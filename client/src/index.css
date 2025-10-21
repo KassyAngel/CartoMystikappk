@@ -1,0 +1,891 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* LIGHT MODE */
+:root {
+  --button-outline: rgba(0,0,0, .10);
+  --badge-outline: rgba(0,0,0, .05);
+
+  /* Automatic computation of border around primary / danger buttons */
+  --opaque-button-border-intensity: -8; /* In terms of percentages */
+
+  /* Backgrounds applied on top of other backgrounds when hovered/active */
+  --elevate-1: rgba(0,0,0, .03);
+  --elevate-2: rgba(0,0,0, .08);
+
+  --background: 0 0% 100%;
+
+  --foreground: 0 0% 9%;
+
+  --border: 0 0% 89%;
+
+  --card: 0 0% 98%;
+
+  --card-foreground: 0 0% 9%;
+
+  --card-border: 0 0% 91%;
+
+  --sidebar: 0 0% 96%;
+
+  --sidebar-foreground: 0 0% 9%;
+
+  --sidebar-border: 0 0% 89%;
+
+  --sidebar-primary: 280 70% 28%;
+
+  --sidebar-primary-foreground: 280 10% 95%;
+
+  --sidebar-accent: 0 0% 94%;
+
+  --sidebar-accent-foreground: 0 0% 15%;
+
+  --sidebar-ring: 280 70% 28%;
+
+  --popover: 0 0% 96%;
+
+  --popover-foreground: 0 0% 9%;
+
+  --popover-border: 0 0% 87%;
+
+  --primary: 280 70% 28%;
+
+  --primary-foreground: 280 10% 95%;
+
+  --secondary: 0 0% 92%;
+
+  --secondary-foreground: 0 0% 9%;
+
+  --muted: 0 0% 94%;
+
+  --muted-foreground: 0 0% 45%;
+
+  --accent: 280 15% 94%;
+
+  --accent-foreground: 280 40% 20%;
+
+  --destructive: 0 84% 32%;
+
+  --destructive-foreground: 0 0% 98%;
+
+  --input: 0 0% 80%;
+  --ring: 280 70% 28%;
+  --chart-1: 280 70% 28%;
+  --chart-2: 45 90% 45%;
+  --chart-3: 260 60% 35%;
+  --chart-4: 320 60% 40%;
+  --chart-5: 200 70% 35%;
+
+  --font-sans: Open Sans, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: Menlo, monospace;
+  --radius: .5rem; /* 8px */
+  --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
+  --shadow: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 2px 4px -1px hsl(0 0% 0% / 0.00);
+  --shadow-lg: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 4px 6px -1px hsl(0 0% 0% / 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 8px 10px -1px hsl(0 0% 0% / 0.00);
+  --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+
+  /* Automatically computed borders - intensity can be controlled by the user by the --opaque-button-border-intensity setting */
+
+  /* Fallback for older browsers */
+  --sidebar-primary-border: hsl(var(--sidebar-primary));
+  --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --sidebar-accent-border: hsl(var(--sidebar-accent));
+  --sidebar-accent-border: hsl(from hsl(var(--sidebar-accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --primary-border: hsl(var(--primary));
+  --primary-border: hsl(from hsl(var(--primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --secondary-border: hsl(var(--secondary));
+  --secondary-border: hsl(from hsl(var(--secondary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --muted-border: hsl(var(--muted));
+  --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --accent-border: hsl(var(--accent));
+  --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --destructive-border: hsl(var(--destructive));
+  --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+}
+
+.dark {
+  --button-outline: rgba(255,255,255, .10);
+  --badge-outline: rgba(255,255,255, .05);
+
+  --opaque-button-border-intensity: 9;  /* In terms of percentages */
+
+  /* Backgrounds applied on top of other backgrounds when hovered/active */
+  --elevate-1: rgba(255,255,255, .04);
+  --elevate-2: rgba(255,255,255, .09);
+
+  --background: 280 25% 8%;
+
+  --foreground: 280 10% 95%;
+
+  --border: 280 20% 18%;
+
+  --card: 280 25% 10%;
+
+  --card-foreground: 280 10% 95%;
+
+  --card-border: 280 20% 20%;
+
+  --sidebar: 260 30% 12%;
+
+  --sidebar-foreground: 260 15% 90%;
+
+  --sidebar-border: 260 25% 22%;
+
+  --sidebar-primary: 280 70% 60%;
+
+  --sidebar-primary-foreground: 280 10% 95%;
+
+  --sidebar-accent: 260 25% 18%;
+
+  --sidebar-accent-foreground: 260 15% 85%;
+
+  --sidebar-ring: 280 70% 60%;
+
+  --popover: 280 25% 14%;
+
+  --popover-foreground: 280 10% 90%;
+
+  --popover-border: 280 20% 24%;
+
+  --primary: 280 70% 28%;
+
+  --primary-foreground: 280 10% 95%;
+
+  --secondary: 280 20% 16%;
+
+  --secondary-foreground: 280 10% 90%;
+
+  --muted: 280 15% 12%;
+
+  --muted-foreground: 280 10% 65%;
+
+  --accent: 280 15% 14%;
+
+  --accent-foreground: 280 15% 85%;
+
+  --destructive: 0 84% 28%;
+
+  --destructive-foreground: 0 10% 95%;
+
+  /* Used as the border around inputs. Dark mode: Should be a border that is light enough to have high contrast when rendered on a --card background. More contrast than standard --border */
+  --input: 280 20% 35%;
+  --ring: 280 70% 60%;
+  --chart-1: 280 70% 75%;
+  --chart-2: 45 90% 75%;
+  --chart-3: 260 60% 70%;
+  --chart-4: 320 60% 70%;
+  --chart-5: 200 70% 70%;
+
+  --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
+  --shadow: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 2px 4px -1px hsl(0 0% 0% / 0.00);
+  --shadow-lg: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 4px 6px -1px hsl(0 0% 0% / 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 8px 10px -1px hsl(0 0% 0% / 0.00);
+  --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
+
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-serif antialiased bg-background text-foreground;
+    background: linear-gradient(135deg, #1a0033, #330066, #4d0080);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/**
+ * Using the elevate system.
+ * Automatic contrast adjustment.
+ *
+ * <element className="hover-elevate" />
+ * <element className="active-elevate-2" />
+ *
+ * // Using the tailwind utility when a data attribute is "on"
+ * <element className="toggle-elevate data-[state=on]:toggle-elevated" />
+ * // Or manually controlling the toggle state
+ * <element className="toggle-elevate toggle-elevated" />
+ *
+ * Elevation systems have to handle many states.
+ * - not-hovered, vs. hovered vs. active  (three mutually exclusive states)
+ * - toggled or not
+ * - focused or not (this is not handled with these utilities)
+ *
+ * Even without handling focused or not, this is six possible combinations that
+ * need to be distinguished from eachother visually.
+ */
+/* Mystical animations and effects */
+.mystical-bg-icon {
+  animation: mystical-float 6s ease-in-out infinite, mystical-glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes mystical-float {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
+  33% { transform: translate(-50%, -50%) translateY(-10px) rotate(2deg); }
+  66% { transform: translate(-50%, -50%) translateY(5px) rotate(-1deg); }
+}
+
+@keyframes mystical-glow {
+  0% { filter: blur(1px) brightness(0.8); }
+  100% { filter: blur(0.5px) brightness(1.2); }
+}
+
+.ads-support-text {
+  background: linear-gradient(45deg, #b19cd9, #8a2be2, #9370db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 10px rgba(177, 156, 217, 0.3);
+}
+
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes sparkle {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1) rotate(180deg); opacity: 0.8; }
+  100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+.sparkle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #ffd700;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkle 1s ease-out forwards;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.shimmer::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+  animation: shimmer 3s infinite;
+  pointer-events: none;
+}
+
+.mystical-card {
+  background: linear-gradient(145deg, #2d1b69, #4a2c85);
+  border: 2px solid #6d4c41;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.mystical-card:hover {
+  transform: translateY(-5px);
+  border-color: #ffd700;
+  box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
+}
+
+.mystical-card.selected {
+  border-color: #ffd700;
+  background: linear-gradient(145deg, #4a2c85, #6d4c41);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+}
+
+/* Désactiver l'effet de survol pour les cartes retournées */
+.mystical-card-flipped {
+  border-color: #ffd700 !important;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.5) !important;
+}
+
+.mystical-card-flipped:hover {
+  transform: none !important;
+  border-color: #ffd700 !important;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.5) !important;
+}
+
+/* Désactiver complètement les interactions pour les cartes flippées */
+.flip-card-inner.rotate-y-180 {
+  pointer-events: none !important;
+}
+
+.flip-card-inner.rotate-y-180 .mystical-card {
+  cursor: default !important;
+}
+
+.flip-card-inner.rotate-y-180 .mystical-card:hover {
+  transform: none !important;
+  border-color: #ffd700 !important;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.5) !important;
+}
+
+.mystical-btn {
+  background: linear-gradient(145deg, #6d4c41, #8d5f47);
+  border: 2px solid #ffd700;
+  color: #fff;
+  font-family: 'Playfair Display', Georgia, serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.mystical-btn:hover {
+  background: linear-gradient(145deg, #8d5f47, #ad7f67);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.mystical-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.mystical-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #6d4c41;
+  color: #fff;
+  font-family: 'Playfair Display', Georgia, serif;
+  transition: all 0.3s ease;
+}
+
+.mystical-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.mystical-input:focus {
+  border-color: #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.mystical-title {
+  background: linear-gradient(45deg, #ffd700, #ffb347, #ff6b9d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  line-height: 1.2;
+  padding: 0.1em 0;
+}
+
+.flip-card {
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.flip-card-front {
+  background: linear-gradient(145deg, #2d1b69, #4a2c85);
+  border: 3px solid #6d4c41;
+  color: #ffd700;
+}
+
+.flip-card-back {
+  background: linear-gradient(145deg, #4a2c85, #6d4c41);
+  border: 3px solid #ffd700;
+  color: #fff;
+  transform: rotateY(180deg);
+  padding: 20px;
+  flex-direction: column;
+}
+
+/* Additional custom utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.text-shadow-glow {
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+@layer utilities {
+
+  /* Hide ugly search cancel button in Chrome until we can style it properly */
+  input[type="search"]::-webkit-search-cancel-button {
+    @apply hidden;
+  }
+
+  /* Placeholder styling for contentEditable div */
+  [contenteditable][data-placeholder]:empty::before {
+    content: attr(data-placeholder);
+    color: hsl(var(--muted-foreground));
+    pointer-events: none;
+  }
+
+  /* .no-default-hover-elevate/no-default-active-elevate is an escape hatch so consumers of
+   * buttons/badges can remove the automatic brightness adjustment on interactions
+   * and program their own. */
+  .no-default-hover-elevate {}
+
+  .no-default-active-elevate {}
+
+
+  /**
+   * Toggleable backgrounds go behind the content. Hoverable/active goes on top.
+   * This way they can stack/compound. Both will overlap the parent's borders!
+   * So borders will be automatically adjusted both on toggle, and hover/active,
+   * and they will be compounded.
+   */
+  .toggle-elevate::before,
+  .toggle-elevate-2::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0px;
+    /*border-radius: inherit;   match rounded corners */
+    border-radius: inherit;
+    z-index: -1;
+    /* sits behind content but above backdrop */
+  }
+
+  .toggle-elevate.toggle-elevated::before {
+    background-color: var(--elevate-2);
+  }
+
+  /* If there's a 1px border, adjust the inset so that it covers that parent's border */
+  .border.toggle-elevate::before {
+    inset: -1px;
+  }
+
+  /* Does not work on elements with overflow:hidden! */
+  .hover-elevate:not(.no-default-hover-elevate),
+  .active-elevate:not(.no-default-active-elevate),
+  .hover-elevate-2:not(.no-default-hover-elevate),
+  .active-elevate-2:not(.no-default-active-elevate) {
+    position: relative;
+    z-index: 0;
+  }
+
+  .hover-elevate:not(.no-default-hover-elevate)::after,
+  .active-elevate:not(.no-default-active-elevate)::after,
+  .hover-elevate-2:not(.no-default-hover-elevate)::after,
+  .active-elevate-2:not(.no-default-active-elevate)::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0px;
+    /*border-radius: inherit;   match rounded corners */
+    border-radius: inherit;
+    z-index: 999;
+    /* sits in front of content */
+  }
+
+  .hover-elevate:hover:not(.no-default-hover-elevate)::after,
+  .active-elevate:active:not(.no-default-active-elevate)::after {
+    background-color: var(--elevate-1);
+  }
+
+  .hover-elevate-2:hover:not(.no-default-hover-elevate)::after,
+  .active-elevate-2:active:not(.no-default-active-elevate)::after {
+    background-color: var(--elevate-2);
+  }
+
+  /* If there's a 1px border, adjust the inset so that it covers that parent's border */
+  .border.hover-elevate:not(.no-hover-interaction-elevate)::after,
+  .border.active-elevate:not(.no-active-interaction-elevate)::after,
+  .border.hover-elevate-2:not(.no-hover-interaction-elevate)::after,
+  .border.active-elevate-2:not(.no-active-interaction-elevate)::after,
+  .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
+    inset: -1px;
+  }
+
+  .card-back-galaxy {
+    position: relative;
+    border-radius: 15px;
+    background: radial-gradient(circle at center, #2e0854, #000);
+    overflow: hidden;
+    border: 2px solid gold;
+  }
+
+  /* Effet galaxie animée */
+  .card-back-galaxy::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+      from 0deg,
+      #6b46c1,
+      #b794f4,
+      #2c5282,
+      #6b46c1
+    );
+    animation: spin 5s linear infinite;
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  /* Symbole central */
+  .card-back-galaxy .symbol {
+    position: relative;
+    z-index: 2;
+    font-size: 2rem;
+    color: gold;
+    text-shadow: 0 0 6px gold, 0 0 12px white;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  /* Animations pour OracleCard */
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .animate-shimmer {
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in {
+    animation: fade-in-up 0.8s ease-out forwards;
+    opacity: 0;
+  }
+/* ========================================
+   AMÉLIORATION VISIBILITÉ DES TEXTES
+   ======================================== */
+
+/* Tous les textes clairs ont une ombre portée */
+.text-purple-200,
+.text-purple-300,
+.text-gray-300 {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Textes blancs avec ombre forte */
+.text-white,
+.text-gray-100 {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Textes dorés avec ombre */
+.text-yellow-400,
+.text-yellow-300 {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* Amélioration des inputs */
+input::placeholder {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Amélioration des titres */
+h1, h2, h3 {
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+}
+  @keyframes shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .animate-shimmer {
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+  /* Ajoutez ces styles à votre fichier CSS global */
+
+  /* Animation d'apparition en fondu depuis le bas */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Animation de ping pour les sparkles */
+  @keyframes ping {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    75%, 100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+
+  .animate-ping {
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  /* Titre mystique avec effet subtil */
+  .mystical-title {
+    text-shadow: 
+      0 0 20px rgba(251, 191, 36, 0.15),
+      0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.05em;
+  }
+
+  /* Container des cartes avec espacement harmonieux */
+  .revelation-cards {
+    position: relative;
+  }
+
+  /* Effet de lueur douce pour les cartes */
+  .revelation-cards > div {
+    position: relative;
+  }
+
+  /* Style pour les icônes de position - symboles mystiques */
+  .revelation-cards .position-icon {
+    font-family: 'Times New Roman', serif;
+    font-weight: 300;
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.3));
+  }
+
+  /* Labels de position élégants */
+  .revelation-cards p {
+    font-variant: small-caps;
+    letter-spacing: 0.15em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Ligne décorative sous les positions */
+  .revelation-cards .position-line {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(251, 191, 36, 0.3) 20%,
+      rgba(251, 191, 36, 0.3) 80%,
+      transparent
+    );
+    margin-top: 4px;
+  }
+
+  /* Bouton de révélation avec style raffiné */
+  .mystical-button-primary {
+    background: linear-gradient(
+      135deg,
+      rgba(109, 76, 65, 0.8) 0%,
+      rgba(88, 61, 52, 0.9) 50%,
+      rgba(109, 76, 65, 0.8) 100%
+    );
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(251, 191, 36, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .mystical-button-primary:hover {
+    border-color: rgba(251, 191, 36, 0.5);
+    box-shadow: 
+      0 6px 25px rgba(251, 191, 36, 0.2),
+      inset 0 1px 0 rgba(251, 191, 36, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* Bouton retour discret */
+  .mystical-button-secondary {
+    background: rgba(45, 27, 105, 0.3);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  .mystical-button-secondary:hover {
+    background: rgba(45, 27, 105, 0.5);
+    border-color: rgba(251, 191, 36, 0.3);
+  }
+
+  /* Couleurs ambrées élégantes */
+  .text-amber-100\/90 {
+    color: rgba(254, 243, 199, 0.9);
+  }
+
+  .text-amber-200\/80 {
+    color: rgba(253, 230, 138, 0.8);
+  }
+
+  .text-amber-200\/60 {
+    color: rgba(253, 230, 138, 0.6);
+  }
+
+  .text-amber-300\/70 {
+    color: rgba(252, 211, 77, 0.7);
+  }
+
+  .text-amber-300\/80 {
+    color: rgba(252, 211, 77, 0.8);
+  }
+
+  .text-amber-400\/30 {
+    color: rgba(251, 191, 36, 0.3);
+  }
+
+  /* Effet de brillance pour le bouton */
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Responsive pour petits écrans */
+  @media (max-width: 640px) {
+    .revelation-cards {
+      gap: 2rem;
+    }
+
+    .mystical-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* Style pour l'état de chargement */
+  .revelation-loading {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  @layer utilities {
+    @keyframes spin-slow {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .animate-spin-slow {
+      animation: spin-slow 60s linear infinite;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fade-in 0.5s ease-out;
+    }
+  }
+  }

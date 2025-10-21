@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oracle Mystique par Kassy Angel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a0033, #330066, #4d0080);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Pages d'introduction */
+        .intro-page {
+            display: none;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .intro-page.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin-bottom: 50px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff6b9d);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .intro-title {
+            font-size: 2.5em;
+            color: #ffd700;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .intro-subtitle {
+            font-size: 1.2em;
+            color: #b19cd9;
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            margin: 30px 0;
+            width: 100%;
+        }
+
+        .name-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #6d4c41;
+            border-radius: 25px;
+            padding: 15px 25px;
+            font-size: 1.2em;
+            color: #fff;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            font-family: 'Georgia', serif;
+            transition: all 0.3s ease;
+        }
+
+        .name-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .name-input:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Sélection de date */
+        .birthdate-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        .date-selector {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #6d4c41;
+            border-radius: 15px;
+            padding: 15px;
+            color: #ffd700;
+            font-size: 1.1em;
+            font-family: 'Georgia', serif;
+            min-width: 100px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .date-selector option {
+            background: #2d1b69;
+            color: #ffd700;
+            padding: 5px;
+        }
+
+        .date-selector:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Sélection de genre */
+        .gender-options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .gender-option {
+            background: linear-gradient(145deg, #2d1b69, #4a2c85);
+            border: 2px solid #6d4c41;
+            border-radius: 20px;
+            padding: 30px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .gender-option:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
+        }
+
+        .gender-option.selected {
+            border-color: #ffd700;
+            background: linear-gradient(145deg, #4a2c85, #6d4c41);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+        }
+
+        .gender-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .gender-label {
+            font-size: 1.1em;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .zodiac-icon {
+            width: 120px;
+            height: 120px;
+            margin: 20px 0;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b9d, #ffd700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn {
+            background: linear-gradient(145deg, #6d4c41, #8d5f47);
+            color: #fff;
+            border: 2px solid #ffd700;
+            padding: 15px 40px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            margin: 20px 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            min-width: 150px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(145deg, #8d5f47, #ad7f67);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Pages principales (cachées initialement) */
+        .main-content {
+            display: none;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            background: linear-gradient(45deg, #ffd700, #ffb347, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #b19cd9;
+            font-style: italic;
+        }
+
+        .oracle-selection {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .oracle-card {
+            background: linear-gradient(145deg, #2d1b69, #4a2c85);
+            border: 2px solid #6d4c41;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            min-width: 200px;
+        }
+
+        .oracle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
+            border-color: #ffd700;
+        }
+
+        .oracle-card.selected {
+            border-color: #ffd700;
+            background: linear-gradient(145deg, #4a2c85, #6d4c41);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+        }
+
+        .oracle-card h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .oracle-card p {
+            color: #c9a9dd;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .game-area {
+            display: none;
+            text-align: center;
+        }
+
+        .reading-type {
+            margin-bottom: 30px;
+        }
+
+        .reading-type h2 {
+            color: #ffd700;
+            font-size: 2em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .cards-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 100px;
+            height: 150px;
+            background: linear-gradient(145deg, #2d1b69, #4a2c85);
+            border: 3px solid #6d4c41;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #ffd700;
+            text-align: center;
+            font-weight: bold;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+            border-color: #ffd700;
+        }
+
+        .card.selected {
+            background: linear-gradient(145deg, #6d4c41, #8d5f47);
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            transform: scale(1.05);
+        }
+
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(145deg, #6d4c41, #8d5f47);
+            color: #fff;
+            border: 2px solid #ffd700;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(145deg, #8d5f47, #ad7f67);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Page de révélation */
+        .revelation-page {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .revelation-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .revelation-header h1 {
+            font-size: 2.5em;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .revelation-header p {
+            color: #b19cd9;
+            font-size: 1.1em;
+            font-style: italic;
+        }
+
+        .revelation-cards {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+
+        .revelation-position {
+            text-align: center;
+            max-width: 300px;
+        }
+
+        .position-label {
+            color: #ffd700;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .flip-card {
+            width: 180px;
+            height: 270px;
+            perspective: 1000px;
+            margin: 0 auto 30px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .flip-card-front {
+            background: linear-gradient(145deg, #2d1b69, #4a2c85);
+            border: 3px solid #6d4c41;
+            color: #ffd700;
+            font-size: 2em;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(145deg, #4a2c85, #6d4c41);
+            border: 3px solid #ffd700;
+            color: #fff;
+            transform: rotateY(180deg);
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        .flip-card-back h3 {
+            color: #ffd700;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .card-meaning {
+            color: #c9a9dd;
+            font-size: 0.9em;
+            line-height: 1.4;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .flip-instruction {
+            color: #b19cd9;
+            font-size: 1em;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        .flip-instruction.hidden {
+            opacity: 0;
+        }
+
+        .summary {
+            background: linear-gradient(145deg, #1a0033, #2d1b69);
+            border: 3px solid #ffd700;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px 0;
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: none;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            animation: shimmer 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .summary h3 {
+            color: #ffd700;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .summary p {
+            color: #e6d7ff;
+            line-height: 1.8;
+            text-align: left;
+            font-size: 1.1em;
+            position: relative;
+            z-index: 1;
+            white-space: pre-line;
+        }
+
+        .revelation-controls {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        /* Animation de paillettes */
+        @keyframes sparkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1) rotate(180deg); opacity: 0.8; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 1s ease-out forwards;
+        }
+
+        @media (max-width: 768px) {
+            .intro-title {
+                font-size: 2em;
+            }
+            
+            .gender-options {
+                gap: 20px;
+            }
+            
+            .gender-option {
+                min-width: 100px;
+                padding: 20px 15px;
+            }
+            
+            .birthdate-container {
+                gap: 10px;
+            }
+            
+            .date-selector {
+                min-width: 80px;
+                padding: 10px;
+            }
+            
+            .revelation-cards {
+                gap: 30px;
+            }
+            
+            .flip-card {
+                width: 140px;
+                height: 210px;
+            }
+            
+            .card {
+                width: 80px;
+                height: 120px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <!-- Page 1: Nom/Prénom -->
+        <div class="intro-page active" id="namePage">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 33%"></div>
+            </div>
+            <h1 class="intro-title">Nom de famille</h1>
+            <p class="intro-subtitle">Comment préférez-vous être appelé ? Entrez votre prénom ou votre surnom</p>
+            <div class="input-group">
+                <input type="text" class="name-input" id="userNameInput" placeholder="Entrez votre nom" maxlength="30">
+            </div>
+            <button class="btn" id="nameNextBtn" onclick="nextToDate()" disabled>SUIVANT</button>
+        </div>
+
+        <!-- Page 2: Date de naissance -->
+        <div class="intro-page" id="datePage">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 66%"></div>
+            </div>
+            <h1 class="intro-title">Date de naissance</h1>
+            <div class="zodiac-icon">♈</div>
+            <p class="intro-subtitle">Entrez votre date de naissance pour déterminer votre horoscope</p>
+            <div class="birthdate-container">
+                <select class="date-selector" id="daySelect">
+                    <option value="">Jour</option>
+                </select>
+                <select class="date-selector" id="monthSelect">
+                    <option value="">Mois</option>
+                    <option value="1">Janvier</option>
+                    <option value="2">Février</option>
+                    <option value="3">Mars</option>
+                    <option value="4">Avril</option>
+                    <option value="5">Mai</option>
+                    <option value="6">Juin</option>
+                    <option value="7">Juillet</option>
+                    <option value="8">Août</option>
+                    <option value="9">Septembre</option>
+                    <option value="10">Octobre</option>
+                    <option value="11">Novembre</option>
+                    <option value="12">Décembre</option>
+                </select>
+                <select class="date-selector" id="yearSelect">
+                    <option value="">Année</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-secondary" onclick="backToName()">← RETOUR</button>
+                <button class="btn" id="dateNextBtn" onclick="nextToGender()" disabled>SUIVANT</button>
+            </div>
+        </div>
+
+        <!-- Page 3: Genre -->
+        <div class="intro-page" id="genderPage">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%"></div>
+            </div>
+            <h1 class="intro-title">Genre</h1>
+            <p class="intro-subtitle">"Indiquez votre genre afin de personnaliser votre expérience"</p>
+            <div class="gender-options">
+                <div class="gender-option" data-gender="homme">
+                    <div class="gender-icon">♂</div>
+                    <div class="gender-label">Homme</div>
+                </div>
+                <div class="gender-option" data-gender="femme">
+                    <div class="gender-icon">♀</div>
+                    <div class="gender-label">Féminin</div>
+                </div>
+                <div class="gender-option" data-gender="autre">
+                    <div class="gender-icon">⚥</div>
+                    <div class="gender-label">Autre</div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-secondary" onclick="backToDate()">← RETOUR</button>
+                <button class="btn" id="genderNextBtn" onclick="startOracle()" disabled>COMMENCER</button>
+            </div>
+        </div>
+
+        <!-- Contenu principal de l'oracle -->
+        <div class="main-content" id="mainContent">
+            <div class="header">
+                <h1 id="welcomeTitle">Bienvenue !</h1>
+                <p>Découvrez les secrets de votre destinée</p>
+            </div>
+
+            <div class="oracle-selection" id="oracleSelection">
+                <div class="oracle-card" data-oracle="tarot">
+                    <h3>🔮 Tarot de Marseille</h3>
+                    <p>Les 22 arcanes majeurs dévoilent les mystères de votre destinée</p>
+                </div>
+                <div class="oracle-card" data-oracle="oracle">
+                    <h3>✨ Oracle des Anges</h3>
+                    <p>25 cartes angéliques pour guidance et protection spirituelle</p>
+                </div>
+                <div class="oracle-card" data-oracle="runes">
+                    <h3>ᚱ Runes Nordiques</h3>
+                    <p>L'ancienne sagesse viking pour éclairer votre chemin</p>
+                </div>
+            </div>
+
+            <div class="game-area" id="gameArea">
+                <button class="back-btn" onclick="goBack()">← Retour</button>
+                
+                <div class="reading-type">
+                    <h2 id="oracleTitle" style="color: #e8e4f3 !important;">Tirage à 3 Cartes</h2>
+                    <p id="oracleDescription">Choisissez 3 cartes pour découvrir votre passé, présent et futur</p>
+                </div>
+
+                <div class="cards-grid" id="cardsGrid"></div>
+
+                <div class="controls">
+                    <button class="btn" id="revealBtn" onclick="revealCards()" disabled>Révéler les cartes</button>
+                    <button class="btn" onclick="resetGame()">Nouveau tirage</button>
+                </div>
+            </div>
+
+            <!-- Page de révélation -->
+            <div class="revelation-page" id="revelationPage">
+                <button class="back-btn" onclick="goBackToSelection()">← Nouveau tirage</button>
+                
+                <div class="revelation-header">
+                    <h1 id="revelationTitle" style="color: #e8e4f3 !important;">Votre Tirage - Tarot de Marseille</h1>
+                    <p>Cliquez sur chaque carte pour révéler votre destinée</p>
+                </div>
+
+                <div class="revelation-cards" id="revelationCards">
+                    <!-- Les cartes seront générées ici -->
+                </div>
+
+                <div class="summary" id="revelationSummary">
+                    <h3 style="color: #e8e4f3 !important;">✨ Résumé de votre tirage ✨</h3>
+                    <p id="summaryText"></p>
+                </div>
+
+                <div class="revelation-controls">
+                    <button class="btn" onclick="goBackToSelection()">Nouveau tirage</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables utilisateur
+        let userName = '';
+        let userBirthdate = null;
+        let userGender = '';
+        let userZodiac = '';
+
+        // Données des oracles
+        const oracleData = {
+            tarot: {
+                title: 'Tarot de Marseille',
+                description: 'Choisissez 3 cartes pour découvrir votre passé, présent et futur',
+                cards: [
+                    { name: 'Le Bateleur', meaning: 'Nouveau début, créativité, potentiel' },
+                    { name: 'La Papesse', meaning: 'Intuition, mystère, connaissance cachée' },
+                    { name: 'L\'Impératrice', meaning: 'Fertilité, créativité, abondance' },
+                    { name: 'L\'Empereur', meaning: 'Autorité, structure, contrôle' },
+                    { name: 'Le Pape', meaning: 'Tradition, sagesse, guidance spirituelle' },
+                    { name: 'L\'Amoureux', meaning: 'Choix, amour, harmonie' },
+                    { name: 'Le Chariot', meaning: 'Victoire, détermination, contrôle' },
+                    { name: 'La Justice', meaning: 'Équilibre, vérité, karma' },
+                    { name: 'L\'Hermite', meaning: 'Sagesse intérieure, solitude, réflexion' },
+                    { name: 'La Roue de Fortune', meaning: 'Changement, cycles, destin' },
+                    { name: 'La Force', meaning: 'Courage, patience, compassion' },
+                    { name: 'Le Pendu', meaning: 'Sacrifice, perspective, patience' },
+                    { name: 'La Mort', meaning: 'Transformation, fin, renouveau' },
+                    { name: 'Tempérance', meaning: 'Équilibre, modération, patience' },
+                    { name: 'Le Diable', meaning: 'Tentations, liens, illusions' },
+                    { name: 'La Maison Dieu', meaning: 'Révélation soudaine, changement brutal' },
+                    { name: 'L\'Étoile', meaning: 'Espoir, inspiration, guidance' },
+                    { name: 'La Lune', meaning: 'Illusions, intuition, subconscient' },
+                    { name: 'Le Soleil', meaning: 'Joie, succès, vitalité' },
+                    { name: 'Le Jugement', meaning: 'Renouveau, pardon, éveil spirituel' },
+                    { name: 'Le Monde', meaning: 'Accomplissement, totalité, succès' },
+                    { name: 'Le Mat', meaning: 'Nouveau départ, spontanéité, aventure' }
+                ]
+            },
+            oracle: {
+                title: 'Oracle des Anges',
+                description: 'Choisissez 3 cartes pour recevoir les messages angéliques',
+                cards: [
+                    { name: 'Ange Gardien', meaning: 'Protection divine et guidance constante' },
+                    { name: 'Archange Michel', meaning: 'Force, courage et protection' },
+                    { name: 'Archange Gabriel', meaning: 'Communication et messages divins' },
+                    { name: 'Archange Raphaël', meaning: 'Guérison et transformation' },
+                    { name: 'Archange Uriel', meaning: 'Sagesse et illumination' },
+                    { name: 'Amour Inconditionnel', meaning: 'Acceptation et compassion divine' },
+                    { name: 'Guidance Divine', meaning: 'Direction claire pour votre chemin' },
+                    { name: 'Protection Céleste', meaning: 'Sécurité et soutien angélique' },
+                    { name: 'Intuition Sacrée', meaning: 'Écoute de votre voix intérieure' },
+                    { name: 'Pardon et Paix', meaning: 'Libération et réconciliation' },
+                    { name: 'Abondance Divine', meaning: 'Prospérité spirituelle et matérielle' },
+                    { name: 'Créativité Céleste', meaning: 'Expression artistique et inspiration' },
+                    { name: 'Guérison du Cœur', meaning: 'Restauration émotionnelle' },
+                    { name: 'Nouveau Départ', meaning: 'Opportunités fraîches et renaissance' },
+                    { name: 'Foi et Confiance', meaning: 'Croyance en votre chemin divin' },
+                    { name: 'Équilibre Spirituel', meaning: 'Harmonie entre corps et âme' },
+                    { name: 'Messages Divins', meaning: 'Communications importantes du ciel' },
+                    { name: 'Force Intérieure', meaning: 'Pouvoir personnel et résilience' },
+                    { name: 'Joie Céleste', meaning: 'Bonheur et gratitude divine' },
+                    { name: 'Transformation', meaning: 'Changement positif et évolution' },
+                    { name: 'Connexion Sacrée', meaning: 'Lien avec le divin et l\'univers' },
+                    { name: 'Lumière Divine', meaning: 'Illumination et clarté spirituelle' },
+                    { name: 'Bénédictions', meaning: 'Faveurs célestes et grâces' },
+                    { name: 'Éveil Spirituel', meaning: 'Conscience supérieure et révélation' },
+                    { name: 'Amour Éternel', meaning: 'Connexion divine et amour pur' }
+                ]
+            },
+            runes: {
+                title: 'Runes Nordiques',
+                description: 'Choisissez 3 runes pour connaître l\'ancienne sagesse',
+                cards: [
+                    { name: 'Fehu ᚠ', meaning: 'Richesse, bétail, prospérité matérielle' },
+                    { name: 'Uruz ᚢ', meaning: 'Force sauvage, vitalité, courage' },
+                    { name: 'Thurisaz ᚦ', meaning: 'Géant, chaos contrôlé, protection' },
+                    { name: 'Ansuz ᚨ', meaning: 'Dieu, communication, sagesse' },
+                    { name: 'Raidho ᚱ', meaning: 'Voyage, mouvement, progression' },
+                    { name: 'Kenaz ᚲ', meaning: 'Torche, connaissance, illumination' },
+                    { name: 'Gebo ᚷ', meaning: 'Don, échange, partenariat' },
+                    { name: 'Wunjo ᚹ', meaning: 'Joie, harmonie, succès' },
+                    { name: 'Hagalaz ᚺ', meaning: 'Grêle, destruction créatrice' },
+                    { name: 'Nauthiz ᚾ', meaning: 'Besoin, contrainte, leçon' },
+                    { name: 'Isa ᛁ', meaning: 'Glace, stagnation, patience' },
+                    { name: 'Jera ᛃ', meaning: 'Année, cycles, récolte' },
+                    { name: 'Eihwaz ᛇ', meaning: 'If, protection, endurance' },
+                    { name: 'Perthro ᛈ', meaning: 'Dé, destin, mystère' },
+                    { name: 'Algiz ᛉ', meaning: 'Élan, protection divine' },
+                    { name: 'Sowilo ᛊ', meaning: 'Soleil, succès, vitalité' },
+                    { name: 'Tiwaz ᛏ', meaning: 'Tyr, honneur, justice' },
+                    { name: 'Berkano ᛒ', meaning: 'Bouleau, croissance, féminité' },
+                    { name: 'Ehwaz ᛖ', meaning: 'Cheval, partenariat, loyauté' },
+                    { name: 'Mannaz ᛗ', meaning: 'Homme, humanité, soi' },
+                    { name: 'Laguz ᛚ', meaning: 'Eau, flux, intuition' },
+                    { name: 'Ingwaz ᛜ', meaning: 'Ing, fertilité, potentiel' },
+                    { name: 'Othala ᛟ', meaning: 'Héritage, foyer, tradition' },
+                    { name: 'Dagaz ᛞ', meaning: 'Jour, éveil, transformation' }
+                ]
+            }
+        };
+
+        let currentOracle = null;
+        let selectedCardIndices = [];
+        let selectedCards = [];
+        let gamePhase = 'selection';
+        let flippedCardsCount = 0;
+
+        // Fonctions des pages d'introduction
+        function nextToDate() {
+            userName = document.getElementById('userNameInput').value.trim();
+            if (userName) {
+                document.getElementById('namePage').classList.remove('active');
+                document.getElementById('datePage').classList.add('active');
+            }
+        }
+
+        function backToName() {
+            document.getElementById('datePage').classList.remove('active');
+            document.getElementById('namePage').classList.add('active');
+        }
+
+        function nextToGender() {
+            const day = document.getElementById('daySelect').value;
+            const month = document.getElementById('monthSelect').value;
+            const year = document.getElementById('yearSelect').value;
+            
+            if (day && month && year) {
+                userBirthdate = { day: parseInt(day), month: parseInt(month), year: parseInt(year) };
+                userZodiac = getZodiacSign(parseInt(day), parseInt(month));
+                updateZodiacIcon();
+                document.getElementById('datePage').classList.remove('active');
+                document.getElementById('genderPage').classList.add('active');
+            }
+        }
+
+        function backToDate() {
+            document.getElementById('genderPage').classList.remove('active');
+            document.getElementById('datePage').classList.add('active');
+        }
+
+        function startOracle() {
+            if (userGender) {
+                document.getElementById('genderPage').classList.remove('active');
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('welcomeTitle').textContent = `Bienvenue ${userName} !`;
+            }
+        }
+
+        // Fonctions utilitaires
+        function getZodiacSign(day, month) {
+            const signs = [
+                {name: 'Capricorne', symbol: '♑', start: [22, 12], end: [19, 1]},
+                {name: 'Verseau', symbol: '♒', start: [20, 1], end: [18, 2]},
+                {name: 'Poissons', symbol: '♓', start: [19, 2], end: [20, 3]},
+                {name: 'Bélier', symbol: '♈', start: [21, 3], end: [19, 4]},
+                {name: 'Taureau', symbol: '♉', start: [20, 4], end: [20, 5]},
+                {name: 'Gémeaux', symbol: '♊', start: [21, 5], end: [20, 6]},
+                {name: 'Cancer', symbol: '♋', start: [21, 6], end: [22, 7]},
+                {name: 'Lion', symbol: '♌', start: [23, 7], end: [22, 8]},
+                {name: 'Vierge', symbol: '♍', start: [23, 8], end: [22, 9]},
+                {name: 'Balance', symbol: '♎', start: [23, 9], end: [22, 10]},
+                {name: 'Scorpion', symbol: '♏', start: [23, 10], end: [21, 11]},
+                {name: 'Sagittaire', symbol: '♐', start: [22, 11], end: [21, 12]}
+            ];
+
+            for (let sign of signs) {
+                if (month === sign.start[1] && day >= sign.start[0]) return sign;
+                if (month === sign.end[1] && day <= sign.end[0]) return sign;
+            }
+            return signs[0];
+        }
+
+        function updateZodiacIcon() {
+            if (userZodiac) {
+                document.querySelector('.zodiac-icon').textContent = userZodiac.symbol;
+            }
+        }
+
+        // Créer les étoiles
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Initialisation des sélecteurs de date
+        function initializeDateSelectors() {
+            // Jours
+            const daySelect = document.getElementById('daySelect');
+            for (let i = 1; i <= 31; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i.toString().padStart(2, '0');
+                daySelect.appendChild(option);
+            }
+
+            // Années
+            const yearSelect = document.getElementById('yearSelect');
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear; i >= currentYear - 100; i--) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
+        }
+
+        // Fonctions de l'oracle
+        function startGame(oracleType) {
+            currentOracle = oracleData[oracleType];
+            document.getElementById('oracleSelection').style.display = 'none';
+            document.getElementById('gameArea').style.display = 'block';
+            document.getElementById('oracleTitle').textContent = currentOracle.title;
+            document.getElementById('oracleDescription').textContent = currentOracle.description;
+            
+            createCards();
+            resetGameState();
+        }
+
+        function createCards() {
+            const cardsGrid = document.getElementById('cardsGrid');
+            cardsGrid.innerHTML = '';
+            
+            for (let i = 0; i < currentOracle.cards.length; i++) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.index = i;
+                card.textContent = (i + 1).toString();
+                
+                card.addEventListener('click', function() {
+                    if (gamePhase === 'selection' && selectedCardIndices.length < 3 && !this.classList.contains('selected')) {
+                        selectCard(this, i);
+                    }
+                });
+                
+                cardsGrid.appendChild(card);
+            }
+        }
+
+        function selectCard(cardElement, index) {
+            cardElement.classList.add('selected');
+            selectedCardIndices.push(index);
+            selectedCards.push(currentOracle.cards[index]);
+            
+            if (selectedCardIndices.length === 3) {
+                document.getElementById('revealBtn').disabled = false;
+            }
+        }
+
+        function revealCards() {
+            // Masquer la page de sélection
+            document.getElementById('gameArea').style.display = 'none';
+            
+            // Afficher la page de révélation
+            document.getElementById('revelationPage').style.display = 'block';
+            
+            // Mettre à jour le titre
+            document.getElementById('revelationTitle').textContent = `Votre Tirage - ${currentOracle.title}`;
+            
+            // Créer les cartes de révélation
+            createRevelationCards();
+            
+            gamePhase = 'revealing';
+        }
+
+        function createRevelationCards() {
+            const revelationCards = document.getElementById('revelationCards');
+            const positionLabels = ['Passé', 'Présent', 'Futur'];
+            
+            revelationCards.innerHTML = '';
+            flippedCardsCount = 0;
+            
+            selectedCards.forEach((card, index) => {
+                const positionDiv = document.createElement('div');
+                positionDiv.className = 'revelation-position';
+                
+                positionDiv.innerHTML = `
+                    <div class="position-label">${positionLabels[index]}</div>
+                    <div class="flip-card" data-index="${index}">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front" style="font-size: 0.8em; font-style: italic; font-weight: 300; letter-spacing: 1px;">
+                                Touchez pour révéler
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>${card.name}</h3>
+                                <div class="card-meaning">${card.meaning}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                revelationCards.appendChild(positionDiv);
+                
+                // Ajouter l'event listener pour le retournement
+                const flipCard = positionDiv.querySelector('.flip-card');
+                
+                flipCard.addEventListener('click', function() {
+                    if (!this.classList.contains('flipped')) {
+                        this.classList.add('flipped');
+                        createSparkles(this);
+                        
+                        flippedCardsCount++;
+                        if (flippedCardsCount === 3) {
+                            setTimeout(() => {
+                                showSummary();
+                            }, 1000);
+                        }
+                    }
+                });
+            });
+        }
+
+        function createSparkles(element) {
+            const rect = element.getBoundingClientRect();
+            const sparkleCount = 15;
+            
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = (rect.left + Math.random() * rect.width) + 'px';
+                sparkle.style.top = (rect.top + Math.random() * rect.height) + 'px';
+                sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+                
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1000);
+            }
+        }
+
+        function showSummary() {
+            const summary = createReadingSummary(selectedCards);
+            document.getElementById('summaryText').textContent = summary;
+            document.getElementById('revelationSummary').style.display = 'block';
+        }
+
+        function createReadingSummary(cards) {
+            const pastCard = cards[0];
+            const presentCard = cards[1];
+            const futureCard = cards[2];
+            const oracleType = currentOracle.title;
+            
+            const genderText = userGender === 'femme' ? 'Ma chère' : userGender === 'homme' ? 'Mon cher' : 'Chère âme';
+            const zodiacText = userZodiac ? `En tant que ${userZodiac.name}, ` : '';
+            
+            // RÉSUMÉS SPÉCIFIQUES PAR ORACLE
+            if (oracleType === 'Tarot de Marseille') {
+                return createTarotSummary(pastCard, presentCard, futureCard, genderText, zodiacText);
+            } else if (oracleType === 'Oracle des Anges') {
+                return createAngelSummary(pastCard, presentCard, futureCard, genderText, zodiacText);
+            } else if (oracleType === 'Runes Nordiques') {
+                return createRuneSummary(pastCard, presentCard, futureCard, genderText, zodiacText);
+            }
+        }
+
+        function createTarotSummary(pastCard, presentCard, futureCard, genderText, zodiacText) {
+            const tarotReadings = [
+                `Salut ${userName} ! Alors, ton tirage de Tarot me dit des choses intéressantes. ${zodiacText}${pastCard.name} dans ton passé montre que tu as vécu des moments qui t'ont vraiment fait grandir. C'était pas toujours facile, mais ça t'a rendu${userGender === 'femme' ? 'e' : ''} plus fort${userGender === 'femme' ? 'e' : ''}.
+
+En ce moment, ${presentCard.name} influence ta vie de manière positive. Tu es dans une période où les choses bougent, et c'est plutôt bon signe pour la suite.
+
+Pour ton futur, ${futureCard.name} annonce de belles choses ! Tu peux t'attendre à des changements heureux qui vont t'apporter satisfaction.
+
+Mon conseil : ${userName}, avec ton caractère de ${userZodiac ? userZodiac.name : 'personne intuitive'}, fais confiance à ton instinct. Tu as tout ce qu'il faut pour réussir !`,
+
+                `Hey ${userName} ! Les cartes du Tarot racontent une belle histoire sur toi. ${zodiacText}${pastCard.name} me montre que ton passé t'a appris des leçons importantes. Tu as su transformer les difficultés en force.
+
+Actuellement, l'énergie de ${presentCard.name} t'accompagne au quotidien. C'est une carte qui apporte de la clarté sur ce que tu dois faire maintenant.
+
+Côté avenir, ${futureCard.name} te réserve de bonnes surprises ! Les étoiles s'alignent pour t'offrir ce que tu mérites vraiment.
+
+Petit conseil perso : ${userName}, ton côté ${userZodiac ? userZodiac.name : 'sensible'} est un vrai atout. N'hésite pas à l'écouter, il te guidera vers les bonnes décisions.`
+            ];
+            return tarotReadings[Math.floor(Math.random() * tarotReadings.length)];
+        }
+
+        function createAngelSummary(pastCard, presentCard, futureCard, genderText, zodiacText) {
+            const angelReadings = [
+                `Coucou ${userName} ! Les anges ont des messages plein d'amour pour toi. ${zodiacText}${pastCard.name} me dit que même dans tes moments difficiles, tu étais protégé${userGender === 'femme' ? 'e' : ''}. Tes guides étaient là, même si tu ne le sentais pas toujours.
+
+En ce moment, ${presentCard.name} brille autour de toi. Cette énergie douce et bienveillante t'aide à voir les choses du bon côté et à rester optimiste.
+
+Pour ton futur, ${futureCard.name} t'apporte plein de bénédictions ! Attends-toi à recevoir de l'aide inattendue et des moments de pure joie.
+
+Message des anges : ${userName}, ta nature de ${userZodiac ? userZodiac.name : 'âme douce'} attire naturellement les bonnes vibrations. Continue à garder ton cœur ouvert, les miracles arrivent !`,
+
+                `Salut ma belle ${userName} ! Les anges me chuchotent de belles choses sur toi. ${zodiacText}${pastCard.name} révèle que tu as toujours eu une protection spéciale, même quand tu ne le savais pas. C'est beau, non ?
+
+Présentement, ${presentCard.name} rayonne dans ta vie. Cette carte angélique signifie que tu es sur le bon chemin et que tes efforts sont reconnus là-haut.
+
+L'avenir t'offre ${futureCard.name}, un vrai cadeau du ciel ! Prépare-toi à vivre des moments magiques qui vont réchauffer ton cœur.
+
+Conseil angélique : ${userName}, avec ton énergie de ${userZodiac ? userZodiac.name : 'personne lumineuse'}, tu inspires les autres sans même t'en rendre compte. C'est ça, ton super pouvoir !`
+            ];
+            return angelReadings[Math.floor(Math.random() * angelReadings.length)];
+        }
+
+        function createRuneSummary(pastCard, presentCard, futureCard, genderText, zodiacText) {
+            const runeReadings = [
+                `Salut ${userName} ! Les runes anciennes parlent de ta force intérieure. ${zodiacText}${pastCard.name} montre que tu as du caractère et que tu ne te laisses pas faire. Tes ancêtres seraient fier${userGender === 'femme' ? 's' : 's'} de toi !
+
+En ce moment, ${presentCard.name} t'accompagne avec sa sagesse ancestrale. Cette rune te donne le courage nécessaire pour affronter ce qui t'attend.
+
+Ton avenir avec ${futureCard.name} s'annonce victorieux ! Tu vas surmonter tes défis et en sortir grandi${userGender === 'femme' ? 'e' : ''}.
+
+Conseil des anciens : ${userName}, ton esprit de ${userZodiac ? userZodiac.name : 'battant'} te permettra de réaliser tes rêves. Tu as la force des guerriers en toi, alors fonce !`,
+
+                `Hey ${userName} ! Les runes me racontent ton histoire de combattant${userGender === 'femme' ? 'e' : ''}. ${zodiacText}${pastCard.name} témoigne de ta capacité à te relever après chaque coup dur. Tu es vraiment costaud${userGender === 'femme' ? 'e' : ''} !
+
+Actuellement, ${presentCard.name} guide tes pas avec la sagesse des anciens. Cette énergie puissante te donne la confiance pour prendre les bonnes décisions.
+
+Pour l'avenir, ${futureCard.name} prédit de grandes victoires ! Tu vas enfin récolter les fruits de ton travail et de ta persévérance.
+
+Message runique : ${userName}, ton âme de ${userZodiac ? userZodiac.name : 'guerrier'} t'aidera à conquérir tous tes objectifs. Reste déterminé${userGender === 'femme' ? 'e' : ''}, le succès t'attend !`
+            ];
+            return runeReadings[Math.floor(Math.random() * runeReadings.length)];
+        }
+
+        function resetGame() {
+            resetGameState();
+            createCards();
+        }
+
+        function resetGameState() {
+            selectedCardIndices = [];
+            selectedCards = [];
+            gamePhase = 'selection';
+            flippedCardsCount = 0;
+            document.getElementById('revealBtn').disabled = true;
+            document.getElementById('revelationSummary').style.display = 'none';
+        }
+
+        function goBack() {
+            document.getElementById('gameArea').style.display = 'none';
+            document.getElementById('oracleSelection').style.display = 'flex';
+            document.querySelectorAll('.oracle-card').forEach(c => c.classList.remove('selected'));
+            resetGameState();
+        }
+
+        function goToHome() {
+            // Masquer le contenu principal
+            document.getElementById('mainContent').style.display = 'none';
+            
+            // Réinitialiser toutes les pages d'intro
+            document.querySelectorAll('.intro-page').forEach(page => page.classList.remove('active'));
+            
+            // Afficher la première page (nom)
+            document.getElementById('namePage').classList.add('active');
+            
+            // Réinitialiser les données utilisateur si nécessaire
+            document.getElementById('userNameInput').value = '';
+            document.getElementById('nameNextBtn').disabled = true;
+            
+            // Remettre les sélecteurs de date par défaut
+            document.getElementById('daySelect').value = '';
+            document.getElementById('monthSelect').value = '';
+            document.getElementById('yearSelect').value = '';
+            document.getElementById('dateNextBtn').disabled = true;
+            
+            // Désélectionner le genre
+            document.querySelectorAll('.gender-option').forEach(opt => opt.classList.remove('selected'));
+            document.getElementById('genderNextBtn').disabled = true;
+            
+            // Réinitialiser les variables
+            userName = '';
+            userBirthdate = null;
+            userGender = '';
+            userZodiac = '';
+        }
+
+        function goBackToSelection() {
+            document.getElementById('revelationPage').style.display = 'none';
+            document.getElementById('oracleSelection').style.display = 'flex';
+            document.querySelectorAll('.oracle-card').forEach(c => c.classList.remove('selected'));
+            resetGameState();
+        }
+
+        // Initialisation au chargement de la page
+        window.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            initializeDateSelectors();
+            
+            // Event listeners pour le nom
+            const nameInput = document.getElementById('userNameInput');
+            const nameBtn = document.getElementById('nameNextBtn');
+            
+            nameInput.addEventListener('input', function() {
+                nameBtn.disabled = this.value.trim().length === 0;
+            });
+
+            // Event listeners pour la date
+            const daySelect = document.getElementById('daySelect');
+            const monthSelect = document.getElementById('monthSelect');
+            const yearSelect = document.getElementById('yearSelect');
+            const dateBtn = document.getElementById('dateNextBtn');
+            
+            function checkDateComplete() {
+                dateBtn.disabled = !(daySelect.value && monthSelect.value && yearSelect.value);
+            }
+            
+            daySelect.addEventListener('change', checkDateComplete);
+            monthSelect.addEventListener('change', checkDateComplete);
+            yearSelect.addEventListener('change', checkDateComplete);
+
+            // Event listeners pour le genre
+            const genderOptions = document.querySelectorAll('.gender-option');
+            const genderBtn = document.getElementById('genderNextBtn');
+            
+            genderOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    genderOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    userGender = this.dataset.gender;
+                    genderBtn.disabled = false;
+                });
+            });
+            
+            // Event listeners pour les cartes oracle
+            document.querySelectorAll('.oracle-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('.oracle-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    const oracleType = this.dataset.oracle;
+                    setTimeout(() => {
+                        startGame(oracleType);
+                    }, 500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
