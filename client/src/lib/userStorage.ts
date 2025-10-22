@@ -1,68 +1,108 @@
+import { Preferences } from '@capacitor/preferences';
+import { Capacitor } from '@capacitor/core';
 import { UserSession } from '@shared/schema';
 
 const USER_STORAGE_KEY = 'mystic_user_session';
-const LANGUAGE_KEY = 'mystic_language'; // ✅ Nouvelle clé
+const LANGUAGE_KEY = 'mystic_language';
 
-export const saveUserSession = (user: UserSession): void => {
+// Détecte si on est sur mobile
+const isNative = Capacitor.isNativePlatform();
+
+// ===== USER SESSION =====
+
+export const saveUserSession = async (user: UserSession): Promise<void> => {
   try {
-    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+    const data = JSON.stringify(user);
+    if (isNative) {
+      await Preferences.set({ key: USER_STORAGE_KEY, value: data });
+    } else {
+      localStorage.setItem(USER_STORAGE_KEY, data);
+    }
+    console.log('✅ Session sauvegardée');
   } catch (error) {
-    console.error('Erreur lors de la sauvegarde de la session:', error);
+    console.error('❌ Erreur sauvegarde session:', error);
   }
 };
 
-export const getUserSession = (): UserSession | null => {
+export const getUserSession = async (): Promise<UserSession | null> => {
   try {
-    const stored = localStorage.getItem(USER_STORAGE_KEY);
+    let stored: string | null = null;
+
+    if (isNative) {
+      const result = await Preferences.get({ key: USER_STORAGE_KEY });
+      stored = result.value;
+    } else {
+      stored = localStorage.getItem(USER_STORAGE_KEY);
+    }
+
     if (!stored) return null;
 
     const user = JSON.parse(stored);
-
-    // Vérifier que les données sont valides
     if (user.name && user.birthDate && user.gender) {
       return user;
     }
     return null;
   } catch (error) {
-    console.error('Erreur lors de la récupération de la session:', error);
+    console.error('❌ Erreur récupération session:', error);
     return null;
   }
 };
 
-export const clearUserSession = (): void => {
+export const clearUserSession = async (): Promise<void> => {
   try {
-    localStorage.removeItem(USER_STORAGE_KEY);
-    // Ne pas supprimer la langue, elle persiste même après déconnexion
+    if (isNative) {
+      await Preferences.remove({ key: USER_STORAGE_KEY });
+    } else {
+      localStorage.removeItem(USER_STORAGE_KEY);
+    }
+    console.log('✅ Session supprimée');
   } catch (error) {
-    console.error('Erreur lors de la suppression de la session:', error);
+    console.error('❌ Erreur suppression session:', error);
   }
 };
 
-// ✅ Nouvelles fonctions pour gérer la langue
-export const saveLanguage = (language: string): void => {
+// ===== LANGUAGE =====
+
+export const saveLanguage = async (language: string): Promise<void> => {
   try {
-    localStorage.setItem(LANGUAGE_KEY, language);
+    if (isNative) {
+      await Preferences.set({ key: LANGUAGE_KEY, value: language });
+    } else {
+      localStorage.setItem(LANGUAGE_KEY, language);
+    }
     console.log('✅ Langue sauvegardée:', language);
   } catch (error) {
-    console.error('Erreur lors de la sauvegarde de la langue:', error);
+    console.error('❌ Erreur sauvegarde langue:', error);
   }
 };
 
-export const getSavedLanguage = (): string | null => {
+export const getSavedLanguage = async (): Promise<string | null> => {
   try {
-    const language = localStorage.getItem(LANGUAGE_KEY);
+    let language: string | null = null;
+
+    if (isNative) {
+      const result = await Preferences.get({ key: LANGUAGE_KEY });
+      language = result.value;
+    } else {
+      language = localStorage.getItem(LANGUAGE_KEY);
+    }
+
     console.log('📖 Langue récupérée:', language);
     return language;
   } catch (error) {
-    console.error('Erreur lors de la récupération de la langue:', error);
+    console.error('❌ Erreur récupération langue:', error);
     return null;
   }
 };
 
-export const clearLanguage = (): void => {
+export const clearLanguage = async (): Promise<void> => {
   try {
-    localStorage.removeItem(LANGUAGE_KEY);
+    if (isNative) {
+      await Preferences.remove({ key: LANGUAGE_KEY });
+    } else {
+      localStorage.removeItem(LANGUAGE_KEY);
+    }
   } catch (error) {
-    console.error('Erreur lors de la suppression de la langue:', error);
+    console.error('❌ Erreur suppression langue:', error);
   }
 };
