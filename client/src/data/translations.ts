@@ -196,7 +196,7 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.fallback.angels": "être lumineux",
     "interpretation.fallback.runes": "guerrier{genderSuffix}",
     "interpretation.title.daily": "Interprétation pour {name}",
-    "interpretation.title.reading": "Tirage cartes pour {{name}}",
+    "interpretation.title.reading": "Tirage cartes pour {name}",
     "interpretation.subtitle": "Voici votre révélation personnalisée",
     "interpretation.backToCards": "Retour aux cartes",
     "interpretation.newConsultation": "Nouvelle consultation",
