@@ -139,7 +139,14 @@ export default function HoroscopePage({
     error,
     refetch,
   } = useQuery<HoroscopeData>({
-    queryKey: [`${config.apiBaseUrl}/api/horoscope`, englishSign],  // ✅ URL complète
+    queryKey: ['horoscope', englishSign],
+    queryFn: async () => {
+      const response = await fetch(`${config.apiBaseUrl}/api/horoscope/${englishSign}`);
+      if (!response.ok) {
+        throw new Error('Erreur lors de la récupération de l\'horoscope');
+      }
+      return response.json();
+    },
     enabled: !!user.zodiacSign,
   });
 
