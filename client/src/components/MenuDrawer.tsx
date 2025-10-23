@@ -41,18 +41,18 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
   // ✅ Fonctions pour ouvrir les pages légales via Capacitor Browser
   const openLegalMentions = async () => {
     onClose();
-    const lang = language === 'fr' ? 'fr' : 'en';
-    await Browser.open({
-      url: `${window.location.origin}/mentions-legales-${lang}.html`,
-    });
+    const url = language === 'fr' 
+      ? `${window.location.origin}/mentions-legales.html`
+      : `${window.location.origin}/mentions-legales-${language}.html`;
+    await Browser.open({ url });
   };
 
   const openPrivacyPolicy = async () => {
     onClose();
-    const lang = language === 'fr' ? 'fr' : 'en';
-    await Browser.open({
-      url: `${window.location.origin}/politique-confidentialite-${lang}.html`,
-    });
+    const url = language === 'fr' 
+      ? `${window.location.origin}/politique-confidentialite.html`
+      : `${window.location.origin}/politique-confidentialite-${language}.html`;
+    await Browser.open({ url });
   };
 
   return (
