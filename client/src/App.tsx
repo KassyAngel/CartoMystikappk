@@ -169,6 +169,8 @@ function App() {
       const newCount = readingCount + 1;
       setReadingCount(newCount);
 
+      console.log(`📊 Compteur de tirages: ${newCount}`); 
+
       // Afficher pub : après le 1er tirage, puis toutes les 2
       if (newCount === 1 || newCount % 2 === 0) {
         console.log(`📢 Affichage pub (tirage n°${newCount})`);

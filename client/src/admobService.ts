@@ -44,13 +44,23 @@ export async function removeBannerAd() {
 // Afficher une pub interstitielle (plein écran)
 export async function showInterstitialAd() {
   try {
+    console.log('🔄 Préparation de l\'interstitiel...');
+
     // 1. Préparer la pub
     await AdMob.prepareInterstitial({
       adId: ADMOB_IDS.interstitial,
     });
 
-    // 2. Afficher la pub
+    console.log('⏳ Attente du chargement...');
+
+    // 2. Attendre que la pub soit chargée (2 secondes)
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    console.log('📢 Affichage de l\'interstitiel...');
+
+    // 3. Afficher la pub
     await AdMob.showInterstitial();
+
     console.log('✅ Interstitiel affiché');
   } catch (error) {
     console.error('❌ Erreur interstitiel:', error);
