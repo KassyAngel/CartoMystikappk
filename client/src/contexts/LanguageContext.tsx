@@ -15,11 +15,18 @@ interface LanguageProviderProps {
 }
 
 export function LanguageProvider({ children }: LanguageProviderProps) {
-  // ✅ Initialiser avec la langue sauvegardée
-  const [language, setLanguageState] = useState<Language>(() => {
-    const savedLang = getSavedLanguage();
-    return (savedLang as Language) || 'fr'; // Par défaut : français
-  });
+  // ✅ Valeur par défaut immédiate
+  const [language, setLanguageState] = useState<Language>('fr');
+
+  // ✅ Charger la langue sauvegardée (async)
+  useEffect(() => {
+    (async () => {
+      const savedLang = await getSavedLanguage();
+      if (savedLang) {
+        setLanguageState(savedLang as Language);
+      }
+    })();
+  }, []);
 
   // ✅ Sauvegarder automatiquement quand la langue change
   const setLanguage = (lang: Language) => {
@@ -28,21 +35,15 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     saveLanguage(lang);
   };
 
-  // ✅ Debug au démarrage
-  useEffect(() => {
-    console.log('🎨 LanguageContext initialisé avec:', language);
-  }, []);
-
+  // ✅ Fonction de traduction
   const t = (key: string, params?: Record<string, any>) => {
     let translation = translations[language][key] || key;
-
     if (params) {
       Object.entries(params).forEach(([paramKey, paramValue]) => {
         const regex = new RegExp(`\\{${paramKey}\\}`, 'g');
         translation = translation.replace(regex, String(paramValue || ''));
       });
     }
-
     return translation;
   };
 

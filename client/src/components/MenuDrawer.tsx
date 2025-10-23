@@ -1,6 +1,7 @@
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 import { Globe, ChevronDown, ChevronUp } from 'lucide-react';
+import { Browser } from '@capacitor/browser'; // ✅ Ajouté
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -36,6 +37,21 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
   if (!isOpen) return null;
 
   const currentLanguage = languages.find(l => l.code === language);
+
+  // ✅ Fonctions pour ouvrir les pages légales via Capacitor Browser
+  const openLegalMentions = async () => {
+    onClose();
+    await Browser.open({
+      url: window.location.origin + '/mentions-legales.html',
+    });
+  };
+
+  const openPrivacyPolicy = async () => {
+    onClose();
+    await Browser.open({
+      url: window.location.origin + '/politique-confidentialite.html',
+    });
+  };
 
   return (
     <>
@@ -165,26 +181,23 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
             )}
           </div>
 
-          {/* Legal */}
+          {/* ✅ Pages légales via Capacitor Browser */}
           <div className="pt-4 border-t border-purple-500/30 space-y-1">
-            <a
-              href="/mentions-legales.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-purple-700/30 transition-colors text-purple-200 text-sm"
+            <button
+              onClick={openLegalMentions}
+              className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-purple-700/30 transition-colors text-purple-200 text-sm"
             >
               <span>📜</span>
               <span>{t('legal.mentions')}</span>
-            </a>
-            <a
-              href="/politique-confidentialite.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-purple-700/30 transition-colors text-purple-200 text-sm"
+            </button>
+
+            <button
+              onClick={openPrivacyPolicy}
+              className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-purple-700/30 transition-colors text-purple-200 text-sm"
             >
               <span>🔒</span>
               <span>{t('legal.privacy')}</span>
-            </a>
+            </button>
           </div>
         </nav>
 
