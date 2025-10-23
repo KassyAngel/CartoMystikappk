@@ -13,6 +13,7 @@ import { UserProvider } from "@/contexts/UserContext";
 import OracleMystiqueApp from "@/pages/OracleMystiqueApp";
 import NotFound from "@/pages/not-found";
 import { showBannerAd, showInterstitialAd } from './admobService';
+import { config } from '@/config'; // ⚡ AJOUTÉ
 
 export interface Reading {
   id: string;
@@ -55,14 +56,13 @@ function App() {
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
 
-  // Afficher la bannière au démarrage
   useEffect(() => {
     showBannerAd();
   }, []);
 
   const showTopBar = !['landing', 'name', 'date', 'gender'].includes(currentStep);
 
-   useEffect(() => {
+  useEffect(() => {
     const checkNotificationPermission = () => {
       const permission = localStorage.getItem('notificationPermission');
       if (!permission && currentStep === 'oracle') {
@@ -78,13 +78,14 @@ function App() {
 
   const loadUserData = async () => {
     try {
-      const premiumResponse = await fetch('/api/user/premium-status', {
+      // ✅ URL complète avec Render
+      const premiumResponse = await fetch(`${config.apiBaseUrl}/api/user/premium-status`, {
         credentials: 'include'
       });
       const premiumData = await premiumResponse.json();
       setIsPremium(premiumData.isPremium);
 
-      const readingsResponse = await fetch('/api/readings', {
+      const readingsResponse = await fetch(`${config.apiBaseUrl}/api/readings`, {
         credentials: 'include'
       });
       const readingsData = await readingsResponse.json();
@@ -92,8 +93,10 @@ function App() {
         ...r,
         date: new Date(r.date)
       })));
+
+      console.log('✅ Données chargées:', readingsData.readings.length, 'tirages');
     } catch (error) {
-      console.error('Erreur chargement données:', error);
+      console.error('❌ Erreur chargement données:', error);
     } finally {
       setIsLoading(false);
     }
@@ -101,7 +104,7 @@ function App() {
 
   const handleSaveNote = async (readingId: string, note: string) => {
     try {
-      await fetch(`/api/readings/${readingId}/note`, {
+      await fetch(`${config.apiBaseUrl}/api/readings/${readingId}/note`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -114,7 +117,7 @@ function App() {
         )
       );
     } catch (error) {
-      console.error('Erreur sauvegarde note:', error);
+      console.error('❌ Erreur sauvegarde note:', error);
     }
   };
 
@@ -123,7 +126,7 @@ function App() {
     if (!reading) return;
 
     try {
-      await fetch(`/api/readings/${readingId}/favorite`, {
+      await fetch(`${config.apiBaseUrl}/api/readings/${readingId}/favorite`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -136,19 +139,20 @@ function App() {
         )
       );
     } catch (error) {
-      console.error('Erreur toggle favori:', error);
+      console.error('❌ Erreur toggle favori:', error);
     }
   };
 
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
-    // ❌ NE PAS sauvegarder Crystal Ball dans le Grimoire
     if (reading.type === 'crystalBall') {
       console.log('🔮 Crystal Ball not saved in Grimoire');
       return;
     }
 
     try {
-      const response = await fetch('/api/readings', {
+      console.log('📤 Envoi tirage vers:', `${config.apiBaseUrl}/api/readings`);
+
+      const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -165,18 +169,18 @@ function App() {
         ...prev
       ]);
 
-      // 🎯 Gestion des pubs interstitielles
+      console.log('✅ Tirage enregistré:', newReading.id);
+
       const newCount = readingCount + 1;
       setReadingCount(newCount);
 
       console.log(`📊 Compteur de tirages: ${newCount}`); 
 
-      // Afficher pub : après le 1er tirage, puis toutes les 2
       if (newCount === 1 || newCount % 2 === 0) {
         console.log(`📢 Affichage pub (tirage n°${newCount})`);
         setTimeout(() => {
           showInterstitialAd();
-        }, 1000); // Attend 1 seconde après le tirage
+        }, 1000);
       }
 
     } catch (error) {
