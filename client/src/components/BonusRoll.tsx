@@ -187,16 +187,19 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
         )}
       </div>
 
-      {/* Message et interprétation */}
+      {/* Message et interprétation - VERSION CORRIGÉE */}
       <div className="text-center mb-4">
-        <p className="text-[#ffd700] font-semibold text-sm sm:text-lg mb-2">{message}</p>
+        <p className="text-[#ffd700] font-semibold text-sm sm:text-lg mb-2 px-2">{message}</p>
 
         {interpretation && (
-          <div className="mt-2 sm:mt-4 p-2.5 sm:p-4 bg-[#1a0033] rounded-lg sm:rounded-xl border border-[#7b5dcf] backdrop-blur-sm">
-            <h4 className="text-base sm:text-xl font-bold text-[#ffd700] mb-1.5 sm:mb-2 leading-tight">
-              {interpretation.title}
-            </h4>
-            <p className="text-[#b19cd9] text-sm sm:text-base leading-relaxed">
+          <div className="mt-2 sm:mt-4 p-3 sm:p-4 bg-[#1a0033] rounded-lg sm:rounded-xl border border-[#7b5dcf] backdrop-blur-sm mx-1 sm:mx-0">
+            <div className="flex items-start gap-2 mb-2">
+              <span className="text-2xl sm:text-3xl flex-shrink-0">🎁</span>
+              <h4 className="text-sm sm:text-xl font-bold text-[#ffd700] leading-tight flex-1 text-left">
+                {interpretation.title}
+              </h4>
+            </div>
+            <p className="text-[#b19cd9] text-xs sm:text-base leading-relaxed text-left px-1">
               {interpretation.message}
             </p>
           </div>

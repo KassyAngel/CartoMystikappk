@@ -119,43 +119,48 @@ export default function OracleSelection({
               </div>
             </div>
 
-            {/* Effet de lueur animée */}
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-yellow-400/20 to-amber-500/20 rounded-2xl blur-xl animate-pulse"></div>
+            {/* Effet de lueur douce */}
+            <div className="absolute inset-0 bg-amber-400/10 rounded-2xl blur-2xl"></div>
 
             {/* Carte Bonus */}
-            <button
-              onClick={() => handleOracleClick('bonusRoll')}
-              className={`relative w-full p-4 rounded-2xl
-                bg-gradient-to-br from-amber-600 via-yellow-500 to-orange-600
-                hover:from-amber-500 hover:via-yellow-400 hover:to-orange-500
-                border-3 border-yellow-300
-                shadow-[0_0_30px_rgba(251,191,36,0.5),inset_0_2px_8px_rgba(255,255,255,0.3)]
-                hover:shadow-[0_0_50px_rgba(251,191,36,0.8),inset_0_2px_8px_rgba(255,255,255,0.5)]
-                transform hover:scale-105
-                transition-all duration-300
-                group overflow-hidden
-                ${selectedOracle === 'bonusRoll' ? 'scale-105 ring-4 ring-yellow-300' : ''}`}
-            >
+              <button
+                onClick={() => handleOracleClick('bonusRoll')}
+                className={`relative w-full p-4 sm:p-5 rounded-2xl
+                  bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033]
+                  border-2 border-amber-400/60
+                  hover:border-amber-300
+                  shadow-[0_0_20px_rgba(251,191,36,0.3)]
+                  hover:shadow-[0_0_30px_rgba(251,191,36,0.5)]
+                  transform hover:scale-[1.02]
+                  transition-all duration-300
+                  group overflow-hidden
+                  ${selectedOracle === 'bonusRoll' ? 'scale-[1.02] border-amber-300' : ''}`}
+              >
               {/* Effet brillant animé */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-400/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
 
-              {/* Contenu */}
-              <div className="relative flex items-center justify-center gap-3">
-                <span className="text-3xl animate-bounce">🎲</span>
-                <div className="text-left flex-1">
-                  <div className="text-white font-bold text-base sm:text-lg drop-shadow-lg">
-                    {t('oracle.bonusRoll.title')}
+                {/* Contenu */}
+                <div className="relative flex items-center justify-center gap-3 sm:gap-4">
+                  {/* Icône dé avec effet */}
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-amber-400/20 rounded-full blur-lg animate-pulse"></div>
+                    <span className="relative text-3xl sm:text-4xl group-hover:scale-110 transition-transform duration-300">🎲</span>
                   </div>
-                  <div className="text-yellow-100 text-xs font-medium">
-                    {t('oracle.bonusRoll.description')}
-                  </div>
-                </div>
-                <span className="text-2xl">✨</span>
-              </div>
 
-              {/* Particules décoratives */}
-              <div className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full animate-ping opacity-75"></div>
-              <div className="absolute bottom-2 left-2 w-2 h-2 bg-white rounded-full animate-ping opacity-75" style={{animationDelay: '150ms'}}></div>
+                  {/* Texte */}
+                  <div className="text-left flex-1">
+                    <div className="text-amber-300 font-bold text-base sm:text-lg mb-0.5 drop-shadow-[0_2px_8px_rgba(251,191,36,0.5)]">
+                      {t('oracle.bonusRoll.title')}
+                    </div>
+                    <div className="text-purple-200 text-xs sm:text-sm font-normal leading-snug">
+                      {t('oracle.bonusRoll.description')}
+                    </div>
+                  </div>
+                </div>  
+                
+                {/* Petites étoiles décoratives */}
+                <div className="absolute top-3 right-3 text-amber-400/40 text-sm animate-pulse">✦</div>
+                <div className="absolute bottom-3 left-3 text-amber-400/40 text-sm animate-pulse" style={{animationDelay: '500ms'}}>✦</div>
             </button>
           </div>
         </div>
