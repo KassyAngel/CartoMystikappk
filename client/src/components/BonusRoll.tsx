@@ -15,18 +15,16 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
   const [message, setMessage] = useState(t('oracle.bonusRoll.ready'));
   const [interpretation, setInterpretation] = useState<{ title: string; message: string } | null>(null);
   const [isLoadingAd, setIsLoadingAd] = useState(false);
-  const [rollCount, setRollCount] = useState(0); // Compteur de tirages
+  const [rollCount, setRollCount] = useState(0);
 
   const getRandomVariation = () => Math.random() < 0.5 ? '1' : '2';
 
   async function rollDice() {
     if (rolling || isLoadingAd) return;
 
-    // Incrémenter le compteur de tirages
     const newRollCount = rollCount + 1;
     setRollCount(newRollCount);
 
-    // Pub tous les 2 tirages (2, 4, 6, etc.)
     if (newRollCount % 2 === 0) {
       setIsLoadingAd(true);
       setMessage(t('oracle.bonusRoll.loadingAd'));
@@ -78,7 +76,6 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
     }, 80);
   }
 
-  // Fonction pour afficher les points sur le dé
   const renderDiceDots = (value: number) => {
     const dotPositions: Record<number, string[]> = {
       1: ['center'],
@@ -118,11 +115,11 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
   };
 
   return (
-    <div className="bonus-roll-container p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-2 border-[#ffd700] shadow-2xl">
+    <div className="bonus-roll-container p-3 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-2 border-[#ffd700] shadow-2xl">
 
       {/* Header */}
-      <div className="text-center mb-4 sm:mb-6">
-        <h3 className="text-xl sm:text-2xl font-bold text-[#ffd700] font-serif mb-1 sm:mb-2 flex items-center justify-center gap-2">
+      <div className="text-center mb-3 sm:mb-6">
+        <h3 className="text-lg sm:text-2xl font-bold text-[#ffd700] font-serif mb-1 sm:mb-2 flex items-center justify-center gap-1.5 sm:gap-2">
           🎁 {t('oracle.bonusRoll.title')}
         </h3>
         <p className="text-[#b19cd9] text-xs sm:text-sm leading-tight px-2">
@@ -131,10 +128,10 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
       </div>
 
       {/* Dés avec design 3D amélioré */}
-      <div className="flex items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6 px-2">
+      <div className="flex items-center justify-center gap-1.5 sm:gap-4 mb-3 sm:mb-6 px-1 sm:px-2 flex-wrap">
         {/* Dé 1 */}
         <div
-          className={`dice-3d w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl sm:rounded-2xl
+          className={`dice-3d w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl sm:rounded-2xl
             bg-gradient-to-br from-[#8b5cf6] via-[#a78bfa] to-[#c4b5fd]
             flex items-center justify-center
             border-4 border-[#ffd700]
@@ -144,18 +141,17 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
             relative overflow-hidden`}
           onClick={!hasRolled ? rollDice : undefined}
         >
-          {/* Reflet brillant */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl sm:rounded-2xl" />
           {renderDiceDots(dice[0])}
         </div>
 
-        <div className="text-[#ffd700] text-3xl sm:text-4xl md:text-5xl font-bold animate-pulse drop-shadow-[0_0_10px_rgba(255,215,0,0.8)]">
+        <div className="text-[#ffd700] text-2xl sm:text-4xl md:text-5xl font-bold animate-pulse drop-shadow-[0_0_10px_rgba(255,215,0,0.8)]">
           +
         </div>
 
         {/* Dé 2 */}
         <div
-          className={`dice-3d w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl sm:rounded-2xl
+          className={`dice-3d w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl sm:rounded-2xl
             bg-gradient-to-br from-[#8b5cf6] via-[#a78bfa] to-[#c4b5fd]
             flex items-center justify-center
             border-4 border-[#ffd700]
@@ -172,12 +168,12 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
         {/* Résultat */}
         {hasRolled && (
           <>
-            <div className="text-[#ffd700] text-3xl sm:text-4xl md:text-5xl font-bold drop-shadow-[0_0_10px_rgba(255,215,0,0.8)]">
+            <div className="text-[#ffd700] text-2xl sm:text-4xl md:text-5xl font-bold drop-shadow-[0_0_10px_rgba(255,215,0,0.8)]">
               =
             </div>
-            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl sm:rounded-2xl
+            <div className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl sm:rounded-2xl
               bg-gradient-to-br from-[#ffd700] via-[#fbbf24] to-[#f59e0b]
-              flex items-center justify-center text-[#1a0033] font-bold text-4xl sm:text-5xl md:text-6xl
+              flex items-center justify-center text-[#1a0033] font-bold text-3xl sm:text-5xl md:text-6xl
               border-4 border-white
               shadow-[0_12px_48px_rgba(255,215,0,0.8),inset_0_2px_8px_rgba(255,255,255,0.5)]
               animate-bounce-in-3d
@@ -193,11 +189,11 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
 
       {/* Message et interprétation */}
       <div className="text-center mb-4">
-        <p className="text-[#ffd700] font-semibold text-base sm:text-lg mb-2">{message}</p>
+        <p className="text-[#ffd700] font-semibold text-sm sm:text-lg mb-2">{message}</p>
 
         {interpretation && (
-          <div className="mt-3 sm:mt-4 p-3 sm:p-4 bg-[#1a0033] rounded-xl border border-[#7b5dcf] backdrop-blur-sm">
-            <h4 className="text-lg sm:text-xl font-bold text-[#ffd700] mb-2 leading-tight">
+          <div className="mt-2 sm:mt-4 p-2.5 sm:p-4 bg-[#1a0033] rounded-lg sm:rounded-xl border border-[#7b5dcf] backdrop-blur-sm">
+            <h4 className="text-base sm:text-xl font-bold text-[#ffd700] mb-1.5 sm:mb-2 leading-tight">
               {interpretation.title}
             </h4>
             <p className="text-[#b19cd9] text-sm sm:text-base leading-relaxed">

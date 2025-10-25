@@ -81,7 +81,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   }
 
   return (
-    <div className="main-content w-full min-h-screen flex flex-col p-3 sm:p-5 pt-16 sm:pt-20 pb-6 relative overflow-hidden">
+    <div className="main-content w-full min-h-screen flex flex-col p-2 sm:p-5 pt-14 sm:pt-20 pb-4 relative overflow-hidden">
       {/* Fond amélioré avec effet de particules */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033] -z-10">
         <div className="absolute inset-0 opacity-10">
@@ -106,46 +106,46 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
       <div className="text-center mb-6 sm:mb-8 relative">
         {/* Badge BONUS flottant */}
         <div className="inline-block mb-4">
-          <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wider shadow-lg animate-pulse">
+          <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-4 py-1.5 sm:px-6 sm:py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wide sm:tracking-wider shadow-lg animate-pulse">
             🎁 BONUS EXCLUSIF
           </div>
         </div>
 
         {/* Icône centrale avec effet */}
         <div className="flex justify-center mb-4">
-          <div className="relative w-16 h-16 sm:w-20 sm:h-20">
+          <div className="relative w-12 h-12 sm:w-20 sm:h-20">
             <div className="absolute inset-0 bg-amber-400/30 rounded-full blur-2xl animate-pulse"></div>
             <div className="absolute inset-0 bg-gradient-to-br from-amber-500 via-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-4 border-yellow-300 shadow-[0_0_30px_rgba(251,191,36,0.6)]">
-              <span className="text-4xl sm:text-5xl animate-bounce">🎲</span>
+              <span className="text-3xl sm:text-5xl animate-bounce">🎲</span>
             </div>
           </div>
         </div>
 
-        <h1 className="mystical-title text-3xl sm:text-4xl md:text-5xl font-bold font-serif mb-3 leading-tight px-2
+        <h1 className="mystical-title text-2xl sm:text-4xl md:text-5xl font-bold font-serif mb-2 sm:mb-3 leading-tight px-2
           bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-300 bg-clip-text text-transparent
           drop-shadow-[0_0_20px_rgba(251,191,36,0.5)]">
           {t('oracle.bonusRoll.title')}
         </h1>
 
-        <p className="text-purple-200 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-4
-          bg-purple-900/30 py-3 rounded-xl border border-amber-400/30 backdrop-blur-sm">
+        <p className="text-purple-200 text-xs sm:text-base md:text-lg max-w-2xl mx-auto leading-snug sm:leading-relaxed px-3 sm:px-4
+          bg-purple-900/30 py-2 sm:py-3 rounded-lg sm:rounded-xl border border-amber-400/30 backdrop-blur-sm">
           ✨ {t('oracle.bonusRoll.description')}
         </p>
 
         {/* Séparateur décoratif amélioré */}
-        <div className="flex items-center justify-center gap-3 mt-5">
-          <div className="h-px w-12 sm:w-16 bg-gradient-to-r from-transparent via-amber-400 to-amber-400"></div>
+        <div className="flex items-center justify-center gap-2 sm:gap-3 mt-3 sm:mt-5">
+          <div className="h-px w-8 sm:w-16 bg-gradient-to-r from-transparent via-amber-400 to-amber-400"></div>
           <div className="relative">
             <div className="absolute inset-0 bg-amber-400/30 blur-lg"></div>
             <span className="relative text-amber-300 text-2xl">✦</span>
           </div>
-          <div className="h-px w-12 sm:w-16 bg-gradient-to-l from-transparent via-amber-400 to-amber-400"></div>
+          <div className="h-px w-8 sm:w-16 bg-gradient-to-l from-transparent via-amber-400 to-amber-400"></div>
         </div>
       </div>
 
       {/* Composant des dés - Centré avec cadre */}
-      <div className="flex-1 flex items-center justify-center py-4">
-        <div className="w-full max-w-2xl px-2 sm:px-4">
+      <div className="flex-1 flex items-center justify-center py-2 sm:py-4">
+        <div className="w-full max-w-2xl px-1 sm:px-4">
           <div className="relative">
             {/* Effet de lueur autour du composant */}
             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-orange-500/20 rounded-3xl blur-2xl"></div>
@@ -155,8 +155,8 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
       </div>
 
       {/* Boutons navigation améliorés */}
-      <div className="mt-6 pb-4">
-        <div className="flex gap-3 justify-center max-w-md mx-auto px-3">
+      <div className="mt-4 sm:mt-6 pb-3 sm:pb-4">
+        <div className="flex gap-2 sm:gap-3 justify-center max-w-md mx-auto px-2 sm:px-3">
           <MysticalButton 
             variant="secondary" 
             onClick={onBack}
