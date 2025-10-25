@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MysticalButton from '@/components/MysticalButton';
 import MysticalInput from '@/components/MysticalInput';
 import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getSecureRandomInt } from '@/lib/utils';
+import { showInterstitialAd } from '@/admobService'; // ⚡ AJOUTÉ
 
 interface CrystalBallPageProps {
   onBack: () => void;
@@ -17,6 +18,7 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
   const [question, setQuestion] = useState('');
   const [phase, setPhase] = useState<Phase>('question');
   const [currentAnswer, setCurrentAnswer] = useState<{ key: string; icon: string; color: string } | null>(null);
+  const [questionCount, setQuestionCount] = useState(0); // ⚡ AJOUTÉ
   const { t } = useLanguage();
 
   const mysticalAnswers = [
@@ -40,21 +42,39 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
     if (onSaveReading) {
       try {
         const readingData = {
-          type: 'crystalBall', // ✅ CHANGÉ de 'crystal' à 'crystalBall'
+          type: 'crystalBall',
           question: question,
-          answer: answerKey, // ✅ Sauvegarder la clé, pas la traduction
+          answer: answerKey,
           date: new Date()
         };
         await onSaveReading(readingData);
-        console.log('✅ Crystal Ball reading saved (will be filtered)');
+        console.log('✅ Crystal Ball reading saved');
       } catch (error) {
         console.error('❌ Save error:', error);
       }
     }
   };
 
-  const handleAskQuestion = () => {
+  const handleAskQuestion = async () => {
     if (!question.trim()) return;
+
+    // ⚡ Incrémenter le compteur
+    const newCount = questionCount + 1;
+    setQuestionCount(newCount);
+
+    console.log(`🔮 Question n°${newCount}`);
+
+    // ⚡ Système de pub : 1er gratuit, 2e avec pub, puis tous les 3 (5, 8, 11...)
+    const shouldShowAd = newCount === 2 || (newCount > 2 && (newCount - 2) % 3 === 0);
+
+    if (shouldShowAd) {
+      console.log(`🎬 Affichage pub (question n°${newCount})`);
+      try {
+        await showInterstitialAd();
+      } catch (error) {
+        console.log("Pub non disponible");
+      }
+    }
 
     console.log('🔮 Phase: LOADING');
     setPhase('loading');

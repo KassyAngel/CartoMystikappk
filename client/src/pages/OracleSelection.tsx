@@ -24,6 +24,7 @@ export default function OracleSelection({
   const playFlipSound = useSound('Flip-card.wav');
   const hasDoneDaily = hasUsedDailyReading();
 
+  // ✅ Oracles normaux (sans le bonus)
   const oracles = [
     ...(!hasDoneDaily ? [{
       id: 'daily',
@@ -54,13 +55,6 @@ export default function OracleSelection({
       title: t('oracle.horoscope.title'),
       description: t('oracle.horoscope.description'),
       icon: '♈'
-    },
-    // ✅ Carte Tirage Bonus (anciennement Mystery Dice)
-    {
-      id: 'bonusRoll',
-      title: t('oracle.bonusRoll.title'),
-      description: t('oracle.bonusRoll.description'),
-      icon: '🎁'
     }
   ];
 
@@ -102,7 +96,8 @@ export default function OracleSelection({
       {/* Grille des cartes */}
       <div className="flex-1 flex items-center justify-center py-1 sm:py-2">
         <div className="w-full max-w-4xl px-1 sm:px-2">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5 mb-3">
+          {/* ✅ Grille principale des oracles */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5 mb-4">
             {oracles.map((oracle) => (
               <OracleCard
                 key={oracle.id}
@@ -113,6 +108,55 @@ export default function OracleSelection({
                 onClick={() => handleOracleClick(oracle.id)}
               />
             ))}
+          </div>
+
+          {/* ✅ BONUS ROLL - Carte spéciale mise en évidence */}
+          <div className="relative mt-6">
+            {/* Badge BONUS flottant */}
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+              <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg animate-pulse">
+                🎁 BONUS
+              </div>
+            </div>
+
+            {/* Effet de lueur animée */}
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-yellow-400/20 to-amber-500/20 rounded-2xl blur-xl animate-pulse"></div>
+
+            {/* Carte Bonus */}
+            <button
+              onClick={() => handleOracleClick('bonusRoll')}
+              className={`relative w-full p-4 rounded-2xl
+                bg-gradient-to-br from-amber-600 via-yellow-500 to-orange-600
+                hover:from-amber-500 hover:via-yellow-400 hover:to-orange-500
+                border-3 border-yellow-300
+                shadow-[0_0_30px_rgba(251,191,36,0.5),inset_0_2px_8px_rgba(255,255,255,0.3)]
+                hover:shadow-[0_0_50px_rgba(251,191,36,0.8),inset_0_2px_8px_rgba(255,255,255,0.5)]
+                transform hover:scale-105
+                transition-all duration-300
+                group overflow-hidden
+                ${selectedOracle === 'bonusRoll' ? 'scale-105 ring-4 ring-yellow-300' : ''}`}
+            >
+              {/* Effet brillant animé */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+
+              {/* Contenu */}
+              <div className="relative flex items-center justify-center gap-3">
+                <span className="text-3xl animate-bounce">🎲</span>
+                <div className="text-left flex-1">
+                  <div className="text-white font-bold text-base sm:text-lg drop-shadow-lg">
+                    {t('oracle.bonusRoll.title')}
+                  </div>
+                  <div className="text-yellow-100 text-xs font-medium">
+                    {t('oracle.bonusRoll.description')}
+                  </div>
+                </div>
+                <span className="text-2xl">✨</span>
+              </div>
+
+              {/* Particules décoratives */}
+              <div className="absolute top-2 right-2 w-2 h-2 bg-white rounded-full animate-ping opacity-75"></div>
+              <div className="absolute bottom-2 left-2 w-2 h-2 bg-white rounded-full animate-ping opacity-75" style={{animationDelay: '150ms'}}></div>
+            </button>
           </div>
         </div>
       </div>
