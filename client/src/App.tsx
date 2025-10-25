@@ -13,11 +13,11 @@ import { UserProvider } from "@/contexts/UserContext";
 import OracleMystiqueApp from "@/pages/OracleMystiqueApp";
 import NotFound from "@/pages/not-found";
 import { showBannerAd, showInterstitialAd } from './admobService';
-import { config } from '@/config'; // ⚡ AJOUTÉ
+import { config } from '@/config';
 
 export interface Reading {
   id: string;
-  type: 'tarot' | 'oracle' | 'crystal' | 'horoscope' | 'angels' | 'runes' |'crystalBall'
+  type: 'tarot' | 'oracle' | 'crystal' | 'horoscope' | 'angels' | 'runes' | 'crystalBall' | 'mysteryDice'; // ✅ AJOUTÉ mysteryDice
   oracleTitle?: string;
   date: Date;
   cards?: string[];
@@ -27,7 +27,8 @@ export interface Reading {
   isFavorite: boolean;
 }
 
-type AppStep = 'landing' | 'name' | 'date' | 'gender' | 'oracle' | 'game' | 'revelation' | 'interpretation' | 'horoscope' | 'crystalBall' | 'responsiveTest';
+// ✅ AJOUTÉ mysteryDice
+type AppStep = 'landing' | 'name' | 'date' | 'gender' | 'oracle' | 'game' | 'revelation' | 'interpretation' | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'responsiveTest';
 
 function Router({ onSaveReading, onStepChange }: { 
   onSaveReading: (reading: any) => Promise<void>;
@@ -78,7 +79,6 @@ function App() {
 
   const loadUserData = async () => {
     try {
-      // ✅ URL complète avec Render
       const premiumResponse = await fetch(`${config.apiBaseUrl}/api/user/premium-status`, {
         credentials: 'include'
       });

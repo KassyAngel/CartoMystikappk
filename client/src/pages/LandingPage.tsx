@@ -2,6 +2,7 @@ import MysticalButton from '@/components/MysticalButton';
 import LanguageSelector from '@/components/LanguageSelector';
 import { useLanguage } from '@/contexts/LanguageContext';
 
+
 interface LandingPageProps {
   onEnter: () => void;
 }

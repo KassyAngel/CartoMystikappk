@@ -1742,6 +1742,76 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.activation": "Erreur lors de l'activation de l'abonnement",
     "premium.error.payment": "Erreur lors du paiement. Veuillez réessayer.",
 
+    // Tirage Bonus Oracle
+    "oracle.bonusRoll.title": "Tirage Bonus",
+    "oracle.bonusRoll.description": "Déverrouillez votre révélation numérologique secrète",
+    "oracle.bonusRoll.ready": "Prêt à découvrir votre message bonus ?",
+    "oracle.bonusRoll.rolling": "🎲 Lancement des dés mystiques...",
+    "oracle.bonusRoll.loadingAd": "📢 Déverrouillage de votre révélation...",
+    "oracle.bonusRoll.result": "Résultat",
+    "oracle.bonusRoll.cosmicMessage": "Votre message bonus",
+    "oracle.bonusRoll.rollButton": "🎁 Débloquer le Tirage Bonus",
+    "oracle.bonusRoll.newRoll": "✨ Nouveau Tirage Bonus",
+    "oracle.bonusRoll.diceResult": "Dés",
+
+    // Interprétations identiques à mysteryDice...
+    "oracle.bonusRoll.2.title.1": "🌅 Nouveau Départ",
+    "oracle.bonusRoll.2.message.1": "Les étoiles s'alignent pour un nouveau commencement. Double chance vous accompagne aujourd'hui !",
+    "oracle.bonusRoll.2.title.2": "✨ Renaissance Cosmique",
+    "oracle.bonusRoll.2.message.2": "Un cycle nouveau débute dans votre vie. L'univers vous offre une seconde chance extraordinaire.",
+
+    "oracle.bonusRoll.3.title.1": "🔮 Intuition Divine",
+    "oracle.bonusRoll.3.message.1": "Votre sixième sens est à son apogée. Suivez votre intuition, elle ne vous trompera pas.",
+    "oracle.bonusRoll.3.title.2": "👁️ Vision Mystique",
+    "oracle.bonusRoll.3.message.2": "Les voiles se lèvent sur votre perception. Votre clairvoyance atteint des sommets inégalés.",
+
+    "oracle.bonusRoll.4.title.1": "🏛️ Fondations Solides",
+    "oracle.bonusRoll.4.message.1": "La stabilité et la confiance sont vos alliés. Vos bases sont solides, construisez avec assurance.",
+    "oracle.bonusRoll.4.title.2": "⚓ Ancrage Puissant",
+    "oracle.bonusRoll.4.message.2": "Votre force réside dans votre stabilité. Le moment est venu de bâtir sur du roc.",
+
+    "oracle.bonusRoll.5.title.1": "✨ Opportunités Magiques",
+    "oracle.bonusRoll.5.message.1": "Le changement apporte des surprises inattendues. Restez ouvert aux nouvelles possibilités.",
+    "oracle.bonusRoll.5.title.2": "🌪️ Vent du Changement",
+    "oracle.bonusRoll.5.message.2": "La transformation est à votre porte. Embrassez l'inconnu avec confiance et audace.",
+
+    "oracle.bonusRoll.6.title.1": "⚖️ Harmonie Parfaite",
+    "oracle.bonusRoll.6.message.1": "L'équilibre règne dans votre vie. Savourez cette période de paix et d'harmonie.",
+    "oracle.bonusRoll.6.title.2": "🕊️ Sérénité Absolue",
+    "oracle.bonusRoll.6.message.2": "Votre âme baigne dans la tranquillité. Profitez de cet instant de grâce cosmique.",
+
+    "oracle.bonusRoll.7.title.1": "🍀 Chance Mystique",
+    "oracle.bonusRoll.7.message.1": "Le nombre de la chance vous sourit ! Attendez-vous à des surprises agréables.",
+    "oracle.bonusRoll.7.title.2": "🎰 Fortune Divine",
+    "oracle.bonusRoll.7.message.2": "Les dés du destin tombent en votre faveur. La providence vous bénit aujourd'hui.",
+
+    "oracle.bonusRoll.8.title.1": "💎 Abondance Cosmique",
+    "oracle.bonusRoll.8.message.1": "La réussite et la prospérité vous entourent. L'univers récompense vos efforts.",
+    "oracle.bonusRoll.8.title.2": "👑 Prospérité Infinie",
+    "oracle.bonusRoll.8.message.2": "Le flux d'abondance coule vers vous. Votre travail porte des fruits magnifiques.",
+
+    "oracle.bonusRoll.9.title.1": "🌱 Évolution Spirituelle",
+    "oracle.bonusRoll.9.message.1": "Votre croissance personnelle atteint de nouveaux sommets. Continuez votre chemin.",
+    "oracle.bonusRoll.9.title.2": "🦋 Métamorphose Sacrée",
+    "oracle.bonusRoll.9.message.2": "Vous êtes en pleine transformation spirituelle. Votre âme s'élève vers la lumière.",
+
+    "oracle.bonusRoll.10.title.1": "🎯 Défis Stimulants",
+    "oracle.bonusRoll.10.message.1": "De nouveaux challenges vous attendent, mais vous êtes prêt à les relever avec brio.",
+    "oracle.bonusRoll.10.title.2": "⚔️ Épreuves Formatrices",
+    "oracle.bonusRoll.10.message.2": "Les obstacles deviennent des tremplins. Votre détermination transforme tout en victoire.",
+
+    "oracle.bonusRoll.11.title.1": "🔥 Persévérance Victorieuse",
+    "oracle.bonusRoll.11.message.1": "Votre détermination porte ses fruits. Le nombre maître 11 vous guide vers le succès.",
+    "oracle.bonusRoll.11.title.2": "⚡ Maître Illuminé",
+    "oracle.bonusRoll.11.message.2": "Le nombre sacré 11 révèle votre potentiel illimité. Vous êtes un phare pour les autres.",
+
+    "oracle.bonusRoll.12.title.1": "👑 Accomplissement Total",
+    "oracle.bonusRoll.12.message.1": "La plénitude et l'accomplissement sont à votre portée. Vous avez atteint la complétude.",
+    "oracle.bonusRoll.12.title.2": "🌟 Perfection Cosmique",
+    "oracle.bonusRoll.12.message.2": "Le cycle est complet, vous touchez à l'excellence. L'univers célèbre votre réussite.",
+
+    "oracle.backToOracles": "Retour aux oracles",
+
     // Common
     "common.back": "Retour",
     "common.home": "Accueil",
@@ -3406,6 +3476,76 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.success": "Subscription activated successfully! Enjoy your ad-free experience and unlimited Grimoire.",
     "premium.error.activation": "Error activating subscription",
     "premium.error.payment": "Payment error. Please try again.",
+
+    // Mystery Dice Oracle
+    "oracle.bonusRoll.title": "Bonus Roll",
+      "oracle.bonusRoll.description": "Unlock your secret numerological revelation",
+      "oracle.bonusRoll.ready": "Ready to discover your bonus message?",
+      "oracle.bonusRoll.rolling": "🎲 Rolling the mystical dice...",
+      "oracle.bonusRoll.loadingAd": "📢 Unlocking your revelation...",
+      "oracle.bonusRoll.result": "Result",
+      "oracle.bonusRoll.cosmicMessage": "Your bonus message",
+      "oracle.bonusRoll.rollButton": "🎁 Unlock Bonus Roll",
+      "oracle.bonusRoll.newRoll": "✨ New Bonus Roll",
+      "oracle.bonusRoll.diceResult": "Dice",
+
+    // Interpretations (2 variations per result)
+    "oracle.bonusRoll.2.title.1": "🌅 New Beginning",
+    "oracle.bonusRoll.2.message.1": "The stars align for a fresh start. Double luck accompanies you today!",
+    "oracle.bonusRoll.2.title.2": "✨ Cosmic Rebirth",
+    "oracle.bonusRoll.2.message.2": "A new cycle begins in your life. The universe offers you an extraordinary second chance.",
+
+    "oracle.bonusRoll.3.title.1": "🔮 Divine Intuition",
+    "oracle.bonusRoll.3.message.1": "Your sixth sense is at its peak. Follow your intuition, it won't deceive you.",
+    "oracle.bonusRoll.3.title.2": "👁️ Mystical Vision",
+    "oracle.bonusRoll.3.message.2": "The veils lift on your perception. Your clairvoyance reaches unmatched heights.",
+
+    "oracle.bonusRoll.4.title.1": "🏛️ Solid Foundations",
+    "oracle.bonusRoll.4.message.1": "Stability and confidence are your allies. Your foundations are strong, build with assurance.",
+    "oracle.bonusRoll.4.title.2": "⚓ Powerful Grounding",
+    "oracle.bonusRoll.4.message.2": "Your strength lies in your stability. The time has come to build on solid rock.",
+
+    "oracle.bonusRoll.5.title.1": "✨ Magical Opportunities",
+    "oracle.bonusRoll.5.message.1": "Change brings unexpected surprises. Stay open to new possibilities.",
+    "oracle.bonusRoll.5.title.2": "🌪️ Wind of Change",
+    "oracle.bonusRoll.5.message.2": "Transformation is at your door. Embrace the unknown with confidence and boldness.",
+
+    "oracle.bonusRoll.6.title.1": "⚖️ Perfect Harmony",
+    "oracle.bonusRoll.6.message.1": "Balance reigns in your life. Enjoy this period of peace and harmony.",
+    "oracle.bonusRoll.6.title.2": "🕊️ Absolute Serenity",
+    "oracle.bonusRoll.6.message.2": "Your soul bathes in tranquility. Enjoy this moment of cosmic grace.",
+
+    "oracle.bonusRoll.7.title.1": "🍀 Mystical Luck",
+    "oracle.bonusRoll.7.message.1": "The lucky number smiles upon you! Expect pleasant surprises.",
+    "oracle.bonusRoll.7.title.2": "🎰 Divine Fortune",
+    "oracle.bonusRoll.7.message.2": "The dice of destiny fall in your favor. Providence blesses you today.",
+
+    "oracle.bonusRoll.8.title.1": "💎 Cosmic Abundance",
+    "oracle.bonusRoll.8.message.1": "Success and prosperity surround you. The universe rewards your efforts.",
+    "oracle.bonusRoll.8.title.2": "👑 Infinite Prosperity",
+    "oracle.bonusRoll.8.message.2": "The flow of abundance flows toward you. Your work bears magnificent fruits.",
+
+    "oracle.bonusRoll.9.title.1": "🌱 Spiritual Evolution",
+    "oracle.bonusRoll.9.message.1": "Your personal growth reaches new heights. Continue your path.",
+    "oracle.bonusRoll.9.title.2": "🦋 Sacred Metamorphosis",
+    "oracle.bonusRoll.9.message.2": "You're in full spiritual transformation. Your soul rises toward the light.",
+
+    "oracle.bonusRoll.10.title.1": "🎯 Stimulating Challenges",
+    "oracle.bonusRoll.10.message.1": "New challenges await you, but you're ready to face them brilliantly.",
+    "oracle.bonusRoll.10.title.2": "⚔️ Formative Trials",
+    "oracle.bonusRoll.10.message.2": "Obstacles become stepping stones. Your determination transforms everything into victory.",
+
+    "oracle.bonusRoll.11.title.1": "🔥 Victorious Perseverance",
+    "oracle.bonusRoll.11.message.1": "Your determination bears fruit. Master number 11 guides you to success.",
+    "oracle.bonusRoll.11.title.2": "⚡ Illuminated Master",
+    "oracle.bonusRoll.11.message.2": "Sacred number 11 reveals your unlimited potential. You're a beacon for others.",
+
+    "oracle.bonusRoll.12.title.1": "👑 Total Achievement",
+    "oracle.bonusRoll.12.message.1": "Fulfillment and accomplishment are within your reach. You've achieved completeness.",
+    "oracle.bonusRoll.12.title.2": "🌟 Cosmic Perfection",
+    "oracle.bonusRoll.12.message.2": "The cycle is complete, you touch excellence. The universe celebrates your success.",
+
+    "oracle.backToOracles": "Back to oracles",
 
     // Common
     "common.back": "Back",
@@ -5142,6 +5282,74 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.activation": "Error al activar la suscripción",
     "premium.error.payment": "Error de pago. Por favor, inténtalo de nuevo.",
 
+    // Mystery Dice Oracle
+    "oracle.bonusRoll.title": "Tirada Bonus",
+      "oracle.bonusRoll.description": "Desbloquea tu revelación numerológica secreta",
+      "oracle.bonusRoll.ready": "¿Listo para descubrir tu mensaje bonus?",
+      "oracle.bonusRoll.rolling": "🎲 Lanzando los dados místicos...",
+      "oracle.bonusRoll.loadingAd": "📢 Desbloqueando tu revelación...",
+      "oracle.bonusRoll.result": "Resultado",
+      "oracle.bonusRoll.cosmicMessage": "Tu mensaje bonus",
+      "oracle.bonusRoll.rollButton": "🎁 Desbloquear Tirada Bonus",
+      "oracle.bonusRoll.newRoll": "✨ Nueva Tirada Bonus",
+      "oracle.bonusRoll.diceResult": "Dados",
+
+    "oracle.bonusRoll.2.title.1": "🌅 Nuevo Comienzo",
+    "oracle.bonusRoll.2.message.1": "Las estrellas se alinean para un nuevo comienzo. ¡Doble suerte te acompaña hoy!",
+    "oracle.bonusRoll.2.title.2": "✨ Renacimiento Cósmico",
+    "oracle.bonusRoll.2.message.2": "Un nuevo ciclo comienza en tu vida. El universo te ofrece una segunda oportunidad extraordinaria.",
+
+    "oracle.bonusRoll.3.title.1": "🔮 Intuición Divina",
+    "oracle.bonusRoll.3.message.1": "Tu sexto sentido está en su apogeo. Sigue tu intuición, no te engañará.",
+    "oracle.bonusRoll.3.title.2": "👁️ Visión Mística",
+    "oracle.bonusRoll.3.message.2": "Los velos se levantan sobre tu percepción. Tu clarividencia alcanza alturas inigualables.",
+
+    "oracle.bonusRoll.4.title.1": "🏛️ Fundamentos Sólidos",
+    "oracle.bonusRoll.4.message.1": "La estabilidad y la confianza son tus aliados. Tus bases son sólidas, construye con seguridad.",
+    "oracle.bonusRoll.4.title.2": "⚓ Anclaje Poderoso",
+    "oracle.bonusRoll.4.message.2": "Tu fuerza reside en tu estabilidad. Ha llegado el momento de construir sobre roca firme.",
+
+    "oracle.bonusRoll.5.title.1": "✨ Oportunidades Mágicas",
+    "oracle.bonusRoll.5.message.1": "El cambio trae sorpresas inesperadas. Mantente abierto a nuevas posibilidades.",
+    "oracle.bonusRoll.5.title.2": "🌪️ Viento de Cambio",
+    "oracle.bonusRoll.5.message.2": "La transformación está a tu puerta. Abraza lo desconocido con confianza y audacia.",
+
+    "oracle.bonusRoll.6.title.1": "⚖️ Armonía Perfecta",
+    "oracle.bonusRoll.6.message.1": "El equilibrio reina en tu vida. Disfruta de este período de paz y armonía.",
+    "oracle.bonusRoll.6.title.2": "🕊️ Serenidad Absoluta",
+    "oracle.bonusRoll.6.message.2": "Tu alma se baña en tranquilidad. Disfruta de este momento de gracia cósmica.",
+
+    "oracle.bonusRoll.7.title.1": "🍀 Suerte Mística",
+    "oracle.bonusRoll.7.message.1": "¡El número de la suerte te sonríe! Espera sorpresas agradables.",
+    "oracle.bonusRoll.7.title.2": "🎰 Fortuna Divina",
+    "oracle.bonusRoll.7.message.2": "Los dados del destino caen a tu favor. La providencia te bendice hoy.",
+
+    "oracle.bonusRoll.8.title.1": "💎 Abundancia Cósmica",
+    "oracle.bonusRoll.8.message.1": "El éxito y la prosperidad te rodean. El universo recompensa tus esfuerzos.",
+    "oracle.bonusRoll.8.title.2": "👑 Prosperidad Infinita",
+    "oracle.bonusRoll.8.message.2": "El flujo de abundancia fluye hacia ti. Tu trabajo da frutos magníficos.",
+
+    "oracle.bonusRoll.9.title.1": "🌱 Evolución Espiritual",
+    "oracle.bonusRoll.9.message.1": "Tu crecimiento personal alcanza nuevas alturas. Continúa tu camino.",
+    "oracle.bonusRoll.9.title.2": "🦋 Metamorfosis Sagrada",
+    "oracle.bonusRoll.9.message.2": "Estás en plena transformación espiritual. Tu alma se eleva hacia la luz.",
+
+    "oracle.bonusRoll.10.title.1": "🎯 Desafíos Estimulantes",
+    "oracle.bonusRoll.10.message.1": "Nuevos desafíos te esperan, pero estás listo para enfrentarlos brillantemente.",
+    "oracle.bonusRoll.10.title.2": "⚔️ Pruebas Formadoras",
+    "oracle.bonusRoll.10.message.2": "Los obstáculos se convierten en trampolines. Tu determinación transforma todo en victoria.",
+
+    "oracle.bonusRoll.11.title.1": "🔥 Perseverancia Victoriosa",
+    "oracle.bonusRoll.11.message.1": "Tu determinación da frutos. El número maestro 11 te guía hacia el éxito.",
+    "oracle.bonusRoll.11.title.2": "⚡ Maestro Iluminado",
+    "oracle.bonusRoll.11.message.2": "El número sagrado 11 revela tu potencial ilimitado. Eres un faro para los demás.",
+
+    "oracle.bonusRoll.12.title.1": "👑 Logro Total",
+    "oracle.bonusRoll.12.message.1": "La plenitud y el logro están a tu alcance. Has alcanzado la completud.",
+    "oracle.bonusRoll.12.title.2": "🌟 Perfección Cósmica",
+    "oracle.bonusRoll.12.message.2": "El ciclo está completo, tocas la excelencia. El universo celebra tu éxito.",
+
+    "oracle.backToOracles": "Volver a los oráculos",
     // Common
     "common.back": "Atrás",
     "common.home": "Inicio",
@@ -6879,6 +7087,75 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.success": "Abonnement erfolgreich aktiviert! Genieße dein werbefreies Erlebnis und das unbegrenzte Grimoire.",
     "premium.error.activation": "Fehler bei der Aktivierung des Abonnements",
     "premium.error.payment": "Fehler bei der Zahlung. Bitte versuche es erneut.",
+
+    // Mystery Dice Oracle
+    "oracle.bonusRoll.title": "Bonus Wurf",
+      "oracle.bonusRoll.description": "Entsperren Sie Ihre geheime numerologische Offenbarung",
+      "oracle.bonusRoll.ready": "Bereit, Ihre Bonus-Nachricht zu entdecken?",
+      "oracle.bonusRoll.rolling": "🎲 Die mystischen Würfel werden geworfen...",
+      "oracle.bonusRoll.loadingAd": "📢 Entsperren Ihrer Offenbarung...",
+      "oracle.bonusRoll.result": "Ergebnis",
+      "oracle.bonusRoll.cosmicMessage": "Ihre Bonus-Nachricht",
+      "oracle.bonusRoll.rollButton": "🎁 Bonus Wurf Entsperren",
+      "oracle.bonusRoll.newRoll": "✨ Neuer Bonus Wurf",
+      "oracle.bonusRoll.diceResult": "Würfel",
+
+    "oracle.bonusRoll.2.title.1": "🌅 Neuer Anfang",
+    "oracle.bonusRoll.2.message.1": "Die Sterne richten sich für einen Neuanfang aus. Doppeltes Glück begleitet Sie heute!",
+    "oracle.bonusRoll.2.title.2": "✨ Kosmische Wiedergeburt",
+    "oracle.bonusRoll.2.message.2": "Ein neuer Zyklus beginnt in Ihrem Leben. Das Universum bietet Ihnen eine außergewöhnliche zweite Chance.",
+
+    "oracle.bonusRoll.3.title.1": "🔮 Göttliche Intuition",
+    "oracle.bonusRoll.3.message.1": "Ihr sechster Sinn ist auf dem Höhepunkt. Folgen Sie Ihrer Intuition, sie wird Sie nicht täuschen.",
+    "oracle.bonusRoll.3.title.2": "👁️ Mystische Vision",
+    "oracle.bonusRoll.3.message.2": "Die Schleier heben sich von Ihrer Wahrnehmung. Ihre Hellsichtigkeit erreicht ungeahnte Höhen.",
+
+    "oracle.bonusRoll.4.title.1": "🏛️ Solide Grundlagen",
+    "oracle.bonusRoll.4.message.1": "Stabilität und Vertrauen sind Ihre Verbündeten. Ihre Grundlagen sind solide, bauen Sie mit Zuversicht.",
+    "oracle.bonusRoll.4.title.2": "⚓ Kraftvolle Erdung",
+    "oracle.bonusRoll.4.message.2": "Ihre Stärke liegt in Ihrer Stabilität. Die Zeit ist gekommen, auf Fels zu bauen.",
+
+    "oracle.bonusRoll.5.title.1": "✨ Magische Möglichkeiten",
+    "oracle.bonusRoll.5.message.1": "Veränderung bringt unerwartete Überraschungen. Bleiben Sie offen für neue Möglichkeiten.",
+    "oracle.bonusRoll.5.title.2": "🌪️ Wind der Veränderung",
+    "oracle.bonusRoll.5.message.2": "Transformation steht vor Ihrer Tür. Umarmen Sie das Unbekannte mit Zuversicht und Kühnheit.",
+
+    "oracle.bonusRoll.6.title.1": "⚖️ Perfekte Harmonie",
+    "oracle.bonusRoll.6.message.1": "Gleichgewicht herrscht in Ihrem Leben. Genießen Sie diese Zeit des Friedens und der Harmonie.",
+    "oracle.bonusRoll.6.title.2": "🕊️ Absolute Gelassenheit",
+    "oracle.bonusRoll.6.message.2": "Ihre Seele badet in Ruhe. Genießen Sie diesen Moment kosmischer Gnade.",
+
+    "oracle.bonusRoll.7.title.1": "🍀 Mystisches Glück",
+    "oracle.bonusRoll.7.message.1": "Die Glückszahl lächelt Sie an! Erwarten Sie angenehme Überraschungen.",
+    "oracle.bonusRoll.7.title.2": "🎰 Göttliches Vermögen",
+    "oracle.bonusRoll.7.message.2": "Die Würfel des Schicksals fallen zu Ihren Gunsten. Die Vorsehung segnet Sie heute.",
+
+    "oracle.bonusRoll.8.title.1": "💎 Kosmischer Überfluss",
+    "oracle.bonusRoll.8.message.1": "Erfolg und Wohlstand umgeben Sie. Das Universum belohnt Ihre Bemühungen.",
+    "oracle.bonusRoll.8.title.2": "👑 Unendlicher Wohlstand",
+    "oracle.bonusRoll.8.message.2": "Der Fluss des Überflusses fließt zu Ihnen. Ihre Arbeit trägt herrliche Früchte.",
+
+    "oracle.bonusRoll.9.title.1": "🌱 Spirituelle Evolution",
+    "oracle.bonusRoll.9.message.1": "Ihr persönliches Wachstum erreicht neue Höhen. Setzen Sie Ihren Weg fort.",
+    "oracle.bonusRoll.9.title.2": "🦋 Heilige Metamorphose",
+    "oracle.bonusRoll.9.message.2": "Sie befinden sich in voller spiritueller Transformation. Ihre Seele steigt zum Licht auf.",
+
+    "oracle.bonusRoll.10.title.1": "🎯 Stimulierende Herausforderungen",
+    "oracle.bonusRoll.10.message.1": "Neue Herausforderungen erwarten Sie, aber Sie sind bereit, sie brillant zu meistern.",
+    "oracle.bonusRoll.10.title.2": "⚔️ Bildende Prüfungen",
+    "oracle.bonusRoll.10.message.2": "Hindernisse werden zu Sprungbrettern. Ihre Entschlossenheit verwandelt alles in Sieg.",
+
+    "oracle.bonusRoll.11.title.1": "🔥 Siegreiche Ausdauer",
+    "oracle.bonusRoll.11.message.1": "Ihre Entschlossenheit trägt Früchte. Die Meisterzahl 11 führt Sie zum Erfolg.",
+    "oracle.bonusRoll.11.title.2": "⚡ Erleuchteter Meister",
+    "oracle.bonusRoll.11.message.2": "Die heilige Zahl 11 offenbart Ihr unbegrenztes Potenzial. Sie sind ein Leuchtturm für andere.",
+
+    "oracle.bonusRoll.12.title.1": "👑 Totale Vollendung",
+    "oracle.bonusRoll.12.message.1": "Erfüllung und Vollendung sind in Ihrer Reichweite. Sie haben Vollständigkeit erreicht.",
+    "oracle.bonusRoll.12.title.2": "🌟 Kosmische Perfektion",
+    "oracle.bonusRoll.12.message.2": "Der Zyklus ist abgeschlossen, Sie berühren Exzellenz. Das Universum feiert Ihren Erfolg.",
+
+    "oracle.backToOracles": "Zurück zu den Orakeln",
 
     // Common
     "common.back": "Zurück",
@@ -8621,6 +8898,74 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.activation": "Errore durante l’attivazione dell’abbonamento",
     "premium.error.payment": "Errore durante il pagamento. Riprova.",
 
+    // Mystery Dice Oracle
+    "oracle.bonusRoll.title": "Lancio Bonus",
+      "oracle.bonusRoll.description": "Sblocca la tua rivelazione numerologica segreta",
+      "oracle.bonusRoll.ready": "Pronto a scoprire il tuo messaggio bonus?",
+      "oracle.bonusRoll.rolling": "🎲 Lancio dei dadi mistici...",
+      "oracle.bonusRoll.loadingAd": "📢 Sblocco della tua rivelazione...",
+      "oracle.bonusRoll.result": "Risultato",
+      "oracle.bonusRoll.cosmicMessage": "Il tuo messaggio bonus",
+      "oracle.bonusRoll.rollButton": "🎁 Sblocca Lancio Bonus",
+      "oracle.bonusRoll.newRoll": "✨ Nuovo Lancio Bonus",
+      "oracle.bonusRoll.diceResult": "Dadi",
+
+    "oracle.bonusRoll.2.title.1": "🌅 Nuovo Inizio",
+    "oracle.bonusRoll.2.message.1": "Le stelle si allineano per un nuovo inizio. Doppia fortuna ti accompagna oggi!",
+    "oracle.bonusRoll.2.title.2": "✨ Rinascita Cosmica",
+    "oracle.bonusRoll.2.message.2": "Un nuovo ciclo inizia nella tua vita. L'universo ti offre una seconda opportunità straordinaria.",
+
+    "oracle.bonusRoll.3.title.1": "🔮 Intuizione Divina",
+    "oracle.bonusRoll.3.message.1": "Il tuo sesto senso è al suo apice. Segui la tua intuizione, non ti ingannerà.",
+    "oracle.bonusRoll.3.title.2": "👁️ Visione Mistica",
+    "oracle.bonusRoll.3.message.2": "I veli si sollevano sulla tua percezione. La tua chiaroveggenza raggiunge vette ineguagliate.",
+
+    "oracle.bonusRoll.4.title.1": "🏛️ Fondamenta Solide",
+    "oracle.bonusRoll.4.message.1": "La stabilità e la fiducia sono i tuoi alleati. Le tue basi sono solide, costruisci con sicurezza.",
+    "oracle.bonusRoll.4.title.2": "⚓ Radicamento Potente",
+    "oracle.bonusRoll.4.message.2": "La tua forza risiede nella tua stabilità. È giunto il momento di costruire sulla roccia.",
+
+    "oracle.bonusRoll.5.title.1": "✨ Opportunità Magiche",
+    "oracle.bonusRoll.5.message.1": "Il cambiamento porta sorprese inaspettate. Rimani aperto a nuove possibilità.",
+    "oracle.bonusRoll.5.title.2": "🌪️ Vento del Cambiamento",
+    "oracle.bonusRoll.5.message.2": "La trasformazione è alla tua porta. Abbraccia l'ignoto con fiducia e audacia.",
+
+    "oracle.bonusRoll.6.title.1": "⚖️ Armonia Perfetta",
+    "oracle.bonusRoll.6.message.1": "L'equilibrio regna nella tua vita. Goditi questo periodo di pace e armonia.",
+    "oracle.bonusRoll.6.title.2": "🕊️ Serenità Assoluta",
+    "oracle.bonusRoll.6.message.2": "La tua anima si immerge nella tranquillità. Goditi questo momento di grazia cosmica.",
+
+    "oracle.bonusRoll.7.title.1": "🍀 Fortuna Mistica",
+    "oracle.bonusRoll.7.message.1": "Il numero della fortuna ti sorride! Aspettati piacevoli sorprese.",
+    "oracle.bonusRoll.7.title.2": "🎰 Fortuna Divina",
+    "oracle.bonusRoll.7.message.2": "I dadi del destino cadono a tuo favore. La provvidenza ti benedice oggi.",
+
+    "oracle.bonusRoll.8.title.1": "💎 Abbondanza Cosmica",
+    "oracle.bonusRoll.8.message.1": "Il successo e la prosperità ti circondano. L'universo premia i tuoi sforzi.",
+    "oracle.bonusRoll.8.title.2": "👑 Prosperità Infinita",
+    "oracle.bonusRoll.8.message.2": "Il flusso di abbondanza scorre verso di te. Il tuo lavoro porta frutti magnifici.",
+
+    "oracle.bonusRoll.9.title.1": "🌱 Evoluzione Spirituale",
+    "oracle.bonusRoll.9.message.1": "La tua crescita personale raggiunge nuove vette. Continua il tuo cammino.",
+    "oracle.bonusRoll.9.title.2": "🦋 Metamorfosi Sacra",
+    "oracle.bonusRoll.9.message.2": "Sei in piena trasformazione spirituale. La tua anima si eleva verso la luce.",
+
+    "oracle.bonusRoll.10.title.1": "🎯 Sfide Stimolanti",
+    "oracle.bonusRoll.10.message.1": "Nuove sfide ti attendono, ma sei pronto ad affrontarle brillantemente.",
+    "oracle.bonusRoll.10.title.2": "⚔️ Prove Formative",
+    "oracle.bonusRoll.10.message.2": "Gli ostacoli diventano trampolini di lancio. La tua determinazione trasforma tutto in vittoria.",
+
+    "oracle.bonusRoll.11.title.1": "🔥 Perseveranza Vittoriosa",
+    "oracle.bonusRoll.11.message.1": "La tua determinazione porta frutti. Il numero maestro 11 ti guida verso il successo.",
+    "oracle.bonusRoll.11.title.2": "⚡ Maestro Illuminato",
+    "oracle.bonusRoll.11.message.2": "Il numero sacro 11 rivela il tuo potenziale illimitato. Sei un faro per gli altri.",
+
+    "oracle.bonusRoll.12.title.1": "👑 Realizzazione Totale",
+    "oracle.bonusRoll.12.message.1": "La pienezza e la realizzazione sono a portata di mano. Hai raggiunto la completezza.",
+    "oracle.bonusRoll.12.title.2": "🌟 Perfezione Cosmica",
+    "oracle.bonusRoll.12.message.2": "Il ciclo è completo, tocchi l'eccellenza. L'universo celebra il tuo successo.",
+
+    "oracle.backToOracles": "Torna agli oracoli",
   },
 };
 

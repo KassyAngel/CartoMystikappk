@@ -9,11 +9,12 @@ import CardGame from './CardGame';
 import RevelationPage from './RevelationPage';
 import InterpretationPage from './InterpretationPage';
 import HoroscopePage from './HoroscopePage';
+import BonusRollPage from './BonusRollPage';
+import CrystalBallPage from './CrystalBallPage';
+import ResponsiveTest from '@/components/ResponsiveTest';
 import { ZodiacSign } from '@shared/schema';
 import { oracleData } from '@/data/oracleData';
-import ResponsiveTest from '@/components/ResponsiveTest';
-import CrystalBallPage from './CrystalBallPage';
-import { useUser } from '@/contexts/UserContext'; // ✅ Import du context
+import { useUser } from '@/contexts/UserContext';
 
 type AppStep =
   | 'landing'
@@ -26,6 +27,7 @@ type AppStep =
   | 'interpretation'
   | 'horoscope'
   | 'crystalBall'
+  | 'bonusRoll'
   | 'responsiveTest';
 
 interface OracleMystiqueAppProps {
@@ -35,18 +37,16 @@ interface OracleMystiqueAppProps {
 
 export default function OracleMystiqueApp({ onSaveReading, onStepChange }: OracleMystiqueAppProps) {
   const [currentStep, setCurrentStep] = useState<AppStep>('landing');
-  const { user, setUser, clearUser } = useUser(); // ✅ Utilisation du context
+  const { user, setUser, clearUser } = useUser();
   const [selectedOracle, setSelectedOracle] = useState('');
   const [selectedCardIndices, setSelectedCardIndices] = useState<number[]>([]);
 
-  // ✅ Informer le parent du changement d'étape
   useEffect(() => {
     if (onStepChange) {
       onStepChange(currentStep);
     }
   }, [currentStep, onStepChange]);
 
-  // ✅ Charger la session au démarrage (déjà géré par UserContext)
   useEffect(() => {
     if (user.name && user.birthDate && user.gender) {
       console.log('Session utilisateur chargée depuis le context:', user);
@@ -76,6 +76,7 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
     setSelectedOracle(oracleType);
     if (oracleType === 'horoscope') setCurrentStep('horoscope');
     else if (oracleType === 'crystalBall') setCurrentStep('crystalBall');
+    else if (oracleType === 'bonusRoll') setCurrentStep('bonusRoll');
     else setCurrentStep('game');
   };
 
@@ -93,7 +94,7 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
   const handleGoToCrystalBall = () => setCurrentStep('crystalBall');
 
   const handleBackToHome = () => {
-    clearUser(); // ✅ Utilisation du context
+    clearUser();
     console.log('Session utilisateur effacée');
     setCurrentStep('landing');
     setSelectedOracle('');
@@ -128,12 +129,17 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
 
       <main className="flex-grow flex flex-col justify-center items-center max-w-6xl mx-auto p-5">
         {currentStep === 'responsiveTest' && <ResponsiveTest />}
+
         {currentStep === 'landing' && <LandingPage onEnter={handleEnter} />}
+
         {currentStep === 'name' && <NamePage onNext={handleNameSubmit} />}
+
         {currentStep === 'date' && <DatePage onNext={handleDateSubmit} onBack={handleBackToName} />}
+
         {currentStep === 'gender' && (
           <GenderPage onNext={handleGenderSubmit} onBack={handleBackToDate} />
         )}
+
         {currentStep === 'oracle' && (
           <OracleSelection
             user={user}
@@ -142,6 +148,7 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
             onHome={handleBackToHome}
           />
         )}
+
         {currentStep === 'game' && oracle && (
           <CardGame
             user={user}
@@ -151,6 +158,7 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
             onBack={handleBackToOracle}
           />
         )}
+
         {currentStep === 'revelation' && oracle && (
           <RevelationPage
             user={user}
@@ -189,6 +197,13 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
             user={user}
             onBack={handleBackToOracle}
             onSaveReading={handleSaveReading}
+          />
+        )}
+
+        {currentStep === 'bonusRoll' && (
+          <BonusRollPage
+            user={user}
+            onBack={handleBackToOracle}
           />
         )}
       </main>
