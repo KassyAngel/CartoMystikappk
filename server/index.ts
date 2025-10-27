@@ -8,14 +8,12 @@ dotenv.config();
 
 const app = express();
 
-// ⚠️ IMPORTANT : Le webhook Stripe DOIT venir AVANT express.json()
-// Car Stripe a besoin du body brut (raw) pour vérifier la signature
+// ⚠️ Webhook Stripe AVANT express.json()
 app.post(
   "/api/webhook",
   express.raw({ type: "application/json" }),
   async (req: Request, res: Response) => {
     try {
-      // Cette route sera gérée dans routes.ts
       const handler = (app as any)._stripeWebhookHandler;
       if (handler) {
         await handler(req, res);
@@ -29,7 +27,7 @@ app.post(
   }
 );
 
-// ✅ Middleware JSON (APRÈS le webhook Stripe)
+// ✅ Middleware JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -37,7 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
+  let capturedJsonResponse: Record<string, any> | undefined;
 
   const originalResJson = res.json;
   res.json = function (bodyJson, ...args) {
@@ -49,14 +47,8 @@ app.use((req, res, next) => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
-      }
-
+      if (capturedJsonResponse) logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      if (logLine.length > 80) logLine = logLine.slice(0, 79) + "…";
       log(logLine);
     }
   });
@@ -70,21 +62,28 @@ app.use((req, res, next) => {
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-
     res.status(status).json({ message });
     throw err;
   });
 
-  // Servir les fichiers statiques et Vite en dev
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
     serveStatic(app);
   }
 
-  // Démarrer le serveur
-  const PORT = parseInt(process.env.PORT || '3000', 10);
-  server.listen(PORT, "0.0.0.0", () => {
-    log(`✅ Serveur démarré sur le port ${PORT}`);
-  });
+  // ✅ Gestion du port
+  const PORT = parseInt(process.env.PORT || "3001", 10);
+  server.listen(PORT, "0.0.0.0")
+    .on("listening", () => log(`✅ Serveur démarré sur le port ${PORT}`))
+    .on("error", (err: NodeJS.ErrnoException) => {
+      if (err.code === "EADDRINUSE") {
+        console.error(`❌ Le port ${PORT} est déjà utilisé !`);
+        console.error("Essayez de changer le PORT dans votre fichier .env ou tuez le processus existant.");
+        process.exit(1);
+      } else {
+        console.error(err);
+        process.exit(1);
+      }
+    });
 })();
