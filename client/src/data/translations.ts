@@ -1713,6 +1713,16 @@ const translations: Record<Language, Record<string, string>> = {
     "grimoire.oracle.angels": "Oracle des Anges",
     "grimoire.oracle.runes": "Runes Vikings",
 
+    // Grimoire - Statistiques
+    "grimoire.stats.total": "Total",
+    "grimoire.stats.thisMonth": "Ce mois",
+
+    // Grimoire - Effacer tout
+    "grimoire.clearAll.button": "Tout effacer",
+    "grimoire.clearAll.confirm.title": "Êtes-vous sûr ?",
+    "grimoire.clearAll.confirm.message": "Cette action est irréversible. Tous vos tirages seront supprimés définitivement.",
+    "grimoire.clearAll.confirm.button": "Oui, tout effacer",
+
     // MENU LÉGAL
     "legal.menu.title": "Menu légal",
     "legal.mentions": "Mentions légales",
@@ -3447,6 +3457,13 @@ const translations: Record<Language, Record<string, string>> = {
     "grimoire.oracle.tarot": "Tarot",
     "grimoire.oracle.angels": "Angel Oracle",
     "grimoire.oracle.runes": "Viking Runes",
+    "grimoire.stats.total": "Total",
+      "grimoire.stats.thisMonth": "This month",
+
+      "grimoire.clearAll.button": "Clear all",
+      "grimoire.clearAll.confirm.title": "Are you sure?",
+      "grimoire.clearAll.confirm.message": "This action is irreversible. All your readings will be permanently deleted.",
+      "grimoire.clearAll.confirm.button": "Yes, clear all",
 
     // MENU LÉGAL
     "legal.menu.title": "Legal menu",
@@ -5252,6 +5269,13 @@ const translations: Record<Language, Record<string, string>> = {
     "grimoire.oracle.tarot": "Tarot",
     "grimoire.oracle.angels": "Oráculo de los Ángeles",
     "grimoire.oracle.runes": "Runas Vikingas",
+    "grimoire.stats.total": "Total",
+      "grimoire.stats.thisMonth": "Este mes",
+
+      "grimoire.clearAll.button": "Borrar todo",
+      "grimoire.clearAll.confirm.title": "¿Estás seguro?",
+      "grimoire.clearAll.confirm.message": "Esta acción es irreversible. Todas tus lecturas serán eliminadas permanentemente.",
+      "grimoire.clearAll.confirm.button": "Sí, borrar todo",
 
     // MENU LÉGAL
     "legal.menu.title": "Menú legal",
@@ -7058,6 +7082,13 @@ const translations: Record<Language, Record<string, string>> = {
     "grimoire.oracle.tarot": "Tarot",
     "grimoire.oracle.angels": "Engelorakel",
     "grimoire.oracle.runes": "Wikinger-Runen",
+    "grimoire.stats.total": "Gesamt",
+      "grimoire.stats.thisMonth": "Diesen Monat",
+
+      "grimoire.clearAll.button": "Alles löschen",
+      "grimoire.clearAll.confirm.title": "Sind Sie sicher?",
+      "grimoire.clearAll.confirm.message": "Diese Aktion ist unwiderruflich. Alle Ihre Lesungen werden dauerhaft gelöscht.",
+      "grimoire.clearAll.confirm.button": "Ja, alles löschen",
 
     // MENU LÉGAL
     "legal.menu.title": "Rechtliches Menü",
@@ -8868,6 +8899,12 @@ const translations: Record<Language, Record<string, string>> = {
     "grimoire.oracle.tarot": "Tarocchi",
     "grimoire.oracle.angels": "Oracolo degli Angeli",
     "grimoire.oracle.runes": "Rune Vichinghe",
+    "grimoire.stats.total": "Totale",
+      "grimoire.stats.thisMonth": "Questo mese",
+      "grimoire.clearAll.button": "Cancella tutto",
+      "grimoire.clearAll.confirm.title": "Sei sicuro?",
+      "grimoire.clearAll.confirm.message": "Questa azione è irreversibile. Tutte le tue letture saranno eliminate definitivamente.",
+      "grimoire.clearAll.confirm.button": "Sì, cancella tutto",
 
     // MENU LÉGAL
     "legal.menu.title": "Menu legale",

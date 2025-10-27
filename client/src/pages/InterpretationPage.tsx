@@ -4,7 +4,7 @@ import { OracleData, OracleCard, UserSession, OracleType } from '@shared/schema'
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getSecureRandomInt } from '@/lib/utils';
 import { getTimeUntilMidnight } from '@/lib/dailyLimit';
-import { useEffect, useRef } from 'react';
+// ❌ SUPPRIMÉ : import { useEffect, useRef } from 'react';
 
 interface CardSection {
   icon: string;
@@ -32,11 +32,11 @@ export default function InterpretationPage({
   selectedCards,
   onBack,
   onHome,
-  onSaveReading,
+  onSaveReading, // ⚠️ Gardé dans les props mais non utilisé (sauvegarde déjà faite dans CardGame)
   onCrystalBall
 }: InterpretationPageProps) {
   const { t } = useLanguage();
-  const hasSavedRef = useRef(false);
+  // ❌ SUPPRIMÉ : const hasSavedRef = useRef(false);
 
   const normalizeCardName = (cardName: string): string => {
     return cardName
@@ -307,41 +307,14 @@ export default function InterpretationPage({
 
   const { sections, finalMessage, greeting } = generateInterpretationSections();
 
-  useEffect(() => {
-    const saveReading = async () => {
-      if (onSaveReading && !hasSavedRef.current) {
-        // 🕐 Créer un objet Date avec l'heure exacte du tirage
-        const readingDate = new Date();
-
-        // 📝 Générer le texte complet pour la sauvegarde
-        const fullText = sections.map(s => `${s.icon} ${s.title}\n${s.content}`).join('\n\n') + '\n\n💫 ' + finalMessage;
-
-        const readingData = {
-          type: oracleType === 'daily' ? 'oracle' : oracleType,
-          oracleTitle: oracle.title, // ✅ Ajout du titre de l'oracle
-          cards: selectedCards.map(c => c.name),
-          question: null,
-          answer: fullText,
-          date: readingDate // ✅ Date avec heure exacte
-        };
-
-        try {
-          await onSaveReading(readingData);
-          console.log("✅ Tirage enregistré depuis InterpretationPage à", readingDate.toLocaleTimeString());
-          hasSavedRef.current = true;
-        } catch (error) {
-          console.error("❌ Erreur lors de la sauvegarde :", error);
-        }
-      }
-    };
-    saveReading();
-  }, [onSaveReading, oracleType, oracle.title, selectedCards, sections, finalMessage]);
+  // ❌ SUPPRIMÉ COMPLÈTEMENT LE useEffect QUI SAUVEGARDAIT (lignes 331-357)
+  // La sauvegarde est déjà faite dans CardGame.tsx !
 
   return (
     <div className="interpretation-page min-h-screen flex flex-col justify-between p-2 sm:p-3">
       <div className="interpretation-header text-center pt-20 sm:pt-24">
         <h1 className="mystical-title text-lg sm:text-xl md:text-2xl font-bold font-serif mb-1 sm:mb-2 leading-tight">
-                    {isDailyReading 
+          {isDailyReading 
             ? t('interpretation.title.daily', { name: user.name })
             : t('interpretation.title.reading', { name: user.name })
           }

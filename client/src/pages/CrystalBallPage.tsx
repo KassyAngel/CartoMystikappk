@@ -4,7 +4,6 @@ import MysticalInput from '@/components/MysticalInput';
 import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getSecureRandomInt } from '@/lib/utils';
-import { showInterstitialAd } from '@/admobService'; // ⚡ AJOUTÉ
 
 interface CrystalBallPageProps {
   onBack: () => void;
@@ -18,7 +17,7 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
   const [question, setQuestion] = useState('');
   const [phase, setPhase] = useState<Phase>('question');
   const [currentAnswer, setCurrentAnswer] = useState<{ key: string; icon: string; color: string } | null>(null);
-  const [questionCount, setQuestionCount] = useState(0); // ⚡ AJOUTÉ
+  // ❌ SUPPRIMÉ : const [questionCount, setQuestionCount] = useState(0);
   const { t } = useLanguage();
 
   const mysticalAnswers = [
@@ -41,40 +40,25 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
   const saveReading = async (answerKey: string) => {
     if (onSaveReading) {
       try {
-        const readingData = {
+        await onSaveReading({
           type: 'crystalBall',
           question: question,
           answer: answerKey,
           date: new Date()
-        };
-        await onSaveReading(readingData);
-        console.log('✅ Crystal Ball reading saved');
+        });
+        console.log('✅ Crystal Ball saved → pub triggered via App.tsx');
       } catch (error) {
         console.error('❌ Save error:', error);
       }
     }
   };
 
+  // ✅ MODIFIÉ : Suppression du système de pub interne
   const handleAskQuestion = async () => {
     if (!question.trim()) return;
 
-    // ⚡ Incrémenter le compteur
-    const newCount = questionCount + 1;
-    setQuestionCount(newCount);
-
-    console.log(`🔮 Question n°${newCount}`);
-
-    // ⚡ Système de pub : 1er gratuit, 2e avec pub, puis tous les 3 (5, 8, 11...)
-    const shouldShowAd = newCount === 2 || (newCount > 2 && (newCount - 2) % 3 === 0);
-
-    if (shouldShowAd) {
-      console.log(`🎬 Affichage pub (question n°${newCount})`);
-      try {
-        await showInterstitialAd();
-      } catch (error) {
-        console.log("Pub non disponible");
-      }
-    }
+    // ❌ SUPPRIMÉ : Toute la logique de compteur et pub
+    // La pub sera gérée par App.tsx via onSaveReading()
 
     console.log('🔮 Phase: LOADING');
     setPhase('loading');
@@ -86,6 +70,7 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
       setCurrentAnswer(randomAnswer);
       setPhase('answer');
 
+      // ✅ Sauvegarder (déclenchera la pub via App.tsx)
       saveReading(randomAnswer.key);
     }, 2500);
   };
@@ -96,7 +81,6 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
     setCurrentAnswer(null);
     setPhase('question');
   };
-
   return (
     <div className="crystal-ball-page min-h-screen w-full flex justify-center items-start px-4 py-4 pt-20 sm:pt-24">
       <div className="max-w-lg w-full flex flex-col gap-3 sm:gap-4">

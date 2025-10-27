@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import MysticalButton from '@/components/MysticalButton';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 interface NotificationPermissionModalProps {
   onClose: () => void;

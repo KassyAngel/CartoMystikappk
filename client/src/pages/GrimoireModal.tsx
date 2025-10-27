@@ -8,6 +8,7 @@ interface GrimoireModalProps {
   onSaveNote: (readingId: string, note: string) => Promise<void>;
   onToggleFavorite: (readingId: string) => Promise<void>;
   onClose: () => void;
+  onClearAll?: () => Promise<void>; // ✅ Nouvelle prop pour effacer
 }
 
 const GrimoireModal = ({
@@ -16,40 +17,57 @@ const GrimoireModal = ({
   onSaveNote,
   onToggleFavorite,
   onClose,
+  onClearAll,
 }: GrimoireModalProps) => {
   const [expandedReadings, setExpandedReadings] = useState<Set<string>>(new Set());
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const { t, language } = useLanguage();
 
   // 🔧 Dédupliquer les lectures (par date et type)
   const uniqueReadings = useMemo(() => {
-    console.log('📚 Total readings:', readings.length);
-    console.log('📖 All readings:', readings);
-
     const seen = new Map<string, Reading>();
 
     readings.forEach(reading => {
-      // Créer une clé unique basée sur plusieurs critères
-      const dateKey = new Date(reading.date).toISOString().split('T')[0]; // YYYY-MM-DD
+      const dateKey = new Date(reading.date).toISOString().split('T')[0];
       const cardsKey = reading.cards ? reading.cards.sort().join(',') : '';
       const key = `${dateKey}-${reading.type}-${cardsKey}`;
 
-      console.log('🔑 Reading key:', key, reading);
-
-      // Garder seulement la première occurrence
       if (!seen.has(key)) {
         seen.set(key, reading);
-      } else {
-        console.log('⚠️ Duplicate found:', key);
       }
     });
 
-    const unique = Array.from(seen.values()).sort((a, b) => 
+    return Array.from(seen.values()).sort((a, b) => 
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
-
-    console.log('✅ Unique readings:', unique.length);
-    return unique;
   }, [readings]);
+
+  // 📊 Compteur de tirages
+  const totalReadings = uniqueReadings.length;
+  const readingsThisMonth = useMemo(() => {
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+
+    return uniqueReadings.filter(reading => {
+      const readingDate = new Date(reading.date);
+      return readingDate.getMonth() === currentMonth && 
+             readingDate.getFullYear() === currentYear;
+    }).length;
+  }, [uniqueReadings]);
+
+  // 🗑️ Fonction pour effacer tout le grimoire
+  const handleClearAll = async () => {
+    if (!onClearAll) return;
+
+    try {
+      await onClearAll();
+      setShowConfirmDelete(false);
+      console.log('🔥 Grimoire vidé !');
+    } catch (error) {
+      console.error('❌ Erreur lors du vidage du grimoire:', error);
+    }
+  };
 
   const toggleExpand = (readingId: string) => {
     setExpandedReadings(prev => {
@@ -65,7 +83,6 @@ const GrimoireModal = ({
 
   const displayedReadings = isPremium ? uniqueReadings : uniqueReadings.slice(0, 3);
 
-  // 🎨 Fonction pour obtenir le badge coloré selon le type d'oracle
   const getOracleBadge = (type: string) => {
     const badges = {
       tarot: { emoji: '🔮', label: t("grimoire.oracle.tarot"), color: 'bg-purple-600' },
@@ -79,28 +96,19 @@ const GrimoireModal = ({
     return badges[type as keyof typeof badges] || badges.oracle;
   };
 
-  // 🌍 Normaliser le nom de carte pour obtenir la clé de traduction
   const normalizeCardName = (cardName: string): string => {
     if (!cardName) return '';
-
-    // Pour les clés de traduction, on garde le nom EXACT mais on retire juste les espaces
-    // Exemple: "Le Fou" → "LeFou", "L'Amoureux" → "LAmoureux"
     return cardName
-    .trim()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')  // Enlève les accents (compatible ES5)
-    .replace(/\s+/g, '')
-    .replace(/'/g, '');
-    // PAS de toLowerCase() car les clés utilisent la casse originale !
+      .trim()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '')
+      .replace(/'/g, '');
   };
 
-  // 🃏 Traduire le nom d'une carte selon le type d'oracle
   const translateCardName = (cardName: string, readingType: string): string => {
     if (!cardName) return '';
 
-    console.log('🔍 Translating card:', { cardName, readingType, language });
-
-    // Déterminer le type d'oracle pour les clés de traduction
     let oracleKey = 'daily';
     if (readingType === 'tarot') oracleKey = 'tarot';
     else if (readingType === 'angels') oracleKey = 'angels';
@@ -110,10 +118,6 @@ const GrimoireModal = ({
     else if (readingType === 'daily') oracleKey = 'daily';
 
     const normalizedName = normalizeCardName(cardName);
-    console.log('📝 Normalized name:', normalizedName);
-
-    // ✅ STRUCTURE CORRECTE : cards.oracleType.CardName.name
-    // Exemple: "Le Fou" → "cards.tarot.LeFou.name"
     const possibleKeys = [
       `cards.${oracleKey}.${normalizedName}.name`,
       `cards.${oracleKey}.${normalizedName}`,
@@ -121,29 +125,18 @@ const GrimoireModal = ({
       `${oracleKey}.cards.${normalizedName}`,
     ];
 
-    console.log('🔑 Trying keys:', possibleKeys);
-
     for (const key of possibleKeys) {
       const translated = t(key);
-      console.log(`  ${key} →`, translated);
-
-      // Si la traduction existe et est différente de la clé
       if (translated && translated !== key && translated !== cardName) {
-        console.log('✅ Found translation:', translated);
         return translated;
       }
     }
 
-    console.log('❌ No translation found, returning original:', cardName);
-    // Si aucune traduction trouvée, retourner le nom original
     return cardName;
   };
 
-  // 📅 Fonction pour formater la date avec l'heure (multilingue)
   const formatDateTime = (date: Date) => {
     const d = new Date(date);
-
-    // Adapter la locale selon la langue
     const localeMap: Record<string, string> = {
       fr: 'fr-FR',
       en: 'en-US',
@@ -180,6 +173,63 @@ const GrimoireModal = ({
         <h2 className="text-xl sm:text-2xl font-bold mb-3 text-yellow-300 pr-8">
           📜 {t("grimoire.title")}
         </h2>
+
+        {/* 📊 Statistiques des tirages */}
+        <div className="bg-purple-800/40 border border-purple-500/30 rounded-lg p-3 mb-3">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-3">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-yellow-300">{totalReadings}</div>
+                <div className="text-xs text-purple-300">{t("grimoire.stats.total") || "Total"}</div>
+              </div>
+              <div className="w-px h-10 bg-purple-500/30"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-300">{readingsThisMonth}</div>
+                <div className="text-xs text-purple-300">{t("grimoire.stats.thisMonth") || "Ce mois"}</div>
+              </div>
+            </div>
+
+            {/* 🗑️ Bouton Effacer tout */}
+            {onClearAll && totalReadings > 0 && (
+              <button
+                onClick={() => setShowConfirmDelete(true)}
+                className="bg-red-600/30 hover:bg-red-600/50 text-red-200 px-3 py-1.5 rounded-lg transition-all text-sm border border-red-500/30 flex items-center gap-1.5"
+              >
+                <span>🗑️</span>
+                <span>{t("grimoire.clearAll.button") || "Tout effacer"}</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* ⚠️ Modal de confirmation de suppression */}
+        {showConfirmDelete && (
+          <div className="bg-red-900/40 border-2 border-red-500 rounded-lg p-4 mb-3">
+            <div className="text-center mb-3">
+              <div className="text-3xl mb-2">⚠️</div>
+              <p className="text-red-200 font-bold mb-1">
+                {t("grimoire.clearAll.confirm.title") || "Êtes-vous sûr ?"}
+              </p>
+              <p className="text-red-300 text-sm">
+                {t("grimoire.clearAll.confirm.message") || "Cette action est irréversible. Tous vos tirages seront supprimés définitivement."}
+              </p>
+            </div>
+            <div className="flex gap-2 justify-center">
+              <button
+                onClick={() => setShowConfirmDelete(false)}
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-all"
+              >
+                {t("common.cancel") || "Annuler"}
+              </button>
+              <button
+                onClick={handleClearAll}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-all font-bold"
+              >
+                {t("grimoire.clearAll.confirm.button") || "Oui, tout effacer"}
+              </button>
+            </div>
+          </div>
+        )}
 
         {!isPremium && (
           <div className="bg-yellow-600/20 border border-yellow-600 rounded-lg p-2.5 mb-3 text-sm">
@@ -240,9 +290,7 @@ const GrimoireModal = ({
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {reading.cards.map((card, idx) => {
-                          // 🌍 TRADUCTION DES CARTES
                           const translatedCard = translateCardName(card, reading.type);
-
                           return (
                             <span 
                               key={idx}

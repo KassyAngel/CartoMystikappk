@@ -32,7 +32,7 @@ type AppStep =
 
 interface OracleMystiqueAppProps {
   onSaveReading?: (reading: any) => Promise<void>;
-  onStepChange?: (step: AppStep) => void;
+  onStepChange?: ((step: AppStep) => void) | ((step: AppStep) => Promise<void>); // ✅ Union explicite
 }
 
 export default function OracleMystiqueApp({ onSaveReading, onStepChange }: OracleMystiqueAppProps) {
@@ -43,7 +43,11 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
 
   useEffect(() => {
     if (onStepChange) {
-      onStepChange(currentStep);
+      // ✅ Gère les deux cas (sync et async)
+      const result = onStepChange(currentStep);
+      if (result instanceof Promise) {
+        result.catch(err => console.error('Error in onStepChange:', err));
+      }
     }
   }, [currentStep, onStepChange]);
 
@@ -103,26 +107,6 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
 
   const oracle = selectedOracle ? oracleData[selectedOracle] : null;
 
-  const handleSaveReading = async (reading: any) => {
-    try {
-      const response = await fetch('/api/readings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(reading)
-      });
-      if (response.ok) {
-        const savedReading = await response.json();
-        console.log('✅ Tirage enregistré dans le grimoire :', savedReading);
-        if (onSaveReading) {
-          await onSaveReading(savedReading);
-        }
-      }
-    } catch (error) {
-      console.error('❌ Erreur sauvegarde tirage:', error);
-    }
-  };
-
   return (
     <div className="min-h-screen flex flex-col">
       <StarsBackground />
@@ -149,12 +133,14 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
           />
         )}
 
+        {/* ✅ CORRIGÉ : Ajout onSaveReading */}
         {currentStep === 'game' && oracle && (
           <CardGame
             user={user}
             oracle={oracle}
             oracleType={selectedOracle as any}
             onCardsSelected={handleCardsSelected}
+            onSaveReading={onSaveReading}
             onBack={handleBackToOracle}
           />
         )}
@@ -180,23 +166,26 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
             onBack={handleBackToCards}
             onHome={handleBackToOracle}
             onCrystalBall={handleGoToCrystalBall}
-            onSaveReading={handleSaveReading}
+            onSaveReading={onSaveReading}
           />
         )}
 
+        {/* ✅ CORRIGÉ : Ajout onSaveReading */}
         {currentStep === 'horoscope' && (
           <HoroscopePage
             user={user}
             onBack={handleBackToOracle}
             onHome={handleBackToHome}
+            onSaveReading={onSaveReading}
           />
         )}
 
+        {/* ✅ CORRIGÉ : Ajout onSaveReading */}
         {currentStep === 'crystalBall' && (
           <CrystalBallPage
             user={user}
             onBack={handleBackToOracle}
-            onSaveReading={handleSaveReading}
+            onSaveReading={onSaveReading}
           />
         )}
 

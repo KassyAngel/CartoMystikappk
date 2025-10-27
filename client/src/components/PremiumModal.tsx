@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { config } from '@/config';
 
 interface PremiumModalProps {
   isOpen: boolean;
@@ -12,7 +13,6 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
   const [loading, setLoading] = useState(false);
   const { t } = useLanguage();
 
-  // Fermer avec Escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && !loading) {
@@ -32,39 +32,41 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
 
   if (!isOpen) return null;
 
+  // ✅ NOUVEAU : Fonction de paiement Stripe
   const handleSubscribe = async () => {
     if (!selectedPlan) return;
 
     setLoading(true);
 
     try {
-      const confirmMessage = selectedPlan === 'premium_1month' 
-        ? `💳 ${t("premium.confirm.1month")}` 
-        : `💳 ${t("premium.confirm.3months")}`;
+      console.log('🛒 Création session Stripe pour plan:', selectedPlan);
 
-      const paymentSuccess = confirm(confirmMessage);
+      // 1️⃣ Appeler le backend pour créer la session Stripe
+      const response = await fetch(`${config.apiBaseUrl}/api/create-checkout-session`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ planId: selectedPlan })
+      });
 
-      if (paymentSuccess) {
-        const response = await fetch('/api/premium/activate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ planId: selectedPlan })
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          alert(`🎉 ${t("premium.success")}`);
-          if (onPurchase) onPurchase(selectedPlan);
-          onClose();
-        } else {
-          alert(`❌ ${t("premium.error.activation")}`);
-        }
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP: ${response.status}`);
       }
-    } catch (error) {
-      console.error('Erreur abonnement:', error);
-      alert(`❌ ${t("premium.error.payment")}`);
+
+      const data = await response.json();
+
+      if (data.success && data.url) {
+        console.log('✅ Session Stripe créée, redirection vers:', data.url);
+
+        // 2️⃣ Rediriger vers la page de paiement Stripe
+        window.location.href = data.url;
+      } else {
+        throw new Error(data.error || 'Erreur création session');
+      }
+
+    } catch (error: any) {
+      console.error('❌ Erreur paiement Stripe:', error);
+      alert(`❌ ${t("premium.error.payment") || "Erreur lors du paiement. Réessayez."}`);
     } finally {
       setLoading(false);
     }
@@ -88,15 +90,12 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      {/* Overlay */}
       <div 
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={handleOverlayClick}
       />
 
-      {/* Contenu Modal */}
       <div className="relative bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-800 rounded-2xl shadow-2xl max-w-md w-full p-6 border-2 border-yellow-500/30">
-        {/* Bouton fermer */}
         <button
           type="button"
           onClick={handleCloseClick}
@@ -109,7 +108,6 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
           </svg>
         </button>
 
-        {/* Titre */}
         <div className="text-center mb-6">
           <div className="text-4xl mb-2">✨</div>
           <h2 className="text-2xl font-bold text-yellow-400 mb-2">
@@ -120,7 +118,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
           </p>
         </div>
 
-        {/* Plans */}
+        {/* Plans d'abonnement */}
         <div className="space-y-3 mb-6">
           {/* Plan 1 mois */}
           <button
@@ -142,7 +140,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
             </div>
           </button>
 
-          {/* Plan 3 mois */}
+          {/* Plan 3 mois (avec badge promo) */}
           <button
             type="button"
             onClick={() => setSelectedPlan('premium_3months')}
@@ -169,7 +167,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
           </button>
         </div>
 
-        {/* Bouton S'abonner */}
+        {/* Bouton de paiement */}
         <button
           type="button"
           onClick={handleSubscribe}
@@ -181,9 +179,14 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
           }`}
         >
           {loading 
-            ? (t("premium.button.processing") || "En cours...") 
+            ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="animate-spin">⏳</span>
+                {t("premium.button.processing") || "Redirection..."}
+              </span>
+            )
             : (selectedPlan 
-              ? (t("premium.button.subscribe") || "S'abonner") 
+              ? `💳 ${t("premium.button.subscribe") || "Payer avec Stripe"}` 
               : (t("premium.button.select") || "Sélectionner un plan")
             )
           }
@@ -191,18 +194,26 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
 
         {/* Conditions */}
         <div className="mt-4 text-xs text-purple-200 text-center space-y-1">
-          <p>{t("premium.conditions.line1") || "Paiement sécurisé"}</p>
-          <p className="text-purple-300">{t("premium.conditions.line2") || "Annulation à tout moment"}</p>
+          <p>🔒 {t("premium.conditions.line1") || "Paiement sécurisé par Stripe"}</p>
+          <p className="text-purple-300">{t("premium.conditions.line2") || "Vos données sont protégées"}</p>
         </div>
 
-        {/* Avantages */}
+        {/* Avantages Premium */}
         <div className="mt-4 pt-4 border-t border-purple-500/30">
           <div className="text-center text-sm text-purple-200 space-y-1">
             <div>✓ {t("premium.benefits.ads") || "Sans publicité"}</div>
-            <div>✓ {t("premium.benefits.grimoire") || "Accès au grimoire"}</div>
+            <div>✓ {t("premium.benefits.grimoire") || "Grimoire illimité"}</div>
             <div>✓ {t("premium.benefits.notes") || "Notes personnalisées"}</div>
             <div>✓ {t("premium.benefits.history") || "Historique complet"}</div>
           </div>
+        </div>
+
+        {/* Logo Stripe */}
+        <div className="mt-3 flex items-center justify-center gap-2 text-purple-300 text-xs">
+          <span>Powered by</span>
+          <svg className="h-4" viewBox="0 0 60 25" fill="currentColor">
+            <path d="M59.64 14.28h-8.06c.19 1.93 1.6 2.55 3.2 2.55 1.64 0 2.96-.37 4.05-.95v3.32a8.33 8.33 0 0 1-4.56 1.1c-4.01 0-6.83-2.5-6.83-7.48 0-4.19 2.39-7.52 6.3-7.52 3.92 0 5.96 3.28 5.96 7.5 0 .4-.04 1.26-.06 1.48zm-5.92-5.62c-1.03 0-2.17.73-2.17 2.58h4.25c0-1.85-1.07-2.58-2.08-2.58zM40.95 20.3c-1.44 0-2.32-.6-2.9-1.04l-.02 4.63-4.12.87V5.57h3.76l.08 1.02a4.7 4.7 0 0 1 3.23-1.29c2.9 0 5.62 2.6 5.62 7.4 0 5.23-2.7 7.6-5.65 7.6zM40 8.95c-.95 0-1.54.34-1.97.81l.02 6.12c.4.44.98.78 1.95.78 1.52 0 2.54-1.65 2.54-3.87 0-2.15-1.04-3.84-2.54-3.84zM28.24 5.57h4.13v14.44h-4.13V5.57zm0-4.7L32.37 0v3.36l-4.13.88V.88zm-4.32 9.35v9.79H19.8V5.57h3.7l.12 1.22c1-1.77 3.07-1.41 3.62-1.22v3.79c-.52-.17-2.29-.43-3.32.86zm-8.55 4.72c0 2.43 2.6 1.68 3.12 1.46v3.36c-.55.3-1.54.54-2.89.54a4.15 4.15 0 0 1-4.27-4.24l.01-13.17 4.02-.86v3.54h3.14V9.1h-3.13v5.85zm-4.91.70c0 2.97-2.31 4.66-5.73 4.66a11.2 11.2 0 0 1-4.46-.93v-3.93c1.38.75 3.1 1.31 4.46 1.31.92 0 1.53-.24 1.53-1C6.26 13.77 0 14.51 0 9.95 0 7.04 2.28 5.3 5.62 5.3c1.36 0 2.72.2 4.09.75v3.88a9.23 9.23 0 0 0-4.1-1.06c-.86 0-1.44.25-1.44.9 0 1.85 6.29.97 6.29 5.88z"/>
+          </svg>
         </div>
       </div>
     </div>

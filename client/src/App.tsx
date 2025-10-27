@@ -17,7 +17,7 @@ import { config } from '@/config';
 
 export interface Reading {
   id: string;
-  type: 'tarot' | 'oracle' | 'crystal' | 'horoscope' | 'angels' | 'runes' | 'crystalBall' | 'mysteryDice'; // ✅ AJOUTÉ mysteryDice
+  type: 'tarot' | 'oracle' | 'crystal' | 'horoscope' | 'angels' | 'runes' | 'crystalBall' | 'mysteryDice' | 'bonusRoll';
   oracleTitle?: string;
   date: Date;
   cards?: string[];
@@ -27,8 +27,7 @@ export interface Reading {
   isFavorite: boolean;
 }
 
-// ✅ AJOUTÉ mysteryDice
-type AppStep = 'landing' | 'name' | 'date' | 'gender' | 'oracle' | 'game' | 'revelation' | 'interpretation' | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'responsiveTest';
+type AppStep = 'landing' | 'name' | 'date' | 'gender' | 'oracle' | 'game' | 'revelation' | 'interpretation' | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'bonusRoll' | 'responsiveTest';
 
 function Router({ onSaveReading, onStepChange }: { 
   onSaveReading: (reading: any) => Promise<void>;
@@ -39,7 +38,7 @@ function Router({ onSaveReading, onStepChange }: {
       <Route path="/">
         <OracleMystiqueApp 
           onSaveReading={onSaveReading} 
-          onStepChange={onStepChange} 
+          onStepChange={onStepChange as any}
         />
       </Route>
       <Route component={NotFound} />
@@ -57,6 +56,7 @@ function App() {
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
 
+  // Afficher la bannière au démarrage
   useEffect(() => {
     showBannerAd();
   }, []);
@@ -143,44 +143,92 @@ function App() {
     }
   };
 
-  const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
-    if (reading.type === 'crystalBall') {
-      console.log('🔮 Crystal Ball not saved in Grimoire');
-      return;
-    }
-
+  // 🗑️ NOUVELLE FONCTION : Effacer tout le Grimoire
+  const clearAllReadings = async () => {
     try {
-      console.log('📤 Envoi tirage vers:', `${config.apiBaseUrl}/api/readings`);
+      console.log('🗑️ Suppression de tous les tirages du Grimoire...');
 
+      // Appel API pour supprimer tous les tirages
       const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(reading)
+        method: 'DELETE',
+        credentials: 'include'
       });
 
       if (!response.ok) {
-        throw new Error(`Erreur HTTP: ${response.status}`);
+        throw new Error('Erreur lors de la suppression');
       }
 
-      const newReading = await response.json();
-      setReadings(prev => [
-        { ...newReading, date: new Date(newReading.date) },
-        ...prev
-      ]);
+      // Vider l'état local
+      setReadings([]);
 
-      console.log('✅ Tirage enregistré:', newReading.id);
+      console.log('🔥 Grimoire complètement vidé !');
+    } catch (error) {
+      console.error('❌ Erreur lors du vidage du grimoire:', error);
+      alert('Une erreur est survenue lors de la suppression des tirages.');
+    }
+  };
 
-      const newCount = readingCount + 1;
-      setReadingCount(newCount);
+  const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
+    // ❌ Liste des types à NE PAS sauvegarder dans le Grimoire
+    const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
+    const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
 
-      console.log(`📊 Compteur de tirages: ${newCount}`); 
+    try {
+      console.log('📤 Envoi tirage:', reading.type);
 
-      if (newCount === 1 || newCount % 2 === 0) {
-        console.log(`📢 Affichage pub (tirage n°${newCount})`);
-        setTimeout(() => {
-          showInterstitialAd();
-        }, 1000);
+      // ✅ Envoyer au serveur SEULEMENT si c'est un type à sauvegarder
+      if (shouldSaveInGrimoire) {
+        const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(reading)
+        });
+
+        // ⚠️ IGNORE l'erreur 403 (ancienne limite obsolète)
+        if (response.status === 403) {
+          console.log('⚠️ Erreur 403 ignorée (limite supprimée côté serveur)');
+          // Ne rien faire, continuer normalement
+        } else if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
+        } else {
+          const newReading = await response.json();
+
+          // ✅ Ajouter à l'état local
+          setReadings(prev => [
+            { ...newReading, date: new Date(newReading.date) },
+            ...prev
+          ]);
+          console.log('✅ Tirage enregistré dans Grimoire:', newReading.id);
+        }
+      } else {
+        console.log(`🚫 ${reading.type} non sauvegardé dans Grimoire (type exclu)`);
+      }
+
+      // 🎬 SYSTÈME PUB UNIFIÉ (avec vérification Premium)
+      if (!isPremium) {
+        const newCount = readingCount + 1;
+        setReadingCount(newCount);
+
+        let shouldShowAd = false;
+        const isCrystalBall = reading.type === 'crystalBall';
+
+        if (isCrystalBall) {
+          shouldShowAd = newCount === 2 || (newCount > 2 && (newCount - 2) % 3 === 0);
+          console.log(`🔮 Crystal Ball n°${newCount} → Pub: ${shouldShowAd ? 'OUI' : 'NON'}`);
+        } else {
+          shouldShowAd = newCount === 1 || newCount % 2 === 0;
+          console.log(`🌟 ${reading.type} n°${newCount} → Pub: ${shouldShowAd ? 'OUI' : 'NON'}`);
+        }
+
+        if (shouldShowAd) {
+          console.log(`🎬 Affichage pub interstitielle (tirage global n°${newCount})`);
+          setTimeout(() => {
+            showInterstitialAd();
+          }, 1000);
+        }
+      } else {
+        console.log('👑 Premium actif : pas de publicité');
       }
 
     } catch (error) {
@@ -224,6 +272,7 @@ function App() {
                   onSaveNote={handleSaveNote}
                   onToggleFavorite={handleToggleFavorite}
                   onClose={() => setIsGrimoireOpen(false)}
+                  onClearAll={clearAllReadings}
                 />
               )}
 

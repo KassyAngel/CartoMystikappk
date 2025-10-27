@@ -1,32 +1,172 @@
-import type { Express } from "express";
+import type { Express, Request, Response } from "express";
+import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import cors from "cors";
+import Stripe from "stripe";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+// ====== Initialisation Stripe ======
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: "2025-09-30.clover",
+});
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // ===== CONFIGURATION CORS =====
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+    })
+  );
 
-  // ===== ROUTES HOROSCOPE =====
+  app.options("*", (_, res) => res.status(200).end());
 
-  const horoscopeHandler = async (req: any, res: any) => {
+  // ========================================
+  // 🧾 ROUTE WEBHOOK STRIPE
+  // ========================================
+  app.post(
+    "/api/webhook",
+    express.raw({ type: "application/json" }), // corps brut
+    async (req: Request, res: Response) => {
+      const sig = req.headers["stripe-signature"];
+      if (!sig) return res.status(400).send("Signature manquante");
+
+      try {
+        const event = stripe.webhooks.constructEvent(
+          req.body,
+          sig,
+          process.env.STRIPE_WEBHOOK_SECRET as string
+        );
+
+        console.log("📬 Événement Stripe reçu:", event.type);
+
+        if (event.type === "checkout.session.completed") {
+          const session = event.data.object as Stripe.Checkout.Session;
+          const userId = session.metadata?.userId;
+          const planId = session.metadata?.planId;
+
+          if (userId && planId) {
+            console.log(`✅ Paiement réussi pour user ${userId}, plan ${planId}`);
+
+            const expiresAt = new Date();
+            if (planId === "premium_1month") {
+              expiresAt.setMonth(expiresAt.getMonth() + 1);
+            } else if (planId === "premium_3months") {
+              expiresAt.setMonth(expiresAt.getMonth() + 3);
+            }
+
+            await storage.setItem(
+              `premiumUntil_${userId}`,
+              expiresAt.toISOString()
+            );
+
+            console.log(
+              `✅ User ${userId} premium jusqu'au ${expiresAt.toISOString()}`
+            );
+          }
+        }
+
+        res.json({ received: true });
+      } catch (err: any) {
+        console.error("❌ Erreur webhook Stripe:", err.message);
+        res.status(400).send(`Webhook Error: ${err.message}`);
+      }
+    }
+  );
+
+  // ========================================
+  // 💳 CRÉATION SESSION CHECKOUT
+  // ========================================
+  app.post("/api/create-checkout-session", async (req: Request, res: Response) => {
+    try {
+      const { planId } = req.body;
+      if (!planId) return res.status(400).json({ error: "planId requis" });
+
+      const prices: Record<string, { amount: number; currency: string }> = {
+        premium_1month: { amount: 399, currency: "eur" },
+        premium_3months: { amount: 898, currency: "eur" },
+      };
+
+      const selectedPrice = prices[planId];
+      if (!selectedPrice) return res.status(400).json({ error: "Plan invalide" });
+
+      const userId = (req as any).session?.userId || "guest";
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: [
+          {
+            price_data: {
+              currency: selectedPrice.currency,
+              product_data: {
+                name:
+                  planId === "premium_1month"
+                    ? "Oracle Mystique Premium - 1 mois"
+                    : "Oracle Mystique Premium - 3 mois",
+                description: "Accès illimité sans publicités",
+              },
+              unit_amount: selectedPrice.amount,
+            },
+            quantity: 1,
+          },
+        ],
+        mode: "payment",
+        success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+        metadata: {
+          userId: userId.toString(),
+          planId: planId,
+        },
+      });
+
+      console.log("✅ Session Stripe créée:", session.id);
+      res.json({ success: true, sessionId: session.id, url: session.url });
+    } catch (error: any) {
+      console.error("❌ Erreur création session Stripe:", error);
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // ========================================
+  // 🔮 HOROSCOPE (inchangé)
+  // ========================================
+  const horoscopeHandler = async (req: Request, res: Response) => {
     try {
       const { sign } = req.params;
+      const validSigns = [
+        "aries",
+        "taurus",
+        "gemini",
+        "cancer",
+        "leo",
+        "virgo",
+        "libra",
+        "scorpio",
+        "sagittarius",
+        "capricorn",
+        "aquarius",
+        "pisces",
+      ];
 
-      const validSigns = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 
-                         'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
+      if (!validSigns.includes(sign.toLowerCase()))
+        return res.status(400).json({ error: "Signe zodiacal invalide" });
 
-      if (!validSigns.includes(sign.toLowerCase())) {
-        return res.status(400).json({ error: 'Signe zodiacal invalide' });
-      }
-
+      console.log(`🔮 Horoscope pour ${sign}`);
       const horoscope = generateDailyHoroscope(sign.toLowerCase());
       res.json(horoscope);
     } catch (error) {
-      console.error('Erreur horoscope:', error);
-      res.status(500).json({ error: 'Impossible de récupérer l\'horoscope du jour' });
+      console.error("❌ Erreur horoscope:", error);
+      res.status(500).json({ error: "Impossible de générer l'horoscope" });
     }
   };
 
-  app.get('/api/horoscope/:sign', horoscopeHandler);
-  app.post('/api/horoscope/:sign', horoscopeHandler);
+  app.get("/api/horoscope/:sign", horoscopeHandler);
+  app.post("/api/horoscope/:sign", horoscopeHandler);
 
   function generateDailyHoroscope(sign: string) {
     const today = new Date();
@@ -197,200 +337,214 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     };
 
-    const signData = horoscopes[sign];
-    if (!signData) {
-      throw new Error('Signe non trouvé');
-    }
+     const signData = horoscopes[sign];
+        if (!signData) {
+          throw new Error('Signe non trouvé');
+        }
 
-    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000);
-    const descIndex = dayOfYear % signData.descriptions.length;
-    const moodIndex = dayOfYear % signData.moods.length;
-    const colorIndex = dayOfYear % signData.colors.length;
-    const compatIndex = dayOfYear % signData.compatibility.length;
-    const luckyNumber = (dayOfYear % 50) + 1;
+        const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000);
+        const descIndex = dayOfYear % signData.descriptions.length;
+        const moodIndex = dayOfYear % signData.moods.length;
+        const colorIndex = dayOfYear % signData.colors.length;
+        const compatIndex = dayOfYear % signData.compatibility.length;
+        const luckyNumber = (dayOfYear % 50) + 1;
 
-    return {
-      sign: sign,
-      date: getSignDateRange(sign),
-      description: signData.descriptions[descIndex],
-      mood: signData.moods[moodIndex],
-      luckyNumber: luckyNumber.toString(),
-      luckyColor: signData.colors[colorIndex],
-      compatibility: signData.compatibility[compatIndex],
-      currentDate: currentDate
-    };
-  }
-
-  function getSignDateRange(sign: string): string {
-    const ranges: Record<string, string> = {
-      aries: "21 mars - 19 avril",
-      taurus: "20 avril - 20 mai", 
-      gemini: "21 mai - 20 juin",
-      cancer: "21 juin - 22 juillet",
-      leo: "23 juillet - 22 août",
-      virgo: "23 août - 22 septembre",
-      libra: "23 septembre - 22 octobre",
-      scorpio: "23 octobre - 21 novembre",
-      sagittarius: "22 novembre - 21 décembre",
-      capricorn: "22 décembre - 19 janvier",
-      aquarius: "20 janvier - 18 février",
-      pisces: "19 février - 20 mars"
-    };
-    return ranges[sign] || "";
-  }
-
-  // ===== ROUTES PREMIUM =====
-
-  // Activer un abonnement premium
-  app.post("/api/premium/activate", async (req, res) => {
-    try {
-      const { planId } = req.body;
-
-      // Calculer la date d'expiration
-      const now = new Date();
-      let premiumUntil: Date;
-
-      if (planId === 'premium_1month') {
-        premiumUntil = new Date(now.setMonth(now.getMonth() + 1));
-      } else if (planId === 'premium_3months') {
-        premiumUntil = new Date(now.setMonth(now.getMonth() + 3));
-      } else {
-        return res.status(400).json({ error: 'Plan invalide' });
+        return {
+          sign: sign,
+          date: getSignDateRange(sign),
+          description: signData.descriptions[descIndex],
+          mood: signData.moods[moodIndex],
+          luckyNumber: luckyNumber.toString(),
+          luckyColor: signData.colors[colorIndex],
+          compatibility: signData.compatibility[compatIndex],
+          currentDate: currentDate
+        };
       }
 
-      // Sauvegarder dans le storage
-      await storage.setItem('premiumUntil', premiumUntil.toISOString());
-
-      console.log(`✅ Premium activé jusqu'au ${premiumUntil.toLocaleDateString('fr-FR')}`);
-
-      res.json({
-        success: true,
-        isPremium: true,
-        premiumUntil: premiumUntil.toISOString()
-      });
-    } catch (error) {
-      console.error("❌ Erreur activation premium:", error);
-      res.status(500).json({ error: "Erreur serveur" });
-    }
-  });
-
-  // Vérifier le statut premium
-  app.get("/api/user/premium-status", async (req, res) => {
-    try {
-      const premiumUntilStr = await storage.getItem('premiumUntil');
-
-      if (!premiumUntilStr) {
-        return res.json({ isPremium: false, premiumUntil: null });
+      function getSignDateRange(sign: string): string {
+        const ranges: Record<string, string> = {
+          aries: "21 mars - 19 avril",
+          taurus: "20 avril - 20 mai",
+          gemini: "21 mai - 20 juin",
+          cancer: "21 juin - 22 juillet",
+          leo: "23 juillet - 22 août",
+          virgo: "23 août - 22 septembre",
+          libra: "23 septembre - 22 octobre",
+          scorpio: "23 octobre - 21 novembre",
+          sagittarius: "22 novembre - 21 décembre",
+          capricorn: "22 décembre - 19 janvier",
+          aquarius: "20 janvier - 18 février",
+          pisces: "19 février - 20 mars"
+        };
+        return ranges[sign] || "";
       }
 
-      const premiumUntil = new Date(premiumUntilStr);
-      const now = new Date();
-      const isPremium = premiumUntil > now;
+      // ===== ROUTES PREMIUM =====
 
-      console.log(`🔍 Vérification premium: ${isPremium ? 'Actif' : 'Expiré'} (expire: ${premiumUntil.toLocaleDateString('fr-FR')})`);
+      app.post("/api/premium/activate", async (req, res) => {
+        try {
+          const { planId } = req.body;
+          const now = new Date();
+          let premiumUntil: Date;
 
-      res.json({ 
-        isPremium,
-        premiumUntil: isPremium ? premiumUntilStr : null
-      });
-    } catch (error) {
-      console.error("❌ Erreur vérification premium:", error);
-      res.json({ isPremium: false, premiumUntil: null });
-    }
-  });
+          if (planId === 'premium_1month') {
+            premiumUntil = new Date(now.setMonth(now.getMonth() + 1));
+          } else if (planId === 'premium_3months') {
+            premiumUntil = new Date(now.setMonth(now.getMonth() + 3));
+          } else {
+            return res.status(400).json({ error: 'Plan invalide' });
+          }
 
-  // ===== ROUTES GRIMOIRE =====
+          await storage.setItem('premiumUntil', premiumUntil.toISOString());
 
-  app.get("/api/readings", async (req, res) => {
-    try {
-      const allReadings = await storage.getItem('readings') || [];
-      console.log(`📖 Récupération de ${allReadings.length} tirages`);
-      res.json({ readings: allReadings });
-    } catch (error) {
-      console.error("❌ Erreur récupération tirages:", error);
-      res.status(500).json({ error: "Erreur serveur" });
-    }
-  });
+          console.log(`✅ Premium activé jusqu'au ${premiumUntil.toLocaleDateString('fr-FR')}`);
 
-  app.post("/api/readings", async (req, res) => {
-    try {
-      const { type, cards, question, answer } = req.body;
-
-      const allReadings = await storage.getItem('readings') || [];
-
-      const newReading = {
-        id: Date.now().toString(),
-        type,
-        cards: cards || null,
-        question: question || null,
-        answer: answer || null,
-        notes: "",
-        isFavorite: false,
-        date: new Date().toISOString(),
-      };
-
-      allReadings.unshift(newReading);
-      await storage.setItem('readings', allReadings);
-
-      console.log('✅ Tirage enregistré côté serveur:', {
-        id: newReading.id,
-        type: newReading.type,
-        cardsCount: cards?.length || 0
+          res.json({
+            success: true,
+            isPremium: true,
+            premiumUntil: premiumUntil.toISOString()
+          });
+        } catch (error) {
+          console.error("❌ Erreur activation premium:", error);
+          res.status(500).json({ error: "Erreur serveur" });
+        }
       });
 
-      res.json(newReading);
-    } catch (error) {
-      console.error("❌ Erreur création tirage:", error);
-      res.status(500).json({ error: "Erreur serveur" });
+      app.get("/api/user/premium-status", async (req, res) => {
+        try {
+          const premiumUntilStr = await storage.getItem('premiumUntil');
+
+          if (!premiumUntilStr) {
+            return res.json({ isPremium: false, premiumUntil: null });
+          }
+
+          const premiumUntil = new Date(premiumUntilStr);
+          const now = new Date();
+          const isPremium = premiumUntil > now;
+
+          console.log(`🔍 Vérification premium: ${isPremium ? 'Actif' : 'Expiré'} (expire: ${premiumUntil.toLocaleDateString('fr-FR')})`);
+
+          res.json({
+            isPremium,
+            premiumUntil: isPremium ? premiumUntilStr : null
+          });
+        } catch (error) {
+          console.error("❌ Erreur vérification premium:", error);
+          res.json({ isPremium: false, premiumUntil: null });
+        }
+      });
+
+      // ===== ROUTES GRIMOIRE =====
+
+      app.get("/api/readings", async (req, res) => {
+        try {
+          const allReadings = await storage.getItem('readings') || [];
+          console.log(`📖 Récupération de ${allReadings.length} tirages`);
+          res.json({ readings: allReadings });
+        } catch (error) {
+          console.error("❌ Erreur récupération tirages:", error);
+          res.status(500).json({ error: "Erreur serveur" });
+        }
+      });
+
+      app.post("/api/readings", async (req, res) => {
+        try {
+          const { type, cards, question, answer } = req.body;
+
+          // ✅ Tirages illimités, pubs gérées côté frontend
+          const allReadings = await storage.getItem('readings') || [];
+
+          const newReading = {
+            id: Date.now().toString(),
+            type,
+            cards: cards || null,
+            question: question || null,
+            answer: answer || null,
+            notes: "",
+            isFavorite: false,
+            date: new Date().toISOString(),
+          };
+
+          // ❌ Ne pas sauvegarder certains types dans le Grimoire
+          const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'bonusRoll'];
+
+          if (!typesExcludedFromGrimoire.includes(type)) {
+            allReadings.unshift(newReading);
+            await storage.setItem('readings', allReadings);
+            console.log('✅ Tirage sauvegardé dans Grimoire:', {
+              id: newReading.id,
+              type: newReading.type,
+              totalSaved: allReadings.length
+            });
+          } else {
+            console.log('🚫 Tirage NON sauvegardé (type exclu du Grimoire):', type);
+          }
+
+          res.json(newReading);
+        } catch (error) {
+          console.error("❌ Erreur création tirage:", error);
+          res.status(500).json({ error: "Erreur serveur" });
+        }
+      });
+
+      app.put("/api/readings/:id/note", async (req, res) => {
+        try {
+          const { id } = req.params;
+          const { note } = req.body;
+
+          const allReadings = await storage.getItem('readings') || [];
+          const index = allReadings.findIndex((r: any) => r.id === id);
+
+          if (index === -1) {
+            return res.status(404).json({ error: "Tirage non trouvé" });
+          }
+
+          allReadings[index].notes = note;
+          await storage.setItem('readings', allReadings);
+
+          console.log(`📝 Note mise à jour pour le tirage ${id}`);
+          res.json(allReadings[index]);
+        } catch (error) {
+          console.error("❌ Erreur mise à jour note:", error);
+          res.status(500).json({ error: "Erreur serveur" });
+        }
+      });
+
+      app.put("/api/readings/:id/favorite", async (req, res) => {
+        try {
+          const { id } = req.params;
+          const { isFavorite } = req.body;
+
+          const allReadings = await storage.getItem('readings') || [];
+          const index = allReadings.findIndex((r: any) => r.id === id);
+
+          if (index === -1) {
+            return res.status(404).json({ error: "Tirage non trouvé" });
+          }
+
+          allReadings[index].isFavorite = isFavorite;
+          await storage.setItem('readings', allReadings);
+
+          console.log(`⭐ Favori ${isFavorite ? 'ajouté' : 'retiré'} pour le tirage ${id}`);
+          res.json(allReadings[index]);
+        } catch (error) {
+          console.error("❌ Erreur toggle favori:", error);
+          res.status(500).json({ error: "Erreur serveur" });
+        }
+      });
+
+      // 🗑️ Route pour vider le Grimoire
+      app.delete("/api/readings", async (req, res) => {
+        try {
+          await storage.setItem('readings', []);
+          console.log('🔥 Tous les tirages ont été supprimés du Grimoire');
+          res.json({ success: true, message: 'Grimoire vidé avec succès' });
+        } catch (error) {
+          console.error("❌ Erreur suppression tirages:", error);
+          res.status(500).json({ error: "Erreur serveur" });
+        }
+      });
+
+      const httpServer = createServer(app);
+      return httpServer;
     }
-  });
-
-  app.put("/api/readings/:id/note", async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { note } = req.body;
-
-      const allReadings = await storage.getItem('readings') || [];
-      const index = allReadings.findIndex((r: any) => r.id === id);
-
-      if (index === -1) {
-        return res.status(404).json({ error: "Tirage non trouvé" });
-      }
-
-      allReadings[index].notes = note;
-      await storage.setItem('readings', allReadings);
-
-      console.log(`📝 Note mise à jour pour le tirage ${id}`);
-      res.json(allReadings[index]);
-    } catch (error) {
-      console.error("❌ Erreur mise à jour note:", error);
-      res.status(500).json({ error: "Erreur serveur" });
-    }
-  });
-
-  app.put("/api/readings/:id/favorite", async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { isFavorite } = req.body;
-
-      const allReadings = await storage.getItem('readings') || [];
-      const index = allReadings.findIndex((r: any) => r.id === id);
-
-      if (index === -1) {
-        return res.status(404).json({ error: "Tirage non trouvé" });
-      }
-
-      allReadings[index].isFavorite = isFavorite;
-      await storage.setItem('readings', allReadings);
-
-      console.log(`⭐ Favori ${isFavorite ? 'ajouté' : 'retiré'} pour le tirage ${id}`);
-      res.json(allReadings[index]);
-    } catch (error) {
-      console.error("❌ Erreur toggle favori:", error);
-      res.status(500).json({ error: "Erreur serveur" });
-    }
-  });
-
-  const httpServer = createServer(app);
-  return httpServer;
-}

@@ -10,6 +10,7 @@ interface HoroscopePageProps {
   user: UserSession;
   onBack: () => void;
   onHome: () => void;
+  onSaveReading?: (reading: any) => Promise<void>;
 }
 
 interface HoroscopeData {
@@ -23,10 +24,9 @@ interface HoroscopeData {
   currentDate: string;
 }
 
-// Mapping des signes français vers les noms anglais pour l'API
 const signMapping: Record<string, string> = {
   'Bélier': 'aries',
-  'Taureau': 'taurus', 
+  'Taureau': 'taurus',
   'Gémeaux': 'gemini',
   'Cancer': 'cancer',
   'Lion': 'leo',
@@ -39,17 +39,13 @@ const signMapping: Record<string, string> = {
   'Poissons': 'pisces'
 };
 
-// Les fonctions de mapping restent identiques...
 const createHoroscopeDataMapping = () => {
   const descriptions: Record<string, string[]> = {
     aries: [
       "Votre énergie débordante attire toutes les bonnes opportunités aujourd'hui. C'est le moment de foncer vers vos objectifs avec confiance.",
       "Mars vous donne un courage extraordinaire pour surmonter tous les obstacles. Vos initiatives seront couronnées de succès.",
-      // ... (garder toutes les descriptions existantes)
     ],
-    // ... (garder tous les autres signes)
   };
-
   return { descriptions };
 };
 
@@ -125,27 +121,61 @@ const getRandomFinalMessage = (
 export default function HoroscopePage({
   user,
   onBack,
+  onSaveReading
 }: HoroscopePageProps) {
   const [showInterpretation, setShowInterpretation] = useState(false);
+  const [hasSavedReading, setHasSavedReading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { t } = useLanguage();
 
   const englishSign = user.zodiacSign
     ? signMapping[user.zodiacSign.name]
     : "aries";
 
+  // 🪄 Nouvelle logique de récupération avec timeout + gestion d'erreur détaillée
   const {
     data: horoscope,
     isLoading,
+    isFetching,
     error,
     refetch,
   } = useQuery<HoroscopeData>({
     queryKey: ['horoscope', englishSign],
     queryFn: async () => {
-      const response = await fetch(`${config.apiBaseUrl}/api/horoscope/${englishSign}`);
-      if (!response.ok) {
-        throw new Error('Erreur lors de la récupération de l\'horoscope');
+      setErrorMessage(null);
+      console.log(`🔮 Récupération horoscope pour ${englishSign}...`);
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 60000);
+
+      try {
+        const response = await fetch(`${config.apiBaseUrl}/api/horoscope/${englishSign}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('✅ Horoscope reçu:', data);
+        return data;
+      } catch (error: any) {
+        console.error('❌ Erreur horoscope:', error);
+
+        if (error.name === 'AbortError') {
+          setErrorMessage("⏱️ Le serveur met trop de temps à répondre. Réessaie dans quelques secondes.");
+        } else {
+          setErrorMessage("❌ Impossible de récupérer l'horoscope. Vérifie ta connexion Internet.");
+        }
+
+        throw error;
+      } finally {
+        clearTimeout(timeoutId);
       }
-      return response.json();
     },
     enabled: !!user.zodiacSign,
   });
@@ -153,6 +183,32 @@ export default function HoroscopePage({
   const handleRetry = async () => {
     await refetch();
   };
+
+  useEffect(() => {
+    if (horoscope && !hasSavedReading && onSaveReading) {
+      const saveHoroscope = async () => {
+        try {
+          await onSaveReading({
+            type: 'horoscope',
+            answer: JSON.stringify({
+              sign: englishSign,
+              description: horoscope.description,
+              mood: horoscope.mood,
+              luckyNumber: horoscope.luckyNumber,
+              luckyColor: horoscope.luckyColor,
+              compatibility: horoscope.compatibility
+            }),
+            date: new Date()
+          });
+          setHasSavedReading(true);
+          console.log('✅ Horoscope saved → pub triggered via App.tsx');
+        } catch (error) {
+          console.error('❌ Erreur sauvegarde horoscope:', error);
+        }
+      };
+      saveHoroscope();
+    }
+  }, [horoscope, hasSavedReading, onSaveReading, englishSign]);
 
   useEffect(() => {
     if (horoscope) {
@@ -197,7 +253,7 @@ export default function HoroscopePage({
       {
         icon: "🔮",
         title: t("horoscope.predictions.title"),
-          content: t(`horoscope.data.descriptions.${englishSign}.0`),
+        content: t(`horoscope.data.descriptions.${englishSign}.0`),
       },
       {
         icon: "😊",
@@ -217,7 +273,6 @@ export default function HoroscopePage({
     ];
 
     const finalMessage = getRandomFinalMessage(t, user, translatedZodiacSign);
-
     return { sections, greeting, finalMessage };
   };
 
@@ -237,14 +292,11 @@ export default function HoroscopePage({
 
   return (
     <div className="horoscope-page p-3 sm:p-4 pt-16 sm:pt-20 min-h-screen flex flex-col pb-6">
-
-      {/* Header compact */}
       <div className="horoscope-header text-center mb-4 sm:mb-6">
         <h1 className="mystical-title text-xl sm:text-2xl md:text-3xl font-bold font-serif mb-3">
           {t("horoscope.title")}
         </h1>
 
-        {/* Symbole et nom du signe - Compact */}
         <div className="text-center mb-4">
           <div className="text-4xl sm:text-5xl mb-2">{user.zodiacSign.symbol}</div>
           <h2 className="text-[#ffd700] text-lg sm:text-xl md:text-2xl font-bold font-serif">
@@ -256,34 +308,35 @@ export default function HoroscopePage({
         </div>
       </div>
 
-      {isLoading && (
-        <div className="text-center flex-1 flex items-center justify-center">
-          <div>
-            <div className="mystical-loader mb-4">
-              <div className="stars-spinner"></div>
-            </div>
-            <p className="text-[#b19cd9] text-lg">{t("horoscope.loading")}</p>
-          </div>
+      {(isLoading || isFetching) && (
+        <div className="text-center py-8">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
+          <p className="text-purple-300">
+            Chargement de votre horoscope...
+            <br />
+            <span className="text-xs text-purple-400">(Le serveur peut mettre 30-60s à démarrer)</span>
+          </p>
         </div>
       )}
 
-      {error && (
-        <div className="text-center mb-8">
-          <p className="text-[#ff6b6b] text-lg mb-4">{t("horoscope.error")}</p>
-          <MysticalButton onClick={handleRetry} data-testid="button-retry">
-            {t("horoscope.retry")}
-          </MysticalButton>
+      {errorMessage && (
+        <div className="bg-red-500/20 border border-red-500 rounded-lg p-4 mb-4 text-center">
+          <p className="text-red-300">{errorMessage}</p>
+          <button
+            onClick={() => refetch()}
+            className="mt-3 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg text-white"
+          >
+            Réessayer
+          </button>
         </div>
       )}
 
       {horoscope && (
         <>
-          {/* Salutation */}
           <div className="bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-2 border-[#ffd700] rounded-2xl p-4 text-center mb-4">
             <p className="text-[#ffd700] text-sm sm:text-base md:text-lg italic">{greeting}</p>
           </div>
 
-          {/* Accordéon avec gestion de visibilité */}
           <div className="flex-1">
             <SummaryCard
               title={t("horoscope.predictions.title")}
@@ -298,7 +351,7 @@ export default function HoroscopePage({
 
       <div className="horoscope-controls text-center mt-6 sm:mt-10 pb-4">
         <div className="flex gap-4 justify-center flex-wrap">
-          <MysticalButton variant="secondary" onClick={onBack} data-testid="button-new-consultation">
+          <MysticalButton variant="secondary" onClick={onBack}>
             {t("horoscope.newConsultation")}
           </MysticalButton>
         </div>
