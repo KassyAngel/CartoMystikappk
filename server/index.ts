@@ -61,7 +61,8 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
   // Gestion du port
-  const PORT = parseInt(process.env.PORT || "5000", 10); // Assurez-vous que PORT est défini dans .env
+  const PORT = 3001; // Force le port 3001
+  console.log("🔧 Port forcé à 3001");// Assurez-vous que PORT est défini dans .env
   server.listen(PORT, "0.0.0.0") // Utilisez 0.0.0.0 pour que le port soit accessible
     .on("listening", () => log(`✅ Serveur démarré sur le port ${PORT}`))
     .on("error", (err: NodeJS.ErrnoException) => {

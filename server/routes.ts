@@ -95,7 +95,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const selectedPrice = prices[planId];
       if (!selectedPrice) return res.status(400).json({ error: "Plan invalide" });
 
-      const userId = (req as any).session?.userId || "guest";
+      // Ligne 120 - AMÉLIORER
+      const userId = (req as any).session?.userId || `guest_${Date.now()}`;
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
