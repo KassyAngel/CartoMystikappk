@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import GrimoireModal from "./pages/GrimoireModal";
 import PremiumModal from './components/PremiumModal';
 import NotificationPermissionModal from './components/NotificationPermissionModal';
+import StatsModal from './components/StatsModal';
 import TopBar from './components/TopBar';
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
@@ -62,6 +63,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isGrimoireOpen, setIsGrimoireOpen] = useState(false);
   const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
+  const [isStatsOpen, setIsStatsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState<AppStep>('landing');
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
@@ -287,6 +289,7 @@ function App() {
                 <TopBar
                   onOpenGrimoire={() => setIsGrimoireOpen(true)}
                   onOpenPremium={() => setIsPremiumModalOpen(true)}
+                  onOpenStats={() => setIsStatsOpen(true)}
                   isPremium={isPremium}
                 />
               )}
@@ -316,6 +319,13 @@ function App() {
                     setIsPremiumModalOpen(false);
                     window.location.reload();
                   }}
+                />
+              )}
+
+              {isStatsOpen && (
+                <StatsModal
+                  readings={readings}
+                  onClose={() => setIsStatsOpen(false)}
                 />
               )}
 

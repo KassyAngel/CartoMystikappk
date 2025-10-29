@@ -4,7 +4,7 @@ import { OracleData, OracleCard, UserSession, OracleType } from '@shared/schema'
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getSecureRandomInt } from '@/lib/utils';
 import { getTimeUntilMidnight } from '@/lib/dailyLimit';
-// ❌ SUPPRIMÉ : import { useEffect, useRef } from 'react';
+import { Share } from 'lucide-react'; // Import Share icon
 
 interface CardSection {
   icon: string;
@@ -22,6 +22,8 @@ interface InterpretationPageProps {
   onHome: () => void;
   onCrystalBall?: () => void;
   onSaveReading?: (reading: any) => Promise<void>;
+  onNavigate: (path: string) => void; // Added for navigation
+  interpretation: string; // Added for sharing
 }
 
 export default function InterpretationPage({
@@ -33,10 +35,11 @@ export default function InterpretationPage({
   onBack,
   onHome,
   onSaveReading, // ⚠️ Gardé dans les props mais non utilisé (sauvegarde déjà faite dans CardGame)
-  onCrystalBall
+  onCrystalBall,
+  onNavigate, // Added for navigation
+  interpretation // Added for sharing
 }: InterpretationPageProps) {
   const { t } = useLanguage();
-  // ❌ SUPPRIMÉ : const hasSavedRef = useRef(false);
 
   const normalizeCardName = (cardName: string): string => {
     return cardName
@@ -199,7 +202,7 @@ export default function InterpretationPage({
         ];
         const randomKey = variations[getSecureRandomInt(0, variations.length - 1)];
         const translated = t(randomKey, { zodiacSign });
-        return translated.includes('interpretation.daily') 
+        return translated.includes('interpretation.daily')
           ? t('interpretation.daily.wisdom', { zodiacSign })
           : translated;
       };
@@ -307,14 +310,36 @@ export default function InterpretationPage({
 
   const { sections, finalMessage, greeting } = generateInterpretationSections();
 
-  // ❌ SUPPRIMÉ COMPLÈTEMENT LE useEffect QUI SAUVEGARDAIT (lignes 331-357)
-  // La sauvegarde est déjà faite dans CardGame.tsx !
+  const handleNewConsultation = () => {
+    onNavigate('oracle');
+  };
+
+  // 📱 Fonction de partage social
+  const handleShare = async () => {
+    const shareText = `✨ ${t('oracle.' + oracleType + '.title')} - CartoMystik\n\n${interpretation}\n\n🔮 Découvrez votre destinée sur CartoMystik !`;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'CartoMystik - Mon Tirage',
+          text: shareText,
+        });
+        console.log('✅ Partage réussi');
+      } else {
+        // Fallback : copier dans le presse-papier
+        await navigator.clipboard.writeText(shareText);
+        alert(t('share.copied') || '✅ Copié dans le presse-papier !');
+      }
+    } catch (error) {
+      console.log('❌ Partage annulé ou erreur:', error);
+    }
+  };
 
   return (
     <div className="interpretation-page min-h-screen flex flex-col justify-between p-2 sm:p-3">
       <div className="interpretation-header text-center pt-20 sm:pt-24">
         <h1 className="mystical-title text-lg sm:text-xl md:text-2xl font-bold font-serif mb-1 sm:mb-2 leading-tight">
-          {isDailyReading 
+          {isDailyReading
             ? t('interpretation.title.daily', { name: user.name })
             : t('interpretation.title.reading', { name: user.name })
           }
@@ -348,31 +373,40 @@ export default function InterpretationPage({
               </p>
             </div>
 
-            <MysticalButton 
-              variant="primary" 
-              onClick={onCrystalBall} 
+            <MysticalButton
+              variant="primary"
+              onClick={onCrystalBall}
               className="min-h-[44px]"
             >
               🔮 {t('interpretation.consultCrystalBall')}
             </MysticalButton>
 
-            <MysticalButton 
-              variant="secondary" 
-              onClick={onHome} 
+            <MysticalButton
+              variant="secondary"
+              onClick={onHome}
               className="min-h-[44px]"
             >
               {t('common.backHome')}
             </MysticalButton>
           </>
         ) : (
-          <MysticalButton 
-            variant="secondary" 
-            onClick={onHome} 
-            className="min-h-[44px]"
-            data-testid="button-new-consultation"
-          >
-            {t('interpretation.newConsultation')}
-          </MysticalButton>
+          <div className="flex gap-3 w-full max-w-md">
+            <MysticalButton
+              onClick={handleShare}
+              className="flex-1 bg-blue-600 hover:bg-blue-700 flex items-center justify-center gap-2"
+            >
+              <Share size={18} />
+              {t('share.button') || '📤 Partager'}
+            </MysticalButton>
+
+            <MysticalButton
+              onClick={handleNewConsultation}
+              className="flex-1 bg-purple-600 hover:bg-purple-700"
+              data-testid="button-new-consultation"
+            >
+              {t('interpretation.newConsultation')}
+            </MysticalButton>
+          </div>
         )}
       </div>
     </div>
