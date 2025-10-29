@@ -145,4 +145,12 @@ if (Capacitor.isNativePlatform()) {
   initialize().catch(err => {
     console.error('❌ Erreur auto-init AdMob:', err);
   });
+  if (Capacitor.isNativePlatform()) {
+    console.log('📱 Platform native détectée, initialisation AdMob...');
+    initialize().catch(err => {
+      console.error('❌ Erreur auto-init AdMob:', err);
+    });
+  } else {
+    console.log('🌐 Platform web détectée, AdMob désactivé');
+  }
 }
