@@ -46,16 +46,20 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
     const lang = availableLanguages.includes(language) ? language : 'en';
     const filename = lang === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html';
     
-    // Utiliser le chemin absolu depuis la racine web
-    const url = `https://localhost/${filename}`;
+    // Construire l'URL complète avec le protocol capacitor
+    const url = `${window.location.origin}/${filename}`;
 
     console.log('🔗 Opening legal mentions:', url);
     try {
-      await Browser.open({ url });
+      await Browser.open({ 
+        url,
+        windowName: '_blank',
+        presentationStyle: 'fullscreen'
+      });
     } catch (error) {
       console.error('❌ Error opening legal mentions:', error);
-      // Fallback: ouvrir dans la même fenêtre
-      window.open(`/${filename}`, '_blank');
+      // Fallback: navigation directe
+      window.location.href = `/${filename}`;
     }
   };
 
@@ -66,16 +70,20 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
     const lang = availableLanguages.includes(language) ? language : 'en';
     const filename = lang === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html';
     
-    // Utiliser le chemin absolu depuis la racine web
-    const url = `https://localhost/${filename}`;
+    // Construire l'URL complète avec le protocol capacitor
+    const url = `${window.location.origin}/${filename}`;
 
     console.log('🔗 Opening privacy policy:', url);
     try {
-      await Browser.open({ url });
+      await Browser.open({ 
+        url,
+        windowName: '_blank',
+        presentationStyle: 'fullscreen'
+      });
     } catch (error) {
       console.error('❌ Error opening privacy policy:', error);
-      // Fallback: ouvrir dans la même fenêtre
-      window.open(`/${filename}`, '_blank');
+      // Fallback: navigation directe
+      window.location.href = `/${filename}`;
     }
   };
 
