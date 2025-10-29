@@ -1829,7 +1829,7 @@ const translations: Record<Language, Record<string, string>> = {
   },
 
   en: {
-    // Landing Page</old_str>
+    // Landing Page
     "landing.title": "CartoMystik",
     "landing.subtitle":
       "Discover the mysteries of your destiny through cards, stars and ancient wisdom",
