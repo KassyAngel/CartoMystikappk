@@ -1,0 +1,45 @@
+/workspace$ npm run build
+npx cap sync android
+git add .
+git commit -m "Fix API calls with Render URL for mobile"
+
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist/server
+
+vite v5.4.21 building for production...
+transforming (89) ../node_modules/@tanstack/react-query/build/modern/useSuspenseQueries.js
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+
+/stars-bg.svg referenced in /stars-bg.svg didn't resolve at build time, it will remain unchanged to be resolved at runtime
+client/src/App.tsx (82:29): "showBanner" is not exported by "client/src/admobService.ts", imported by "client/src/App.tsx".
+✓ 1796 modules transformed.
+../dist/public/index.html                     1.19 kB │ gzip:   0.58 kB
+../dist/public/assets/index-X0-gVfrp.css    138.96 kB │ gzip:  21.03 kB
+../dist/public/assets/web-Sj-OANgw.js         0.38 kB │ gzip:   0.25 kB
+../dist/public/assets/web-CUoA8IQ9.js         1.25 kB │ gzip:   0.58 kB
+../dist/public/assets/web-Dgb_aSel.js         1.26 kB │ gzip:   0.42 kB
+../dist/public/assets/web-LxiHEQZa.js         3.44 kB │ gzip:   1.10 kB
+../dist/public/assets/index-jfRvB4Uc.js   1,273.37 kB │ gzip: 366.01 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 11.27s
+
+  dist/server/index.js  34.1kb
+
+⚡ Done in 12ms
+✔ Copying web assets from public to android/app/src/main/assets/public in 36.26ms
+✔ Creating capacitor.config.json in android/app/src/main/assets in 1.82ms
+✔ copy android in 108.96ms
+✔ Updating Android plugins in 38.18ms
+[info] Found 4 Capacitor plugins for android:
+       @capacitor-community/admob@6.2.0
+       @capacitor/browser@7.0.2
+       @capacitor/local-notifications@7.0.3
+       @capacitor/preferences@7.0.2
+✔ update android in 164.39ms
+[info] Sync finished in 0.375s
+[main d6ababe] Fix API calls with Render URL for mobile
+ 3 files changed, 705 insertions(+), 895 deletions(-)
