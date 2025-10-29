@@ -1,6 +1,8 @@
 
 import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, AdMobBannerSize, InterstitialAdPluginEvents, AdMobError } from '@capacitor-community/admob';
 
+import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
+
 class AdMobService {
   private isInitialized = false;
 
@@ -77,3 +79,14 @@ class AdMobService {
 }
 
 export const admobService = new AdMobService();
+
+// Export des fonctions pour compatibilité avec les imports existants
+export const showBannerAd = (options?: { position?: 'TOP' | 'BOTTOM' }) => 
+  admobService.showBanner(options);
+
+export const showInterstitialAd = async () => {
+  await admobService.prepareInterstitial();
+  await admobService.showInterstitial();
+};
+
+export const initialize = () => admobService.initialize();
