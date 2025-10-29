@@ -58,8 +58,16 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
       if (data.success && data.url) {
         console.log('✅ Session Stripe créée, redirection vers:', data.url);
 
-        // 2️⃣ Rediriger vers la page de paiement Stripe
-        window.location.href = data.url;
+        /// 2️⃣ Ouvrir la page de paiement Stripe dans un nouvel onglet
+        const stripeWindow = window.open(data.url, '_blank');
+
+        if (!stripeWindow) {
+          // Si le popup est bloqué
+          alert('⚠️ Veuillez autoriser les popups pour accéder au paiement Stripe');
+        } else {
+          // Fermer la modal après ouverture
+          onClose();
+        }
       } else {
         throw new Error(data.error || 'Erreur création session');
       }
