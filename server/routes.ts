@@ -27,59 +27,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.options("*", (_, res) => res.status(200).end());
 
   // ========================================
-  // 🧾 ROUTE WEBHOOK STRIPE
-  // ========================================
-  app.post(
-    "/api/webhook",
-    express.raw({ type: "application/json" }), // corps brut
-    async (req: Request, res: Response) => {
-      const sig = req.headers["stripe-signature"];
-      if (!sig) return res.status(400).send("Signature manquante");
-
-      try {
-        const event = stripe.webhooks.constructEvent(
-          req.body,
-          sig,
-          process.env.STRIPE_WEBHOOK_SECRET as string
-        );
-
-        console.log("📬 Événement Stripe reçu:", event.type);
-
-        if (event.type === "checkout.session.completed") {
-          const session = event.data.object as Stripe.Checkout.Session;
-          const userId = session.metadata?.userId;
-          const planId = session.metadata?.planId;
-
-          if (userId && planId) {
-            console.log(`✅ Paiement réussi pour user ${userId}, plan ${planId}`);
-
-            const expiresAt = new Date();
-            if (planId === "premium_1month") {
-              expiresAt.setMonth(expiresAt.getMonth() + 1);
-            } else if (planId === "premium_3months") {
-              expiresAt.setMonth(expiresAt.getMonth() + 3);
-            }
-
-            await storage.setItem(
-              `premiumUntil_${userId}`,
-              expiresAt.toISOString()
-            );
-
-            console.log(
-              `✅ User ${userId} premium jusqu'au ${expiresAt.toISOString()}`
-            );
-          }
-        }
-
-        res.json({ received: true });
-      } catch (err: any) {
-        console.error("❌ Erreur webhook Stripe:", err.message);
-        res.status(400).send(`Webhook Error: ${err.message}`);
-      }
-    }
-  );
-
-  // ========================================
   // 💳 CRÉATION SESSION CHECKOUT
   // ========================================
       app.post("/api/create-checkout-session", async (req: Request, res: Response) => {

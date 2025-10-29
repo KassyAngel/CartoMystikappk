@@ -5,13 +5,67 @@ import dotenv from "dotenv";
 // Charger les variables d'environnement
 dotenv.config();
 const app = express();
-// Webhook Stripe
 
-// ⚠️ IMPORTANT : Le webhook doit utiliser express.raw() AVANT express.json()
-// La route webhook est définie dans routes.ts avec express.raw()
+// ⚠️ IMPORTANT : Définir la route webhook AVANT express.json()
+// Cela permet à Stripe de recevoir le corps brut (raw body) requis pour la vérification de signature
+import Stripe from "stripe";
 
-// Middleware JSON pour les autres routes
-// Middleware JSON
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: "2025-09-30.clover",
+});
+
+app.post(
+  "/api/webhook",
+  express.raw({ type: "application/json" }),
+  async (req: Request, res: Response) => {
+    const sig = req.headers["stripe-signature"];
+    if (!sig) return res.status(400).send("Signature manquante");
+
+    try {
+      const event = stripe.webhooks.constructEvent(
+        req.body,
+        sig,
+        process.env.STRIPE_WEBHOOK_SECRET as string
+      );
+
+      console.log("📬 Événement Stripe reçu:", event.type);
+
+      if (event.type === "checkout.session.completed") {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const userId = session.metadata?.userId;
+        const planId = session.metadata?.planId;
+
+        if (userId && planId) {
+          console.log(`✅ Paiement réussi pour user ${userId}, plan ${planId}`);
+
+          const expiresAt = new Date();
+          if (planId === "premium_1month") {
+            expiresAt.setMonth(expiresAt.getMonth() + 1);
+          } else if (planId === "premium_3months") {
+            expiresAt.setMonth(expiresAt.getMonth() + 3);
+          }
+
+          const { storage } = await import("./storage");
+          await storage.setItem(
+            `premiumUntil_${userId}`,
+            expiresAt.toISOString()
+          );
+
+          console.log(
+            `✅ User ${userId} premium jusqu'au ${expiresAt.toISOString()}`
+          );
+        }
+      }
+
+      res.json({ received: true });
+    } catch (err: any) {
+      console.error("❌ Erreur webhook Stripe:", err.message);
+      res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+  }
+);
+
+// Middleware JSON pour les autres routes (appliqué APRÈS la route webhook)
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // Logger des requêtes 
