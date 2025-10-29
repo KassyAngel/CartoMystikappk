@@ -1,5 +1,4 @@
 
-```typescript
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { Language, translations } from '@/data/translations';
 import { saveLanguage, getSavedLanguage } from '@/lib/userStorage';
@@ -64,4 +63,3 @@ export function useLanguage() {
 }
 
 export type { Language };
-```
