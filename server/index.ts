@@ -60,8 +60,8 @@ app.use((req, res, next) => {
   } else {
     serveStatic(app);
   }
-  // Gestion du port
-  const PORT = Number(process.env.PORT) || 3001; // Utilise PORT de Render ou 3001 par défaut
+  // Gestion du port - Prioriser la variable d'environnement système (Render)
+  const PORT = Number(process.env.PORT) || 5000;
   console.log(`🔧 Démarrage sur le port ${PORT}`);
 
   server.listen(PORT, "0.0.0.0", () => {
