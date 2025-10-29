@@ -20,8 +20,9 @@ async function initialize() {
 
   try {
     await AdMob.initialize({
-      testingDevices: ['YOUR_DEVICE_ID'],
-      initializeForTesting: true,
+      requestTrackingAuthorization: true,
+      testingDevices: [], // Vide pour utiliser les ID de test Google
+      initializeForTesting: true, // Garde true pour utiliser les ID de test
     });
     isAdMobInitialized = true;
     console.log('✅ AdMob initialisé avec succès');
