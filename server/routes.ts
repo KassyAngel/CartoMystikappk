@@ -80,8 +80,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           },
         ],
         mode: "payment",
-        success_url: `https://cartomystikappk.onrender.com/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `https://cartomystikappk.onrender.com/cancel`,
+        success_url: `${process.env.FRONTEND_URL || 'https://cartomystikappk.replit.app'}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.FRONTEND_URL || 'https://cartomystikappk.replit.app'}/cancel`,
         metadata: {
           userId: userId.toString(),
           planId: planId,
