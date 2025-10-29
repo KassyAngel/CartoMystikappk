@@ -1828,8 +1828,500 @@ const translations: Record<Language, Record<string, string>> = {
     "common.language": "Langue",
   },
 
-  en: {
+  es: {
     // Landing Page
+    "landing.title": "CartoMystik",
+    "landing.subtitle": "Descubre los misterios de tu destino a través de las cartas, las estrellas y la sabiduría antigua",
+    "landing.enter": "ENTRAR",
+    "landing.ads.support": "Los anuncios nos ayudan a mantener la aplicación gratuita",
+
+    // Sistema anti-repetición
+    "system.antirepeat.loading": "Las cartas se están barajando...",
+    "system.antirepeat.active": "Sistema anti-repetición activo",
+    "system.cards.refreshed": "Nuevas cartas disponibles",
+
+    // Name Page
+    "name.title": "Nombre",
+    "name.subtitle": "¿Cómo prefieres que te llamen? Introduce tu nombre o apodo",
+    "name.placeholder": "Introduce tu nombre",
+    "name.next": "SIGUIENTE",
+
+    // Date Page
+    "date.title": "Fecha de nacimiento",
+    "date.subtitle": "Revela tu signo astrológico para una adivinación personalizada",
+    "date.day": "Día",
+    "date.month": "Mes",
+    "date.year": "Año",
+    "date.next": "SIGUIENTE",
+    "date.months.1": "Enero",
+    "date.months.2": "Febrero",
+    "date.months.3": "Marzo",
+    "date.months.4": "Abril",
+    "date.months.5": "Mayo",
+    "date.months.6": "Junio",
+    "date.months.7": "Julio",
+    "date.months.8": "Agosto",
+    "date.months.9": "Septiembre",
+    "date.months.10": "Octubre",
+    "date.months.11": "Noviembre",
+    "date.months.12": "Diciembre",
+
+    // Gender Page
+    "gender.title": "Género",
+    "gender.subtitle": "Indica tu género para personalizar tu experiencia",
+    "gender.male": "Masculino",
+    "gender.female": "Femenino",
+    "gender.other": "Otro",
+    "gender.next": "COMENZAR",
+    "gender.back": "ATRÁS",
+
+    // Barra de navegación
+    "menu.open": "Abrir menú",
+    "profile.open": "Abrir perfil",
+    "profile.birthdate": "Fecha de nacimiento",
+    "profile.gender": "Género",
+    "profile.zodiac": "Signo zodiacal",
+    "profile.edit": "Editar mi perfil",
+    "profile.edit.title": "Editar mi perfil",
+    "profile.edit.subtitle": "Actualiza tu información personal",
+    "profile.edit.error": "Por favor completa todos los campos",
+    "grimoire.subtitle": "Tu historial de lecturas",
+    "premium.active": "Activo",
+    "locale": "es-ES",
+    "common.cancel": "Cancelar",
+    "common.save": "Guardar",
+    "name.label": "Nombre",
+
+    // Notificaciones ES
+    "notification.channel.name": "Lectura Diaria",
+    "notification.channel.description": "Notificaciones para tu lectura mística del día",
+    "notification.variants.1.title": "✨ Las estrellas te llaman",
+    "notification.variants.1.body": "¡Descubre tu horóscopo y lectura mística del día!",
+    "notification.variants.2.title": "🔮 Tu destino te espera",
+    "notification.variants.2.body": "Consulta tu lectura diaria y horóscopo personalizado",
+    "notification.variants.3.title": "🌙 El misterio se revela",
+    "notification.variants.3.body": "¡Tu lectura del día y horóscopo están listos!",
+    "notification.variants.4.title": "⭐ Un mensaje de las estrellas",
+    "notification.variants.4.body": "Descubre lo que las cartas y los astros te reservan hoy",
+    "notification.variants.5.title": "✨ CartoMystik te llama",
+    "notification.variants.5.body": "Tu guía diaria: lectura de cartas y horóscopo disponibles",
+    "notification.modal.title": "Notificaciones Diarias",
+    "notification.modal.description": "Recibe cada día a las 10h un recordatorio místico para descubrir tu lectura y horóscopo personalizados",
+    "notification.modal.benefit1": "Lectura diaria",
+    "notification.modal.benefit2": "Horóscopo personalizado según tu signo",
+    "notification.modal.benefit3": "No te pierdas nunca tu guía diaria",
+    "notification.modal.accept": "Activar notificaciones",
+    "notification.modal.decline": "No gracias",
+    "notification.modal.note": "Podrás modificar esta opción más tarde en los ajustes",
+
+    // Oracle Selection
+    "oracle.welcome": "¡Bienvenido {name}!",
+    "oracle.subtitle": "Descubre los secretos de tu destino",
+    "oracle.daily.title": "Lectura del Día",
+    "oracle.daily.description": "Una carta para guiarte e inspirarte hoy",
+    "oracle.horoscope.title": "Horóscopo",
+    "oracle.horoscope.description": "Descubre lo que las estrellas te reservan hoy según tu signo",
+    "oracle.tarot.title": "Tarot",
+    "oracle.tarot.description": "Los 22 Arcanos Mayores revelan los misterios de tu destino",
+    "oracle.angels.title": "Oráculo de los Ángeles",
+    "oracle.angels.description": "Conecta con tus guías angelicales para recibir sus mensajes de amor",
+    "oracle.runes.title": "Runas Nórdicas",
+    "oracle.runes.description": "La antigua sabiduría de los Vikingos revela tu camino de guerra y victoria",
+    "oracle.crystalBall.title": "Bola de Cristal",
+    "oracle.crystalBall.description": "Haz tus preguntas a la bola mística",
+    "oracle.bonusRoll.title": "Tirada Bonus",
+    "oracle.bonusRoll.description": "Desbloquea tu revelación numerológica secreta",
+    "oracle.back": "ATRÁS",
+    "oracle.home": "Inicio",
+    "oracle.backToOracles": "Volver a los oráculos",
+
+    // Común
+    "common.back": "Atrás",
+    "common.home": "Inicio",
+    "common.language": "Idioma",
+    "common.backHome": "Volver al inicio",
+
+    // Interpretación
+    "interpretation.advice.title": "Tu consejo personal",
+    "interpretation.gender.femme": "Querida",
+    "interpretation.gender.homme": "Querido",
+    "interpretation.gender.autre": "Querida alma",
+
+    // Zodíaco
+    "zodiac.aries": "Aries",
+    "zodiac.taurus": "Tauro",
+    "zodiac.gemini": "Géminis",
+    "zodiac.cancer": "Cáncer",
+    "zodiac.leo": "Leo",
+    "zodiac.virgo": "Virgo",
+    "zodiac.libra": "Libra",
+    "zodiac.scorpio": "Escorpio",
+    "zodiac.sagittarius": "Sagitario",
+    "zodiac.capricorn": "Capricornio",
+    "zodiac.aquarius": "Acuario",
+    "zodiac.pisces": "Piscis",
+
+    // Horóscopo
+    "horoscope.title": "Horóscopo del Día",
+    "horoscope.greeting": "¡Hola {name}! Aquí está tu horóscopo del día como {zodiacSign} {zodiacSymbol}",
+    "horoscope.message": "Querido/a {name}, como {zodiacSign}, tienes esta hermosa energía que atrae cosas buenas. ¡Confía en las estrellas y tu intuición hoy!",
+    
+    // Premium
+    "premium.button.label": "Hazte Premium",
+    "premium.title": "¡Elimina los Anuncios!",
+
+    // Grimorio
+    "grimoire.title": "Grimorio Místico",
+    "grimoire.empty.title": "Sin lecturas guardadas",
+    
+    // Legal
+    "legal.menu.title": "Menú legal",
+    "legal.mentions": "Aviso legal",
+    "legal.privacy": "Política de privacidad",
+
+    // Bola de Cristal
+    "crystalBall.title": "Bola de Cristal Mística",
+    "crystalBall.subtitle": "Haz tu pregunta y deja que la magia te guíe",
+    "crystalBall.askPrompt": "¿Cuál es tu pregunta?",
+    "crystalBall.questionPlaceholder": "Escribe tu pregunta aquí...",
+    "crystalBall.submitQuestion": "Consultar la Bola",
+    "crystalBall.thinking": "La bola está pensando...",
+    "crystalBall.newQuestion": "Hacer otra pregunta",
+    "crystalBall.answers.yes": "Sí",
+    "crystalBall.answers.no": "No",
+    "crystalBall.answers.maybe": "Tal vez",
+  },
+
+  de: {
+    // Landing Page
+    "landing.title": "CartoMystik",
+    "landing.subtitle": "Entdecke die Geheimnisse deines Schicksals durch Karten, Sterne und alte Weisheit",
+    "landing.enter": "EINTRETEN",
+    "landing.ads.support": "Werbung hilft uns, die App kostenlos zu halten",
+
+    // Anti-Wiederholungssystem
+    "system.antirepeat.loading": "Die Karten werden gemischt...",
+    "system.antirepeat.active": "Anti-Wiederholungssystem aktiv",
+    "system.cards.refreshed": "Neue Karten verfügbar",
+
+    // Name Page
+    "name.title": "Vorname",
+    "name.subtitle": "Wie möchtest du genannt werden? Gib deinen Namen oder Spitznamen ein",
+    "name.placeholder": "Gib deinen Namen ein",
+    "name.next": "WEITER",
+
+    // Date Page
+    "date.title": "Geburtsdatum",
+    "date.subtitle": "Enthülle dein astrologisches Zeichen für eine personalisierte Wahrsagung",
+    "date.day": "Tag",
+    "date.month": "Monat",
+    "date.year": "Jahr",
+    "date.next": "WEITER",
+    "date.months.1": "Januar",
+    "date.months.2": "Februar",
+    "date.months.3": "März",
+    "date.months.4": "April",
+    "date.months.5": "Mai",
+    "date.months.6": "Juni",
+    "date.months.7": "Juli",
+    "date.months.8": "August",
+    "date.months.9": "September",
+    "date.months.10": "Oktober",
+    "date.months.11": "November",
+    "date.months.12": "Dezember",
+
+    // Gender Page
+    "gender.title": "Geschlecht",
+    "gender.subtitle": "Gib dein Geschlecht an, um dein Erlebnis zu personalisieren",
+    "gender.male": "Männlich",
+    "gender.female": "Weiblich",
+    "gender.other": "Andere",
+    "gender.next": "BEGINNEN",
+    "gender.back": "ZURÜCK",
+
+    // Navigationsleiste
+    "menu.open": "Menü öffnen",
+    "profile.open": "Profil öffnen",
+    "profile.birthdate": "Geburtsdatum",
+    "profile.gender": "Geschlecht",
+    "profile.zodiac": "Sternzeichen",
+    "profile.edit": "Mein Profil bearbeiten",
+    "profile.edit.title": "Mein Profil bearbeiten",
+    "profile.edit.subtitle": "Aktualisiere deine persönlichen Informationen",
+    "profile.edit.error": "Bitte fülle alle Felder aus",
+    "grimoire.subtitle": "Deine Lesehistorie",
+    "premium.active": "Aktiv",
+    "locale": "de-DE",
+    "common.cancel": "Abbrechen",
+    "common.save": "Speichern",
+    "name.label": "Name",
+
+    // Benachrichtigungen DE
+    "notification.channel.name": "Tägliche Lesung",
+    "notification.channel.description": "Benachrichtigungen für deine tägliche mystische Lesung",
+    "notification.variants.1.title": "✨ Die Sterne rufen dich",
+    "notification.variants.1.body": "Entdecke dein Horoskop und deine mystische Tageslesung!",
+    "notification.variants.2.title": "🔮 Dein Schicksal wartet",
+    "notification.variants.2.body": "Schaue dir deine Tageslesung und dein persönliches Horoskop an",
+    "notification.variants.3.title": "🌙 Das Mysterium enthüllt sich",
+    "notification.variants.3.body": "Deine Tageslesung und dein Horoskop sind bereit!",
+    "notification.variants.4.title": "⭐ Eine Botschaft von den Sternen",
+    "notification.variants.4.body": "Entdecke, was die Karten und die Sterne heute für dich bereithalten",
+    "notification.variants.5.title": "✨ CartoMystik ruft dich",
+    "notification.variants.5.body": "Deine tägliche Führung: Kartenlesung und Horoskop verfügbar",
+    "notification.modal.title": "Tägliche Benachrichtigungen",
+    "notification.modal.description": "Erhalte jeden Tag um 10 Uhr eine mystische Erinnerung, um deine personalisierte Lesung und dein Horoskop zu entdecken",
+    "notification.modal.benefit1": "Tägliche Lesung",
+    "notification.modal.benefit2": "Personalisiertes Horoskop nach deinem Zeichen",
+    "notification.modal.benefit3": "Verpasse nie deine tägliche Führung",
+    "notification.modal.accept": "Benachrichtigungen aktivieren",
+    "notification.modal.decline": "Nein danke",
+    "notification.modal.note": "Du kannst diese Wahl später in den Einstellungen ändern",
+
+    // Oracle Selection
+    "oracle.welcome": "Willkommen {name}!",
+    "oracle.subtitle": "Entdecke die Geheimnisse deines Schicksals",
+    "oracle.daily.title": "Tageslesung",
+    "oracle.daily.description": "Eine Karte, die dich heute leitet und inspiriert",
+    "oracle.horoscope.title": "Horoskop",
+    "oracle.horoscope.description": "Entdecke, was die Sterne heute für dich nach deinem Zeichen bereithalten",
+    "oracle.tarot.title": "Tarot",
+    "oracle.tarot.description": "Die 22 Großen Arkana enthüllen die Geheimnisse deines Schicksals",
+    "oracle.angels.title": "Engel-Orakel",
+    "oracle.angels.description": "Verbinde dich mit deinen Engelsführern, um ihre Liebesbotschaften zu empfangen",
+    "oracle.runes.title": "Nordische Runen",
+    "oracle.runes.description": "Die alte Weisheit der Wikinger enthüllt deinen Weg von Krieg und Sieg",
+    "oracle.crystalBall.title": "Kristallkugel",
+    "oracle.crystalBall.description": "Stelle deine Fragen an die mystische Kugel",
+    "oracle.bonusRoll.title": "Bonus-Wurf",
+    "oracle.bonusRoll.description": "Entsperre deine geheime numerologische Offenbarung",
+    "oracle.back": "ZURÜCK",
+    "oracle.home": "Startseite",
+    "oracle.backToOracles": "Zurück zu den Orakeln",
+
+    // Gemeinsam
+    "common.back": "Zurück",
+    "common.home": "Startseite",
+    "common.language": "Sprache",
+    "common.backHome": "Zurück zur Startseite",
+
+    // Interpretation
+    "interpretation.advice.title": "Dein persönlicher Rat",
+    "interpretation.gender.femme": "Liebe",
+    "interpretation.gender.homme": "Lieber",
+    "interpretation.gender.autre": "Liebe Seele",
+
+    // Tierkreis
+    "zodiac.aries": "Widder",
+    "zodiac.taurus": "Stier",
+    "zodiac.gemini": "Zwillinge",
+    "zodiac.cancer": "Krebs",
+    "zodiac.leo": "Löwe",
+    "zodiac.virgo": "Jungfrau",
+    "zodiac.libra": "Waage",
+    "zodiac.scorpio": "Skorpion",
+    "zodiac.sagittarius": "Schütze",
+    "zodiac.capricorn": "Steinbock",
+    "zodiac.aquarius": "Wassermann",
+    "zodiac.pisces": "Fische",
+
+    // Horoskop
+    "horoscope.title": "Tageshoroskop",
+    "horoscope.greeting": "Hallo {name}! Hier ist dein Tageshoroskop als {zodiacSign} {zodiacSymbol}",
+    "horoscope.message": "Liebe/r {name}, als {zodiacSign} hast du diese schöne Energie, die gute Dinge anzieht. Vertraue heute auf die Sterne und deine Intuition!",
+
+    // Premium
+    "premium.button.label": "Premium werden",
+    "premium.title": "Werbung entfernen!",
+
+    // Grimoire
+    "grimoire.title": "Mystisches Grimoire",
+    "grimoire.empty.title": "Keine gespeicherten Lesungen",
+
+    // Legal
+    "legal.menu.title": "Rechtliches Menü",
+    "legal.mentions": "Impressum",
+    "legal.privacy": "Datenschutzrichtlinie",
+
+    // Kristallkugel
+    "crystalBall.title": "Mystische Kristallkugel",
+    "crystalBall.subtitle": "Stelle deine Frage und lass dich von der Magie leiten",
+    "crystalBall.askPrompt": "Was ist deine Frage?",
+    "crystalBall.questionPlaceholder": "Schreibe deine Frage hier...",
+    "crystalBall.submitQuestion": "Kugel befragen",
+    "crystalBall.thinking": "Die Kugel denkt nach...",
+    "crystalBall.newQuestion": "Weitere Frage stellen",
+    "crystalBall.answers.yes": "Ja",
+    "crystalBall.answers.no": "Nein",
+    "crystalBall.answers.maybe": "Vielleicht",
+  },
+
+  it: {
+    // Landing Page
+    "landing.title": "CartoMystik",
+    "landing.subtitle": "Scopri i misteri del tuo destino attraverso le carte, le stelle e l'antica saggezza",
+    "landing.enter": "ENTRA",
+    "landing.ads.support": "Gli annunci ci aiutano a mantenere l'app gratuita",
+
+    // Sistema anti-ripetizione
+    "system.antirepeat.loading": "Le carte si stanno mescolando...",
+    "system.antirepeat.active": "Sistema anti-ripetizione attivo",
+    "system.cards.refreshed": "Nuove carte disponibili",
+
+    // Name Page
+    "name.title": "Nome",
+    "name.subtitle": "Come preferisci essere chiamato? Inserisci il tuo nome o soprannome",
+    "name.placeholder": "Inserisci il tuo nome",
+    "name.next": "AVANTI",
+
+    // Date Page
+    "date.title": "Data di nascita",
+    "date.subtitle": "Rivela il tuo segno astrologico per una divinazione personalizzata",
+    "date.day": "Giorno",
+    "date.month": "Mese",
+    "date.year": "Anno",
+    "date.next": "AVANTI",
+    "date.months.1": "Gennaio",
+    "date.months.2": "Febbraio",
+    "date.months.3": "Marzo",
+    "date.months.4": "Aprile",
+    "date.months.5": "Maggio",
+    "date.months.6": "Giugno",
+    "date.months.7": "Luglio",
+    "date.months.8": "Agosto",
+    "date.months.9": "Settembre",
+    "date.months.10": "Ottobre",
+    "date.months.11": "Novembre",
+    "date.months.12": "Dicembre",
+
+    // Gender Page
+    "gender.title": "Genere",
+    "gender.subtitle": "Indica il tuo genere per personalizzare la tua esperienza",
+    "gender.male": "Maschile",
+    "gender.female": "Femminile",
+    "gender.other": "Altro",
+    "gender.next": "INIZIA",
+    "gender.back": "INDIETRO",
+
+    // Barra di navigazione
+    "menu.open": "Apri menu",
+    "profile.open": "Apri profilo",
+    "profile.birthdate": "Data di nascita",
+    "profile.gender": "Genere",
+    "profile.zodiac": "Segno zodiacale",
+    "profile.edit": "Modifica il mio profilo",
+    "profile.edit.title": "Modifica il mio profilo",
+    "profile.edit.subtitle": "Aggiorna le tue informazioni personali",
+    "profile.edit.error": "Si prega di compilare tutti i campi",
+    "grimoire.subtitle": "La tua cronologia di letture",
+    "premium.active": "Attivo",
+    "locale": "it-IT",
+    "common.cancel": "Annulla",
+    "common.save": "Salva",
+    "name.label": "Nome",
+
+    // Notifiche IT
+    "notification.channel.name": "Lettura Giornaliera",
+    "notification.channel.description": "Notifiche per la tua lettura mistica del giorno",
+    "notification.variants.1.title": "✨ Le stelle ti chiamano",
+    "notification.variants.1.body": "Scopri il tuo oroscopo e la tua lettura mistica del giorno!",
+    "notification.variants.2.title": "🔮 Il tuo destino ti aspetta",
+    "notification.variants.2.body": "Consulta la tua lettura quotidiana e l'oroscopo personalizzato",
+    "notification.variants.3.title": "🌙 Il mistero si svela",
+    "notification.variants.3.body": "La tua lettura del giorno e l'oroscopo sono pronti!",
+    "notification.variants.4.title": "⭐ Un messaggio dalle stelle",
+    "notification.variants.4.body": "Scopri cosa le carte e gli astri ti riservano oggi",
+    "notification.variants.5.title": "✨ CartoMystik ti chiama",
+    "notification.variants.5.body": "La tua guida quotidiana: lettura delle carte e oroscopo disponibili",
+    "notification.modal.title": "Notifiche Giornaliere",
+    "notification.modal.description": "Ricevi ogni giorno alle 10 un promemoria mistico per scoprire la tua lettura e oroscopo personalizzati",
+    "notification.modal.benefit1": "Lettura giornaliera",
+    "notification.modal.benefit2": "Oroscopo personalizzato secondo il tuo segno",
+    "notification.modal.benefit3": "Non perdere mai la tua guida quotidiana",
+    "notification.modal.accept": "Attiva notifiche",
+    "notification.modal.decline": "No grazie",
+    "notification.modal.note": "Potrai modificare questa scelta più tardi nelle impostazioni",
+
+    // Oracle Selection
+    "oracle.welcome": "Benvenuto {name}!",
+    "oracle.subtitle": "Scopri i segreti del tuo destino",
+    "oracle.daily.title": "Lettura del Giorno",
+    "oracle.daily.description": "Una carta per guidarti e inspirarti oggi",
+    "oracle.horoscope.title": "Oroscopo",
+    "oracle.horoscope.description": "Scopri cosa le stelle ti riservano oggi secondo il tuo segno",
+    "oracle.tarot.title": "Tarocchi",
+    "oracle.tarot.description": "I 22 Arcani Maggiori rivelano i misteri del tuo destino",
+    "oracle.angels.title": "Oracolo degli Angeli",
+    "oracle.angels.description": "Connettiti con le tue guide angeliche per ricevere i loro messaggi d'amore",
+    "oracle.runes.title": "Rune Nordiche",
+    "oracle.runes.description": "L'antica saggezza dei Vichinghi rivela il tuo cammino di guerra e vittoria",
+    "oracle.crystalBall.title": "Sfera di Cristallo",
+    "oracle.crystalBall.description": "Fai le tue domande alla sfera mistica",
+    "oracle.bonusRoll.title": "Tiro Bonus",
+    "oracle.bonusRoll.description": "Sblocca la tua rivelazione numerologica segreta",
+    "oracle.back": "INDIETRO",
+    "oracle.home": "Home",
+    "oracle.backToOracles": "Torna agli oracoli",
+
+    // Comune
+    "common.back": "Indietro",
+    "common.home": "Home",
+    "common.language": "Lingua",
+    "common.backHome": "Torna alla home",
+
+    // Interpretazione
+    "interpretation.advice.title": "Il tuo consiglio personale",
+    "interpretation.gender.femme": "Cara",
+    "interpretation.gender.homme": "Caro",
+    "interpretation.gender.autre": "Cara anima",
+
+    // Zodiaco
+    "zodiac.aries": "Ariete",
+    "zodiac.taurus": "Toro",
+    "zodiac.gemini": "Gemelli",
+    "zodiac.cancer": "Cancro",
+    "zodiac.leo": "Leone",
+    "zodiac.virgo": "Vergine",
+    "zodiac.libra": "Bilancia",
+    "zodiac.scorpio": "Scorpione",
+    "zodiac.sagittarius": "Sagittario",
+    "zodiac.capricorn": "Capricorno",
+    "zodiac.aquarius": "Acquario",
+    "zodiac.pisces": "Pesci",
+
+    // Oroscopo
+    "horoscope.title": "Oroscopo del Giorno",
+    "horoscope.greeting": "Ciao {name}! Ecco il tuo oroscopo del giorno come {zodiacSign} {zodiacSymbol}",
+    "horoscope.message": "Caro/a {name}, come {zodiacSign}, hai questa bella energia che attira cose buone. Fidati delle stelle e della tua intuizione oggi!",
+
+    // Premium
+    "premium.button.label": "Diventa Premium",
+    "premium.title": "Elimina gli Annunci!",
+
+    // Grimorio
+    "grimoire.title": "Grimorio Mistico",
+    "grimoire.empty.title": "Nessuna lettura salvata",
+
+    // Legale
+    "legal.menu.title": "Menu legale",
+    "legal.mentions": "Note legali",
+    "legal.privacy": "Informativa sulla privacy",
+
+    // Sfera di Cristallo
+    "crystalBall.title": "Sfera di Cristallo Mistica",
+    "crystalBall.subtitle": "Fai la tua domanda e lascia che la magia ti guidi",
+    "crystalBall.askPrompt": "Qual è la tua domanda?",
+    "crystalBall.questionPlaceholder": "Scrivi la tua domanda qui...",
+    "crystalBall.submitQuestion": "Consulta la Sfera",
+    "crystalBall.thinking": "La sfera sta pensando...",
+    "crystalBall.newQuestion": "Fai un'altra domanda",
+    "crystalBall.answers.yes": "Sì",
+    "crystalBall.answers.no": "No",
+    "crystalBall.answers.maybe": "Forse",
+  },
+
+  en: {
+    // Landing Page</old_str>
     "landing.title": "CartoMystik",
     "landing.subtitle":
       "Discover the mysteries of your destiny through cards, stars and ancient wisdom",
