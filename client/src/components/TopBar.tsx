@@ -4,16 +4,14 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import MenuDrawer from './MenuDrawer';
 import UserProfileModal from './UserProfileModal';
 import PremiumModal from './PremiumModal';
-import { Menu, User, BookOpen, Crown, BarChart3 } from 'lucide-react';
 
 interface TopBarProps {
   onOpenGrimoire: () => void;
   onOpenPremium: () => void;
-  onOpenStats: () => void; // Added for stats functionality
   isPremium: boolean;
 }
 
-export default function TopBar({ onOpenGrimoire, onOpenPremium, onOpenStats, isPremium }: TopBarProps) {
+export default function TopBar({ onOpenGrimoire, onOpenPremium, isPremium }: TopBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
@@ -99,36 +97,15 @@ export default function TopBar({ onOpenGrimoire, onOpenPremium, onOpenStats, isP
             </h1>
           </div>
 
-          {/* Droite : Boutons et Profil utilisateur */}
-          <div className="flex items-center gap-3">
-            {/* Bouton Statistiques */}
-            <button
-              onClick={onOpenStats}
-              className="p-2 rounded-full bg-blue-600/30 hover:bg-blue-600/50 transition-all border border-blue-500/30"
-              title={t('stats.title') || 'Statistiques'}
-            >
-              <BarChart3 size={20} className="text-blue-200" />
-            </button>
-
-            {/* Bouton Grimoire */}
-            <button
-              onClick={onOpenGrimoire}
-              className="p-2 rounded-full bg-purple-600/30 hover:bg-purple-600/50 transition-all border border-purple-500/30"
-              title={t('grimoire.subtitle')}
-            >
-              <BookOpen size={20} className="text-purple-200" />
-            </button>
-
-            {/* Profil utilisateur */}
-            <button
-              onClick={handleProfileClick}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-700/50 hover:bg-purple-600/50 transition-all hover:scale-105"
-              aria-label={t('profile.open')}
-            >
-              <span className="font-medium text-purple-200">{user.name || 'User'}</span>
-              <span className="text-xl">{user.zodiacSign?.symbol || '✨'}</span>
-            </button>
-          </div>
+          {/* Droite : Profil utilisateur */}
+          <button
+            onClick={handleProfileClick}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-700/50 hover:bg-purple-600/50 transition-all hover:scale-105"
+            aria-label={t('profile.open')}
+          >
+            <span className="font-medium text-purple-200">{user.name || 'User'}</span>
+            <span className="text-xl">{user.zodiacSign?.symbol || '✨'}</span>
+          </button>
         </div>
       </div>
 
