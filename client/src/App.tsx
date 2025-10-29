@@ -31,15 +31,15 @@ export interface Reading {
 
 type AppStep = 'landing' | 'name' | 'date' | 'gender' | 'oracle' | 'game' | 'revelation' | 'interpretation' | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'bonusRoll' | 'responsiveTest';
 
-function Router({ onSaveReading, onStepChange }: { 
+function Router({ onSaveReading, onStepChange }: {
   onSaveReading: (reading: any) => Promise<void>;
   onStepChange: (step: AppStep) => void;
 }) {
   return (
     <Switch>
       <Route path="/">
-        <OracleMystiqueApp 
-          onSaveReading={onSaveReading} 
+        <OracleMystiqueApp
+          onSaveReading={onSaveReading}
           onStepChange={onStepChange as any}
         />
       </Route>
@@ -268,7 +268,7 @@ function App() {
               )}
 
               {showNotificationModal && (
-                <NotificationPermissionModal 
+                <NotificationPermissionModal
                   onClose={() => setShowNotificationModal(false)}
                 />
               )}
@@ -298,9 +298,9 @@ function App() {
               <Toaster />
 
               <div className="w-full h-full overflow-y-auto">
-                <Router 
-                  onSaveReading={addReading} 
-                  onStepChange={setCurrentStep} 
+                <Router
+                  onSaveReading={addReading}
+                  onStepChange={setCurrentStep}
                 />
               </div>
             </div>
