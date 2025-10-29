@@ -430,8 +430,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         try {
           const { type, cards, question, answer } = req.body;
 
-          // ✅ Tirages illimités, pubs gérées côté frontend
+          // ✅ Tirages illimités pour tous (Premium = sans pub)
           const allReadings = await storage.getItem('readings') || [];
+          
+          console.log('📖 Sauvegarde tirage - Total actuel:', allReadings.length);
 
           const newReading = {
             id: Date.now().toString(),

@@ -16,6 +16,8 @@ import PaymentSuccessPage from "@/pages/PaymentSuccessPage";
 import PaymentCancelPage from "@/pages/PaymentCancelPage";
 import { showBannerAd, showInterstitialAd } from './admobService';
 import { config } from '@/config';
+import * as admobService from './admobService';
+
 
 export interface Reading {
   id: string;
@@ -31,15 +33,15 @@ export interface Reading {
 
 type AppStep = 'landing' | 'name' | 'date' | 'gender' | 'oracle' | 'game' | 'revelation' | 'interpretation' | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'bonusRoll' | 'responsiveTest';
 
-function Router({ onSaveReading, onStepChange }: { 
+function Router({ onSaveReading, onStepChange }: {
   onSaveReading: (reading: any) => Promise<void>;
   onStepChange: (step: AppStep) => void;
 }) {
   return (
     <Switch>
       <Route path="/">
-        <OracleMystiqueApp 
-          onSaveReading={onSaveReading} 
+        <OracleMystiqueApp
+          onSaveReading={onSaveReading}
           onStepChange={onStepChange as any}
         />
       </Route>
@@ -64,10 +66,32 @@ function App() {
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
 
-  // Afficher la bannière au démarrage
+  // ===== GESTION ADMOB (seulement pour non-premium) =====
   useEffect(() => {
-    showBannerAd();
+    const initAdMob = async () => {
+      try {
+        // Vérifier le statut Premium
+        const response = await fetch(`${config.apiBaseUrl}/api/user/premium-status`, {
+          credentials: 'include'
+        });
+        const data = await response.json();
+
+        // Afficher les pubs UNIQUEMENT si l'utilisateur n'est PAS Premium
+        if (!data.isPremium) {
+          await admobService.initialize();
+          await admobService.showBanner();
+          console.log('📢 Publicités activées (utilisateur non-premium)');
+        } else {
+          console.log('✅ Publicités désactivées (utilisateur Premium)');
+        }
+      } catch (error) {
+        console.error('❌ Erreur initialisation AdMob:', error);
+      }
+    };
+
+    initAdMob();
   }, []);
+
 
   const showTopBar = !['landing', 'name', 'date', 'gender'].includes(currentStep);
 
@@ -268,7 +292,7 @@ function App() {
               )}
 
               {showNotificationModal && (
-                <NotificationPermissionModal 
+                <NotificationPermissionModal
                   onClose={() => setShowNotificationModal(false)}
                 />
               )}
@@ -298,9 +322,9 @@ function App() {
               <Toaster />
 
               <div className="w-full h-full overflow-y-auto">
-                <Router 
-                  onSaveReading={addReading} 
-                  onStepChange={setCurrentStep} 
+                <Router
+                  onSaveReading={addReading}
+                  onStepChange={setCurrentStep}
                 />
               </div>
             </div>
