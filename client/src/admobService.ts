@@ -1,19 +1,54 @@
-import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, AdMobBannerSize, InterstitialAdPluginEvents, AdMobError } from '@capacitor-community/admob';
+import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
+import { Capacitor } from '@capacitor/core';
 
+// ✅ Variable pour tracker si AdMob est initialisé
+let isAdMobInitialized = false;
+
+// ✅ Fonction d'initialisation avec protection
 async function initialize() {
+  // Ne pas initialiser sur le web
+  if (!Capacitor.isNativePlatform()) {
+    console.log('🌐 Mode web détecté, AdMob désactivé');
+    return;
+  }
+
+  // Ne pas initialiser deux fois
+  if (isAdMobInitialized) {
+    console.log('✅ AdMob déjà initialisé');
+    return;
+  }
+
   try {
     await AdMob.initialize({
-      requestTrackingAuthorization: true,
-      testingDevices: ['YOUR_DEVICE_ID'], // Pour les tests
-      initializeForTesting: true, // À retirer en production
+      testingDevices: ['YOUR_DEVICE_ID'],
+      initializeForTesting: true,
     });
-    console.log('✅ AdMob initialisé');
+    isAdMobInitialized = true;
+    console.log('✅ AdMob initialisé avec succès');
   } catch (error) {
     console.error('❌ Erreur initialisation AdMob:', error);
   }
 }
 
+// ✅ Wrapper pour s'assurer que AdMob est initialisé
+async function ensureAdMobReady() {
+  if (!Capacitor.isNativePlatform()) {
+    return false;
+  }
+
+  if (!isAdMobInitialized) {
+    await initialize();
+  }
+
+  return isAdMobInitialized;
+}
+
 async function showBanner(options?: { position?: 'TOP' | 'BOTTOM' }) {
+  if (!(await ensureAdMobReady())) {
+    console.log('🌐 AdMob non disponible (mode web)');
+    return;
+  }
+
   try {
     const bannerOptions: BannerAdOptions = {
       adId: 'ca-app-pub-3940256099942544/6300978111', // ID de test
@@ -21,7 +56,6 @@ async function showBanner(options?: { position?: 'TOP' | 'BOTTOM' }) {
       position: options?.position === 'TOP' ? BannerAdPosition.TOP_CENTER : BannerAdPosition.BOTTOM_CENTER,
       margin: 0,
     };
-
     await AdMob.showBanner(bannerOptions);
     console.log('✅ Bannière affichée');
   } catch (error) {
@@ -30,6 +64,8 @@ async function showBanner(options?: { position?: 'TOP' | 'BOTTOM' }) {
 }
 
 async function hideBanner() {
+  if (!Capacitor.isNativePlatform()) return;
+
   try {
     await AdMob.removeBanner();
     console.log('🙈 Bannière masquée');
@@ -39,6 +75,8 @@ async function hideBanner() {
 }
 
 async function removeBanner() {
+  if (!Capacitor.isNativePlatform()) return;
+
   try {
     await AdMob.removeBanner();
     console.log('🗑️ Bannière supprimée');
@@ -48,6 +86,11 @@ async function removeBanner() {
 }
 
 async function prepareInterstitial() {
+  if (!(await ensureAdMobReady())) {
+    console.log('🌐 AdMob non disponible (mode web)');
+    return;
+  }
+
   try {
     await AdMob.prepareInterstitial({
       adId: 'ca-app-pub-3940256099942544/1033173712', // ID de test
@@ -59,6 +102,8 @@ async function prepareInterstitial() {
 }
 
 async function showInterstitial() {
+  if (!Capacitor.isNativePlatform()) return;
+
   try {
     await AdMob.showInterstitial();
     console.log('✅ Interstitiel affiché');
@@ -69,15 +114,35 @@ async function showInterstitial() {
 
 // Fonction combinée pour afficher un interstitiel
 async function showInterstitialAd() {
-  await prepareInterstitial();
-  await showInterstitial();
+  if (!(await ensureAdMobReady())) {
+    console.log('🌐 AdMob non disponible (mode web)');
+    return;
+  }
+
+  try {
+    await prepareInterstitial();
+    // Attendre un peu avant d'afficher
+    await new Promise(resolve => setTimeout(resolve, 500));
+    await showInterstitial();
+  } catch (error) {
+    console.error('❌ Erreur affichage interstitiel:', error);
+  }
 }
 
-// Export des fonctions pour compatibilité avec les imports existants
-export { initialize };
-export { showBanner };
-export { hideBanner };
-export { removeBanner };
-export { prepareInterstitial };
-export { showInterstitial };
-export { showInterstitialAd };
+// Export des fonctions
+export { 
+  initialize,
+  showBanner,
+  hideBanner,
+  removeBanner,
+  prepareInterstitial,
+  showInterstitial,
+  showInterstitialAd
+};
+
+// ✅ AUTO-INITIALISATION au chargement du module
+if (Capacitor.isNativePlatform()) {
+  initialize().catch(err => {
+    console.error('❌ Erreur auto-init AdMob:', err);
+  });
+}
