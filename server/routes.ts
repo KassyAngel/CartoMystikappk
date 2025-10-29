@@ -82,10 +82,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ========================================
   // 💳 CRÉATION SESSION CHECKOUT
   // ========================================
-  app.post("/api/create-checkout-session", async (req: Request, res: Response) => {
-    try {
-      const { planId } = req.body;
-      if (!planId) return res.status(400).json({ error: "planId requis" });
+      app.post("/api/create-checkout-session", async (req: Request, res: Response) => {
+        console.log("📥 Requête create-checkout-session reçue:", req.body);
+        try {
+          const { planId } = req.body;
+          if (!planId) {
+            console.error("❌ planId manquant");
+            return res.status(400).json({ error: "planId requis" });
+          }
 
       const prices: Record<string, { amount: number; currency: string }> = {
         premium_1month: { amount: 399, currency: "eur" },

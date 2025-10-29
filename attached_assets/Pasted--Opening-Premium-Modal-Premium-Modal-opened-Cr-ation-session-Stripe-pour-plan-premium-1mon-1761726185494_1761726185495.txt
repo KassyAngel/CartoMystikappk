@@ -1,0 +1,17 @@
+🌟 Opening Premium Modal
+ ✅ Premium Modal opened
+ 🛒 Création session Stripe pour plan: premium_1month
+ ✅ Session Stripe créée, redirection vers: https://checkout.stripe.com/c/pay/cs_test_a1Hmxzx9EaGIgRmSmOSEHnZbsNULMhsBD9ysa8BXOgC1KqH5vF9Xr7oWny#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdkdWxOYHwnPyd1blpxYHZxWjA0Vk92UEZCdldQUH1JRDxVYVdQY1FdSmFAZER3UH1rMGpcVVU2RklwPFBAZ09yZnQwdmNgfDNfYG9Gb1xJdW1NdWxrb19kcHBjQmZUYlFgbjNVaFVBdmE2NTVOcGpHZlc0MScpJ2N3amhWYHdzYHcnP3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2FJyYzMT1jYTYnKSdpZHxqcHFRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2RnaWBVaWRmYG1qaWFgd3YnP3F3cGB4JSUl
+checkout.stripe.com/c/pay/cs_test_a1Hmxzx9EaGIgRmSmOSEHnZbsNULMhsBD9ysa8BXOgC1KqH5vF9Xr7oWny#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdkdWxOYHwnPyd1blpxYHZxWjA0Vk92UEZCdldQUH1JRDxVYVdQY1FdSmFAZER3UH1rMGpcVVU2RklwPFBAZ09yZnQwdmNgfDNfYG9Gb1xJdW1NdWxrb19kcHBjQmZUYlFgbjNVaFVBdmE2NTVOcGpHZlc0MScpJ2N3amhWYHdzYHcnP3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2FJyYzMT1jYTYnKSdpZHxqcHFRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2RnaWBVaWRmYG1qaWFgd3YnP3F3cGB4JSUl:1  <link rel=preload> uses an unsupported `as` value
+checkout.stripe.com/c/pay/cs_test_a1Hmxzx9EaGIgRmSmOSEHnZbsNULMhsBD9ysa8BXOgC1KqH5vF9Xr7oWny#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdkdWxOYHwnPyd1blpxYHZxWjA0Vk92UEZCdldQUH1JRDxVYVdQY1FdSmFAZER3UH1rMGpcVVU2RklwPFBAZ09yZnQwdmNgfDNfYG9Gb1xJdW1NdWxrb19kcHBjQmZUYlFgbjNVaFVBdmE2NTVOcGpHZlc0MScpJ2N3amhWYHdzYHcnP3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2FJyYzMT1jYTYnKSdpZHxqcHFRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2RnaWBVaWRmYG1qaWFgd3YnP3F3cGB4JSUl:1  <link rel=preload> uses an unsupported `as` value
+checkout-app-init-855af58fe91b01ac80d40ce8d6ee5f5b.js:1  Stripe Checkout is not able to run in an iFrame. Please redirect to Checkout at the top level.
+n.Z @ checkout-app-init-855af58fe91b01ac80d40ce8d6ee5f5b.js:1
+[Violation] Potential permissions policy violation: payment is not allowed in this document.
+[Violation] Potential permissions policy violation: payment is not allowed in this document.
+69Tracking Prevention blocked access to storage for <URL>.
+[NEW] Explain Console errors by using Copilot in Edge: click
+         
+         to explain an error. 
+        Learn more
+        Don't show again
+_app-25b3b267c9954083.js:13 [Violation] 'setTimeout' handler took 77ms
