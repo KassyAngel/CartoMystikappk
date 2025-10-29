@@ -13,6 +13,3 @@ project(':capacitor-local-notifications').projectDir = new File('../node_modules
 
 include ':capacitor-preferences'
 project(':capacitor-preferences').projectDir = new File('../node_modules/@capacitor/preferences/android')
-
-include ':capacitor-admob'
-project(':capacitor-admob').projectDir = new File('../node_modules/capacitor-admob/android')

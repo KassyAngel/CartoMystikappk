@@ -1,0 +1,182 @@
+> Task :capacitor-admob:compileDebugJavaWithJavac FAILED
+Java compiler version 21 has deprecated support for compiling with source/target version 8.
+Try one of the following options:
+    1. [Recommended] Use Java toolchain with a lower language version
+    2. Set a higher source/target version
+    3. Use a lower version of the JDK running the build (if you're not using Java toolchain)
+For more details on how to configure these settings, see https://developer.android.com/build/jdks.
+To suppress this warning, set android.javaCompile.suppressSourceTargetDeprecationWarning=true in gradle.properties.
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:10: error: package androidx.coordinatorlayout.widget does not exist
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+                                        ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:19: error: cannot find symbol
+import com.google.android.gms.ads.AdError;
+                                 ^
+  symbol:   class AdError
+  location: package com.google.android.gms.ads
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:24: error: cannot find symbol
+import com.google.android.gms.ads.FullScreenContentCallback;
+                                 ^
+  symbol:   class FullScreenContentCallback
+  location: package com.google.android.gms.ads
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:25: error: cannot find symbol
+import com.google.android.gms.ads.LoadAdError;
+                                 ^
+  symbol:   class LoadAdError
+  location: package com.google.android.gms.ads
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:27: error: package com.google.android.gms.ads.interstitial does not exist
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+                                              ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:28: error: package com.google.android.gms.ads.interstitial does not exist
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+                                              ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:32: error: cannot find symbol
+import androidx.annotation.NonNull;
+                          ^
+  symbol:   class NonNull
+  location: package androidx.annotation
+Java compiler has deprecated support for compiling with source/target compatibility version 8.
+
+Set Java Toolchain to 17
+Change Java language level and jvmTarget to 11 in all modules if using a lower level.
+Pick a different compatibility level...
+Pick a different JDK to run Gradle...
+More information...
+
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:47: error: cannot find symbol
+    private InterstitialAd mInterstitialAd;
+            ^
+  symbol:   class InterstitialAd
+  location: class AdMob
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:56: error: incompatible types: String is not a functional interface
+            MobileAds.initialize(getContext(), initializationStatus -> {
+                     ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:60: error: cannot access AppCompatActivity
+            mViewGroup = (ViewGroup) ((ViewGroup) getActivity().findViewById(android.R.id.content)).getChildAt(0);
+                                                             ^
+  class file for androidx.appcompat.app.AppCompatActivity not found
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:106: error: package CoordinatorLayout does not exist
+            final CoordinatorLayout.LayoutParams mAdViewLayoutParams = new CoordinatorLayout.LayoutParams(
+                                   ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:106: error: package CoordinatorLayout does not exist
+            final CoordinatorLayout.LayoutParams mAdViewLayoutParams = new CoordinatorLayout.LayoutParams(
+                                                                                            ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:107: error: package CoordinatorLayout does not exist
+                    CoordinatorLayout.LayoutParams.WRAP_CONTENT,
+                                     ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:108: error: package CoordinatorLayout does not exist
+                    CoordinatorLayout.LayoutParams.WRAP_CONTENT
+                                     ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:150: error: cannot find symbol
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                                          ^
+  symbol: class LoadAdError
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:150: error: cannot find symbol
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                                  ^
+  symbol: class NonNull
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:239: error: cannot find symbol
+                        new InterstitialAdLoadCallback() {
+                            ^
+  symbol:   class InterstitialAdLoadCallback
+  location: class AdMob
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:241: error: cannot find symbol
+                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                                                            ^
+  symbol: class InterstitialAd
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:267: error: cannot find symbol
+                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                                                  ^
+  symbol: class LoadAdError
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:241: error: cannot find symbol
+                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                                                    ^
+  symbol: class NonNull
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:267: error: cannot find symbol
+                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                                          ^
+  symbol: class NonNull
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:240: error: method does not override or implement a method from a supertype
+                            @Override
+                            ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:246: error: cannot find symbol
+                                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                                                                                 ^
+  symbol: class FullScreenContentCallback
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:254: error: cannot find symbol
+                                    public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                                                                                           ^
+  symbol: class AdError
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:254: error: cannot find symbol
+                                    public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                                                                                   ^
+  symbol: class NonNull
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:247: error: method does not override or implement a method from a supertype
+                                    @Override
+                                    ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:253: error: method does not override or implement a method from a supertype
+                                    @Override
+                                    ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:259: error: method does not override or implement a method from a supertype
+                                    @Override
+                                    ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:266: error: method does not override or implement a method from a supertype
+                            @Override
+                            ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:238: error: cannot find symbol
+                InterstitialAd.load(getContext(), adId, new AdRequest.Builder().build(),
+                ^
+  symbol:   variable InterstitialAd
+  location: class AdMob
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:332: error: cannot find symbol
+                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                                                  ^
+  symbol: class LoadAdError
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:306: error: cannot find symbol
+                            public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                                                    ^
+  symbol: class NonNull
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:332: error: cannot find symbol
+                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                                          ^
+  symbol: class NonNull
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:305: error: method does not override or implement a method from a supertype
+                            @Override
+                            ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:311: error: cannot find symbol
+                                mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                                                                             ^
+  symbol: class FullScreenContentCallback
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:318: error: cannot find symbol
+                                    public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                                                                                           ^
+  symbol: class AdError
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:318: error: cannot find symbol
+                                    public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                                                                                   ^
+  symbol: class NonNull
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:312: error: method does not override or implement a method from a supertype
+                                    @Override
+                                    ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:317: error: method does not override or implement a method from a supertype
+                                    @Override
+                                    ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:323: error: method does not override or implement a method from a supertype
+                                    @Override
+                                    ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:331: error: method does not override or implement a method from a supertype
+                            @Override
+                            ^
+C:\Users\grand\CartoMystikappk\node_modules\capacitor-admob\android\src\main\java\app\xplatform\capacitor\plugins\AdMob.java:303: error: cannot find symbol
+                RewardedAd.load(getContext(), adId, new AdRequest.Builder().build(),
+                          ^
+  symbol:   method load(Context,String,AdRequest,<anonymous RewardedAdLoadCallback>)
+  location: class RewardedAd
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+42 errors
+3 warnings
+  warning: [options] source value 8 is obsolete and will be removed in a future release
+
