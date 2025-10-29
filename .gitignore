@@ -3,5 +3,10 @@ dist
 .DS_Store
 server/public
 vite.config.ts.*
-*.tar.gzcartomystik-project.zip
+*.tar.gz
 cartomystik-project.zip
+
+# Variables d'environnement sensibles
+.env
+.env.local
+.env.production
