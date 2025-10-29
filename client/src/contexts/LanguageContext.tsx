@@ -41,7 +41,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     let translation = translations[language][key] || key;
     if (params) {
       Object.entries(params).forEach(([paramKey, paramValue]) => {
-        const regex = new RegExp(`\\{${paramKey}\\}`, 'g');
+        const regex = new RegExp('\\{' + paramKey + '\\}', 'g');
         translation = translation.replace(regex, String(paramValue || ''));
       });
     }
