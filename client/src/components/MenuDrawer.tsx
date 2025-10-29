@@ -46,10 +46,11 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
     const availableLanguages = ['fr', 'en'];
     const lang = availableLanguages.includes(language) ? language : 'en';
 
-    const url = lang === 'fr' 
-      ? `${window.location.origin}/mentions-legales.html`
-      : `${window.location.origin}/mentions-legales-en.html`;
+    // Utiliser le chemin relatif qui fonctionne à la fois sur web et Android
+    const filename = lang === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html';
+    const url = `${window.location.protocol}//${window.location.host}/${filename}`;
 
+    console.log('🔗 Opening legal mentions:', url);
     await Browser.open({ url });
   };
 
@@ -60,10 +61,11 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
     const availableLanguages = ['fr', 'en'];
     const lang = availableLanguages.includes(language) ? language : 'en';
 
-    const url = lang === 'fr' 
-      ? `${window.location.origin}/politique-confidentialite.html`
-      : `${window.location.origin}/politique-confidentialite-en.html`;
+    // Utiliser le chemin relatif qui fonctionne à la fois sur web et Android
+    const filename = lang === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html';
+    const url = `${window.location.protocol}//${window.location.host}/${filename}`;
 
+    console.log('🔗 Opening privacy policy:', url);
     await Browser.open({ url });
   };
 
