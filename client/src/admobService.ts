@@ -67,6 +67,12 @@ async function showInterstitial() {
   }
 }
 
+// Fonction combinée pour afficher un interstitiel
+async function showInterstitialAd() {
+  await prepareInterstitial();
+  await showInterstitial();
+}
+
 // Export des fonctions pour compatibilité avec les imports existants
 export { initialize };
 export { showBanner };
@@ -74,3 +80,4 @@ export { hideBanner };
 export { removeBanner };
 export { prepareInterstitial };
 export { showInterstitial };
+export { showInterstitialAd };
