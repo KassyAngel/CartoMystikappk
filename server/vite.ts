@@ -80,12 +80,8 @@ export function serveStatic(app: Express) {
 
   app.use(express.static(distPath));
 
-  // Servir index.html pour toutes les routes NON-API (pour le routing React)
-  app.get("*", (req, res, next) => {
-    // Ne pas intercepter les routes API
-    if (req.path.startsWith('/api')) {
-      return next();
-    }
+  // Servir index.html pour toutes les routes non trouvées (SPA fallback)
+  app.use("*", (_req, res) => {
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
