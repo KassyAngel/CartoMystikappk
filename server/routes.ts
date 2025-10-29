@@ -46,8 +46,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const selectedPrice = prices[planId];
       if (!selectedPrice) return res.status(400).json({ error: "Plan invalide" });
 
-      // Ligne 120 - AMÉLIORER
-      const userId = (req as any).session?.userId || `guest_${Date.now()}`;
+      // Génération d'un userId persistant basé sur les données utilisateur stockées
+      const userDataStr = await storage.getItem('user');
+      let userId = `guest_${Date.now()}`;
+      
+      if (userDataStr) {
+        try {
+          const userData = JSON.parse(userDataStr);
+          // Créer un ID unique basé sur le nom et la date de naissance
+          userId = `${userData.name}_${userData.birthDate}`.replace(/[^a-zA-Z0-9_]/g, '_').toLowerCase();
+          console.log(`🔑 UserId généré pour le paiement: ${userId}`);
+        } catch (e) {
+          console.warn('⚠️ Impossible de parser les données utilisateur');
+        }
+      }
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
@@ -364,9 +376,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       app.get("/api/user/premium-status", async (req, res) => {
         try {
-          const premiumUntilStr = await storage.getItem('premiumUntil');
+          // Récupérer les données utilisateur pour générer le userId
+          const userDataStr = await storage.getItem('user');
+          let userId = null;
+          
+          if (userDataStr) {
+            try {
+              const userData = JSON.parse(userDataStr);
+              userId = `${userData.name}_${userData.birthDate}`.replace(/[^a-zA-Z0-9_]/g, '_').toLowerCase();
+            } catch (e) {
+              console.warn('⚠️ Impossible de parser les données utilisateur');
+            }
+          }
+
+          // Vérifier le statut premium de cet utilisateur
+          const premiumUntilStr = userId ? await storage.getItem(`premiumUntil_${userId}`) : null;
 
           if (!premiumUntilStr) {
+            console.log(`🔍 Vérification premium pour ${userId || 'utilisateur inconnu'}: Aucun abonnement`);
             return res.json({ isPremium: false, premiumUntil: null });
           }
 
@@ -374,7 +401,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           const now = new Date();
           const isPremium = premiumUntil > now;
 
-          console.log(`🔍 Vérification premium: ${isPremium ? 'Actif' : 'Expiré'} (expire: ${premiumUntil.toLocaleDateString('fr-FR')})`);
+          console.log(`🔍 Vérification premium pour ${userId}: ${isPremium ? 'Actif' : 'Expiré'} (expire: ${premiumUntil.toLocaleDateString('fr-FR')})`);
 
           res.json({
             isPremium,
