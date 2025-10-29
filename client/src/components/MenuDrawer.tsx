@@ -42,13 +42,12 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
   const openLegalMentions = async () => {
     onClose();
 
-    // Si la langue a un fichier dédié, sinon utilise l'anglais
     const availableLanguages = ['fr', 'en'];
     const lang = availableLanguages.includes(language) ? language : 'en';
-
-    // Utiliser le chemin relatif qui fonctionne à la fois sur web et Android
     const filename = lang === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html';
-    const url = `${window.location.protocol}//${window.location.host}/${filename}`;
+    
+    // Sur Android, utiliser l'URL capacitor://localhost
+    const url = `${window.location.origin}/${filename}`;
 
     console.log('🔗 Opening legal mentions:', url);
     await Browser.open({ url });
@@ -57,13 +56,12 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
   const openPrivacyPolicy = async () => {
     onClose();
 
-    // Si la langue a un fichier dédié, sinon utilise l'anglais
     const availableLanguages = ['fr', 'en'];
     const lang = availableLanguages.includes(language) ? language : 'en';
-
-    // Utiliser le chemin relatif qui fonctionne à la fois sur web et Android
     const filename = lang === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html';
-    const url = `${window.location.protocol}//${window.location.host}/${filename}`;
+    
+    // Sur Android, utiliser l'URL capacitor://localhost
+    const url = `${window.location.origin}/${filename}`;
 
     console.log('🔗 Opening privacy policy:', url);
     await Browser.open({ url });
