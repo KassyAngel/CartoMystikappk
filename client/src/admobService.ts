@@ -6,6 +6,23 @@ const ADMOB_IDS = {
   interstitial: 'ca-app-pub-3940256099942544/1033173712' // ID TEST - Remplacer
 };
 
+// Initialiser AdMob
+export async function initialize() {
+  try {
+    await AdMob.initialize({
+      initializeForTesting: true,
+    });
+    console.log('✅ AdMob initialisé');
+  } catch (error) {
+    console.error('❌ Erreur initialisation AdMob:', error);
+  }
+}
+
+// Afficher la bannière
+export async function showBanner() {
+  await showBannerAd();
+}
+
 // Afficher une bannière publicitaire
 export async function showBannerAd() {
   try {
