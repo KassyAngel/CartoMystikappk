@@ -1,7 +1,8 @@
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 import { Globe, ChevronDown, ChevronUp } from 'lucide-react';
-import { Browser } from '@capacitor/browser'; // ✅ Ajouté
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -23,7 +24,6 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
   const { t, language, setLanguage } = useLanguage();
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
 
-  // Fermer avec Escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -38,52 +38,62 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
 
   const currentLanguage = languages.find(l => l.code === language);
 
-  // ✅ Fonctions pour ouvrir les pages légales via Capacitor Browser
+  // ✅ Fonction pour construire l'URL correcte selon la plateforme
+  const getAssetUrl = (filename: string): string => {
+    if (Capacitor.isNativePlatform()) {
+      // Sur Android/iOS, utilise le protocol capacitor avec le chemin des assets
+      return `https://localhost/${filename}`;
+    } else {
+      // Sur web (Replit), utilise le chemin relatif
+      return `/${filename}`;
+    }
+  };
+
+  // ✅ Ouvrir Mentions Légales
   const openLegalMentions = async () => {
     onClose();
 
     const availableLanguages = ['fr', 'en'];
     const lang = availableLanguages.includes(language) ? language : 'en';
     const filename = lang === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html';
-    
-    // Construire l'URL complète avec le protocol capacitor
-    const url = `${window.location.origin}/${filename}`;
 
+    const url = getAssetUrl(filename);
     console.log('🔗 Opening legal mentions:', url);
+
     try {
       await Browser.open({ 
         url,
-        windowName: '_blank',
-        presentationStyle: 'fullscreen'
+        presentationStyle: 'fullscreen',
+        toolbarColor: '#581c87'
       });
+      console.log('✅ Legal mentions opened');
     } catch (error) {
       console.error('❌ Error opening legal mentions:', error);
-      // Fallback: navigation directe
-      window.location.href = `/${filename}`;
+      alert('Erreur lors de l\'ouverture des mentions légales');
     }
   };
 
+  // ✅ Ouvrir Politique de Confidentialité
   const openPrivacyPolicy = async () => {
     onClose();
 
     const availableLanguages = ['fr', 'en'];
     const lang = availableLanguages.includes(language) ? language : 'en';
     const filename = lang === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html';
-    
-    // Construire l'URL complète avec le protocol capacitor
-    const url = `${window.location.origin}/${filename}`;
 
+    const url = getAssetUrl(filename);
     console.log('🔗 Opening privacy policy:', url);
+
     try {
       await Browser.open({ 
         url,
-        windowName: '_blank',
-        presentationStyle: 'fullscreen'
+        presentationStyle: 'fullscreen',
+        toolbarColor: '#581c87'
       });
+      console.log('✅ Privacy policy opened');
     } catch (error) {
       console.error('❌ Error opening privacy policy:', error);
-      // Fallback: navigation directe
-      window.location.href = `/${filename}`;
+      alert('Erreur lors de l\'ouverture de la politique de confidentialité');
     }
   };
 
@@ -155,7 +165,7 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
             </div>
           </button>
 
-          {/* Langue - Section déroulante */}
+          {/* Langue */}
           <div className="pt-4 border-t border-purple-500/30">
             <button
               onClick={(e) => {
@@ -185,7 +195,6 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
               )}
             </button>
 
-            {/* Liste des langues (déroulante) */}
             {isLanguageOpen && (
               <div className="mt-2 space-y-1 pl-4">
                 {languages.map((lang) => (
@@ -215,7 +224,7 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
             )}
           </div>
 
-          {/* ✅ Pages légales via Capacitor Browser */}
+          {/* Pages légales */}
           <div className="pt-4 border-t border-purple-500/30 space-y-1">
             <button
               onClick={openLegalMentions}
