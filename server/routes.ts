@@ -524,6 +524,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       });
 
+      // ===== ROUTES DE REDIRECTION STRIPE =====
+      // Ces routes servent l'application React pour gérer le routing côté client
+      app.get('/success', (req, res, next) => {
+        // En production, le middleware serveStatic gèrera cela
+        // En développement, Vite s'en charge
+        next();
+      });
+
+      app.get('/cancel', (req, res, next) => {
+        // En production, le middleware serveStatic gèrera cela
+        // En développement, Vite s'en charge
+        next();
+      });
+
       const httpServer = createServer(app);
       return httpServer;
     }
