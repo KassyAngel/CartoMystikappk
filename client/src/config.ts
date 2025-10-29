@@ -8,5 +8,7 @@ const API_BASE_URL = isNative
   : window.location.origin; // Utilise l'origine actuelle pour éviter les problèmes CORS
 
 export const config = {
-  apiBaseUrl: API_BASE_URL,
+  apiBaseUrl: import.meta.env.DEV 
+    ? 'http://localhost:5000' 
+    : 'https://cartomystikappk.onrender.com'
 };
