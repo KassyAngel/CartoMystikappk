@@ -46,20 +46,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const selectedPrice = prices[planId];
       if (!selectedPrice) return res.status(400).json({ error: "Plan invalide" });
 
-      // Génération d'un userId persistant basé sur les données utilisateur stockées
-      const userDataStr = await storage.getItem('user');
-      let userId = `guest_${Date.now()}`;
+      // Génération d'un userId persistant - utiliser device ID ou session
+      // IMPORTANT: Pour production, implémenter un vrai système d'authentification
+      let userId = req.cookies?.userId || `user_${Date.now()}_${Math.random().toString(36).substring(7)}`;
       
-      if (userDataStr) {
-        try {
-          const userData = JSON.parse(userDataStr);
-          // Créer un ID unique basé sur le nom et la date de naissance
-          userId = `${userData.name}_${userData.birthDate}`.replace(/[^a-zA-Z0-9_]/g, '_').toLowerCase();
-          console.log(`🔑 UserId généré pour le paiement: ${userId}`);
-        } catch (e) {
-          console.warn('⚠️ Impossible de parser les données utilisateur');
-        }
-      }
+      // Sauvegarder le userId dans un cookie pour persistance
+      res.cookie('userId', userId, { 
+        maxAge: 365 * 24 * 60 * 60 * 1000, // 1 an
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production'
+      });
+      
+      console.log(`🔑 UserId utilisé pour le paiement: ${userId}`);
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
@@ -376,21 +374,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       app.get("/api/user/premium-status", async (req, res) => {
         try {
-          // Récupérer les données utilisateur pour générer le userId
-          const userDataStr = await storage.getItem('user');
-          let userId = null;
+          // Utiliser le même système de userId que pour le paiement
+          const userId = req.cookies?.userId;
           
-          if (userDataStr) {
-            try {
-              const userData = JSON.parse(userDataStr);
-              userId = `${userData.name}_${userData.birthDate}`.replace(/[^a-zA-Z0-9_]/g, '_').toLowerCase();
-            } catch (e) {
-              console.warn('⚠️ Impossible de parser les données utilisateur');
-            }
+          if (!userId) {
+            console.log('🔍 Aucun userId trouvé dans les cookies');
+            return res.json({ isPremium: false, premiumUntil: null });
           }
 
           // Vérifier le statut premium de cet utilisateur
-          const premiumUntilStr = userId ? await storage.getItem(`premiumUntil_${userId}`) : null;
+          const premiumUntilStr = await storage.getItem(`premiumUntil_${userId}`);
 
           if (!premiumUntilStr) {
             console.log(`🔍 Vérification premium pour ${userId || 'utilisateur inconnu'}: Aucun abonnement`);

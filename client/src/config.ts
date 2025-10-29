@@ -6,7 +6,7 @@ const isNative = Capacitor.isNativePlatform();
 // Configuration API selon l'environnement
 export const config = {
   apiBaseUrl: isNative 
-    ? 'https://cartomystikappk.onrender.com'  // Production pour l'app native
+    ? 'https://cartomystikappk.onrender.com'  // TOUJOURS utiliser Render pour l'app native
     : import.meta.env.PROD 
       ? 'https://cartomystikappk.onrender.com'  // Production web
       : ''  // Développement: utiliser l'origine actuelle (Replit proxy)

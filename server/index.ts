@@ -2,9 +2,11 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 // Charger les variables d'environnement
 dotenv.config();
 const app = express();
+app.use(cookieParser());
 
 // ⚠️ IMPORTANT : Définir la route webhook AVANT express.json()
 // Cela permet à Stripe de recevoir le corps brut (raw body) requis pour la vérification de signature
