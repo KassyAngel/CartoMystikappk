@@ -1,0 +1,56 @@
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist/server
+
+vite v5.4.21 building for production...
+
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+
+/stars-bg.svg referenced in /stars-bg.svg didn't resolve at build time, it will remain unchanged to be resolved at runtime
+✓ 1796 modules transformed.
+x Build failed in 8.31s
+error during build:
+client/src/components/BonusRoll.tsx (2:9): "showInterstitialAd" is not exported by "client/src/admobService.ts", imported by "client/src/components/BonusRoll.tsx".
+file: /home/runner/workspace/client/src/components/BonusRoll.tsx:2:9
+
+1: import React, { useState } from 'react';
+2: import { showInterstitialAd } from '@/admobService';
+            ^
+3: import MysticalButton from './MysticalButton';
+4: import { useLanguage } from '@/contexts/LanguageContext';
+
+    at getRollupError (file:///home/runner/workspace/node_modules/rollup/dist/es/shared/parseAst.js:401:41)
+    at error (file:///home/runner/workspace/node_modules/rollup/dist/es/shared/parseAst.js:397:42)
+    at Module.error (file:///home/runner/workspace/node_modules/rollup/dist/es/shared/node-entry.js:16939:16)
+    at Module.traceVariable (file:///home/runner/workspace/node_modules/rollup/dist/es/shared/node-entry.js:17391:29)
+    at ModuleScope.findVariable (file:///home/runner/workspace/node_modules/rollup/dist/es/shared/node-entry.js:15061:39)
+    at FunctionScope.findVariable (file:///home/runner/workspace/node_modules/rollup/dist/es/shared/node-entry.js:5642:38)
+    at FunctionBodyScope.findVariable (file:///home/runner/workspace/node_modules/rollup/dist/es/shared/node-entry.js:5642:38)
+    at FunctionScope.findVariable (file:///home/runner/workspace/node_modules/rollup/dist/es/shared/node-entry.js:5642:38)
+    at FunctionBodyScope.findVariable (file:///home/runner/workspace/node_modules/rollup/dist/es/shared/node-entry.js:5642:38)
+    at TrackingScope.findVariable (file:///home/runner/workspace/node_modules/rollup/dist/es/shared/node-entry.js:5642:38)
+✔ Copying web assets from public to android/app/src/main/assets/public in 13.92ms
+✔ Creating capacitor.config.json in android/app/src/main/assets in 1.32ms
+✔ copy android in 96.82ms
+✔ Updating Android plugins in 53.62ms
+[info] Found 4 Capacitor plugins for android:
+       @capacitor-community/admob@6.2.0
+       @capacitor/browser@7.0.2
+       @capacitor/local-notifications@7.0.3
+       @capacitor/preferences@7.0.2
+✔ update android in 178.69ms
+[info] Sync finished in 0.364s
+fatal: Unable to create '/home/runner/workspace/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+fatal: Unable to create '/home/runner/workspace/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+~/workspace$ 
