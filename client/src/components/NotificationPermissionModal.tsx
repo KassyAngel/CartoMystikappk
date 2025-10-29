@@ -78,7 +78,7 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
               id: 1,
               title: randomVariant.title,
               body: randomVariant.body,
-              schedule: { 
+              schedule: {
                 at: triggerTime, // ✅ Date locale respectée
                 repeats: true,
                 every: 'day',
@@ -96,7 +96,7 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
         // ✅ Sauvegarder le choix avec timestamp
         localStorage.setItem('notificationPermission', 'granted');
         localStorage.setItem('notificationTime', '10:00');
-        localStorage.setItem('notificationTimezone', Intl.DateTimeFormat().resolvedOptions().timeZone);
+        localStorage.setItem('notificationTimezone',Intl.DateTimeFormat().resolvedOptions().timeZone);
 
         console.log('✅ Notifications quotidiennes activées');
         console.log('⏰ Heure: 10h00 locale');
@@ -159,8 +159,8 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
 
         {/* Boutons */}
         <div className="flex flex-col gap-3">
-          <MysticalButton 
-            variant="primary" 
+          <MysticalButton
+            variant="primary"
             onClick={handleAccept}
             className="w-full"
           >
