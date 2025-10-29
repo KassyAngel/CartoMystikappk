@@ -6,23 +6,11 @@ import dotenv from "dotenv";
 dotenv.config();
 const app = express();
 // Webhook Stripe
-app.post(
-  "/api/webhook",
-  express.raw({ type: "application/json" }),
-  async (req: Request, res: Response) => {
-    try {
-      const handler = (app as any)._stripeWebhookHandler;
-      if (handler) {
-        await handler(req, res);
-      } else {
-        res.status(404).json({ error: "Webhook handler not found" });
-      }
-    } catch (error) {
-      console.error("❌ Erreur webhook:", error);
-      res.status(500).json({ error: "Webhook error" });
-    }
-  }
-);
+
+// ⚠️ IMPORTANT : Le webhook doit utiliser express.raw() AVANT express.json()
+// La route webhook est définie dans routes.ts avec express.raw()
+
+// Middleware JSON pour les autres routes
 // Middleware JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
