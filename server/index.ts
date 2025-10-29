@@ -61,18 +61,21 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
   // Gestion du port
-  const PORT = process.env.PORT || 3001; // Utilise PORT de Render ou 3001 par défaut
+const PORT = process.env.PORT || 3001; // Utilise PORT de Render ou 3001 par défaut
   console.log(`🔧 Démarrage sur le port ${PORT}`);
-  server.listen(PORT, "0.0.0.0") // Utilisez 0.0.0.0 pour que le port soit accessible
-    .on("listening", () => log(`✅ Serveur démarré sur le port ${PORT}`))
-    .on("error", (err: NodeJS.ErrnoException) => {
-      if (err.code === "EADDRINUSE") {
-        console.error(`❌ Le port ${PORT} est déjà utilisé !`);
-        console.error("Essayez de changer le PORT dans votre fichier .env ou tuez le processus existant.");
-        process.exit(1);
-      } else {
-        console.error(err);
-        process.exit(1);
-      }
-    });
+
+  server.listen(PORT, "0.0.0.0", () => {
+    log(`✅ Serveur démarré sur le port ${PORT}`);
+  });
+
+  server.on("error", (err: NodeJS.ErrnoException) => {
+    if (err.code === "EADDRINUSE") {
+      console.error(`❌ Le port ${PORT} est déjà utilisé !`);
+      console.error("Essayez de changer le PORT dans votre fichier .env ou tuez le processus existant.");
+      process.exit(1);
+    } else {
+      console.error(err);
+      process.exit(1);
+    }
+  });
 })();
