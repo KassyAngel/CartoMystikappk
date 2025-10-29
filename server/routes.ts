@@ -121,8 +121,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           },
         ],
         mode: "payment",
-        success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+        success_url: `https://cartomystikappk.onrender.com/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `https://cartomystikappk.onrender.com/cancel`,
         metadata: {
           userId: userId.toString(),
           planId: planId,
