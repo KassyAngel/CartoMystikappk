@@ -1,4 +1,6 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+
+```typescript
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { Language, translations } from '@/data/translations';
 import { saveLanguage, getSavedLanguage } from '@/lib/userStorage';
 
@@ -15,10 +17,9 @@ interface LanguageProviderProps {
 }
 
 export function LanguageProvider({ children }: LanguageProviderProps) {
-  // ✅ Valeur par défaut immédiate
   const [language, setLanguageState] = useState<Language>('fr');
 
-  // ✅ Charger la langue sauvegardée (async)
+  // Charger la langue sauvegardée au démarrage
   useEffect(() => {
     (async () => {
       const savedLang = await getSavedLanguage();
@@ -28,15 +29,15 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     })();
   }, []);
 
-  // ✅ Sauvegarder automatiquement quand la langue change
-  const setLanguage = (lang: Language) => {
+  // Sauvegarder automatiquement quand la langue change
+  const setLanguage = useCallback((lang: Language) => {
     console.log('🌍 Changement de langue:', language, '→', lang);
     setLanguageState(lang);
     saveLanguage(lang);
-  };
+  }, [language]);
 
-  // ✅ Fonction de traduction
-  const t = (key: string, params?: Record<string, any>) => {
+  // Fonction de traduction optimisée avec useCallback
+  const t = useCallback((key: string, params?: Record<string, any>) => {
     let translation = translations[language][key] || key;
     if (params) {
       Object.entries(params).forEach(([paramKey, paramValue]) => {
@@ -45,7 +46,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
       });
     }
     return translation;
-  };
+  }, [language]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
@@ -63,3 +64,4 @@ export function useLanguage() {
 }
 
 export type { Language };
+```
