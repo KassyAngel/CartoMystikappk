@@ -46,11 +46,17 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
     const lang = availableLanguages.includes(language) ? language : 'en';
     const filename = lang === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html';
     
-    // Sur Android, utiliser l'URL capacitor://localhost
-    const url = `${window.location.origin}/${filename}`;
+    // Utiliser le chemin absolu depuis la racine web
+    const url = `https://localhost/${filename}`;
 
     console.log('🔗 Opening legal mentions:', url);
-    await Browser.open({ url });
+    try {
+      await Browser.open({ url });
+    } catch (error) {
+      console.error('❌ Error opening legal mentions:', error);
+      // Fallback: ouvrir dans la même fenêtre
+      window.open(`/${filename}`, '_blank');
+    }
   };
 
   const openPrivacyPolicy = async () => {
@@ -60,11 +66,17 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
     const lang = availableLanguages.includes(language) ? language : 'en';
     const filename = lang === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html';
     
-    // Sur Android, utiliser l'URL capacitor://localhost
-    const url = `${window.location.origin}/${filename}`;
+    // Utiliser le chemin absolu depuis la racine web
+    const url = `https://localhost/${filename}`;
 
     console.log('🔗 Opening privacy policy:', url);
-    await Browser.open({ url });
+    try {
+      await Browser.open({ url });
+    } catch (error) {
+      console.error('❌ Error opening privacy policy:', error);
+      // Fallback: ouvrir dans la même fenêtre
+      window.open(`/${filename}`, '_blank');
+    }
   };
 
   return (
