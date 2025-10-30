@@ -1,7 +1,6 @@
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 import { Globe, ChevronDown, ChevronUp } from 'lucide-react';
-import { InAppBrowser } from '@capacitor/inappbrowser';
 import { Capacitor } from '@capacitor/core';
 
 interface MenuDrawerProps {
@@ -23,74 +22,76 @@ const languages: { code: Language; name: string; flag: string }[] = [
 export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPremium, isPremium }: MenuDrawerProps) {
   const { t, language, setLanguage } = useLanguage();
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [htmlContent, setHtmlContent] = useState<{ title: string; content: string } | null>(null);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        if (htmlContent) {
+          setHtmlContent(null);
+        } else {
+          onClose();
+        }
+      }
     };
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
       return () => document.removeEventListener('keydown', handleEscape);
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, htmlContent]);
 
   if (!isOpen) return null;
 
   const currentLanguage = languages.find(l => l.code === language);
 
-  // ✅ Fonction pour ouvrir un fichier HTML selon la plateforme
-  const openHtmlFile = async (filename: string) => {
+  // ✅ Fonction pour charger et afficher le contenu HTML
+  const loadHtmlFile = async (filename: string, title: string) => {
     const platform = Capacitor.getPlatform();
     console.log('📱 Platform:', platform);
-    console.log('📄 Opening file:', filename);
+    console.log('📄 Loading file:', filename);
 
     try {
-      if (platform === 'android' || platform === 'ios') {
-        // Sur mobile, utilise InAppBrowser avec le chemin correct
-        const url = platform === 'android' 
-          ? `https://localhost/${filename}` // Capacitor server sur Android
-          : `capacitor://localhost/${filename}`; // Capacitor server sur iOS
+      let url: string;
 
-        console.log('🔗 URL mobile:', url);
-
-        await InAppBrowser.openInWebView({
-          url,
-          options: {
-            closeButton: true,
-            closeButtonText: 'Fermer',
-            title: filename.includes('mentions') ? 'Mentions légales' : 'Politique de confidentialité',
-            toolbarColor: '#581c87'
-          }
-        });
+      if (platform === 'web') {
+        // Sur web, utilise fetch
+        url = `/${filename}`;
+        const response = await fetch(url);
+        const content = await response.text();
+        setHtmlContent({ title, content });
       } else {
-        // Sur web, ouvre dans un nouvel onglet
-        const url = `/${filename}`;
-        console.log('🔗 URL web:', url);
-        window.open(url, '_blank');
+        // Sur mobile, utilise le serveur Capacitor
+        url = `https://localhost/${filename}`;
+
+        // Charge le contenu dans un iframe invisible pour le récupérer
+        const response = await fetch(url);
+        const content = await response.text();
+        setHtmlContent({ title, content });
       }
-      console.log('✅ File opened successfully');
+
+      console.log('✅ File loaded successfully');
     } catch (error) {
-      console.error('❌ Error opening file:', error);
-      alert(`Erreur lors de l'ouverture du fichier: ${error}`);
+      console.error('❌ Error loading file:', error);
+      alert(`Erreur lors du chargement du fichier: ${error}`);
     }
   };
 
   // ✅ Ouvrir Mentions Légales
   const openLegalMentions = async () => {
-    onClose();
     const availableLanguages = ['fr', 'en'];
     const lang = availableLanguages.includes(language) ? language : 'en';
     const filename = lang === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html';
-    await openHtmlFile(filename);
+    const title = lang === 'fr' ? 'Mentions légales' : 'Legal Notice';
+    await loadHtmlFile(filename, title);
   };
 
   // ✅ Ouvrir Politique de Confidentialité
   const openPrivacyPolicy = async () => {
-    onClose();
     const availableLanguages = ['fr', 'en'];
     const lang = availableLanguages.includes(language) ? language : 'en';
     const filename = lang === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html';
-    await openHtmlFile(filename);
+    const title = lang === 'fr' ? 'Politique de confidentialité' : 'Privacy Policy';
+    await loadHtmlFile(filename, title);
   };
 
   return (
@@ -247,6 +248,35 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
           </p>
         </div>
       </div>
+
+      {/* Modal HTML */}
+      {htmlContent && (
+        <>
+          <div 
+            className="fixed inset-0 bg-black/80 z-[60]"
+            onClick={() => setHtmlContent(null)}
+          />
+          <div className="fixed inset-4 bg-white rounded-lg z-[70] flex flex-col overflow-hidden">
+            {/* Header modal */}
+            <div className="flex items-center justify-between p-4 border-b bg-purple-900">
+              <h3 className="text-yellow-300 font-bold text-lg">{htmlContent.title}</h3>
+              <button
+                onClick={() => setHtmlContent(null)}
+                className="p-2 rounded-lg hover:bg-purple-700/50 transition-colors"
+              >
+                <svg className="w-6 h-6 text-purple-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            {/* Contenu HTML */}
+            <div 
+              className="flex-1 overflow-auto p-6"
+              dangerouslySetInnerHTML={{ __html: htmlContent.content }}
+            />
+          </div>
+        </>
+      )}
     </>
   );
 }
