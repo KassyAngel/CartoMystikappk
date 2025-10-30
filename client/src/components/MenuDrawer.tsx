@@ -45,18 +45,12 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
       const lang = language === 'fr' ? '' : '-en';
       const fileName = `mentions-legales${lang}.html`;
       
-      console.log('📜 Ouverture mentions légales:', fileName);
-      
       if (Capacitor.isNativePlatform()) {
-        // Essayer avec le chemin capacitor:// qui est le scheme natif
-        const url = `capacitor://localhost/${fileName}`;
-        console.log('🔗 URL native:', url);
-        
+        // Sur mobile Android, ouvrir depuis les assets
         await Browser.open({ 
-          url: url,
+          url: `https://appassets.androidplatform.net/assets/public/${fileName}`,
           presentationStyle: 'fullscreen'
         });
-        console.log('✅ Browser.open() appelé avec succès');
       } else {
         // Sur web, ouvrir dans un nouvel onglet
         window.open(`/${fileName}`, '_blank');
@@ -64,10 +58,6 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
       onClose();
     } catch (error) {
       console.error('❌ Erreur ouverture mentions légales:', error);
-      // Fallback: essayer avec une WebView simple
-      if (Capacitor.isNativePlatform()) {
-        alert('Impossible d\'ouvrir les mentions légales. Veuillez réessayer.');
-      }
     }
   };
 
@@ -76,18 +66,12 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
       const lang = language === 'fr' ? '' : '-en';
       const fileName = `politique-confidentialite${lang}.html`;
       
-      console.log('🔒 Ouverture politique confidentialité:', fileName);
-      
       if (Capacitor.isNativePlatform()) {
-        // Essayer avec le chemin capacitor:// qui est le scheme natif
-        const url = `capacitor://localhost/${fileName}`;
-        console.log('🔗 URL native:', url);
-        
+        // Sur mobile Android, ouvrir depuis les assets
         await Browser.open({ 
-          url: url,
+          url: `https://appassets.androidplatform.net/assets/public/${fileName}`,
           presentationStyle: 'fullscreen'
         });
-        console.log('✅ Browser.open() appelé avec succès');
       } else {
         // Sur web, ouvrir dans un nouvel onglet
         window.open(`/${fileName}`, '_blank');
@@ -95,10 +79,6 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
       onClose();
     } catch (error) {
       console.error('❌ Erreur ouverture politique confidentialité:', error);
-      // Fallback: essayer avec une WebView simple
-      if (Capacitor.isNativePlatform()) {
-        alert('Impossible d\'ouvrir la politique de confidentialité. Veuillez réessayer.');
-      }
     }
   };
 
