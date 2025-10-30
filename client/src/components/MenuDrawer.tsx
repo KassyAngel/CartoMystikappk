@@ -44,14 +44,14 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
   const openLegalMentions = async () => {
     try {
       const lang = language === 'fr' ? '' : '-en';
-      const url = Capacitor.isNativePlatform() 
-        ? `https://cartomystikappk.onrender.com/mentions-legales${lang}.html`
-        : `/mentions-legales${lang}.html`;
-
+      
       if (Capacitor.isNativePlatform()) {
-        await Browser.open({ url });
+        // Sur mobile, ouvrir les fichiers locaux inclus dans l'APK
+        const localPath = `capacitor://localhost/mentions-legales${lang}.html`;
+        await Browser.open({ url: localPath });
       } else {
-        window.open(url, '_blank');
+        // Sur web, ouvrir depuis le serveur
+        window.open(`/mentions-legales${lang}.html`, '_blank');
       }
       onClose();
     } catch (error) {
@@ -62,14 +62,14 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
   const openPrivacyPolicy = async () => {
     try {
       const lang = language === 'fr' ? '' : '-en';
-      const url = Capacitor.isNativePlatform()
-        ? `https://cartomystikappk.onrender.com/politique-confidentialite${lang}.html`
-        : `/politique-confidentialite${lang}.html`;
-
+      
       if (Capacitor.isNativePlatform()) {
-        await Browser.open({ url });
+        // Sur mobile, ouvrir les fichiers locaux inclus dans l'APK
+        const localPath = `capacitor://localhost/politique-confidentialite${lang}.html`;
+        await Browser.open({ url: localPath });
       } else {
-        window.open(url, '_blank');
+        // Sur web, ouvrir depuis le serveur
+        window.open(`/politique-confidentialite${lang}.html`, '_blank');
       }
       onClose();
     } catch (error) {
