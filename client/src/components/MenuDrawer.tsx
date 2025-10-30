@@ -40,9 +40,15 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
 
   // ✅ Fonction pour construire l'URL correcte selon la plateforme
   const getAssetUrl = (filename: string): string => {
-    if (Capacitor.isNativePlatform()) {
-      // Sur Android/iOS, utilise le protocol capacitor avec le chemin des assets
-      return `https://localhost/${filename}`;
+    const platform = Capacitor.getPlatform();
+    console.log('📱 Platform:', platform);
+
+    if (platform === 'android') {
+      // Sur Android, utilise file:///android_asset/
+      return `file:///android_asset/public/${filename}`;
+    } else if (platform === 'ios') {
+      // Sur iOS, utilise le chemin du bundle
+      return `public/${filename}`;
     } else {
       // Sur web (Replit), utilise le chemin relatif
       return `/${filename}`;
