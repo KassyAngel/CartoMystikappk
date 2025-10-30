@@ -1,6 +1,9 @@
+
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 import { Globe, ChevronDown, ChevronUp } from 'lucide-react';
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -21,7 +24,6 @@ const languages: { code: Language; name: string; flag: string }[] = [
 export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPremium, isPremium }: MenuDrawerProps) {
   const { t, language, setLanguage } = useLanguage();
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-  const [legalModalType, setLegalModalType] = useState<'mentions' | 'privacy' | null>(null);
 
   // Fermer avec Escape
   useEffect(() => {
@@ -38,18 +40,46 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
 
   const currentLanguage = languages.find(l => l.code === language);
 
-  const openLegalMentions = () => {
-    onClose();
-    setTimeout(() => {
-      setLegalModalType('mentions');
-    }, 300);
+  const openLegalMentions = async () => {
+    try {
+      const lang = language === 'fr' ? '' : '-en';
+      const fileName = `mentions-legales${lang}.html`;
+      
+      if (Capacitor.isNativePlatform()) {
+        // Sur mobile Android, ouvrir depuis les assets
+        await Browser.open({ 
+          url: `https://appassets.androidplatform.net/assets/public/${fileName}`,
+          presentationStyle: 'fullscreen'
+        });
+      } else {
+        // Sur web, ouvrir dans un nouvel onglet
+        window.open(`/${fileName}`, '_blank');
+      }
+      onClose();
+    } catch (error) {
+      console.error('❌ Erreur ouverture mentions légales:', error);
+    }
   };
 
-  const openPrivacyPolicy = () => {
-    onClose();
-    setTimeout(() => {
-      setLegalModalType('privacy');
-    }, 300);
+  const openPrivacyPolicy = async () => {
+    try {
+      const lang = language === 'fr' ? '' : '-en';
+      const fileName = `politique-confidentialite${lang}.html`;
+      
+      if (Capacitor.isNativePlatform()) {
+        // Sur mobile Android, ouvrir depuis les assets
+        await Browser.open({ 
+          url: `https://appassets.androidplatform.net/assets/public/${fileName}`,
+          presentationStyle: 'fullscreen'
+        });
+      } else {
+        // Sur web, ouvrir dans un nouvel onglet
+        window.open(`/${fileName}`, '_blank');
+      }
+      onClose();
+    } catch (error) {
+      console.error('❌ Erreur ouverture politique confidentialité:', error);
+    }
   };
 
   return (
@@ -180,14 +210,10 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
             )}
           </div>
 
-          {/* ✅ Pages légales via Capacitor Browser */}
+          {/* Pages légales */}
           <div className="pt-4 border-t border-purple-500/30 space-y-1">
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                openLegalMentions();
-              }}
+              onClick={openLegalMentions}
               className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-purple-700/30 transition-colors text-purple-200 text-sm"
             >
               <span>📜</span>
@@ -195,11 +221,7 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
             </button>
 
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                openPrivacyPolicy();
-              }}
+              onClick={openPrivacyPolicy}
               className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-purple-700/30 transition-colors text-purple-200 text-sm"
             >
               <span>🔒</span>
@@ -215,13 +237,6 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
           </p>
         </div>
       </div>
-
-      {/* Legal Modal */}
-      <LegalModal 
-        isOpen={legalModalType !== null}
-        onClose={() => setLegalModalType(null)}
-        type={legalModalType}
-      />
     </>
   );
 }
