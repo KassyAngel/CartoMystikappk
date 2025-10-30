@@ -60,12 +60,12 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
     <>
       {/* Overlay */}
       <div 
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100]"
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200]"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="fixed inset-4 md:inset-10 bg-white rounded-xl shadow-2xl z-[101] overflow-hidden flex flex-col">
+      <div className="fixed inset-4 md:inset-10 bg-white rounded-xl shadow-2xl z-[201] overflow-hidden flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-4 md:p-6 border-b border-gray-200 bg-gradient-to-r from-purple-900 to-purple-800 flex-shrink-0">
           <h2 className="text-yellow-300 font-serif font-bold text-lg md:text-2xl">

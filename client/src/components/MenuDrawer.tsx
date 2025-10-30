@@ -40,11 +40,17 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
   const currentLanguage = languages.find(l => l.code === language);
 
   const openLegalMentions = () => {
-    setLegalModalType('mentions');
+    onClose(); // Fermer le drawer d'abord
+    setTimeout(() => {
+      setLegalModalType('mentions');
+    }, 100); // Petit délai pour laisser le drawer se fermer
   };
 
   const openPrivacyPolicy = () => {
-    setLegalModalType('privacy');
+    onClose(); // Fermer le drawer d'abord
+    setTimeout(() => {
+      setLegalModalType('privacy');
+    }, 100); // Petit délai pour laisser le drawer se fermer
   };
 
   return (
