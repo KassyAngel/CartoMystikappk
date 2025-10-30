@@ -1,7 +1,7 @@
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 import { Globe, ChevronDown, ChevronUp } from 'lucide-react';
-import { Browser } from '@capacitor/browser'; // ✅ Ajouté
+import LegalModal from './LegalModal';
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -22,6 +22,7 @@ const languages: { code: Language; name: string; flag: string }[] = [
 export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPremium, isPremium }: MenuDrawerProps) {
   const { t, language, setLanguage } = useLanguage();
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [legalModalType, setLegalModalType] = useState<'mentions' | 'privacy' | null>(null);
 
   // Fermer avec Escape
   useEffect(() => {
@@ -38,53 +39,12 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
 
   const currentLanguage = languages.find(l => l.code === language);
 
-  // ✅ Fonctions pour ouvrir les pages légales via Capacitor Browser
-  const openLegalMentions = async () => {
-    onClose();
-
-    const availableLanguages = ['fr', 'en'];
-    const lang = availableLanguages.includes(language) ? language : 'en';
-    const filename = lang === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html';
-    
-    // Construire l'URL complète avec le protocol capacitor
-    const url = `${window.location.origin}/${filename}`;
-
-    console.log('🔗 Opening legal mentions:', url);
-    try {
-      await Browser.open({ 
-        url,
-        windowName: '_blank',
-        presentationStyle: 'fullscreen'
-      });
-    } catch (error) {
-      console.error('❌ Error opening legal mentions:', error);
-      // Fallback: navigation directe
-      window.location.href = `/${filename}`;
-    }
+  const openLegalMentions = () => {
+    setLegalModalType('mentions');
   };
 
-  const openPrivacyPolicy = async () => {
-    onClose();
-
-    const availableLanguages = ['fr', 'en'];
-    const lang = availableLanguages.includes(language) ? language : 'en';
-    const filename = lang === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html';
-    
-    // Construire l'URL complète avec le protocol capacitor
-    const url = `${window.location.origin}/${filename}`;
-
-    console.log('🔗 Opening privacy policy:', url);
-    try {
-      await Browser.open({ 
-        url,
-        windowName: '_blank',
-        presentationStyle: 'fullscreen'
-      });
-    } catch (error) {
-      console.error('❌ Error opening privacy policy:', error);
-      // Fallback: navigation directe
-      window.location.href = `/${filename}`;
-    }
+  const openPrivacyPolicy = () => {
+    setLegalModalType('privacy');
   };
 
   return (
@@ -242,6 +202,13 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
           </p>
         </div>
       </div>
+
+      {/* Legal Modal */}
+      <LegalModal 
+        isOpen={legalModalType !== null}
+        onClose={() => setLegalModalType(null)}
+        type={legalModalType}
+      />
     </>
   );
 }
