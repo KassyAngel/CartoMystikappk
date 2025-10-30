@@ -178,7 +178,11 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
           {/* ✅ Pages légales via Capacitor Browser */}
           <div className="pt-4 border-t border-purple-500/30 space-y-1">
             <button
-              onClick={openLegalMentions}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openLegalMentions();
+              }}
               className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-purple-700/30 transition-colors text-purple-200 text-sm"
             >
               <span>📜</span>
@@ -186,7 +190,11 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
             </button>
 
             <button
-              onClick={openPrivacyPolicy}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openPrivacyPolicy();
+              }}
               className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-purple-700/30 transition-colors text-purple-200 text-sm"
             >
               <span>🔒</span>
