@@ -12,7 +12,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { UserProvider } from "@/contexts/UserContext";
 import OracleMystiqueApp from "@/pages/OracleMystiqueApp";
 import NotFound from "@/pages/not-found";
-import { showBanner, showInterstitialAd } from './admobService';
+// import { showBanner, showInterstitialAd } from './admobService';
 import { config } from '@/config';
 
 export interface Reading {
@@ -29,15 +29,15 @@ export interface Reading {
 
 type AppStep = 'landing' | 'name' | 'date' | 'gender' | 'oracle' | 'game' | 'revelation' | 'interpretation' | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'bonusRoll' | 'responsiveTest';
 
-function Router({ onSaveReading, onStepChange }: { 
+function Router({ onSaveReading, onStepChange }: {
   onSaveReading: (reading: any) => Promise<void>;
   onStepChange: (step: AppStep) => void;
 }) {
   return (
     <Switch>
       <Route path="/">
-        <OracleMystiqueApp 
-          onSaveReading={onSaveReading} 
+        <OracleMystiqueApp
+          onSaveReading={onSaveReading}
           onStepChange={onStepChange as any}
         />
       </Route>
@@ -58,7 +58,7 @@ function App() {
 
   // Afficher la bannière au démarrage
   useEffect(() => {
-    showBanner();
+    // showBanner();
   }, []);
 
   const showTopBar = !['landing', 'name', 'date', 'gender'].includes(currentStep);
@@ -223,9 +223,9 @@ function App() {
 
         if (shouldShowAd) {
           console.log(`🎬 Affichage pub interstitielle (tirage global n°${newCount})`);
-          setTimeout(() => {
-            showInterstitialAd();
-          }, 1000);
+          // setTimeout(() => {
+          //   showInterstitialAd();
+          // }, 1000);
         }
       } else {
         console.log('👑 Premium actif : pas de publicité');
@@ -260,7 +260,7 @@ function App() {
               )}
 
               {showNotificationModal && (
-                <NotificationPermissionModal 
+                <NotificationPermissionModal
                   onClose={() => setShowNotificationModal(false)}
                 />
               )}
@@ -290,9 +290,9 @@ function App() {
               <Toaster />
 
               <div className="w-full h-full overflow-y-auto">
-                <Router 
-                  onSaveReading={addReading} 
-                  onStepChange={setCurrentStep} 
+                <Router
+                  onSaveReading={addReading}
+                  onStepChange={setCurrentStep}
                 />
               </div>
             </div>
