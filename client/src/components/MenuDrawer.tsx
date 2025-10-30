@@ -1,7 +1,7 @@
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 import { Globe, ChevronDown, ChevronUp } from 'lucide-react';
-import LegalModal from './LegalModal';
+import { Browser } from '@capacitor/browser'; // ✅ Ajouté
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -22,27 +22,70 @@ const languages: { code: Language; name: string; flag: string }[] = [
 export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPremium, isPremium }: MenuDrawerProps) {
   const { t, language, setLanguage } = useLanguage();
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-  const [legalModal, setLegalModal] = useState<'legal' | 'privacy' | null>(null);
 
+  // Fermer avec Escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        if (legalModal) {
-          setLegalModal(null);
-        } else {
-          onClose();
-        }
-      }
+      if (e.key === 'Escape') onClose();
     };
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
       return () => document.removeEventListener('keydown', handleEscape);
     }
-  }, [isOpen, onClose, legalModal]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   const currentLanguage = languages.find(l => l.code === language);
+
+  // ✅ Fonctions pour ouvrir les pages légales via Capacitor Browser
+  const openLegalMentions = async () => {
+    onClose();
+
+    const availableLanguages = ['fr', 'en'];
+    const lang = availableLanguages.includes(language) ? language : 'en';
+    const filename = lang === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html';
+    
+    // Construire l'URL complète avec le protocol capacitor
+    const url = `${window.location.origin}/${filename}`;
+
+    console.log('🔗 Opening legal mentions:', url);
+    try {
+      await Browser.open({ 
+        url,
+        windowName: '_blank',
+        presentationStyle: 'fullscreen'
+      });
+    } catch (error) {
+      console.error('❌ Error opening legal mentions:', error);
+      // Fallback: navigation directe
+      window.location.href = `/${filename}`;
+    }
+  };
+
+  const openPrivacyPolicy = async () => {
+    onClose();
+
+    const availableLanguages = ['fr', 'en'];
+    const lang = availableLanguages.includes(language) ? language : 'en';
+    const filename = lang === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html';
+    
+    // Construire l'URL complète avec le protocol capacitor
+    const url = `${window.location.origin}/${filename}`;
+
+    console.log('🔗 Opening privacy policy:', url);
+    try {
+      await Browser.open({ 
+        url,
+        windowName: '_blank',
+        presentationStyle: 'fullscreen'
+      });
+    } catch (error) {
+      console.error('❌ Error opening privacy policy:', error);
+      // Fallback: navigation directe
+      window.location.href = `/${filename}`;
+    }
+  };
 
   return (
     <>
@@ -112,7 +155,7 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
             </div>
           </button>
 
-          {/* Langue */}
+          {/* Langue - Section déroulante */}
           <div className="pt-4 border-t border-purple-500/30">
             <button
               onClick={(e) => {
@@ -142,6 +185,7 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
               )}
             </button>
 
+            {/* Liste des langues (déroulante) */}
             {isLanguageOpen && (
               <div className="mt-2 space-y-1 pl-4">
                 {languages.map((lang) => (
@@ -171,10 +215,10 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
             )}
           </div>
 
-          {/* Pages légales */}
+          {/* ✅ Pages légales via Capacitor Browser */}
           <div className="pt-4 border-t border-purple-500/30 space-y-1">
             <button
-              onClick={() => setLegalModal('legal')}
+              onClick={openLegalMentions}
               className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-purple-700/30 transition-colors text-purple-200 text-sm"
             >
               <span>📜</span>
@@ -182,7 +226,7 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
             </button>
 
             <button
-              onClick={() => setLegalModal('privacy')}
+              onClick={openPrivacyPolicy}
               className="flex items-center gap-3 w-full text-left p-3 rounded-lg hover:bg-purple-700/30 transition-colors text-purple-200 text-sm"
             >
               <span>🔒</span>
@@ -198,13 +242,6 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
           </p>
         </div>
       </div>
-
-      {/* Modal légal */}
-      <LegalModal 
-        isOpen={legalModal !== null}
-        onClose={() => setLegalModal(null)}
-        type={legalModal || 'legal'}
-      />
     </>
   );
 }
