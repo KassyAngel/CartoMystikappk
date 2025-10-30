@@ -1,9 +1,6 @@
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 import { Globe, ChevronDown, ChevronUp } from 'lucide-react';
-import LegalModal from './LegalModal';
-import { Browser } from '@capacitor/browser';
-import { Capacitor } from '@capacitor/core';
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -41,40 +38,18 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
 
   const currentLanguage = languages.find(l => l.code === language);
 
-  const openLegalMentions = async () => {
-    try {
-      const lang = language === 'fr' ? '' : '-en';
-      
-      if (Capacitor.isNativePlatform()) {
-        // Sur mobile, ouvrir les fichiers locaux inclus dans l'APK
-        const localPath = `capacitor://localhost/mentions-legales${lang}.html`;
-        await Browser.open({ url: localPath });
-      } else {
-        // Sur web, ouvrir depuis le serveur
-        window.open(`/mentions-legales${lang}.html`, '_blank');
-      }
-      onClose();
-    } catch (error) {
-      console.error('❌ Error opening legal mentions:', error);
-    }
+  const openLegalMentions = () => {
+    onClose();
+    setTimeout(() => {
+      setLegalModalType('mentions');
+    }, 300);
   };
 
-  const openPrivacyPolicy = async () => {
-    try {
-      const lang = language === 'fr' ? '' : '-en';
-      
-      if (Capacitor.isNativePlatform()) {
-        // Sur mobile, ouvrir les fichiers locaux inclus dans l'APK
-        const localPath = `capacitor://localhost/politique-confidentialite${lang}.html`;
-        await Browser.open({ url: localPath });
-      } else {
-        // Sur web, ouvrir depuis le serveur
-        window.open(`/politique-confidentialite${lang}.html`, '_blank');
-      }
-      onClose();
-    } catch (error) {
-      console.error('❌ Error opening privacy policy:', error);
-    }
+  const openPrivacyPolicy = () => {
+    onClose();
+    setTimeout(() => {
+      setLegalModalType('privacy');
+    }, 300);
   };
 
   return (
