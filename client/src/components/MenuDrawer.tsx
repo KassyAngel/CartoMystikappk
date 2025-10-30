@@ -2,6 +2,8 @@ import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 import { Globe, ChevronDown, ChevronUp } from 'lucide-react';
 import LegalModal from './LegalModal';
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -39,18 +41,40 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
 
   const currentLanguage = languages.find(l => l.code === language);
 
-  const openLegalMentions = () => {
-    onClose(); // Fermer le drawer d'abord
-    setTimeout(() => {
-      setLegalModalType('mentions');
-    }, 100); // Petit délai pour laisser le drawer se fermer
+  const openLegalMentions = async () => {
+    try {
+      const lang = language === 'fr' ? '' : '-en';
+      const url = Capacitor.isNativePlatform() 
+        ? `https://cartomystikappk.onrender.com/mentions-legales${lang}.html`
+        : `/mentions-legales${lang}.html`;
+
+      if (Capacitor.isNativePlatform()) {
+        await Browser.open({ url });
+      } else {
+        window.open(url, '_blank');
+      }
+      onClose();
+    } catch (error) {
+      console.error('❌ Error opening legal mentions:', error);
+    }
   };
 
-  const openPrivacyPolicy = () => {
-    onClose(); // Fermer le drawer d'abord
-    setTimeout(() => {
-      setLegalModalType('privacy');
-    }, 100); // Petit délai pour laisser le drawer se fermer
+  const openPrivacyPolicy = async () => {
+    try {
+      const lang = language === 'fr' ? '' : '-en';
+      const url = Capacitor.isNativePlatform()
+        ? `https://cartomystikappk.onrender.com/politique-confidentialite${lang}.html`
+        : `/politique-confidentialite${lang}.html`;
+
+      if (Capacitor.isNativePlatform()) {
+        await Browser.open({ url });
+      } else {
+        window.open(url, '_blank');
+      }
+      onClose();
+    } catch (error) {
+      console.error('❌ Error opening privacy policy:', error);
+    }
   };
 
   return (
