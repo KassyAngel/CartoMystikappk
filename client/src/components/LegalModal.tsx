@@ -28,7 +28,28 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
     // Charger le contenu HTML
     fetch(filename)
       .then(res => res.text())
-      .then(html => setHtmlContent(html))
+      .then(html => {
+        // Créer un parser DOM temporaire
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Extraire uniquement le contenu du body (sans les styles)
+        const bodyContent = doc.querySelector('body');
+        
+        if (bodyContent) {
+          // Supprimer le bouton "Retour" qui n'a plus de sens dans le modal
+          const backBtn = bodyContent.querySelector('.back-btn');
+          if (backBtn) backBtn.remove();
+          
+          // Supprimer le footer s'il existe
+          const footer = bodyContent.querySelector('footer');
+          if (footer) footer.remove();
+          
+          setHtmlContent(bodyContent.innerHTML);
+        } else {
+          setHtmlContent('<p>Contenu non disponible</p>');
+        }
+      })
       .catch(err => {
         console.error('❌ Error loading HTML:', err);
         setHtmlContent('<p>Erreur de chargement</p>');
@@ -65,9 +86,89 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
 
         {/* Content */}
         <div 
-          className="flex-1 overflow-y-auto p-4"
-          dangerouslySetInnerHTML={{ __html: htmlContent }}
-        />
+          className="flex-1 overflow-y-auto p-6 prose prose-sm max-w-none"
+          style={{
+            color: '#1f2937',
+            fontSize: '15px',
+            lineHeight: '1.6'
+          }}
+        >
+          <style dangerouslySetInnerHTML={{ __html: `
+            .prose h1 {
+              color: #7c3aed;
+              font-size: 1.875rem;
+              font-weight: 700;
+              margin-bottom: 1rem;
+              border-bottom: 2px solid #e9d5ff;
+              padding-bottom: 0.5rem;
+            }
+            .prose h2 {
+              color: #6d28d9;
+              font-size: 1.5rem;
+              font-weight: 600;
+              margin-top: 1.5rem;
+              margin-bottom: 0.75rem;
+            }
+            .prose h3 {
+              color: #7c3aed;
+              font-size: 1.25rem;
+              font-weight: 600;
+              margin-top: 1rem;
+              margin-bottom: 0.5rem;
+            }
+            .prose p {
+              margin-bottom: 0.75rem;
+              color: #374151;
+            }
+            .prose ul, .prose ol {
+              margin-left: 1.5rem;
+              margin-bottom: 1rem;
+            }
+            .prose li {
+              margin-bottom: 0.5rem;
+              color: #4b5563;
+            }
+            .prose a {
+              color: #7c3aed;
+              text-decoration: underline;
+            }
+            .prose a:hover {
+              color: #6d28d9;
+            }
+            .prose strong {
+              color: #1f2937;
+              font-weight: 600;
+            }
+            .prose .info-box, .prose .rights-list {
+              background: rgba(168, 85, 247, 0.1);
+              border-left: 4px solid #a855f7;
+              padding: 1rem;
+              margin: 1rem 0;
+              border-radius: 0.5rem;
+            }
+            .prose table {
+              width: 100%;
+              border-collapse: collapse;
+              margin: 1rem 0;
+            }
+            .prose th, .prose td {
+              border: 1px solid #e5e7eb;
+              padding: 0.75rem;
+              text-align: left;
+            }
+            .prose th {
+              background: rgba(168, 85, 247, 0.1);
+              font-weight: 600;
+              color: #6d28d9;
+            }
+            .prose .date {
+              color: #9ca3af;
+              font-size: 0.875rem;
+              margin-bottom: 1.5rem;
+            }
+          `}} />
+          <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+        </div>
       </div>
     </>
   );
