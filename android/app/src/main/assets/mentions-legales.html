@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentions Légales - CartoMystik</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #e9d5ff;
+            background: linear-gradient(135deg, #1a0933 0%, #2d1b4e 50%, #1a0933 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(88, 28, 135, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        h1 {
+            font-family: Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #fde68a, #fcd34d, #fde68a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .date {
+            color: rgba(233, 213, 255, 0.6);
+            font-size: 0.875rem;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-family: Georgia, serif;
+            color: #fcd34d;
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: #fde68a;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #e9d5ff;
+        }
+
+        .info-box {
+            background: rgba(88, 28, 135, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #fcd34d;
+        }
+
+        .warning-box {
+            background: rgba(168, 85, 247, 0.2);
+            border: 2px solid #fcd34d;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box p:first-child {
+            color: #fde68a;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #fde68a;
+        }
+
+        a {
+            color: #fcd34d;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #fde68a;
+            text-decoration: underline;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #e9d5ff;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(168, 85, 247, 0.3);
+            color: #fde68a;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid rgba(252, 211, 77, 0.3);
+        }
+
+        .back-btn:hover {
+            background: rgba(168, 85, 247, 0.5);
+            transform: translateX(-5px);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="javascript:window.close();" class="back-btn">← Retour</a>
+
+        <h1>Mentions Légales</h1>
+        <p class="date">Dernière mise à jour : Janvier 2025</p>
+
+        <section>
+            <h2>1. Éditeur de l'application</h2>
+            <p>L'application <strong>CartoMystik</strong> est éditée par :</p>
+            <div class="info-box">
+                <p><strong>KcDev</strong><br>
+                Auto-entrepreneur<br>
+                Représentée par Karen CROSSIN</p>
+
+                <p><strong>Siège social :</strong><br>
+                54 chemin des sables<br>
+                37530 Nazelles-Négron<br>
+                France</p>
+
+                <p><strong>SIRET :</strong> 992 482 745 00013</p>
+                <p><strong>Email :</strong> <a href="mailto:kcevent37@gmail.com">kcevent37@gmail.com</a></p>
+            </div>
+        </section>
+
+        <section>
+            <h2>2. Directeur de publication</h2>
+            <p>Karen CROSSIN</p>
+        </section>
+
+        <section>
+            <h2>3. Hébergement</h2>
+            <div class="info-box" style="border-left-color: #fcd34d; background: rgba(251, 191, 36, 0.1);">
+                <p><strong>📝 Information à compléter</strong></p>
+                <p style="color: rgba(233, 213, 255, 0.8);">Cette section sera mise à jour lors du déploiement en production avec les informations de l'hébergeur.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>4. Propriété intellectuelle</h2>
+            <p>L'ensemble des contenus de l'application CartoMystik (textes, images, icônes, illustrations, design, structure, code source) est la propriété exclusive de KcDev, sauf mention contraire.</p>
+            <p>Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments de l'application, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation écrite préalable de KcDev.</p>
+            <p>Le non-respect de cette interdiction constitue une contrefaçon pouvant engager la responsabilité civile et pénale du contrefacteur.</p>
+        </section>
+
+        <section>
+            <h2>5. Données personnelles</h2>
+            <p>Les données personnelles collectées par l'application sont traitées conformément à la réglementation en vigueur et notamment le Règlement Général sur la Protection des Données (RGPD).</p>
+            <p>Pour plus d'informations, veuillez consulter notre <a href="/politique-confidentialite.html" target="_blank">Politique de Confidentialité</a>.</p>
+        </section>
+
+        <section>
+            <h2>6. Stockage des données</h2>
+            <p>L'application CartoMystik utilise le stockage local du navigateur (localStorage) pour sauvegarder :</p>
+            <ul>
+                <li>Votre prénom</li>
+                <li>Votre date de naissance et signe astrologique</li>
+                <li>Votre genre</li>
+                <li>Votre langue préférée</li>
+                <li>L'historique de vos tirages de cartes</li>
+            </ul>
+            <div class="info-box">
+                <p><strong>✨ Important :</strong> Ces données sont stockées uniquement dans votre navigateur et ne sont pas transmises à nos serveurs.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>7. Publicité</h2>
+            <p>L'application CartoMystik affiche des publicités fournies par Google AdMob. Ces publicités peuvent utiliser des cookies et des technologies de suivi conformément à la politique de confidentialité de Google.</p>
+            <p>Vous pouvez désactiver la personnalisation des annonces dans les paramètres de votre appareil ou souscrire à la version Premium sans publicité.</p>
+        </section>
+
+        <section>
+            <h2>8. Limitation de responsabilité</h2>
+            <div class="warning-box">
+                <p>⚠️ Important</p>
+                <p>Les tirages de cartes, horoscopes et interprétations fournis par CartoMystik sont proposés à titre de <strong>divertissement et de développement personnel uniquement</strong>.</p>
+                <p>Ils ne constituent en aucun cas des conseils médicaux, juridiques, financiers ou professionnels.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>9. Âge minimum</h2>
+            <p>L'utilisation de CartoMystik est réservée aux personnes âgées de <strong>13 ans et plus</strong>.</p>
+            <p>Les mineurs de moins de 18 ans doivent obtenir l'autorisation de leurs parents ou tuteurs légaux avant d'utiliser l'application et de s'abonner à la version Premium.</p>
+        </section>
+
+        <section>
+            <h2>10. Contact</h2>
+            <div class="info-box">
+                <p>Pour toute question concernant les mentions légales ou l'utilisation de l'application :</p>
+                <p><strong>Email :</strong> <a href="mailto:kcevent37@gmail.com">kcevent37@gmail.com</a></p>
+            </div>
+        </section>
+
+        <section>
+            <h2>11. Droit applicable</h2>
+            <p>Les présentes mentions légales sont régies par le droit français. En cas de litige, et à défaut de résolution amiable, les tribunaux français seront seuls compétents.</p>
+        </section>
+
+        <footer style="margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(168, 85, 247, 0.3); text-align: center;">
+            <p style="color: rgba(233, 213, 255, 0.6); font-size: 0.875rem;">
+                Mentions légales créées en janvier 2025 pour CartoMystik par KcDev
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 import { Globe, ChevronDown, ChevronUp } from 'lucide-react';
-import { Browser } from '@capacitor/browser';
+import { InAppBrowser } from '@capacitor/inappbrowser';
 import { Capacitor } from '@capacitor/core';
 
 interface MenuDrawerProps {
@@ -38,69 +38,59 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
 
   const currentLanguage = languages.find(l => l.code === language);
 
-  // ✅ Fonction pour construire l'URL correcte selon la plateforme
-  const getAssetUrl = (filename: string): string => {
+  // ✅ Fonction pour ouvrir un fichier HTML selon la plateforme
+  const openHtmlFile = async (filename: string) => {
     const platform = Capacitor.getPlatform();
     console.log('📱 Platform:', platform);
+    console.log('📄 Opening file:', filename);
 
-    if (platform === 'android') {
-      // Sur Android, utilise file:///android_asset/
-      return `file:///android_asset/public/${filename}`;
-    } else if (platform === 'ios') {
-      // Sur iOS, utilise le chemin du bundle
-      return `public/${filename}`;
-    } else {
-      // Sur web (Replit), utilise le chemin relatif
-      return `/${filename}`;
+    try {
+      if (platform === 'android' || platform === 'ios') {
+        // Sur mobile, utilise InAppBrowser avec le chemin correct
+        const url = platform === 'android' 
+          ? `https://localhost/${filename}` // Capacitor server sur Android
+          : `capacitor://localhost/${filename}`; // Capacitor server sur iOS
+
+        console.log('🔗 URL mobile:', url);
+
+        await InAppBrowser.openInWebView({
+          url,
+          options: {
+            closeButton: true,
+            closeButtonText: 'Fermer',
+            title: filename.includes('mentions') ? 'Mentions légales' : 'Politique de confidentialité',
+            toolbarColor: '#581c87'
+          }
+        });
+      } else {
+        // Sur web, ouvre dans un nouvel onglet
+        const url = `/${filename}`;
+        console.log('🔗 URL web:', url);
+        window.open(url, '_blank');
+      }
+      console.log('✅ File opened successfully');
+    } catch (error) {
+      console.error('❌ Error opening file:', error);
+      alert(`Erreur lors de l'ouverture du fichier: ${error}`);
     }
   };
 
   // ✅ Ouvrir Mentions Légales
   const openLegalMentions = async () => {
     onClose();
-
     const availableLanguages = ['fr', 'en'];
     const lang = availableLanguages.includes(language) ? language : 'en';
     const filename = lang === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html';
-
-    const url = getAssetUrl(filename);
-    console.log('🔗 Opening legal mentions:', url);
-
-    try {
-      await Browser.open({ 
-        url,
-        presentationStyle: 'fullscreen',
-        toolbarColor: '#581c87'
-      });
-      console.log('✅ Legal mentions opened');
-    } catch (error) {
-      console.error('❌ Error opening legal mentions:', error);
-      alert('Erreur lors de l\'ouverture des mentions légales');
-    }
+    await openHtmlFile(filename);
   };
 
   // ✅ Ouvrir Politique de Confidentialité
   const openPrivacyPolicy = async () => {
     onClose();
-
     const availableLanguages = ['fr', 'en'];
     const lang = availableLanguages.includes(language) ? language : 'en';
     const filename = lang === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html';
-
-    const url = getAssetUrl(filename);
-    console.log('🔗 Opening privacy policy:', url);
-
-    try {
-      await Browser.open({ 
-        url,
-        presentationStyle: 'fullscreen',
-        toolbarColor: '#581c87'
-      });
-      console.log('✅ Privacy policy opened');
-    } catch (error) {
-      console.error('❌ Error opening privacy policy:', error);
-      alert('Erreur lors de l\'ouverture de la politique de confidentialité');
-    }
+    await openHtmlFile(filename);
   };
 
   return (
