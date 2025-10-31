@@ -15,13 +15,13 @@ console.log('🔍 Détection plateforme AdMob:', {
   windowLocation: window.location.href
 });
 
-// ✅ IDs AdMob de production CartoMystik
+// 🧪 IDs AdMob de TEST (à remplacer en production)
 const BANNER_AD_ID = isNative 
-  ? 'ca-app-pub-5733508257471048/2428210645'  // Bannière accueil
+  ? 'ca-app-pub-3940256099942544/6300978111'  // Test Banner
   : '';
 
 const INTERSTITIAL_AD_ID = isNative
-  ? 'ca-app-pub-5733508257471048/5422426681'  // Interstitiel 1
+  ? 'ca-app-pub-3940256099942544/1033173712'  // Test Interstitial
   : '';
 
 export async function initialize() {
@@ -35,10 +35,10 @@ export async function initialize() {
   try {
     await AdMob.initialize({
       requestTrackingAuthorization: true,
-      testingDevices: [],  // ⚠️ Vide pour la production
-      initializeForTesting: false,  // ⚠️ False pour les vraies pubs
+      testingDevices: ['YOUR_DEVICE_ID'],  // 🧪 Mode test
+      initializeForTesting: true,  // 🧪 True pour les pubs de test
     });
-    console.log('✅ AdMob initialisé en production');
+    console.log('✅ AdMob initialisé en mode TEST');
   } catch (error) {
     console.error('❌ Erreur init AdMob:', error);
   }

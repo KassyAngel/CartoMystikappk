@@ -16,14 +16,21 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
 
   const getFileName = () => {
     const isNative = Capacitor.isNativePlatform();
-    const basePath = isNative ? 'https://localhost/' : './';
+    const platform = Capacitor.getPlatform();
+    
+    // Sur Android, les fichiers sont dans /public/ du bundle
+    const basePath = isNative && platform === 'android' 
+      ? 'capacitor://localhost/' 
+      : isNative && platform === 'ios'
+      ? 'capacitor://localhost/'
+      : '/';
 
     const fileName = type === 'legal' 
       ? (language === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html')
       : (language === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html');
 
     const fullPath = `${basePath}${fileName}`;
-    console.log('📄 Chargement page légale:', fullPath, 'isNative:', isNative, 'platform:', Capacitor.getPlatform());
+    console.log('📄 Chargement page légale:', fullPath, 'isNative:', isNative, 'platform:', platform);
 
     return fullPath;
   };
@@ -75,7 +82,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
             src={getFileName()}
             className="w-full h-full border-0"
             title={type === 'legal' ? 'Mentions Légales' : 'Politique de Confidentialité'}
-            sandbox="allow-same-origin"
+            sandbox="allow-same-origin allow-scripts"
             loading="lazy"
           />
         </div>
