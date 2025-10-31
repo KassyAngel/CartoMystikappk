@@ -268,26 +268,20 @@ function App() {
         console.log(`🚫 ${reading.type} non sauvegardé dans Grimoire (type exclu)`);
       }
 
-      // 🎬 Système pub unifié
+      // 🎬 Système pub simplifié : 1 pub tous les 3 tirages
       if (!isPremium) {
         const newCount = readingCount + 1;
         setReadingCount(newCount);
 
-        let shouldShowAd = false;
-        const isCrystalBall = reading.type === 'crystalBall';
+        // Pub au 3ème tirage, puis tous les 3 tirages (3, 6, 9, 12...)
+        const shouldShowAd = newCount % 3 === 0;
 
-        if (isCrystalBall) {
-          shouldShowAd = newCount === 2 || (newCount > 2 && (newCount - 2) % 3 === 0);
-          console.log(`🔮 Crystal Ball n°${newCount} → Pub: ${shouldShowAd ? 'OUI' : 'NON'}`);
-        } else {
-          shouldShowAd = newCount === 1 || newCount % 2 === 0;
-          console.log(`🌟 ${reading.type} n°${newCount} → Pub: ${shouldShowAd ? 'OUI' : 'NON'}`);
-        }
+        console.log(`📊 Tirage n°${newCount} (${reading.type}) → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
 
         if (shouldShowAd) {
-          console.log(`🎬 Affichage pub interstitielle (tirage global n°${newCount})`);
+          console.log(`🎬 Affichage pub interstitielle après 3 tirages`);
           setTimeout(() => {
-            showInterstitialAd();
+            showInterstitialAd(`after_${reading.type}_reading`);
           }, 1000);
         }
       } else {

@@ -30,7 +30,7 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
       setMessage(t('oracle.bonusRoll.loadingAd'));
 
       try {
-        await showInterstitialAd();
+        await showInterstitialAd('bonus_roll');
       } catch (error) {
         console.log("Pub non disponible, on continue quand même");
       }

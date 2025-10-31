@@ -108,14 +108,20 @@ export async function showInterstitial() {
   }
 }
 
-export async function showInterstitialAd() {
+// Compteur global pour tracer les pubs
+let interstitialAdCounter = 0;
+
+export async function showInterstitialAd(context: string = 'unknown') {
   if (!isNative) {
-    console.log('📱 Pas de pub (web)');
+    console.log('📱 Pas de pub (web) - Context:', context);
     return;
   }
 
+  interstitialAdCounter++;
+  const adNumber = interstitialAdCounter;
+
   try {
-    console.log('📺 Préparation de la pub interstitielle...');
+    console.log(`📺 [PUB #${adNumber}] Préparation... Context: ${context}`);
     
     await AdMob.prepareInterstitial({
       adId: INTERSTITIAL_AD_ID,
@@ -125,18 +131,19 @@ export async function showInterstitialAd() {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     const result = await AdMob.showInterstitial();
-    console.log('✅ Pub interstitielle affichée', result);
+    console.log(`✅ [PUB #${adNumber}] Affichée avec succès - Context: ${context}`, result);
   } catch (error: any) {
-    console.error('❌ Erreur pub interstitielle:', error);
+    console.error(`❌ [PUB #${adNumber}] Erreur - Context: ${context}`, error);
     
     // Si l'erreur est "Ad is not ready", on réessaye
     if (error?.message?.includes('not ready')) {
-      console.log('⏳ Pub pas prête, nouvelle tentative...');
+      console.log(`⏳ [PUB #${adNumber}] Pas prête, nouvelle tentative...`);
       await new Promise(resolve => setTimeout(resolve, 2000));
       try {
         await AdMob.showInterstitial();
+        console.log(`✅ [PUB #${adNumber}] Affichée après réessai - Context: ${context}`);
       } catch (retryError) {
-        console.error('❌ Échec après réessai:', retryError);
+        console.error(`❌ [PUB #${adNumber}] Échec après réessai - Context: ${context}`, retryError);
       }
     }
   }
