@@ -1,9 +1,9 @@
 
 import { useEffect } from 'react';
-import { useNavigate } from 'wouter';
+import { useLocation } from 'wouter';
 
 export default function PaymentCancelPage() {
-  const [, setLocation] = useNavigate();
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     // Redirection après 3 secondes vers la page d'accueil

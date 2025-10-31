@@ -1,11 +1,11 @@
 
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'wouter';
+import { useLocation } from 'wouter';
 import { config } from '@/config';
 
 export default function PaymentSuccessPage() {
   const [verified, setVerified] = useState(false);
-  const [, setLocation] = useNavigate();
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     // Vérifier le statut Premium avant de rediriger
