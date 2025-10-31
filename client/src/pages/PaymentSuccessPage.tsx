@@ -27,9 +27,10 @@ export default function PaymentSuccessPage() {
 
     verifyPremium();
 
-    // Redirection après 3 secondes vers la page d'accueil de l'app
+    // Redirection après 3 secondes vers la sélection des oracles
     const timer = setTimeout(() => {
-      setLocation('/');
+      // Utiliser window.history pour revenir en arrière
+      window.history.back();
     }, 3000);
 
     return () => clearTimeout(timer);

@@ -6,10 +6,11 @@ export default function PaymentCancelPage() {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    // Redirection après 3 secondes vers la page d'accueil
+    // Redirection immédiate vers la sélection des oracles
     const timer = setTimeout(() => {
-      setLocation('/');
-    }, 3000);
+      // Utiliser window.history pour revenir en arrière sans passer par la landing page
+      window.history.back();
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [setLocation]);
@@ -20,7 +21,7 @@ export default function PaymentCancelPage() {
         <div className="text-6xl mb-4">❌</div>
         <h1 className="text-3xl font-bold text-red-400 mb-4">Paiement annulé</h1>
         <p className="text-white mb-4">Vous avez annulé le paiement</p>
-        <p className="text-purple-200 text-sm">Redirection en cours...</p>
+        <p className="text-purple-200 text-sm">Retour à la sélection des oracles...</p>
       </div>
     </div>
   );
