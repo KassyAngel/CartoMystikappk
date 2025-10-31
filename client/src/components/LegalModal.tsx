@@ -12,6 +12,15 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
   const { language } = useLanguage();
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
+  // 🖼️ Nettoyage de l'iframe pour éviter les fuites mémoire
+  useEffect(() => {
+    return () => {
+      if (iframeRef.current) {
+        iframeRef.current.src = 'about:blank';
+      }
+    };
+  }, []);
+
   if (!isOpen || !type) return null;
 
   const getFileName = () => {
@@ -21,24 +30,14 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
 
     const isNative = Capacitor.isNativePlatform();
     const platform = Capacitor.getPlatform();
-    
+
     // Sur mobile natif, utiliser un chemin relatif simple
     const fullPath = isNative ? `./${fileName}` : `/${fileName}`;
-    
+
     console.log('📄 Chargement page légale:', fullPath, 'isNative:', isNative, 'platform:', platform);
 
     return fullPath;
   };
-
-  // 🔧 Nettoyage de l'iframe pour éviter les fuites mémoire
-  useEffect(() => {
-    return () => {
-      if (iframeRef.current) {
-        // Vider le contenu de l'iframe avant démontage
-        iframeRef.current.src = 'about:blank';
-      }
-    };
-  }, []);
 
   return (
     <>
