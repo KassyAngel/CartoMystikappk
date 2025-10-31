@@ -1748,8 +1748,6 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.button.subscribe": "S'abonner maintenant",
     "premium.button.select": "Sélectionne une offre",
     "premium.button.processing": "Traitement...",
-    "premium.conditions.line1": "L'abonnement est automatiquement renouvelé et peut être supprimé à tout moment.",
-    "premium.conditions.line2": "Si l'abonnement est annulé, l'abonnement acheté n'est pas remboursé. La version premium sans pub est conservée jusqu'à la fin de la période et ne sera pas renouvelée.",
     "premium.benefits.ads": "Aucune publicité",
     "premium.benefits.grimoire": "Grimoire Mystique illimité",
     "premium.benefits.notes": "Notes et favoris",
