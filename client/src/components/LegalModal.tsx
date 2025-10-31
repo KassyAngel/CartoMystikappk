@@ -15,10 +15,11 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
   if (!isOpen || !type) return null;
 
   const getFileName = () => {
+    // Chemins relatifs qui fonctionnent aussi bien en web qu'en Android
     if (type === 'legal') {
-      return language === 'fr' ? '/mentions-legales.html' : '/mentions-legales-en.html';
+      return language === 'fr' ? './mentions-legales.html' : './mentions-legales-en.html';
     }
-    return language === 'fr' ? '/politique-confidentialite.html' : '/politique-confidentialite-en.html';
+    return language === 'fr' ? './politique-confidentialite.html' : './politique-confidentialite-en.html';
   };
 
   // 🔧 Nettoyage de l'iframe pour éviter les fuites mémoire
