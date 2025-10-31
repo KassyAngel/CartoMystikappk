@@ -56,10 +56,15 @@ function App() {
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
 
-  // Afficher la bannière au démarrage
+  // Afficher la bannière au démarrage (sauf si Premium)
   useEffect(() => {
-    showBanner();
-  }, []);
+    if (!isPremium) {
+      showBanner();
+      console.log('📺 Bannière affichée (utilisateur gratuit)');
+    } else {
+      console.log('👑 Bannière cachée (utilisateur Premium)');
+    }
+  }, [isPremium]);
 
   const showTopBar = !['landing', 'name', 'date', 'gender'].includes(currentStep);
 
