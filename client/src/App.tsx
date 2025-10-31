@@ -72,8 +72,12 @@ function App() {
   // Afficher la bannière au démarrage (sauf si Premium)
   useEffect(() => {
     if (!isPremium) {
-      showBanner();
-      console.log('📺 Bannière affichée (utilisateur gratuit)');
+      // 🔧 Délai de 2 secondes pour réduire la charge mémoire initiale
+      const timer = setTimeout(() => {
+        showBanner();
+        console.log('📺 Bannière affichée (utilisateur gratuit)');
+      }, 2000);
+      return () => clearTimeout(timer);
     } else {
       console.log('👑 Bannière cachée (utilisateur Premium)');
     }

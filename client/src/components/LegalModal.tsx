@@ -1,4 +1,6 @@
+
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useEffect, useRef } from 'react';
 
 interface LegalModalProps {
   isOpen: boolean;
@@ -8,6 +10,7 @@ interface LegalModalProps {
 
 export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
   const { language } = useLanguage();
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   if (!isOpen || !type) return null;
 
@@ -18,6 +21,16 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
     }
     return `/politique-confidentialite${lang}.html`;
   };
+
+  // 🔧 Nettoyage de l'iframe pour éviter les fuites mémoire
+  useEffect(() => {
+    return () => {
+      if (iframeRef.current) {
+        // Vider le contenu de l'iframe avant démontage
+        iframeRef.current.src = 'about:blank';
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -52,10 +65,12 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
         {/* Content */}
         <div className="h-[calc(100%-64px)] bg-white">
           <iframe
+            ref={iframeRef}
             src={getFileName()}
             className="w-full h-full border-0"
             title={type === 'legal' ? 'Mentions Légales' : 'Politique de Confidentialité'}
             sandbox="allow-same-origin"
+            loading="lazy"
           />
         </div>
       </div>

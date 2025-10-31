@@ -40,6 +40,13 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
     }
   }, [isOpen, onClose, legalModal]);
 
+  // 🔧 Nettoyer la modal légale quand le drawer se ferme
+  useEffect(() => {
+    if (!isOpen && legalModal) {
+      setLegalModal(null);
+    }
+  }, [isOpen, legalModal]);
+
   if (!isOpen) return null;
 
   const currentLanguage = languages.find(l => l.code === language);
