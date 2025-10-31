@@ -197,6 +197,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
       leo: {
         descriptions: [
           "Votre rayonnement naturel éblouit votre entourage. C'est votre moment de gloire, profitez-en pour briller de mille feux.",
+
+
+      // ===== ROUTE ALERTE EXPIRATION PREMIUM =====
+      app.get("/api/user/premium-expiration-alert", async (req, res) => {
+        try {
+          const userId = req.cookies?.userId;
+          
+          if (!userId) {
+            return res.json({ shouldAlert: false });
+          }
+
+          const premiumUntilStr = await storage.getItem(`premiumUntil_${userId}`);
+          if (!premiumUntilStr) {
+            return res.json({ shouldAlert: false });
+          }
+
+          const premiumUntil = new Date(premiumUntilStr);
+          const now = new Date();
+          const daysRemaining = Math.ceil((premiumUntil.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+
+          // Vérifier si une alerte a déjà été affichée aujourd'hui
+          const lastAlertDateStr = await storage.getItem(`lastAlertDate_${userId}`);
+          const today = new Date().toDateString();
+          
+          if (lastAlertDateStr === today) {
+            // Déjà alerté aujourd'hui
+            return res.json({ shouldAlert: false });
+          }
+
+          // Conditions d'alerte
+          let shouldAlert = false;
+          let message = '';
+          let alertType = '';
+
+          if (daysRemaining <= 0) {
+            // Premium expiré
+            shouldAlert = true;
+            message = 'premium.expired';
+            alertType = 'expired';
+          } else if (daysRemaining <= 3) {
+            // 3 jours ou moins avant expiration
+            shouldAlert = true;
+            message = 'premium.expiringSoon';
+            alertType = 'warning';
+          }
+
+          if (shouldAlert) {
+            // Enregistrer la date de l'alerte pour éviter les doublons
+            await storage.setItem(`lastAlertDate_${userId}`, today);
+          }
+
+          res.json({
+            shouldAlert,
+            message,
+            alertType,
+            daysRemaining: Math.max(0, daysRemaining),
+            expirationDate: premiumUntil.toISOString()
+          });
+
+        } catch (error) {
+          console.error("❌ Erreur vérification alerte expiration:", error);
+          res.json({ shouldAlert: false });
+        }
+      });
+
           "Le Soleil vous donne une confiance inébranlable. Vos projets créatifs et vos initiatives personnelles sont favorisés.",
           "Les relations amicales sont renforcées grâce à votre générosité. Vous pourriez organiser un événement pour célébrer vos liens.",
           "Le moment est idéal pour prendre des initiatives audacieuses dans votre carrière. Vous êtes prêt à saisir les opportunités qui se présentent.",

@@ -1667,6 +1667,8 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Premium
     "premium.manage": "Gérer mon abonnement (annuler, factures...)",
+    "premium.expired": "Votre accès Premium a expiré",
+    "premium.expiringSoon": "Votre accès Premium expire bientôt",
     
     // Français
     "oracle.crystalBall.title": "Boule de Cristal",

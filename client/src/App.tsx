@@ -97,7 +97,38 @@ function App() {
 
   useEffect(() => {
     loadUserData();
+    checkPremiumExpiration();
   }, []);
+
+  const checkPremiumExpiration = async () => {
+    try {
+      const response = await fetch(`${config.apiBaseUrl}/api/user/premium-expiration-alert`, {
+        credentials: 'include'
+      });
+      const data = await response.json();
+
+      if (data.shouldAlert) {
+        let alertMessage = '';
+        
+        if (data.alertType === 'expired') {
+          alertMessage = `⚠️ Votre accès Premium a expiré.\n\nVous pouvez souscrire à nouveau pour profiter des avantages Premium.`;
+        } else if (data.alertType === 'warning') {
+          const days = data.daysRemaining;
+          const expirationDate = new Date(data.expirationDate).toLocaleDateString('fr-FR');
+          alertMessage = `🔔 Votre accès Premium expire dans ${days} jour${days > 1 ? 's' : ''}.\n\nDate d'expiration : ${expirationDate}\n\nPour renouveler, rendez-vous dans le menu Premium.`;
+        }
+
+        if (alertMessage) {
+          // Afficher l'alerte après un court délai pour ne pas perturber le chargement
+          setTimeout(() => {
+            alert(alertMessage);
+          }, 2000);
+        }
+      }
+    } catch (error) {
+      console.error('❌ Erreur vérification expiration Premium:', error);
+    }
+  };
 
   const loadUserData = async () => {
     try {
