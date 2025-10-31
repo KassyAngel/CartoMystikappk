@@ -12,7 +12,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { UserProvider } from "@/contexts/UserContext";
 import OracleMystiqueApp from "@/pages/OracleMystiqueApp";
 import NotFound from "@/pages/not-found";
-import { showBanner, showInterstitialAd } from './admobService';
+import { initialize as initializeAdMob, showBanner, showInterstitialAd } from './admobService';
 import { config } from '@/config';
 
 export interface Reading {
@@ -55,6 +55,19 @@ function App() {
   const [currentStep, setCurrentStep] = useState<AppStep>('landing');
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
+
+  // 🆕 Initialiser AdMob au démarrage
+  useEffect(() => {
+    const initAds = async () => {
+      try {
+        await initializeAdMob();
+        console.log('✅ AdMob initialisé au démarrage');
+      } catch (error) {
+        console.error('❌ Erreur initialisation AdMob:', error);
+      }
+    };
+    initAds();
+  }, []);
 
   // Afficher la bannière au démarrage (sauf si Premium)
   useEffect(() => {
@@ -148,12 +161,10 @@ function App() {
     }
   };
 
-  // 🗑️ NOUVELLE FONCTION : Effacer tout le Grimoire
   const clearAllReadings = async () => {
     try {
       console.log('🗑️ Suppression de tous les tirages du Grimoire...');
 
-      // Appel API pour supprimer tous les tirages
       const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
         method: 'DELETE',
         credentials: 'include'
@@ -163,9 +174,7 @@ function App() {
         throw new Error('Erreur lors de la suppression');
       }
 
-      // Vider l'état local
       setReadings([]);
-
       console.log('🔥 Grimoire complètement vidé !');
     } catch (error) {
       console.error('❌ Erreur lors du vidage du grimoire:', error);
@@ -174,14 +183,12 @@ function App() {
   };
 
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
-    // ❌ Liste des types à NE PAS sauvegarder dans le Grimoire
     const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
     const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
 
     try {
       console.log('📤 Envoi tirage:', reading.type);
 
-      // ✅ Envoyer au serveur SEULEMENT si c'est un type à sauvegarder
       if (shouldSaveInGrimoire) {
         const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
           method: 'POST',
@@ -190,16 +197,13 @@ function App() {
           body: JSON.stringify(reading)
         });
 
-        // ⚠️ IGNORE l'erreur 403 (ancienne limite obsolète)
         if (response.status === 403) {
           console.log('⚠️ Erreur 403 ignorée (limite supprimée côté serveur)');
-          // Ne rien faire, continuer normalement
         } else if (!response.ok) {
           throw new Error(`Erreur HTTP: ${response.status}`);
         } else {
           const newReading = await response.json();
 
-          // ✅ Ajouter à l'état local
           setReadings(prev => [
             { ...newReading, date: new Date(newReading.date) },
             ...prev
@@ -210,7 +214,7 @@ function App() {
         console.log(`🚫 ${reading.type} non sauvegardé dans Grimoire (type exclu)`);
       }
 
-      // 🎬 SYSTÈME PUB UNIFIÉ (avec vérification Premium)
+      // 🎬 Système pub unifié
       if (!isPremium) {
         const newCount = readingCount + 1;
         setReadingCount(newCount);
