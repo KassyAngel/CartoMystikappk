@@ -59,6 +59,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`🔑 UserId utilisé pour le paiement: ${userId}`);
 
+      // Déterminer l'URL frontend selon l'environnement
+      const isDevelopment = process.env.NODE_ENV !== 'production';
+      const frontendUrl = isDevelopment 
+        ? 'https://6ff68a04-c6dd-4290-a776-a222d5d0c22f-00-3477r7j3sy8oe.janeway.replit.dev:5000'
+        : (process.env.FRONTEND_URL || 'https://cartomystikappk.onrender.com');
+
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: [
@@ -79,8 +85,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           },
         ],
         mode: "payment", // ✅ Mode paiement unique (pas de renouvellement automatique)
-        success_url: `${process.env.FRONTEND_URL || 'https://cartomystikappk.onrender.com'}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.FRONTEND_URL || 'https://cartomystikappk.onrender.com'}/cancel`,
+        success_url: `${frontendUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${frontendUrl}/cancel`,
         metadata: {
           userId: userId.toString(),
           planId: planId,
