@@ -29,8 +29,7 @@ export default function PaymentSuccessPage() {
 
     // Redirection après 3 secondes vers la sélection des oracles
     const timer = setTimeout(() => {
-      // Utiliser window.history pour revenir en arrière
-      window.history.back();
+      setLocation('/');
     }, 3000);
 
     return () => clearTimeout(timer);

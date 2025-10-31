@@ -6,10 +6,9 @@ export default function PaymentCancelPage() {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    // Redirection immédiate vers la sélection des oracles
+    // Redirection vers la sélection des oracles
     const timer = setTimeout(() => {
-      // Utiliser window.history pour revenir en arrière sans passer par la landing page
-      window.history.back();
+      setLocation('/');
     }, 2000);
 
     return () => clearTimeout(timer);
