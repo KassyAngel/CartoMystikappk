@@ -73,15 +73,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 description: "Accès illimité sans publicités",
               },
               unit_amount: selectedPrice.amount,
-              recurring: {
-                interval: planId === "premium_1month" ? "month" : "month",
-                interval_count: planId === "premium_1month" ? 1 : 3,
-              },
+              // ✅ Pas de recurring pour un paiement unique
             },
             quantity: 1,
           },
         ],
-        mode: "subscription", // ✅ Mode abonnement avec renouvellement automatique
+        mode: "payment", // ✅ Mode paiement unique (pas de renouvellement automatique)
         success_url: `${process.env.FRONTEND_URL || 'https://cartomystikappk.onrender.com'}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${process.env.FRONTEND_URL || 'https://cartomystikappk.onrender.com'}/cancel`,
         metadata: {

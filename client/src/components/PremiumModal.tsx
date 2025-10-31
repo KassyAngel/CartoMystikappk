@@ -200,21 +200,11 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
           }
         </button>
 
-        {/* Bouton Gérer l'abonnement */}
-        <a
-          href="https://billing.stripe.com/p/login"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full mt-4 py-2 px-4 rounded-lg bg-purple-700/50 hover:bg-purple-600/50 text-center text-purple-200 hover:text-white transition-all border border-purple-500/30"
-        >
-          ⚙️ {t("premium.manage") || "Gérer mon abonnement (annuler, factures...)"}
-        </a>
-
         {/* Conditions */}
         <div className="mt-4 text-xs text-purple-200 text-center space-y-1">
           <p>🔒 {t("premium.conditions.line1") || "Paiement sécurisé par Stripe"}</p>
-          <p className="text-purple-300">{t("premium.conditions.line2") || "Abonnement renouvelé automatiquement. Annulation possible à tout moment."}</p>
-          <p className="text-purple-300 text-[10px]">{t("premium.conditions.line3") || "Aucun remboursement après souscription. Accès conservé jusqu'à la fin de la période en cas d'annulation."}</p>
+          <p className="text-purple-300">{t("premium.conditions.line2") || "Paiement unique, pas de renouvellement automatique."}</p>
+          <p className="text-purple-300 text-[10px]">{t("premium.conditions.line3") || "Aucun remboursement après paiement. Accès Premium valable pour la durée choisie."}</p>
         </div>
 
         {/* Avantages Premium */}
