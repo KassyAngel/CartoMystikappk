@@ -197,7 +197,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       leo: {
         descriptions: [
           "Votre rayonnement naturel éblouit votre entourage. C'est votre moment de gloire, profitez-en pour briller de mille feux.",
-
+          "Le Soleil vous donne une confiance inébranlable. Vos projets créatifs et vos initiatives personnelles sont favorisés.",
+          "Les relations amicales sont renforcées grâce à votre générosité. Vous pourriez organiser un événement pour célébrer vos liens.",
+          "Le moment est idéal pour prendre des initiatives audacieuses dans votre carrière. Vous êtes prêt à saisir les opportunités qui se présentent.",
+          "Un peu de sport ou d'activité physique pourrait vous apporter un regain d'énergie. Faites quelque chose qui vous excite.",
+          "Votre générosité et votre chaleur humaine vous valent l'admiration de tous. Vous inspirez et motivez ceux qui vous entourent."
+        ],
+        moods: ["Rayonnant", "Généreux", "Créatif", "Majestueux", "Charismatique", "Théâtral"],
+        colors: ["Or", "Orange solaire", "Jaune impérial", "Rouge royal", "Doré", "Ambre"],
+        compatibility: ["Bélier, Sagittaire", "Gémeaux, Balance", "Verseau, Bélier", "Sagittaire, Gémeaux", "Balance, Verseau", "Bélier, Balance"]
+      },
 
       // ===== ROUTE ALERTE EXPIRATION PREMIUM =====
       app.get("/api/user/premium-expiration-alert", async (req, res) => {
