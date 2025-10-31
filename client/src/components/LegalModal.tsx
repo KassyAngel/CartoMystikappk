@@ -3,7 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 interface LegalModalProps {
   isOpen: boolean;
   onClose: () => void;
-  type: 'mentions' | 'privacy' | null;
+  type: 'legal' | 'privacy' | null;
 }
 
 export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
@@ -13,7 +13,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
 
   const getFileName = () => {
     const lang = language === 'fr' ? '' : '-en';
-    if (type === 'mentions') {
+    if (type === 'legal') {
       return `/mentions-legales${lang}.html`;
     }
     return `/politique-confidentialite${lang}.html`;
@@ -32,7 +32,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-purple-500/30 bg-purple-900/50">
           <h2 className="text-yellow-300 font-serif font-bold text-xl">
-            {type === 'mentions' ? (
+            {type === 'legal' ? (
               language === 'fr' ? 'Mentions Légales' : 'Legal Notice'
             ) : (
               language === 'fr' ? 'Politique de Confidentialité' : 'Privacy Policy'
@@ -54,7 +54,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
           <iframe
             src={getFileName()}
             className="w-full h-full border-0"
-            title={type === 'mentions' ? 'Mentions Légales' : 'Politique de Confidentialité'}
+            title={type === 'legal' ? 'Mentions Légales' : 'Politique de Confidentialité'}
             sandbox="allow-same-origin"
           />
         </div>

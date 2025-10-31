@@ -4,10 +4,10 @@ import LegalModal from "./LegalModal";
 
 export default function LegalMenu() {
   const [open, setOpen] = useState(false);
-  const [modalType, setModalType] = useState<'mentions' | 'privacy' | null>(null);
+  const [modalType, setModalType] = useState<'legal' | 'privacy' | null>(null);
   const { t } = useLanguage();
 
-  const openModal = (type: 'mentions' | 'privacy') => {
+  const openModal = (type: 'legal' | 'privacy') => {
     setModalType(type);
     setOpen(false);
   };
@@ -41,7 +41,7 @@ export default function LegalMenu() {
 
             <div className="absolute right-0 mt-2 w-64 rounded-lg shadow-xl bg-white/95 backdrop-blur-sm ring-1 ring-black/10 z-50 overflow-hidden">
               <button
-                onClick={() => openModal('mentions')}
+                onClick={() => openModal('legal')}
                 className="w-full text-left block px-4 py-3 text-sm text-gray-700 hover:bg-purple-50 transition-colors border-b border-gray-100"
               >
                 📜 {t("legal.mentions")}
@@ -60,7 +60,7 @@ export default function LegalMenu() {
       <LegalModal
         isOpen={modalType !== null}
         onClose={() => setModalType(null)}
-        type={modalType || 'mentions'}
+        type={modalType || 'legal'}
       />
     </>
   );
