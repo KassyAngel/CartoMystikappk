@@ -15,11 +15,10 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
   if (!isOpen || !type) return null;
 
   const getFileName = () => {
-    const lang = language === 'fr' ? '' : '-en';
     if (type === 'legal') {
-      return `/mentions-legales${lang}.html`;
+      return language === 'fr' ? '/mentions-legales.html' : '/mentions-legales-en.html';
     }
-    return `/politique-confidentialite${lang}.html`;
+    return language === 'fr' ? '/politique-confidentialite.html' : '/politique-confidentialite-en.html';
   };
 
   // 🔧 Nettoyage de l'iframe pour éviter les fuites mémoire
