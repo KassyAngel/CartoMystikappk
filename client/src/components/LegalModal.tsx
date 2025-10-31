@@ -16,31 +16,14 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
 
   const getFileName = () => {
     const isNative = Capacitor.isNativePlatform();
-    const platform = Capacitor.getPlatform();
-
-    // Détection du chemin selon la plateforme
-    let basePath = './';
-    if (isNative) {
-      if (platform === 'android') {
-        basePath = 'capacitor://localhost/';
-      } else if (platform === 'ios') {
-        basePath = 'capacitor://localhost/';
-      }
-    }
+    const basePath = isNative ? 'https://localhost/' : './';
 
     const fileName = type === 'legal' 
       ? (language === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html')
       : (language === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html');
 
     const fullPath = `${basePath}${fileName}`;
-    console.log('📄 Chargement page légale:', {
-      fullPath,
-      isNative,
-      platform,
-      basePath,
-      fileName,
-      currentURL: window.location.href
-    });
+    console.log('📄 Chargement page légale:', fullPath, 'isNative:', isNative, 'platform:', Capacitor.getPlatform());
 
     return fullPath;
   };

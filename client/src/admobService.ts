@@ -10,7 +10,9 @@ console.log('🔍 Détection plateforme AdMob:', {
   platform,
   userAgent: navigator.userAgent,
   isAndroid: platform === 'android',
-  isIOS: platform === 'ios'
+  isIOS: platform === 'ios',
+  capacitorAvailable: typeof Capacitor !== 'undefined',
+  windowLocation: window.location.href
 });
 
 // ✅ IDs AdMob de production CartoMystik
