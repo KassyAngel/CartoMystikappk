@@ -18,9 +18,12 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
 
   const handleAccept = async () => {
     try {
+      console.log('🔔 [NOTIF] Début de la demande de permission...');
       const permission = await LocalNotifications.requestPermissions();
+      console.log('🔔 [NOTIF] Permission reçue:', JSON.stringify(permission));
 
       if (permission.display === 'granted') {
+        console.log('✅ [NOTIF] Permission accordée, création du canal...');
         // ✅ Créer le canal de notification
         await LocalNotifications.createChannel({
           id: 'daily-tirage',
@@ -30,6 +33,7 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
           sound: 'default',
           vibration: true,
         });
+        console.log('✅ [NOTIF] Canal créé avec succès');
 
         // ✅ Programmer la notification à 10h LOCALE (respecte le fuseau horaire)
         const now = new Date();
@@ -72,7 +76,11 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
 
         const randomVariant = notificationVariants[Math.floor(Math.random() * notificationVariants.length)];
 
-        await LocalNotifications.schedule({
+        console.log('⏰ [NOTIF] Planification pour:', triggerTime.toLocaleString());
+        console.log('🌍 [NOTIF] Fuseau horaire:', Intl.DateTimeFormat().resolvedOptions().timeZone);
+        console.log('📝 [NOTIF] Message:', randomVariant.title);
+        
+        const scheduleResult = await LocalNotifications.schedule({
           notifications: [
             {
               id: 1,
@@ -92,6 +100,7 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
             },
           ],
         });
+        console.log('✅ [NOTIF] Planification terminée:', JSON.stringify(scheduleResult));
 
         // ✅ Sauvegarder le choix avec timestamp
         localStorage.setItem('notificationPermission', 'granted');
@@ -103,10 +112,11 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
         console.log('🌍 Fuseau:', Intl.DateTimeFormat().resolvedOptions().timeZone);
       } else {
         localStorage.setItem('notificationPermission', 'denied');
-        console.log('❌ Permission refusée');
+        console.log('❌ [NOTIF] Permission refusée par l\'utilisateur');
       }
     } catch (err) {
-      console.error('❌ Erreur configuration notifications:', err);
+      console.error('❌ [NOTIF] Erreur configuration notifications:', err);
+      console.error('❌ [NOTIF] Détails erreur:', JSON.stringify(err));
       localStorage.setItem('notificationPermission', 'error');
     }
 
