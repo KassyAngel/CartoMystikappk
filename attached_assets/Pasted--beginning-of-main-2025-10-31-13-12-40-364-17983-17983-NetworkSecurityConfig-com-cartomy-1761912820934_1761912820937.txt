@@ -1,0 +1,267 @@
+--------- beginning of main
+2025-10-31 13:12:40.364 17983-17983 NetworkSecurityConfig   com.cartomystik.app                  D  No Network Security Config specified, using platform default
+2025-10-31 13:12:40.364 17983-17983 NetworkSecurityConfig   com.cartomystik.app                  D  No Network Security Config specified, using platform default
+2025-10-31 13:12:40.366 17983-17983 libc                    com.cartomystik.app                  E  Access denied finding property "ro.vendor.pref_scale_resolution"
+2025-10-31 13:12:40.394 17983-17983 WM-WrkMgrInitializer    com.cartomystik.app                  D  Initializing WorkManager with default configuration.
+2025-10-31 13:12:40.410 17983-17983 TetheringManager        com.cartomystik.app                  I  registerTetheringEventCallback:com.cartomystik.app
+2025-10-31 13:12:40.429 17983-18020 libMEOW                 com.cartomystik.app                  D  meow reload base cfg path: na
+2025-10-31 13:12:40.429 17983-18020 libMEOW                 com.cartomystik.app                  D  meow reload overlay cfg path: na
+2025-10-31 13:12:40.429 17983-18020 libMEOW                 com.cartomystik.app                  D  applied 0 plugin for [com.cartomystik.app].
+2025-10-31 13:12:40.474 17983-17983 AppCompatDelegate       com.cartomystik.app                  D  Checking for metadata for AppLocalesMetadataHolderService : Service not found
+2025-10-31 13:12:40.512 17983-17983 View                    com.cartomystik.app                  D  com.cartomystik.app initForcedUseForceDark: 1
+2025-10-31 13:12:40.517 17983-17983 DecorView[]             com.cartomystik.app                  D  getWindowModeFromSystem  windowmode is 1
+2025-10-31 13:12:40.518 17983-17983 DecorView               com.cartomystik.app                  D  createDecorCaptionView windowingMode:1 mWindowMode 1 isFullscreen: true
+2025-10-31 13:12:40.540 17983-17983 cartomystik.ap          com.cartomystik.app                  W  Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (greylist, reflection, allowed)
+2025-10-31 13:12:40.559 17983-17983 WebViewFactory          com.cartomystik.app                  I  Loading com.google.android.webview version 141.0.7390.122 (code 739012233)
+2025-10-31 13:12:40.580 17983-17983 linker                  com.cartomystik.app                  W  Warning: "/data/app/~~5HfYz_1F5GNqkacafjL4Mg==/com.google.android.trichromelibrary_739012233-ROkvOCBMQvg8GGQojdp_jg==/base.apk!/lib/arm64-v8a/libmonochrome_64.so" unused DT entry: unknown processor-specific (type 0x70000001 arg 0x0) (ignoring)
+2025-10-31 13:12:40.647 17983-17983 cr_WVCFactoryProvider   com.cartomystik.app                  I  version=141.0.7390.122 (739012233) minSdkVersion=29 multiprocess=true packageId=127 splits=<none>
+2025-10-31 13:12:40.680 17983-18026 chromium                com.cartomystik.app                  I  [1031/131240.673560:INFO:android_webview/browser/variations/variations_seed_loader.cc:67] Failed to open file for reading.: No such file or directory (2)
+2025-10-31 13:12:40.722 17983-17983 cr_LibraryLoader        com.cartomystik.app                  I  Successfully loaded native library
+2025-10-31 13:12:40.725 17983-17983 cr_CachingUmaRecorder   com.cartomystik.app                  I  Flushed 8 samples from 8 histograms, 0 samples were dropped.
+2025-10-31 13:12:40.738 17983-17983 cr_CombinedPProvider    com.cartomystik.app                  I  #registerProvider() provider:WV.ak@144dca isPolicyCacheEnabled:false policyProvidersSize:0
+2025-10-31 13:12:40.739 17983-17983 cr_PolicyProvider       com.cartomystik.app                  I  #setManagerAndSource() 0
+2025-10-31 13:12:40.804 17983-17983 cr_CombinedPProvider    com.cartomystik.app                  I  #linkNativeInternal() 1
+2025-10-31 13:12:40.806 17983-17983 cr_AppResProvider       com.cartomystik.app                  I  #getApplicationRestrictionsFromUserManager() Bundle[EMPTY_PARCEL]
+2025-10-31 13:12:40.806 17983-17983 cr_PolicyProvider       com.cartomystik.app                  I  #notifySettingsAvailable() 0
+2025-10-31 13:12:40.806 17983-17983 cr_CombinedPProvider    com.cartomystik.app                  I  #onSettingsAvailable() 0
+2025-10-31 13:12:40.806 17983-17983 cr_CombinedPProvider    com.cartomystik.app                  I  #flushPolicies()
+2025-10-31 13:12:40.857 17983-17983 libc                    com.cartomystik.app                  E  Access denied finding property "ro.vendor.df.effect.conflict"
+2025-10-31 13:12:40.857 17983-17983 libc                    com.cartomystik.app                  E  Access denied finding property "ro.vendor.knock.type"
+2025-10-31 13:12:40.888 17983-18051 libc                    com.cartomystik.app                  E  Access denied finding property "ro.vendor.api_level"
+2025-10-31 13:12:40.910 17983-17983 chromium                com.cartomystik.app                  W  [WARNING:android_webview/browser/network_service/net_helpers.cc:143] HTTP Cache size is: 20971520
+2025-10-31 13:12:40.990 17983-17983 EgretLoader             com.cartomystik.app                  D  EgretLoader(Context context)
+2025-10-31 13:12:40.991 17983-17983 EgretLoader             com.cartomystik.app                  D  The context is not activity
+2025-10-31 13:12:41.000 17983-17983 Capacitor               com.cartomystik.app                  E  Error loading plugins.
+                                                                                                    com.getcapacitor.PluginLoadException: Could not find class by class path: app.xplatform.capacitor.plugins.AdMob
+                                                                                                    	at com.getcapacitor.PluginManager.loadPluginClasses(PluginManager.java:35)
+                                                                                                    	at com.getcapacitor.BridgeActivity.onCreate(BridgeActivity.java:37)
+                                                                                                    	at com.cartomystik.app.MainActivity.onCreate(MainActivity.java:9)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:8142)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:8114)
+                                                                                                    	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1309)
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3565)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3752)
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:85)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:135)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:95)
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2178)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:106)
+                                                                                                    	at android.os.Looper.loop(Looper.java:236)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:8051)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:620)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1011)
+2025-10-31 13:12:41.000 17983-17983 Capacitor               com.cartomystik.app                  D  Starting BridgeActivity
+2025-10-31 13:12:41.033 17983-17983 Capacitor               com.cartomystik.app                  D  Registering plugin instance: CapacitorCookies
+2025-10-31 13:12:41.038 17983-17983 Capacitor               com.cartomystik.app                  D  Registering plugin instance: WebView
+2025-10-31 13:12:41.040 17983-17983 Capacitor               com.cartomystik.app                  D  Registering plugin instance: CapacitorHttp
+2025-10-31 13:12:41.049 17983-17983 Capacitor               com.cartomystik.app                  W  Unable to read file at path public/plugins
+2025-10-31 13:12:41.055 17983-17983 Capacitor               com.cartomystik.app                  D  Loading app at https://localhost
+2025-10-31 13:12:41.076 17983-18057 cr_media                com.cartomystik.app                  W  getBluetoothAdapter() requires BLUETOOTH permission
+2025-10-31 13:12:41.076 17983-18057 cr_media                com.cartomystik.app                  W  registerBluetoothIntentsIfNeeded: Requires BLUETOOTH permission
+2025-10-31 13:12:41.083 17983-18097 libMEOW                 com.cartomystik.app                  D  applied 0 plugin for [com.cartomystik.app].
+2025-10-31 13:12:41.097 17983-18097 libEGL                  com.cartomystik.app                  E  eglCreateContextImpl:990 error 3004 (EGL_BAD_ATTRIBUTE)
+2025-10-31 13:12:41.105 17983-17983 Activity                com.cartomystik.app                  W  Slow Operation: Activity com.cartomystik.app/.MainActivity onCreate took 623ms
+2025-10-31 13:12:41.107 17983-18051 Capacitor               com.cartomystik.app                  D  Handling local request: https://localhost/
+2025-10-31 13:12:41.125 17983-17983 Capacitor               com.cartomystik.app                  D  App started
+2025-10-31 13:12:41.129 17983-17983 Capacitor               com.cartomystik.app                  D  App resumed
+2025-10-31 13:12:41.133 17983-17983 SurfaceFactory          com.cartomystik.app                  I  [static] sSurfaceFactory = com.mediatek.view.impl.SurfaceFactoryImpl@5410a0c
+2025-10-31 13:12:41.139 17983-17983 ViewRootIm...nActivity] com.cartomystik.app                  D  hardware acceleration = true , fakeHwAccelerated = false, sRendererDisabled = false, forceHwAccelerated = false, sSystemRendererDisabled = false
+2025-10-31 13:12:41.143 17983-17983 libMEOW                 com.cartomystik.app                  D  applied 0 plugin for [com.cartomystik.app].
+2025-10-31 13:12:41.144 17983-17983 InputTransport          com.cartomystik.app                  I  Create ARC handle: 0xb40000755b893240
+2025-10-31 13:12:41.144 17983-17983 PhoneWindow             com.cartomystik.app                  V  DecorView setVisiblity: visibility = 0, Parent = android.view.ViewRootImpl@7fabaf8, this = DecorView@e895bd1[MainActivity]
+2025-10-31 13:12:41.147 17983-17983 Looper                  com.cartomystik.app                  W  PerfMonitor looperActivity : package=com.cartomystik.app/.MainActivity time=728ms latency=623ms running=443ms  procState=2 ClientTransaction{ callbacks=[android.app.servertransaction.LaunchActivityItem] lifecycleRequest=android.app.servertransaction.ResumeActivityItem } historyMsgCount=3 (msgIndex=1 wall=89ms seq=1 running=53ms runnable=4ms io=27ms late=4ms h=android.app.ActivityThread$H w=162) (msgIndex=3 wall=535ms seq=3 running=483ms runnable=3ms io=17ms late=89ms h=android.app.ActivityThread$H w=110)
+2025-10-31 13:12:41.159 17983-18117 CameraManagerGlobal     com.cartomystik.app                  I  Connecting to camera service
+2025-10-31 13:12:41.166 17983-17983 Looper                  com.cartomystik.app                  W  PerfMonitor looperActivity : package=com.cartomystik.app/.MainActivity time=0ms latency=1370ms running=0ms  procState=2 ClientTransaction{ callbacks=[android.app.servertransaction.TopResumedActivityChangeItem] } historyMsgCount=4 (msgIndex=1 wall=89ms seq=1 running=53ms runnable=4ms io=27ms late=4ms h=android.app.ActivityThread$H w=162) (msgIndex=3 wall=535ms seq=3 running=483ms runnable=3ms io=17ms late=89ms h=android.app.ActivityThread$H w=110) (msgIndex=4 wall=728ms seq=4 running=443ms runnable=9ms io=209ms late=623ms h=android.app.ActivityThread$H w=159)
+2025-10-31 13:12:41.166 17983-17983 Choreographer           com.cartomystik.app                  I  Skipped 45 frames!  The application may be doing too much work on its main thread.
+2025-10-31 13:12:41.169 17983-17983 ContentCatcher          com.cartomystik.app                  W  Failed to notify a WebView
+2025-10-31 13:12:41.174 17983-18117 CameraManagerGlobal     com.cartomystik.app                  W  [soar.cts] ignore the status update of camera: 2
+2025-10-31 13:12:41.174 17983-18117 CameraManagerGlobal     com.cartomystik.app                  W  [soar.cts] ignore the status update of camera: 3
+2025-10-31 13:12:41.175 17983-18004 CameraManagerGlobal     com.cartomystik.app                  W  ignore the torch status update of camera: 2
+2025-10-31 13:12:41.176 17983-18004 CameraManagerGlobal     com.cartomystik.app                  W  ignore the torch status update of camera: 3
+2025-10-31 13:12:41.201 17983-18018 libMEOW                 com.cartomystik.app                  D  applied 0 plugin for [com.cartomystik.app].
+2025-10-31 13:12:41.217 17983-18018 ion                     com.cartomystik.app                  E  ioctl c0044901 failed with code -1: Invalid argument
+2025-10-31 13:12:41.302 17983-18018 OpenGLRenderer          com.cartomystik.app                  I  Davey! duration=900ms; Flags=1, IntendedVsync=775271429716121, Vsync=775272179716136, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=775272194912363, AnimationStart=775272194917825, PerformTraversalsStart=775272196541286, DrawStart=775272235983055, SyncQueued=775272242772902, SyncStart=775272243137825, IssueDrawCommandsStart=775272243178825, SwapBuffers=775272325574748, FrameCompleted=775272330235132, DequeueBufferDuration=130769, QueueBufferDuration=652000, GpuCompleted=0, 
+2025-10-31 13:12:41.303 17983-17983 Looper                  com.cartomystik.app                  W  PerfMonitor doFrame : time=136ms vsyncFrame=0 latency=765ms procState=2 historyMsgCount=3 (msgIndex=1 wall=535ms seq=3 running=483ms runnable=3ms io=17ms late=89ms h=android.app.ActivityThread$H w=110) (msgIndex=2 wall=728ms seq=4 running=443ms runnable=9ms io=209ms late=623ms h=android.app.ActivityThread$H w=159)
+2025-10-31 13:12:41.453 17983-18059 Capacitor               com.cartomystik.app                  D  Handling local request: https://localhost/assets/index-X0-gVfrp.css
+2025-10-31 13:12:41.454 17983-18071 Capacitor               com.cartomystik.app                  D  Handling local request: https://localhost/assets/index-t_9oCiLa.js
+2025-10-31 13:12:41.479 17983-18072 AudioCapabilities       com.cartomystik.app                  W  Unsupported mime audio/x-adpcm-ms
+2025-10-31 13:12:41.480 17983-18072 AudioCapabilities       com.cartomystik.app                  W  Unsupported mime audio/x-adpcm-dvi-ima
+2025-10-31 13:12:41.481 17983-18072 AudioCapabilities       com.cartomystik.app                  W  Unsupported mime audio/alac
+2025-10-31 13:12:41.481 17983-18072 AudioCapabilities       com.cartomystik.app                  W  Unsupported mime audio/ape
+2025-10-31 13:12:41.483 17983-18072 VideoCapabilities       com.cartomystik.app                  W  Unsupported mime image/vnd.android.heic
+2025-10-31 13:12:41.497 17983-18072 VideoCapabilities       com.cartomystik.app                  W  Unrecognized profile/level 1/32 for video/mp4v-es
+2025-10-31 13:12:41.497 17983-18072 VideoCapabilities       com.cartomystik.app                  W  Unrecognized profile/level 32768/2 for video/mp4v-es
+2025-10-31 13:12:41.497 17983-18072 VideoCapabilities       com.cartomystik.app                  W  Unrecognized profile/level 32768/64 for video/mp4v-es
+2025-10-31 13:12:41.499 17983-18072 VideoCapabilities       com.cartomystik.app                  W  Unsupported mime video/x-ms-wmv
+2025-10-31 13:12:41.500 17983-18072 VideoCapabilities       com.cartomystik.app                  W  Unsupported mime video/xvid
+2025-10-31 13:12:41.502 17983-18072 VideoCapabilities       com.cartomystik.app                  W  Unrecognized profile/level 1/32 for video/mp4v-es
+2025-10-31 13:12:41.601 17983-17983 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: ❌ Erreur AdMob: Error: "AdMob" plugin is not implemented on android
+2025-10-31 13:12:41.625 17983-18052 Capacitor               com.cartomystik.app                  D  Handling local request: https://localhost/favicon.ico
+2025-10-31 13:12:41.673 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:41.690 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 2 lines
+2025-10-31 13:12:41.690 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:41.792 17983-17983 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 365 - Msg: ❌ Erreur initialisation AdMob: Error: "AdMob" plugin is not implemented on android
+2025-10-31 13:12:41.792 17983-17983 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: ❌ Erreur initialisation AdMob: TypeError: (void 0) is not a function
+2025-10-31 13:12:41.796 17983-17999 System                  com.cartomystik.app                  W  A resource failed to call close. 
+2025-10-31 13:12:41.796 17983-17999 System                  com.cartomystik.app                  W  A resource failed to call close. 
+2025-10-31 13:12:41.907 17983-17983 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: ✅ Données chargées: 1 tirages
+2025-10-31 13:12:41.935 17983-17983 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: Session utilisateur chargée depuis le context: [object Object]
+2025-10-31 13:12:41.949 17983-17983 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 70 - Msg: ❌ Erreur récupération langue: Error: "Preferences" plugin is not implemented on android
+2025-10-31 13:12:42.291 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:42.299 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 66 lines
+2025-10-31 13:12:42.299 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:42.340 17983-17983 Looper                  com.cartomystik.app                  W  PerfMonitor doFrame : time=324ms vsyncFrame=0 latency=0ms procState=2
+2025-10-31 13:12:42.361 17983-17983 Looper                  com.cartomystik.app                  W  PerfMonitor doFrame : time=20ms vsyncFrame=0 latency=307ms procState=2 historyMsgCount=1 (msgIndex=1 wall=324ms seq=84 running=1ms h=android.view.Choreographer$FrameHandler c=android.view.Choreographer$FrameDisplayEventReceiver)
+2025-10-31 13:12:42.468 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:42.468 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:42.586 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:42.590 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 4 lines
+2025-10-31 13:12:42.590 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:42.630 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:42.635 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 99 lines
+2025-10-31 13:12:42.635 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:42.635 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:42.636 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 6 lines
+2025-10-31 13:12:42.636 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:42.676 17983-17983 Looper                  com.cartomystik.app                  W  PerfMonitor doFrame : time=315ms vsyncFrame=0 latency=15ms procState=2 historyMsgCount=1
+2025-10-31 13:12:46.375 17983-18494 ProfileInstaller        com.cartomystik.app                  D  Installing profile for com.cartomystik.app
+2025-10-31 13:12:46.617 17983-17983 cartomystik.ap          com.cartomystik.app                  W  Accessing hidden method Landroid/view/MotionEvent;->getEventTimeNano()J (greylist, reflection, allowed)
+2025-10-31 13:12:46.669 17983-17983 cartomystik.ap          com.cartomystik.app                  W  Accessing hidden method Landroid/view/MotionEvent;->getHistoricalEventTimeNano(I)J (greylist-max-o, reflection, denied)
+2025-10-31 13:12:46.758 17983-17983 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 130 - Msg: Opening menu drawer
+2025-10-31 13:12:47.021 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:47.021 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:47.021 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:47.021 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:47.021 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:47.121 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:47.144 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 1 line
+2025-10-31 13:12:47.177 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:48.267 17983-17983 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 70 - Msg: Uncaught (in promise) Error: "Browser" plugin is not implemented on android
+2025-10-31 13:12:48.296 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:48.338 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:48.364 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:48.396 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:48.426 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:48.460 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:48.495 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:49.812 17983-17983 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 130 - Msg: Opening menu drawer
+2025-10-31 13:12:49.853 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:49.853 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 2 lines
+2025-10-31 13:12:49.853 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:49.872 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:49.904 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:49.983 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:50.006 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 1 line
+2025-10-31 13:12:50.035 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:50.203 17983-17996 cartomystik.ap          com.cartomystik.app                  I  Compiler allocated 4379KB to compile void android.view.ViewRootImpl.performTraversals()
+2025-10-31 13:12:50.763 17983-17983 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 70 - Msg: Uncaught (in promise) Error: "Browser" plugin is not implemented on android
+2025-10-31 13:12:50.849 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:50.893 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 2 lines
+2025-10-31 13:12:50.919 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:50.945 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:50.972 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:50.998 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.601 17983-18051 Capacitor               com.cartomystik.app                  D  Handling local request: https://localhost/sounds/Flip-card.wav
+2025-10-31 13:12:53.693 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.694 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 7 lines
+2025-10-31 13:12:53.694 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.750 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.861 17983-18057 AAudio                  com.cartomystik.app                  I  AAudioStreamBuilder_openStream() called ----------------------------------------
+2025-10-31 13:12:53.861 17983-18057 AudioStreamBuilder      com.cartomystik.app                  I  rate   =  44100, channels  = 2, format   = 5, sharing = SH, dir = OUTPUT
+2025-10-31 13:12:53.861 17983-18057 AudioStreamBuilder      com.cartomystik.app                  I  device =      0, sessionId = -1, perfMode = 11, callback: ON with frames = 1024, error callback: ON
+2025-10-31 13:12:53.861 17983-18057 AudioStreamBuilder      com.cartomystik.app                  I  usage  =      1, contentType = 0, inputPreset = 0, allowedCapturePolicy = 0
+2025-10-31 13:12:53.861 17983-18057 AudioStreamBuilder      com.cartomystik.app                  I  privacy sensitive = false
+2025-10-31 13:12:53.861 17983-18057 AudioStreamBuilder      com.cartomystik.app                  D  build() MMAP not used because AAUDIO_PERFORMANCE_MODE_LOW_LATENCY not requested.
+2025-10-31 13:12:53.861 17983-18057 cartomystik.ap          com.cartomystik.app                  D  PlayerBase::PlayerBase()
+2025-10-31 13:12:53.863 17983-18057 AudioStreamTrack        com.cartomystik.app                  D  open(), request notificationFrames = 1024, frameCount = 0
+2025-10-31 13:12:53.863 17983-18057 AudioTrack              com.cartomystik.app                  D  INSP: type=audio,case=1,set=0xb4000075e6c62500,stream_type=-1,sample_rate=44100,format=0x5,channel_mask=0x3,frame_count=0,flags=0x8,notification_frames=1024,session_id=0,transfer_type=1,uid=-1,pid=-1
+2025-10-31 13:12:53.863 17983-18057 AudioTrack              com.cartomystik.app                  D  INSP: type=audio,case=1,attributes=1,content_type=2,usage=1,source=0,flags=0x0
+2025-10-31 13:12:53.863 17983-18057 AudioTrack              com.cartomystik.app                  D  set(sessionID=0)
+2025-10-31 13:12:53.863 17983-18057 AudioTrack              com.cartomystik.app                  D  set(): Building AudioTrack with attributes: usage = 1, content = 2, flags = 0x0, tags = []
+2025-10-31 13:12:53.863 17983-18057 AudioTrack              com.cartomystik.app                  D  set(): 0xb4000075e6c62500, Create AudioTrackThread, tid = 18978
+2025-10-31 13:12:53.864 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.864 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 2 lines
+2025-10-31 13:12:53.865 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.910 17983-18057 AudioTrack              com.cartomystik.app                  D  createTrack_l(13097): 0xb4000075e6c62500, mCblk = 0x75e3236000, mLatency = 170, mAfLatency = 85, frameCount = 3770, mSampleRate = 44100, mFlags = 0x8, mReqFrameCount = 3770, mNotificationFramesAct = 1024
+2025-10-31 13:12:53.912 17983-18057 AudioTrack              com.cartomystik.app                  D  setVolume(13097): 0xb4000075e6c62500, left = 1.000000, right = 1.000000
+2025-10-31 13:12:53.912 17983-18057 AAudioStream            com.cartomystik.app                  D  setState(s#1) from 0 to 2
+2025-10-31 13:12:53.914 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.914 17983-18057 AAudio                  com.cartomystik.app                  I  AAudioStreamBuilder_openStream() returns 0 = AAUDIO_OK for s#1 ----------------
+2025-10-31 13:12:53.914 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.915 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.915 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.920 17983-18057 AAudio                  com.cartomystik.app                  D  AAudioStream_requestStart(s#1) called --------------
+2025-10-31 13:12:53.920 17983-18057 AAudioStream            com.cartomystik.app                  D  setState(s#1) from 2 to 3
+2025-10-31 13:12:53.920 17983-18057 AudioTrack              com.cartomystik.app                  D  start(13097): 0xb4000075e6c62500, prior state:STATE_STOPPED
+2025-10-31 13:12:53.966 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.966 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.969 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:53.970 17983-18057 cartomystik.ap          com.cartomystik.app                  D  PlayerBase::start() from IPlayer
+2025-10-31 13:12:53.970 17983-18057 AAudio                  com.cartomystik.app                  D  AAudioStream_requestStart(s#1) returned 0 ---------
+2025-10-31 13:12:53.971 17983-18004 AudioStreamTrack        com.cartomystik.app                  D  onAudioDeviceUpdate() devId 3 => 3
+2025-10-31 13:12:53.972 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.028 17983-17983 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 363 - Msg: 🔮 Récupération horoscope pour leo...
+2025-10-31 13:12:54.030 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.030 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 2 lines
+2025-10-31 13:12:54.030 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.095 17983-18978 AAudioStream            com.cartomystik.app                  D  setState(s#1) from 3 to 4
+2025-10-31 13:12:54.210 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.210 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 3 lines
+2025-10-31 13:12:54.210 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.324 17983-17983 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 363 - Msg: ✅ Horoscope reçu: [object Object]
+2025-10-31 13:12:54.349 17983-17983 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: 📤 Envoi tirage: horoscope
+2025-10-31 13:12:54.350 17983-17983 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: 🚫 horoscope non sauvegardé dans Grimoire (type exclu)
+2025-10-31 13:12:54.351 17983-17983 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: 🌟 horoscope n°1 → Pub: OUI
+2025-10-31 13:12:54.352 17983-17983 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: 🎬 Affichage pub interstitielle (tirage global n°1)
+2025-10-31 13:12:54.353 17983-17983 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 363 - Msg: ✅ Horoscope saved → pub triggered via App.tsx
+2025-10-31 13:12:54.386 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.386 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 1 line
+2025-10-31 13:12:54.386 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.480 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.481 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 8 lines
+2025-10-31 13:12:54.482 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.692 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.692 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.693 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:54.703 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 112 lines
+2025-10-31 13:12:54.703 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.032 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.033 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.091 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.091 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.091 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.120 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.146 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.172 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.173 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.267 17983-17983 Choreographer           com.cartomystik.app                  W  Already have a pending vsync event.  There should only be one at a time.
+2025-10-31 13:12:55.275 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.275 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 2 lines
+2025-10-31 13:12:55.275 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.301 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.342 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.360 17983-17983 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 365 - Msg: ❌ Erreur préparation interstitiel: Error: "AdMob" plugin is not implemented on android
+2025-10-31 13:12:55.361 17983-17983 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 365 - Msg: ❌ Erreur affichage interstitiel: Error: "AdMob" plugin is not implemented on android
+2025-10-31 13:12:55.368 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.368 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:55.417 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:56.137 17983-18978 AudioTrack              com.cartomystik.app                  I  isLongTimeZoreData zoer date time 1 Seconds
+2025-10-31 13:12:56.263 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:56.273 17983-18018 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 16 lines
+2025-10-31 13:12:56.273 17983-18018 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 13:12:56.551 17983-19015 cartomystik.ap          com.cartomystik.app                  W  Accessing hidden method Ldalvik/system/VMStack;->getStackClass2()Ljava/lang/Class; (greylist, reflection, allowed)
+2025-10-31 13:12:56.560 17983-19015 FilePhenotypeFlags      com.cartomystik.app                  E  Config package com.google.android.gms.clearcut_client#com.cartomystik.app cannot use FILE backing without declarative registration. See go/phenotype-android-integration#phenotype for more information. This will lead to stale flags.
+2025-10-31 13:12:57.161 17983-18978 AudioTrack              com.cartomystik.app                  I  isLongTimeZoreData zoer date time 2 Seconds
+2025-10-31 13:12:57.191 17983-17983 Capacitor               com.cartomystik.app                  D  App paused
+2025-10-31 13:12:58.046 17983-18057 AAudio                  com.cartomystik.app                  D  AAudioStream_requestStop(s#1) called
+2025-10-31 13:12:58.046 17983-18057 AAudioStream            com.cartomystik.app                  D  setState(s#1) from 4 to 9
+2025-10-31 13:12:58.046 17983-18057 AudioTrack              com.cartomystik.app                  D  stop(sessionID=77489)
+2025-10-31 13:12:58.046 17983-18057 AudioTrack              com.cartomystik.app                  D  stop(13097): 0xb4000075e6c62500, prior state:STATE_ACTIVE
+2025-10-31 13:12:58.046 17983-18057 AudioTrack              com.cartomystik.app                  D  stop(13097): called with 178918 frames delivered
+2025-10-31 13:12:58.047 17983-18057 AudioTrack              com.cartomystik.app                  D  stop(13097): 0xb4000075e6c62500 stop done
+2025-10-31 13:12:58.047 17983-18057 cartomystik.ap          com.cartomystik.app                  D  PlayerBase::stop() from IPlayer
+2025-10-31 13:12:58.047 17983-18057 AAudioStream            com.cartomystik.app                  D  setState(s#1) from 9 to 10
+2025-10-31 13:12:58.150 17983-17983 Capacitor               com.cartomystik.app                  D  App stopped
+2025-10-31 13:12:58.152 17983-17983 Capacitor               com.cartomystik.app                  D  Saving instance state!
+2025-10-31 13:12:58.154 17983-17983 PhoneWindow             com.cartomystik.app                  V  DecorView setVisiblity: visibility = 4, Parent = android.view.ViewRootImpl@7fabaf8, this = DecorView@e895bd1[MainActivity]
