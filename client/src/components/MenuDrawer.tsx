@@ -51,10 +51,10 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
       console.log('📱 Plateforme native?', Capacitor.isNativePlatform());
       
       if (Capacitor.isNativePlatform()) {
-        const url = `https://appassets.androidplatform.net/assets/public/${fileName}`;
+        // ✅ Utiliser le chemin relatif depuis les assets Capacitor
+        const url = `/${fileName}`;
         console.log('🔗 URL à ouvrir:', url);
         
-        // Sur mobile Android, ouvrir depuis les assets
         await Browser.open({ 
           url,
           presentationStyle: 'fullscreen'
@@ -84,10 +84,10 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
       console.log('📱 Plateforme native?', Capacitor.isNativePlatform());
       
       if (Capacitor.isNativePlatform()) {
-        const url = `https://appassets.androidplatform.net/assets/public/${fileName}`;
+        // ✅ Utiliser le chemin relatif depuis les assets Capacitor
+        const url = `/${fileName}`;
         console.log('🔗 URL à ouvrir:', url);
         
-        // Sur mobile Android, ouvrir depuis les assets
         await Browser.open({ 
           url,
           presentationStyle: 'fullscreen'
