@@ -1,0 +1,28 @@
+--------- beginning of main
+2025-10-31 13:21:51.161 14426-14485 InstallApkReceiver      com.miui.home                        E  uninstall:package:com.cartomystik.app
+2025-10-31 13:21:51.614 13494-29190 PhSharedDirectoryWriter com.google.android.gms.persistent    E  Failed to delete the CE shared dir for Android package: com.cartomystik.app. [CONTEXT service_id=51 ]
+                                                                                                    java.lang.IllegalStateException: Failed to delete directory
+                                                                                                    	at fhso.r(:com.google.android.gms@254232022@25.42.32 (150400-820822052):10)
+                                                                                                    	at dosm.a(:com.google.android.gms@254232022@25.42.32 (150400-820822052):84)
+                                                                                                    	at com.google.android.gms.phenotype.notification.PackagesChangedIntentOperation.onHandleIntent(:com.google.android.gms@254232022@25.42.32 (150400-820822052):103)
+                                                                                                    	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@254232022@25.42.32 (150400-820822052):2)
+                                                                                                    	at awcl.onHandleIntent(:com.google.android.gms@254232022@25.42.32 (150400-820822052):8)
+                                                                                                    	at xif.run(:com.google.android.gms@254232022@25.42.32 (150400-820822052):64)
+                                                                                                    	at xie.run(:com.google.android.gms@254232022@25.42.32 (150400-820822052):132)
+                                                                                                    	at ffrz.run(:com.google.android.gms@254232022@25.42.32 (150400-820822052):19)
+                                                                                                    	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+                                                                                                    	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+                                                                                                    	at java.lang.Thread.run(Thread.java:923)
+2025-10-31 13:21:51.620 13494-29190 PhSharedDirectoryWriter com.google.android.gms.persistent    E  Failed to delete the DE shared dir for Android package: com.cartomystik.app. [CONTEXT service_id=51 ]
+                                                                                                    java.lang.IllegalStateException: Failed to delete directory
+                                                                                                    	at fhso.r(:com.google.android.gms@254232022@25.42.32 (150400-820822052):10)
+                                                                                                    	at dosm.a(:com.google.android.gms@254232022@25.42.32 (150400-820822052):130)
+                                                                                                    	at com.google.android.gms.phenotype.notification.PackagesChangedIntentOperation.onHandleIntent(:com.google.android.gms@254232022@25.42.32 (150400-820822052):103)
+                                                                                                    	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@254232022@25.42.32 (150400-820822052):2)
+                                                                                                    	at awcl.onHandleIntent(:com.google.android.gms@254232022@25.42.32 (150400-820822052):8)
+                                                                                                    	at xif.run(:com.google.android.gms@254232022@25.42.32 (150400-820822052):64)
+                                                                                                    	at xie.run(:com.google.android.gms@254232022@25.42.32 (150400-820822052):132)
+                                                                                                    	at ffrz.run(:com.google.android.gms@254232022@25.42.32 (150400-820822052):19)
+                                                                                                    	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+                                                                                                    	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+                                                                                                    	at java.lang.Thread.run(Thread.java:923)
