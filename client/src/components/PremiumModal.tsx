@@ -202,9 +202,9 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
 
         {/* Conditions */}
         <div className="mt-4 text-xs text-purple-200 text-center space-y-1">
-          <p>🔒 {t("premium.conditions.line1") || "Paiement sécurisé par Stripe"}</p>
-          <p className="text-green-400 font-semibold">✓ {t("premium.conditions.line2") || "Paiement unique, SANS renouvellement automatique"}</p>
-          <p className="text-purple-300 text-[10px]">{t("premium.conditions.line3") || "Aucun remboursement après paiement. Accès Premium valable pour la durée choisie."}</p>
+          <p>{t("premium.conditions.line1")}</p>
+          <p className="text-green-400 font-semibold">{t("premium.conditions.line2")}</p>
+          <p className="text-purple-300 text-[10px]">{t("premium.conditions.line3")}</p>
           <p className="text-purple-300 text-[10px]">Vous serez notifié 3 jours avant l'expiration de votre accès.</p>
         </div>
 
