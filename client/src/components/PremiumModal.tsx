@@ -205,7 +205,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
           <p>{t("premium.conditions.line1")}</p>
           <p className="text-green-400 font-semibold">{t("premium.conditions.line2")}</p>
           <p className="text-purple-300 text-[10px]">{t("premium.conditions.line3")}</p>
-          <p className="text-purple-300 text-[10px]">Vous serez notifié 3 jours avant l'expiration de votre accès.</p>
+          <p className="text-purple-300 text-[10px]">{t("premium.conditions.line4")}</p>
         </div>
 
         {/* Avantages Premium */}
