@@ -203,7 +203,8 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
         {/* Conditions */}
         <div className="mt-4 text-xs text-purple-200 text-center space-y-1">
           <p>🔒 {t("premium.conditions.line1") || "Paiement sécurisé par Stripe"}</p>
-          <p className="text-purple-300">{t("premium.conditions.line2") || "Vos données sont protégées"}</p>
+          <p className="text-purple-300">{t("premium.conditions.line2") || "Abonnement renouvelé automatiquement. Annulation possible à tout moment."}</p>
+          <p className="text-purple-300 text-[10px]">{t("premium.conditions.line3") || "Aucun remboursement après souscription. Accès conservé jusqu'à fin de période en cas d'annulation."}</p>
         </div>
 
         {/* Avantages Premium */}
