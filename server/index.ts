@@ -46,6 +46,8 @@ app.post(
           } else if (planId === "premium_3months") {
             expiresAt.setMonth(expiresAt.getMonth() + 3);
           }
+          
+          console.log(`📅 Plan choisi: ${planId}, expiration prévue: ${expiresAt.toLocaleDateString('fr-FR')}`);
 
           const { storage } = await import("./storage");
           await storage.setItem(
