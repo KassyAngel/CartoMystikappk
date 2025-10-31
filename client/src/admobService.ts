@@ -4,14 +4,13 @@ import { Capacitor } from '@capacitor/core';
 
 const isNative = Capacitor.isNativePlatform();
 
-// ⚠️ REMPLACE CES IDs PAR TES VRAIS IDs ADMOB
-// Va sur https://admob.google.com pour les obtenir
+// ✅ IDs AdMob de production CartoMystik
 const BANNER_AD_ID = isNative 
-  ? 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX'  // TON ID bannière
+  ? 'ca-app-pub-5733508257471048/2428210645'  // Bannière accueil
   : '';
 
 const INTERSTITIAL_AD_ID = isNative
-  ? 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX'  // TON ID interstitielle
+  ? 'ca-app-pub-5733508257471048/5422426681'  // Interstitiel 1
   : '';
 
 export async function initialize() {
@@ -23,10 +22,10 @@ export async function initialize() {
   try {
     await AdMob.initialize({
       requestTrackingAuthorization: true,
-      testingDevices: ['YOUR_DEVICE_ID_HERE'],
-      initializeForTesting: true,
+      testingDevices: [],  // ⚠️ Vide pour la production
+      initializeForTesting: false,  // ⚠️ False pour les vraies pubs
     });
-    console.log('✅ AdMob initialisé');
+    console.log('✅ AdMob initialisé en production');
   } catch (error) {
     console.error('❌ Erreur init AdMob:', error);
   }
