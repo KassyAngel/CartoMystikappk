@@ -25,7 +25,12 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
     const newRollCount = rollCount + 1;
     setRollCount(newRollCount);
 
-    if (newRollCount % 2 === 0) {
+    // Pub au 1er tirage, puis tous les 2 tirages (1, 3, 5, 7...)
+    const shouldShowAd = newRollCount === 1 || (newRollCount > 1 && newRollCount % 2 === 1);
+
+    console.log(`🎁 Tirage bonus n°${newRollCount} → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
+
+    if (shouldShowAd) {
       setIsLoadingAd(true);
       setMessage(t('oracle.bonusRoll.loadingAd'));
 
