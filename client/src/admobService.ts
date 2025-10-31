@@ -4,13 +4,14 @@ import { Capacitor } from '@capacitor/core';
 
 const isNative = Capacitor.isNativePlatform();
 
-// IDs de test Google AdMob
+// ⚠️ REMPLACE CES IDs PAR TES VRAIS IDs ADMOB
+// Va sur https://admob.google.com pour les obtenir
 const BANNER_AD_ID = isNative 
-  ? 'ca-app-pub-3940256099942544/6300978111'  // Test Android
+  ? 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX'  // TON ID bannière
   : '';
 
 const INTERSTITIAL_AD_ID = isNative
-  ? 'ca-app-pub-3940256099942544/1033173712'  // Test Android
+  ? 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX'  // TON ID interstitielle
   : '';
 
 export async function initialize() {

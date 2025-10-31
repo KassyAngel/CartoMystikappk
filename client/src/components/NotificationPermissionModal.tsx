@@ -35,16 +35,17 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
         });
         console.log('✅ [NOTIF] Canal créé avec succès');
 
-        // ✅ Programmer la notification à 10h LOCALE (respecte le fuseau horaire)
+        // ✅ Programmer la notification à 10h LOCALE
         const now = new Date();
-        const triggerTime = new Date();
+        let triggerTime = new Date();
 
-        // Définir l'heure à 10h00 dans le fuseau horaire LOCAL de l'utilisateur
+        // Définir l'heure à 10h00 aujourd'hui
         triggerTime.setHours(10, 0, 0, 0);
 
         // Si 10h est déjà passé aujourd'hui, planifier pour demain
-        if (triggerTime <= now) {
-          triggerTime.setDate(triggerTime.getDate() + 1);
+        if (triggerTime.getTime() <= now.getTime()) {
+          triggerTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+          triggerTime.setHours(10, 0, 0, 0);
         }
 
         console.log('🕐 Notification programmée pour:', triggerTime.toLocaleString());
