@@ -1,0 +1,47 @@
+-31 10:58:20.335  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:20.362  3098-3154  OpenGLRenderer          com.cartomystik.app                  I  Davey! duration=752ms; Flags=0, IntendedVsync=769668781870498, Vsync=769669465203845, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=769669477107491, AnimationStart=769669477110952, PerformTraversalsStart=769669479714029, DrawStart=769669479903491, SyncQueued=769669480718644, SyncStart=769669532492414, IssueDrawCommandsStart=769669532585337, SwapBuffers=769669584867875, FrameCompleted=769669586411798, DequeueBufferDuration=152308, QueueBufferDuration=796231, GpuCompleted=0, 
+2025-10-31 10:58:21.452  3098-3098  cartomystik.ap          com.cartomystik.app                  W  Accessing hidden method Landroid/view/MotionEvent;->getEventTimeNano()J (greylist, reflection, allowed)
+2025-10-31 10:58:21.528  3098-3098  cartomystik.ap          com.cartomystik.app                  W  Accessing hidden method Landroid/view/MotionEvent;->getHistoricalEventTimeNano(I)J (greylist-max-o, reflection, denied)
+2025-10-31 10:58:21.616  3098-3098  Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 130 - Msg: Opening menu drawer
+2025-10-31 10:58:21.656  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:21.766  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:21.766  3098-3154  chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 3 lines
+2025-10-31 10:58:21.766  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:21.786  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:21.864  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:21.894  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:22.223  3098-3558  ProfileInstaller        com.cartomystik.app                  D  Installing profile for com.cartomystik.app
+2025-10-31 10:58:22.517  3098-3098  Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 70 - Msg: Uncaught (in promise) Error: "Browser" plugin is not implemented on android
+2025-10-31 10:58:22.551  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:22.568  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:22.586  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:22.610  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:22.632  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:22.646  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:22.664  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:22.685  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:22.705  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:23.338  3098-3098  Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 130 - Msg: Opening menu drawer
+2025-10-31 10:58:23.382  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:23.383  3098-3154  chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 3 lines
+2025-10-31 10:58:23.383  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:23.404  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:23.425  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:23.446  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:23.470  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:23.498  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:23.520  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:23.544  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:24.362  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:24.382  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:24.400  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:24.416  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:24.442  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:24.463  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:24.482  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:24.498  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:24.518  3098-3154  GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 10:58:24.867  3098-3098  Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 70 - Msg: Uncaught (in promise) Error: "Browser" plugin is not implemented on android
+2025-10-31 10:58:25.577  3098-3130  cartomystik.ap          com.cartomystik.app                  I  Compiler allocated 4379KB to compile void android.view.ViewRootImpl.performTraversals()
+2025-10-31 10:58:31.817  3098-3608  cartomystik.ap          com.cartomystik.app                  W  Accessing hidden method Ldalvik/system/VMStack;->getStackClass2()Ljava/lang/Class; (greylist, reflection, allowed)
+2025-10-31 10:58:31.831  3098-3608  FilePhenotypeFlags      com.cartomystik.app                  E  Config package com.google.android.gms.clearcut_client#com.cartomystik.app cannot use FILE backing without declarative registration. See go/phenotype-android-integration#phenotype for more information. This will lead to stale flags.
