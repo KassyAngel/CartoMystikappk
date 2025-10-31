@@ -1,13 +1,16 @@
-
 import { Capacitor } from '@capacitor/core';
 
 const isNative = Capacitor.isNativePlatform();
+const isProd = import.meta.env.PROD;
 
-// Configuration API selon l'environnement
+// Domaine unique (tu peux le centraliser ici)
+const RENDER_URL = 'https://cartomystikappk.onrender.com';
+
+// Configuration globale
 export const config = {
-  apiBaseUrl: isNative 
-    ? 'https://cartomystikappk.onrender.com'  // TOUJOURS utiliser Render pour l'app native
-    : import.meta.env.PROD 
-      ? 'https://cartomystikappk.onrender.com'  // Production web
-      : ''  // Développement: utiliser l'origine actuelle (Replit proxy)
+  apiBaseUrl: isNative
+    ? RENDER_URL // Android/iOS : Render
+    : isProd
+      ? RENDER_URL // Web en production
+      : `${window.location.origin}`, // Dev (Replit ou localhost)
 };
