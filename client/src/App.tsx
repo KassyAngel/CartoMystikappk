@@ -38,12 +38,8 @@ function Router({ onSaveReading, onStepChange }: {
 }) {
   return (
     <Switch>
-      <Route path="/success">
-        <PaymentSuccessPage />
-      </Route>
-      <Route path="/cancel">
-        <PaymentCancelPage />
-      </Route>
+      <Route path="/success" component={PaymentSuccessPage} />
+      <Route path="/cancel" component={PaymentCancelPage} />
       <Route path="/">
         <OracleMystiqueApp
           onSaveReading={onSaveReading}
