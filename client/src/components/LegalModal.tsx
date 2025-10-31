@@ -15,21 +15,16 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
   if (!isOpen || !type) return null;
 
   const getFileName = () => {
-    const isNative = Capacitor.isNativePlatform();
-    const platform = Capacitor.getPlatform();
-    
-    // Sur Android, les fichiers sont dans /public/ du bundle
-    const basePath = isNative && platform === 'android' 
-      ? 'capacitor://localhost/' 
-      : isNative && platform === 'ios'
-      ? 'capacitor://localhost/'
-      : '/';
-
     const fileName = type === 'legal' 
       ? (language === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html')
       : (language === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html');
 
-    const fullPath = `${basePath}${fileName}`;
+    const isNative = Capacitor.isNativePlatform();
+    const platform = Capacitor.getPlatform();
+    
+    // Sur mobile natif, utiliser un chemin relatif simple
+    const fullPath = isNative ? `./${fileName}` : `/${fileName}`;
+    
     console.log('📄 Chargement page légale:', fullPath, 'isNative:', isNative, 'platform:', platform);
 
     return fullPath;
