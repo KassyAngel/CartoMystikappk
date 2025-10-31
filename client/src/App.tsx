@@ -98,6 +98,13 @@ function App() {
   useEffect(() => {
     loadUserData();
     checkPremiumExpiration();
+
+    // 🔄 Vérification automatique du statut Premium toutes les heures
+    const premiumCheckInterval = setInterval(() => {
+      loadUserData();
+    }, 60 * 60 * 1000); // 1 heure
+
+    return () => clearInterval(premiumCheckInterval);
   }, []);
 
   const checkPremiumExpiration = async () => {
@@ -122,6 +129,13 @@ function App() {
           // Afficher l'alerte après un court délai pour ne pas perturber le chargement
           setTimeout(() => {
             alert(alertMessage);
+            
+            // 🔄 Si l'abonnement a expiré, recharger la page pour réactiver les limitations
+            if (data.alertType === 'expired') {
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
+            }
           }, 2000);
         }
       }
