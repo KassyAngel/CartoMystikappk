@@ -3,6 +3,15 @@ import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, AdMobBannerSize
 import { Capacitor } from '@capacitor/core';
 
 const isNative = Capacitor.isNativePlatform();
+const platform = Capacitor.getPlatform();
+
+console.log('🔍 Détection plateforme AdMob:', {
+  isNative,
+  platform,
+  userAgent: navigator.userAgent,
+  isAndroid: platform === 'android',
+  isIOS: platform === 'ios'
+});
 
 // ✅ IDs AdMob de production CartoMystik
 const BANNER_AD_ID = isNative 
@@ -14,8 +23,10 @@ const INTERSTITIAL_AD_ID = isNative
   : '';
 
 export async function initialize() {
+  console.log('📱 Initialisation AdMob - isNative:', isNative, 'platform:', platform);
+  
   if (!isNative) {
-    console.log('📱 AdMob ignoré (pas sur mobile natif)');
+    console.log('📱 AdMob ignoré (pas sur mobile natif) - Vous êtes sur:', platform);
     return;
   }
 

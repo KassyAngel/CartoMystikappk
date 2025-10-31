@@ -9,7 +9,13 @@ const config: CapacitorConfig = {
     cleartext: false,
     allowNavigation: [
       'cartomystikappk.onrender.com'
-    ]
+    ],
+    // ✅ Ne pas forcer une URL en développement sur Android
+    hostname: undefined,
+    url: undefined
+  },
+  android: {
+    allowMixedContent: false
   }
 };
 

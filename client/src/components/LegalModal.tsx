@@ -1,4 +1,3 @@
-
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect, useRef, useState } from 'react';
 import { Capacitor } from '@capacitor/core';
@@ -17,12 +16,33 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
 
   const getFileName = () => {
     const isNative = Capacitor.isNativePlatform();
-    const basePath = isNative ? 'capacitor://localhost/' : './';
-    
-    if (type === 'legal') {
-      return `${basePath}${language === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html'}`;
+    const platform = Capacitor.getPlatform();
+
+    // Détection du chemin selon la plateforme
+    let basePath = './';
+    if (isNative) {
+      if (platform === 'android') {
+        basePath = 'capacitor://localhost/';
+      } else if (platform === 'ios') {
+        basePath = 'capacitor://localhost/';
+      }
     }
-    return `${basePath}${language === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html'}`;
+
+    const fileName = type === 'legal' 
+      ? (language === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html')
+      : (language === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html');
+
+    const fullPath = `${basePath}${fileName}`;
+    console.log('📄 Chargement page légale:', {
+      fullPath,
+      isNative,
+      platform,
+      basePath,
+      fileName,
+      currentURL: window.location.href
+    });
+
+    return fullPath;
   };
 
   // 🔧 Nettoyage de l'iframe pour éviter les fuites mémoire
