@@ -1,12 +1,60 @@
 import { Preferences } from '@capacitor/preferences';
 import { Capacitor } from '@capacitor/core';
+import { Device } from '@capacitor/device';
 import { UserSession } from '@shared/schema';
 
 const USER_STORAGE_KEY = 'mystic_user_session';
 const LANGUAGE_KEY = 'mystic_language';
+const DEVICE_ID_KEY = 'mystic_device_id';
 
 // Détecte si on est sur mobile
 const isNative = Capacitor.isNativePlatform();
+
+// ===== DEVICE ID =====
+
+export const getDeviceId = async (): Promise<string> => {
+  try {
+    // Essayer de récupérer un deviceId déjà enregistré
+    let deviceId: string | null = null;
+    
+    if (isNative) {
+      const result = await Preferences.get({ key: DEVICE_ID_KEY });
+      deviceId = result.value;
+    } else {
+      deviceId = localStorage.getItem(DEVICE_ID_KEY);
+    }
+
+    // Si on a déjà un deviceId, le retourner
+    if (deviceId) {
+      return deviceId;
+    }
+
+    // Sinon, en créer un nouveau
+    if (isNative) {
+      // Sur mobile, utiliser l'UUID du device
+      const info = await Device.getId();
+      deviceId = info.identifier;
+    } else {
+      // Sur web, générer un UUID persistant
+      deviceId = `web_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+    }
+
+    // Sauvegarder le deviceId pour la prochaine fois
+    if (isNative) {
+      await Preferences.set({ key: DEVICE_ID_KEY, value: deviceId });
+    } else {
+      localStorage.setItem(DEVICE_ID_KEY, deviceId);
+    }
+
+    console.log('✅ DeviceId généré:', deviceId);
+    return deviceId;
+  } catch (error) {
+    console.error('❌ Erreur récupération deviceId:', error);
+    // Fallback
+    const fallbackId = `fallback_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+    return fallbackId;
+  }
+};
 
 // ===== USER SESSION =====
 

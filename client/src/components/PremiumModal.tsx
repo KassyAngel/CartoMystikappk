@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { config } from '@/config';
+import { getDeviceId } from '@/lib/userStorage';
 
 interface PremiumModalProps {
   isOpen: boolean;
@@ -42,11 +43,12 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
       console.log('🛒 Création session Stripe pour plan:', selectedPlan);
 
       // 1️⃣ Appeler le backend pour créer la session Stripe
+      const deviceId = await getDeviceId(); // Récupérer le deviceId
       const response = await fetch(`${config.apiBaseUrl}/api/create-checkout-session`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ planId: selectedPlan })
+        body: JSON.stringify({ planId: selectedPlan, deviceId }) // Envoyer le deviceId
       });
 
       if (!response.ok) {

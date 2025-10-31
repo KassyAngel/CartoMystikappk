@@ -46,18 +46,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const selectedPrice = prices[planId];
       if (!selectedPrice) return res.status(400).json({ error: "Plan invalide" });
 
-      // Génération d'un userId persistant - utiliser device ID ou session
-      // IMPORTANT: Pour production, implémenter un vrai système d'authentification
-      let userId = req.cookies?.userId || `user_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+      // Récupérer le deviceId envoyé par le client
+      const { deviceId } = req.body;
       
-      // Sauvegarder le userId dans un cookie pour persistance
-      res.cookie('userId', userId, { 
-        maxAge: 365 * 24 * 60 * 60 * 1000, // 1 an
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production'
-      });
+      if (!deviceId) {
+        console.error("❌ deviceId manquant");
+        return res.status(400).json({ error: "deviceId requis" });
+      }
       
-      console.log(`🔑 UserId utilisé pour le paiement: ${userId}`);
+      const userId = deviceId;
+      
+      console.log(`🔑 UserId (deviceId) utilisé pour le paiement: ${userId}`);
 
       // Déterminer l'URL frontend selon l'environnement
       const isDevelopment = process.env.NODE_ENV !== 'production';
