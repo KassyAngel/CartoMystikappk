@@ -1,0 +1,198 @@
+package app.xplatform.capacitor.plugins;
+
+import android.Manifest;
+import android.app.Activity;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
+
+import com.getcapacitor.JSObject;
+import com.getcapacitor.NativePlugin;
+import com.getcapacitor.Plugin;
+import com.getcapacitor.PluginCall;
+import com.getcapacitor.PluginMethod;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+
+@NativePlugin(
+        permissions = {
+                Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.INTERNET
+        }
+)
+public class AdMob extends Plugin {
+
+    private AdView bannerAdView;
+    private InterstitialAd interstitialAd;
+    private RewardedAd rewardedAd;
+    private FrameLayout bannerContainer;
+
+    // ✅ Initialisation de AdMob
+    @PluginMethod
+    public void initialize(PluginCall call) {
+        String appId = call.getString("appId", "ca-app-pub-3940256099942544~3347511713");
+        try {
+            MobileAds.initialize(getContext(), initializationStatus -> Log.d(getLogTag(), "AdMob initialized"));
+            call.resolve();
+        } catch (Exception ex) {
+            call.reject(ex.getLocalizedMessage(), ex);
+        }
+    }
+
+    // ✅ Bannière
+    @PluginMethod
+    public void showBanner(PluginCall call) {
+        String adId = call.getString("adId", "ca-app-pub-3940256099942544/6300978111");
+        String position = call.getString("position", "BOTTOM_CENTER");
+
+        Activity activity = getActivity();
+        activity.runOnUiThread(() -> {
+            if (bannerAdView != null) {
+                bannerAdView.destroy();
+            }
+
+            bannerAdView = new AdView(activity);
+            bannerAdView.setAdUnitId(adId);
+            bannerAdView.setAdSize(AdSize.BANNER);
+
+            AdRequest adRequest = new AdRequest.Builder().build();
+
+            bannerContainer = new FrameLayout(activity);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            if ("TOP_CENTER".equals(position)) {
+                params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+            } else {
+                params.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+            }
+
+            bannerContainer.setLayoutParams(params);
+            ((ViewGroup) activity.findViewById(android.R.id.content)).addView(bannerContainer);
+            bannerContainer.addView(bannerAdView);
+
+            bannerAdView.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    notifyListeners("onBannerLoaded", new JSObject().put("value", true));
+                }
+
+                @Override
+                public void onAdFailedToLoad(@NonNull LoadAdError adError) {
+                    notifyListeners("onBannerFailed", new JSObject().put("error", adError.getMessage()));
+                }
+            });
+
+            bannerAdView.loadAd(adRequest);
+            call.resolve();
+        });
+    }
+
+    @PluginMethod
+    public void removeBanner(PluginCall call) {
+        Activity activity = getActivity();
+        activity.runOnUiThread(() -> {
+            if (bannerAdView != null) {
+                bannerAdView.destroy();
+                bannerAdView = null;
+            }
+            if (bannerContainer != null) {
+                ((ViewGroup) activity.findViewById(android.R.id.content)).removeView(bannerContainer);
+                bannerContainer = null;
+            }
+            call.resolve();
+        });
+    }
+
+    // ✅ Interstitiel
+    @PluginMethod
+    public void prepareInterstitial(PluginCall call) {
+        String adId = call.getString("adId", "ca-app-pub-3940256099942544/1033173712");
+        Activity activity = getActivity();
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(activity, adId, adRequest, new InterstitialAdLoadCallback() {
+            @Override
+            public void onAdLoaded(@NonNull InterstitialAd ad) {
+                interstitialAd = ad;
+                notifyListeners("onInterstitialLoaded", new JSObject().put("value", true));
+                call.resolve();
+            }
+
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                notifyListeners("onInterstitialFailed", new JSObject().put("error", loadAdError.getMessage()));
+                call.reject(loadAdError.getMessage());
+            }
+        });
+    }
+
+    @PluginMethod
+    public void showInterstitial(PluginCall call) {
+        Activity activity = getActivity();
+        activity.runOnUiThread(() -> {
+            if (interstitialAd != null) {
+                interstitialAd.show(activity);
+                interstitialAd = null;
+                call.resolve();
+            } else {
+                call.reject("Interstitial not loaded yet.");
+            }
+        });
+    }
+
+    // ✅ Rewarded Ads
+    @PluginMethod
+    public void prepareRewardVideoAd(PluginCall call) {
+        String adId = call.getString("adId", "ca-app-pub-3940256099942544/5224354917");
+        Activity activity = getActivity();
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        RewardedAd.load(activity, adId, adRequest, new RewardedAdLoadCallback() {
+            @Override
+            public void onAdLoaded(@NonNull RewardedAd ad) {
+                rewardedAd = ad;
+                notifyListeners("onRewardedLoaded", new JSObject().put("value", true));
+                call.resolve();
+            }
+
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError adError) {
+                call.reject(adError.getMessage());
+            }
+        });
+    }
+
+    @PluginMethod
+    public void showRewardVideoAd(PluginCall call) {
+        Activity activity = getActivity();
+        activity.runOnUiThread(() -> {
+            if (rewardedAd != null) {
+                rewardedAd.show(activity, rewardItem -> {
+                    JSObject reward = new JSObject();
+                    reward.put("type", rewardItem.getType());
+                    reward.put("amount", rewardItem.getAmount());
+                    notifyListeners("onUserRewarded", reward);
+                });
+                rewardedAd = null;
+                call.resolve();
+            } else {
+                call.reject("Rewarded ad not loaded yet.");
+            }
+        });
+    }
+}
