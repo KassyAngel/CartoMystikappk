@@ -1,6 +1,7 @@
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Capacitor } from '@capacitor/core';
 
 interface LegalModalProps {
   isOpen: boolean;
@@ -15,11 +16,13 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
   if (!isOpen || !type) return null;
 
   const getFileName = () => {
-    // Chemins relatifs qui fonctionnent aussi bien en web qu'en Android
+    const isNative = Capacitor.isNativePlatform();
+    const basePath = isNative ? '' : './';
+    
     if (type === 'legal') {
-      return language === 'fr' ? './mentions-legales.html' : './mentions-legales-en.html';
+      return `${basePath}${language === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html'}`;
     }
-    return language === 'fr' ? './politique-confidentialite.html' : './politique-confidentialite-en.html';
+    return `${basePath}${language === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html'}`;
   };
 
   // 🔧 Nettoyage de l'iframe pour éviter les fuites mémoire
