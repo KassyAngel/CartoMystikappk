@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useEffect as useRouteEffect } from "react";
-import GrimoireModal from "./pages/GrimoireModal";
+import GrimoireModal from './pages/GrimoireModal';
+import PaymentSuccessPage from './pages/PaymentSuccessPage';
+import PaymentCancelPage from './pages/PaymentCancelPage';
 import PremiumModal from './components/PremiumModal';
 import NotificationPermissionModal from './components/NotificationPermissionModal';
 import TopBar from './components/TopBar';
@@ -150,20 +152,20 @@ function App() {
 
       if (data.shouldAlert) {
         let alertMessage = '';
-        
+
         if (data.alertType === 'expired') {
           alertMessage = `⚠️ Votre accès Premium a expiré.\n\nVous pouvez souscrire à nouveau pour profiter des avantages Premium.`;
         } else if (data.alertType === 'warning') {
           const days = data.daysRemaining;
           const expirationDate = new Date(data.expirationDate).toLocaleDateString('fr-FR');
-          alertMessage = `🔔 Votre accès Premium expire dans ${days} jour${days > 1 ? 's' : ''}.\n\nDate d'expiration : ${expirationDate}\n\nPour renouveler, rendez-vous dans le menu Premium.`;
+          alertMessage = `🔔 Votre accès Premium expire dans ${days} jour${days > 1 ? 's' : ''}.\n\nDate d expiration : ${expirationDate}\n\nPour renouveler, rendez-vous dans le menu Premium.`;
         }
 
         if (alertMessage) {
           // Afficher l'alerte après un court délai pour ne pas perturber le chargement
           setTimeout(() => {
             alert(alertMessage);
-            
+
             // 🔄 Si l'abonnement a expiré, recharger la page pour réactiver les limitations
             if (data.alertType === 'expired') {
               setTimeout(() => {

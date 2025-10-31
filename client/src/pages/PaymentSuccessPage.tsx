@@ -1,9 +1,11 @@
 
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'wouter';
 import { config } from '@/config';
 
 export default function PaymentSuccessPage() {
   const [verified, setVerified] = useState(false);
+  const [, setLocation] = useNavigate();
 
   useEffect(() => {
     // Vérifier le statut Premium avant de rediriger
@@ -25,13 +27,13 @@ export default function PaymentSuccessPage() {
 
     verifyPremium();
 
-    // Redirection après 3 secondes
+    // Redirection après 3 secondes vers la page d'accueil de l'app
     const timer = setTimeout(() => {
-      window.location.href = '/';
+      setLocation('/');
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [setLocation]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-900 via-indigo-900 to-purple-800">
