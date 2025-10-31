@@ -17,7 +17,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
 
   const getFileName = () => {
     const isNative = Capacitor.isNativePlatform();
-    const basePath = isNative ? '' : './';
+    const basePath = isNative ? 'capacitor://localhost/' : './';
     
     if (type === 'legal') {
       return `${basePath}${language === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html'}`;
