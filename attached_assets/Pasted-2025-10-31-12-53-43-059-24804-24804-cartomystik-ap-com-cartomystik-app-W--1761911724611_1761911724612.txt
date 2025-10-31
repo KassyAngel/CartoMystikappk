@@ -1,0 +1,136 @@
+2025-10-31 12:53:43.059 24804-24804 cartomystik.ap          com.cartomystik.app                  W  Accessing hidden method Landroid/app/LoadedApk;->updateApplicationInfo(Landroid/content/pm/ApplicationInfo;Ljava/util/List;)V (greylist-max-o, linking, denied)
+2025-10-31 12:53:43.059 24804-24804 cartomystik.ap          com.cartomystik.app                  W  Accessing hidden method Landroid/app/LoadedApk;->setApplicationInfo(Landroid/content/pm/ApplicationInfo;)V (greylist-max-o, linking, denied)
+2025-10-31 12:53:43.059 24804-24804 cartomystik.ap          com.cartomystik.app                  W  Redefining intrinsic method java.lang.Thread java.lang.Thread.currentThread(). This may cause the unexpected use of the original definition of java.lang.Thread java.lang.Thread.currentThread()in methods that have already been compiled.
+2025-10-31 12:53:43.059 24804-24804 cartomystik.ap          com.cartomystik.app                  W  Redefining intrinsic method boolean java.lang.Thread.interrupted(). This may cause the unexpected use of the original definition of boolean java.lang.Thread.interrupted()in methods that have already been compiled.
+2025-10-31 12:53:43.115 24804-24804 cartomystik.ap          com.cartomystik.app                  W  ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[]{PCL[/apex/com.android.extservices/javalib/android.ext.adservices.jar*3549398241]} | PCL[/data/data/com.cartomystik.app/code_cache/.overlay/base.apk/classes12.dex*4073564706]{PCL[/apex/com.android.extservices/javalib/android.ext.adservices.jar*3549398241]})
+2025-10-31 12:53:43.129 24804-24804 cartomystik.ap          com.cartomystik.app                  W  Found duplicate classes, falling back to extracting from APK : /data/app/~~w96_roYgLfAsDO4tl4-jIw==/com.cartomystik.app-ZCrIp8DgsJnmdpxmQbuaJw==/base.apk
+2025-10-31 12:53:43.129 24804-24804 cartomystik.ap          com.cartomystik.app                  W  NOTE: This wastes RAM and hurts startup performance.
+2025-10-31 12:53:43.129 24804-24804 cartomystik.ap          com.cartomystik.app                  W  Found duplicated class when checking oat files: 'Lcom/cartomystik/app/MainActivity;' in /data/app/~~w96_roYgLfAsDO4tl4-jIw==/com.cartomystik.app-ZCrIp8DgsJnmdpxmQbuaJw==/base.apk!classes12.dex and /data/data/com.cartomystik.app/code_cache/.overlay/base.apk/classes12.dex
+2025-10-31 12:53:43.620 24804-24804 NetworkSecurityConfig   com.cartomystik.app                  D  No Network Security Config specified, using platform default
+2025-10-31 12:53:43.621 24804-24804 NetworkSecurityConfig   com.cartomystik.app                  D  No Network Security Config specified, using platform default
+2025-10-31 12:53:43.623 24804-24804 libc                    com.cartomystik.app                  E  Access denied finding property "ro.vendor.pref_scale_resolution"
+2025-10-31 12:53:43.659 24804-24804 WM-WrkMgrInitializer    com.cartomystik.app                  D  Initializing WorkManager with default configuration.
+2025-10-31 12:53:43.680 24804-24804 TetheringManager        com.cartomystik.app                  I  registerTetheringEventCallback:com.cartomystik.app
+2025-10-31 12:53:43.715 24804-24889 libMEOW                 com.cartomystik.app                  D  meow reload base cfg path: na
+2025-10-31 12:53:43.715 24804-24889 libMEOW                 com.cartomystik.app                  D  meow reload overlay cfg path: na
+2025-10-31 12:53:43.715 24804-24889 libMEOW                 com.cartomystik.app                  D  applied 0 plugin for [com.cartomystik.app].
+2025-10-31 12:53:43.764 24804-24804 AppCompatDelegate       com.cartomystik.app                  D  Checking for metadata for AppLocalesMetadataHolderService : Service not found
+2025-10-31 12:53:43.813 24804-24804 View                    com.cartomystik.app                  D  com.cartomystik.app initForcedUseForceDark: 1
+2025-10-31 12:53:43.821 24804-24804 DecorView[]             com.cartomystik.app                  D  getWindowModeFromSystem  windowmode is 1
+2025-10-31 12:53:43.821 24804-24804 DecorView               com.cartomystik.app                  D  createDecorCaptionView windowingMode:1 mWindowMode 1 isFullscreen: true
+2025-10-31 12:53:43.846 24804-24804 cartomystik.ap          com.cartomystik.app                  W  Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (greylist, reflection, allowed)
+2025-10-31 12:53:43.880 24804-24804 WebViewFactory          com.cartomystik.app                  I  Loading com.google.android.webview version 141.0.7390.122 (code 739012233)
+2025-10-31 12:53:43.913 24804-24804 linker                  com.cartomystik.app                  W  Warning: "/data/app/~~5HfYz_1F5GNqkacafjL4Mg==/com.google.android.trichromelibrary_739012233-ROkvOCBMQvg8GGQojdp_jg==/base.apk!/lib/arm64-v8a/libmonochrome_64.so" unused DT entry: unknown processor-specific (type 0x70000001 arg 0x0) (ignoring)
+2025-10-31 12:53:44.034 24804-24804 cr_WVCFactoryProvider   com.cartomystik.app                  I  version=141.0.7390.122 (739012233) minSdkVersion=29 multiprocess=true packageId=127 splits=<none>
+2025-10-31 12:53:44.103 24804-24920 chromium                com.cartomystik.app                  I  [1031/125344.085167:INFO:android_webview/browser/variations/variations_seed_loader.cc:67] Failed to open file for reading.: No such file or directory (2)
+2025-10-31 12:53:44.151 24804-24804 cr_LibraryLoader        com.cartomystik.app                  I  Successfully loaded native library
+2025-10-31 12:53:44.156 24804-24804 cr_CachingUmaRecorder   com.cartomystik.app                  I  Flushed 8 samples from 8 histograms, 0 samples were dropped.
+2025-10-31 12:53:44.175 24804-24804 cr_CombinedPProvider    com.cartomystik.app                  I  #registerProvider() provider:WV.ak@c94db3b isPolicyCacheEnabled:false policyProvidersSize:0
+2025-10-31 12:53:44.178 24804-24804 cr_PolicyProvider       com.cartomystik.app                  I  #setManagerAndSource() 0
+2025-10-31 12:53:44.289 24804-24804 cr_CombinedPProvider    com.cartomystik.app                  I  #linkNativeInternal() 1
+2025-10-31 12:53:44.300 24804-24804 cr_AppResProvider       com.cartomystik.app                  I  #getApplicationRestrictionsFromUserManager() Bundle[EMPTY_PARCEL]
+2025-10-31 12:53:44.300 24804-24804 cr_PolicyProvider       com.cartomystik.app                  I  #notifySettingsAvailable() 0
+2025-10-31 12:53:44.300 24804-24804 cr_CombinedPProvider    com.cartomystik.app                  I  #onSettingsAvailable() 0
+2025-10-31 12:53:44.300 24804-24804 cr_CombinedPProvider    com.cartomystik.app                  I  #flushPolicies()
+2025-10-31 12:53:44.375 24804-24804 libc                    com.cartomystik.app                  E  Access denied finding property "ro.vendor.df.effect.conflict"
+2025-10-31 12:53:44.376 24804-24804 libc                    com.cartomystik.app                  E  Access denied finding property "ro.vendor.knock.type"
+2025-10-31 12:53:44.433 24804-25016 libc                    com.cartomystik.app                  E  Access denied finding property "ro.vendor.api_level"
+2025-10-31 12:53:44.465 24804-24804 chromium                com.cartomystik.app                  W  [WARNING:android_webview/browser/network_service/net_helpers.cc:143] HTTP Cache size is: 20971520
+2025-10-31 12:53:44.629 24804-24804 EgretLoader             com.cartomystik.app                  D  EgretLoader(Context context)
+2025-10-31 12:53:44.631 24804-24804 EgretLoader             com.cartomystik.app                  D  The context is not activity
+2025-10-31 12:53:44.642 24804-24804 Capacitor               com.cartomystik.app                  E  Error loading plugins.
+                                                                                                    com.getcapacitor.PluginLoadException: Could not find class by class path: app.xplatform.capacitor.plugins.AdMob
+                                                                                                    	at com.getcapacitor.PluginManager.loadPluginClasses(PluginManager.java:35)
+                                                                                                    	at com.getcapacitor.BridgeActivity.onCreate(BridgeActivity.java:37)
+                                                                                                    	at com.cartomystik.app.MainActivity.onCreate(MainActivity.java:9)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:8142)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:8114)
+                                                                                                    	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1309)
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3565)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3752)
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:85)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:135)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:95)
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2178)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:106)
+                                                                                                    	at android.os.Looper.loop(Looper.java:236)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:8051)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:620)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1011)
+2025-10-31 12:53:44.642 24804-24804 Capacitor               com.cartomystik.app                  D  Starting BridgeActivity
+2025-10-31 12:53:44.679 24804-24804 Capacitor               com.cartomystik.app                  D  Registering plugin instance: CapacitorCookies
+2025-10-31 12:53:44.685 24804-24804 Capacitor               com.cartomystik.app                  D  Registering plugin instance: WebView
+2025-10-31 12:53:44.687 24804-24804 Capacitor               com.cartomystik.app                  D  Registering plugin instance: CapacitorHttp
+2025-10-31 12:53:44.698 24804-24804 Capacitor               com.cartomystik.app                  W  Unable to read file at path public/plugins
+2025-10-31 12:53:44.710 24804-24804 Capacitor               com.cartomystik.app                  D  Loading app at https://localhost
+2025-10-31 12:53:44.742 24804-25040 cr_media                com.cartomystik.app                  W  getBluetoothAdapter() requires BLUETOOTH permission
+2025-10-31 12:53:44.742 24804-25040 cr_media                com.cartomystik.app                  W  registerBluetoothIntentsIfNeeded: Requires BLUETOOTH permission
+2025-10-31 12:53:44.751 24804-25128 libMEOW                 com.cartomystik.app                  D  applied 0 plugin for [com.cartomystik.app].
+2025-10-31 12:53:44.761 24804-25128 libEGL                  com.cartomystik.app                  E  eglCreateContextImpl:990 error 3004 (EGL_BAD_ATTRIBUTE)
+2025-10-31 12:53:44.788 24804-24804 Activity                com.cartomystik.app                  W  Slow Operation: Activity com.cartomystik.app/.MainActivity onCreate took 1014ms
+2025-10-31 12:53:44.792 24804-25016 Capacitor               com.cartomystik.app                  D  Handling local request: https://localhost/
+2025-10-31 12:53:44.813 24804-24804 Capacitor               com.cartomystik.app                  D  App started
+2025-10-31 12:53:44.817 24804-24804 Capacitor               com.cartomystik.app                  D  App resumed
+2025-10-31 12:53:44.822 24804-24804 SurfaceFactory          com.cartomystik.app                  I  [static] sSurfaceFactory = com.mediatek.view.impl.SurfaceFactoryImpl@5410a0c
+2025-10-31 12:53:44.830 24804-24804 ViewRootIm...nActivity] com.cartomystik.app                  D  hardware acceleration = true , fakeHwAccelerated = false, sRendererDisabled = false, forceHwAccelerated = false, sSystemRendererDisabled = false
+2025-10-31 12:53:44.836 24804-24804 libMEOW                 com.cartomystik.app                  D  applied 0 plugin for [com.cartomystik.app].
+2025-10-31 12:53:44.836 24804-24804 InputTransport          com.cartomystik.app                  I  Create ARC handle: 0xb4000075da04d5e0
+2025-10-31 12:53:44.837 24804-24804 PhoneWindow             com.cartomystik.app                  V  DecorView setVisiblity: visibility = 0, Parent = android.view.ViewRootImpl@7fabaf8, this = DecorView@e895bd1[MainActivity]
+2025-10-31 12:53:44.848 24804-24804 Looper                  com.cartomystik.app                  W  PerfMonitor longMsg : seq=4 plan=12:53:42.962 late=730ms wall=1145ms running=552ms runnable=14ms io=447ms h=android.app.ActivityThread$H w=159 procState=2
+2025-10-31 12:53:44.849 24804-24804 Looper                  com.cartomystik.app                  W  PerfMonitor looperActivity : package=com.cartomystik.app/.MainActivity time=1145ms latency=730ms running=552ms  procState=2 ClientTransaction{ callbacks=[android.app.servertransaction.LaunchActivityItem] lifecycleRequest=android.app.servertransaction.ResumeActivityItem } historyMsgCount=3 (msgIndex=1 wall=144ms seq=1 running=68ms runnable=33ms io=35ms late=3ms h=android.app.ActivityThread$H w=162) (msgIndex=3 wall=624ms seq=3 running=539ms runnable=14ms io=27ms late=109ms h=android.app.ActivityThread$H w=110)
+2025-10-31 12:53:44.873 24804-25177 CameraManagerGlobal     com.cartomystik.app                  I  Connecting to camera service
+2025-10-31 12:53:44.874 24804-24804 Looper                  com.cartomystik.app                  W  PerfMonitor looperActivity : package=com.cartomystik.app/.MainActivity time=4ms latency=1907ms running=1ms  procState=2 ClientTransaction{ callbacks=[android.app.servertransaction.TopResumedActivityChangeItem] } historyMsgCount=4 (msgIndex=1 wall=144ms seq=1 running=68ms runnable=33ms io=35ms late=3ms h=android.app.ActivityThread$H w=162) (msgIndex=3 wall=624ms seq=3 running=539ms runnable=14ms io=27ms late=109ms h=android.app.ActivityThread$H w=110) (msgIndex=4 wall=1145ms seq=4 running=552ms runnable=14ms io=447ms late=730ms h=android.app.ActivityThread$H w=159)
+2025-10-31 12:53:44.875 24804-24804 Choreographer           com.cartomystik.app                  I  Skipped 72 frames!  The application may be doing too much work on its main thread.
+2025-10-31 12:53:44.879 24804-24804 ContentCatcher          com.cartomystik.app                  W  Failed to notify a WebView
+2025-10-31 12:53:44.879 24804-25177 CameraManagerGlobal     com.cartomystik.app                  W  [soar.cts] ignore the status update of camera: 2
+2025-10-31 12:53:44.880 24804-25177 CameraManagerGlobal     com.cartomystik.app                  W  [soar.cts] ignore the status update of camera: 3
+2025-10-31 12:53:44.881 24804-24850 CameraManagerGlobal     com.cartomystik.app                  W  ignore the torch status update of camera: 2
+2025-10-31 12:53:44.882 24804-24850 CameraManagerGlobal     com.cartomystik.app                  W  ignore the torch status update of camera: 3
+2025-10-31 12:53:44.922 24804-24831 System                  com.cartomystik.app                  W  A resource failed to call close. 
+2025-10-31 12:53:44.937 24804-24887 libMEOW                 com.cartomystik.app                  D  applied 0 plugin for [com.cartomystik.app].
+2025-10-31 12:53:44.966 24804-24887 ion                     com.cartomystik.app                  E  ioctl c0044901 failed with code -1: Invalid argument
+2025-10-31 12:53:45.037 24804-24887 OpenGLRenderer          com.cartomystik.app                  I  Davey! duration=1362ms; Flags=1, IntendedVsync=774134702461335, Vsync=774135902461359, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=774135903186065, AnimationStart=774135903205526, PerformTraversalsStart=774135906465757, DrawStart=774135977727065, SyncQueued=774135992229141, SyncStart=774135992694449, IssueDrawCommandsStart=774135992750988, SwapBuffers=774136060243603, FrameCompleted=774136065658680, DequeueBufferDuration=176308, QueueBufferDuration=601539, GpuCompleted=0, 
+2025-10-31 12:53:45.038 24804-24804 Looper                  com.cartomystik.app                  W  PerfMonitor doFrame : time=164ms vsyncFrame=0 latency=1200ms procState=2 historyMsgCount=4 (msgIndex=1 wall=624ms seq=3 running=539ms runnable=14ms io=27ms late=109ms h=android.app.ActivityThread$H w=110) (msgIndex=2 wall=1145ms seq=4 running=552ms runnable=14ms io=447ms late=730ms h=android.app.ActivityThread$H w=159)
+2025-10-31 12:53:45.487 24804-25039 Capacitor               com.cartomystik.app                  D  Handling local request: https://localhost/assets/index-t_9oCiLa.js
+2025-10-31 12:53:45.488 24804-25050 Capacitor               com.cartomystik.app                  D  Handling local request: https://localhost/assets/index-X0-gVfrp.css
+2025-10-31 12:53:45.559 24804-25074 AudioCapabilities       com.cartomystik.app                  W  Unsupported mime audio/x-adpcm-ms
+2025-10-31 12:53:45.563 24804-25074 AudioCapabilities       com.cartomystik.app                  W  Unsupported mime audio/x-adpcm-dvi-ima
+2025-10-31 12:53:45.564 24804-25074 AudioCapabilities       com.cartomystik.app                  W  Unsupported mime audio/alac
+2025-10-31 12:53:45.570 24804-25074 AudioCapabilities       com.cartomystik.app                  W  Unsupported mime audio/ape
+2025-10-31 12:53:45.572 24804-25074 VideoCapabilities       com.cartomystik.app                  W  Unsupported mime image/vnd.android.heic
+2025-10-31 12:53:45.573 24804-24829 cartomystik.ap          com.cartomystik.app                  I  Background young concurrent copying GC freed 8363(606KB) AllocSpace objects, 4(80KB) LOS objects, 32% free, 4742KB/7004KB, paused 85us total 118.151ms
+2025-10-31 12:53:45.605 24804-25074 VideoCapabilities       com.cartomystik.app                  W  Unrecognized profile/level 1/32 for video/mp4v-es
+2025-10-31 12:53:45.605 24804-25074 VideoCapabilities       com.cartomystik.app                  W  Unrecognized profile/level 32768/2 for video/mp4v-es
+2025-10-31 12:53:45.606 24804-25074 VideoCapabilities       com.cartomystik.app                  W  Unrecognized profile/level 32768/64 for video/mp4v-es
+2025-10-31 12:53:45.615 24804-25074 VideoCapabilities       com.cartomystik.app                  W  Unsupported mime video/x-ms-wmv
+2025-10-31 12:53:45.616 24804-25074 VideoCapabilities       com.cartomystik.app                  W  Unsupported mime video/xvid
+2025-10-31 12:53:45.627 24804-25074 VideoCapabilities       com.cartomystik.app                  W  Unrecognized profile/level 1/32 for video/mp4v-es
+2025-10-31 12:53:45.795 24804-24804 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: ❌ Erreur AdMob: Error: "AdMob" plugin is not implemented on android
+2025-10-31 12:53:45.878 24804-25023 Capacitor               com.cartomystik.app                  D  Handling local request: https://localhost/favicon.ico
+2025-10-31 12:53:45.980 24804-24887 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 12:53:45.980 24804-24887 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 12:53:46.003 24804-24887 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 12:53:46.003 24804-24887 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 12:53:46.142 24804-24804 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 365 - Msg: ❌ Erreur initialisation AdMob: Error: "AdMob" plugin is not implemented on android
+2025-10-31 12:53:46.143 24804-24804 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: ❌ Erreur initialisation AdMob: TypeError: (void 0) is not a function
+2025-10-31 12:53:46.260 24804-24804 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: ✅ Données chargées: 0 tirages
+2025-10-31 12:53:46.304 24804-24804 Capacitor/Console       com.cartomystik.app                  I  File: https://localhost/assets/index-t_9oCiLa.js - Line 452 - Msg: Session utilisateur chargée depuis le context: [object Object]
+2025-10-31 12:53:46.329 24804-24804 Capacitor/Console       com.cartomystik.app                  E  File: https://localhost/assets/index-t_9oCiLa.js - Line 70 - Msg: ❌ Erreur récupération langue: Error: "Preferences" plugin is not implemented on android
+2025-10-31 12:53:46.849 24804-24887 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 12:53:46.856 24804-24887 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 66 lines
+2025-10-31 12:53:46.856 24804-24887 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 12:53:46.900 24804-24804 Looper                  com.cartomystik.app                  W  PerfMonitor doFrame : time=475ms vsyncFrame=0 latency=0ms procState=2
+2025-10-31 12:53:46.917 24804-24804 Looper                  com.cartomystik.app                  W  PerfMonitor doFrame : time=15ms vsyncFrame=0 latency=460ms procState=2 historyMsgCount=1 (msgIndex=1 wall=475ms seq=95 running=1ms h=android.view.Choreographer$FrameHandler c=android.view.Choreographer$FrameDisplayEventReceiver)
+2025-10-31 12:53:47.036 24804-24887 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 12:53:47.036 24804-24887 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 12:53:47.129 24804-24887 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 12:53:47.170 24804-24887 chatty                  com.cartomystik.app                  I  uid=10726(com.cartomystik.app) RenderThread identical 113 lines
+2025-10-31 12:53:47.170 24804-24887 GPUAUX                  com.cartomystik.app                  E  [AUX]GuiExtAuxCheckAuxPath:626: Null anb
+2025-10-31 12:53:47.207 24804-24887 OpenGLRenderer          com.cartomystik.app                  I  Davey! duration=755ms; Flags=0, IntendedVsync=774137470117659, Vsync=774137920117668, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=774137930162065, AnimationStart=774137930165526, PerformTraversalsStart=774137933620295, DrawStart=774137933841449, SyncQueued=774137934583680, SyncStart=774137945081142, IssueDrawCommandsStart=774137945294142, SwapBuffers=774138234980295, FrameCompleted=774138235679372, DequeueBufferDuration=221846, QueueBufferDuration=384384, GpuCompleted=0, 
+2025-10-31 12:53:48.592 24804-24875 cartomystik.ap          com.cartomystik.app                  I  Waiting for a blocking GC ProfileSaver
+2025-10-31 12:53:50.012 24804-25336 ProfileInstaller        com.cartomystik.app                  D  Installing profile for com.cartomystik.app
+2025-10-31 12:53:52.289 24804-24828 cartomystik.ap          com.cartomystik.app                  I  Compiler allocated 4379KB to compile void android.view.ViewRootImpl.performTraversals()
+2025-10-31 12:54:00.267 24804-25363 cartomystik.ap          com.cartomystik.app                  W  Accessing hidden method Ldalvik/system/VMStack;->getStackClass2()Ljava/lang/Class; (greylist, reflection, allowed)
+2025-10-31 12:54:00.274 24804-25363 FilePhenotypeFlags      com.cartomystik.app                  E  Config package com.google.android.gms.clearcut_client#com.cartomystik.app cannot use FILE backing without declarative registration. See go/phenotype-android-integration#phenotype for more information. This will lead to stale flags.
+2025-10-31 12:54:39.703 24804-24804 Choreographer           com.cartomystik.app                  W  Frame time is 0.109417  now = 774190731121529  timestampNanos = 774190731230946 ms in the future!  Check that graphics HAL is generating vsync timestamps using the correct timebase.
