@@ -1665,6 +1665,9 @@ const translations: Record<Language, Record<string, string>> = {
     "crystalBall.newQuestion": "Poser une autre question",
     "crystalBall.backHome": "🏠 Retour à l'accueil",
     
+    // Premium
+    "premium.manage": "Gérer mon abonnement (annuler, factures...)",
+    
     // Français
     "oracle.crystalBall.title": "Boule de Cristal",
     "oracle.crystalBall.description": "Posez vos questions à la boule mystique",
