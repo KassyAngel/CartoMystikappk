@@ -1669,6 +1669,9 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.manage": "Gérer mon abonnement (annuler, factures...)",
     "premium.expired": "Votre accès Premium a expiré",
     "premium.expiringSoon": "Votre accès Premium expire bientôt",
+    "premium.conditions.line1": "Paiement sécurisé par Stripe",
+    "premium.conditions.line2": "Paiement unique, SANS renouvellement automatique",
+    "premium.conditions.line3": "Aucun remboursement après paiement. Accès Premium valable pour la durée choisie.",
     
     // Français
     "oracle.crystalBall.title": "Boule de Cristal",
