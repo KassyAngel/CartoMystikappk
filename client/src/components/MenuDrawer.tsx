@@ -45,19 +45,31 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
       const lang = language === 'fr' ? '' : '-en';
       const fileName = `mentions-legales${lang}.html`;
       
+      console.log('📜 Ouverture mentions légales...');
+      console.log('🌍 Langue actuelle:', language);
+      console.log('📄 Nom du fichier:', fileName);
+      console.log('📱 Plateforme native?', Capacitor.isNativePlatform());
+      
       if (Capacitor.isNativePlatform()) {
+        const url = `https://appassets.androidplatform.net/assets/public/${fileName}`;
+        console.log('🔗 URL à ouvrir:', url);
+        
         // Sur mobile Android, ouvrir depuis les assets
         await Browser.open({ 
-          url: `https://appassets.androidplatform.net/assets/public/${fileName}`,
+          url,
           presentationStyle: 'fullscreen'
         });
+        console.log('✅ Browser.open() réussi');
       } else {
         // Sur web, ouvrir dans un nouvel onglet
-        window.open(`/${fileName}`, '_blank');
+        const url = `/${fileName}`;
+        console.log('🔗 URL à ouvrir (web):', url);
+        window.open(url, '_blank');
       }
       onClose();
     } catch (error) {
       console.error('❌ Erreur ouverture mentions légales:', error);
+      console.error('📋 Détails de l\'erreur:', JSON.stringify(error, null, 2));
     }
   };
 
@@ -66,19 +78,31 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
       const lang = language === 'fr' ? '' : '-en';
       const fileName = `politique-confidentialite${lang}.html`;
       
+      console.log('🔒 Ouverture politique de confidentialité...');
+      console.log('🌍 Langue actuelle:', language);
+      console.log('📄 Nom du fichier:', fileName);
+      console.log('📱 Plateforme native?', Capacitor.isNativePlatform());
+      
       if (Capacitor.isNativePlatform()) {
+        const url = `https://appassets.androidplatform.net/assets/public/${fileName}`;
+        console.log('🔗 URL à ouvrir:', url);
+        
         // Sur mobile Android, ouvrir depuis les assets
         await Browser.open({ 
-          url: `https://appassets.androidplatform.net/assets/public/${fileName}`,
+          url,
           presentationStyle: 'fullscreen'
         });
+        console.log('✅ Browser.open() réussi');
       } else {
         // Sur web, ouvrir dans un nouvel onglet
-        window.open(`/${fileName}`, '_blank');
+        const url = `/${fileName}`;
+        console.log('🔗 URL à ouvrir (web):', url);
+        window.open(url, '_blank');
       }
       onClose();
     } catch (error) {
       console.error('❌ Erreur ouverture politique confidentialité:', error);
+      console.error('📋 Détails de l\'erreur:', JSON.stringify(error, null, 2));
     }
   };
 
