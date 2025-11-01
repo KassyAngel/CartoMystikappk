@@ -17,7 +17,6 @@ import OracleMystiqueApp from "@/pages/OracleMystiqueApp";
 import NotFound from "@/pages/not-found";
 import { initialize as initializeAdMob, showBanner, showInterstitialAd } from './admobService';
 import { config } from '@/config';
-import RestorePremiumPage from '@/pages/RestorePremiumPage';
 
 export interface Reading {
   id: string;
@@ -61,7 +60,6 @@ function App() {
   const [currentStep, setCurrentStep] = useState<AppStep>('landing');
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
-  const [showRestorePremium, setShowRestorePremium] = useState(false);
 
   // 🆕 Initialiser AdMob au démarrage
   useEffect(() => {
@@ -105,11 +103,6 @@ function App() {
   useEffect(() => {
     loadUserData();
     checkPremiumExpiration();
-
-    // Écouter l'événement pour ouvrir la restauration Premium
-    const handleShowRestore = () => setShowRestorePremium(true);
-    window.addEventListener('showRestorePremium', handleShowRestore);
-    return () => window.removeEventListener('showRestorePremium', handleShowRestore);
 
     // 🔄 Vérification automatique du statut Premium toutes les heures
     const premiumCheckInterval = setInterval(() => {
@@ -331,11 +324,12 @@ function App() {
 
               {isGrimoireOpen && (
                 <GrimoireModal
-                  isOpen={isGrimoireOpen}
-                  onClose={() => setIsGrimoireOpen(false)}
+                  isPremium={isPremium}
                   readings={readings}
                   onSaveNote={handleSaveNote}
                   onToggleFavorite={handleToggleFavorite}
+                  onClose={() => setIsGrimoireOpen(false)}
+                  onClearAll={clearAllReadings}
                 />
               )}
 
@@ -358,16 +352,6 @@ function App() {
                   onStepChange={setCurrentStep}
                 />
               </div>
-
-              {showRestorePremium && (
-                <RestorePremiumPage
-                  onClose={() => setShowRestorePremium(false)}
-                  onSuccess={() => {
-                    setShowRestorePremium(false);
-                    loadUserData();
-                  }}
-                />
-              )}
             </div>
           </TooltipProvider>
         </UserProvider>
