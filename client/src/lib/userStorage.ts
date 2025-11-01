@@ -6,17 +6,16 @@ import { UserSession } from '@shared/schema';
 const USER_STORAGE_KEY = 'mystic_user_session';
 const LANGUAGE_KEY = 'mystic_language';
 const DEVICE_ID_KEY = 'mystic_device_id';
+const USER_EMAIL_KEY = 'mystic_user_email';
 
 // Détecte si on est sur mobile
 const isNative = Capacitor.isNativePlatform();
 
 // ===== DEVICE ID =====
-
 export const getDeviceId = async (): Promise<string> => {
   try {
-    // Essayer de récupérer un deviceId déjà enregistré
     let deviceId: string | null = null;
-    
+
     if (isNative) {
       const result = await Preferences.get({ key: DEVICE_ID_KEY });
       deviceId = result.value;
@@ -24,22 +23,17 @@ export const getDeviceId = async (): Promise<string> => {
       deviceId = localStorage.getItem(DEVICE_ID_KEY);
     }
 
-    // Si on a déjà un deviceId, le retourner
     if (deviceId) {
       return deviceId;
     }
 
-    // Sinon, en créer un nouveau
     if (isNative) {
-      // Sur mobile, utiliser l'UUID du device
       const info = await Device.getId();
       deviceId = info.identifier;
     } else {
-      // Sur web, générer un UUID persistant
       deviceId = `web_${Date.now()}_${Math.random().toString(36).substring(7)}`;
     }
 
-    // Sauvegarder le deviceId pour la prochaine fois
     if (isNative) {
       await Preferences.set({ key: DEVICE_ID_KEY, value: deviceId });
     } else {
@@ -50,14 +44,12 @@ export const getDeviceId = async (): Promise<string> => {
     return deviceId;
   } catch (error) {
     console.error('❌ Erreur récupération deviceId:', error);
-    // Fallback
     const fallbackId = `fallback_${Date.now()}_${Math.random().toString(36).substring(7)}`;
     return fallbackId;
   }
 };
 
 // ===== USER SESSION =====
-
 export const saveUserSession = async (user: UserSession): Promise<void> => {
   try {
     const data = JSON.stringify(user);
@@ -110,7 +102,6 @@ export const clearUserSession = async (): Promise<void> => {
 };
 
 // ===== LANGUAGE =====
-
 export const saveLanguage = async (language: string): Promise<void> => {
   try {
     if (isNative) {
@@ -152,5 +143,63 @@ export const clearLanguage = async (): Promise<void> => {
     }
   } catch (error) {
     console.error('❌ Erreur suppression langue:', error);
+  }
+};
+
+// ===== USER EMAIL (pour Premium) =====
+/**
+ * Sauvegarder l'email de l'utilisateur (pour récupérer le Premium après réinstallation)
+ */
+export const saveUserEmail = async (email: string): Promise<void> => {
+  try {
+    const trimmedEmail = email.toLowerCase().trim();
+
+    if (isNative) {
+      await Preferences.set({ key: USER_EMAIL_KEY, value: trimmedEmail });
+    } else {
+      localStorage.setItem(USER_EMAIL_KEY, trimmedEmail);
+    }
+
+    console.log('✅ Email utilisateur sauvegardé:', trimmedEmail);
+  } catch (error) {
+    console.error('❌ Erreur sauvegarde email:', error);
+  }
+};
+
+/**
+ * Récupérer l'email sauvegardé
+ */
+export const getUserEmail = async (): Promise<string | null> => {
+  try {
+    let email: string | null = null;
+
+    if (isNative) {
+      const result = await Preferences.get({ key: USER_EMAIL_KEY });
+      email = result.value;
+    } else {
+      email = localStorage.getItem(USER_EMAIL_KEY);
+    }
+
+    console.log('📧 Email récupéré:', email || 'aucun');
+    return email;
+  } catch (error) {
+    console.error('❌ Erreur récupération email:', error);
+    return null;
+  }
+};
+
+/**
+ * Supprimer l'email sauvegardé (déconnexion / réinitialisation)
+ */
+export const clearUserEmail = async (): Promise<void> => {
+  try {
+    if (isNative) {
+      await Preferences.remove({ key: USER_EMAIL_KEY });
+    } else {
+      localStorage.removeItem(USER_EMAIL_KEY);
+    }
+    console.log('🗑️ Email utilisateur supprimé');
+  } catch (error) {
+    console.error('❌ Erreur suppression email:', error);
   }
 };

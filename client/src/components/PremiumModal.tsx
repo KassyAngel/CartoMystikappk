@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { config } from '@/config';
-import { getDeviceId } from '@/lib/userStorage';
+import { config } from "@/config";
+import { getDeviceId } from "@/lib/userStorage";
 
 interface PremiumModalProps {
   isOpen: boolean;
@@ -13,14 +13,12 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
   const [selectedPlan, setSelectedPlan] = useState<'premium_1month' | 'premium_3months' | null>(null);
   const [loading, setLoading] = useState(false);
   const { t } = useLanguage();
-  const [email, setEmail] = useState(''); // State for the email input
-  const [emailError, setEmailError] = useState(''); // State for email validation errors
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !loading) {
-        onClose();
-      }
+      if (e.key === 'Escape' && !loading) onClose();
     };
 
     if (isOpen) {
@@ -35,11 +33,11 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
 
   if (!isOpen) return null;
 
-  // ✅ NOUVEAU : Fonction de paiement Stripe
+  // ✅ Nouvelle version de la fonction handleSubscribe
   const handleSubscribe = async () => {
     if (!selectedPlan) return;
 
-    // Basic email validation
+    // Validation email
     if (!email) {
       setEmailError(t("premium.error.emailRequired") || "L'email est requis.");
       return;
@@ -48,20 +46,29 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
       setEmailError(t("premium.error.emailInvalid") || "L'email n'est pas valide.");
       return;
     }
-    setEmailError(''); // Clear previous errors
+    setEmailError('');
 
     setLoading(true);
 
     try {
       console.log('🛒 Création session Stripe pour plan:', selectedPlan);
 
-      // 1️⃣ Appeler le backend pour créer la session Stripe
-      const deviceId = await getDeviceId(); // Récupérer le deviceId
+      // ✅ Sauvegarde temporaire de l'email
+      localStorage.setItem('userEmail', email.toLowerCase().trim());
+
+      // Récupérer le deviceId
+      const deviceId = await getDeviceId();
+
+      // Appeler le backend
       const response = await fetch(`${config.apiBaseUrl}/api/create-checkout-session`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ planId: selectedPlan, deviceId, email }) // Envoyer l'email
+        body: JSON.stringify({
+          planId: selectedPlan,
+          deviceId,
+          email: email.toLowerCase().trim()
+        })
       });
 
       if (!response.ok) {
@@ -73,14 +80,12 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
       if (data.success && data.url) {
         console.log('✅ Session Stripe créée, redirection vers:', data.url);
 
-        /// 2️⃣ Ouvrir la page de paiement Stripe dans un nouvel onglet
+        // Ouvrir Stripe dans un nouvel onglet
         const stripeWindow = window.open(data.url, '_blank');
 
         if (!stripeWindow) {
-          // Si le popup est bloqué
           alert('⚠️ Veuillez autoriser les popups pour accéder au paiement Stripe');
         } else {
-          // Fermer la modal après ouverture
           onClose();
         }
       } else {
@@ -98,32 +103,26 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
   const handleOverlayClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.target === e.currentTarget && !loading) {
-      onClose();
-    }
+    if (e.target === e.currentTarget && !loading) onClose();
   };
 
   const handleCloseClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!loading) {
-      onClose();
-    }
+    if (!loading) onClose();
   };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={handleOverlayClick}
-      />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={handleOverlayClick} />
 
       <div className="relative bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-800 rounded-2xl shadow-2xl max-w-md w-full p-6 border-2 border-yellow-500/30">
+        {/* Bouton fermer */}
         <button
           type="button"
           onClick={handleCloseClick}
           disabled={loading}
-          className="absolute top-4 right-4 p-1 rounded-full bg-white/10 hover:bg-white/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="absolute top-4 right-4 p-1 rounded-full bg-white/10 hover:bg-white/20 transition-colors disabled:opacity-50"
           aria-label={t("common.close") || "Fermer"}
         >
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,6 +130,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
           </svg>
         </button>
 
+        {/* Titre */}
         <div className="text-center mb-6">
           <div className="text-4xl mb-2">✨</div>
           <h2 className="text-2xl font-bold text-yellow-400 mb-2">
@@ -155,18 +155,16 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
             disabled={loading}
             className="w-full px-4 py-2 bg-white/10 border border-purple-400/30 rounded-lg text-white placeholder-purple-300/50 focus:outline-none focus:border-yellow-400 disabled:opacity-50"
           />
-          {emailError && (
-            <p className="text-red-400 text-sm mt-1">{emailError}</p>
-          )}
+          {emailError && <p className="text-red-400 text-sm mt-1">{emailError}</p>}
         </div>
 
+        {/* Plans */}
         <div className="space-y-4 mb-6">
-          {/* Plan 1 mois */}
           <button
             type="button"
-            onClick={() => { setSelectedPlan('premium_1month'); setEmailError(''); }} // Clear email error on plan selection
+            onClick={() => { setSelectedPlan('premium_1month'); setEmailError(''); }}
             disabled={loading}
-            className={`w-full p-4 rounded-xl border-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+            className={`w-full p-4 rounded-xl border-2 transition-all ${
               selectedPlan === 'premium_1month'
                 ? 'border-yellow-400 bg-yellow-400/20 shadow-lg scale-105'
                 : 'border-purple-400/30 bg-purple-800/30 hover:border-yellow-400/50'
@@ -175,18 +173,17 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
             <div className="flex justify-between items-center">
               <div className="text-left">
                 <div className="text-white font-semibold">{t("premium.plan.1month") || "1 mois"}</div>
-                <div className="text-purple-200 text-xs">{t("premium.plan.1month.subtitle") || "Abonnement mensuel"}</div>
+                <div className="text-purple-200 text-xs">{t("premium.plan.1month.subtitle") || "Sans engagement"}</div>
               </div>
               <div className="text-yellow-400 font-bold text-xl">3,99€</div>
             </div>
           </button>
 
-          {/* Plan 3 mois (avec badge promo) */}
           <button
             type="button"
-            onClick={() => { setSelectedPlan('premium_3months'); setEmailError(''); }} // Clear email error on plan selection
+            onClick={() => { setSelectedPlan('premium_3months'); setEmailError(''); }}
             disabled={loading}
-            className={`w-full p-4 rounded-xl border-2 transition-all relative disabled:opacity-50 disabled:cursor-not-allowed ${
+            className={`w-full p-4 rounded-xl border-2 transition-all relative ${
               selectedPlan === 'premium_3months'
                 ? 'border-yellow-400 bg-yellow-400/20 shadow-lg scale-105'
                 : 'border-purple-400/30 bg-purple-800/30 hover:border-yellow-400/50'
@@ -198,7 +195,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
             <div className="flex justify-between items-center">
               <div className="text-left">
                 <div className="text-white font-semibold">{t("premium.plan.3months") || "3 mois"}</div>
-                <div className="text-green-400 text-xs font-semibold">{t("premium.plan.3months.subtitle") || "Meilleure offre !"}</div>
+                <div className="text-green-400 text-xs font-semibold">{t("premium.plan.3months.subtitle") || "Meilleure offre"}</div>
               </div>
               <div>
                 <div className="text-gray-400 text-sm line-through">11,97€</div>
@@ -208,7 +205,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
           </button>
         </div>
 
-        {/* Bouton de paiement */}
+        {/* Bouton Stripe */}
         <button
           type="button"
           onClick={handleSubscribe}
@@ -219,18 +216,16 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
               : 'bg-gray-600 text-gray-400 cursor-not-allowed'
           }`}
         >
-          {loading
-            ? (
-              <span className="flex items-center justify-center gap-2">
-                <span className="animate-spin">⏳</span>
-                {t("premium.button.processing") || "Redirection..."}
-              </span>
-            )
-            : (selectedPlan
+          {loading ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="animate-spin">⏳</span>
+              {t("premium.button.processing") || "Redirection..."}
+            </span>
+          ) : (
+            selectedPlan
               ? `💳 ${t("premium.button.subscribe") || "Payer avec Stripe"}`
               : (t("premium.button.select") || "Sélectionner un plan")
-            )
-          }
+          )}
         </button>
 
         {/* Conditions */}
@@ -241,7 +236,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
           <p className="text-purple-300 text-[10px]">{t("premium.conditions.line4")}</p>
         </div>
 
-        {/* Avantages Premium */}
+        {/* Avantages */}
         <div className="mt-4 pt-4 border-t border-purple-500/30">
           <div className="text-center text-sm text-purple-200 space-y-1">
             <div>✓ {t("premium.benefits.ads") || "Sans publicité"}</div>
@@ -255,7 +250,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
         <div className="mt-3 flex items-center justify-center gap-2 text-purple-300 text-xs">
           <span>Powered by</span>
           <svg className="h-4" viewBox="0 0 60 25" fill="currentColor">
-            <path d="M59.64 14.28h-8.06c.19 1.93 1.6 2.55 3.2 2.55 1.64 0 2.96-.37 4.05-.95v3.32a8.33 8.33 0 0 1-4.56 1.1c-4.01 0-6.83-2.5-6.83-7.48 0-4.19 2.39-7.52 6.3-7.52 3.92 0 5.96 3.28 5.96 7.5 0 .4-.04 1.26-.06 1.48zm-5.92-5.62c-1.03 0-2.17.73-2.17 2.58h4.25c0-1.85-1.07-2.58-2.08-2.58zM40.95 20.3c-1.44 0-2.32-.6-2.9-1.04l-.02 4.63-4.12.87V5.57h3.76l.08 1.02a4.7 4.7 0 0 1 3.23-1.29c2.9 0 5.62 2.6 5.62 7.4 0 5.23-2.7 7.6-5.65 7.6zM40 8.95c-.95 0-1.54.34-1.97.81l.02 6.12c.4.44.98.78 1.95.78 1.52 0 2.54-1.65 2.54-3.87 0-2.15-1.04-3.84-2.54-3.84zM28.24 5.57h4.13v14.44h-4.13V5.57zm0-4.7L32.37 0v3.36l-4.13.88V.88zm-4.32 9.35v9.79H19.8V5.57h3.7l.12 1.22c1-1.77 3.07-1.41 3.62-1.22v3.79c-.52-.17-2.29-.43-3.32.86zm-8.55 4.72c0 2.43 2.6 1.68 3.12 1.46v3.36c-.55.3-1.54.54-2.89.54a4.15 4.15 0 0 1-4.27-4.24l.01-13.17 4.02-.86v3.54h3.14V9.1h-3.13v5.85zm-4.91.70c0 2.97-2.31 4.66-5.73 4.66a11.2 11.2 0 0 1-4.46-.93v-3.93c1.38.75 3.1 1.31 4.46 1.31.92 0 1.53-.24 1.53-1C6.26 13.77 0 14.51 0 9.95 0 7.04 2.28 5.3 5.62 5.3c1.36 0 2.72.2 4.09.75v3.88a9.23 9.23 0 0 0-4.1-1.06c-.86 0-1.44.25-1.44.9 0 1.85 6.29.97 6.29 5.88z"/>
+            <path d="M59.64 14.28h-8.06c.19 1.93 1.6 2.55 3.2 2.55 1.64 0 2.96-.37 4.05-.95v3.32a8.33 8.33 0 0 1-4.56 1.1c-4.01 0-6.83-2.5-6.83-7.48 0-4.19 2.39-7.52 6.3-7.52 3.92 0 5.96 3.28 5.96 7.5 0 .4-.04 1.26-.06 1.48zM53.72 8.66c-1.03 0-2.17.73-2.17 2.58h4.25c0-1.85-1.07-2.58-2.08-2.58zM40.95 20.3c-1.44 0-2.32-.6-2.9-1.04l-.02 4.63-4.12.87V5.57h3.76l.08 1.02a4.7 4.7 0 0 1 3.23-1.29c2.9 0 5.62 2.6 5.62 7.4 0 5.23-2.7 7.6-5.65 7.6zM40 8.95c-.95 0-1.54.34-1.97.81l.02 6.12c.4.44.98.78 1.95.78 1.52 0 2.54-1.65 2.54-3.87 0-2.15-1.04-3.84-2.54-3.84zM28.24 5.57h4.13v14.44h-4.13V5.57zm0-4.7L32.37 0v3.36l-4.13.88V.88zm-4.32 9.35v9.79H19.8V5.57h3.7l.12 1.22c1-1.77 3.07-1.41 3.62-1.22v3.79c-.52-.17-2.29-.43-3.32.86zm-8.55 4.72c0 2.43 2.6 1.68 3.12 1.46v3.36c-.55.3-1.54.54-2.89.54a4.15 4.15 0 0 1-4.27-4.24l.01-13.17 4.02-.86v3.54h3.14V9.1h-3.13v5.85zM6.46 15.77c0 2.97-2.31 4.66-5.73 4.66a11.2 11.2 0 0 1-4.46-.93v-3.93c1.38.75 3.1 1.31 4.46 1.31.92 0 1.53-.24 1.53-1C6.26 13.77 0 14.51 0 9.95 0 7.04 2.28 5.3 5.62 5.3c1.36 0 2.72.2 4.09.75v3.88a9.23 9.23 0 0 0-4.1-1.06c-.86 0-1.44.25-1.44.9 0 1.85 6.29.97 6.29 5.88z"/>
           </svg>
         </div>
       </div>

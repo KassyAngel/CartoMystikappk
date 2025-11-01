@@ -7,11 +7,18 @@ const config: CapacitorConfig = {
   server: {
     cleartext: false,
     allowNavigation: [
-      'cartomystikappk.onrender.com'
+      'cartomystikappk.onrender.com',
+      '*.stripe.com',  // ✅ Autoriser Stripe
+      'checkout.stripe.com'  // ✅ Autoriser Stripe Checkout
     ]
   },
   android: {
     allowMixedContent: false
+  },
+  plugins: {
+    CapacitorHttp: {
+      enabled: true
+    }
   }
 };
 

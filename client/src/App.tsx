@@ -17,6 +17,7 @@ import OracleMystiqueApp from "@/pages/OracleMystiqueApp";
 import NotFound from "@/pages/not-found";
 import { initialize as initializeAdMob, showBanner, showInterstitialAd } from './admobService';
 import { config } from '@/config';
+import { getUserEmail } from '@/lib/userStorage'; // 🆕 Import ajouté
 
 export interface Reading {
   id: string;
@@ -30,7 +31,11 @@ export interface Reading {
   isFavorite: boolean;
 }
 
-type AppStep = 'landing' | 'name' | 'date' | 'gender' | 'oracle' | 'game' | 'revelation' | 'interpretation' | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'bonusRoll' | 'responsiveTest';
+type AppStep =
+  | 'landing' | 'name' | 'date' | 'gender'
+  | 'oracle' | 'game' | 'revelation' | 'interpretation'
+  | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'bonusRoll'
+  | 'responsiveTest';
 
 function Router({ onSaveReading, onStepChange }: {
   onSaveReading: (reading: any) => Promise<void>;
@@ -74,17 +79,16 @@ function App() {
     initAds();
   }, []);
 
-  // Afficher la bannière au démarrage (sauf si Premium)
+  // Afficher la bannière pub si non Premium
   useEffect(() => {
     if (!isPremium) {
-      // 🔧 Délai de 2 secondes pour réduire la charge mémoire initiale
       const timer = setTimeout(() => {
         showBanner();
         console.log('📺 Bannière affichée (utilisateur gratuit)');
       }, 2000);
       return () => clearTimeout(timer);
     } else {
-      console.log('👑 Bannière cachée (utilisateur Premium)');
+      console.log('👑 Bannière cachée (Premium actif)');
     }
   }, [isPremium]);
 
@@ -100,18 +104,55 @@ function App() {
     checkNotificationPermission();
   }, [currentStep]);
 
+  // 🔁 Charger les données utilisateur
   useEffect(() => {
     loadUserData();
     checkPremiumExpiration();
 
-    // 🔄 Vérification automatique du statut Premium toutes les heures
-    const premiumCheckInterval = setInterval(() => {
+    const interval = setInterval(() => {
       loadUserData();
-    }, 60 * 60 * 1000); // 1 heure
+    }, 60 * 60 * 1000); // toutes les heures
 
-    return () => clearInterval(premiumCheckInterval);
+    return () => clearInterval(interval);
   }, []);
 
+  // ✅ Nouvelle version de loadUserData
+  const loadUserData = async () => {
+    try {
+      // 🔹 Récupérer l’email stocké
+      const savedEmail = await getUserEmail();
+
+      // 🔹 Vérifier statut Premium
+      const premiumResponse = await fetch(`${config.apiBaseUrl}/api/user/premium-status`, {
+        credentials: 'include',
+        headers: savedEmail ? { 'x-user-email': savedEmail } : {},
+      });
+      const premiumData = await premiumResponse.json();
+      setIsPremium(premiumData.isPremium);
+
+      console.log('✅ Statut Premium:', premiumData.isPremium, savedEmail ? `(email: ${savedEmail})` : '(sans email)');
+
+      // 🔹 Charger les tirages
+      const readingsResponse = await fetch(`${config.apiBaseUrl}/api/readings`, {
+        credentials: 'include'
+      });
+      const readingsData = await readingsResponse.json();
+      setReadings(
+        readingsData.readings.map((r: any) => ({
+          ...r,
+          date: new Date(r.date)
+        }))
+      );
+
+      console.log('✅ Données chargées:', readingsData.readings.length, 'tirages');
+    } catch (error) {
+      console.error('❌ Erreur chargement données:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Vérification d’expiration Premium
   const checkPremiumExpiration = async () => {
     try {
       const response = await fetch(`${config.apiBaseUrl}/api/user/premium-expiration-alert`, {
@@ -127,50 +168,20 @@ function App() {
         } else if (data.alertType === 'warning') {
           const days = data.daysRemaining;
           const expirationDate = new Date(data.expirationDate).toLocaleDateString('fr-FR');
-          alertMessage = `🔔 Votre accès Premium expire dans ${days} jour${days > 1 ? 's' : ''}.\n\nDate d expiration : ${expirationDate}\n\nPour renouveler, rendez-vous dans le menu Premium.`;
+          alertMessage = `🔔 Votre accès Premium expire dans ${days} jour${days > 1 ? 's' : ''}.\n\nDate d’expiration : ${expirationDate}\n\nPour renouveler, rendez-vous dans le menu Premium.`;
         }
 
         if (alertMessage) {
-          // Afficher l'alerte après un court délai pour ne pas perturber le chargement
           setTimeout(() => {
             alert(alertMessage);
-
-            // 🔄 Si l'abonnement a expiré, recharger la page pour réactiver les limitations
             if (data.alertType === 'expired') {
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
+              setTimeout(() => window.location.reload(), 1000);
             }
           }, 2000);
         }
       }
     } catch (error) {
       console.error('❌ Erreur vérification expiration Premium:', error);
-    }
-  };
-
-  const loadUserData = async () => {
-    try {
-      const premiumResponse = await fetch(`${config.apiBaseUrl}/api/user/premium-status`, {
-        credentials: 'include'
-      });
-      const premiumData = await premiumResponse.json();
-      setIsPremium(premiumData.isPremium);
-
-      const readingsResponse = await fetch(`${config.apiBaseUrl}/api/readings`, {
-        credentials: 'include'
-      });
-      const readingsData = await readingsResponse.json();
-      setReadings(readingsData.readings.map((r: any) => ({
-        ...r,
-        date: new Date(r.date)
-      })));
-
-      console.log('✅ Données chargées:', readingsData.readings.length, 'tirages');
-    } catch (error) {
-      console.error('❌ Erreur chargement données:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -184,9 +195,7 @@ function App() {
       });
 
       setReadings(prev =>
-        prev.map(r =>
-          r.id === readingId ? { ...r, notes: note } : r
-        )
+        prev.map(r => r.id === readingId ? { ...r, notes: note } : r)
       );
     } catch (error) {
       console.error('❌ Erreur sauvegarde note:', error);
@@ -206,9 +215,7 @@ function App() {
       });
 
       setReadings(prev =>
-        prev.map(r =>
-          r.id === readingId ? { ...r, isFavorite: !r.isFavorite } : r
-        )
+        prev.map(r => r.id === readingId ? { ...r, isFavorite: !r.isFavorite } : r)
       );
     } catch (error) {
       console.error('❌ Erreur toggle favori:', error);
@@ -218,32 +225,28 @@ function App() {
   const clearAllReadings = async () => {
     try {
       console.log('🗑️ Suppression de tous les tirages du Grimoire...');
-
       const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
         method: 'DELETE',
         credentials: 'include'
       });
 
-      if (!response.ok) {
-        throw new Error('Erreur lors de la suppression');
-      }
-
+      if (!response.ok) throw new Error('Erreur lors de la suppression');
       setReadings([]);
-      console.log('🔥 Grimoire complètement vidé !');
+      console.log('🔥 Grimoire vidé !');
     } catch (error) {
-      console.error('❌ Erreur lors du vidage du grimoire:', error);
+      console.error('❌ Erreur vidage grimoire:', error);
       alert('Une erreur est survenue lors de la suppression des tirages.');
     }
   };
 
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
-    const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
-    const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
+    const excluded = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
+    const shouldSave = !excluded.includes(reading.type);
 
     try {
       console.log('📤 Envoi tirage:', reading.type);
 
-      if (shouldSaveInGrimoire) {
+      if (shouldSave) {
         const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -252,37 +255,27 @@ function App() {
         });
 
         if (response.status === 403) {
-          console.log('⚠️ Erreur 403 ignorée (limite supprimée côté serveur)');
+          console.log('⚠️ 403 ignorée (limite serveur)');
         } else if (!response.ok) {
           throw new Error(`Erreur HTTP: ${response.status}`);
         } else {
           const newReading = await response.json();
-
           setReadings(prev => [
             { ...newReading, date: new Date(newReading.date) },
             ...prev
           ]);
-          console.log('✅ Tirage enregistré dans Grimoire:', newReading.id);
+          console.log('✅ Tirage enregistré:', newReading.id);
         }
-      } else {
-        console.log(`🚫 ${reading.type} non sauvegardé dans Grimoire (type exclu)`);
       }
 
-      // 🎬 Système pub simplifié : 1 pub tous les 3 tirages
       if (!isPremium) {
         const newCount = readingCount + 1;
         setReadingCount(newCount);
-
-        // Pub au 3ème tirage, puis tous les 3 tirages (3, 6, 9, 12...)
         const shouldShowAd = newCount % 3 === 0;
-
-        console.log(`📊 Tirage n°${newCount} (${reading.type}) → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
+        console.log(`📊 Tirage n°${newCount} → Pub: ${shouldShowAd ? 'OUI' : 'NON'}`);
 
         if (shouldShowAd) {
-          console.log(`🎬 Affichage pub interstitielle après 3 tirages`);
-          setTimeout(() => {
-            showInterstitialAd(`after_${reading.type}_reading`);
-          }, 1000);
+          setTimeout(() => showInterstitialAd(`after_${reading.type}_reading`), 1000);
         }
       } else {
         console.log('👑 Premium actif : pas de publicité');
@@ -307,7 +300,6 @@ function App() {
         <UserProvider>
           <TooltipProvider>
             <div className="dark relative w-screen h-screen overflow-hidden">
-
               {showTopBar && (
                 <TopBar
                   onOpenGrimoire={() => setIsGrimoireOpen(true)}
