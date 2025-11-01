@@ -119,10 +119,8 @@ function App() {
   // ✅ Nouvelle version de loadUserData
   const loadUserData = async () => {
     try {
-      // 🔹 Récupérer l’email stocké
       const savedEmail = await getUserEmail();
 
-      // 🔹 Vérifier statut Premium
       const premiumResponse = await fetch(`${config.apiBaseUrl}/api/user/premium-status`, {
         credentials: 'include',
         headers: savedEmail ? { 'x-user-email': savedEmail } : {},
@@ -132,7 +130,6 @@ function App() {
 
       console.log('✅ Statut Premium:', premiumData.isPremium, savedEmail ? `(email: ${savedEmail})` : '(sans email)');
 
-      // 🔹 Charger les tirages
       const readingsResponse = await fetch(`${config.apiBaseUrl}/api/readings`, {
         credentials: 'include'
       });
@@ -239,14 +236,16 @@ function App() {
     }
   };
 
+  // ✅ VERSION FINALE de addReading (avec système pub corrigé)
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
-    const excluded = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
-    const shouldSave = !excluded.includes(reading.type);
+    const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
+    const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
 
     try {
       console.log('📤 Envoi tirage:', reading.type);
 
-      if (shouldSave) {
+      // Sauvegarde dans le Grimoire si applicable
+      if (shouldSaveInGrimoire) {
         const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -255,27 +254,40 @@ function App() {
         });
 
         if (response.status === 403) {
-          console.log('⚠️ 403 ignorée (limite serveur)');
+          console.log('⚠️ Erreur 403 ignorée (limite supprimée côté serveur)');
         } else if (!response.ok) {
           throw new Error(`Erreur HTTP: ${response.status}`);
         } else {
           const newReading = await response.json();
+
           setReadings(prev => [
             { ...newReading, date: new Date(newReading.date) },
             ...prev
           ]);
-          console.log('✅ Tirage enregistré:', newReading.id);
+          console.log('✅ Tirage enregistré dans Grimoire:', newReading.id);
         }
+      } else {
+        console.log(`🚫 ${reading.type} non sauvegardé dans Grimoire (type exclu)`);
       }
 
+      // 🎬 Système pub : SEULEMENT pour les tirages NON-BONUS
       if (!isPremium) {
+        if (reading.type === 'bonusRoll') {
+          console.log('🎁 Bonus Roll : pubs gérées en interne (pas de pub globale)');
+          return; // ✅ sortie
+        }
+
         const newCount = readingCount + 1;
         setReadingCount(newCount);
+
         const shouldShowAd = newCount % 3 === 0;
-        console.log(`📊 Tirage n°${newCount} → Pub: ${shouldShowAd ? 'OUI' : 'NON'}`);
+        console.log(`📊 Tirage n°${newCount} (${reading.type}) → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
 
         if (shouldShowAd) {
-          setTimeout(() => showInterstitialAd(`after_${reading.type}_reading`), 1000);
+          console.log(`🎬 Affichage pub interstitielle après 3 tirages`);
+          setTimeout(() => {
+            showInterstitialAd(`after_${reading.type}_reading`);
+          }, 1000);
         }
       } else {
         console.log('👑 Premium actif : pas de publicité');

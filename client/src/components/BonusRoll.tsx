@@ -17,29 +17,30 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
   const [isLoadingAd, setIsLoadingAd] = useState(false);
   const [rollCount, setRollCount] = useState(0);
 
-  const getRandomVariation = () => Math.random() < 0.5 ? '1' : '2';
+  const getRandomVariation = () => (Math.random() < 0.5 ? '1' : '2');
 
+  // ✅ Nouvelle version complète de rollDice
   async function rollDice() {
     if (rolling || isLoadingAd) return;
 
+    // 🎁 Système pub Bonus Roll : 1er lancer + 1 lancer sur 2
     const newRollCount = rollCount + 1;
     setRollCount(newRollCount);
 
-    // Pub au 1er tirage, puis tous les 2 tirages (1, 3, 5, 7...)
+    // Pub au 1er lancer, puis aux lancers impairs (3, 5, 7, 9...)
     const shouldShowAd = newRollCount === 1 || (newRollCount > 1 && newRollCount % 2 === 1);
 
-    console.log(`🎁 Tirage bonus n°${newRollCount} → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
+    console.log(`🎲 Bonus Roll n°${newRollCount} → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
 
     if (shouldShowAd) {
       setIsLoadingAd(true);
       setMessage(t('oracle.bonusRoll.loadingAd'));
-
       try {
         await showInterstitialAd('bonus_roll');
+        console.log('✅ Pub Bonus Roll affichée');
       } catch (error) {
-        console.log("Pub non disponible, on continue quand même");
+        console.log("❌ Pub non disponible, on continue quand même");
       }
-
       setIsLoadingAd(false);
     }
 
@@ -60,8 +61,11 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
         const sum = d1 + d2;
 
         const variation = getRandomVariation();
-        const title = t(`oracle.bonusRoll.${sum}.title.${variation}`) || "✨ Mystère Cosmique";
-        const interpretationMessage = t(`oracle.bonusRoll.${sum}.message.${variation}`) || "Les étoiles vous réservent une surprise...";
+        const title =
+          t(`oracle.bonusRoll.${sum}.title.${variation}`) || '✨ Mystère Cosmique';
+        const interpretationMessage =
+          t(`oracle.bonusRoll.${sum}.message.${variation}`) ||
+          'Les étoiles vous réservent une surprise...';
 
         const result = { title, message: interpretationMessage };
 
@@ -74,7 +78,7 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
           onComplete({
             total: sum,
             dice: [d1, d2],
-            interpretation: `${result.title}\n\n${result.message}`
+            interpretation: `${result.title}\n\n${result.message}`,
           });
         }
       }
@@ -88,7 +92,7 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
       3: ['top-left', 'center', 'bottom-right'],
       4: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
       5: ['top-left', 'top-right', 'center', 'bottom-left', 'bottom-right'],
-      6: ['top-left', 'top-right', 'middle-left', 'middle-right', 'bottom-left', 'bottom-right']
+      6: ['top-left', 'top-right', 'middle-left', 'middle-right', 'bottom-left', 'bottom-right'],
     };
 
     const positions = dotPositions[value] || [];
@@ -100,17 +104,14 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
             'top-left': 'col-start-1 row-start-1',
             'top-right': 'col-start-3 row-start-1',
             'middle-left': 'col-start-1 row-start-2',
-            'center': 'col-start-2 row-start-2',
+            center: 'col-start-2 row-start-2',
             'middle-right': 'col-start-3 row-start-2',
             'bottom-left': 'col-start-1 row-start-3',
-            'bottom-right': 'col-start-3 row-start-3'
+            'bottom-right': 'col-start-3 row-start-3',
           }[pos];
 
           return (
-            <div
-              key={idx}
-              className={`${positionClass} flex items-center justify-center`}
-            >
+            <div key={idx} className={`${positionClass} flex items-center justify-center`}>
               <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 bg-white rounded-full shadow-lg" />
             </div>
           );
@@ -120,21 +121,19 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
   };
 
   return (
-    <div className="bonus-roll-container p-3 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-2 border-[#ffd700] shadow-2xl">
-
+    <div className="bonus-roll-container max-w-full max-h-screen overflow-y-auto p-3 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-2 border-[#ffd700] shadow-2xl">
       {/* Header */}
-      <div className="text-center mb-3 sm:mb-6">
+      <div className="text-center mb-3 sm:mb-6 px-2">
         <h3 className="text-lg sm:text-2xl font-bold text-[#ffd700] font-serif mb-1 sm:mb-2 flex items-center justify-center gap-1.5 sm:gap-2">
           🎁 {t('oracle.bonusRoll.title')}
         </h3>
-        <p className="text-[#b19cd9] text-xs sm:text-sm leading-tight px-2">
+        <p className="text-[#b19cd9] text-xs sm:text-sm leading-tight">
           {!hasRolled ? t('oracle.bonusRoll.description') : t('oracle.bonusRoll.cosmicMessage')}
         </p>
       </div>
 
-      {/* Dés avec design 3D amélioré */}
+      {/* Dés */}
       <div className="flex items-center justify-center gap-1.5 sm:gap-4 mb-3 sm:mb-6 px-1 sm:px-2 flex-wrap">
-        {/* Dé 1 */}
         <div
           className={`dice-3d w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl sm:rounded-2xl
             bg-gradient-to-br from-[#8b5cf6] via-[#a78bfa] to-[#c4b5fd]
@@ -154,7 +153,6 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
           +
         </div>
 
-        {/* Dé 2 */}
         <div
           className={`dice-3d w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl sm:rounded-2xl
             bg-gradient-to-br from-[#8b5cf6] via-[#a78bfa] to-[#c4b5fd]
@@ -170,7 +168,6 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
           {renderDiceDots(dice[1])}
         </div>
 
-        {/* Résultat */}
         {hasRolled && (
           <>
             <div className="text-[#ffd700] text-2xl sm:text-4xl md:text-5xl font-bold drop-shadow-[0_0_10px_rgba(255,215,0,0.8)]">
@@ -192,19 +189,21 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
         )}
       </div>
 
-      {/* Message et interprétation - VERSION CORRIGÉE */}
-      <div className="text-center mb-4">
-        <p className="text-[#ffd700] font-semibold text-sm sm:text-lg mb-2 px-2">{message}</p>
+      {/* Message et interprétation */}
+      <div className="text-center mb-4 px-3 sm:px-6 max-w-full overflow-visible">
+        <p className="text-[#ffd700] font-semibold text-sm sm:text-lg mb-2 px-2 break-words whitespace-pre-wrap">
+          {message}
+        </p>
 
         {interpretation && (
-          <div className="mt-2 sm:mt-4 p-3 sm:p-4 bg-[#1a0033] rounded-lg sm:rounded-xl border border-[#7b5dcf] backdrop-blur-sm mx-1 sm:mx-0">
+          <div className="mt-2 sm:mt-4 p-3 sm:p-4 bg-[#1a0033] rounded-lg sm:rounded-xl border border-[#7b5dcf] backdrop-blur-sm mx-auto max-w-[95%] sm:max-w-lg text-left break-words whitespace-pre-wrap">
             <div className="flex items-start gap-2 mb-2">
               <span className="text-2xl sm:text-3xl flex-shrink-0">🎁</span>
-              <h4 className="text-sm sm:text-xl font-bold text-[#ffd700] leading-tight flex-1 text-left">
+              <h4 className="text-sm sm:text-xl font-bold text-[#ffd700] leading-tight flex-1">
                 {interpretation.title}
               </h4>
             </div>
-            <p className="text-[#b19cd9] text-xs sm:text-base leading-relaxed text-left px-1">
+            <p className="text-[#b19cd9] text-xs sm:text-base leading-relaxed px-1">
               {interpretation.message}
             </p>
           </div>
@@ -213,8 +212,8 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
 
       {/* Boutons */}
       {!hasRolled && !rolling && !isLoadingAd && (
-        <div className="text-center">
-          <MysticalButton 
+        <div className="text-center px-3 sm:px-6">
+          <MysticalButton
             onClick={rollDice}
             className="w-full sm:w-auto text-sm sm:text-base min-h-[44px]"
           >
@@ -224,9 +223,9 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
       )}
 
       {hasRolled && (
-        <div className="text-center">
-          <MysticalButton 
-            variant="secondary" 
+        <div className="text-center px-3 sm:px-6">
+          <MysticalButton
+            variant="secondary"
             onClick={() => {
               setHasRolled(false);
               setInterpretation(null);
@@ -241,7 +240,7 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
       )}
 
       {isLoadingAd && (
-        <div className="text-center">
+        <div className="text-center my-4">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#ffd700]"></div>
         </div>
       )}
@@ -264,18 +263,18 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
         }
 
         @keyframes bounce-in-3d {
-          0% { 
+          0% {
             transform: scale(0) rotate(0deg);
             opacity: 0;
           }
-          50% { 
+          50% {
             transform: scale(1.3) rotate(180deg);
             opacity: 1;
           }
           75% {
             transform: scale(0.9) rotate(270deg);
           }
-          100% { 
+          100% {
             transform: scale(1) rotate(360deg);
             opacity: 1;
           }
