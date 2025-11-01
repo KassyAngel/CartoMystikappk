@@ -2,6 +2,7 @@ import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 import { Globe, ChevronDown, ChevronUp } from 'lucide-react';
 import LegalModal from './LegalModal';
+import RestorePremiumModal from './RestorePremiumModal';
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -23,12 +24,15 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
   const { t, language, setLanguage } = useLanguage();
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [legalModal, setLegalModal] = useState<'legal' | 'privacy' | null>(null);
+  const [isRestoreModalOpen, setIsRestoreModalOpen] = useState(false);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (legalModal) {
           setLegalModal(null);
+        } else if (isRestoreModalOpen) {
+          setIsRestoreModalOpen(false);
         } else {
           onClose();
         }
@@ -38,14 +42,15 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
       document.addEventListener('keydown', handleEscape);
       return () => document.removeEventListener('keydown', handleEscape);
     }
-  }, [isOpen, onClose, legalModal]);
+  }, [isOpen, onClose, legalModal, isRestoreModalOpen]);
 
-  // 🔧 Nettoyer la modal légale quand le drawer se ferme
+  // 🔧 Nettoyer les modales quand le drawer se ferme
   useEffect(() => {
-    if (!isOpen && legalModal) {
+    if (!isOpen) {
       setLegalModal(null);
+      setIsRestoreModalOpen(false);
     }
-  }, [isOpen, legalModal]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -118,6 +123,29 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
               <div className="text-purple-300 text-xs">{t('premium.subtitle')}</div>
             </div>
           </button>
+
+          {/* 🆕 Restaurer mon abonnement (visible seulement si non-Premium) */}
+          {!isPremium && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setIsRestoreModalOpen(true);
+              }}
+              className="w-full flex items-center gap-4 p-4 rounded-xl bg-indigo-800/30 hover:bg-indigo-700/50 transition-all group border border-indigo-500/30"
+            >
+              <div className="text-3xl group-hover:scale-110 transition-transform">🔄</div>
+              <div className="flex-1 text-left">
+                <div className="text-indigo-200 font-semibold">
+                  {t('premium.restore.title') || 'Restaurer mon abonnement'}
+                </div>
+                <div className="text-indigo-300 text-xs">
+                  {t('premium.restore.subtitle') || 'Déjà Premium ? Récupérez votre accès'}
+                </div>
+              </div>
+            </button>
+          )}
 
           {/* Langue */}
           <div className="pt-4 border-t border-purple-500/30">
@@ -211,6 +239,17 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
         isOpen={legalModal !== null}
         onClose={() => setLegalModal(null)}
         type={legalModal || 'legal'}
+      />
+
+      {/* 🆕 Modal Restauration Premium */}
+      <RestorePremiumModal
+        isOpen={isRestoreModalOpen}
+        onClose={() => setIsRestoreModalOpen(false)}
+        onRestoreSuccess={() => {
+          setIsRestoreModalOpen(false);
+          onClose(); // Fermer le menu
+          window.location.reload(); // Recharger pour mettre à jour le statut
+        }}
       />
     </>
   );

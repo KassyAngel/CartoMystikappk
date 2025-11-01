@@ -1758,6 +1758,23 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.conditions.line3": "Aucun remboursement après paiement. Accès Premium valable pour la durée choisie.",
     "premium.conditions.line4": "Vous serez notifié 3 jours avant l'expiration de votre accès.",
 
+    //PREMIUM RESTOR
+    "premium.restore.title": "Restaurer mon abonnement",
+    "premium.restore.subtitle": "Déjà Premium ? Récupérez votre accès",
+    "premium.restore.description": "Entrez l'email utilisé lors de votre achat Premium",
+    "premium.restore.button": "Restaurer",
+    "premium.restore.verifying": "Vérification...",
+    "premium.restore.success": "Premium restauré avec succès !",
+    "premium.restore.redirecting": "Redirection en cours...",
+    "premium.restore.notFound": "Aucun abonnement Premium trouvé pour cet email. Vérifiez l'adresse ou souscrivez à un nouvel abonnement.",
+    "premium.restore.error": "Une erreur est survenue lors de la restauration. Réessayez.",
+    "premium.restore.info": "Vous devez utiliser le même email que lors de votre achat Premium sur Stripe.",
+    "premium.restore.help": "Besoin d'aide ?",
+    "premium.restore.contact": "Contactez-nous",
+    "premium.error.emailRequired": "L'email est requis.",
+    "premium.error.emailInvalid": "L'email n'est pas valide.",
+    "premium.emailLabel": "Votre email",
+
     // Tirage Bonus Oracle
     "oracle.bonusRoll.title": "Tirage Bonus",
     "oracle.bonusRoll.description": "Déverrouillez votre révélation numérologique secrète",
@@ -3504,6 +3521,23 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.conditions.line2": "✓ One-time payment, NO automatic renewal",
     "premium.conditions.line3": "No refund after payment. Premium access valid for the selected duration.",
     "premium.conditions.line4": "You will be notified 3 days before your access expires.",
+
+    // PREMIUM RESTOR
+    "premium.restore.title": "Restore my subscription",
+    "premium.restore.subtitle": "Already Premium? Recover your access",
+    "premium.restore.description": "Enter the email used when purchasing Premium",
+    "premium.restore.button": "Restore",
+    "premium.restore.verifying": "Verifying...",
+    "premium.restore.success": "Premium successfully restored!",
+    "premium.restore.redirecting": "Redirecting...",
+    "premium.restore.notFound": "No Premium subscription found for this email. Check the address or subscribe to a new plan.",
+    "premium.restore.error": "An error occurred while restoring. Please try again.",
+    "premium.restore.info": "You must use the same email as when you purchased Premium on Stripe.",
+    "premium.restore.help": "Need help?",
+    "premium.restore.contact": "Contact us",
+    "premium.error.emailRequired": "Email is required.",
+    "premium.error.emailInvalid": "Email is not valid.",
+    "premium.emailLabel": "Your email",
 
     // Mystery Dice Oracle
     "oracle.bonusRoll.title": "Bonus Roll",
@@ -5322,6 +5356,23 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.conditions.line3": "No hay reembolso después del pago. El acceso Premium es válido por la duración seleccionada.",
     "premium.conditions.line4": "Se te notificará 3 días antes de que expire tu acceso.",
 
+    // PREMIUM RESTOR
+    "premium.restore.title": "Restaurar mi suscripción",
+    "premium.restore.subtitle": "¿Ya eres Premium? Recupera tu acceso",
+    "premium.restore.description": "Introduce el correo electrónico utilizado al comprar Premium",
+    "premium.restore.button": "Restaurar",
+    "premium.restore.verifying": "Verificando...",
+    "premium.restore.success": "¡Premium restaurado con éxito!",
+    "premium.restore.redirecting": "Redirigiendo...",
+    "premium.restore.notFound": "No se encontró una suscripción Premium para este correo electrónico. Verifica la dirección o suscríbete a un nuevo plan.",
+    "premium.restore.error": "Ocurrió un error al restaurar. Inténtalo de nuevo.",
+    "premium.restore.info": "Debes usar el mismo correo electrónico que cuando compraste Premium en Stripe.",
+    "premium.restore.help": "¿Necesitas ayuda?",
+    "premium.restore.contact": "Contáctanos",
+    "premium.error.emailRequired": "Se requiere correo electrónico.",
+    "premium.error.emailInvalid": "El correo electrónico no es válido.",
+    "premium.emailLabel": "Tu correo electrónico",
+
     // Mystery Dice Oracle
     "oracle.bonusRoll.title": "Tirada Bonus",
       "oracle.bonusRoll.description": "Desbloquea tu revelación numerológica secreta",
@@ -7139,6 +7190,23 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.conditions.line2": "✓ Einmalzahlung, KEINE automatische Verlängerung",
     "premium.conditions.line3": "Keine Rückerstattung nach Zahlung. Premium-Zugang gilt für die gewählte Dauer.",
     "premium.conditions.line4": "Sie werden 3 Tage vor Ablauf Ihres Zugangs benachrichtigt.",
+
+    // PREMIUM RESTOR
+    "premium.restore.title": "Mein Abonnement wiederherstellen",
+    "premium.restore.subtitle": "Schon Premium? Stelle deinen Zugriff wieder her",
+    "premium.restore.description": "Gib die E-Mail-Adresse ein, die du beim Kauf von Premium verwendet hast",
+    "premium.restore.button": "Wiederherstellen",
+    "premium.restore.verifying": "Überprüfung...",
+    "premium.restore.success": "Premium erfolgreich wiederhergestellt!",
+    "premium.restore.redirecting": "Weiterleitung...",
+    "premium.restore.notFound": "Für diese E-Mail wurde kein Premium-Abonnement gefunden. Überprüfe die Adresse oder abonniere einen neuen Plan.",
+    "premium.restore.error": "Beim Wiederherstellen ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+    "premium.restore.info": "Du musst dieselbe E-Mail verwenden wie beim Kauf von Premium über Stripe.",
+    "premium.restore.help": "Brauchen Sie Hilfe?",
+    "premium.restore.contact": "Kontaktiere uns",
+    "premium.error.emailRequired": "E-Mail ist erforderlich.",
+    "premium.error.emailInvalid": "E-Mail ist ungültig.",
+    "premium.emailLabel": "Deine E-Mail",
 
     // Mystery Dice Oracle
     "oracle.bonusRoll.title": "Bonus Wurf",
@@ -8960,6 +9028,23 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.conditions.line2": "✓ Pagamento una tantum, SENZA rinnovo automatico",
     "premium.conditions.line3": "Nessun rimborso dopo il pagamento. L'accesso Premium è valido per la durata scelta.",
     "premium.conditions.line4": "Riceverai una notifica 3 giorni prima della scadenza del tuo accesso.",
+
+    // PREMIUM RESTOR
+    "premium.restore.title": "Ripristina il mio abbonamento",
+    "premium.restore.subtitle": "Già Premium? Recupera il tuo accesso",
+    "premium.restore.description": "Inserisci l'email utilizzata al momento dell'acquisto di Premium",
+    "premium.restore.button": "Ripristina",
+    "premium.restore.verifying": "Verifica in corso...",
+    "premium.restore.success": "Premium ripristinato con successo!",
+    "premium.restore.redirecting": "Reindirizzamento in corso...",
+    "premium.restore.notFound": "Nessun abbonamento Premium trovato per questa email. Controlla l'indirizzo o sottoscrivi un nuovo abbonamento.",
+    "premium.restore.error": "Si è verificato un errore durante il ripristino. Riprova.",
+    "premium.restore.info": "Devi utilizzare la stessa email usata per acquistare Premium su Stripe.",
+    "premium.restore.help": "Hai bisogno di aiuto?",
+    "premium.restore.contact": "Contattaci",
+    "premium.error.emailRequired": "L'email è richiesta.",
+    "premium.error.emailInvalid": "L'email non è valida.",
+    "premium.emailLabel": "La tua email",
 
     // Mystery Dice Oracle
     "oracle.bonusRoll.title": "Lancio Bonus",
