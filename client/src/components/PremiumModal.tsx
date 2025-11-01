@@ -13,6 +13,8 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
   const [selectedPlan, setSelectedPlan] = useState<'premium_1month' | 'premium_3months' | null>(null);
   const [loading, setLoading] = useState(false);
   const { t } = useLanguage();
+  const [email, setEmail] = useState(''); // State for the email input
+  const [emailError, setEmailError] = useState(''); // State for email validation errors
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -37,6 +39,17 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
   const handleSubscribe = async () => {
     if (!selectedPlan) return;
 
+    // Basic email validation
+    if (!email) {
+      setEmailError(t("premium.error.emailRequired") || "L'email est requis.");
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setEmailError(t("premium.error.emailInvalid") || "L'email n'est pas valide.");
+      return;
+    }
+    setEmailError(''); // Clear previous errors
+
     setLoading(true);
 
     try {
@@ -48,7 +61,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ planId: selectedPlan, deviceId }) // Envoyer le deviceId
+        body: JSON.stringify({ planId: selectedPlan, deviceId, email }) // Envoyer l'email
       });
 
       if (!response.ok) {
@@ -128,12 +141,30 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
           </p>
         </div>
 
-        {/* Plans d'abonnement */}
-        <div className="space-y-3 mb-6">
+        {/* Champ email */}
+        <div className="mb-6">
+          <label htmlFor="premium-email" className="block text-sm font-medium text-purple-200 mb-2">
+            {t("premium.emailLabel") || "Votre email (pour récupérer votre abonnement)"}
+          </label>
+          <input
+            id="premium-email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="exemple@email.com"
+            disabled={loading}
+            className="w-full px-4 py-2 bg-white/10 border border-purple-400/30 rounded-lg text-white placeholder-purple-300/50 focus:outline-none focus:border-yellow-400 disabled:opacity-50"
+          />
+          {emailError && (
+            <p className="text-red-400 text-sm mt-1">{emailError}</p>
+          )}
+        </div>
+
+        <div className="space-y-4 mb-6">
           {/* Plan 1 mois */}
           <button
             type="button"
-            onClick={() => setSelectedPlan('premium_1month')}
+            onClick={() => { setSelectedPlan('premium_1month'); setEmailError(''); }} // Clear email error on plan selection
             disabled={loading}
             className={`w-full p-4 rounded-xl border-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
               selectedPlan === 'premium_1month'
@@ -153,7 +184,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
           {/* Plan 3 mois (avec badge promo) */}
           <button
             type="button"
-            onClick={() => setSelectedPlan('premium_3months')}
+            onClick={() => { setSelectedPlan('premium_3months'); setEmailError(''); }} // Clear email error on plan selection
             disabled={loading}
             className={`w-full p-4 rounded-xl border-2 transition-all relative disabled:opacity-50 disabled:cursor-not-allowed ${
               selectedPlan === 'premium_3months'
@@ -181,9 +212,9 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
         <button
           type="button"
           onClick={handleSubscribe}
-          disabled={!selectedPlan || loading}
+          disabled={!selectedPlan || loading || !email}
           className={`w-full py-3 rounded-xl font-bold text-lg transition-all ${
-            selectedPlan && !loading
+            selectedPlan && !loading && email
               ? 'bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-white shadow-lg'
               : 'bg-gray-600 text-gray-400 cursor-not-allowed'
           }`}

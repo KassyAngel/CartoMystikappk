@@ -46,17 +46,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const selectedPrice = prices[planId];
       if (!selectedPrice) return res.status(400).json({ error: "Plan invalide" });
 
-      // Récupérer le deviceId envoyé par le client
-      const { deviceId } = req.body;
+      // Récupérer l'email envoyé par le client
+      const { deviceId, email } = req.body;
       
-      if (!deviceId) {
-        console.error("❌ deviceId manquant");
-        return res.status(400).json({ error: "deviceId requis" });
+      if (!email) {
+        console.error("❌ email manquant");
+        return res.status(400).json({ error: "email requis" });
       }
       
-      const userId = deviceId;
+      // Utiliser l'email comme userId (persistant même après désinstallation)
+      const userId = email.toLowerCase().trim();
       
-      console.log(`🔑 UserId (deviceId) utilisé pour le paiement: ${userId}`);
+      console.log(`🔑 UserId (email) utilisé pour le paiement: ${userId}`);
 
       // Déterminer l'URL frontend selon l'environnement
       const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -380,13 +381,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       app.get("/api/user/premium-status", async (req, res) => {
         try {
-          // Utiliser le même système de userId que pour le paiement
-          const userId = req.cookies?.userId;
+          // Récupérer l'email depuis le header (envoyé par le client)
+          const userEmail = req.headers['x-user-email'] as string;
           
-          if (!userId) {
-            console.log('🔍 Aucun userId trouvé dans les cookies');
+          if (!userEmail) {
+            console.log('🔍 Aucun email trouvé dans les headers');
             return res.json({ isPremium: false, premiumUntil: null });
           }
+
+          const userId = userEmail.toLowerCase().trim();
 
           // Vérifier le statut premium de cet utilisateur
           const premiumUntilStr = await storage.getItem(`premiumUntil_${userId}`);

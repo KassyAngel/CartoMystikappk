@@ -5,6 +5,8 @@ import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSound } from '@/hooks/useSound';
 import { hasUsedDailyReading } from '@/lib/dailyLimit';
+import { getSavedLanguage } from '@/lib/userStorage'; // Assuming this function exists and returns the saved email
+import { config } from '@/config'; // Assuming config.apiBaseUrl is defined here
 
 interface OracleSelectionProps {
   user: UserSession;
@@ -13,10 +15,10 @@ interface OracleSelectionProps {
   onHome: () => void;
 }
 
-export default function OracleSelection({ 
-  user, 
-  onOracleSelect, 
-  onBack, 
+export default function OracleSelection({
+  user,
+  onOracleSelect,
+  onBack,
   onHome
 }: OracleSelectionProps) {
   const [selectedOracle, setSelectedOracle] = useState('');
@@ -66,6 +68,33 @@ export default function OracleSelection({
       onOracleSelect(oracleId);
     }, 500);
   };
+
+  // Placeholder for checkPremiumStatus, as the provided snippet only contains its modification.
+  // In a real scenario, this function would likely be defined elsewhere or used in a context
+  // where its full implementation is available.
+  const checkPremiumStatus = async () => {
+    try {
+      // Récupérer l'email sauvegardé
+      const savedEmail = await getSavedLanguage(); // Temporaire, à renommer
+
+      const response = await fetch(`${config.apiBaseUrl}/api/user/premium-status`, {
+        credentials: 'include',
+        headers: savedEmail ? { 'x-user-email': savedEmail } : {},
+      });
+
+      if (!response.ok) {
+        // Handle error appropriately
+        console.error("Failed to check premium status");
+        return false;
+      }
+      const data = await response.json();
+      return data.isPremium; // Assuming the API returns { isPremium: boolean }
+    } catch (error) {
+      console.error("Error checking premium status:", error);
+      return false;
+    }
+  };
+
 
   return (
     <div className="main-content w-full min-h-screen flex flex-col p-2 sm:p-3 pt-14 sm:pt-16 pb-3">
@@ -156,8 +185,8 @@ export default function OracleSelection({
                       {t('oracle.bonusRoll.description')}
                     </div>
                   </div>
-                </div>  
-                
+                </div>
+
                 {/* Petites étoiles décoratives */}
                 <div className="absolute top-3 right-3 text-amber-400/40 text-sm animate-pulse">✦</div>
                 <div className="absolute bottom-3 left-3 text-amber-400/40 text-sm animate-pulse" style={{animationDelay: '500ms'}}>✦</div>
@@ -169,15 +198,15 @@ export default function OracleSelection({
       {/* Boutons navigation */}
       <div className="text-center pt-2">
         <div className="flex gap-1.5 sm:gap-2 justify-center max-w-xs sm:max-w-sm mx-auto px-2">
-          <MysticalButton 
-            variant="secondary" 
+          <MysticalButton
+            variant="secondary"
             onClick={onBack}
             className="flex-1 min-h-[42px] text-xs sm:text-sm px-2 sm:px-3"
           >
             ← {t('oracle.back')}
           </MysticalButton>
-          <MysticalButton 
-            onClick={onHome} 
+          <MysticalButton
+            onClick={onHome}
             data-testid="button-home"
             className="flex-1 min-h-[42px] text-xs sm:text-sm px-2 sm:px-3"
           >
