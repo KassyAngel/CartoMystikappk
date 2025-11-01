@@ -3800,7 +3800,7 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.daily.cardMessage.var5":
       'La carta "{cardName}" vibra en armonía con tu día.',
     "interpretation.daily.cardMessage.var6":
-      'La carta "{cardName}" ilumina tu camino con una fuerza especial hoy.',
+      'La carta "{cardName}" ilumina tu camino con una fuerza especial hoy.'
     "interpretation.daily.cardMessage.var7":
       'La carta "{cardName}" te invita a escuchar tu intuición hoy.',
     "interpretation.daily.cardMessage.var8":
