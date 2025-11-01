@@ -6,9 +6,9 @@ export default function PaymentCancelPage() {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    // Redirection vers la sélection des oracles
+    // Redirection vers la sélection des oracles (garde le profil)
     const timer = setTimeout(() => {
-      setLocation('/');
+      setLocation('/oracle-selection');
     }, 2000);
 
     return () => clearTimeout(timer);

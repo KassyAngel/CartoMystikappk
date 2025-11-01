@@ -29,7 +29,7 @@ export default function PaymentSuccessPage() {
 
     // Redirection après 3 secondes vers la sélection des oracles
     const timer = setTimeout(() => {
-      setLocation('/');
+      setLocation('/oracle-selection');
     }, 3000);
 
     return () => clearTimeout(timer);
