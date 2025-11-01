@@ -19,15 +19,12 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
 
   const getRandomVariation = () => (Math.random() < 0.5 ? '1' : '2');
 
-  // ✅ Nouvelle version complète de rollDice
   async function rollDice() {
     if (rolling || isLoadingAd) return;
 
-    // 🎁 Système pub Bonus Roll : 1er lancer + 1 lancer sur 2
     const newRollCount = rollCount + 1;
     setRollCount(newRollCount);
 
-    // Pub au 1er lancer, puis aux lancers impairs (3, 5, 7, 9...)
     const shouldShowAd = newRollCount === 1 || (newRollCount > 1 && newRollCount % 2 === 1);
 
     console.log(`🎲 Bonus Roll n°${newRollCount} → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
@@ -61,11 +58,8 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
         const sum = d1 + d2;
 
         const variation = getRandomVariation();
-        const title =
-          t(`oracle.bonusRoll.${sum}.title.${variation}`) || '✨ Mystère Cosmique';
-        const interpretationMessage =
-          t(`oracle.bonusRoll.${sum}.message.${variation}`) ||
-          'Les étoiles vous réservent une surprise...';
+        const title = t(`oracle.bonusRoll.${sum}.title.${variation}`) || '✨ Mystère Cosmique';
+        const interpretationMessage = t(`oracle.bonusRoll.${sum}.message.${variation}`) || 'Les étoiles vous réservent une surprise...';
 
         const result = { title, message: interpretationMessage };
 
@@ -121,7 +115,8 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
   };
 
   return (
-    <div className="bonus-roll-container max-w-full max-h-screen overflow-y-auto p-3 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-2 border-[#ffd700] shadow-2xl">
+    // ✅ CORRECTION : overflow-x-hidden pour bloquer scroll horizontal
+    <div className="bonus-roll-container w-full h-full overflow-x-hidden overflow-y-auto p-3 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-2 border-[#ffd700] shadow-2xl touch-pan-y">
       {/* Header */}
       <div className="text-center mb-3 sm:mb-6 px-2">
         <h3 className="text-lg sm:text-2xl font-bold text-[#ffd700] font-serif mb-1 sm:mb-2 flex items-center justify-center gap-1.5 sm:gap-2">
@@ -133,11 +128,11 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
       </div>
 
       {/* Dés */}
-      <div className="flex items-center justify-center gap-1.5 sm:gap-4 mb-3 sm:mb-6 px-1 sm:px-2 flex-wrap">
+      <div className="flex items-center justify-center gap-1.5 sm:gap-4 mb-3 sm:mb-6 px-1 sm:px-2">
         <div
           className={`dice-3d w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl sm:rounded-2xl
             bg-gradient-to-br from-[#8b5cf6] via-[#a78bfa] to-[#c4b5fd]
-            flex items-center justify-center
+            flex items-center justify-center flex-shrink-0
             border-4 border-[#ffd700]
             shadow-[0_8px_32px_rgba(139,92,246,0.5),inset_0_2px_8px_rgba(255,255,255,0.3)]
             ${rolling ? 'animate-shake-3d' : 'hover:scale-110 transition-all duration-300'}
@@ -149,14 +144,14 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
           {renderDiceDots(dice[0])}
         </div>
 
-        <div className="text-[#ffd700] text-2xl sm:text-4xl md:text-5xl font-bold animate-pulse drop-shadow-[0_0_10px_rgba(255,215,0,0.8)]">
+        <div className="text-[#ffd700] text-2xl sm:text-4xl md:text-5xl font-bold animate-pulse drop-shadow-[0_0_10px_rgba(255,215,0,0.8)] flex-shrink-0">
           +
         </div>
 
         <div
           className={`dice-3d w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl sm:rounded-2xl
             bg-gradient-to-br from-[#8b5cf6] via-[#a78bfa] to-[#c4b5fd]
-            flex items-center justify-center
+            flex items-center justify-center flex-shrink-0
             border-4 border-[#ffd700]
             shadow-[0_8px_32px_rgba(139,92,246,0.5),inset_0_2px_8px_rgba(255,255,255,0.3)]
             ${rolling ? 'animate-shake-3d' : 'hover:scale-110 transition-all duration-300'}
@@ -170,13 +165,13 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
 
         {hasRolled && (
           <>
-            <div className="text-[#ffd700] text-2xl sm:text-4xl md:text-5xl font-bold drop-shadow-[0_0_10px_rgba(255,215,0,0.8)]">
+            <div className="text-[#ffd700] text-2xl sm:text-4xl md:text-5xl font-bold drop-shadow-[0_0_10px_rgba(255,215,0,0.8)] flex-shrink-0">
               =
             </div>
             <div className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl sm:rounded-2xl
               bg-gradient-to-br from-[#ffd700] via-[#fbbf24] to-[#f59e0b]
               flex items-center justify-center text-[#1a0033] font-bold text-3xl sm:text-5xl md:text-6xl
-              border-4 border-white
+              border-4 border-white flex-shrink-0
               shadow-[0_12px_48px_rgba(255,215,0,0.8),inset_0_2px_8px_rgba(255,255,255,0.5)]
               animate-bounce-in-3d
               relative overflow-hidden">
@@ -190,20 +185,20 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
       </div>
 
       {/* Message et interprétation */}
-      <div className="text-center mb-4 px-3 sm:px-6 max-w-full overflow-visible">
-        <p className="text-[#ffd700] font-semibold text-sm sm:text-lg mb-2 px-2 break-words whitespace-pre-wrap">
+      <div className="text-center mb-4 px-3 sm:px-6 w-full">
+        <p className="text-[#ffd700] font-semibold text-sm sm:text-lg mb-2 px-2 break-words">
           {message}
         </p>
 
         {interpretation && (
-          <div className="mt-2 sm:mt-4 p-3 sm:p-4 bg-[#1a0033] rounded-lg sm:rounded-xl border border-[#7b5dcf] backdrop-blur-sm mx-auto max-w-[95%] sm:max-w-lg text-left break-words whitespace-pre-wrap">
+          <div className="mt-2 sm:mt-4 p-3 sm:p-4 bg-[#1a0033] rounded-lg sm:rounded-xl border border-[#7b5dcf] backdrop-blur-sm mx-auto w-full max-w-lg">
             <div className="flex items-start gap-2 mb-2">
               <span className="text-2xl sm:text-3xl flex-shrink-0">🎁</span>
-              <h4 className="text-sm sm:text-xl font-bold text-[#ffd700] leading-tight flex-1">
+              <h4 className="text-sm sm:text-xl font-bold text-[#ffd700] leading-tight break-words">
                 {interpretation.title}
               </h4>
             </div>
-            <p className="text-[#b19cd9] text-xs sm:text-base leading-relaxed px-1">
+            <p className="text-[#b19cd9] text-xs sm:text-base leading-relaxed break-words">
               {interpretation.message}
             </p>
           </div>
@@ -246,6 +241,12 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
       )}
 
       <style>{`
+        /* ✅ Empêcher le scroll horizontal au niveau global */
+        .bonus-roll-container {
+          touch-action: pan-y; /* Autoriser uniquement le scroll vertical */
+          -webkit-overflow-scrolling: touch; /* Scroll fluide sur iOS */
+        }
+
         @keyframes shake-3d {
           0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
           10% { transform: translateX(-3px) translateY(-3px) rotate(-3deg); }
