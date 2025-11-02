@@ -68,14 +68,6 @@
             color: #e9d5ff;
         }
 
-        .intro-box {
-            background: rgba(251, 191, 36, 0.1);
-            border: 2px solid rgba(252, 211, 77, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
         .info-box {
             background: rgba(88, 28, 135, 0.4);
             border-radius: 12px;
@@ -92,30 +84,10 @@
             margin: 20px 0;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: rgba(88, 28, 135, 0.3);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        th {
-            background: rgba(168, 85, 247, 0.3);
-            color: #fcd34d;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
-        }
-
-        tr:last-child td {
-            border-bottom: none;
+        .warning-box p:first-child {
+            color: #fde68a;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
         strong {
@@ -160,13 +132,6 @@
             text-decoration: none;
         }
 
-        .rights-list {
-            background: rgba(88, 28, 135, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -179,10 +144,6 @@
             h2 {
                 font-size: 1.3rem;
             }
-
-            table {
-                font-size: 0.875rem;
-            }
         }
     </style>
 </head>
@@ -193,260 +154,344 @@
         <h1>Politique de Confidentialité</h1>
         <p class="date">Dernière mise à jour : Janvier 2025</p>
 
-        <div class="intro-box">
-            <p>La protection de vos données personnelles est une priorité pour <strong>KcDev</strong>. Cette politique vous informe sur la manière dont nous collectons, utilisons et protégeons vos données conformément au <strong>RGPD (Règlement UE 2016/679)</strong>.</p>
-        </div>
+        <section>
+            <h2>Introduction</h2>
+            <p>Le respect de votre vie privée est important pour nous. Cette politique de confidentialité explique quelles données personnelles nous collectons via l'application <strong>CartoMystik</strong>, comment nous les utilisons, les protégeons et quels sont vos droits.</p>
+            <p>Nous vous invitons à lire attentivement ces conditions avant de fournir vos données personnelles.</p>
+        </section>
 
         <section>
-            <h2>1. Responsable du traitement</h2>
+            <h2>1. Responsable du traitement des données</h2>
             <div class="info-box">
                 <p><strong>KcDev</strong><br>
-                Auto-entrepreneur</p>
-
-                <p><strong>Localisation :</strong><br>
-                Indre-et-Loire (37)<br>
-                France</p>
-
-                <p><strong>SIRET :</strong> 992 482 745 00013<br>
-                <strong>Email :</strong> <a href="mailto:kcevent37@gmail.com">kcevent37@gmail.com</a></p>
-            </div>
-        </section>
-
-        <section>
-            <h2>2. Données collectées</h2>
-
-            <h3>📱 Données stockées localement (localStorage)</h3>
-            <p>Les données suivantes sont stockées <strong>uniquement dans votre navigateur</strong> :</p>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Donnée</th>
-                        <th>Finalité</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Prénom</strong></td>
-                        <td>Personnalisation de l'expérience</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Date de naissance</strong></td>
-                        <td>Calcul du signe astrologique</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Genre</strong></td>
-                        <td>Personnalisation des messages</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Signe astrologique</strong></td>
-                        <td>Affichage de l'horoscope</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Langue préférée</strong></td>
-                        <td>Interface multilingue</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Historique des tirages</strong></td>
-                        <td>Grimoire personnel</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="warning-box" style="border-color: #10b981;">
-                <p style="color: #10b981; font-weight: bold;">✅ Important</p>
-                <p>Ces données sont stockées uniquement sur votre appareil. Elles ne sont <strong>jamais transmises à nos serveurs</strong> ni à des tiers.</p>
-            </div>
-
-            <h3>📧 Email pour Restauration Premium</h3>
-            <div class="info-box">
-                <p><strong>Collecte optionnelle :</strong></p>
-                <p>Si vous souscrivez à la version Premium, nous vous demandons votre adresse email pour :</p>
-                <ul>
-                    <li>Associer votre abonnement Premium à votre compte</li>
-                    <li>Permettre la restauration de votre abonnement après désinstallation/réinstallation</li>
-                    <li>Gérer la durée de validité de votre accès Premium</li>
-                </ul>
-                <p><strong>Stockage :</strong> Votre email est stocké de manière sécurisée sur nos serveurs hébergés par Render.</p>
-                <p><strong>Partage :</strong> Votre email est également transmis à Stripe lors du paiement pour la gestion sécurisée de la transaction.</p>
-            </div>
-
-            <div class="warning-box" style="border-color: #10b981;">
-                <p style="color: #10b981; font-weight: bold;">✅ Transparence</p>
-                <p>Nous ne collectons votre email <strong>que si vous achetez Premium</strong>.</p>
-                <p>Nous ne l'utilisons <strong>jamais pour vous envoyer des emails publicitaires</strong> sans votre consentement.</p>
-            </div>
-
-            <h3>📢 Données collectées par des tiers</h3>
-            <p><strong>Google AdMob (Publicités)</strong></p>
-            <p>Notre application affiche des publicités via Google AdMob qui peut collecter :</p>
-            <ul>
-                <li>Identifiant publicitaire de votre appareil</li>
-                <li>Données de navigation</li>
-                <li>Données de localisation approximative</li>
-                <li>Données techniques (OS, modèle d'appareil)</li>
-            </ul>
-            <p>Pour en savoir plus : <a href="https://policies.google.com/privacy" target="_blank">Politique Google</a></p>
-        </section>
-
-        <section>
-            <h2>3. Finalités du traitement</h2>
-            <p>Nous utilisons vos données pour :</p>
-            <ul style="list-style: none; margin-left: 0;">
-                <li>✅ Personnaliser votre expérience</li>
-                <li>✅ Calculer et afficher votre signe astrologique</li>
-                <li>✅ Sauvegarder vos tirages (Grimoire)</li>
-                <li>✅ Afficher l'interface dans votre langue</li>
-                <li>✅ Gérer les abonnements Premium</li>
-                <li>✅ Afficher des publicités (version gratuite)</li>
-            </ul>
-
-            <p style="margin-top: 20px;">Nous <strong>n'utilisons jamais</strong> vos données pour :</p>
-            <ul style="list-style: none; margin-left: 0;">
-                <li>❌ Les vendre à des tiers</li>
-                <li>❌ Vous envoyer des emails non sollicités</li>
-                <li>❌ Créer des profils marketing sans consentement</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>3.1 Gestion des Abonnements Premium</h2>
-            
-            <h3>Collecte de l'email</h3>
-            <p>Lors de la souscription à la version Premium, nous collectons votre adresse email pour :</p>
-            <ul>
-                <li>✅ Lier votre abonnement Premium à votre compte</li>
-                <li>✅ Calculer et vérifier la durée de validité de votre accès</li>
-                <li>✅ Permettre la restauration de votre Premium après désinstallation</li>
-            </ul>
-
-            <h3>Base légale</h3>
-            <p>La collecte de votre email repose sur :</p>
-            <ul>
-                <li><strong>L'exécution du contrat</strong> (Article 6.1.b RGPD) : Nécessaire pour fournir le service Premium</li>
-                <li><strong>Votre consentement</strong> (Article 6.1.a RGPD) : Vous acceptez explicitement lors de l'achat</li>
-            </ul>
-
-            <h3>Traitement par des tiers</h3>
-            <div class="info-box">
-                <p><strong>Stripe, Inc.</strong></p>
-                <p>Lors du paiement, votre email est transmis à Stripe pour :</p>
-                <ul>
-                    <li>Traiter votre paiement de manière sécurisée</li>
-                    <li>Générer un reçu de paiement</li>
-                    <li>Prévenir les fraudes</li>
-                </ul>
-                <p>Stripe est conforme au RGPD. Plus d'informations : 
-                    <a href="https://stripe.com/fr/privacy" target="_blank">Politique Stripe</a>
-                </p>
-            </div>
-
-            <h3>Restauration d'abonnement</h3>
-            <p>Vous pouvez restaurer votre Premium après réinstallation en :</p>
-            <ol>
-                <li>Ouvrant le menu de l'application</li>
-                <li>Cliquant sur "Restaurer mon abonnement"</li>
-                <li>Saisissant l'email utilisé lors de l'achat</li>
-            </ol>
-            <p>Notre serveur vérifie si cet email possède un abonnement Premium actif.</p>
-        </section>
-
-        <section>
-            <h2>4. Durée de conservation</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Donnée</th>
-                        <th>Durée</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Données localStorage</td>
-                        <td>Jusqu'à suppression par l'utilisateur</td>
-                    </tr>
-                    <tr>
-                        <td>Email Premium</td>
-                        <td>Pendant la durée de l'abonnement + 10 ans (obligations comptables)</td>
-                    </tr>
-                    <tr>
-                        <td>Données serveur (consultations)</td>
-                        <td>2 ans maximum</td>
-                    </tr>
-                    <tr>
-                        <td>Données de paiement (Stripe)</td>
-                        <td>10 ans (obligations légales)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section>
-            <h2>5. Vos droits (RGPD)</h2>
-            <p>Conformément au RGPD, vous disposez des droits suivants :</p>
-
-            <div class="rights-list">
-                <p><strong>✓ Droit d'accès</strong> - Accéder à toutes vos données</p>
-                <p><strong>✓ Droit de rectification</strong> - Corriger vos données</p>
-                <p><strong>✓ Droit à l'effacement</strong> - Supprimer vos données</p>
-                <p><strong>✓ Droit à la limitation</strong> - Limiter le traitement</p>
-                <p><strong>✓ Droit à la portabilité</strong> - Recevoir vos données</p>
-                <p><strong>✓ Droit d'opposition</strong> - S'opposer au traitement</p>
-                <p><strong>✓ Droit de retirer le consentement</strong> - À tout moment</p>
-            </div>
-
-            <div class="info-box">
-                <p><strong>Pour exercer vos droits :</strong></p>
-                <p>Email : <a href="mailto:kcevent37@gmail.com">kcevent37@gmail.com</a></p>
-                <p>Délai de réponse : <strong>1 mois maximum</strong></p>
-                <p>Pour la suppression de votre email Premium, précisez l'adresse email concernée dans votre demande.</p>
-            </div>
-        </section>
-
-        <section>
-            <h2>6. Sécurité des données</h2>
-            <p>Nous mettons en œuvre des mesures pour protéger vos données :</p>
-            <ul>
-                <li>✅ Stockage local chiffré (localStorage du navigateur)</li>
-                <li>✅ Connexions sécurisées HTTPS</li>
-                <li>✅ Accès restreint aux données serveur</li>
-                <li>✅ Sauvegardes régulières</li>
-                <li>✅ Mises à jour de sécurité régulières</li>
-                <li>✅ Email Premium stocké de manière sécurisée sur nos serveurs</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>7. Données des mineurs</h2>
-            <div class="warning-box">
-                <p><strong>⚠️ Âge minimum : 13 ans</strong></p>
-                <p>L'utilisation de CartoMystik est réservée aux personnes âgées de 13 ans et plus.</p>
-                <p>Les mineurs de moins de 18 ans doivent obtenir l'autorisation de leurs parents ou tuteurs légaux avant d'utiliser l'application et de s'abonner à la version Premium.</p>
-            </div>
-        </section>
-
-        <section>
-            <h2>8. Réclamation auprès de la CNIL</h2>
-            <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire une réclamation auprès de la <strong>CNIL</strong> :</p>
-            <div class="info-box">
-                <p><strong>Commission Nationale de l'Informatique et des Libertés</strong><br>
-                3 Place de Fontenoy<br>
-                TSA 80715<br>
-                75334 PARIS CEDEX 07</p>
-                <p>Site web : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a><br>
-                Téléphone : 01 53 73 22 22</p>
-            </div>
-        </section>
-
-        <section>
-            <h2>9. Contact</h2>
-            <div class="info-box">
-                <p>Pour toute question concernant cette politique de confidentialité ou l'exercice de vos droits :</p>
+                Auto-entrepreneur<br>
+                SIRET : 992 482 745 00013</p>
+                <p><strong>Localisation :</strong> Indre-et-Loire (37), France</p>
                 <p><strong>Email :</strong> <a href="mailto:kcevent37@gmail.com">kcevent37@gmail.com</a></p>
-                <p><strong>Adresse postale :</strong><br>
-                KcDev<br>
-                Indre-et-Loire (37)<br>
+            </div>
+        </section>
+
+        <section>
+            <h2>2. Âge minimum et protection des mineurs</h2>
+            <div class="warning-box">
+                <p>⚠️ Âge minimum requis</p>
+                <p>L'utilisation de CartoMystik est réservée aux personnes âgées de <strong>13 ans et plus</strong>.</p>
+                <p>Pour les utilisateurs de moins de 18 ans, le consentement des parents ou tuteurs légaux est requis avant :</p>
+                <ul>
+                    <li>L'utilisation de l'application</li>
+                    <li>La fourniture de données personnelles</li>
+                    <li>L'achat de la version Premium</li>
+                </ul>
+            </div>
+            <p><strong>Protection des enfants de moins de 13 ans :</strong></p>
+            <p>En aucun cas des données relatives à la situation professionnelle, économique ou à la vie privée ne seront collectées auprès des mineurs sans le consentement de leurs parents ou tuteurs.</p>
+            <p>Si vous avez moins de 13 ans et que vous avez accédé à cette application sans en informer vos parents, vous ne devez pas l'utiliser ni fournir de données personnelles.</p>
+        </section>
+
+        <section>
+            <h2>3. Principes de protection des données</h2>
+            <p>Nous nous engageons à respecter les principes suivants dans le traitement de vos données :</p>
+            <ul>
+                <li><strong>Licéité, loyauté et transparence :</strong> Nous aurons toujours besoin de votre consentement pour traiter vos données personnelles et nous vous informerons de manière transparente.</li>
+                <li><strong>Minimisation des données :</strong> Nous ne collectons que les données strictement nécessaires.</li>
+                <li><strong>Limitation de la durée de conservation :</strong> Vos données ne seront conservées que pendant la durée nécessaire.</li>
+                <li><strong>Intégrité et confidentialité :</strong> Nous prenons toutes les mesures nécessaires pour garantir la sécurité de vos données.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>4. Données collectées</h2>
+            
+            <h3>4.1 Données stockées localement (dans votre appareil)</h3>
+            <p>Les données suivantes sont stockées <strong>uniquement dans votre appareil</strong> via le stockage local du navigateur (localStorage) et <strong>ne sont jamais envoyées à nos serveurs</strong> :</p>
+            <ul>
+                <li>Votre prénom</li>
+                <li>Votre date de naissance et signe astrologique</li>
+                <li>Votre genre</li>
+                <li>Votre langue préférée</li>
+                <li>L'historique de vos tirages de cartes</li>
+                <li>Vos notes personnelles sur les tirages</li>
+                <li>Vos tirages favoris</li>
+            </ul>
+            <div class="info-box">
+                <p><strong>✨ Important :</strong> Ces données restent uniquement sur votre appareil. Si vous désinstallez l'application ou supprimez les données de votre navigateur, ces informations seront perdues (sauf pour les utilisateurs Premium qui peuvent les restaurer via leur email).</p>
+            </div>
+
+            <h3>4.2 Données collectées sur nos serveurs</h3>
+            <p>Les données suivantes sont collectées et stockées sur nos serveurs <strong>uniquement si vous souscrivez à la version Premium</strong> :</p>
+            <ul>
+                <li><strong>Adresse email :</strong> Pour associer votre abonnement Premium à votre compte</li>
+                <li><strong>Date de souscription et d'expiration :</strong> Pour gérer la durée de validité de votre accès Premium</li>
+                <li><strong>Statut de paiement :</strong> Confirmation du paiement via Stripe</li>
+            </ul>
+
+            <h3>4.3 Données techniques collectées automatiquement</h3>
+            <p>Les données techniques suivantes peuvent être collectées automatiquement :</p>
+            <ul>
+                <li>Adresse IP</li>
+                <li>Type d'appareil et système d'exploitation</li>
+                <li>Navigateur utilisé</li>
+                <li>Données d'utilisation de l'application (pages visitées, durée de visite)</li>
+                <li>Identifiant publicitaire (pour Google AdMob)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>5. Finalités du traitement</h2>
+            <p>Nous utilisons vos données pour les finalités suivantes :</p>
+
+            <h3>5.1 Fonctionnement de l'application</h3>
+            <ul>
+                <li>Personnaliser votre expérience (prénom, signe astrologique)</li>
+                <li>Sauvegarder vos tirages et interprétations</li>
+                <li>Permettre la consultation de votre historique</li>
+                <li>Afficher l'interface dans votre langue préférée</li>
+            </ul>
+
+            <h3>5.2 Gestion de l'abonnement Premium</h3>
+            <ul>
+                <li>Activer votre accès Premium après paiement</li>
+                <li>Restaurer votre abonnement après réinstallation</li>
+                <li>Vous notifier avant l'expiration de votre accès</li>
+                <li>Gérer la durée de validité de votre abonnement</li>
+            </ul>
+
+            <h3>5.3 Publicité (utilisateurs gratuits uniquement)</h3>
+            <ul>
+                <li>Afficher des publicités pertinentes via Google AdMob</li>
+                <li>Mesurer l'efficacité des publicités</li>
+            </ul>
+
+            <h3>5.4 Amélioration de l'application</h3>
+            <ul>
+                <li>Analyser l'utilisation de l'application</li>
+                <li>Corriger les bugs et améliorer les performances</li>
+                <li>Développer de nouvelles fonctionnalités</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>6. Base juridique du traitement</h2>
+            <p>Nous traitons vos données sur les bases juridiques suivantes :</p>
+            <ul>
+                <li><strong>Consentement :</strong> Pour l'utilisation de l'application et l'affichage de publicités personnalisées</li>
+                <li><strong>Exécution du contrat :</strong> Pour la gestion de votre abonnement Premium</li>
+                <li><strong>Intérêt légitime :</strong> Pour l'amélioration de l'application et la prévention de la fraude</li>
+                <li><strong>Obligations légales :</strong> Pour le respect de la législation en vigueur (comptabilité, facturation)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>7. Durée de conservation des données</h2>
+            <p>Nous conservons vos données selon les durées suivantes :</p>
+
+            <h3>7.1 Données stockées localement</h3>
+            <p>Les données stockées dans votre appareil (prénom, historique, etc.) sont conservées <strong>jusqu'à ce que vous les supprimiez</strong> en :</p>
+            <ul>
+                <li>Supprimant les données de l'application</li>
+                <li>Désinstallant l'application</li>
+                <li>Effaçant le cache de votre navigateur</li>
+            </ul>
+
+            <h3>7.2 Données sur nos serveurs (Premium)</h3>
+            <ul>
+                <li><strong>Email et données d'abonnement :</strong> Conservés pendant la durée de votre abonnement + 3 ans (obligations comptables et fiscales)</li>
+                <li><strong>Données de paiement Stripe :</strong> Gérées par Stripe selon leur propre politique de conservation</li>
+            </ul>
+
+            <h3>7.3 Suppression des données</h3>
+            <p>Vous pouvez demander la suppression de vos données à tout moment en nous contactant à <a href="mailto:kcevent37@gmail.com">kcevent37@gmail.com</a>. Nous procéderons à la suppression dans un délai maximum de 30 jours.</p>
+        </section>
+
+        <section>
+            <h2>8. Partage des données avec des tiers</h2>
+            <p>Nous ne vendons, ne louons ni ne transférons vos données personnelles à des tiers, sauf dans les cas suivants :</p>
+
+            <h3>8.1 Services essentiels</h3>
+            <div class="info-box">
+                <p><strong>Render Services, Inc. (Hébergement)</strong></p>
+                <p>Localisation : États-Unis<br>
+                Finalité : Hébergement de nos serveurs<br>
+                Site web : <a href="https://render.com" target="_blank">https://render.com</a></p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Stripe, Inc. (Paiements)</strong></p>
+                <p>Localisation : États-Unis<br>
+                Finalité : Traitement sécurisé des paiements Premium<br>
+                Conformité RGPD : Oui<br>
+                Site web : <a href="https://stripe.com/fr/privacy" target="_blank">https://stripe.com/fr/privacy</a></p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Google AdMob (Publicité)</strong></p>
+                <p>Localisation : États-Unis<br>
+                Finalité : Affichage de publicités pour les utilisateurs gratuits<br>
+                Site web : <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+            </div>
+
+            <h3>8.2 Transferts internationaux de données</h3>
+            <p>Certains de nos prestataires (Render, Stripe, Google) sont situés aux États-Unis. Ces transferts sont encadrés par :</p>
+            <ul>
+                <li>Les clauses contractuelles types de la Commission européenne</li>
+                <li>Le Data Privacy Framework (DPF) pour les entreprises américaines certifiées</li>
+                <li>Des garanties appropriées conformes au RGPD</li>
+            </ul>
+
+            <h3>8.3 Obligations légales</h3>
+            <p>Nous pouvons être amenés à divulguer vos données si la loi l'exige (décision de justice, autorités compétentes).</p>
+        </section>
+
+        <section>
+            <h2>9. Cookies et technologies de suivi</h2>
+            
+            <h3>9.1 Utilisation des cookies</h3>
+            <p>CartoMystik utilise les technologies suivantes :</p>
+
+            <h4>Cookies strictement nécessaires</h4>
+            <ul>
+                <li><strong>localStorage :</strong> Sauvegarde de vos préférences et historique (côté client uniquement)</li>
+                <li><strong>Session utilisateur :</strong> Authentification pour les utilisateurs Premium</li>
+            </ul>
+
+            <h4>Cookies publicitaires (utilisateurs gratuits)</h4>
+            <ul>
+                <li><strong>Google AdMob :</strong> Affichage et personnalisation des publicités</li>
+                <li><strong>Identifiant publicitaire mobile (IDFA/AAID) :</strong> Suivi publicitaire anonymisé</li>
+            </ul>
+
+            <h3>9.2 Désactivation des cookies publicitaires</h3>
+            <p>Vous pouvez désactiver la personnalisation des annonces :</p>
+            <ul>
+                <li><strong>Sur Android :</strong> Paramètres → Google → Annonces → Désactiver la personnalisation des annonces</li>
+                <li><strong>Sur iOS :</strong> Réglages → Confidentialité → Suivi → Désactiver "Autoriser le suivi"</li>
+                <li><strong>Solution définitive :</strong> Souscrire à la version Premium sans publicité</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>10. Vos droits (RGPD)</h2>
+            <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :</p>
+
+            <h3>10.1 Droit d'accès</h3>
+            <p>Vous pouvez demander à accéder à toutes les données personnelles que nous détenons sur vous.</p>
+
+            <h3>10.2 Droit de rectification</h3>
+            <p>Vous pouvez demander la correction de données inexactes ou incomplètes.</p>
+
+            <h3>10.3 Droit à l'effacement ("droit à l'oubli")</h3>
+            <p>Vous pouvez demander la suppression de vos données personnelles lorsque :</p>
+            <ul>
+                <li>Elles ne sont plus nécessaires aux finalités pour lesquelles elles ont été collectées</li>
+                <li>Vous retirez votre consentement</li>
+                <li>Vous vous opposez au traitement</li>
+                <li>Vos données ont été traitées de manière illicite</li>
+            </ul>
+
+            <h3>10.4 Droit à la limitation du traitement</h3>
+            <p>Vous pouvez demander la limitation du traitement de vos données dans certaines circonstances (contestation de l'exactitude, traitement illicite, etc.).</p>
+
+            <h3>10.5 Droit d'opposition</h3>
+            <p>Vous pouvez vous opposer au traitement de vos données pour des raisons tenant à votre situation particulière, notamment concernant :</p>
+            <ul>
+                <li>Les publicités personnalisées</li>
+                <li>Les analyses statistiques</li>
+            </ul>
+
+            <h3>10.6 Droit à la portabilité des données</h3>
+            <p>Vous pouvez recevoir vos données personnelles dans un format structuré, couramment utilisé et lisible par machine, et les transmettre à un autre responsable de traitement.</p>
+
+            <h3>10.7 Droit de retirer son consentement</h3>
+            <p>Lorsque le traitement est fondé sur votre consentement, vous pouvez le retirer à tout moment. Ce retrait ne remet pas en cause la licéité du traitement effectué avant le retrait.</p>
+
+            <h3>10.8 Comment exercer vos droits</h3>
+            <div class="info-box">
+                <p>Pour exercer l'un de ces droits, contactez-nous :</p>
+                <p><strong>Email :</strong> <a href="mailto:kcevent37@gmail.com">kcevent37@gmail.com</a></p>
+                <p>Nous répondrons à votre demande dans un délai maximum de <strong>1 mois</strong> (prolongeable à 3 mois en cas de complexité).</p>
+                <p>Vous devrez fournir une preuve d'identité pour des raisons de sécurité.</p>
+            </div>
+
+            <h3>10.9 Droit de déposer une plainte</h3>
+            <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez déposer une plainte auprès de l'autorité de contrôle compétente :</p>
+            <div class="info-box">
+                <p><strong>CNIL (Commission Nationale de l'Informatique et des Libertés)</strong></p>
+                <p>3 Place de Fontenoy<br>
+                TSA 80715<br>
+                75334 Paris Cedex 07<br>
                 France</p>
+                <p>Téléphone : 01 53 73 22 22<br>
+                Site web : <a href="https://www.cnil.fr" target="_blank">https://www.cnil.fr</a></p>
+            </div>
+        </section>
+
+        <section>
+            <h2>11. Sécurité des données</h2>
+            <p>Nous mettons en œuvre toutes les mesures techniques et organisationnelles appropriées pour protéger vos données personnelles :</p>
+
+            <h3>11.1 Mesures techniques</h3>
+            <ul>
+                <li><strong>Certificat SSL/TLS :</strong> Toutes les communications entre l'application et nos serveurs sont chiffrées</li>
+                <li><strong>Stockage sécurisé :</strong> Les données sont stockées sur des serveurs sécurisés (Render)</li>
+                <li><strong>Paiements sécurisés :</strong> Aucune donnée de carte bancaire n'est stockée par nous (gérée par Stripe)</li>
+                <li><strong>Sauvegarde régulière :</strong> Les données sont sauvegardées régulièrement pour éviter toute perte</li>
+            </ul>
+
+            <h3>11.2 Mesures organisationnelles</h3>
+            <ul>
+                <li>Accès aux données limité aux personnes autorisées uniquement</li>
+                <li>Obligation de confidentialité pour tous nos prestataires</li>
+                <li>Procédures de gestion des incidents de sécurité</li>
+            </ul>
+
+            <h3>11.3 Notification en cas de violation de données</h3>
+            <p>En cas de violation de données personnelles susceptible d'engendrer un risque élevé pour vos droits et libertés, nous vous en informerons dans les <strong>72 heures</strong> suivant la découverte de l'incident, conformément au RGPD.</p>
+
+            <div class="warning-box" style="border-color: #ef4444;">
+                <p style="color: #ef4444;">⚠️ Aucun système n'est totalement sûr</p>
+                <p>Bien que nous mettions en œuvre toutes les mesures de sécurité possibles, aucune transmission de données sur Internet ou système de stockage ne peut garantir une sécurité absolue à 100%.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>12. Exactitude et véracité des données</h2>
+            <p>En tant qu'utilisateur, vous êtes responsable de la véracité et de l'exactitude des données que vous nous fournissez.</p>
+            <p>Vous vous engagez à :</p>
+            <ul>
+                <li>Fournir des informations exactes, à jour et complètes</li>
+                <li>Maintenir à jour vos données personnelles</li>
+                <li>Informer KcDev de toute modification de vos données</li>
+            </ul>
+            <p>KcDev ne peut être tenu responsable des conséquences résultant de la fourniture de données inexactes, incomplètes ou non actualisées.</p>
+        </section>
+
+        <section>
+            <h2>13. Modifications de la politique de confidentialité</h2>
+            <p>Nous nous réservons le droit de modifier la présente politique de confidentialité à tout moment pour :</p>
+            <ul>
+                <li>Nous conformer à l'évolution de la législation</li>
+                <li>Refléter des changements dans nos pratiques</li>
+                <li>Améliorer la clarté des informations</li>
+            </ul>
+            <div class="info-box">
+                <p><strong>Notification des modifications</strong></p>
+                <p>En cas de modification substantielle, nous vous informerons :</p>
+                <ul>
+                    <li>Via une notification dans l'application</li>
+                    <li>Par email (pour les utilisateurs Premium)</li>
+                    <li>En affichant un avis visible lors de votre prochaine connexion</li>
+                </ul>
+                <p>Date de dernière modification : <strong>Janvier 2025</strong></p>
+            </div>
+            <p>Nous vous encourageons à consulter régulièrement cette politique pour rester informé de nos pratiques en matière de protection des données.</p>
+        </section>
+
+        <section>
+            <h2>14. Contact</h2>
+            <div class="info-box">
+                <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits :</p>
+                <p><strong>Email :</strong> <a href="mailto:kcevent37@gmail.com">kcevent37@gmail.com</a></p>
+                <p><strong>Délai de réponse :</strong> Nous nous engageons à répondre dans un délai maximum de 1 mois.</p>
             </div>
         </section>
 
