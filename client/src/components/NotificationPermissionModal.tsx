@@ -12,7 +12,6 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Animation d'entrée
     setTimeout(() => setIsVisible(true), 100);
   }, []);
 
@@ -24,7 +23,8 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
 
       if (permission.display === 'granted') {
         console.log('✅ [NOTIF] Permission accordée, création du canal...');
-        // ✅ Créer le canal de notification
+
+        // Créer le canal de notification
         await LocalNotifications.createChannel({
           id: 'daily-tirage',
           name: t('notification.channel.name'),
@@ -34,22 +34,6 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
           vibration: true,
         });
         console.log('✅ [NOTIF] Canal créé avec succès');
-
-        // ✅ Programmer la notification à 10h LOCALE
-        const now = new Date();
-        let triggerTime = new Date();
-
-        // Définir l'heure à 10h00 aujourd'hui
-        triggerTime.setHours(10, 0, 0, 0);
-
-        // Si 10h est déjà passé aujourd'hui, planifier pour demain
-        if (triggerTime.getTime() <= now.getTime()) {
-          triggerTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-          triggerTime.setHours(10, 0, 0, 0);
-        }
-
-        console.log('🕐 Notification programmée pour:', triggerTime.toLocaleString());
-        console.log('🌍 Fuseau horaire:', Intl.DateTimeFormat().resolvedOptions().timeZone);
 
         // 🎲 Choisir une phrase aléatoire parmi 5 variations
         const notificationVariants = [
@@ -77,10 +61,11 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
 
         const randomVariant = notificationVariants[Math.floor(Math.random() * notificationVariants.length)];
 
-        console.log('⏰ [NOTIF] Planification pour:', triggerTime.toLocaleString());
-        console.log('🌍 [NOTIF] Fuseau horaire:', Intl.DateTimeFormat().resolvedOptions().timeZone);
+        console.log('⏰ [NOTIF] Planification pour: 10h00 locale (fuseau utilisateur)');
+        console.log('🌍 [NOTIF] Fuseau horaire détecté:', Intl.DateTimeFormat().resolvedOptions().timeZone);
         console.log('📝 [NOTIF] Message:', randomVariant.title);
-        
+
+        // ✅ Utiliser `on:` pour respecter l'heure locale
         const scheduleResult = await LocalNotifications.schedule({
           notifications: [
             {
@@ -88,10 +73,12 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
               title: randomVariant.title,
               body: randomVariant.body,
               schedule: {
-                at: triggerTime, // ✅ Date locale respectée
-                repeats: true,
-                every: 'day',
-                allowWhileIdle: true, // ✅ Fonctionne même en mode veille
+                on: {
+                  hour: 10,      // ✅ 10h locale de l'utilisateur
+                  minute: 0,     // ✅ À la minute 0
+                },
+                repeats: true,     // ✅ Tous les jours
+                allowWhileIdle: true, // ✅ Fonctionne en mode veille
               },
               sound: 'default',
               actionTypeId: 'OPEN_APP',
@@ -103,13 +90,12 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
         });
         console.log('✅ [NOTIF] Planification terminée:', JSON.stringify(scheduleResult));
 
-        // ✅ Sauvegarder le choix avec timestamp
+        // Sauvegarder le choix
         localStorage.setItem('notificationPermission', 'granted');
         localStorage.setItem('notificationTime', '10:00');
-        localStorage.setItem('notificationTimezone',Intl.DateTimeFormat().resolvedOptions().timeZone);
+        localStorage.setItem('notificationTimezone', Intl.DateTimeFormat().resolvedOptions().timeZone);
 
-        console.log('✅ Notifications quotidiennes activées');
-        console.log('⏰ Heure: 10h00 locale');
+        console.log('✅ Notifications quotidiennes activées à 10h00 (heure locale)');
         console.log('🌍 Fuseau:', Intl.DateTimeFormat().resolvedOptions().timeZone);
       } else {
         localStorage.setItem('notificationPermission', 'denied');

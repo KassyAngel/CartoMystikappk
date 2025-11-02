@@ -17,7 +17,7 @@ import OracleMystiqueApp from "@/pages/OracleMystiqueApp";
 import NotFound from "@/pages/not-found";
 import { initialize as initializeAdMob, showBanner, showInterstitialAd } from './admobService';
 import { config } from '@/config';
-import { getUserEmail } from '@/lib/userStorage'; // 🆕 Import ajouté
+import { getUserEmail } from '@/lib/userStorage';
 
 export interface Reading {
   id: string;
@@ -66,7 +66,7 @@ function App() {
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
 
-  // 🆕 Initialiser AdMob au démarrage
+  // Initialiser AdMob au démarrage
   useEffect(() => {
     const initAds = async () => {
       try {
@@ -104,19 +104,18 @@ function App() {
     checkNotificationPermission();
   }, [currentStep]);
 
-  // 🔁 Charger les données utilisateur
+  // Charger les données utilisateur
   useEffect(() => {
     loadUserData();
     checkPremiumExpiration();
 
     const interval = setInterval(() => {
       loadUserData();
-    }, 60 * 60 * 1000); // toutes les heures
+    }, 60 * 60 * 1000);
 
     return () => clearInterval(interval);
   }, []);
 
-  // ✅ Nouvelle version de loadUserData
   const loadUserData = async () => {
     try {
       const savedEmail = await getUserEmail();
@@ -149,7 +148,6 @@ function App() {
     }
   };
 
-  // Vérification d’expiration Premium
   const checkPremiumExpiration = async () => {
     try {
       const response = await fetch(`${config.apiBaseUrl}/api/user/premium-expiration-alert`, {
@@ -165,7 +163,7 @@ function App() {
         } else if (data.alertType === 'warning') {
           const days = data.daysRemaining;
           const expirationDate = new Date(data.expirationDate).toLocaleDateString('fr-FR');
-          alertMessage = `🔔 Votre accès Premium expire dans ${days} jour${days > 1 ? 's' : ''}.\n\nDate d’expiration : ${expirationDate}\n\nPour renouveler, rendez-vous dans le menu Premium.`;
+          alertMessage = `🔔 Votre accès Premium expire dans ${days} jour${days > 1 ? 's' : ''}.\n\nDate d'expiration : ${expirationDate}\n\nPour renouveler, rendez-vous dans le menu Premium.`;
         }
 
         if (alertMessage) {
@@ -236,7 +234,6 @@ function App() {
     }
   };
 
-  // ✅ VERSION FINALE de addReading (avec système pub corrigé)
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
     const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
     const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
@@ -244,7 +241,6 @@ function App() {
     try {
       console.log('📤 Envoi tirage:', reading.type);
 
-      // Sauvegarde dans le Grimoire si applicable
       if (shouldSaveInGrimoire) {
         const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
           method: 'POST',
@@ -270,11 +266,10 @@ function App() {
         console.log(`🚫 ${reading.type} non sauvegardé dans Grimoire (type exclu)`);
       }
 
-      // 🎬 Système pub : SEULEMENT pour les tirages NON-BONUS
       if (!isPremium) {
         if (reading.type === 'bonusRoll') {
           console.log('🎁 Bonus Roll : pubs gérées en interne (pas de pub globale)');
-          return; // ✅ sortie
+          return;
         }
 
         const newCount = readingCount + 1;
@@ -312,6 +307,20 @@ function App() {
         <UserProvider>
           <TooltipProvider>
             <div className="dark relative w-screen h-screen overflow-hidden">
+              {/* 🆕 Style CSS pour espacer le contenu au-dessus de la bannière pub */}
+              {!isPremium && (
+                <style>{`
+                  .main-content {
+                    padding-bottom: 70px !important;
+                  }
+                  @media (min-width: 640px) {
+                    .main-content {
+                      padding-bottom: 80px !important;
+                    }
+                  }
+                `}</style>
+              )}
+
               {showTopBar && (
                 <TopBar
                   onOpenGrimoire={() => setIsGrimoireOpen(true)}

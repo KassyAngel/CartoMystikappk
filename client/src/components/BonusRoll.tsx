@@ -115,7 +115,6 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
   };
 
   return (
-    // ✅ CORRECTION : overflow-x-hidden pour bloquer scroll horizontal
     <div className="bonus-roll-container w-full h-full overflow-x-hidden overflow-y-auto p-3 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-2 border-[#ffd700] shadow-2xl touch-pan-y">
       {/* Header */}
       <div className="text-center mb-3 sm:mb-6 px-2">
@@ -191,16 +190,19 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
         </p>
 
         {interpretation && (
-          <div className="mt-2 sm:mt-4 p-3 sm:p-4 bg-[#1a0033] rounded-lg sm:rounded-xl border border-[#7b5dcf] backdrop-blur-sm mx-auto w-full max-w-lg">
-            <div className="flex items-start gap-2 mb-2">
-              <span className="text-2xl sm:text-3xl flex-shrink-0">🎁</span>
-              <h4 className="text-sm sm:text-xl font-bold text-[#ffd700] leading-tight break-words">
+          <div className="mt-3 sm:mt-6 p-4 sm:p-6 bg-gradient-to-br from-[#2d1b69] to-[#1a0033] rounded-xl sm:rounded-2xl border-2 border-[#ffd700] shadow-[0_0_30px_rgba(255,215,0,0.3)] backdrop-blur-sm mx-auto w-full max-w-lg animate-fade-in-scale">
+            <div className="flex items-center justify-center gap-3 mb-3 sm:mb-4">
+              <span className="text-3xl sm:text-4xl animate-pulse">🎁</span>
+              <h4 className="text-base sm:text-2xl font-bold text-[#ffd700] leading-tight break-words text-center drop-shadow-[0_2px_8px_rgba(255,215,0,0.5)]">
                 {interpretation.title}
               </h4>
+              <span className="text-3xl sm:text-4xl animate-pulse">✨</span>
             </div>
-            <p className="text-[#b19cd9] text-xs sm:text-base leading-relaxed break-words">
-              {interpretation.message}
-            </p>
+            <div className="bg-[#1a0033]/50 rounded-lg p-3 sm:p-4 border border-[#ffd700]/30">
+              <p className="text-[#e9d5ff] text-sm sm:text-lg leading-relaxed break-words text-center font-medium">
+                {interpretation.message}
+              </p>
+            </div>
           </div>
         )}
       </div>
@@ -241,10 +243,23 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
       )}
 
       <style>{`
-        /* ✅ Empêcher le scroll horizontal au niveau global */
         .bonus-roll-container {
-          touch-action: pan-y; /* Autoriser uniquement le scroll vertical */
-          -webkit-overflow-scrolling: touch; /* Scroll fluide sur iOS */
+          touch-action: pan-y;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        @keyframes fade-in-scale {
+          0% {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+        .animate-fade-in-scale {
+          animation: fade-in-scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         @keyframes shake-3d {

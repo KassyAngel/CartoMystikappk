@@ -127,9 +127,9 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
           {t('oracle.bonusRoll.title')}
         </h1>
 
-        <p className="text-purple-200 text-xs sm:text-base md:text-lg max-w-2xl mx-auto leading-snug sm:leading-relaxed px-3 sm:px-4
-          bg-purple-900/30 py-2 sm:py-3 rounded-lg sm:rounded-xl border border-amber-400/30 backdrop-blur-sm">
-          ✨ {t('oracle.bonusRoll.description')}
+        <p className="text-purple-100 sm:text-amber-50 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-snug sm:leading-relaxed px-3 sm:px-4
+          bg-purple-900/60 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-amber-400/50 shadow-[0_0_15px_rgba(255,215,0,0.3)]">
+          ✨ <span className="font-semibold text-amber-300">{t('oracle.bonusRoll.description')}</span>
         </p>
 
         {/* Séparateur décoratif amélioré */}

@@ -1775,6 +1775,20 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailInvalid": "L'email n'est pas valide.",
     "premium.emailLabel": "Votre email",
 
+    // PAGE PAIEMENT SUCESS CANCEL
+    "payment.success.title": "Paiement réussi !",
+    "payment.success.verified": "Votre compte Premium a été activé",
+    "payment.success.activating": "Activation en cours...",
+    "payment.success.benefits": "Profitez de toutes les fonctionnalités Premium !",
+    "payment.success.noAds": "Sans publicité",
+    "payment.success.unlimitedGrimoire": "Grimoire illimité",
+    "payment.success.fullHistory": "Historique complet",
+    "payment.success.redirecting": "Redirection automatique vers les oracles...",
+    "payment.cancel.title": "Paiement annulé",
+    "payment.cancel.message": "Vous avez annulé le paiement",
+    "payment.cancel.retry": "Vous pouvez réessayer à tout moment depuis le menu Premium",
+    "payment.cancel.redirecting": "Retour à la sélection des oracles...",
+
     // Tirage Bonus Oracle
     "oracle.bonusRoll.title": "Tirage Bonus",
     "oracle.bonusRoll.description": "Déverrouillez votre révélation numérologique secrète",
@@ -3538,6 +3552,20 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailRequired": "Email is required.",
     "premium.error.emailInvalid": "Email is not valid.",
     "premium.emailLabel": "Your email",
+
+    // PAGE PAIEMENT SUCESS CANCEL
+    "payment.success.title": "Payment Successful!",
+    "payment.success.verified": "Your Premium account has been activated",
+    "payment.success.activating": "Activation in progress...",
+    "payment.success.benefits": "Enjoy all Premium features!",
+    "payment.success.noAds": "Ad-free",
+    "payment.success.unlimitedGrimoire": "Unlimited Grimoire",
+    "payment.success.fullHistory": "Full history",
+    "payment.success.redirecting": "Automatic redirection to oracles...",
+    "payment.cancel.title": "Payment Cancelled",
+    "payment.cancel.message": "You cancelled the payment",
+    "payment.cancel.retry": "You can try again anytime from the Premium menu",
+    "payment.cancel.redirecting": "Returning to oracle selection...",
 
     // Mystery Dice Oracle
     "oracle.bonusRoll.title": "Bonus Roll",
@@ -5373,6 +5401,20 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailInvalid": "El correo electrónico no es válido.",
     "premium.emailLabel": "Tu correo electrónico",
 
+    // PAGE PAIEMENT SUCCESS CANCEL
+    "payment.success.title": "¡Pago exitoso!",
+    "payment.success.verified": "Tu cuenta Premium ha sido activada",
+    "payment.success.activating": "Activación en curso...",
+    "payment.success.benefits": "¡Disfruta de todas las funciones Premium!",
+    "payment.success.noAds": "Sin publicidad",
+    "payment.success.unlimitedGrimoire": "Grimorio ilimitado",
+    "payment.success.fullHistory": "Historial completo",
+    "payment.success.redirecting": "Redirección automática a los oráculos...",
+    "payment.cancel.title": "Pago cancelado",
+    "payment.cancel.message": "Has cancelado el pago",
+    "payment.cancel.retry": "Puedes intentarlo de nuevo en cualquier momento desde el menú Premium",
+    "payment.cancel.redirecting": "Volviendo a la selección de oráculos...",
+
     // Mystery Dice Oracle
     "oracle.bonusRoll.title": "Tirada Bonus",
       "oracle.bonusRoll.description": "Desbloquea tu revelación numerológica secreta",
@@ -7207,6 +7249,20 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailRequired": "E-Mail ist erforderlich.",
     "premium.error.emailInvalid": "E-Mail ist ungültig.",
     "premium.emailLabel": "Deine E-Mail",
+
+    // PAGE PAIEMENT SUCCESS CANCEL
+    "payment.success.title": "Zahlung erfolgreich!",
+    "payment.success.verified": "Ihr Premium-Konto wurde aktiviert",
+    "payment.success.activating": "Aktivierung läuft...",
+    "payment.success.benefits": "Genießen Sie alle Premium-Funktionen!",
+    "payment.success.noAds": "Werbefrei",
+    "payment.success.unlimitedGrimoire": "Unbegrenztes Grimoire",
+    "payment.success.fullHistory": "Vollständiger Verlauf",
+    "payment.success.redirecting": "Automatische Weiterleitung zu den Orakeln...",
+    "payment.cancel.title": "Zahlung abgebrochen",
+    "payment.cancel.message": "Sie haben die Zahlung abgebrochen",
+    "payment.cancel.retry": "Sie können es jederzeit über das Premium-Menü erneut versuchen",
+    "payment.cancel.redirecting": "Zurück zur Orakelauswahl...",
 
     // Mystery Dice Oracle
     "oracle.bonusRoll.title": "Bonus Wurf",
@@ -9045,6 +9101,20 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailRequired": "L'email è richiesta.",
     "premium.error.emailInvalid": "L'email non è valida.",
     "premium.emailLabel": "La tua email",
+
+    // PAGE PAIEMENT SUCESS CANCEL
+    "payment.success.title": "Pagamento riuscito!",
+    "payment.success.verified": "Il tuo account Premium è stato attivato",
+    "payment.success.activating": "Attivazione in corso...",
+    "payment.success.benefits": "Goditi tutte le funzionalità Premium!",
+    "payment.success.noAds": "Senza pubblicità",
+    "payment.success.unlimitedGrimoire": "Grimorio illimitato",
+    "payment.success.fullHistory": "Cronologia completa",
+    "payment.success.redirecting": "Reindirizzamento automatico agli oracoli...",
+    "payment.cancel.title": "Pagamento annullato",
+    "payment.cancel.message": "Hai annullato il pagamento",
+    "payment.cancel.retry": "Puoi riprovare in qualsiasi momento dal menu Premium",
+    "payment.cancel.redirecting": "Ritorno alla selezione degli oracoli...",
 
     // Mystery Dice Oracle
     "oracle.bonusRoll.title": "Lancio Bonus",
