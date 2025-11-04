@@ -372,26 +372,65 @@
                 <li><strong>Formule 3 mois</strong> : 8,98€ pour un accès de 3 mois (soit 2,99€/mois)</li>
             </ul>
 
-            <h3>11.2 Paiement Unique</h3>
+            <h3>11.2 Modes de paiement</h3>
+            <div class="info-box">
+                <p><strong>📱 Version Android</strong></p>
+                <p>Les achats sont effectués via <strong>Google Play Billing</strong> sous forme de <strong>produits non consommables</strong> (achat unique, non renouvelé automatiquement).</p>
+                <p>Le paiement est traité directement par Google Play Store selon leurs conditions générales.</p>
+                <p>Politique de confidentialité Google Play : <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>🌐 Version Web</strong></p>
+                <p>Les achats sont effectués via <strong>Stripe</strong>, plateforme de paiement sécurisée.</p>
+                <p>Le paiement est un <strong>achat unique</strong> sans renouvellement automatique.</p>
+                <p>Politique de confidentialité Stripe : <a href="https://stripe.com/fr/privacy" target="_blank">https://stripe.com/fr/privacy</a></p>
+            </div>
+
+            <h3>11.3 Gestion des achats avec RevenueCat</h3>
+            <div class="info-box">
+                <p>Sur Android, nous utilisons <strong>RevenueCat</strong> comme intermédiaire pour gérer et synchroniser vos achats :</p>
+                <ul>
+                    <li>RevenueCat communique avec Google Play Billing pour valider vos achats</li>
+                    <li>Il permet la synchronisation de votre statut Premium entre appareils</li>
+                    <li>Il ne traite aucun paiement directement (géré par Google Play)</li>
+                    <li>Seul votre email est partagé avec RevenueCat pour identifier votre compte</li>
+                </ul>
+                <p>Politique de confidentialité RevenueCat : <a href="https://www.revenuecat.com/privacy" target="_blank">https://www.revenuecat.com/privacy</a></p>
+            </div>
+
+            <h3>11.4 Paiement Unique</h3>
             <div class="info-box">
                 <p>✅ Tranquillité d'esprit</p>
-                <p>Votre achat est un <strong>paiement unique</strong> sans renouvellement automatique.</p>
+                <p>Votre achat est un <strong>paiement unique</strong> sans renouvellement automatique, quelle que soit la plateforme.</p>
                 <p>Vous ne serez <strong>jamais débité automatiquement</strong> à la fin de votre période d'accès.</p>
                 <p>Vous serez notifié dans l'application quelques jours avant l'expiration de votre accès Premium.</p>
             </div>
 
-            <h3>11.3 Restauration d'abonnement</h3>
-            <p>Si vous désinstallez puis réinstallez l'application, vous pouvez restaurer votre Premium en :</p>
+            <h3>11.5 Restauration d'abonnement</h3>
+            <p>Si vous désinstallez puis réinstallez l'application, vous pouvez restaurer votre Premium :</p>
+            
+            <p><strong>Sur Android :</strong></p>
             <ol>
-                <li>Ouvrant le menu de l'application</li>
-                <li>Cliquant sur "Restaurer mon abonnement"</li>
-                <li>Saisissant l'email utilisé lors de l'achat</li>
+                <li>Ouvrez le menu de l'application</li>
+                <li>Cliquez sur "Restaurer mon abonnement"</li>
+                <li>Saisissez l'email utilisé lors de l'achat</li>
+                <li>Le système vérifie automatiquement votre achat via RevenueCat et Google Play</li>
             </ol>
-            <p>Notre système vérifiera automatiquement si cet email possède un abonnement Premium actif.</p>
 
-            <h3>11.4 Politique de Remboursement</h3>
+            <p><strong>Sur Web :</strong></p>
+            <ol>
+                <li>Ouvrez le menu de l'application</li>
+                <li>Cliquez sur "Restaurer mon abonnement"</li>
+                <li>Saisissez l'email utilisé lors de l'achat</li>
+                <li>Notre système vérifie votre achat Stripe</li>
+            </ol>
+
+            <h3>11.6 Politique de Remboursement</h3>
+            
+            <p><strong>Version Web (Stripe) :</strong></p>
             <div class="info-box">
-                <p><strong>Aucun remboursement n'est effectué après paiement.</strong></p>
+                <p>Aucun remboursement n'est effectué après paiement.</p>
                 <p>Après validation de votre paiement :</p>
                 <ul>
                     <li>Votre accès Premium est immédiatement activé pour la durée choisie</li>
@@ -400,10 +439,25 @@
                 </ul>
             </div>
 
-            <h3>11.5 Traitement des Paiements</h3>
-            <p>Tous les paiements sont traités de manière sécurisée par <strong>Stripe, Inc.</strong></p>
-            <p>KcDev ne stocke aucune information de carte bancaire.</p>
-            <p>Plus d'informations : <a href="https://stripe.com/fr/privacy" target="_blank">Politique de confidentialité Stripe</a></p>
+            <p><strong>Version Android (Google Play) :</strong></p>
+            <div class="info-box">
+                <p>Les remboursements sont gérés selon la <strong>politique de remboursement de Google Play</strong>.</p>
+                <p>Pour demander un remboursement :</p>
+                <ol>
+                    <li>Accédez à votre historique d'achats Google Play</li>
+                    <li>Sélectionnez l'achat CartoMystik</li>
+                    <li>Suivez la procédure de demande de remboursement</li>
+                </ol>
+                <p>Délai : Généralement dans les 48 heures suivant l'achat</p>
+                <p>Plus d'informations : <a href="https://support.google.com/googleplay/answer/2479637" target="_blank">Support Google Play</a></p>
+            </div>
+
+            <h3>11.7 Sécurité des Paiements</h3>
+            <p>Aucune information de carte bancaire n'est stockée par KcDev :</p>
+            <ul>
+                <li><strong>Sur Web :</strong> Les paiements sont traités de manière sécurisée par Stripe</li>
+                <li><strong>Sur Android :</strong> Les paiements sont traités par Google Play Billing</li>
+            </ul>
         </section>
 
         <section>

@@ -63,6 +63,13 @@
             margin-bottom: 10px;
         }
 
+        h4 {
+            color: #fde68a;
+            font-size: 1rem;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
         p {
             margin-bottom: 15px;
             color: #e9d5ff;
@@ -222,7 +229,8 @@
             <ul>
                 <li><strong>Adresse email :</strong> Pour associer votre abonnement Premium à votre compte</li>
                 <li><strong>Date de souscription et d'expiration :</strong> Pour gérer la durée de validité de votre accès Premium</li>
-                <li><strong>Statut de paiement :</strong> Confirmation du paiement via Stripe</li>
+                <li><strong>Statut de paiement :</strong> Confirmation du paiement via Stripe (Web) ou Google Play Billing (Android)</li>
+                <li><strong>Identifiant utilisateur RevenueCat :</strong> Utilisé uniquement sur Android pour la gestion des achats via Google Play</li>
             </ul>
 
             <h3>4.3 Données techniques collectées automatiquement</h3>
@@ -254,6 +262,7 @@
                 <li>Restaurer votre abonnement après réinstallation</li>
                 <li>Vous notifier avant l'expiration de votre accès</li>
                 <li>Gérer la durée de validité de votre abonnement</li>
+                <li>Synchroniser votre statut Premium entre vos appareils</li>
             </ul>
 
             <h3>5.3 Publicité (utilisateurs gratuits uniquement)</h3>
@@ -296,7 +305,8 @@
             <h3>7.2 Données sur nos serveurs (Premium)</h3>
             <ul>
                 <li><strong>Email et données d'abonnement :</strong> Conservés pendant la durée de votre abonnement + 3 ans (obligations comptables et fiscales)</li>
-                <li><strong>Données de paiement Stripe :</strong> Gérées par Stripe selon leur propre politique de conservation</li>
+                <li><strong>Données de paiement Stripe (Web) :</strong> Gérées par Stripe selon leur propre politique de conservation</li>
+                <li><strong>Données de paiement Google Play (Android) :</strong> Gérées par Google Play et RevenueCat selon leurs propres politiques de conservation</li>
             </ul>
 
             <h3>7.3 Suppression des données</h3>
@@ -316,11 +326,29 @@
             </div>
 
             <div class="info-box">
-                <p><strong>Stripe, Inc. (Paiements)</strong></p>
+                <p><strong>Stripe, Inc. (Paiements Web)</strong></p>
                 <p>Localisation : États-Unis<br>
-                Finalité : Traitement sécurisé des paiements Premium<br>
+                Finalité : Traitement sécurisé des paiements Premium sur la version Web<br>
                 Conformité RGPD : Oui<br>
                 Site web : <a href="https://stripe.com/fr/privacy" target="_blank">https://stripe.com/fr/privacy</a></p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Google Play Billing (Paiements Android)</strong></p>
+                <p>Localisation : États-Unis<br>
+                Finalité : Traitement des paiements Premium sur l'application Android<br>
+                Conformité RGPD : Oui<br>
+                Site web : <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+                <p><strong>Note :</strong> Les paiements sur Android sont effectués directement via Google Play. Nous ne collectons ni ne stockons vos informations de paiement.</p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>RevenueCat, Inc. (Gestion des abonnements Android)</strong></p>
+                <p>Localisation : États-Unis<br>
+                Finalité : Gestion et synchronisation des achats via Google Play sur Android<br>
+                Conformité RGPD : Oui<br>
+                Site web : <a href="https://www.revenuecat.com/privacy" target="_blank">https://www.revenuecat.com/privacy</a></p>
+                <p><strong>Données partagées :</strong> Identifiant utilisateur (email), statut d'abonnement, dates d'expiration</p>
             </div>
 
             <div class="info-box">
@@ -331,7 +359,7 @@
             </div>
 
             <h3>8.2 Transferts internationaux de données</h3>
-            <p>Certains de nos prestataires (Render, Stripe, Google) sont situés aux États-Unis. Ces transferts sont encadrés par :</p>
+            <p>Certains de nos prestataires (Render, Stripe, Google, RevenueCat) sont situés aux États-Unis. Ces transferts sont encadrés par :</p>
             <ul>
                 <li>Les clauses contractuelles types de la Commission européenne</li>
                 <li>Le Data Privacy Framework (DPF) pour les entreprises américaines certifiées</li>
@@ -358,6 +386,12 @@
             <ul>
                 <li><strong>Google AdMob :</strong> Affichage et personnalisation des publicités</li>
                 <li><strong>Identifiant publicitaire mobile (IDFA/AAID) :</strong> Suivi publicitaire anonymisé</li>
+            </ul>
+
+            <h4>Technologies de gestion des achats (Android)</h4>
+            <ul>
+                <li><strong>RevenueCat SDK :</strong> Gestion des achats et synchronisation du statut Premium</li>
+                <li><strong>Google Play Billing :</strong> Traitement des paiements in-app</li>
             </ul>
 
             <h3>9.2 Désactivation des cookies publicitaires</h3>
@@ -433,7 +467,7 @@
             <ul>
                 <li><strong>Certificat SSL/TLS :</strong> Toutes les communications entre l'application et nos serveurs sont chiffrées</li>
                 <li><strong>Stockage sécurisé :</strong> Les données sont stockées sur des serveurs sécurisés (Render)</li>
-                <li><strong>Paiements sécurisés :</strong> Aucune donnée de carte bancaire n'est stockée par nous (gérée par Stripe)</li>
+                <li><strong>Paiements sécurisés :</strong> Aucune donnée de carte bancaire n'est stockée par nous (gérée par Stripe sur Web et Google Play sur Android)</li>
                 <li><strong>Sauvegarde régulière :</strong> Les données sont sauvegardées régulièrement pour éviter toute perte</li>
             </ul>
 
