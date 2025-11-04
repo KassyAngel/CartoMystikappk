@@ -3,13 +3,15 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import { createServer } from "http";
+import { registerPremiumRevenueCatRoutes } from "./routes/premiumRevenueCat"; // ✅ Ajout de ton import
+
 // Charger les variables d'environnement
 dotenv.config();
 const app = express();
 app.use(cookieParser());
 
 // ⚠️ IMPORTANT : Définir la route webhook AVANT express.json()
-// Cela permet à Stripe de recevoir le corps brut (raw body) requis pour la vérification de signature
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -46,18 +48,13 @@ app.post(
           } else if (planId === "premium_3months") {
             expiresAt.setMonth(expiresAt.getMonth() + 3);
           }
-          
-          console.log(`📅 Plan choisi: ${planId}, expiration prévue: ${expiresAt.toLocaleDateString('fr-FR')}`);
+
+          console.log(`📅 Plan choisi: ${planId}, expiration prévue: ${expiresAt.toLocaleDateString("fr-FR")}`);
 
           const { storage } = await import("./storage");
-          await storage.setItem(
-            `premiumUntil_${userId}`,
-            expiresAt.toISOString()
-          );
+          await storage.setItem(`premiumUntil_${userId}`, expiresAt.toISOString());
 
-          console.log(
-            `✅ User ${userId} premium jusqu'au ${expiresAt.toISOString()}`
-          );
+          console.log(`✅ User ${userId} premium jusqu'au ${expiresAt.toISOString()}`);
         }
       }
 
@@ -69,10 +66,11 @@ app.post(
   }
 );
 
-// Middleware JSON pour les autres routes (appliqué APRÈS la route webhook)
+// Middleware JSON (après le webhook Stripe)
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// Logger des requêtes 
+
+// Logger des requêtes API
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -92,29 +90,39 @@ app.use((req, res, next) => {
   });
   next();
 });
-// Démarrer le serveur
+
+// 🆕 Ajout de la route Premium RevenueCat
+registerPremiumRevenueCatRoutes(app);
+
+// Démarrage du serveur
 (async () => {
-  const server = await registerRoutes(app);
+  const serverRoutes = await registerRoutes(app);
+
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
     res.status(status).json({ message });
     throw err;
   });
+
   if (app.get("env") === "development") {
-    await setupVite(app, server);
+    await setupVite(app, serverRoutes);
   } else {
     serveStatic(app);
   }
-  // Gestion du port - Prioriser la variable d'environnement système (Render)
+
+  // Création du serveur HTTP
+  const httpServer = createServer(app);
+
+  // Gestion du port Render
   const PORT = Number(process.env.PORT) || 5000;
   console.log(`🔧 Démarrage sur le port ${PORT}`);
 
-  server.listen(PORT, "0.0.0.0", () => {
+  httpServer.listen(PORT, "0.0.0.0", () => {
     log(`✅ Serveur démarré sur le port ${PORT}`);
   });
 
-  server.on("error", (err: NodeJS.ErrnoException) => {
+  httpServer.on("error", (err: NodeJS.ErrnoException) => {
     if (err.code === "EADDRINUSE") {
       console.error(`❌ Le port ${PORT} est déjà utilisé !`);
       console.error("Essayez de changer le PORT dans votre fichier .env ou tuez le processus existant.");
@@ -124,4 +132,7 @@ app.use((req, res, next) => {
       process.exit(1);
     }
   });
+
+  // 🆕 Retour du serveur HTTP à la fin
+  return httpServer;
 })();

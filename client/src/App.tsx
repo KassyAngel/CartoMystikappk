@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useEffect as useRouteEffect } from "react";
 import GrimoireModal from './pages/GrimoireModal';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentCancelPage from './pages/PaymentCancelPage';
@@ -16,6 +15,7 @@ import { UserProvider } from "@/contexts/UserContext";
 import OracleMystiqueApp from "@/pages/OracleMystiqueApp";
 import NotFound from "@/pages/not-found";
 import { initialize as initializeAdMob, showBanner, showInterstitialAd } from './admobService';
+import { initializeRevenueCat } from './services/revenueCatService'; // 🆕 Ajouté
 import { config } from '@/config';
 import { getUserEmail } from '@/lib/userStorage';
 
@@ -66,17 +66,18 @@ function App() {
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
 
-  // Initialiser AdMob au démarrage
+  // 🆕 Initialiser AdMob et RevenueCat ensemble
   useEffect(() => {
-    const initAds = async () => {
+    const initServices = async () => {
       try {
         await initializeAdMob();
-        console.log('✅ AdMob initialisé au démarrage');
+        await initializeRevenueCat(); // <-- ajouté ici
+        console.log('✅ Services AdMob + RevenueCat initialisés');
       } catch (error) {
-        console.error('❌ Erreur initialisation AdMob:', error);
+        console.error('❌ Erreur initialisation services:', error);
       }
     };
-    initAds();
+    initServices();
   }, []);
 
   // Afficher la bannière pub si non Premium
@@ -307,7 +308,6 @@ function App() {
         <UserProvider>
           <TooltipProvider>
             <div className="dark relative w-screen h-screen overflow-hidden">
-              {/* 🆕 Style CSS pour espacer le contenu au-dessus de la bannière pub */}
               {!isPremium && (
                 <style>{`
                   .main-content {
