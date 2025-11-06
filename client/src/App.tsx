@@ -267,10 +267,11 @@ function App() {
         console.log(`🚫 ${reading.type} non sauvegardé dans Grimoire (type exclu)`);
       }
 
+      // ✅ EXCLUSION BONUS ROLL DES PUBS GLOBALES
       if (!isPremium) {
         if (reading.type === 'bonusRoll') {
           console.log('🎁 Bonus Roll : pubs gérées en interne (pas de pub globale)');
-          return;
+          return; // ⚠️ IMPORTANT : on sort AVANT d'incrémenter le compteur
         }
 
         const newCount = readingCount + 1;
@@ -293,7 +294,6 @@ function App() {
       console.error('❌ Erreur ajout tirage:', error);
     }
   };
-
   if (isLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center bg-gray-900">
@@ -311,11 +311,11 @@ function App() {
               {!isPremium && (
                 <style>{`
                   .main-content {
-                    padding-bottom: 70px !important;
+                    padding-bottom: 110px !important;
                   }
                   @media (min-width: 640px) {
                     .main-content {
-                      padding-bottom: 80px !important;
+                      padding-bottom: 120px !important;
                     }
                   }
                 `}</style>
