@@ -1774,6 +1774,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailRequired": "L'email est requis.",
     "premium.error.emailInvalid": "L'email n'est pas valide.",
     "premium.emailLabel": "Votre email",
+    "premium.emailHelp": "Pour récupérer votre abonnement",
 
     // PAGE PAIEMENT SUCESS CANCEL
     "payment.success.title": "Paiement réussi !",
@@ -3552,6 +3553,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailRequired": "Email is required.",
     "premium.error.emailInvalid": "Email is not valid.",
     "premium.emailLabel": "Your email",
+    "premium.emailHelp": "To retrieve your subscription",
 
     // PAGE PAIEMENT SUCESS CANCEL
     "payment.success.title": "Payment Successful!",
@@ -5400,6 +5402,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailRequired": "Se requiere correo electrónico.",
     "premium.error.emailInvalid": "El correo electrónico no es válido.",
     "premium.emailLabel": "Tu correo electrónico",
+    "premium.emailHelp": "Para recuperar tu suscripción",
 
     // PAGE PAIEMENT SUCCESS CANCEL
     "payment.success.title": "¡Pago exitoso!",
@@ -7249,6 +7252,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailRequired": "E-Mail ist erforderlich.",
     "premium.error.emailInvalid": "E-Mail ist ungültig.",
     "premium.emailLabel": "Deine E-Mail",
+    "premium.emailHelp": "Um Ihr Abonnement wiederherzustellen",
 
     // PAGE PAIEMENT SUCCESS CANCEL
     "payment.success.title": "Zahlung erfolgreich!",
@@ -9101,6 +9105,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailRequired": "L'email è richiesta.",
     "premium.error.emailInvalid": "L'email non è valida.",
     "premium.emailLabel": "La tua email",
+    "premium.emailHelp": "Per recuperare il tuo abbonamento",
 
     // PAGE PAIEMENT SUCESS CANCEL
     "payment.success.title": "Pagamento riuscito!",

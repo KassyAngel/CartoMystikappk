@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import MysticalButton from '@/components/MysticalButton';
 import BonusRoll from '@/components/BonusRoll';
 import { UserSession } from '@shared/schema';
@@ -15,6 +15,43 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   const { t } = useLanguage();
   const [isComplete, setIsComplete] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const diceContainerRef = useRef<HTMLDivElement>(null);
+
+  // Bloquer le scroll pendant le chargement
+  useEffect(() => {
+    if (isLoading) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+
+      return () => {
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+      };
+    }
+  }, [isLoading]);
+
+  // Empêcher le scroll sur le conteneur des dés uniquement
+  useEffect(() => {
+    const container = diceContainerRef.current;
+    if (!container) return;
+
+    const preventScroll = (e: TouchEvent) => {
+      // Permettre le scroll si l'utilisateur touche en dehors du conteneur des dés
+      const target = e.target as HTMLElement;
+      if (container.contains(target)) {
+        e.preventDefault();
+      }
+    };
+
+    // Bloquer uniquement le scroll tactile sur le conteneur des dés
+    container.addEventListener('touchmove', preventScroll, { passive: false });
+
+    return () => {
+      container.removeEventListener('touchmove', preventScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const loadAd = async () => {
@@ -81,7 +118,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   }
 
   return (
-    <div className="main-content w-full min-h-screen flex flex-col p-2 sm:p-5 pt-14 sm:pt-20 pb-4 relative overflow-hidden">
+    <div className="main-content w-full min-h-screen flex flex-col p-2 sm:p-5 pt-14 sm:pt-20 pb-4 relative overflow-y-auto">
       {/* Fond amélioré avec effet de particules */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033] -z-10">
         <div className="absolute inset-0 opacity-10">
@@ -143,12 +180,16 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
         </div>
       </div>
 
-      {/* Composant des dés - Centré avec cadre */}
+      {/* Composant des dés - Avec blocage scroll local */}
       <div className="flex-1 flex items-center justify-center py-2 sm:py-4">
         <div className="w-full max-w-2xl px-1 sm:px-4">
-          <div className="relative">
+          <div 
+            ref={diceContainerRef}
+            className="relative touch-none"
+            style={{ touchAction: 'none' }}
+          >
             {/* Effet de lueur autour du composant */}
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-orange-500/20 rounded-3xl blur-2xl"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-orange-500/20 rounded-3xl blur-2xl pointer-events-none"></div>
             <BonusRoll onComplete={handleComplete} />
           </div>
         </div>

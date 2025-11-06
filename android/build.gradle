@@ -1,65 +1,29 @@
-plugins {
-    id 'com.android.application'
-    id 'com.google.gms.google-services' // Pour Firebase / AdMob
-    id 'kotlin-android' // si tu utilises Kotlin
-}
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-android {
-    namespace 'com.example.monapp' // Remplace par ton package
-    compileSdk 34
-
-    defaultConfig {
-        applicationId "com.example.monapp" // Remplace par ton package
-        minSdk 21
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
-
-        // Pour RevenueCat et le Billing
-        multiDexEnabled true
+buildscript {
+    
+    repositories {
+        google()
+        mavenCentral()
     }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.7.2'
+        classpath 'com.google.gms:google-services:4.4.2'
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = '17'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
-dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+apply from: "variables.gradle"
 
-    // AndroidX et Material
-    implementation "androidx.core:core-ktx:1.12.0"
-    implementation "androidx.appcompat:appcompat:1.7.0"
-    implementation "com.google.android.material:material:1.12.0"
-
-    // RevenueCat
-    implementation 'com.revenuecat.purchases:purchases:5.6.0' // Vérifie la dernière version sur Maven
-
-    // Google Play Billing
-    implementation 'com.android.billingclient:billing-ktx:6.1.0'
-
-    // Firebase / AdMob
-    implementation 'com.google.firebase:firebase-analytics-ktx:22.3.0'
-    implementation 'com.google.android.gms:play-services-ads:22.3.0'
-
-    // Capacitor (si utilisé)
-    implementation "com.getcapacitor:capacitor-android:5.3.1"
-
-    // Autres dépendances
-    implementation "androidx.multidex:multidex:2.0.1"
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
 }
 
-// Plugin Google Services (pour Firebase/AdMob)
-apply plugin: 'com.google.gms.google-services'
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
