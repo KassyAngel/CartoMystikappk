@@ -24,7 +24,6 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
       if (permission.display === 'granted') {
         console.log('✅ [NOTIF] Permission accordée, création du canal...');
 
-        // Créer le canal de notification
         await LocalNotifications.createChannel({
           id: 'daily-tirage',
           name: t('notification.channel.name'),
@@ -33,40 +32,24 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
           sound: 'default',
           vibration: true,
         });
-        console.log('✅ [NOTIF] Canal créé avec succès');
+        console.log('✅ [NOTIF] Canal créé');
 
-        // 🎲 Choisir une phrase aléatoire parmi 5 variations
+        // Phrases mystiques
         const notificationVariants = [
-          {
-            title: t('notification.variants.1.title'),
-            body: t('notification.variants.1.body')
-          },
-          {
-            title: t('notification.variants.2.title'),
-            body: t('notification.variants.2.body')
-          },
-          {
-            title: t('notification.variants.3.title'),
-            body: t('notification.variants.3.body')
-          },
-          {
-            title: t('notification.variants.4.title'),
-            body: t('notification.variants.4.body')
-          },
-          {
-            title: t('notification.variants.5.title'),
-            body: t('notification.variants.5.body')
-          }
+          { title: t('notification.variants.1.title'), body: t('notification.variants.1.body') },
+          { title: t('notification.variants.2.title'), body: t('notification.variants.2.body') },
+          { title: t('notification.variants.3.title'), body: t('notification.variants.3.body') },
+          { title: t('notification.variants.4.title'), body: t('notification.variants.4.body') },
+          { title: t('notification.variants.5.title'), body: t('notification.variants.5.body') },
         ];
 
         const randomVariant = notificationVariants[Math.floor(Math.random() * notificationVariants.length)];
 
-        console.log('⏰ [NOTIF] Planification pour: 10h00 locale (fuseau utilisateur)');
-        console.log('🌍 [NOTIF] Fuseau horaire détecté:', Intl.DateTimeFormat().resolvedOptions().timeZone);
-        console.log('📝 [NOTIF] Message:', randomVariant.title);
+        console.log('⏰ [NOTIF] Planification pour: 10h00 locale');
+        console.log('🌍 Fuseau horaire:', Intl.DateTimeFormat().resolvedOptions().timeZone);
+        console.log('📝 Message:', randomVariant.title);
 
-        // ✅ Utiliser `on:` pour respecter l'heure locale
-        const scheduleResult = await LocalNotifications.schedule({
+        await LocalNotifications.schedule({
           notifications: [
             {
               id: 1,
@@ -74,13 +57,15 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
               body: randomVariant.body,
               schedule: {
                 on: {
-                  hour: 10,      // ✅ 10h locale de l'utilisateur
-                  minute: 0,     // ✅ À la minute 0
+                  hour: 10,
+                  minute: 0,
                 },
-                repeats: true,     // ✅ Tous les jours
-                allowWhileIdle: true, // ✅ Fonctionne en mode veille
+                repeats: true,
+                allowWhileIdle: true,
               },
               sound: 'default',
+              smallIcon: 'ic_notification', // ton icône personnalisée dans res/drawable
+              style: 'bigText', // ✅ texte dépliable
               actionTypeId: 'OPEN_APP',
               extra: {
                 action: 'daily_reading'
@@ -88,22 +73,18 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
             },
           ],
         });
-        console.log('✅ [NOTIF] Planification terminée:', JSON.stringify(scheduleResult));
+        console.log('✅ Notification quotidienne programmée');
 
-        // Sauvegarder le choix
         localStorage.setItem('notificationPermission', 'granted');
         localStorage.setItem('notificationTime', '10:00');
         localStorage.setItem('notificationTimezone', Intl.DateTimeFormat().resolvedOptions().timeZone);
 
-        console.log('✅ Notifications quotidiennes activées à 10h00 (heure locale)');
-        console.log('🌍 Fuseau:', Intl.DateTimeFormat().resolvedOptions().timeZone);
       } else {
         localStorage.setItem('notificationPermission', 'denied');
-        console.log('❌ [NOTIF] Permission refusée par l\'utilisateur');
+        console.log('❌ Permission refusée');
       }
     } catch (err) {
-      console.error('❌ [NOTIF] Erreur configuration notifications:', err);
-      console.error('❌ [NOTIF] Détails erreur:', JSON.stringify(err));
+      console.error('❌ Erreur notifications:', err);
       localStorage.setItem('notificationPermission', 'error');
     }
 
@@ -113,7 +94,7 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
 
   const handleDecline = () => {
     localStorage.setItem('notificationPermission', 'denied');
-    console.log('🔕 Utilisateur a refusé les notifications');
+    console.log('🔕 Notifications refusées');
     setIsVisible(false);
     setTimeout(onClose, 300);
   };
@@ -156,23 +137,15 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
 
         {/* Boutons */}
         <div className="flex flex-col gap-3">
-          <MysticalButton
-            variant="primary"
-            onClick={handleAccept}
-            className="w-full"
-          >
+          <MysticalButton variant="primary" onClick={handleAccept} className="w-full">
             🔔 {t('notification.modal.accept')}
           </MysticalButton>
 
-          <button
-            onClick={handleDecline}
-            className="text-purple-300 hover:text-purple-100 text-sm transition-colors"
-          >
+          <button onClick={handleDecline} className="text-purple-300 hover:text-purple-100 text-sm transition-colors">
             {t('notification.modal.decline')}
           </button>
         </div>
 
-        {/* Note */}
         <p className="text-purple-400 text-xs text-center mt-4 italic">
           {t('notification.modal.note')}
         </p>
