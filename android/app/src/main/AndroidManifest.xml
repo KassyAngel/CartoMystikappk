@@ -8,10 +8,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- ✅ Clé API RevenueCat (PUBLIQUE Google Play) -->
+        <!-- ✅ Clé API RevenueCat (Google Play) -->
         <meta-data
             android:name="com.revenuecat.purchases.api_key"
-            android:value="goog_VOTRE_CLE_PUBLIQUE_GOOGLE_PLAY" />
+            android:value="goog_FysChuiotCqiQGrxnPIxWGJtyKH" />
 
         <!-- AdMob App ID -->
         <meta-data
@@ -56,4 +56,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+
+    <!-- ✅ AJOUTEZ CETTE LIGNE (Google Play Billing) -->
+    <uses-permission android:name="com.android.vending.BILLING" />
 </manifest>
