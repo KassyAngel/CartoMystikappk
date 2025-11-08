@@ -4,7 +4,6 @@ import { OracleData, OracleCard, UserSession, OracleType } from '@shared/schema'
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getSecureRandomInt } from '@/lib/utils';
 import { getTimeUntilMidnight } from '@/lib/dailyLimit';
-// ❌ SUPPRIMÉ : import { useEffect, useRef } from 'react';
 
 interface CardSection {
   icon: string;
@@ -32,11 +31,10 @@ export default function InterpretationPage({
   selectedCards,
   onBack,
   onHome,
-  onSaveReading, // ⚠️ Gardé dans les props mais non utilisé (sauvegarde déjà faite dans CardGame)
+  onSaveReading,
   onCrystalBall
 }: InterpretationPageProps) {
   const { t } = useLanguage();
-  // ❌ SUPPRIMÉ : const hasSavedRef = useRef(false);
 
   const normalizeCardName = (cardName: string): string => {
     return cardName
@@ -307,11 +305,8 @@ export default function InterpretationPage({
 
   const { sections, finalMessage, greeting } = generateInterpretationSections();
 
-  // ❌ SUPPRIMÉ COMPLÈTEMENT LE useEffect QUI SAUVEGARDAIT (lignes 331-357)
-  // La sauvegarde est déjà faite dans CardGame.tsx !
-
   return (
-    <div className="interpretation-page min-h-screen flex flex-col justify-between p-2 sm:p-3">
+    <div className="interpretation-page min-h-screen flex flex-col justify-between p-2 sm:p-3 pb-20 sm:pb-24">
       <div className="interpretation-header text-center pt-20 sm:pt-24">
         <h1 className="mystical-title text-lg sm:text-xl md:text-2xl font-bold font-serif mb-1 sm:mb-2 leading-tight">
           {isDailyReading 
