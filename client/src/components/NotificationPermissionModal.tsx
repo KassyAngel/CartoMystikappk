@@ -31,6 +31,7 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
           description: t('notification.channel.description'),
           sound: 'default',
           vibration: true,
+          visibility: 1, // ✅ Public (visible sur écran verrouillé)
         });
         console.log('✅ [NOTIF] Canal créé');
 
@@ -64,12 +65,19 @@ export default function NotificationPermissionModal({ onClose }: NotificationPer
                 allowWhileIdle: true,
               },
               sound: 'default',
-              smallIcon: 'ic_notification', // ton icône personnalisée dans res/drawable
-              style: 'bigText', // ✅ texte dépliable
+              smallIcon: 'ic_notification',
+              largeIcon: 'ic_launcher', // ✅ Ajouté pour une meilleure visibilité
+              // ✅ CORRECTION PRINCIPALE : utiliser largeBody au lieu de style
+              largeBody: randomVariant.body, // Texte complet dépliable
+              summaryText: 'CartoMystik', // ✅ Texte résumé en bas
               actionTypeId: 'OPEN_APP',
               extra: {
                 action: 'daily_reading'
-              }
+              },
+              // ✅ Options Android supplémentaires
+              ongoing: false,
+              autoCancel: true, // Se ferme au clic
+              channelId: 'daily-tirage',
             },
           ],
         });
