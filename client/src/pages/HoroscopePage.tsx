@@ -64,6 +64,8 @@ const translateHoroscopeData = (
   };
 
   const translateDescription = (frenchDescription: string): string => {
+    if (!frenchDescription) return t('horoscope.data.descriptions.fallback') || 'Description non disponible';
+
     const descIndex = findDescriptionIndex(frenchDescription, sign);
     if (descIndex !== -1) {
       const key = `horoscope.data.descriptions.${sign}.${descIndex}`;
@@ -74,32 +76,39 @@ const translateHoroscopeData = (
   };
 
   const translateMood = (frenchMood: string): string => {
+    if (!frenchMood) return t('horoscope.data.moods.fallback') || 'Non disponible';
+
     const key = `horoscope.data.moods.${frenchMood}`;
     return t(key) !== key ? t(key) : frenchMood;
   };
 
   const translateColor = (frenchColor: string): string => {
+    if (!frenchColor) return t('horoscope.data.colors.fallback') || 'Non disponible';
+
     const key = `horoscope.data.colors.${frenchColor}`;
     return t(key) !== key ? t(key) : frenchColor;
   };
 
   const translateCompatibility = (frenchCompatibility: string): string => {
+    if (!frenchCompatibility) return t('horoscope.data.compatibility.fallback') || 'Non disponible';
+
     const key = `horoscope.data.compatibility.${frenchCompatibility}`;
     return t(key) !== key ? t(key) : frenchCompatibility;
   };
 
   const translateDate = (sign: string): string => {
     const key = `horoscope.data.dates.${sign}`;
-    return t(key) !== key ? t(key) : horoscope.date;
+    return t(key) !== key ? t(key) : horoscope?.date || '';
   };
 
   return {
     ...horoscope,
-    description: translateDescription(horoscope.description),
-    mood: translateMood(horoscope.mood),
-    luckyColor: translateColor(horoscope.luckyColor),
-    compatibility: translateCompatibility(horoscope.compatibility),
+    description: translateDescription(horoscope?.description),
+    mood: translateMood(horoscope?.mood),
+    luckyColor: translateColor(horoscope?.luckyColor),
+    compatibility: translateCompatibility(horoscope?.compatibility),
     date: translateDate(sign),
+    luckyNumber: horoscope?.luckyNumber || '0', // ✅ Valeur par défaut
   };
 };
 
