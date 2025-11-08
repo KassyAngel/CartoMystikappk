@@ -23,13 +23,13 @@ export async function initializeRevenueCat(): Promise<void> {
     const platform = Capacitor.getPlatform();
     const apiKey =
       platform === 'android'
-        ? 'goog_FysChuiotCqiQGrxnPIxWGJtyKH' // ⚠️ À remplacer
+        ? 'goog_FysChuiotCqiQGrxnPIxWGJtyKH'
         : 'appl_VOTRE_CLE_IOS';
 
-    // ✅ Dans v11, on utilise configure() (et non setup)
+    // ✅ Configure RevenueCat
     await Purchases.configure({ apiKey });
 
-    // Activer les logs
+    // Activer les logs pour debug
     await Purchases.setLogLevel({ level: LOG_LEVEL.DEBUG });
 
     console.log('✅ RevenueCat initialisé avec succès');
@@ -55,7 +55,8 @@ export async function getOfferings(): Promise<PurchasesOfferings | null> {
 }
 
 /**
- * 🛒 Achat d’un package
+ * 🛒 Achat d'un package
+ * 🔴 CORRECTION : Récupère le productIdentifier exact depuis l'entitlement
  */
 export async function purchasePackage(
   aPackage: PurchasesPackage,
@@ -64,20 +65,32 @@ export async function purchasePackage(
   if (!Capacitor.isNativePlatform()) return { success: false };
 
   try {
+    // 1. Connecter l'utilisateur avec son email
     await Purchases.logIn({ appUserID: email });
     console.log(`✅ Utilisateur connecté : ${email}`);
 
+    // 2. Effectuer l'achat via Google Play
     const purchaseResult = await Purchases.purchasePackage({ aPackage });
 
+    // 3. Vérifier si l'entitlement Premium est actif
     const entitlements = purchaseResult.customerInfo.entitlements.active;
     const isPremiumActive = !!entitlements['premium'];
 
     if (isPremiumActive) {
-      const expirationDate = entitlements['premium']?.expirationDate || null;
+      const premiumEntitlement = entitlements['premium'];
 
+      // 🔴 CORRECTION : Utiliser productIdentifier de l'entitlement (plus précis que aPackage.identifier)
+      const productId = premiumEntitlement.productIdentifier;
+      const expirationDate = premiumEntitlement.expirationDate || null;
+
+      console.log('✅ Premium activé !');
+      console.log('📦 Produit acheté:', productId);
+      console.log('📅 Expiration:', expirationDate || 'Non fournie par RevenueCat');
+
+      // 4. Envoyer au backend pour activation
       await activatePremiumOnServer({
         email,
-        productId: aPackage.identifier,
+        productId,
         expirationDate,
       });
 
@@ -88,7 +101,7 @@ export async function purchasePackage(
     return { success: false };
   } catch (error: any) {
     if (error.userCancelled) {
-      console.log('❌ Achat annulé');
+      console.log('❌ Achat annulé par l\'utilisateur');
     } else {
       console.error('❌ Erreur achat:', error);
     }
@@ -98,6 +111,7 @@ export async function purchasePackage(
 
 /**
  * ♻️ Restauration des achats
+ * 🔴 CORRECTION : Récupère le productIdentifier exact depuis l'entitlement
  */
 export async function restorePurchases(
   email: string
@@ -105,25 +119,39 @@ export async function restorePurchases(
   if (!Capacitor.isNativePlatform()) return { success: false };
 
   try {
+    // 1. Connecter l'utilisateur
     await Purchases.logIn({ appUserID: email });
+    console.log(`✅ Utilisateur connecté pour restauration : ${email}`);
+
+    // 2. Restaurer les achats Google Play
     const result = await Purchases.restorePurchases();
 
+    // 3. Vérifier si l'entitlement Premium est actif
     const entitlements = result.customerInfo.entitlements.active;
     const isPremiumActive = !!entitlements['premium'];
 
     if (isPremiumActive) {
-      const expirationDate = entitlements['premium']?.expirationDate || null;
+      const premiumEntitlement = entitlements['premium'];
 
+      // 🔴 CORRECTION : Utiliser productIdentifier de l'entitlement
+      const productId = premiumEntitlement.productIdentifier;
+      const expirationDate = premiumEntitlement.expirationDate || null;
+
+      console.log('✅ Premium restauré !');
+      console.log('📦 Produit restauré:', productId);
+      console.log('📅 Expiration:', expirationDate || 'Non fournie par RevenueCat');
+
+      // 4. Envoyer au backend pour réactivation
       await activatePremiumOnServer({
         email,
-        productId: 'restored',
+        productId,
         expirationDate,
       });
 
       return { success: true, customerInfo: result.customerInfo };
     }
 
-    console.warn('⚠️ Aucun abonnement actif trouvé');
+    console.warn('⚠️ Aucun abonnement actif trouvé lors de la restauration');
     return { success: false };
   } catch (error) {
     console.error('❌ Erreur restauration:', error);
@@ -154,6 +182,7 @@ export async function checkPremiumStatus(email: string): Promise<boolean> {
 
 /**
  * 🚀 Envoi au serveur (activation premium)
+ * 🔴 Cette fonction envoie les données au backend qui calculera la durée
  */
 async function activatePremiumOnServer(data: {
   email: string;
@@ -161,7 +190,7 @@ async function activatePremiumOnServer(data: {
   expirationDate: string | null;
 }): Promise<{ success: boolean }> {
   try {
-    console.log('📤 Activation Premium sur le serveur:', data);
+    console.log('📤 Envoi au backend pour activation Premium:', data);
 
     const response = await fetch(`${config.apiBaseUrl}/api/premium/activate-revenuecat`, {
       method: 'POST',
@@ -170,10 +199,20 @@ async function activatePremiumOnServer(data: {
       body: JSON.stringify(data),
     });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Erreur serveur');
+    }
+
     const result = await response.json();
+
+    console.log('✅ Réponse du backend:', result);
+    console.log('⏱️ Durée:', result.durationMonths || 'Non calculée', 'mois');
+    console.log('📅 Expire le:', result.premiumUntil ? new Date(result.premiumUntil).toLocaleDateString('fr-FR') : 'Non définie');
+
     return { success: result.success };
   } catch (error) {
-    console.error('❌ Erreur d’envoi au serveur:', error);
+    console.error('❌ Erreur d\'envoi au serveur:', error);
     return { success: false };
   }
 }
