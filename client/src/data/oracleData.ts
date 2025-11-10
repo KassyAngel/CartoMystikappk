@@ -83,7 +83,7 @@ export const oracleData: Record<string, OracleData> = {
       { name: 'Temperance', meaning: 'Modération, guérison, équilibre' },
       { name: 'Le Diable', meaning: 'Dépendances, illusions, matérialisme' },
       { name: 'La Maison Dieu', meaning: 'Révélation soudaine, changement radical' },
-      { name: 'L\'Étoile', meaning: 'Espoir, inspiration, guidance divine' },
+      { name: 'L\'Etoile', meaning: 'Espoir, inspiration, guidance divine' },
       { name: 'La Lune', meaning: 'Illusions, subconscient, intuition' },
       { name: 'Le Soleil', meaning: 'Joie, succès, vitalité' },
       { name: 'Le Jugement', meaning: 'Éveil spirituel, renaissance, pardon' },

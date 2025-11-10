@@ -8,7 +8,7 @@ interface GrimoireModalProps {
   onSaveNote: (readingId: string, note: string) => Promise<void>;
   onToggleFavorite: (readingId: string) => Promise<void>;
   onClose: () => void;
-  onClearAll?: () => Promise<void>; // ✅ Nouvelle prop pour effacer
+  onClearAll?: () => Promise<void>;
 }
 
 const GrimoireModal = ({
@@ -23,7 +23,7 @@ const GrimoireModal = ({
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const { t, language } = useLanguage();
 
-  // 🔧 Dédupliquer les lectures (par date et type)
+  // 🔧 Dédupliquer les lectures
   const uniqueReadings = useMemo(() => {
     const seen = new Map<string, Reading>();
 
@@ -96,14 +96,16 @@ const GrimoireModal = ({
     return badges[type as keyof typeof badges] || badges.oracle;
   };
 
+  // ✅ FONCTION CORRIGÉE - GARDE LES ACCENTS SUR LA PREMIÈRE LETTRE
   const normalizeCardName = (cardName: string): string => {
     if (!cardName) return '';
+
     return cardName
       .trim()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '')
-      .replace(/'/g, '');
+      // Supprimer apostrophes ET espaces
+      .replace(/[''\s]/g, '')
+      // ✅ NE PAS normaliser les accents pour garder "É" → "LEtoile"
+      // La clé doit matcher exactement "cards.tarot.LEtoile.name"
   };
 
   const translateCardName = (cardName: string, readingType: string): string => {
@@ -118,6 +120,14 @@ const GrimoireModal = ({
     else if (readingType === 'daily') oracleKey = 'daily';
 
     const normalizedName = normalizeCardName(cardName);
+
+    console.log('🔍 Traduction carte:', {
+      original: cardName,
+      normalized: normalizedName,
+      oracleKey,
+      key: `cards.${oracleKey}.${normalizedName}.name`
+    });
+
     const possibleKeys = [
       `cards.${oracleKey}.${normalizedName}.name`,
       `cards.${oracleKey}.${normalizedName}`,
@@ -128,10 +138,12 @@ const GrimoireModal = ({
     for (const key of possibleKeys) {
       const translated = t(key);
       if (translated && translated !== key && translated !== cardName) {
+        console.log('✅ Traduction trouvée:', translated);
         return translated;
       }
     }
 
+    console.warn('⚠️ Aucune traduction trouvée, retour original:', cardName);
     return cardName;
   };
 
@@ -211,7 +223,7 @@ const GrimoireModal = ({
                 {t("grimoire.clearAll.confirm.title") || "Êtes-vous sûr ?"}
               </p>
               <p className="text-red-300 text-sm">
-                {t("grimoire.clearAll.confirm.message") || "Cette action est irréversible. Tous vos tirages seront supprimés définitivement."}
+                {t("grimoire.clearAll.confirm.message") || "Cette action est irréversible."}
               </p>
             </div>
             <div className="flex gap-2 justify-center">
@@ -265,7 +277,7 @@ const GrimoireModal = ({
                   key={reading.id} 
                   className="bg-black/40 rounded-lg p-4 border border-purple-500/30 hover:border-purple-400/50 transition-all"
                 >
-                  {/* En-tête avec badge et date */}
+                  {/* En-tête */}
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex items-center gap-2">
                       <span className={`${badge.color} text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1.5`}>
@@ -273,7 +285,7 @@ const GrimoireModal = ({
                         <span>{badge.label}</span>
                       </span>
                       {reading.isFavorite && (
-                        <span className="text-yellow-400 text-lg" title={t("grimoire.favorite.remove")}>★</span>
+                        <span className="text-yellow-400 text-lg">★</span>
                       )}
                     </div>
                     <div className="text-right">
@@ -304,7 +316,7 @@ const GrimoireModal = ({
                     </div>
                   )}
 
-                  {/* Bouton pour déplier l'interprétation */}
+                  {/* Bouton déplier */}
                   {reading.answer && (
                     <button
                       onClick={() => toggleExpand(reading.id)}
@@ -315,7 +327,7 @@ const GrimoireModal = ({
                     </button>
                   )}
 
-                  {/* Interprétation complète (dépliable) */}
+                  {/* Interprétation */}
                   {isExpanded && reading.answer && (
                     <div className="bg-indigo-900/40 rounded-lg p-4 mb-3 border border-indigo-500/30">
                       <div className="text-purple-200 text-sm whitespace-pre-wrap leading-relaxed">
@@ -324,9 +336,9 @@ const GrimoireModal = ({
                     </div>
                   )}
 
-                  {/* Notes personnelles */}
+                  {/* Notes */}
                   <div className="mt-3">
-                    <label className="text-purple-300 text-sm font-semibold block mb-2 flex items-center gap-1.5">
+                    <label className="text-purple-300 text-sm font-semibold block mb-2">
                       📝 {t("grimoire.notes.title")}
                     </label>
                     <input
@@ -338,7 +350,7 @@ const GrimoireModal = ({
                     />
                   </div>
 
-                  {/* Bouton favori */}
+                  {/* Favori */}
                   <div className="mt-3 flex gap-2">
                     <button
                       onClick={() => onToggleFavorite(reading.id)}

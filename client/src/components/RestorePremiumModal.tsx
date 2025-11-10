@@ -221,7 +221,7 @@ export default function RestorePremiumModal({
           <p className="text-indigo-300 text-xs">
             {t('premium.restore.help') || 'Besoin d\'aide ?'}{' '}
               <a 
-                href="mailto:kcevent37@gmail.com" 
+                href="mailto:cartomystik@gmail.com" 
                 className="text-indigo-400 hover:text-indigo-300 underline"
               >
               {t('premium.restore.contact') || 'Contactez-nous'}
