@@ -93,7 +93,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
             onClick={handleStartRoll}
             className="w-full py-4 text-lg font-bold bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 shadow-[0_0_30px_rgba(251,191,36,0.6)] transform hover:scale-105 transition-all"
           >
-             {t('oracle.bonusRoll.startButton') || 'Lancer le tirage bonus'}
+            🎲 {t('oracle.bonusRoll.startButton') || 'Lancer le tirage bonus'}
           </MysticalButton>
 
           {/* Bouton retour */}
