@@ -93,7 +93,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
             onClick={handleStartRoll}
             className="w-full py-4 text-lg font-bold bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 shadow-[0_0_30px_rgba(251,191,36,0.6)] transform hover:scale-105 transition-all"
           >
-            🎲 {t('oracle.bonusRoll.startButton') || 'Lancer le tirage bonus'}
+             {t('oracle.bonusRoll.startButton') || 'Lancer le tirage bonus'}
           </MysticalButton>
 
           {/* Bouton retour */}
@@ -150,9 +150,9 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
     );
   }
 
-  // ✅ Vue principale avec les dés (après la pub)
+  // ✅ Vue principale avec les dés (DIRECTEMENT après la pub)
   return (
-    <div className="fixed inset-0 flex flex-col bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033] overflow-hidden">
+    <div className="fixed inset-0 flex flex-col bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033] overflow-hidden pb-24">
       {/* Fond animé */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         {[...Array(30)].map((_, i) => (
@@ -173,7 +173,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
 
       {/* Contenu scrollable */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden">
-        <div className="min-h-full flex flex-col p-4 pt-20 pb-24">
+        <div className="min-h-full flex flex-col p-4 pt-20">
           {/* Header */}
           <div className="text-center mb-6 relative">
             <div className="inline-block mb-4">
@@ -213,7 +213,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
       </div>
 
       {/* Boutons navigation fixes en bas */}
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1a0033] via-[#1a0033]/95 to-transparent pt-4 pb-6 px-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-[#1a0033] via-[#1a0033]/95 to-transparent pt-4 pb-6 px-4">
         <div className="flex gap-3 justify-center max-w-md mx-auto">
           <MysticalButton 
             variant="secondary" 

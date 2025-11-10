@@ -1798,9 +1798,10 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.loadingAd": "📢 Déverrouillage de votre révélation...",
     "oracle.bonusRoll.result": "Résultat",
     "oracle.bonusRoll.cosmicMessage": "Votre message bonus",
-    "oracle.bonusRoll.rollButton": "🎁 Débloquer le Tirage Bonus",
+    "oracle.bonusRoll.rollButton": "🎲 Lancer les Dés",
     "oracle.bonusRoll.newRoll": "✨ Nouveau Tirage Bonus",
     "oracle.bonusRoll.diceResult": "Dés",
+    "oracle.bonusRoll.startButton": "🎁 Débloquer le Tirage Bonus",
 
     // Interprétations identiques à mysteryDice...
     "oracle.bonusRoll.2.title.1": "🌅 Nouveau Départ",
@@ -3577,9 +3578,10 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.loadingAd": "📢 Unlocking your revelation...",
       "oracle.bonusRoll.result": "Result",
       "oracle.bonusRoll.cosmicMessage": "Your bonus message",
-      "oracle.bonusRoll.rollButton": "🎁 Unlock Bonus Roll",
+      "oracle.bonusRoll.rollButton": "🎲 Roll the dice",
       "oracle.bonusRoll.newRoll": "✨ New Bonus Roll",
       "oracle.bonusRoll.diceResult": "Dice",
+    "oracle.bonusRoll.startButton": "🎁 Unlock Bonus Roll",
 
     // Interpretations (2 variations per result)
     "oracle.bonusRoll.2.title.1": "🌅 New Beginning",
@@ -5426,9 +5428,10 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.loadingAd": "📢 Desbloqueando tu revelación...",
       "oracle.bonusRoll.result": "Resultado",
       "oracle.bonusRoll.cosmicMessage": "Tu mensaje bonus",
-      "oracle.bonusRoll.rollButton": "🎁 Desbloquear Tirada Bonus",
+      "oracle.bonusRoll.rollButton": "🎲 Lanzar los dados",
       "oracle.bonusRoll.newRoll": "✨ Nueva Tirada Bonus",
       "oracle.bonusRoll.diceResult": "Dados",
+    "oracle.bonusRoll.startButton": "🎁 Desbloquear la Tirada de Bonificación",
 
     "oracle.bonusRoll.2.title.1": "🌅 Nuevo Comienzo",
     "oracle.bonusRoll.2.message.1": "Las estrellas se alinean para un nuevo comienzo. ¡Doble suerte te acompaña hoy!",
@@ -7276,9 +7279,10 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.loadingAd": "📢 Entsperren Ihrer Offenbarung...",
       "oracle.bonusRoll.result": "Ergebnis",
       "oracle.bonusRoll.cosmicMessage": "Ihre Bonus-Nachricht",
-      "oracle.bonusRoll.rollButton": "🎁 Bonus Wurf Entsperren",
+      "oracle.bonusRoll.rollButton": "🎲 Würfle die Würfel",
       "oracle.bonusRoll.newRoll": "✨ Neuer Bonus Wurf",
       "oracle.bonusRoll.diceResult": "Würfel",
+    "oracle.bonusRoll.startButton": "🎁 Bonuswurf freischalten",
 
     "oracle.bonusRoll.2.title.1": "🌅 Neuer Anfang",
     "oracle.bonusRoll.2.message.1": "Die Sterne richten sich für einen Neuanfang aus. Doppeltes Glück begleitet Sie heute!",
@@ -9129,9 +9133,10 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.loadingAd": "📢 Sblocco della tua rivelazione...",
       "oracle.bonusRoll.result": "Risultato",
       "oracle.bonusRoll.cosmicMessage": "Il tuo messaggio bonus",
-      "oracle.bonusRoll.rollButton": "🎁 Sblocca Lancio Bonus",
+      "oracle.bonusRoll.rollButton": "🎲 Lancia i dadi",
       "oracle.bonusRoll.newRoll": "✨ Nuovo Lancio Bonus",
       "oracle.bonusRoll.diceResult": "Dadi",
+    "oracle.bonusRoll.startButton": "🎁 Sblocca il Tiro Bonus",
 
     "oracle.bonusRoll.2.title.1": "🌅 Nuovo Inizio",
     "oracle.bonusRoll.2.message.1": "Le stelle si allineano per un nuovo inizio. Doppia fortuna ti accompagna oggi!",
