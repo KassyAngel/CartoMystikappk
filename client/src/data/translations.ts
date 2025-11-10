@@ -1757,6 +1757,11 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.conditions.line2": "✓ Paiement unique, SANS renouvellement automatique",
     "premium.conditions.line3": "Aucun remboursement après paiement. Accès Premium valable pour la durée choisie.",
     "premium.conditions.line4": "Vous serez notifié 3 jours avant l'expiration de votre accès.",
+    "premium.securePayment": "Paiement sécurisé par",
+    "premium.restoreSubscription": "Restaurer un abonnement",
+    "premium.backToPurchases": "Retour aux achats",
+    "premium.payment.googlePlay": "Paiement Google Play",
+    "premium.payment.stripe": "Paiement Web Stripe",
 
     //PREMIUM RESTOR
     "premium.restore.title": "Restaurer mon abonnement",
@@ -3537,6 +3542,11 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.conditions.line2": "✓ One-time payment, NO automatic renewal",
     "premium.conditions.line3": "No refund after payment. Premium access valid for the selected duration.",
     "premium.conditions.line4": "You will be notified 3 days before your access expires.",
+    "premium.securePaymentBy": "Secure payment by",
+    "premium.restoreSubscription": "Restore a subscription",
+    "premium.backToPurchases": "Back to purchases",
+    "premium.payment.googlePlay": "Google Play Payment",
+    "premium.payment.stripe": "Stripe Web Payment",
 
     // PREMIUM RESTOR
     "premium.restore.title": "Restore my subscription",
@@ -5387,6 +5397,11 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.conditions.line2": "✓ Pago único, SIN renovación automática",
     "premium.conditions.line3": "No hay reembolso después del pago. El acceso Premium es válido por la duración seleccionada.",
     "premium.conditions.line4": "Se te notificará 3 días antes de que expire tu acceso.",
+    "premium.securePaymentBy": "Pago seguro por",
+    "premium.restoreSubscription": "Restaurar una suscripción",
+    "premium.backToPurchases": "Volver a las compras",
+    "premium.payment.googlePlay": "Pago de Google Play",
+    "premium.payment.stripe": "Pago web con Stripe",
 
     // PREMIUM RESTOR
     "premium.restore.title": "Restaurar mi suscripción",
@@ -7238,6 +7253,11 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.conditions.line2": "✓ Einmalzahlung, KEINE automatische Verlängerung",
     "premium.conditions.line3": "Keine Rückerstattung nach Zahlung. Premium-Zugang gilt für die gewählte Dauer.",
     "premium.conditions.line4": "Sie werden 3 Tage vor Ablauf Ihres Zugangs benachrichtigt.",
+    "premium.securePaymentBy": "Sichere Zahlung über",
+    "premium.restoreSubscription": "Abonnement wiederherstellen",
+    "premium.backToPurchases": "Zurück zu den Käufen",
+    "premium.payment.googlePlay": "Google Play-Zahlung",
+    "premium.payment.stripe": "Stripe-Webzahlung",
 
     // PREMIUM RESTOR
     "premium.restore.title": "Mein Abonnement wiederherstellen",
@@ -9092,6 +9112,11 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.conditions.line2": "✓ Pagamento una tantum, SENZA rinnovo automatico",
     "premium.conditions.line3": "Nessun rimborso dopo il pagamento. L'accesso Premium è valido per la durata scelta.",
     "premium.conditions.line4": "Riceverai una notifica 3 giorni prima della scadenza del tuo accesso.",
+    "premium.securePaymentBy": "Pagamento sicuro tramite",
+    "premium.restoreSubscription": "Ripristina un abbonamento",
+    "premium.backToPurchases": "Torna agli acquisti",
+    "premium.payment.googlePlay": "Pagamento Google Play",
+    "premium.payment.stripe": "Pagamento web Stripe",
 
     // PREMIUM RESTOR
     "premium.restore.title": "Ripristina il mio abbonamento",
