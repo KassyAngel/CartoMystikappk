@@ -69,7 +69,7 @@ export const oracleData: Record<string, OracleData> = {
       { name: 'Le Fou', meaning: 'Nouveaux départs, spontanéité, liberté' },
       { name: 'Le Bateleur', meaning: 'Créativité, communication, nouveau projet' },
       { name: 'La Papesse', meaning: 'Intuition, mystère, connaissance cachée' },
-      { name: 'L\'Impératrice', meaning: 'Fertilité, abondance, créativité féminine' },
+      { name: 'L\'Imperatrice', meaning: 'Fertilité, abondance, créativité féminine' },
       { name: 'L\'Empereur', meaning: 'Autorité, structure, leadership' },
       { name: 'Le Pape', meaning: 'Sagesse traditionnelle, guidance spirituelle' },
       { name: 'L\'Amoureux', meaning: 'Choix, relations, harmonie' },
