@@ -291,7 +291,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
                       disabled={isLoading}
                       className="w-full"
                     >
-                      {isLoading ? '⏳ Chargement...' : `🛒 ${t('premium.buy') || 'Acheter'}`}
+                      {isLoading ? `⏳ ${t('premium.button.loading') || 'Chargement...'}` : `🛒 ${t('premium.buy') || 'Acheter'}`}
                     </MysticalButton>
                   </div>
                 ))}
@@ -299,7 +299,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
             ) : !error ? (
               <div className="text-center py-8">
                 <div className="animate-spin text-4xl mb-4">⏳</div>
-                <p className="text-purple-200">Chargement des offres...</p>
+                <p className="text-purple-200">{t('premium.loading.offers') || 'Chargement des offres...'}</p>
               </div>
             ) : null}
           </>
@@ -401,7 +401,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
               disabled={isLoading}
               className="w-full mt-4"
             >
-              {isLoading ? '⏳ Restauration...' : `♻️ ${t('premium.restore') || 'Restaurer'}`}
+              {isLoading ? `⏳ ${t('premium.button.restoring') || 'Restauration...'}` : `♻️ ${t('premium.restore') || 'Restaurer'}`}
             </MysticalButton>
           </div>
         )}
@@ -419,7 +419,10 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
             onClick={() => setShowRestoreForm(!showRestoreForm)}
             className="text-purple-300 hover:text-purple-100 text-sm transition-colors w-full text-center mb-4"
           >
-            {showRestoreForm ? '← Retour aux achats' : '♻️ Restaurer un abonnement'}
+            {showRestoreForm 
+              ? `← ${t('premium.backToPurchase') || 'Retour aux achats'}` 
+              : `♻️ ${t('premium.restoreSubscription') || 'Restaurer un abonnement'}`
+            }
           </button>
         )}
 
@@ -442,7 +445,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
 
         {/* Logo */}
         <div className="mt-3 flex items-center justify-center gap-2 text-purple-300 text-xs">
-          <span>Powered by</span>
+          <span>{t('premium.poweredBy') || 'Powered by'}</span>
           {isNative ? (
             <span className="font-semibold">Google Play</span>
           ) : (

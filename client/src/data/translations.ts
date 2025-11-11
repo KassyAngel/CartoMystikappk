@@ -1762,6 +1762,9 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.backToPurchases": "Retour aux achats",
     "premium.payment.googlePlay": "Paiement Google Play",
     "premium.payment.stripe": "Paiement Web Stripe",
+    "premium.restoreEmailLabel": 'Votre Email',
+    "premium.restore": 'Restaurer',
+    "premium.buy": 'Acheter',
 
     //PREMIUM RESTOR
     "premium.restore.title": "Restaurer mon abonnement",
@@ -1780,6 +1783,11 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailInvalid": "L'email n'est pas valide.",
     "premium.emailLabel": "Votre email",
     "premium.emailHelp": "Pour récupérer votre abonnement",
+    "premium.backToPurchase": 'Retour aux achats',
+    "premium.button.loading": 'Chargement...',
+    "premium.loading.offers": 'Chargement des offres...',
+    "premium.button.restoring": 'Restauration...',
+    "premium.poweredBy": 'Powered by',
 
     // PAGE PAIEMENT SUCESS CANCEL
     "payment.success.title": "Paiement réussi !",
@@ -3548,6 +3556,9 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.backToPurchases": "Back to purchases",
     "premium.payment.googlePlay": "Google Play Payment",
     "premium.payment.stripe": "Stripe Web Payment",
+    "premium.restoreEmailLabel": "Your Email",
+    "premium.restore": "Restore",
+    "premium.buy": "Buy",
 
     // PREMIUM RESTOR
     "premium.restore.title": "Restore my subscription",
@@ -3566,6 +3577,11 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailInvalid": "Email is not valid.",
     "premium.emailLabel": "Your email",
     "premium.emailHelp": "To retrieve your subscription",
+    "premium.poweredBy": 'Powered by',
+    "premium.backToPurchase": "Back to Purchases",
+    "premium.button.loading": "Loading...",
+    "premium.loading.offers": "Loading offers...",
+    "premium.button.restoring": "Restoring...",
 
     // PAGE PAIEMENT SUCESS CANCEL
     "payment.success.title": "Payment Successful!",
@@ -5404,6 +5420,9 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.backToPurchases": "Volver a las compras",
     "premium.payment.googlePlay": "Pago de Google Play",
     "premium.payment.stripe": "Pago web con Stripe",
+    "premium.restoreEmailLabel": "Tu correo electrónico",
+    "premium.restore": "Restaurar",
+    "premium.buy": "Comprar",
 
     // PREMIUM RESTOR
     "premium.restore.title": "Restaurar mi suscripción",
@@ -5422,6 +5441,11 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailInvalid": "El correo electrónico no es válido.",
     "premium.emailLabel": "Tu correo electrónico",
     "premium.emailHelp": "Para recuperar tu suscripción",
+    "premium.poweredBy": 'Powered by',
+    "premium.backToPurchase": "Volver a las compras",
+    "premium.button.loading": "Cargando...",
+    "premium.loading.offers": "Cargando ofertas...",
+    "premium.button.restoring": "Restaurando...",
 
     // PAGE PAIEMENT SUCCESS CANCEL
     "payment.success.title": "¡Pago exitoso!",
@@ -7261,6 +7285,9 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.backToPurchases": "Zurück zu den Käufen",
     "premium.payment.googlePlay": "Google Play-Zahlung",
     "premium.payment.stripe": "Stripe-Webzahlung",
+    "premium.restoreEmailLabel": "Deine E-Mail",
+    "premium.restore": "Wiederherstellen",
+    "premium.buy": "Kaufen",
 
     // PREMIUM RESTOR
     "premium.restore.title": "Mein Abonnement wiederherstellen",
@@ -7279,6 +7306,11 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailInvalid": "E-Mail ist ungültig.",
     "premium.emailLabel": "Deine E-Mail",
     "premium.emailHelp": "Um Ihr Abonnement wiederherzustellen",
+    "premium.poweredBy": 'Powered by',
+    "premium.backToPurchase": "Zurück zu den Käufen",
+    "premium.button.loading": "Wird geladen...",
+    "premium.loading.offers": "Angebote werden geladen...",
+    "premium.button.restoring": "Wird wiederhergestellt...",
 
     // PAGE PAIEMENT SUCCESS CANCEL
     "payment.success.title": "Zahlung erfolgreich!",
@@ -9121,6 +9153,9 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.backToPurchases": "Torna agli acquisti",
     "premium.payment.googlePlay": "Pagamento Google Play",
     "premium.payment.stripe": "Pagamento web Stripe",
+    "premium.restoreEmailLabel": "La tua email",
+    "premium.restore": "Ripristina",
+    "premium.buy": "Acquista",
 
     // PREMIUM RESTOR
     "premium.restore.title": "Ripristina il mio abbonamento",
@@ -9139,6 +9174,11 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.emailInvalid": "L'email non è valida.",
     "premium.emailLabel": "La tua email",
     "premium.emailHelp": "Per recuperare il tuo abbonamento",
+    "premium.poweredBy": 'Powered by',
+    "premium.backToPurchase": "Torna agli acquisti",
+    "premium.button.loading": "Caricamento...",
+    "premium.loading.offers": "Caricamento delle offerte...",
+    "premium.button.restoring": "Ripristino...",
 
     // PAGE PAIEMENT SUCESS CANCEL
     "payment.success.title": "Pagamento riuscito!",
