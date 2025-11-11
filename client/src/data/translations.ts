@@ -1807,7 +1807,8 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.newRoll": "✨ Nouveau Tirage Bonus",
     "oracle.bonusRoll.diceResult": "Dés",
     "oracle.bonusRoll.startButton": "🎁 Débloquer le Tirage Bonus",
-
+    "oracle.bonusRoll.exclusiveBadge":'BONUS EXCLUSIF',
+    
     // Interprétations identiques à mysteryDice...
     "oracle.bonusRoll.2.title.1": "🌅 Nouveau Départ",
     "oracle.bonusRoll.2.message.1": "Les étoiles s'alignent pour un nouveau commencement. Double chance vous accompagne aujourd'hui !",
@@ -3592,7 +3593,8 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.newRoll": "✨ New Bonus Roll",
       "oracle.bonusRoll.diceResult": "Dice",
     "oracle.bonusRoll.startButton": "🎁 Unlock Bonus Roll",
-
+    "oracle.bonusRoll.exclusiveBadge": 'EXCLUSIVE BONUS',
+      
     // Interpretations (2 variations per result)
     "oracle.bonusRoll.2.title.1": "🌅 New Beginning",
     "oracle.bonusRoll.2.message.1": "The stars align for a fresh start. Double luck accompanies you today!",
@@ -5447,7 +5449,8 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.newRoll": "✨ Nueva Tirada Bonus",
       "oracle.bonusRoll.diceResult": "Dados",
     "oracle.bonusRoll.startButton": "🎁 Desbloquear la Tirada de Bonificación",
-
+    "oracle.bonusRoll.exclusiveBadge": 'BONO EXCLUSIVO',
+      
     "oracle.bonusRoll.2.title.1": "🌅 Nuevo Comienzo",
     "oracle.bonusRoll.2.message.1": "Las estrellas se alinean para un nuevo comienzo. ¡Doble suerte te acompaña hoy!",
     "oracle.bonusRoll.2.title.2": "✨ Renacimiento Cósmico",
@@ -7303,7 +7306,8 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.newRoll": "✨ Neuer Bonus Wurf",
       "oracle.bonusRoll.diceResult": "Würfel",
     "oracle.bonusRoll.startButton": "🎁 Bonuswurf freischalten",
-
+    "oracle.bonusRoll.exclusiveBadge": 'EXKLUSIVER BONUS',
+      
     "oracle.bonusRoll.2.title.1": "🌅 Neuer Anfang",
     "oracle.bonusRoll.2.message.1": "Die Sterne richten sich für einen Neuanfang aus. Doppeltes Glück begleitet Sie heute!",
     "oracle.bonusRoll.2.title.2": "✨ Kosmische Wiedergeburt",
@@ -9162,6 +9166,7 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.newRoll": "✨ Nuovo Lancio Bonus",
       "oracle.bonusRoll.diceResult": "Dadi",
     "oracle.bonusRoll.startButton": "🎁 Sblocca il Tiro Bonus",
+    "oracle.bonusRoll.exclusiveBadge": 'BONUS ESCLUSIVO',
 
     "oracle.bonusRoll.2.title.1": "🌅 Nuovo Inizio",
     "oracle.bonusRoll.2.message.1": "Le stelle si allineano per un nuovo inizio. Doppia fortuna ti accompagna oggi!",
