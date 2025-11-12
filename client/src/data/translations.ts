@@ -1750,6 +1750,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.error.activation": "Erreur lors de l'activation de l'abonnement",
     "premium.error.payment": "Erreur lors du paiement. Veuillez réessayer.",
     "premium.error.invalidEmail": "L'email n'est pas valide.",
+    "premium.error.noActivePremium": "Aucun abonnement actif trouvé",
     
     // Premium
     "premium.manage": "Gérer mon abonnement (annuler, factures...)",
@@ -3562,6 +3563,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.restore": "Restore",
     "premium.buy": "Buy",
     "premium.error.invalidEmail": "The email address is not valid.",
+    "premium.error.noActivePremium": "No active subscription found",
     
     // PREMIUM RESTOR
     "premium.restore.title": "Restore my subscription",
@@ -5427,6 +5429,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.restore": "Restaurar",
     "premium.buy": "Comprar",
     "premium.error.invalidEmail": "El correo electrónico no es válido.",
+    "premium.error.noActivePremium": "No se encontró ninguna suscripción activa",
       
     // PREMIUM RESTOR
     "premium.restore.title": "Restaurar mi suscripción",
@@ -7293,6 +7296,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.restore": "Wiederherstellen",
     "premium.buy": "Kaufen",
     "premium.error.invalidEmail": "Die E-Mail-Adresse ist ungültig.",
+    "premium.error.noActivePremium": "Kein aktives Abonnement gefunden",
       
     // PREMIUM RESTOR
     "premium.restore.title": "Mein Abonnement wiederherstellen",
@@ -9162,6 +9166,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.restore": "Ripristina",
     "premium.buy": "Acquista",
     "premium.error.invalidEmail": "L'indirizzo email non è valido.",
+    "premium.error.noActivePremium": "Nessun abbonamento attivo trovato",
 
     // PREMIUM RESTOR
     "premium.restore.title": "Ripristina il mio abbonamento",
