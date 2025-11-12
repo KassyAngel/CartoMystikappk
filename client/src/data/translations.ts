@@ -1749,6 +1749,8 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.success": "Abonnement activé avec succès ! Profitez de votre expérience sans pub et du Grimoire illimité.",
     "premium.error.activation": "Erreur lors de l'activation de l'abonnement",
     "premium.error.payment": "Erreur lors du paiement. Veuillez réessayer.",
+    "premium.error.invalidEmail": "L'email n'est pas valide.",
+    
     // Premium
     "premium.manage": "Gérer mon abonnement (annuler, factures...)",
     "premium.expired": "Votre accès Premium a expiré",
@@ -3559,7 +3561,8 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.restoreEmailLabel": "Your Email",
     "premium.restore": "Restore",
     "premium.buy": "Buy",
-
+    "premium.error.invalidEmail": "The email address is not valid.",
+    
     // PREMIUM RESTOR
     "premium.restore.title": "Restore my subscription",
     "premium.restore.subtitle": "Already Premium? Recover your access",
@@ -5423,7 +5426,8 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.restoreEmailLabel": "Tu correo electrónico",
     "premium.restore": "Restaurar",
     "premium.buy": "Comprar",
-
+    "premium.error.invalidEmail": "El correo electrónico no es válido.",
+      
     // PREMIUM RESTOR
     "premium.restore.title": "Restaurar mi suscripción",
     "premium.restore.subtitle": "¿Ya eres Premium? Recupera tu acceso",
@@ -7288,7 +7292,8 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.restoreEmailLabel": "Deine E-Mail",
     "premium.restore": "Wiederherstellen",
     "premium.buy": "Kaufen",
-
+    "premium.error.invalidEmail": "Die E-Mail-Adresse ist ungültig.",
+      
     // PREMIUM RESTOR
     "premium.restore.title": "Mein Abonnement wiederherstellen",
     "premium.restore.subtitle": "Schon Premium? Stelle deinen Zugriff wieder her",
@@ -9156,6 +9161,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.restoreEmailLabel": "La tua email",
     "premium.restore": "Ripristina",
     "premium.buy": "Acquista",
+    "premium.error.invalidEmail": "L'indirizzo email non è valido.",
 
     // PREMIUM RESTOR
     "premium.restore.title": "Ripristina il mio abbonamento",

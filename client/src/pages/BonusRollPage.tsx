@@ -37,7 +37,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   // ✅ Écran de démarrage
   if (!showDice && !isLoadingAd) {
     return (
-      <div className="main-content w-full min-h-screen flex flex-col items-center justify-center p-4 pb-24 relative overflow-hidden">
+      <div className="main-content w-full min-h-screen flex flex-col items-center justify-center p-4 pb-24 relative overflow-x-hidden overflow-y-auto">
         {/* Fond animé */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033]">
           <div className="absolute inset-0 opacity-20">
@@ -59,27 +59,29 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
         </div>
 
         {/* Contenu */}
-        <div className="text-center relative z-10 px-4 w-full max-w-md">
+        <div className="text-center relative z-10 px-3 w-full max-w-md">
           {/* Badge BONUS - Texte adaptatif */}
-          <div className="inline-block mb-6">
-            <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wide sm:tracking-wider shadow-lg animate-pulse">
-              <span className="whitespace-nowrap">🎁 {t('oracle.bonusRoll.exclusiveBadge') || 'BONUS EXCLUSIF'}</span>
+          <div className="inline-block mb-4 sm:mb-6">
+            <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-wide shadow-lg animate-pulse max-w-[90vw]">
+              <span className="whitespace-nowrap overflow-hidden text-ellipsis block">
+                🎁 {t('oracle.bonusRoll.exclusiveBadge') || 'BONUS EXCLUSIF'}
+              </span>
             </div>
           </div>
 
           {/* Icône centrale */}
-          <div className="relative w-28 h-28 mx-auto mb-6">
+          <div className="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-4 sm:mb-6">
             <div className="absolute inset-0 bg-amber-500/30 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500 via-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-4 border-yellow-300 shadow-[0_0_40px_rgba(251,191,36,0.7)]">
-              <span className="text-6xl animate-bounce">🎲</span>
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-500 via-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-3 sm:border-4 border-yellow-300 shadow-[0_0_40px_rgba(251,191,36,0.7)]">
+              <span className="text-5xl sm:text-6xl animate-bounce">🎲</span>
             </div>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-bold font-serif mb-4 leading-tight bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-300 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(251,191,36,0.5)] px-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif mb-3 sm:mb-4 leading-tight bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-300 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(251,191,36,0.5)] px-2 break-words">
             {t('oracle.bonusRoll.title')}
           </h1>
 
-          <div className="text-amber-50 text-sm sm:text-base mb-6 leading-relaxed bg-purple-900/60 py-3 sm:py-4 px-3 sm:px-4 rounded-xl border border-amber-400/50 shadow-[0_0_15px_rgba(255,215,0,0.3)] min-h-[70px] sm:min-h-[80px] flex items-center justify-center">
+          <div className="text-amber-50 text-xs sm:text-sm mb-4 sm:mb-6 leading-snug sm:leading-relaxed bg-purple-900/60 py-2.5 sm:py-3 px-2.5 sm:px-3 rounded-lg sm:rounded-xl border border-amber-400/50 shadow-[0_0_15px_rgba(255,215,0,0.3)] min-h-[60px] sm:min-h-[70px] flex items-center justify-center">
             <p className="text-center break-words">
               ✨ <span className="font-semibold text-amber-300">{t('oracle.bonusRoll.description')}</span>
             </p>
@@ -88,9 +90,9 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
           {/* Bouton avec texte qui s'adapte */}
           <MysticalButton 
             onClick={handleStartRoll}
-            className="w-full py-3 px-3 sm:px-4 text-sm sm:text-base font-bold bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 shadow-[0_0_30px_rgba(251,191,36,0.6)] transform hover:scale-105 transition-all min-h-[52px] sm:min-h-[56px] flex items-center justify-center"
+            className="w-full py-2.5 sm:py-3 px-2 sm:px-3 text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 shadow-[0_0_30px_rgba(251,191,36,0.6)] transform hover:scale-105 transition-all min-h-[48px] sm:min-h-[52px] flex items-center justify-center"
           >
-            <span className="text-center leading-tight break-words px-1">
+            <span className="text-center leading-tight break-words block max-w-full">
                {t('oracle.bonusRoll.startButton') || 'Débloquer le Tirage Bonus'}
             </span>
           </MysticalButton>
@@ -98,7 +100,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
           {/* Bouton retour */}
           <button
             onClick={onBack}
-            className="mt-4 text-purple-300 hover:text-purple-100 text-sm transition-colors"
+            className="mt-3 sm:mt-4 text-purple-300 hover:text-purple-100 text-xs sm:text-sm transition-colors"
           >
             ← {t('common.back')}
           </button>
@@ -107,7 +109,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
     );
   }
 
-  // ✅ Loader pendant la pub (conservé pour compatibilité future)
+  // ✅ Loader pendant la pub
   if (isLoadingAd) {
     return (
       <div className="main-content w-full min-h-screen flex flex-col items-center justify-center p-5 relative overflow-hidden">
@@ -151,11 +153,11 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
     );
   }
 
-  // ✅ Vue principale avec les dés - FIXE sans défilement
+  // ✅ Vue principale avec les dés - Scrollable verticalement uniquement
   return (
-    <div className="main-content w-full h-screen flex flex-col p-2 sm:p-4 pt-14 sm:pt-20 pb-[140px] relative overflow-hidden">
+    <div className="main-content w-full min-h-screen flex flex-col p-2 sm:p-4 pt-14 sm:pt-16 pb-[140px] relative overflow-x-hidden overflow-y-auto">
       {/* Fond amélioré avec effet de particules */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033] -z-10">
+      <div className="fixed inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033] -z-10">
         <div className="absolute inset-0 opacity-10">
           {[...Array(30)].map((_, i) => (
             <div
@@ -175,33 +177,33 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
       </div>
 
       {/* Header compact */}
-      <div className="text-center mb-3 sm:mb-4 relative flex-shrink-0">
+      <div className="text-center mb-2 sm:mb-3 relative flex-shrink-0 px-2">
         {/* Badge BONUS - Texte court adaptatif */}
-        <div className="inline-block mb-2">
-          <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-xs font-bold uppercase tracking-wide shadow-lg animate-pulse max-w-[95vw]">
+        <div className="inline-block mb-1.5 sm:mb-2">
+          <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[8px] sm:text-[9px] font-bold uppercase tracking-wide shadow-lg animate-pulse max-w-[85vw]">
             <span className="whitespace-nowrap overflow-hidden text-ellipsis block">
-              🎁 {t('oracle.bonusRoll.exclusiveBadge') || 'BONUS EXCLUSIF'}
+              🎁 {t('oracle.bonusRoll.exclusiveBadge') || 'BONUS'}
             </span>
           </div>
         </div>
 
         {/* Icône centrale */}
-        <div className="flex justify-center mb-2">
-          <div className="relative w-10 h-10 sm:w-12 sm:h-12">
+        <div className="flex justify-center mb-1.5 sm:mb-2">
+          <div className="relative w-8 h-8 sm:w-10 sm:h-10">
             <div className="absolute inset-0 bg-amber-400/30 rounded-full blur-xl animate-pulse"></div>
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500 via-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-2 sm:border-3 border-yellow-300 shadow-[0_0_20px_rgba(251,191,36,0.6)]">
-              <span className="text-2xl sm:text-3xl animate-bounce">🎲</span>
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-500 via-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-2 border-yellow-300 shadow-[0_0_20px_rgba(251,191,36,0.6)]">
+              <span className="text-xl sm:text-2xl animate-bounce">🎲</span>
             </div>
           </div>
         </div>
 
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif mb-2 leading-tight px-2
+        <h1 className="text-lg sm:text-xl md:text-2xl font-bold font-serif mb-1.5 sm:mb-2 leading-tight px-2
           bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-300 bg-clip-text text-transparent
           drop-shadow-[0_0_15px_rgba(251,191,36,0.5)] break-words">
           {t('oracle.bonusRoll.title')}
         </h1>
 
-        <div className="text-purple-100 text-xs sm:text-sm max-w-md mx-auto px-3 py-2 bg-purple-900/60 rounded-lg border border-amber-400/30">
+        <div className="text-purple-100 text-[10px] sm:text-xs max-w-md mx-auto px-2 sm:px-3 py-1.5 sm:py-2 bg-purple-900/60 rounded-lg border border-amber-400/30">
           <span className="font-medium text-amber-300 break-words leading-snug block">
             ✨ {t('oracle.bonusRoll.description')}
           </span>
@@ -209,34 +211,34 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
       </div>
 
       {/* Composant des dés - Centré et adaptatif */}
-      <div className="flex-1 flex items-center justify-center overflow-hidden py-2">
-        <div className="w-full max-w-2xl px-1 sm:px-2 h-full flex items-center">
-          <div className="relative w-full">
+      <div className="flex-1 flex items-center justify-center py-2 sm:py-3 min-h-0">
+        <div className="w-full max-w-2xl px-1 sm:px-2">
+          <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-orange-500/20 rounded-2xl blur-xl"></div>
             <BonusRoll onComplete={handleComplete} />
           </div>
         </div>
       </div>
 
-      {/* Boutons navigation - Position fixe */}
+      {/* Boutons navigation - Fixés en bas avec texte adaptatif */}
       <div className="flex-shrink-0 pt-2 sm:pt-3 pb-2">
-        <div className="flex gap-2 justify-center max-w-md mx-auto px-2">
+        <div className="flex gap-1.5 sm:gap-2 justify-center max-w-md mx-auto px-2">
           <MysticalButton 
             variant="secondary" 
             onClick={onBack}
-            className="flex-1 min-h-[44px] sm:min-h-[48px] text-sm sm:text-base font-semibold"
+            className="flex-1 min-h-[40px] sm:min-h-[44px] text-[11px] sm:text-sm font-semibold px-2"
           >
-            <span className="break-words">← {t('common.back')}</span>
+            <span className="break-words block leading-tight">← {t('common.back')}</span>
           </MysticalButton>
 
           {isComplete && (
             <MysticalButton 
               onClick={onBack}
-              className="flex-1 min-h-[44px] sm:min-h-[48px] text-sm sm:text-base font-semibold
+              className="flex-1 min-h-[40px] sm:min-h-[44px] text-[11px] sm:text-sm font-semibold px-2
                 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500
                 shadow-[0_0_20px_rgba(251,191,36,0.5)]"
             >
-              <span className="break-words">{t('oracle.backToOracles') || 'Retour'} →</span>
+              <span className="break-words block leading-tight">{t('oracle.backToOracles') || 'Retour'} →</span>
             </MysticalButton>
           )}
         </div>
