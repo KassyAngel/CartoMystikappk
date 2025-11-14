@@ -11,9 +11,10 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 🆕 Disclaimer - AJOUTER ICI
     "disclaimer.title": "Avertissement Important",
-    "disclaimer.text": "Cette application est uniquement destinée au DIVERTISSEMENT. Les lectures de tarot et interprétations sont générées de manière aléatoire et ne constituent pas des conseils professionnels. CartoMystik ne prétend pas prédire l'avenir réel.",
+    "disclaimer.text": "CartoMystik est une application de divertissement et de développement personnel. Les tirages de cartes, horoscopes et interprétations proposés sont à but récréatif uniquement et ne constituent en aucun cas des conseils médicaux, juridiques, financiers ou professionnels. Nous vous encourageons à consulter des professionnels qualifiés pour toute décision importante concernant votre santé, vos finances ou votre avenir.",
+    "disclaimer.note": "En continuant, vous acceptez d'utiliser cette application à des fins de divertissement",
     "disclaimer.accept": "J'ai compris",
-    "disclaimer.note": "Pour le divertissement uniquement",
+    "disclaimer.legal": "Cette application est conforme au RGPD",
 
     // No-repeat system
     "system.antirepeat.loading": "Les cartes se mélangent...",
@@ -1899,9 +1900,10 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 🆕 Disclaimer - ADD HERE
     "disclaimer.title": "Important Disclaimer",
-    "disclaimer.text": "This app is intended for ENTERTAINMENT purposes only. Tarot readings and interpretations are randomly generated and do not constitute professional advice. CartoMystik does not claim to predict the actual future.",
-    "disclaimer.accept": "I Understand",
-    "disclaimer.note": "For entertainment purposes only",
+      "disclaimer.text": "CartoMystik is an entertainment and personal development app. The card readings, horoscopes, and interpretations provided are for recreational purposes only and do not constitute medical, legal, financial, or professional advice. We encourage you to consult qualified professionals for any important decisions regarding your health, finances, or future.",
+      "disclaimer.note": "By continuing, you agree to use this app for entertainment purposes only.",
+      "disclaimer.accept": "I Understand",
+      "disclaimer.legal": "This app is compliant with GDPR.",
 
     // No-repeat system
     "system.antirepeat.loading": "Cards are shuffling...",
@@ -3700,10 +3702,11 @@ const translations: Record<Language, Record<string, string>> = {
     "landing.ads.support": "Los anuncios nos ayudan a mantener la aplicación gratuita",
 
     // 🆕 Disclaimer - AGREGAR AQUÍ
-    "disclaimer.title": "Aviso Importante",
-    "disclaimer.text": "Esta aplicación está destinada únicamente a fines de ENTRETENIMIENTO. Las lecturas de tarot e interpretaciones se generan de manera aleatoria y no constituyen asesoramiento profesional. CartoMystik no pretende predecir el futuro real.",
-    "disclaimer.accept": "Entiendo",
-    "disclaimer.note": "Solo para entretenimiento",
+     "disclaimer.title": "Aviso Importante",
+      "disclaimer.text": "CartoMystik es una aplicación de entretenimiento y desarrollo personal. Las lecturas de cartas, horóscopos e interpretaciones proporcionadas son solo para fines recreativos y no constituyen asesoramiento médico, legal, financiero o profesional. Le recomendamos que consulte a profesionales cualificados para tomar decisiones importantes sobre su salud, sus finanzas o su futuro.",
+      "disclaimer.note": "Al continuar, acepta utilizar esta aplicación con fines de entretenimiento.",
+      "disclaimer.accept": "Entendido",
+      "disclaimer.legal": "Esta aplicación cumple con el RGPD.",
 
     // No-repeat system
     "system.antirepeat.loading": "Las cartas se están mezclando...",
@@ -5569,10 +5572,11 @@ const translations: Record<Language, Record<string, string>> = {
     "landing.ads.support": "Werbung hilft uns, die App kostenlos zu halten",
 
     // 🆕 Disclaimer - HIER HINZUFÜGEN
-    "disclaimer.title": "Wichtiger Hinweis",
-    "disclaimer.text": "Diese App ist nur für UNTERHALTUNGSZWECKE gedacht. Tarot-Lesungen und Interpretationen werden zufällig generiert und stellen keine professionelle Beratung dar. CartoMystik behauptet nicht, die tatsächliche Zukunft vorherzusagen.",
-    "disclaimer.accept": "Ich verstehe",
-    "disclaimer.note": "Nur zu Unterhaltungszwecken",
+    "disclaimer.title": "Wichtiger Haftungsausschluss",
+      "disclaimer.text": "CartoMystik ist eine App für Unterhaltung und persönliche Entwicklung. Die angebotenen Kartenlesungen, Horoskope und Interpretationen dienen ausschließlich zu Unterhaltungszwecken und stellen keinesfalls medizinische, rechtliche, finanzielle oder berufliche Beratung dar. Wir empfehlen, qualifizierte Fachleute zu konsultieren, wenn es um wichtige Entscheidungen in Bezug auf Ihre Gesundheit, Finanzen oder Zukunft geht.",
+      "disclaimer.note": "Durch die Fortsetzung stimmen Sie zu, diese App nur zu Unterhaltungszwecken zu nutzen.",
+      "disclaimer.accept": "Verstanden",
+      "disclaimer.legal": "Diese App entspricht der DSGVO.",
 
     // No-repeat system
     "system.antirepeat.loading": "Die Karten werden gemischt...",
@@ -7444,9 +7448,10 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 🆕 Disclaimer - AGGIUNGI QUI
     "disclaimer.title": "Avviso Importante",
-    "disclaimer.text": "Questa applicazione è destinata solo a scopi di DIVERTIMENTO. Le letture dei tarocchi e le interpretazioni sono generate casualmente e non costituiscono consulenza professionale. CartoMystik non pretende di predire il futuro reale.",
-    "disclaimer.accept": "Ho capito",
-    "disclaimer.note": "Solo per divertimento",
+      "disclaimer.text": "CartoMystik è un'app di intrattenimento e sviluppo personale. Le letture delle carte, gli oroscopi e le interpretazioni proposte sono solo a scopo ricreativo e non costituiscono in alcun modo consigli medici, legali, finanziari o professionali. Ti incoraggiamo a consultare professionisti qualificati per qualsiasi decisione importante riguardante la tua salute, le tue finanze o il tuo futuro.",
+      "disclaimer.note": "Continuando, accetti di utilizzare questa app solo per scopi di intrattenimento.",
+      "disclaimer.accept": "Ho capito",
+      "disclaimer.legal": "Questa app è conforme al GDPR.",
 
     // No-repeat system
     "system.antirepeat.loading": "Le carte si stanno mescolando...",

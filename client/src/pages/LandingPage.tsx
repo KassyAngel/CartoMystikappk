@@ -9,32 +9,41 @@ interface LandingPageProps {
 }
 
 export default function LandingPage({ onEnter }: LandingPageProps) {
-  const { t } = useLanguage();
+  const { t, isLanguageLoaded } = useLanguage();
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [disclaimerChecked, setDisclaimerChecked] = useState(false);
 
   // ✅ Vérifier si le disclaimer a déjà été accepté
   useEffect(() => {
     const disclaimerAccepted = localStorage.getItem('disclaimerAccepted');
+
     if (!disclaimerAccepted) {
-      // Afficher après un court délai pour un meilleur effet
-      setTimeout(() => setShowDisclaimer(true), 200);
+      // 🔴 IMPORTANT : Attendre que la langue soit chargée avant d'afficher le disclaimer
+      if (isLanguageLoaded) {
+        setTimeout(() => setShowDisclaimer(true), 300);
+      }
+    } else {
+      setDisclaimerChecked(true);
     }
-  }, []);
+  }, [isLanguageLoaded]);
 
   const handleDisclaimerAccept = () => {
     setShowDisclaimer(false);
+    setDisclaimerChecked(true);
   };
 
   return (
     <div className="landing-page min-h-screen flex flex-col justify-between items-center text-center p-4 sm:p-6 relative overflow-hidden bg-gradient-to-b from-[#0a0118] via-[#1a0933] to-[#0a0118]">
 
-      {/* ✅ Modal Disclaimer */}
+      {/* ✅ Modal Disclaimer - PRIORITAIRE */}
       {showDisclaimer && <DisclaimerModal onAccept={handleDisclaimerAccept} />}
 
-      {/* Sélecteur de langue en haut à droite */}
-      <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20">
-        <LanguageSelector />
-      </div>
+      {/* 🌍 Sélecteur de langue en haut à droite - masqué si disclaimer affiché */}
+      {!showDisclaimer && (
+        <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20">
+          <LanguageSelector />
+        </div>
+      )}
 
       {/* Effets de fond mystiques améliorés */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -108,12 +117,14 @@ export default function LandingPage({ onEnter }: LandingPageProps) {
           {/* Bouton */}
           <MysticalButton 
             onClick={onEnter}
+            disabled={!disclaimerChecked}
             className="relative group text-sm sm:text-base py-3 px-10 sm:px-12 min-h-[48px] rounded-full font-serif uppercase tracking-widest text-amber-100 
                        bg-gradient-to-br from-[#4b2c7a] via-[#5c2a7e] to-[#b07cff] 
                        border border-amber-300/40 
                        shadow-[0_0_15px_rgba(255,215,0,0.15)] 
                        hover:shadow-[0_0_25px_rgba(255,215,0,0.4)] 
-                       transition-all duration-500 ease-out backdrop-blur-sm overflow-hidden"
+                       transition-all duration-500 ease-out backdrop-blur-sm overflow-hidden
+                       disabled:opacity-50 disabled:cursor-not-allowed"
             data-testid="button-enter"
           >
             {/* Effet lumineux interne */}
