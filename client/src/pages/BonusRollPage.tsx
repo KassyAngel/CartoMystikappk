@@ -18,11 +18,18 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   const [isLoadingAd, setIsLoadingAd] = useState(false);
 
   const handleStartRoll = async () => {
-    // ✅ Animation de transition avec le loader
+    // ✅ PUB DÈS LE DÉMARRAGE
     setIsLoadingAd(true);
-    console.log('🎯 Démarrage du Bonus Roll - Animation de déverrouillage');
+    console.log('🎯 Démarrage du Bonus Roll - Affichage de la pub...');
 
-    // Petit délai pour l'animation (1.5 secondes)
+    try {
+      await showInterstitialAd('bonus_roll_start');
+      console.log('✅ Pub de démarrage Bonus Roll affichée');
+    } catch (error) {
+      console.log("❌ Pub non disponible, on continue quand même");
+    }
+
+    // Animation de transition (1.5 secondes)
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     setIsLoadingAd(false);

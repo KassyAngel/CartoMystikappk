@@ -25,17 +25,17 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
     const newRollCount = rollCount + 1;
     setRollCount(newRollCount);
 
-    // ✅ Pub sur les lancers impairs : 1, 3, 5, 7...
-    const shouldShowAd = newRollCount % 2 === 1;
+    // ✅ Pub sur les lancers PAIRS : 2, 4, 6, 8... (car la 1ère pub a été faite au démarrage)
+    const shouldShowAd = newRollCount % 2 === 0;
 
-    console.log(`🎲 Bonus Roll n°${newRollCount} → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
+    console.log(`🎲 Bonus Roll - Lancer n°${newRollCount} → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
 
     if (shouldShowAd) {
       setIsLoadingAd(true);
       setMessage(t('oracle.bonusRoll.loadingAd'));
       try {
-        await showInterstitialAd('bonus_roll');
-        console.log('✅ Pub Bonus Roll affichée');
+        await showInterstitialAd(`bonus_roll_${newRollCount}`);
+        console.log(`✅ Pub Bonus Roll lancer #${newRollCount} affichée`);
       } catch (error) {
         console.log("❌ Pub non disponible, on continue quand même");
       }

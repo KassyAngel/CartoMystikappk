@@ -96,7 +96,7 @@ export const oracleData: Record<string, OracleData> = {
     cards: [
       { name: 'Archange Michel', meaning: 'Protection divine, courage et force' },
       { name: 'Archange Gabriel', meaning: 'Messages divins, créativité et communication' },
-      { name: 'Archange Raphaël', meaning: 'Guérison physique et émotionnelle' },
+      { name: 'Archange Raphael', meaning: 'Guérison physique et émotionnelle' },
       { name: 'Archange Uriel', meaning: 'Sagesse divine et illumination' },
       { name: 'Ange Gardien', meaning: 'Protection personnelle et guidance' },
       { name: 'Ange de l\'Amour', meaning: 'Relations harmonieuses et amour inconditionnel' },
