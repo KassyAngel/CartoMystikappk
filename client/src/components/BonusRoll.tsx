@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { showInterstitialAd } from '@/admobService';
+import { showInterstitialAd } from '@/admobService'; // ✅ Import pub interstitielle
 import MysticalButton from './MysticalButton';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -25,8 +25,8 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
     const newRollCount = rollCount + 1;
     setRollCount(newRollCount);
 
-    // ✅ Pub sur les lancers PAIRS : 2, 4, 6, 8... (car la 1ère pub a été faite au démarrage)
-    const shouldShowAd = newRollCount % 2 === 0;
+    // ✅ Pub interstitielle tous les 3 lancers (3, 6, 9...)
+    const shouldShowAd = newRollCount % 3 === 0;
 
     console.log(`🎲 Bonus Roll - Lancer n°${newRollCount} → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
 
@@ -34,8 +34,8 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
       setIsLoadingAd(true);
       setMessage(t('oracle.bonusRoll.loadingAd'));
       try {
-        await showInterstitialAd(`bonus_roll_${newRollCount}`);
-        console.log(`✅ Pub Bonus Roll lancer #${newRollCount} affichée`);
+        await showInterstitialAd('bonus_roll_dice');
+        console.log('✅ Pub Bonus Roll (lancer) affichée');
       } catch (error) {
         console.log("❌ Pub non disponible, on continue quand même");
       }

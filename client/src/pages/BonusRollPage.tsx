@@ -3,7 +3,7 @@ import MysticalButton from '@/components/MysticalButton';
 import BonusRoll from '@/components/BonusRoll';
 import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { showInterstitialAd } from '@/admobService';
+import { showRewardedAd } from '@/admobService'; // ✅ Import de la pub récompensée
 
 interface BonusRollPageProps {
   user: UserSession;
@@ -18,22 +18,24 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   const [isLoadingAd, setIsLoadingAd] = useState(false);
 
   const handleStartRoll = async () => {
-    // ✅ PUB DÈS LE DÉMARRAGE
+    // ✅ Afficher le loader
     setIsLoadingAd(true);
-    console.log('🎯 Démarrage du Bonus Roll - Affichage de la pub...');
+    console.log('🎯 Démarrage du Bonus Roll - Affichage pub récompensée');
 
-    try {
-      await showInterstitialAd('bonus_roll_start');
-      console.log('✅ Pub de démarrage Bonus Roll affichée');
-    } catch (error) {
-      console.log("❌ Pub non disponible, on continue quand même");
-    }
-
-    // Animation de transition (1.5 secondes)
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // ✅ Afficher la pub récompensée
+    const success = await showRewardedAd();
 
     setIsLoadingAd(false);
-    setShowDice(true);
+
+    if (success) {
+      // ✅ L'utilisateur a regardé la pub en entier → débloquer
+      console.log('✅ Pub récompensée vue, déblocage du Bonus Roll');
+      setShowDice(true);
+    } else {
+      // ❌ L'utilisateur a fermé la pub → message d'erreur
+      console.log('❌ Pub fermée avant la fin, pas de déblocage');
+      alert(t('oracle.bonusRoll.adRequired') || 'Vous devez regarder la publicité complète pour accéder au Tirage Bonus.');
+    }
   };
 
   const handleComplete = async (result: { total: number; dice: [number, number]; interpretation: string }) => {
@@ -148,7 +150,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
           </div>
 
           <p className="text-amber-300 text-xl font-bold font-serif mb-2 animate-pulse">
-            {t('oracle.bonusRoll.loadingAd') || 'Déverrouillage...'}
+            {t('oracle.bonusRoll.loadingAd') || 'Chargement de la publicité...'}
           </p>
           <div className="flex justify-center gap-2 mt-4">
             <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce"></span>

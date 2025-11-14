@@ -14,8 +14,8 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { UserProvider } from "@/contexts/UserContext";
 import OracleMystiqueApp from "@/pages/OracleMystiqueApp";
 import NotFound from "@/pages/not-found";
-import { initialize as initializeAdMob, showBanner, showInterstitialAd } from './admobService';
-import { initializeRevenueCat } from './services/revenueCatService'; // 🆕 Ajouté
+import { initialize as initializeAdMob, showBanner, hideBanner, showInterstitialAd } from './admobService';
+import { initializeRevenueCat } from './services/revenueCatService';
 import { config } from '@/config';
 import { getUserEmail } from '@/lib/userStorage';
 
@@ -65,13 +65,14 @@ function App() {
   const [currentStep, setCurrentStep] = useState<AppStep>('landing');
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
+  const [bannerShown, setBannerShown] = useState(false); // ✅ Track si la bannière a été affichée
 
-  // 🆕 Initialiser AdMob et RevenueCat ensemble
+  // Initialiser AdMob et RevenueCat
   useEffect(() => {
     const initServices = async () => {
       try {
-        await initializeAdMob();
-        await initializeRevenueCat(); // <-- ajouté ici
+        await initializeAdMob(); // ✅ Précharge automatiquement la 1ère pub
+        await initializeRevenueCat();
         console.log('✅ Services AdMob + RevenueCat initialisés');
       } catch (error) {
         console.error('❌ Erreur initialisation services:', error);
@@ -80,18 +81,34 @@ function App() {
     initServices();
   }, []);
 
-  // Afficher la bannière pub si non Premium
+  // ✅ NOUVEAU : Afficher la bannière uniquement à partir de 'oracle'
   useEffect(() => {
-    if (!isPremium) {
+    // Si Premium, jamais de bannière
+    if (isPremium) {
+      console.log('👑 Premium actif : bannière cachée');
+      if (bannerShown) {
+        hideBanner();
+        setBannerShown(false);
+      }
+      return;
+    }
+
+    // Afficher la bannière SEULEMENT quand on atteint 'oracle' (et pas avant)
+    if (currentStep === 'oracle' && !bannerShown) {
+      console.log('🎯 Page Oracle atteinte → Affichage de la bannière');
       const timer = setTimeout(() => {
         showBanner();
+        setBannerShown(true);
         console.log('📺 Bannière affichée (utilisateur gratuit)');
-      }, 2000);
+      }, 500); // Petit délai pour une transition douce
+
       return () => clearTimeout(timer);
-    } else {
-      console.log('👑 Bannière cachée (Premium actif)');
     }
-  }, [isPremium]);
+
+    // Une fois affichée, la bannière reste visible (pas de hide si on change de page)
+    // Sauf si l'utilisateur devient Premium (géré ci-dessus)
+
+  }, [currentStep, isPremium, bannerShown]);
 
   const showTopBar = !['landing', 'name', 'date', 'gender'].includes(currentStep);
 
@@ -203,7 +220,7 @@ function App() {
     if (!reading) return;
 
     try {
-      await fetch(`${config.apiBaseUrl}/api/readings/${readingId}/favorite`, {
+      await fetch(`${config.apiBaseId}/api/readings/${readingId}/favorite`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -267,11 +284,11 @@ function App() {
         console.log(`🚫 ${reading.type} non sauvegardé dans Grimoire (type exclu)`);
       }
 
-      // ✅ EXCLUSION BONUS ROLL DES PUBS GLOBALES
+      // Publicités interstitielles
       if (!isPremium) {
         if (reading.type === 'bonusRoll') {
           console.log('🎁 Bonus Roll : pubs gérées en interne (pas de pub globale)');
-          return; // ⚠️ IMPORTANT : on sort AVANT d'incrémenter le compteur
+          return;
         }
 
         const newCount = readingCount + 1;
@@ -294,6 +311,7 @@ function App() {
       console.error('❌ Erreur ajout tirage:', error);
     }
   };
+
   if (isLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center bg-gray-900">
@@ -308,7 +326,8 @@ function App() {
         <UserProvider>
           <TooltipProvider>
             <div className="dark relative w-screen h-screen overflow-hidden">
-              {!isPremium && (
+              {/* ✅ Padding pour la bannière SEULEMENT si elle est affichée */}
+              {!isPremium && bannerShown && (
                 <style>{`
                   .main-content {
                     padding-bottom: 110px !important;

@@ -11,7 +11,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 🆕 Disclaimer - AJOUTER ICI
     "disclaimer.title": "Avertissement Important",
-    "disclaimer.text": "CartoMystik est une application de divertissement et de développement personnel. Les tirages de cartes, horoscopes et interprétations proposés sont à but récréatif uniquement et ne constituent en aucun cas des conseils médicaux, juridiques, financiers ou professionnels. Nous vous encourageons à consulter des professionnels qualifiés pour toute décision importante concernant votre santé, vos finances ou votre avenir.",
+    "disclaimer.text": "CartoMystik est une application de divertissement et de développement personnel. Consultez des experts qualifiés pour toute décision importante..",
     "disclaimer.note": "En continuant, vous acceptez d'utiliser cette application à des fins de divertissement",
     "disclaimer.accept": "J'ai compris",
     "disclaimer.legal": "Cette application est conforme au RGPD",
@@ -1825,6 +1825,8 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.diceResult": "Dés",
     "oracle.bonusRoll.startButton": "🎁 Débloquer le Tirage Bonus",
     "oracle.bonusRoll.exclusiveBadge":'BONUS EXCLUSIF',
+    "oracle.bonusRoll.adRequired": "Vous devez regarder la publicité complète pour accéder au Tirage Bonus.",
+    "oracle.bonusRoll.badge": "BONUS EXCLUSIF",
     
     // Interprétations identiques à mysteryDice...
     "oracle.bonusRoll.2.title.1": "🌅 Nouveau Départ",
@@ -1900,7 +1902,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 🆕 Disclaimer - ADD HERE
     "disclaimer.title": "Important Disclaimer",
-      "disclaimer.text": "CartoMystik is an entertainment and personal development app. The card readings, horoscopes, and interpretations provided are for recreational purposes only and do not constitute medical, legal, financial, or professional advice. We encourage you to consult qualified professionals for any important decisions regarding your health, finances, or future.",
+      "disclaimer.text": "CartoMystik is an entertainment and personal development application. Consult qualified experts for any important decisions.",
       "disclaimer.note": "By continuing, you agree to use this app for entertainment purposes only.",
       "disclaimer.accept": "I Understand",
       "disclaimer.legal": "This app is compliant with GDPR.",
@@ -3628,7 +3630,9 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.diceResult": "Dice",
     "oracle.bonusRoll.startButton": "🎁 Unlock Bonus Roll",
     "oracle.bonusRoll.exclusiveBadge": 'EXCLUSIVE BONUS',
-      
+    "oracle.bonusRoll.adRequired": "You must watch the complete ad to access the Bonus Roll.",
+    "oracle.bonusRoll.badge": "EXCLUSIVE BONUS",
+          
     // Interpretations (2 variations per result)
     "oracle.bonusRoll.2.title.1": "🌅 New Beginning",
     "oracle.bonusRoll.2.message.1": "The stars align for a fresh start. Double luck accompanies you today!",
@@ -3703,7 +3707,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 🆕 Disclaimer - AGREGAR AQUÍ
      "disclaimer.title": "Aviso Importante",
-      "disclaimer.text": "CartoMystik es una aplicación de entretenimiento y desarrollo personal. Las lecturas de cartas, horóscopos e interpretaciones proporcionadas son solo para fines recreativos y no constituyen asesoramiento médico, legal, financiero o profesional. Le recomendamos que consulte a profesionales cualificados para tomar decisiones importantes sobre su salud, sus finanzas o su futuro.",
+      "disclaimer.text": "CartoMystik es una aplicación de entretenimiento y desarrollo personal. Consulte a expertos cualificados para cualquier decisión importante.",
       "disclaimer.note": "Al continuar, acepta utilizar esta aplicación con fines de entretenimiento.",
       "disclaimer.accept": "Entendido",
       "disclaimer.legal": "Esta aplicación cumple con el RGPD.",
@@ -5500,6 +5504,8 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.diceResult": "Dados",
     "oracle.bonusRoll.startButton": "🎁 Desbloquear la Tirada de Bonificación",
     "oracle.bonusRoll.exclusiveBadge": 'BONO EXCLUSIVO',
+    "oracle.bonusRoll.adRequired": "Debes ver el anuncio completo para acceder a la Tirada Bonus.",
+    "oracle.bonusRoll.badge": "BONO EXCLUSIVO",
       
     "oracle.bonusRoll.2.title.1": "🌅 Nuevo Comienzo",
     "oracle.bonusRoll.2.message.1": "Las estrellas se alinean para un nuevo comienzo. ¡Doble suerte te acompaña hoy!",
@@ -5573,7 +5579,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 🆕 Disclaimer - HIER HINZUFÜGEN
     "disclaimer.title": "Wichtiger Haftungsausschluss",
-      "disclaimer.text": "CartoMystik ist eine App für Unterhaltung und persönliche Entwicklung. Die angebotenen Kartenlesungen, Horoskope und Interpretationen dienen ausschließlich zu Unterhaltungszwecken und stellen keinesfalls medizinische, rechtliche, finanzielle oder berufliche Beratung dar. Wir empfehlen, qualifizierte Fachleute zu konsultieren, wenn es um wichtige Entscheidungen in Bezug auf Ihre Gesundheit, Finanzen oder Zukunft geht.",
+      "disclaimer.text": "CartoMystik ist eine App für Unterhaltung und persönliche Entwicklung. Konsultieren Sie qualifizierte Experten für jede wichtige Entscheidung.",
       "disclaimer.note": "Durch die Fortsetzung stimmen Sie zu, diese App nur zu Unterhaltungszwecken zu nutzen.",
       "disclaimer.accept": "Verstanden",
       "disclaimer.legal": "Diese App entspricht der DSGVO.",
@@ -7374,6 +7380,8 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.diceResult": "Würfel",
     "oracle.bonusRoll.startButton": "🎁 Bonuswurf freischalten",
     "oracle.bonusRoll.exclusiveBadge": 'EXKLUSIVER BONUS',
+    "oracle.bonusRoll.adRequired": "Sie müssen die vollständige Werbung ansehen, um Zugriff auf den Bonus-Wurf zu erhalten.",
+    "oracle.bonusRoll.badge": "EXKLUSIVER BONUS",
       
     "oracle.bonusRoll.2.title.1": "🌅 Neuer Anfang",
     "oracle.bonusRoll.2.message.1": "Die Sterne richten sich für einen Neuanfang aus. Doppeltes Glück begleitet Sie heute!",
@@ -7448,7 +7456,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // 🆕 Disclaimer - AGGIUNGI QUI
     "disclaimer.title": "Avviso Importante",
-      "disclaimer.text": "CartoMystik è un'app di intrattenimento e sviluppo personale. Le letture delle carte, gli oroscopi e le interpretazioni proposte sono solo a scopo ricreativo e non costituiscono in alcun modo consigli medici, legali, finanziari o professionali. Ti incoraggiamo a consultare professionisti qualificati per qualsiasi decisione importante riguardante la tua salute, le tue finanze o il tuo futuro.",
+      "disclaimer.text": "CartoMystik è un'applicazione di intrattenimento e sviluppo personale. Consulta esperti qualificati per qualsiasi decisione importante.",
       "disclaimer.note": "Continuando, accetti di utilizzare questa app solo per scopi di intrattenimento.",
       "disclaimer.accept": "Ho capito",
       "disclaimer.legal": "Questa app è conforme al GDPR.",
@@ -9251,6 +9259,8 @@ const translations: Record<Language, Record<string, string>> = {
       "oracle.bonusRoll.diceResult": "Dadi",
     "oracle.bonusRoll.startButton": "🎁 Sblocca il Tiro Bonus",
     "oracle.bonusRoll.exclusiveBadge": 'BONUS ESCLUSIVO',
+    "oracle.bonusRoll.adRequired": "Devi guardare la pubblicità completa per accedere al Tiro Bonus.",
+    "oracle.bonusRoll.badge": "BONUS ESCLUSIVO",
 
     "oracle.bonusRoll.2.title.1": "🌅 Nuovo Inizio",
     "oracle.bonusRoll.2.message.1": "Le stelle si allineano per un nuovo inizio. Doppia fortuna ti accompagna oggi!",
