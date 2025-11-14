@@ -1,13 +1,16 @@
-
-import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition, AdMobBannerSize, InterstitialAdPluginEvents, AdMobError } from '@capacitor-community/admob';
+import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
 import { Capacitor } from '@capacitor/core';
 
 const isNative = Capacitor.isNativePlatform();
 const platform = Capacitor.getPlatform();
 
+// 🎯 INTERRUPTEUR : Changez cette valeur pour passer de TEST à PRODUCTION
+const IS_PRODUCTION = false; // ⚠️ Mettre à true avant la soumission finale
+
 console.log('🔍 Détection plateforme AdMob:', {
   isNative,
   platform,
+  mode: IS_PRODUCTION ? '🚀 PRODUCTION' : '🧪 TEST',
   userAgent: navigator.userAgent,
   isAndroid: platform === 'android',
   isIOS: platform === 'ios',
@@ -15,18 +18,23 @@ console.log('🔍 Détection plateforme AdMob:', {
   windowLocation: window.location.href
 });
 
-// 🧪 IDs AdMob de TEST (à remplacer en production)
+// 📱 IDs AdMob - Automatiquement TEST ou PRODUCTION selon IS_PRODUCTION
 const BANNER_AD_ID = isNative 
-  ? 'ca-app-pub-3940256099942544/6300978111'  // Test Banner
+  ? (IS_PRODUCTION 
+      ? 'ca-app-pub-5733508257471048/2428210645'  // 🚀 PROD - Bannière accueil
+      : 'ca-app-pub-3940256099942544/6300978111') // 🧪 TEST
   : '';
 
 const INTERSTITIAL_AD_ID = isNative
-  ? 'ca-app-pub-3940256099942544/1033173712'  // Test Interstitial
+  ? (IS_PRODUCTION 
+      ? 'ca-app-pub-5733508257471048/5422426681'  // 🚀 PROD - Interstitiel 1
+      : 'ca-app-pub-3940256099942544/1033173712') // 🧪 TEST
   : '';
 
 export async function initialize() {
-  console.log('📱 Initialisation AdMob - isNative:', isNative, 'platform:', platform);
-  
+  console.log(`📱 Initialisation AdMob - Mode: ${IS_PRODUCTION ? 'PRODUCTION' : 'TEST'}`);
+  console.log(`📱 Platform: ${platform}, isNative: ${isNative}`);
+
   if (!isNative) {
     console.log('📱 AdMob ignoré (pas sur mobile natif) - Vous êtes sur:', platform);
     return;
@@ -34,11 +42,12 @@ export async function initialize() {
 
   try {
     await AdMob.initialize({
-      requestTrackingAuthorization: true,
-      testingDevices: ['YOUR_DEVICE_ID'],  // 🧪 Mode test
-      initializeForTesting: true,  // 🧪 True pour les pubs de test
+      testingDevices: IS_PRODUCTION ? [] : ['YOUR_DEVICE_ID'],
+      initializeForTesting: !IS_PRODUCTION,
     });
-    console.log('✅ AdMob initialisé en mode TEST');
+    console.log(`✅ AdMob initialisé en mode ${IS_PRODUCTION ? 'PRODUCTION' : 'TEST'}`);
+    console.log(`📺 Bannière ID: ${BANNER_AD_ID}`);
+    console.log(`📺 Interstitiel ID: ${INTERSTITIAL_AD_ID}`);
   } catch (error) {
     console.error('❌ Erreur init AdMob:', error);
   }
@@ -122,7 +131,7 @@ export async function showInterstitialAd(context: string = 'unknown') {
 
   try {
     console.log(`📺 [PUB #${adNumber}] Préparation... Context: ${context}`);
-    
+
     await AdMob.prepareInterstitial({
       adId: INTERSTITIAL_AD_ID,
     });
@@ -134,7 +143,7 @@ export async function showInterstitialAd(context: string = 'unknown') {
     console.log(`✅ [PUB #${adNumber}] Affichée avec succès - Context: ${context}`, result);
   } catch (error: any) {
     console.error(`❌ [PUB #${adNumber}] Erreur - Context: ${context}`, error);
-    
+
     // Si l'erreur est "Ad is not ready", on réessaye
     if (error?.message?.includes('not ready')) {
       console.log(`⏳ [PUB #${adNumber}] Pas prête, nouvelle tentative...`);

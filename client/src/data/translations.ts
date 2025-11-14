@@ -7,8 +7,13 @@ const translations: Record<Language, Record<string, string>> = {
     "landing.subtitle":
       "Découvrez les mystères de votre destinée à travers les cartes, les astres et la sagesse ancienne",
     "landing.enter": "ENTRER",
-    "landing.ads.support":
-      "Les publicités nous aident à garder l'application gratuite",
+    "landing.ads.support": "Les publicités nous aident à garder l'application gratuite",
+
+    // 🆕 Disclaimer - AJOUTER ICI
+    "disclaimer.title": "Avertissement Important",
+    "disclaimer.text": "Cette application est uniquement destinée au DIVERTISSEMENT. Les lectures de tarot et interprétations sont générées de manière aléatoire et ne constituent pas des conseils professionnels. CartoMystik ne prétend pas prédire l'avenir réel.",
+    "disclaimer.accept": "J'ai compris",
+    "disclaimer.note": "Pour le divertissement uniquement",
 
     // No-repeat system
     "system.antirepeat.loading": "Les cartes se mélangent...",
@@ -1892,6 +1897,12 @@ const translations: Record<Language, Record<string, string>> = {
     "landing.enter": "ENTER",
     "landing.ads.support": "Ads help us keep the app free",
 
+    // 🆕 Disclaimer - ADD HERE
+    "disclaimer.title": "Important Disclaimer",
+    "disclaimer.text": "This app is intended for ENTERTAINMENT purposes only. Tarot readings and interpretations are randomly generated and do not constitute professional advice. CartoMystik does not claim to predict the actual future.",
+    "disclaimer.accept": "I Understand",
+    "disclaimer.note": "For entertainment purposes only",
+
     // No-repeat system
     "system.antirepeat.loading": "Cards are shuffling...",
     "system.antirepeat.active": "Anti-repeat system active",
@@ -3686,8 +3697,13 @@ const translations: Record<Language, Record<string, string>> = {
     "landing.subtitle":
       "Descubre los misterios de tu destino a través de las cartas, las estrellas y la sabiduría ancestral",
     "landing.enter": "ENTRAR",
-    "landing.ads.support":
-      "Los anuncios nos ayudan a mantener la aplicación gratuita",
+    "landing.ads.support": "Los anuncios nos ayudan a mantener la aplicación gratuita",
+
+    // 🆕 Disclaimer - AGREGAR AQUÍ
+    "disclaimer.title": "Aviso Importante",
+    "disclaimer.text": "Esta aplicación está destinada únicamente a fines de ENTRETENIMIENTO. Las lecturas de tarot e interpretaciones se generan de manera aleatoria y no constituyen asesoramiento profesional. CartoMystik no pretende predecir el futuro real.",
+    "disclaimer.accept": "Entiendo",
+    "disclaimer.note": "Solo para entretenimiento",
 
     // No-repeat system
     "system.antirepeat.loading": "Las cartas se están mezclando...",
@@ -5551,6 +5567,12 @@ const translations: Record<Language, Record<string, string>> = {
       "Entdecken Sie die Geheimnisse Ihres Schicksals durch Karten, Sterne und alte Weisheit",
     "landing.enter": "EINTRETEN",
     "landing.ads.support": "Werbung hilft uns, die App kostenlos zu halten",
+
+    // 🆕 Disclaimer - HIER HINZUFÜGEN
+    "disclaimer.title": "Wichtiger Hinweis",
+    "disclaimer.text": "Diese App ist nur für UNTERHALTUNGSZWECKE gedacht. Tarot-Lesungen und Interpretationen werden zufällig generiert und stellen keine professionelle Beratung dar. CartoMystik behauptet nicht, die tatsächliche Zukunft vorherzusagen.",
+    "disclaimer.accept": "Ich verstehe",
+    "disclaimer.note": "Nur zu Unterhaltungszwecken",
 
     // No-repeat system
     "system.antirepeat.loading": "Die Karten werden gemischt...",
@@ -7419,6 +7441,12 @@ const translations: Record<Language, Record<string, string>> = {
       "Scopri i misteri del tuo destino attraverso le carte, le stelle e la saggezza antica",
     "landing.enter": "ENTRARE",
     "landing.ads.support": "Gli annunci ci aiutano a mantenere l'app gratuita",
+
+    // 🆕 Disclaimer - AGGIUNGI QUI
+    "disclaimer.title": "Avviso Importante",
+    "disclaimer.text": "Questa applicazione è destinata solo a scopi di DIVERTIMENTO. Le letture dei tarocchi e le interpretazioni sono generate casualmente e non costituiscono consulenza professionale. CartoMystik non pretende di predire il futuro reale.",
+    "disclaimer.accept": "Ho capito",
+    "disclaimer.note": "Solo per divertimento",
 
     // No-repeat system
     "system.antirepeat.loading": "Le carte si stanno mescolando...",
