@@ -75,6 +75,9 @@ function App() {
       const id = await getDeviceId();
       setDeviceId(id);
       console.log('🔑 Device ID initialisé:', id);
+
+      // ✅ AFFICHER à l'écran pour comparer
+      alert(`Mon Device ID:\n${id.substring(0, 20)}...`);
     };
     initDeviceId();
   }, []);
