@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import MysticalButton from '@/components/MysticalButton';
 import BonusRoll from '@/components/BonusRoll';
 import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { showInterstitialAd } from '@/admobService'; // ✅ Correct // ✅ Import de la pub récompensée
+import { showRewardedAd } from '@/admobService'; // ✅ Import pub récompensée
 
 interface BonusRollPageProps {
   user: UserSession;
@@ -23,22 +23,22 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
     console.log('🎯 Démarrage du Bonus Roll - Affichage pub récompensée');
 
     // ✅ Afficher la pub récompensée
-    const success = await showRewardedAd();
+    const rewardGranted = await showRewardedAd('bonus_roll_start');
 
     setIsLoadingAd(false);
 
-    if (success) {
-      // ✅ L'utilisateur a regardé la pub en entier → débloquer
-      console.log('✅ Pub récompensée vue, déblocage du Bonus Roll');
+    if (rewardGranted) {
+      // ✅ L'utilisateur a regardé la pub complètement → débloquer
+      console.log('✅ Pub récompensée complétée, déblocage du Bonus Roll');
       setShowDice(true);
     } else {
-      // ❌ L'utilisateur a fermé la pub → message d'erreur
+      // ❌ L'utilisateur a fermé la pub avant la fin → message
       console.log('❌ Pub fermée avant la fin, pas de déblocage');
       alert(t('oracle.bonusRoll.adRequired') || 'Vous devez regarder la publicité complète pour accéder au Tirage Bonus.');
     }
   };
 
-  const handleComplete = async (result: { total: number; dice: [number, number]; interpretation: string }) => {
+  const handleComplete = (result: { total: number; dice: [number, number]; interpretation: string }) => {
     setIsComplete(true);
     console.log('Tirage bonus complété:', result);
   };
@@ -69,7 +69,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
 
         {/* Contenu */}
         <div className="text-center relative z-10 px-3 w-full max-w-md">
-          {/* Badge BONUS - Texte adaptatif */}
+          {/* Badge BONUS */}
           <div className="inline-block mb-4 sm:mb-6">
             <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-wide shadow-lg animate-pulse max-w-[90vw]">
               <span className="whitespace-nowrap overflow-hidden text-ellipsis block">
@@ -96,7 +96,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
             </p>
           </div>
 
-          {/* Bouton avec texte qui s'adapte */}
+          {/* Bouton */}
           <MysticalButton 
             onClick={handleStartRoll}
             className="w-full py-2.5 sm:py-3 px-2 sm:px-3 text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 shadow-[0_0_30px_rgba(251,191,36,0.6)] transform hover:scale-105 transition-all min-h-[48px] sm:min-h-[52px] flex items-center justify-center"
@@ -162,10 +162,10 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
     );
   }
 
-  // ✅ Vue principale avec les dés - Scrollable verticalement uniquement
+  // ✅ Vue principale avec les dés
   return (
     <div className="main-content w-full min-h-screen flex flex-col p-2 sm:p-4 pt-14 sm:pt-16 pb-[140px] relative overflow-x-hidden overflow-y-auto">
-      {/* Fond amélioré avec effet de particules */}
+      {/* Fond amélioré */}
       <div className="fixed inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033] -z-10">
         <div className="absolute inset-0 opacity-10">
           {[...Array(30)].map((_, i) => (
@@ -187,7 +187,6 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
 
       {/* Header compact */}
       <div className="text-center mb-2 sm:mb-3 relative flex-shrink-0 px-2">
-        {/* Badge BONUS - Texte court adaptatif */}
         <div className="inline-block mb-1.5 sm:mb-2">
           <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[8px] sm:text-[9px] font-bold uppercase tracking-wide shadow-lg animate-pulse max-w-[85vw]">
             <span className="whitespace-nowrap overflow-hidden text-ellipsis block">
@@ -196,7 +195,6 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
           </div>
         </div>
 
-        {/* Icône centrale */}
         <div className="flex justify-center mb-1.5 sm:mb-2">
           <div className="relative w-8 h-8 sm:w-10 sm:h-10">
             <div className="absolute inset-0 bg-amber-400/30 rounded-full blur-xl animate-pulse"></div>
@@ -219,7 +217,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
         </div>
       </div>
 
-      {/* Composant des dés - Centré et adaptatif */}
+      {/* Composant des dés */}
       <div className="flex-1 flex items-center justify-center py-2 sm:py-3 min-h-0">
         <div className="w-full max-w-2xl px-1 sm:px-2">
           <div className="relative">
@@ -229,7 +227,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
         </div>
       </div>
 
-      {/* Boutons navigation - Fixés en bas avec texte adaptatif */}
+      {/* Boutons navigation */}
       <div className="flex-shrink-0 pt-2 sm:pt-3 pb-2">
         <div className="flex gap-1.5 sm:gap-2 justify-center max-w-md mx-auto px-2">
           <MysticalButton 
