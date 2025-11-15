@@ -20,8 +20,8 @@ android {
         applicationId "com.cartomystik.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 5          // ✅ Incrémente de 1
-versionName "1.0.4"    // ✅ Optionnel mais recommandé
+        versionCode 6          // ✅ Incrémente de 1
+versionName "1.0.5"    // ✅ Optionnel mais recommandé
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
