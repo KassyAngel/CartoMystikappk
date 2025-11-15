@@ -96,41 +96,36 @@ export class PgStorage implements IStorage {
 
       const value = result.rows[0].value;
       console.log(`📥 GET storage["${key}"] → ${JSON.stringify(value).substring(0, 80)}...`);
-      return value; // ✅ PostgreSQL retourne déjà un objet JS (pas besoin de JSON.parse)
+      return value;
     } catch (error) {
       console.error(`❌ Erreur GET storage["${key}"]:`, error);
       return null;
     }
   }
 
-  // ✅ CORRECTION CRITIQUE : Gérer automatiquement string vs objet
   async setItem(key: string, value: any): Promise<void> {
     try {
-      // ✅ Si c'est déjà une string JSON, on la parse puis re-stringify (nettoyage)
-      // ✅ Si c'est un objet, on le stringify directement
       let jsonValue: string;
 
+      // ✅ CORRECTION : Gérer string vs objet
       if (typeof value === 'string') {
         try {
-          // Essayer de parser pour valider que c'est du JSON valide
           const parsed = JSON.parse(value);
-          jsonValue = JSON.stringify(parsed); // Re-stringify proprement
-          console.log(`🔄 String JSON détectée → nettoyée`);
+          jsonValue = JSON.stringify(parsed);
+          console.log(`🔄 String JSON détectée et nettoyée`);
         } catch {
-          // Si ça échoue, c'est peut-être déjà une string simple
           jsonValue = JSON.stringify(value);
         }
       } else {
-        // C'est un objet, on le stringify directement
         jsonValue = JSON.stringify(value);
       }
 
-      // ✅ Vérifier que le JSON est valide avant d'insérer
+      // ✅ Validation avant insertion
       try {
         JSON.parse(jsonValue);
       } catch (parseError) {
-        console.error(`❌ JSON invalide détecté pour key "${key}":`, jsonValue.substring(0, 200));
-        throw new Error('JSON invalide - ne peut pas être inséré');
+        console.error(`❌ JSON invalide pour key "${key}":`, jsonValue.substring(0, 200));
+        throw new Error('JSON invalide - insertion impossible');
       }
 
       await this.pool.query(
@@ -144,8 +139,8 @@ export class PgStorage implements IStorage {
       console.log(`📤 SET storage["${key}"] → OK (${jsonValue.length} chars)`);
     } catch (error: any) {
       console.error(`❌ Erreur SET storage["${key}"]:`, error);
-      console.error(`   Value type:`, typeof value);
-      console.error(`   Value preview:`, JSON.stringify(value).substring(0, 200));
+      console.error(`   Type de value:`, typeof value);
+      console.error(`   Aperçu value:`, JSON.stringify(value).substring(0, 200));
       throw error;
     }
   }
