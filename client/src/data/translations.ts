@@ -1827,8 +1827,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.exclusiveBadge":'BONUS EXCLUSIF',
     "oracle.bonusRoll.adRequired": "Vous devez regarder la publicité complète pour accéder au Tirage Bonus.",
     "oracle.bonusRoll.badge": "BONUS EXCLUSIF",
-    "oracle.bonusRoll.adRequired": "Alert erreur",
-    
+       
     // Interprétations identiques à mysteryDice...
     "oracle.bonusRoll.2.title.1": "🌅 Nouveau Départ",
     "oracle.bonusRoll.2.message.1": "Les étoiles s'alignent pour un nouveau commencement. Double chance vous accompagne aujourd'hui !",
@@ -3633,8 +3632,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.exclusiveBadge": 'EXCLUSIVE BONUS',
     "oracle.bonusRoll.adRequired": "You must watch the complete ad to access the Bonus Roll.",
     "oracle.bonusRoll.badge": "EXCLUSIVE BONUS",
-    "oracle.bonusRoll.adRequired": "Error Alert",
-          
+              
     // Interpretations (2 variations per result)
     "oracle.bonusRoll.2.title.1": "🌅 New Beginning",
     "oracle.bonusRoll.2.message.1": "The stars align for a fresh start. Double luck accompanies you today!",
@@ -5508,8 +5506,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.exclusiveBadge": 'BONO EXCLUSIVO',
     "oracle.bonusRoll.adRequired": "Debes ver el anuncio completo para acceder a la Tirada Bonus.",
     "oracle.bonusRoll.badge": "BONO EXCLUSIVO",
-    "oracle.bonusRoll.adRequired": "Alerta de error",
-      
+          
     "oracle.bonusRoll.2.title.1": "🌅 Nuevo Comienzo",
     "oracle.bonusRoll.2.message.1": "Las estrellas se alinean para un nuevo comienzo. ¡Doble suerte te acompaña hoy!",
     "oracle.bonusRoll.2.title.2": "✨ Renacimiento Cósmico",
@@ -7385,8 +7382,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.exclusiveBadge": 'EXKLUSIVER BONUS',
     "oracle.bonusRoll.adRequired": "Sie müssen die vollständige Werbung ansehen, um Zugriff auf den Bonus-Wurf zu erhalten.",
     "oracle.bonusRoll.badge": "EXKLUSIVER BONUS",
-    "oracle.bonusRoll.adRequired": "Fehleralarm",
-      
+        
     "oracle.bonusRoll.2.title.1": "🌅 Neuer Anfang",
     "oracle.bonusRoll.2.message.1": "Die Sterne richten sich für einen Neuanfang aus. Doppeltes Glück begleitet Sie heute!",
     "oracle.bonusRoll.2.title.2": "✨ Kosmische Wiedergeburt",
@@ -9265,8 +9261,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.exclusiveBadge": 'BONUS ESCLUSIVO',
     "oracle.bonusRoll.adRequired": "Devi guardare la pubblicità completa per accedere al Tiro Bonus.",
     "oracle.bonusRoll.badge": "BONUS ESCLUSIVO",
-    "oracle.bonusRoll.adRequired": "Avviso di errore",
-
+   
     "oracle.bonusRoll.2.title.1": "🌅 Nuovo Inizio",
     "oracle.bonusRoll.2.message.1": "Le stelle si allineano per un nuovo inizio. Doppia fortuna ti accompagna oggi!",
     "oracle.bonusRoll.2.title.2": "✨ Rinascita Cosmica",
