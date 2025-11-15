@@ -172,7 +172,10 @@ function App() {
   }, [deviceId]); // ✅ Dépend du Device ID
 
   const loadUserData = async () => {
-    if (!deviceId) return; // ✅ Sécurité
+    if (!deviceId) {
+      console.log('⏳ Device ID pas encore initialisé, on attend...');
+      return; // ✅ Sortir si pas de Device ID
+    }
 
     try {
       const savedEmail = await getUserEmail();
@@ -186,13 +189,22 @@ function App() {
 
       console.log('✅ Statut Premium:', premiumData.isPremium, savedEmail ? `(email: ${savedEmail})` : '(sans email)');
 
-      // ✅ MODIFIÉ : Envoyer le Device ID
+      // ✅ Envoyer le Device ID
       const readingsResponse = await fetch(`${config.apiBaseUrl}/api/readings`, {
         credentials: 'include',
         headers: {
-          'X-Device-ID': deviceId // ✅ NOUVEAU
+          'X-Device-ID': deviceId // ✅ CRITICAL
         }
       });
+
+      // ✅ Vérifier le statut de la réponse
+      if (!readingsResponse.ok) {
+        const errorData = await readingsResponse.json();
+        console.error('❌ Erreur chargement tirages:', errorData);
+        setIsLoading(false);
+        return;
+      }
+
       const readingsData = await readingsResponse.json();
       setReadings(
         readingsData.readings.map((r: any) => ({
