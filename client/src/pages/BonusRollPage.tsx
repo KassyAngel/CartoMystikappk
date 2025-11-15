@@ -3,7 +3,7 @@ import MysticalButton from '@/components/MysticalButton';
 import BonusRoll from '@/components/BonusRoll';
 import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { showRewardedAd } from '@/admobService'; // ✅ Import de la pub récompensée
+import { showInterstitialAd } from '@/admobService'; // ✅ Correct // ✅ Import de la pub récompensée
 
 interface BonusRollPageProps {
   user: UserSession;
