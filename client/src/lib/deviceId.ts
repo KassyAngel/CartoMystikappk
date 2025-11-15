@@ -1,5 +1,4 @@
 // lib/deviceId.ts
-
 import { Capacitor } from '@capacitor/core';
 import { Device } from '@capacitor/device';
 
@@ -23,8 +22,9 @@ export async function getDeviceId(): Promise<string> {
     try {
       const info = await Device.getId();
 
-      // ⚠️ IMPORTANT : Android utilise "identifier", iOS utilise "uuid"
-      cachedDeviceId = info.identifier || info.uuid || null;
+      // ✅ CORRIGÉ : Android et iOS utilisent tous les deux "identifier"
+      // La propriété "uuid" n'existe plus dans les nouvelles versions
+      cachedDeviceId = info.identifier || null;
 
       if (cachedDeviceId && cachedDeviceId !== 'unknown') {
         console.log('📱 Device ID (natif):', cachedDeviceId);
@@ -79,9 +79,10 @@ export async function getDeviceInfo(): Promise<any> {
     try {
       const info = await Device.getInfo();
       const id = await Device.getId();
+
       return {
         ...info,
-        deviceId: id.identifier || id.uuid,
+        deviceId: id.identifier, // ✅ Utilisez uniquement "identifier"
         platform: Capacitor.getPlatform(),
       };
     } catch (error) {

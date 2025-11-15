@@ -14,7 +14,7 @@ export const oracleData: Record<string, OracleData> = {
       { name: 'Intuition', meaning: 'Votre voix intérieure est particulièrement forte aujourd’hui. Faites confiance à vos pressentiments, même si vous ne pouvez pas les expliquer rationnellement. Ils vous guideront vers des choix plus alignés avec vos véritables besoins. Prenez un moment de silence pour écouter vos ressentis, car votre intuition détient la réponse aux questions que vous vous posez en ce moment.' },
       { name: 'Gratitude', meaning: 'Prenez un moment pour apprécier profondément ce que vous avez déjà. Reconnaître vos bénédictions attire encore plus de positif dans votre vie.' },
       { name: 'Communication', meaning: 'Exprimez-vous avec clarté et bienveillance aujourd’hui. Vos paroles peuvent apaiser, inspirer et créer des liens plus solides.' },
-      { name: 'Équilibre', meaning: 'Cherchez l’harmonie entre vos responsabilités et vos besoins personnels. Prendre soin de vous est essentiel pour maintenir une stabilité intérieure.'},
+      { name: 'Equilibre', meaning: 'Cherchez l’harmonie entre vos responsabilités et vos besoins personnels. Prendre soin de vous est essentiel pour maintenir une stabilité intérieure.'},
       { name: 'Confiance', meaning: 'Croyez en vos capacités et avancez avec assurance. La confiance en vous ouvre la voie vers vos véritables réussites.'},
       { name: 'Lacher-prise', meaning: 'Libérez-vous des poids du passé et des inquiétudes inutiles. Acceptez de laisser aller ce que vous ne pouvez contrôler.' },
       { name: 'Joie', meaning: 'Accueillez la joie dans les petits instants du quotidien. Elle illumine votre cœur et transforme vos énergies.' },
