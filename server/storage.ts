@@ -1,4 +1,5 @@
-import { type User, type InsertUser } from "@shared/schema";
+import { Pool } from 'pg';
+import type { User, InsertUser } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -10,51 +11,158 @@ export interface IStorage {
   deleteItem(key: string): Promise<void>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-  public data: Map<string, any>;
+export class PgStorage implements IStorage {
+  private pool: Pool;
 
   constructor() {
-    this.users = new Map();
-    this.data = new Map();
-    console.log('💾 MemStorage initialisé (Replit - développement)');
+    const databaseUrl = process.env.DATABASE_URL;
+
+    if (!databaseUrl) {
+      console.error('❌ DATABASE_URL non définie !');
+      throw new Error('DATABASE_URL est requise');
+    }
+
+    this.pool = new Pool({
+      connectionString: databaseUrl,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+    });
+
+    console.log('✅ Connexion PostgreSQL initialisée');
+    this.initTables();
+  }
+
+  private async initTables() {
+    try {
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS users (
+          id TEXT PRIMARY KEY,
+          username TEXT UNIQUE NOT NULL,
+          email TEXT,
+          created_at TIMESTAMP DEFAULT NOW()
+        )
+      `);
+
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS storage (
+          key TEXT PRIMARY KEY,
+          value JSONB NOT NULL,
+          updated_at TIMESTAMP DEFAULT NOW()
+        )
+      `);
+
+      console.log('✅ Tables PostgreSQL créées/vérifiées');
+    } catch (error) {
+      console.error('❌ Erreur initialisation tables:', error);
+      throw error;
+    }
   }
 
   async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+    const result = await this.pool.query(
+      'SELECT id, username, email, created_at as "createdAt" FROM users WHERE id = $1',
+      [id]
+    );
+    return result.rows[0] || undefined;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
+    const result = await this.pool.query(
+      'SELECT id, username, email, created_at as "createdAt" FROM users WHERE username = $1',
+      [username]
     );
+    return result.rows[0] || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = randomUUID();
-    const createdAt = new Date().toISOString();
-    const user: User = {
-      id,
-      username: insertUser.username,
-      email: insertUser.email ?? null,
-      createdAt,
-    };
-    this.users.set(id, user);
-    return user;
+    const result = await this.pool.query(
+      'INSERT INTO users (id, username, email) VALUES ($1, $2, $3) RETURNING id, username, email, created_at as "createdAt"',
+      [id, insertUser.username, insertUser.email || null]
+    );
+    return result.rows[0];
   }
 
   async getItem(key: string): Promise<any> {
-    const value = this.data.get(key);
-    return value || null;
+    try {
+      const result = await this.pool.query(
+        'SELECT value FROM storage WHERE key = $1',
+        [key]
+      );
+
+      if (result.rows.length === 0) {
+        console.log(`📥 GET storage["${key}"] → null`);
+        return null;
+      }
+
+      const value = result.rows[0].value;
+      console.log(`📥 GET storage["${key}"] → ${JSON.stringify(value).substring(0, 80)}...`);
+      return value; // ✅ PostgreSQL retourne déjà un objet JS (pas besoin de JSON.parse)
+    } catch (error) {
+      console.error(`❌ Erreur GET storage["${key}"]:`, error);
+      return null;
+    }
   }
 
+  // ✅ CORRECTION CRITIQUE : Gérer automatiquement string vs objet
   async setItem(key: string, value: any): Promise<void> {
-    this.data.set(key, value);
+    try {
+      // ✅ Si c'est déjà une string JSON, on la parse puis re-stringify (nettoyage)
+      // ✅ Si c'est un objet, on le stringify directement
+      let jsonValue: string;
+
+      if (typeof value === 'string') {
+        try {
+          // Essayer de parser pour valider que c'est du JSON valide
+          const parsed = JSON.parse(value);
+          jsonValue = JSON.stringify(parsed); // Re-stringify proprement
+          console.log(`🔄 String JSON détectée → nettoyée`);
+        } catch {
+          // Si ça échoue, c'est peut-être déjà une string simple
+          jsonValue = JSON.stringify(value);
+        }
+      } else {
+        // C'est un objet, on le stringify directement
+        jsonValue = JSON.stringify(value);
+      }
+
+      // ✅ Vérifier que le JSON est valide avant d'insérer
+      try {
+        JSON.parse(jsonValue);
+      } catch (parseError) {
+        console.error(`❌ JSON invalide détecté pour key "${key}":`, jsonValue.substring(0, 200));
+        throw new Error('JSON invalide - ne peut pas être inséré');
+      }
+
+      await this.pool.query(
+        `INSERT INTO storage (key, value, updated_at) 
+         VALUES ($1, $2::jsonb, NOW()) 
+         ON CONFLICT (key) 
+         DO UPDATE SET value = $2::jsonb, updated_at = NOW()`,
+        [key, jsonValue]
+      );
+
+      console.log(`📤 SET storage["${key}"] → OK (${jsonValue.length} chars)`);
+    } catch (error: any) {
+      console.error(`❌ Erreur SET storage["${key}"]:`, error);
+      console.error(`   Value type:`, typeof value);
+      console.error(`   Value preview:`, JSON.stringify(value).substring(0, 200));
+      throw error;
+    }
   }
 
   async deleteItem(key: string): Promise<void> {
-    this.data.delete(key);
+    try {
+      await this.pool.query('DELETE FROM storage WHERE key = $1', [key]);
+      console.log(`🗑️ DELETE storage["${key}"]`);
+    } catch (error) {
+      console.error(`❌ Erreur DELETE storage["${key}"]:`, error);
+      throw error;
+    }
+  }
+
+  async close() {
+    await this.pool.end();
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new PgStorage();

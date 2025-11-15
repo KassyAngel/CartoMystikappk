@@ -310,8 +310,10 @@ function App() {
     }
   };
 
+  // ✅ REMPLACE la fonction addReading() complète dans App.tsx
+
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
-    if (!deviceId) return; // ✅ Sécurité
+    if (!deviceId) return;
 
     const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
     const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
@@ -319,12 +321,13 @@ function App() {
     try {
       console.log('📤 Envoi tirage:', reading.type, 'Device:', deviceId);
 
+      // ✅ Sauvegarde dans Grimoire
       if (shouldSaveInGrimoire) {
         const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',
-            'X-Device-ID': deviceId // ✅ NOUVEAU
+            'X-Device-ID': deviceId
           },
           credentials: 'include',
           body: JSON.stringify(reading)
@@ -333,10 +336,11 @@ function App() {
         if (response.status === 403) {
           console.log('⚠️ Erreur 403 ignorée (limite supprimée côté serveur)');
         } else if (!response.ok) {
+          const errorText = await response.text();
+          console.error(`❌ Erreur HTTP ${response.status}:`, errorText);
           throw new Error(`Erreur HTTP: ${response.status}`);
         } else {
           const newReading = await response.json();
-
           setReadings(prev => [
             { ...newReading, date: new Date(newReading.date) },
             ...prev
@@ -347,13 +351,8 @@ function App() {
         console.log(`🚫 ${reading.type} non sauvegardé dans Grimoire (type exclu)`);
       }
 
-      // Publicités interstitielles
-      if (!isPremium) {
-        if (reading.type === 'bonusRoll') {
-          console.log('🎁 Bonus Roll : pubs gérées en interne (pas de pub globale)');
-          return;
-        }
-
+      // ✅ Publicités interstitielles (AMÉLIORÉ)
+      if (!isPremium && reading.type !== 'bonusRoll') {
         const newCount = readingCount + 1;
         setReadingCount(newCount);
 
@@ -362,19 +361,29 @@ function App() {
 
         if (shouldShowAd) {
           console.log(`🎬 Affichage pub interstitielle après 3 tirages`);
-          setTimeout(() => {
-            showInterstitialAd(`after_${reading.type}_reading`);
-          }, 1000);
+
+          // ✅ AMÉLIORATION : Attendre la fin de l'animation + petit délai
+          setTimeout(async () => {
+            try {
+              await showInterstitialAd(`after_${reading.type}_reading`);
+            } catch (error) {
+              console.error('❌ Erreur affichage pub:', error);
+            }
+          }, 1500); // ✅ Augmenté à 1.5s pour laisser l'UI se stabiliser
         }
+      } else if (reading.type === 'bonusRoll') {
+        console.log('🎁 Bonus Roll : pubs gérées en interne (pas de pub globale)');
       } else {
         console.log('👑 Premium actif : pas de publicité');
       }
 
     } catch (error) {
       console.error('❌ Erreur ajout tirage:', error);
+      // ✅ AMÉLIORATION : Afficher un message à l'utilisateur
+      alert('⚠️ Erreur lors de la sauvegarde du tirage. Veuillez réessayer.');
     }
   };
-
+  
   if (isLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center bg-gray-900">
