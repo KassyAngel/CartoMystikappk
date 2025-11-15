@@ -86,7 +86,7 @@ export class PgStorage implements IStorage {
     return result.rows[0];
   }
 
-  // ✅ Stockage key-value persistant
+  // ✅ Stockage key-value persistant (CORRIGÉ)
   async getItem(key: string): Promise<any> {
     try {
       const result = await this.pool.query(
@@ -108,16 +108,18 @@ export class PgStorage implements IStorage {
     }
   }
 
+  // ✅ CORRECTION CRITIQUE : Pas de JSON.stringify ici !
   async setItem(key: string, value: any): Promise<void> {
     try {
+      // ✅ PostgreSQL avec JSONB attend un objet, pas une string
       await this.pool.query(
         `INSERT INTO storage (key, value, updated_at) 
-         VALUES ($1, $2, NOW()) 
+         VALUES ($1, $2::jsonb, NOW()) 
          ON CONFLICT (key) 
-         DO UPDATE SET value = $2, updated_at = NOW()`,
-        [key, value]
+         DO UPDATE SET value = $2::jsonb, updated_at = NOW()`,
+        [key, JSON.stringify(value)] // ✅ CORRECTION : On stringify pour pg mais pas double
       );
-      console.log(`📤 SET storage["${key}"] → ${JSON.stringify(value).substring(0, 80)}...`);
+      console.log(`📤 SET storage["${key}"] → OK`);
     } catch (error) {
       console.error(`❌ Erreur SET storage["${key}"]:`, error);
       throw error;
