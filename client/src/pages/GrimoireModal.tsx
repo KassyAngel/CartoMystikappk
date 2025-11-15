@@ -96,7 +96,7 @@ const GrimoireModal = ({
     return badges[type as keyof typeof badges] || badges.oracle;
   };
 
-  // ✅ FONCTION CORRIGÉE - GARDE LES ACCENTS SUR LA PREMIÈRE LETTRE
+  // ✅ FONCTION CORRIGÉE - Supprime accents et espaces, GARDE les majuscules
   const normalizeCardName = (cardName: string): string => {
     if (!cardName) return '';
 
@@ -104,8 +104,10 @@ const GrimoireModal = ({
       .trim()
       // Supprimer apostrophes ET espaces
       .replace(/[''\s]/g, '')
-      // ✅ NE PAS normaliser les accents pour garder "É" → "LEtoile"
-      // La clé doit matcher exactement "cards.tarot.LEtoile.name"
+      // ✅ Normaliser les accents (É → E, à → a) en gardant la casse
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+      // ❌ PAS de .toLowerCase() car vos clés sont en majuscules
   };
 
   const translateCardName = (cardName: string, readingType: string): string => {

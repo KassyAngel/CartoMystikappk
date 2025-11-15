@@ -18,6 +18,7 @@ import { initialize as initializeAdMob, showBanner, hideBanner, showInterstitial
 import { initializeRevenueCat } from './services/revenueCatService';
 import { config } from '@/config';
 import { getUserEmail } from '@/lib/userStorage';
+import { getDeviceId } from '@/lib/deviceId'; // ✅ NOUVEAU
 
 export interface Reading {
   id: string;
@@ -65,13 +66,54 @@ function App() {
   const [currentStep, setCurrentStep] = useState<AppStep>('landing');
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
-  const [bannerShown, setBannerShown] = useState(false); // ✅ Track si la bannière a été affichée
+  const [bannerShown, setBannerShown] = useState(false);
+  const [deviceId, setDeviceId] = useState<string>(''); // ✅ NOUVEAU
+
+  // ✅ NOUVEAU : Initialiser Device ID au démarrage
+  useEffect(() => {
+    const initDeviceId = async () => {
+      const id = await getDeviceId();
+      setDeviceId(id);
+      console.log('🔑 Device ID initialisé:', id);
+    };
+    initDeviceId();
+  }, []);
+
+  // ✅ MIGRATION DES DONNÉES (à exécuter UNE FOIS)
+  useEffect(() => {
+    const migrateData = async () => {
+      if (!deviceId) return;
+
+      const migrationDone = localStorage.getItem('migration_done');
+      if (migrationDone) return;
+
+      try {
+        const response = await fetch(`${config.apiBaseUrl}/api/readings/migrate`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-Device-ID': deviceId 
+          },
+          credentials: 'include'
+        });
+
+        if (response.ok) {
+          localStorage.setItem('migration_done', 'true');
+          console.log('✅ Migration des données terminée');
+        }
+      } catch (error) {
+        console.error('❌ Erreur migration:', error);
+      }
+    };
+
+    migrateData();
+  }, [deviceId]);
 
   // Initialiser AdMob et RevenueCat
   useEffect(() => {
     const initServices = async () => {
       try {
-        await initializeAdMob(); // ✅ Précharge automatiquement la 1ère pub
+        await initializeAdMob();
         await initializeRevenueCat();
         console.log('✅ Services AdMob + RevenueCat initialisés');
       } catch (error) {
@@ -81,9 +123,8 @@ function App() {
     initServices();
   }, []);
 
-  // ✅ NOUVEAU : Afficher la bannière uniquement à partir de 'oracle'
+  // Afficher la bannière
   useEffect(() => {
-    // Si Premium, jamais de bannière
     if (isPremium) {
       console.log('👑 Premium actif : bannière cachée');
       if (bannerShown) {
@@ -93,21 +134,16 @@ function App() {
       return;
     }
 
-    // Afficher la bannière SEULEMENT quand on atteint 'oracle' (et pas avant)
     if (currentStep === 'oracle' && !bannerShown) {
       console.log('🎯 Page Oracle atteinte → Affichage de la bannière');
       const timer = setTimeout(() => {
         showBanner();
         setBannerShown(true);
         console.log('📺 Bannière affichée (utilisateur gratuit)');
-      }, 500); // Petit délai pour une transition douce
+      }, 500);
 
       return () => clearTimeout(timer);
     }
-
-    // Une fois affichée, la bannière reste visible (pas de hide si on change de page)
-    // Sauf si l'utilisateur devient Premium (géré ci-dessus)
-
   }, [currentStep, isPremium, bannerShown]);
 
   const showTopBar = !['landing', 'name', 'date', 'gender'].includes(currentStep);
@@ -124,6 +160,7 @@ function App() {
 
   // Charger les données utilisateur
   useEffect(() => {
+    if (!deviceId) return; // ✅ Attendre le Device ID
     loadUserData();
     checkPremiumExpiration();
 
@@ -132,9 +169,11 @@ function App() {
     }, 60 * 60 * 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [deviceId]); // ✅ Dépend du Device ID
 
   const loadUserData = async () => {
+    if (!deviceId) return; // ✅ Sécurité
+
     try {
       const savedEmail = await getUserEmail();
 
@@ -147,8 +186,12 @@ function App() {
 
       console.log('✅ Statut Premium:', premiumData.isPremium, savedEmail ? `(email: ${savedEmail})` : '(sans email)');
 
+      // ✅ MODIFIÉ : Envoyer le Device ID
       const readingsResponse = await fetch(`${config.apiBaseUrl}/api/readings`, {
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+          'X-Device-ID': deviceId // ✅ NOUVEAU
+        }
       });
       const readingsData = await readingsResponse.json();
       setReadings(
@@ -158,7 +201,7 @@ function App() {
         }))
       );
 
-      console.log('✅ Données chargées:', readingsData.readings.length, 'tirages');
+      console.log('✅ Données chargées:', readingsData.readings.length, 'tirages pour device:', deviceId);
     } catch (error) {
       console.error('❌ Erreur chargement données:', error);
     } finally {
@@ -199,10 +242,15 @@ function App() {
   };
 
   const handleSaveNote = async (readingId: string, note: string) => {
+    if (!deviceId) return; // ✅ Sécurité
+
     try {
       await fetch(`${config.apiBaseUrl}/api/readings/${readingId}/note`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Device-ID': deviceId // ✅ NOUVEAU
+        },
         credentials: 'include',
         body: JSON.stringify({ note })
       });
@@ -216,13 +264,18 @@ function App() {
   };
 
   const handleToggleFavorite = async (readingId: string) => {
+    if (!deviceId) return; // ✅ Sécurité
+
     const reading = readings.find(r => r.id === readingId);
     if (!reading) return;
 
     try {
-      await fetch(`${config.apiBaseId}/api/readings/${readingId}/favorite`, {
+      await fetch(`${config.apiBaseUrl}/api/readings/${readingId}/favorite`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Device-ID': deviceId // ✅ NOUVEAU
+        },
         credentials: 'include',
         body: JSON.stringify({ isFavorite: !reading.isFavorite })
       });
@@ -236,11 +289,16 @@ function App() {
   };
 
   const clearAllReadings = async () => {
+    if (!deviceId) return; // ✅ Sécurité
+
     try {
       console.log('🗑️ Suppression de tous les tirages du Grimoire...');
       const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
         method: 'DELETE',
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+          'X-Device-ID': deviceId // ✅ NOUVEAU
+        }
       });
 
       if (!response.ok) throw new Error('Erreur lors de la suppression');
@@ -253,16 +311,21 @@ function App() {
   };
 
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
+    if (!deviceId) return; // ✅ Sécurité
+
     const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
     const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
 
     try {
-      console.log('📤 Envoi tirage:', reading.type);
+      console.log('📤 Envoi tirage:', reading.type, 'Device:', deviceId);
 
       if (shouldSaveInGrimoire) {
         const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-Device-ID': deviceId // ✅ NOUVEAU
+          },
           credentials: 'include',
           body: JSON.stringify(reading)
         });
@@ -326,7 +389,6 @@ function App() {
         <UserProvider>
           <TooltipProvider>
             <div className="dark relative w-screen h-screen overflow-hidden">
-              {/* ✅ Padding pour la bannière SEULEMENT si elle est affichée */}
               {!isPremium && bannerShown && (
                 <style>{`
                   .main-content {
