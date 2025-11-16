@@ -275,7 +275,14 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
         console.log(`⏰ [PUB RÉCOMPENSÉE #${adNumber}] TIMEOUT après 60s`);
         resolved = true;
         isRewardedShowing = false;
-        resolve(false);
+
+        // ✅ EN MODE TEST : Débloquer quand même si la pub a été affichée
+        if (!IS_PRODUCTION && adShown) {
+          console.log(`🧪 [MODE TEST] Pub affichée → Débloqué automatiquement`);
+          resolve(true);
+        } else {
+          resolve(false);
+        }
       }
     }, 60000);
 
@@ -283,8 +290,17 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
     const finalResolve = () => {
       if (resolved) return;
 
-      const shouldUnlock = adShown && rewardReceived;
+      // ✅ EN MODE TEST : Si la pub a été affichée, on débloque TOUJOURS
+      let shouldUnlock: boolean;
+      if (!IS_PRODUCTION && adShown) {
+        shouldUnlock = true;
+        console.log(`🧪 [MODE TEST] Pub affichée → Débloqué automatiquement (pas de onRewarded en test)`);
+      } else {
+        shouldUnlock = adShown && rewardReceived;
+      }
+
       console.log(`🎯 [PUB RÉCOMPENSÉE #${adNumber}] RÉSOLUTION FINALE:`);
+      console.log(`   ├─ Mode: ${IS_PRODUCTION ? '🚀 PRODUCTION' : '🧪 TEST'}`);
       console.log(`   ├─ Pub affichée: ${adShown ? '✅ OUI' : '❌ NON'}`);
       console.log(`   ├─ Récompense reçue: ${rewardReceived ? '✅ OUI' : '❌ NON'}`);
       console.log(`   └─ Résultat: ${shouldUnlock ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'}`);
@@ -297,13 +313,13 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
 
     try {
       console.log(`🎁 [PUB RÉCOMPENSÉE #${adNumber}] Démarrage... Context: ${context}`);
+      console.log(`   Mode: ${IS_PRODUCTION ? '🚀 PRODUCTION' : '🧪 TEST'}`);
 
-      // ✅ ÉTAPE 1 : Écouter la récompense (PRIORITÉ ABSOLUE)
+      // ✅ ÉTAPE 1 : Écouter la récompense
       const rewardListener = (AdMob.addListener as any)('onRewarded', (reward: AdMobRewardItem) => {
         console.log(`🎁✅ [PUB RÉCOMPENSÉE #${adNumber}] RÉCOMPENSE REÇUE:`, reward);
         rewardReceived = true;
 
-        // ✅ Si dismiss déjà appelé, résoudre immédiatement
         if (dismissCalled) {
           console.log(`⚡ [PUB RÉCOMPENSÉE #${adNumber}] Dismiss déjà appelé, résolution immédiate`);
           rewardListener.remove();
@@ -317,19 +333,22 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
         adShown = true;
       });
 
-      // ✅ ÉTAPE 3 : Écouter la fermeture (attendre 2 secondes)
+      // ✅ ÉTAPE 3 : Écouter la fermeture
       const dismissListener = (AdMob.addListener as any)('onRewardedVideoAdDismissed', () => {
-        console.log(`🚪 [PUB RÉCOMPENSÉE #${adNumber}] Fermée - Attente 2s pour la récompense...`);
+        console.log(`🚪 [PUB RÉCOMPENSÉE #${adNumber}] Fermée`);
         dismissCalled = true;
 
-        // ✅ CRITIQUE : Attendre 2 SECONDES (pas 500ms)
+        // ✅ EN MODE TEST : Attendre seulement 1s (les pubs test sont courtes)
+        const delayMs = IS_PRODUCTION ? 2000 : 1000;
+        console.log(`⏰ Attente ${delayMs}ms pour la récompense...`);
+
         setTimeout(() => {
-          console.log(`⏰ [PUB RÉCOMPENSÉE #${adNumber}] Fin du délai de 2s`);
+          console.log(`⏰ [PUB RÉCOMPENSÉE #${adNumber}] Fin du délai`);
           showedListener.remove();
           rewardListener.remove();
           dismissListener.remove();
           finalResolve();
-        }, 2000); // ✅ 2 SECONDES au lieu de 500ms
+        }, delayMs);
       });
 
       // ✅ ÉTAPE 4 : Préparer la pub
