@@ -3,7 +3,7 @@ import MysticalButton from '@/components/MysticalButton';
 import BonusRoll from '@/components/BonusRoll';
 import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { showRewardedAd } from '@/admobService'; // ✅ Import pub récompensée
+import { showRewardedAd } from '@/admobService';
 
 interface BonusRollPageProps {
   user: UserSession;
@@ -18,23 +18,27 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   const [isLoadingAd, setIsLoadingAd] = useState(false);
 
   const handleStartRoll = async () => {
-    // ✅ Afficher le loader
     setIsLoadingAd(true);
     console.log('🎯 Démarrage du Bonus Roll - Affichage pub récompensée');
 
-    // ✅ Afficher la pub récompensée
-    const rewardGranted = await showRewardedAd('bonus_roll_start');
+    try {
+      // ✅ Afficher la pub récompensée
+      const rewardGranted = await showRewardedAd('bonus_roll_start');
 
-    setIsLoadingAd(false);
+      setIsLoadingAd(false);
 
-    if (rewardGranted) {
-      // ✅ L'utilisateur a regardé la pub complètement → débloquer
-      console.log('✅ Pub récompensée complétée, déblocage du Bonus Roll');
-      setShowDice(true);
-    } else {
-      // ❌ L'utilisateur a fermé la pub avant la fin → message
-      console.log('❌ Pub fermée avant la fin, pas de déblocage');
-      alert(t('oracle.bonusRoll.adRequired') || 'Vous devez regarder la publicité complète pour accéder au Tirage Bonus.');
+      if (rewardGranted) {
+        // ✅ Pub regardée complètement → débloquer
+        console.log('✅ Pub récompensée complétée, déblocage du Bonus Roll');
+        setShowDice(true);
+      } else {
+        // ❌ Pub fermée avant la fin → rester sur l'écran
+        console.log('❌ Pub fermée avant la fin, pas de déblocage');
+        // ✅ NE PAS afficher d'alert ici, le message est déjà sur l'écran
+      }
+    } catch (error) {
+      console.error('❌ Erreur pub récompensée:', error);
+      setIsLoadingAd(false);
     }
   };
 
@@ -96,13 +100,20 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
             </p>
           </div>
 
+          {/* Message d'instruction pour la pub */}
+          <div className="mb-4 p-3 bg-amber-500/20 border border-amber-400/50 rounded-lg">
+            <p className="text-amber-200 text-xs sm:text-sm leading-snug">
+              📺 {t('oracle.bonusRoll.adRequired') || 'Vous devez regarder la publicité complète pour accéder au Tirage Bonus.'}
+            </p>
+          </div>
+
           {/* Bouton */}
           <MysticalButton 
             onClick={handleStartRoll}
             className="w-full py-2.5 sm:py-3 px-2 sm:px-3 text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 shadow-[0_0_30px_rgba(251,191,36,0.6)] transform hover:scale-105 transition-all min-h-[48px] sm:min-h-[52px] flex items-center justify-center"
           >
             <span className="text-center leading-tight break-words block max-w-full">
-               {t('oracle.bonusRoll.startButton') || 'Débloquer le Tirage Bonus'}
+              🎁 {t('oracle.bonusRoll.startButton') || 'Débloquer le Tirage Bonus'}
             </span>
           </MysticalButton>
 
@@ -151,6 +162,9 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
 
           <p className="text-amber-300 text-xl font-bold font-serif mb-2 animate-pulse">
             {t('oracle.bonusRoll.loadingAd') || 'Chargement de la publicité...'}
+          </p>
+          <p className="text-amber-200 text-sm mt-3">
+            ⏳ Veuillez regarder la publicité jusqu'au bout
           </p>
           <div className="flex justify-center gap-2 mt-4">
             <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce"></span>
