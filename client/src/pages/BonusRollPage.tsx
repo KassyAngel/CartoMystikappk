@@ -27,18 +27,21 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
 
       setIsLoadingAd(false);
 
+      console.log(`🎁 [BONUS ROLL] Résultat pub: ${rewardGranted ? 'DÉBLOQUÉ ✅' : 'BLOQUÉ ❌'}`);
+
       if (rewardGranted) {
         // ✅ Pub regardée complètement → débloquer
         console.log('✅ Pub récompensée complétée, déblocage du Bonus Roll');
         setShowDice(true);
       } else {
-        // ❌ Pub fermée avant la fin → rester sur l'écran
+        // ❌ Pub fermée avant la fin → afficher message
         console.log('❌ Pub fermée avant la fin, pas de déblocage');
-        // ✅ NE PAS afficher d'alert ici, le message est déjà sur l'écran
+        alert(t('oracle.bonusRoll.adNotCompleted') || 'Vous devez regarder la publicité complète pour accéder au Tirage Bonus.');
       }
     } catch (error) {
       console.error('❌ Erreur pub récompensée:', error);
       setIsLoadingAd(false);
+      alert('Une erreur est survenue. Veuillez réessayer.');
     }
   };
 
