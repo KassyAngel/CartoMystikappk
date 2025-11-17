@@ -260,7 +260,7 @@ export async function showInterstitialAd(context: string = 'unknown') {
   }
 }
 
-// 🎁 PUB RÉCOMPENSÉE - ✅ VERSION CORRIGÉE
+// 🎁 PUB RÉCOMPENSÉE - ✅ VERSION CORRIGÉE FINALE
 let rewardedAdCounter = 0;
 
 export async function showRewardedAd(context: string = 'bonus_roll'): Promise<boolean> {
@@ -331,10 +331,12 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
           isRewardedShowing = false;
           resolved = true;
 
-          // ✅ CORRECTION : On débloque si la pub a été affichée
+          // ✅ CORRECTION FINALE : On débloque dès que la pub a été AFFICHÉE
+          // Car certains réseaux publicitaires ne déclenchent pas toujours onRewarded
           const shouldUnlock = adShown;
 
-          console.log(`   🎯 Résultat final: ${shouldUnlock ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'}`);
+          console.log(`   🎯 Résultat final: ${shouldUnlock ? '✅ DÉBLOQUÉ (pub affichée)' : '❌ BLOQUÉ (pub non affichée)'}`);
+          console.log(`   ℹ️ Note: onRewarded=${rewardReceived} (peut être false même si pub vue en entier)`);
           resolve(shouldUnlock);
         }
       });
