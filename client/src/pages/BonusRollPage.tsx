@@ -29,12 +29,14 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
 
       console.log(`🎁 [BONUS ROLL] Résultat final reçu: ${rewardGranted ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'}`);
 
+      // ✅ CORRECTION FINALE : On débloque dès que la pub a été AFFICHÉE
+      // Car admob.ts vérifie maintenant `adShown` au lieu de `rewardReceived`
       if (rewardGranted) {
-        console.log('✅ [BONUS ROLL] Pub complétée → Déblocage du tirage');
+        console.log('✅ [BONUS ROLL] Pub affichée → Déblocage du tirage');
         setShowDice(true);
       } else {
-        console.log('❌ [BONUS ROLL] Pub fermée prématurément → Pas de déblocage');
-        alert(t('oracle.bonusRoll.adNotCompleted') || 'Vous devez regarder la publicité complète pour accéder au Tirage Bonus.');
+        console.log('❌ [BONUS ROLL] Pub non affichée ou erreur → Pas de déblocage');
+        alert(t('oracle.bonusRoll.adNotCompleted') || 'La publicité n\'a pas pu être affichée. Réessayez.');
       }
     } catch (error) {
       console.error('❌ [BONUS ROLL] Erreur pub récompensée:', error);
@@ -104,7 +106,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
           {/* Message d'instruction pour la pub */}
           <div className="mb-4 p-3 bg-amber-500/20 border border-amber-400/50 rounded-lg">
             <p className="text-amber-200 text-xs sm:text-sm leading-snug">
-              📺 {t('oracle.bonusRoll.adRequired') || 'Vous devez regarder la publicité complète pour accéder au Tirage Bonus.'}
+              📺 {t('oracle.bonusRoll.adRequired') || 'Une courte publicité vous sera présentée pour débloquer ce tirage bonus gratuit.'}
             </p>
           </div>
 
@@ -165,7 +167,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
             {t('oracle.bonusRoll.loadingAd') || 'Chargement de la publicité...'}
           </p>
           <p className="text-amber-200 text-sm mt-3">
-            ⏳ Veuillez regarder la publicité jusqu'au bout
+            ⏳ Un instant s'il vous plaît
           </p>
           <div className="flex justify-center gap-2 mt-4">
             <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce"></span>
