@@ -36,23 +36,15 @@ export default function InterpretationPage({
 }: InterpretationPageProps) {
   const { t } = useLanguage();
 
+  // ✅ FONCTION CORRIGÉE - Identique à GrimoireModal
   const normalizeCardName = (cardName: string): string => {
+    if (!cardName) return '';
+
     return cardName
-      .replace(/\s+/g, '')
-      .replace(/'/g, '')
-      .replace(/'/g, '')
-      .replace(/[àáâãäå]/g, 'a')
-      .replace(/[èéêë]/g, 'e')
-      .replace(/[ìíîï]/g, 'i')
-      .replace(/[òóôõö]/g, 'o')
-      .replace(/[ùúûü]/g, 'u')
-      .replace(/[ñ]/g, 'n')
-      .replace(/[ç]/g, 'c')
-      .replace(/[ÀÁÂÃÄÅÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÑÇà]/g, (match) => {
-        const accents = 'ÀÁÂÃÄÅÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÑÇà';
-        const normal = 'AAAAAAEEEEIIIIOOOOOUUUUNCa';
-        return normal[accents.indexOf(match)] || match;
-      });
+      .trim()
+      .replace(/[''\s]/g, '')  // Supprimer apostrophes ET espaces
+      .normalize('NFD')        // Décomposer les accents
+      .replace(/[\u0300-\u036f]/g, '');  // Supprimer les diacritiques
   };
 
   const isDailyReading = oracleType === 'daily';

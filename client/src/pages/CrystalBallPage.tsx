@@ -148,7 +148,14 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
               <div className="text-center pt-1">
                 <button
                   onClick={onBack}
-                  className="text-purple-300/60 hover:text-purple-200 text-xs sm:text-sm transition-colors"
+                  className="
+                    text-purple-200 
+                    hover:text-amber-300 
+                    text-sm sm:text-base 
+                    font-semibold 
+                    drop-shadow-md 
+                    transition-all
+                  "
                 >
                   ← {t('common.back')}
                 </button>
@@ -203,7 +210,17 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
                 </MysticalButton>
                 <button
                   onClick={onBack}
-                  className="w-full text-purple-300/70 hover:text-purple-200 text-xs sm:text-sm transition-colors py-2"
+                  className="
+                    w-full 
+                    text-purple-200 
+                    hover:text-amber-300 
+                    text-sm sm:text-base 
+                    font-semibold 
+                    py-4 
+                    drop-shadow-[0_0_6px_rgba(255,200,100,0.5)]
+                    hover:drop-shadow-[0_0_10px_rgba(255,200,100,0.9)]
+                    transition-all
+                  "
                 >
                   ← {t('crystalBall.backHome')}
                 </button>

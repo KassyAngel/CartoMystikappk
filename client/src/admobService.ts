@@ -121,28 +121,43 @@ export async function initialize() {
     (AdMob.addListener as any)(RewardAdPluginEvents.Dismissed, () => {
       console.log('🚪 [GLOBAL] Pub récompensée fermée');
 
-      // ✅ Attendre 500ms pour être SÛR que Rewarded a le temps de se déclencher
+      // ✅ Attendre 1 seconde pour être SÛR
       setTimeout(() => {
-        console.log('🎯 [GLOBAL] Résolution:');
-        console.log(`   ├─ Mode: ${IS_PRODUCTION ? 'PRODUCTION' : 'TEST'}`);
+        console.log('🎯 [GLOBAL] Résolution après fermeture:');
+        console.log(`   ├─ Mode: ${IS_PRODUCTION ? 'PRODUCTION 🚀' : 'TEST 🧪'}`);
         console.log(`   ├─ Pub affichée: ${adShown ? '✅' : '❌'}`);
-        console.log(`   ├─ Récompense: ${rewardReceived ? '✅' : '❌'}`);
+        console.log(`   ├─ Récompense reçue: ${rewardReceived ? '✅' : '❌'}`);
 
-        // ✅ DÉBLOQUÉ SI : pub affichée ET (récompense reçue OU mode test)
-        const shouldUnlock = adShown && (rewardReceived || !IS_PRODUCTION);
-        console.log(`   └─ Résultat: ${shouldUnlock ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'} ${!IS_PRODUCTION && !rewardReceived ? '(mode test)' : ''}`);
+        let shouldUnlock = false;
+        let reason = '';
+
+        if (IS_PRODUCTION) {
+          // 🚀 PRODUCTION : Débloque SEULEMENT si récompense reçue
+          shouldUnlock = adShown && rewardReceived;
+          reason = shouldUnlock 
+            ? '✅ PRODUCTION: Pub vue + Récompense reçue'
+            : `❌ PRODUCTION: ${!adShown ? 'Pub non affichée' : 'Récompense non reçue'}`;
+        } else {
+          // 🧪 TEST : Débloque si la pub a été affichée (peu importe la récompense)
+          shouldUnlock = adShown;
+          reason = shouldUnlock 
+            ? '✅ TEST: Pub affichée (récompense ignorée en mode test)'
+            : '❌ TEST: Pub non affichée';
+        }
+
+        console.log(`   └─ Résultat: ${reason}`);
 
         if (currentRewardResolve) {
           currentRewardResolve(shouldUnlock);
           currentRewardResolve = null;
         }
 
-        // Reset
+        // Reset complet
         isRewardedReady = false;
         isRewardedShowing = false;
         rewardReceived = false;
         adShown = false;
-      }, 500);
+      }, 1000); // ✅ 1 seconde au lieu de 500ms
     });
 
     (AdMob.addListener as any)(RewardAdPluginEvents.FailedToShow, (error: any) => {

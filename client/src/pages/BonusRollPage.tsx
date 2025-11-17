@@ -19,7 +19,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
 
   const handleStartRoll = async () => {
     setIsLoadingAd(true);
-    console.log('🎯 Démarrage du Bonus Roll - Affichage pub récompensée');
+    console.log('🎯 [BONUS ROLL] Démarrage - Affichage pub récompensée');
 
     try {
       // ✅ Afficher la pub récompensée
@@ -27,19 +27,17 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
 
       setIsLoadingAd(false);
 
-      console.log(`🎁 [BONUS ROLL] Résultat pub: ${rewardGranted ? 'DÉBLOQUÉ ✅' : 'BLOQUÉ ❌'}`);
+      console.log(`🎁 [BONUS ROLL] Résultat final reçu: ${rewardGranted ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'}`);
 
       if (rewardGranted) {
-        // ✅ Pub regardée complètement → débloquer
-        console.log('✅ Pub récompensée complétée, déblocage du Bonus Roll');
+        console.log('✅ [BONUS ROLL] Pub complétée → Déblocage du tirage');
         setShowDice(true);
       } else {
-        // ❌ Pub fermée avant la fin → afficher message
-        console.log('❌ Pub fermée avant la fin, pas de déblocage');
+        console.log('❌ [BONUS ROLL] Pub fermée prématurément → Pas de déblocage');
         alert(t('oracle.bonusRoll.adNotCompleted') || 'Vous devez regarder la publicité complète pour accéder au Tirage Bonus.');
       }
     } catch (error) {
-      console.error('❌ Erreur pub récompensée:', error);
+      console.error('❌ [BONUS ROLL] Erreur pub récompensée:', error);
       setIsLoadingAd(false);
       alert('Une erreur est survenue. Veuillez réessayer.');
     }
