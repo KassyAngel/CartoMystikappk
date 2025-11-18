@@ -1832,6 +1832,9 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.badge": "BONUS EXCLUSIF",
     "oracle.bonusRoll.pleaseWait": "Un instant s'il vous plaît",
     "oracle.bonusRoll.adNotCompleted": "La publicité n'a pas pu être affichée. Réessayez.",
+    "oracle.bonusRoll.adTimeout": "La publicité a mis trop de temps. Le tirage est débloqué gratuitement.",
+    "oracle.bonusRoll.adStuck": "La publicité est bloquée ?",
+    "oracle.bonusRoll.forceUnlock": "Débloquer maintenant",
            
     // Interprétations Bonus Roll - 3 variations par nombre
     "oracle.bonusRoll.2.title.1": "🌅 Nouveau Départ",
@@ -3664,6 +3667,9 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.badge": "EXCLUSIVE BONUS",
     "oracle.bonusRoll.pleaseWait": "Please wait a moment",
     "oracle.bonusRoll.adNotCompleted": "The ad could not be displayed. Please try again.",
+    "oracle.bonusRoll.adTimeout": "The ad took too long. The draw is unlocked for free.",
+    "oracle.bonusRoll.adStuck": "Is the ad stuck?",
+    "oracle.bonusRoll.forceUnlock": "Unlock now",
               
     // Interpretations (2 variations per result)
     "oracle.bonusRoll.2.title.1": "🌅 New Beginning",
@@ -5566,6 +5572,9 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.badge": "BONO EXCLUSIVO",
     "oracle.bonusRoll.pleaseWait": "Un momento por favor",
     "oracle.bonusRoll.adNotCompleted": "No se pudo mostrar el anuncio. Por favor, inténtalo de nuevo.",
+    "oracle.bonusRoll.adTimeout": "El anuncio tardó demasiado. El sorteo se desbloquea gratis.",
+    "oracle.bonusRoll.adStuck": "¿El anuncio está bloqueado?",
+    "oracle.bonusRoll.forceUnlock": "Desbloquear ahora",
           
     "oracle.bonusRoll.2.title.1": "🌅 Nuevo Comienzo",
     "oracle.bonusRoll.2.message.1": "Las estrellas se alinean para un nuevo inicio. ¡La Doble Suerte te acompaña hoy!",
@@ -7469,6 +7478,9 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.badge": "EXKLUSIVER BONUS",
     "oracle.bonusRoll.pleaseWait": "Einen Moment bitte",
     "oracle.bonusRoll.adNotCompleted": "Die Werbung konnte nicht angezeigt werden. Bitte versuche es erneut.",
+    "oracle.bonusRoll.adTimeout": "Die Werbung hat zu lange gedauert. Die Ziehung wird kostenlos freigeschaltet.",
+    "oracle.bonusRoll.adStuck": "Ist die Werbung hängen geblieben?",
+    "oracle.bonusRoll.forceUnlock": "Jetzt freischalten",
         
     "oracle.bonusRoll.2.title.1": "🌅 Neuer Anfang",
     "oracle.bonusRoll.2.message.1": "Die Sterne stehen für einen Neuanfang günstig. Das doppelte Glück begleitet dich heute!",
@@ -9375,6 +9387,9 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.badge": "BONUS ESCLUSIVO",
     "oracle.bonusRoll.pleaseWait": "Un momento per favore",
     "oracle.bonusRoll.adNotCompleted": "L'annuncio non può essere visualizzato. Riprova.",
+    "oracle.bonusRoll.adTimeout": "L'annuncio ha impiegato troppo tempo. L’estrazione è sbloccata gratuitamente.",
+    "oracle.bonusRoll.adStuck": "L'annuncio è bloccato?",
+    "oracle.bonusRoll.forceUnlock": "Sblocca ora",
    
     "oracle.bonusRoll.2.title.1": "🌅 Nuovo Inizio",
     "oracle.bonusRoll.2.message.1": "Le stelle si allineano per un nuovo inizio. La doppia fortuna ti accompagna oggi!",

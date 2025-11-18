@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import MysticalButton from '@/components/MysticalButton';
 import BonusRoll from '@/components/BonusRoll';
 import { UserSession } from '@shared/schema';
@@ -98,17 +98,47 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   const [showDice, setShowDice] = useState(false);
   const [isLoadingAd, setIsLoadingAd] = useState(false);
   const [variation, setVariation] = useState<string | null>(null);
+  const [adTimedOut, setAdTimedOut] = useState(false);
+
+  // ✅ Ref pour stocker le timer
+  const adTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // ✅ Nettoyer le timeout quand le composant est démonté
+  useEffect(() => {
+    return () => {
+      if (adTimeoutRef.current) {
+        clearTimeout(adTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleStartRoll = async () => {
     setIsLoadingAd(true);
+    setAdTimedOut(false);
 
     // ✅ CHOISIR LA VARIATION DÈS LE DÉBUT
     const chosenVariation = getRandomVariation();
     setVariation(chosenVariation);
     console.log('🎯 [BONUS ROLL] Démarrage - Variation choisie:', chosenVariation);
 
+    // ✅ TIMEOUT DE SÉCURITÉ : 30 secondes max
+    adTimeoutRef.current = setTimeout(() => {
+      console.log('⏱️ [BONUS ROLL] Timeout pub (30s) - Déblocage forcé');
+      setIsLoadingAd(false);
+      setAdTimedOut(true);
+      alert(t('oracle.bonusRoll.adTimeout') || 'La publicité a mis trop de temps. Le tirage est débloqué gratuitement.');
+      setShowDice(true);
+    }, 30000); // 30 secondes
+
     try {
       const rewardGranted = await showRewardedAd('bonus_roll_start');
+
+      // ✅ Annuler le timeout si la pub se termine normalement
+      if (adTimeoutRef.current) {
+        clearTimeout(adTimeoutRef.current);
+        adTimeoutRef.current = null;
+      }
+
       setIsLoadingAd(false);
 
       console.log(`🎁 [BONUS ROLL] Résultat final: ${rewardGranted ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'}`);
@@ -122,9 +152,29 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
       }
     } catch (error) {
       console.error('❌ [BONUS ROLL] Erreur pub récompensée:', error);
+
+      // ✅ Annuler le timeout en cas d'erreur
+      if (adTimeoutRef.current) {
+        clearTimeout(adTimeoutRef.current);
+        adTimeoutRef.current = null;
+      }
+
       setIsLoadingAd(false);
       alert('Une erreur est survenue. Veuillez réessayer.');
     }
+  };
+
+  // ✅ FONCTION D'URGENCE : Débloquer si vraiment bloqué
+  const handleForceUnlock = () => {
+    console.log('🚨 [BONUS ROLL] Déblocage manuel forcé par l\'utilisateur');
+
+    if (adTimeoutRef.current) {
+      clearTimeout(adTimeoutRef.current);
+      adTimeoutRef.current = null;
+    }
+
+    setIsLoadingAd(false);
+    setShowDice(true);
   };
 
   const handleComplete = (result: { total: number; dice: [number, number]; interpretation: string }) => {
@@ -218,7 +268,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
     );
   }
 
-  // ✅ Loader pendant la pub
+  // ✅ Loader pendant la pub AVEC BOUTON D'URGENCE
   if (isLoadingAd) {
     return (
       <div className="main-content w-full min-h-screen flex flex-col items-center justify-center p-5 relative overflow-hidden">
@@ -259,6 +309,19 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
             <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce"></span>
             <span className="w-3 h-3 bg-yellow-400 rounded-full animate-bounce" style={{animationDelay: '0.15s'}}></span>
             <span className="w-3 h-3 bg-orange-400 rounded-full animate-bounce" style={{animationDelay: '0.3s'}}></span>
+          </div>
+
+          {/* ✅ BOUTON D'URGENCE après 10 secondes */}
+          <div className="mt-8">
+            <p className="text-amber-200/70 text-xs mb-3">
+              {t('oracle.bonusRoll.adStuck') || 'La publicité est bloquée ?'}
+            </p>
+            <button
+              onClick={handleForceUnlock}
+              className="px-4 py-2 bg-red-600/80 hover:bg-red-500 text-white text-sm rounded-lg transition-colors border border-red-400"
+            >
+              🚨 {t('oracle.bonusRoll.forceUnlock') || 'Débloquer maintenant'}
+            </button>
           </div>
         </div>
       </div>
