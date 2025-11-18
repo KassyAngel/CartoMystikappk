@@ -34,12 +34,12 @@ export default function TarotCard({
 
   const isBack = number === 0;
 
-  // ✅ FONCTION DE NORMALISATION AMÉLIORÉE (identique à CardGame)
+  // ✅ FONCTION DE NORMALISATION (DOIT ÊTRE DANS LE COMPOSANT)
   const normalizeCardName = (name: string): string => {
     return name
       .toLowerCase()
       .replace(/\s+/g, '')
-      .replace(/[''\u2019]/g, '') // Tous les types d'apostrophes
+      .replace(/[''\u2019]/g, '')
       .replace(/[àáâãäå]/gi, 'a')
       .replace(/[èéêë]/gi, 'e')
       .replace(/[ìíîï]/gi, 'i')
@@ -51,21 +51,25 @@ export default function TarotCard({
       .replace(/[æ]/gi, 'ae');
   };
 
-  // ✅ TRADUCTION CORRIGÉE
+  // ✅ TRADUCTION (DOIT ÊTRE DANS LE COMPOSANT)
   const getTranslatedCardName = (): string => {
     if (!cardName) return '';
 
     const normalized = normalizeCardName(cardName);
     const translationKey = `cards.${oracleType}.${normalized}.name`;
 
-    console.log(`🃏 TarotCard traduction: "${cardName}" → normalized: "${normalized}" → key: "${translationKey}"`);
+    console.log(`┌─ 🎴 TarotCard TRADUCTION ────────────────`);
+    console.log(`│ Carte: "${cardName}"`);
+    console.log(`│ Type: "${oracleType}"`);
+    console.log(`│ Normalisé: "${normalized}"`);
+    console.log(`│ Clé: "${translationKey}"`);
 
     const translated = t(translationKey);
+    console.log(`│ t() retourne: "${translated}"`);
 
-    // ✅ Si la traduction n'existe pas (retourne la clé), on garde l'original
     const finalName = translated === translationKey ? cardName : translated;
-
-    console.log(`   → Résultat affiché: "${finalName}"`);
+    console.log(`│ ✅ AFFICHÉ: "${finalName}"`);
+    console.log(`└──────────────────────────────────────────`);
 
     return finalName;
   };
@@ -88,15 +92,12 @@ export default function TarotCard({
       data-testid={`card-${number}`}
     >
       {isBack ? (
-        /* ✨ DOS DE LA CARTE - VERSION PROFESSIONNELLE ✨ */
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-violet-900">
-          {/* Effet galaxie de fond */}
           <div className="absolute inset-0 opacity-40">
             <div className="absolute top-[20%] left-[30%] w-16 h-16 bg-blue-500/30 rounded-full blur-2xl"></div>
             <div className="absolute bottom-[30%] right-[25%] w-20 h-20 bg-purple-500/20 rounded-full blur-3xl"></div>
           </div>
 
-          {/* Petites étoiles scintillantes */}
           <div className="absolute inset-0">
             <div className="absolute top-[15%] left-[20%] w-1 h-1 bg-yellow-200 rounded-full animate-pulse"></div>
             <div className="absolute top-[40%] right-[15%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
@@ -106,35 +107,27 @@ export default function TarotCard({
             <div className="absolute top-[30%] left-[50%] w-0.5 h-0.5 bg-white/60 rounded-full animate-pulse" style={{animationDelay: '1.2s'}}></div>
           </div>
 
-          {/* Bordure dorée intérieure */}
           <div className="absolute inset-2 rounded-lg border-2 border-[#ffd700]/30"></div>
 
-          {/* Symbole central */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="relative">
-              {/* Lueur derrière le symbole */}
               <div className="absolute inset-0 blur-xl bg-[#ffd700]/20 scale-150"></div>
-
-              {/* Symbole mystique */}
               <div className="relative text-4xl sm:text-5xl text-[#ffd700] drop-shadow-[0_0_10px_rgba(255,215,0,0.8)] font-serif">
                 ☽
               </div>
             </div>
           </div>
 
-          {/* Coins ornementés */}
           <div className="absolute top-3 left-3 text-[#ffd700]/40 text-xs">✦</div>
           <div className="absolute top-3 right-3 text-[#ffd700]/40 text-xs">✦</div>
           <div className="absolute bottom-3 left-3 text-[#ffd700]/40 text-xs">✦</div>
           <div className="absolute bottom-3 right-3 text-[#ffd700]/40 text-xs">✦</div>
 
-          {/* Effet de brillance au hover */}
           {isHovered && (
             <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent animate-shimmer"></div>
           )}
         </div>
       ) : (
-        /* ✅ FACE AVEC NOM TRADUIT CORRECTEMENT */
         cardName ? (
           <div className="text-center px-2">
             <span className="text-[#ffd700] font-bold text-xs sm:text-sm md:text-base leading-tight block">

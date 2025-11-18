@@ -1831,6 +1831,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.adRequired": "Vous devez regarder la publicité complète pour accéder au Tirage Bonus.",
     "oracle.bonusRoll.badge": "BONUS EXCLUSIF",
     "oracle.bonusRoll.pleaseWait": "Un instant s'il vous plaît",
+    "oracle.bonusRoll.adNotCompleted": "La publicité n'a pas pu être affichée. Réessayez.",
            
     // Interprétations Bonus Roll - 3 variations par nombre
     "oracle.bonusRoll.2.title.1": "🌅 Nouveau Départ",
@@ -3662,6 +3663,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.adRequired": "You must watch the complete ad to access the Bonus Roll.",
     "oracle.bonusRoll.badge": "EXCLUSIVE BONUS",
     "oracle.bonusRoll.pleaseWait": "Please wait a moment",
+    "oracle.bonusRoll.adNotCompleted": "The ad could not be displayed. Please try again.",
               
     // Interpretations (2 variations per result)
     "oracle.bonusRoll.2.title.1": "🌅 New Beginning",
@@ -5563,6 +5565,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.adRequired": "Debes ver el anuncio completo para acceder a la Tirada Bonus.",
     "oracle.bonusRoll.badge": "BONO EXCLUSIVO",
     "oracle.bonusRoll.pleaseWait": "Un momento por favor",
+    "oracle.bonusRoll.adNotCompleted": "No se pudo mostrar el anuncio. Por favor, inténtalo de nuevo.",
           
     "oracle.bonusRoll.2.title.1": "🌅 Nuevo Comienzo",
     "oracle.bonusRoll.2.message.1": "Las estrellas se alinean para un nuevo inicio. ¡La Doble Suerte te acompaña hoy!",
@@ -7465,6 +7468,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.adRequired": "Sie müssen die vollständige Werbung ansehen, um Zugriff auf den Bonus-Wurf zu erhalten.",
     "oracle.bonusRoll.badge": "EXKLUSIVER BONUS",
     "oracle.bonusRoll.pleaseWait": "Einen Moment bitte",
+    "oracle.bonusRoll.adNotCompleted": "Die Werbung konnte nicht angezeigt werden. Bitte versuche es erneut.",
         
     "oracle.bonusRoll.2.title.1": "🌅 Neuer Anfang",
     "oracle.bonusRoll.2.message.1": "Die Sterne stehen für einen Neuanfang günstig. Das doppelte Glück begleitet dich heute!",
@@ -9370,6 +9374,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.adRequired": "Devi guardare la pubblicità completa per accedere al Tiro Bonus.",
     "oracle.bonusRoll.badge": "BONUS ESCLUSIVO",
     "oracle.bonusRoll.pleaseWait": "Un momento per favore",
+    "oracle.bonusRoll.adNotCompleted": "L'annuncio non può essere visualizzato. Riprova.",
    
     "oracle.bonusRoll.2.title.1": "🌅 Nuovo Inizio",
     "oracle.bonusRoll.2.message.1": "Le stelle si allineano per un nuovo inizio. La doppia fortuna ti accompagna oggi!",
