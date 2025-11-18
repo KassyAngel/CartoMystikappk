@@ -44,13 +44,13 @@ export default function CardGame({
   const displayCards = isDailyReading ? 3 : 6;
   const maxSelection = isDailyReading ? 1 : 3;
 
-  // ✅ FONCTION UNIQUE ET CORRIGÉE
+  // ✅ NORMALISATION IDENTIQUE À TarotCard.tsx
   const normalizeCardName = (name: string): string => {
     return name
       .trim()
-      .replace(/[''\s]/g, '')  // Supprimer apostrophes ET espaces
-      .normalize('NFD')        // Décomposer les accents
-      .replace(/[\u0300-\u036f]/g, '');  // Supprimer les diacritiques
+      .replace(/['']/g, '')           // Supprimer apostrophes
+      .replace(/-/g, '')              // Supprimer tirets
+      .replace(/\s+/g, '');           // Supprimer espaces → "NouveauDepart", "LacherPrise"
   };
 
   const getCardOracleType = (): 'tarot' | 'angels' | 'runes' | 'oracle' => {
@@ -61,22 +61,32 @@ export default function CardGame({
     return 'oracle';
   };
 
-  // ✅ FONCTION DE TRADUCTION UNIQUE
+  // ✅ FONCTION DE TRADUCTION AVEC PLUSIEURS FORMATS
   const translateCardName = (cardName: string | undefined): string | undefined => {
     if (!cardName) return undefined;
 
     const oracleTypeKey = getCardOracleType();
     const normalizedName = normalizeCardName(cardName);
-    const translationKey = `cards.${oracleTypeKey}.${normalizedName}.name`;
 
-    console.log(`🃏 Traduction: "${cardName}" → "${normalizedName}" → key: "${translationKey}"`);
+    // Essayer plusieurs formats de clés
+    const possibleKeys = [
+      `cards.${oracleTypeKey}.${normalizedName}.name`,  // Format principal
+      `cards.${oracleTypeKey}.${cardName}.name`,        // Nom original
+      `cards.${oracleTypeKey}.${normalizedName}`,       // Sans .name
+    ];
 
-    const translated = t(translationKey);
-    const finalName = translated === translationKey ? cardName : translated;
+    console.log(`🃏 CardGame [${language}]: "${cardName}" → normalized: "${normalizedName}"`);
 
-    console.log(`   → Résultat: "${finalName}" (${language})`);
+    for (const key of possibleKeys) {
+      const translated = t(key);
+      if (translated !== key) {
+        console.log(`   ✅ Trouvé: "${key}" → "${translated}"`);
+        return translated;
+      }
+    }
 
-    return finalName;
+    console.log(`   ⚠️ Pas de traduction, affichage original: "${cardName}"`);
+    return cardName;
   };
 
   useEffect(() => {
@@ -125,7 +135,7 @@ export default function CardGame({
     // ✅ Traduire le nom de la carte
     const displayName = translateCardName(cardData.name) || cardData.name;
 
-    console.log(`🃏 Carte révélée: "${cardData.name}" (FR) → "${displayName}" (${language})`);
+    console.log(`🃏 Carte révélée: "${cardData.name}" (original) → "${displayName}" (${language})`);
 
     // ✅ Créer une copie avec le nom traduit
     const translatedCardData = {
@@ -160,6 +170,7 @@ export default function CardGame({
 
     const zodiacName = getTranslatedZodiacName();
 
+    // ✅ UTILISE LA MÊME NORMALISATION
     const getRandomCardMeaning = (cardName: string, oType: 'tarot' | 'angels' | 'runes' | 'oracle'): string => {
       const normalizedName = normalizeCardName(cardName);
       const baseMeaningKey = `cards.${oType}.${normalizedName}.meaning`;
@@ -336,7 +347,7 @@ export default function CardGame({
       finalMessage
     ].join('\n\n');
 
-    console.log('📄 Interprétation générée:', fullText.substring(0, 200));
+    console.log('📄 Interprétation générée (premiers 200 chars):', fullText.substring(0, 200));
 
     return fullText;
   };

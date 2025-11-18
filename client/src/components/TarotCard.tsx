@@ -23,7 +23,7 @@ export default function TarotCard({
   oracleType = 'tarot'
 }: TarotCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const handleClick = () => {
     if (isSelectable) {
@@ -34,40 +34,53 @@ export default function TarotCard({
 
   const isBack = number === 0;
 
-  // ✅ FONCTION DE NORMALISATION AMÉLIORÉE (identique à CardGame)
+  // ✅ NORMALISATION COMPATIBLE AVEC TES CLÉS DE TRADUCTION
   const normalizeCardName = (name: string): string => {
+    // Garder le format exact : supprimer juste apostrophes et tirets
     return name
-      .toLowerCase()
-      .replace(/\s+/g, '')
-      .replace(/[''\u2019]/g, '') // Tous les types d'apostrophes
-      .replace(/[àáâãäå]/gi, 'a')
-      .replace(/[èéêë]/gi, 'e')
-      .replace(/[ìíîï]/gi, 'i')
-      .replace(/[òóôõö]/gi, 'o')
-      .replace(/[ùúûü]/gi, 'u')
-      .replace(/[ñ]/gi, 'n')
-      .replace(/[ç]/gi, 'c')
-      .replace(/[œ]/gi, 'oe')
-      .replace(/[æ]/gi, 'ae');
+      .trim()
+      .replace(/['']/g, '')           // Supprimer apostrophes
+      .replace(/-/g, '')              // Supprimer tirets
+      .replace(/\s+/g, '');           // Supprimer espaces → "LacherPrise", "NouveauDepart"
   };
 
-  // ✅ TRADUCTION CORRIGÉE
+  // ✅ TRADUCTION AVEC PLUSIEURS FORMATS
   const getTranslatedCardName = (): string => {
     if (!cardName) return '';
 
+    // Format normalisé pour les clés
     const normalized = normalizeCardName(cardName);
-    const translationKey = `cards.${oracleType}.${normalized}.name`;
 
-    console.log(`🃏 TarotCard traduction: "${cardName}" → normalized: "${normalized}" → key: "${translationKey}"`);
+    console.log(`🃏 TarotCard [${language}]: "${cardName}" → normalized: "${normalized}"`);
+    console.log(`   Oracle type: ${oracleType}`);
 
-    const translated = t(translationKey);
+    // ✅ ESSAYER DIFFÉRENTS FORMATS DE CLÉS
+    const possibleKeys = [
+      // Format exact comme dans ton fichier de traduction
+      `cards.${oracleType}.${normalized}.name`,           // Ex: cards.daily.Guidance.name
 
-    // ✅ Si la traduction n'existe pas (retourne la clé), on garde l'original
-    const finalName = translated === translationKey ? cardName : translated;
+      // Formats alternatifs au cas où
+      `cards.${oracleType}.${cardName}.name`,             // Nom original
+      `cards.${oracleType}.${normalized}`,                // Sans .name
+      `oracle.${oracleType}.cards.${normalized}.name`,    // Format alternatif
+      `dailyReading.cards.${normalized}`,                 // Pour tirage du jour
+    ];
 
-    console.log(`   → Résultat affiché: "${finalName}"`);
+    // Essayer chaque format
+    for (const key of possibleKeys) {
+      const translated = t(key);
 
-    return finalName;
+      // Si la traduction existe (ne retourne pas la clé elle-même)
+      if (translated && translated !== key) {
+        console.log(`   ✅ Trouvé avec clé: "${key}" → "${translated}"`);
+        return translated;
+      }
+    }
+
+    // ⚠️ Aucune traduction trouvée : afficher l'original
+    console.log(`   ⚠️ Aucune traduction trouvée pour les clés testées`);
+    console.log(`   📌 Clés testées:`, possibleKeys);
+    return cardName;
   };
 
   return (
