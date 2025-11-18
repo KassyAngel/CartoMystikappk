@@ -301,7 +301,10 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
         <div className="flex justify-center mb-1.5 sm:mb-2">
           <div className="relative w-8 h-8 sm:w-10 sm:h-10">
             <div className={`absolute inset-0 ${styles.glow} rounded-full blur-xl animate-pulse`}></div>
-            <div className={`absolute inset-0 bg-gradient-to-br ${styles.gradient} rounded-full flex items-center justify-center border-2 ${styles.border} shadow-[0_0_20px_${styles.glowColor}]`}>
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${styles.gradient} rounded-full flex items-center justify-center border-2 ${styles.border}`}
+                style={{ boxShadow: `0 0 20px ${styles.glowColor}` }}
+              >
               <span className="text-xl sm:text-2xl animate-bounce">🎲</span>
             </div>
           </div>
