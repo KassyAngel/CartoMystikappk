@@ -44,21 +44,13 @@ export default function CardGame({
   const displayCards = isDailyReading ? 3 : 6;
   const maxSelection = isDailyReading ? 1 : 3;
 
-  // ✅ FONCTION DE NORMALISATION UNIFIÉE
+  // ✅ FONCTION UNIQUE ET CORRIGÉE
   const normalizeCardName = (name: string): string => {
     return name
-      .toLowerCase()
-      .replace(/\s+/g, '')
-      .replace(/[''\u2019]/g, '')
-      .replace(/[àáâãäå]/gi, 'a')
-      .replace(/[èéêë]/gi, 'e')
-      .replace(/[ìíîï]/gi, 'i')
-      .replace(/[òóôõö]/gi, 'o')
-      .replace(/[ùúûü]/gi, 'u')
-      .replace(/[ñ]/gi, 'n')
-      .replace(/[ç]/gi, 'c')
-      .replace(/[œ]/gi, 'oe')
-      .replace(/[æ]/gi, 'ae');
+      .trim()
+      .replace(/[''\s]/g, '')  // Supprimer apostrophes ET espaces
+      .normalize('NFD')        // Décomposer les accents
+      .replace(/[\u0300-\u036f]/g, '');  // Supprimer les diacritiques
   };
 
   const getCardOracleType = (): 'tarot' | 'angels' | 'runes' | 'oracle' => {
@@ -69,7 +61,7 @@ export default function CardGame({
     return 'oracle';
   };
 
-  // ✅ FONCTION DE TRADUCTION AVEC LOGS DÉTAILLÉS
+  // ✅ FONCTION DE TRADUCTION UNIQUE
   const translateCardName = (cardName: string | undefined): string | undefined => {
     if (!cardName) return undefined;
 
@@ -77,18 +69,12 @@ export default function CardGame({
     const normalizedName = normalizeCardName(cardName);
     const translationKey = `cards.${oracleTypeKey}.${normalizedName}.name`;
 
-    console.log(`┌─ 🃏 TRADUCTION CARTE ─────────────────────`);
-    console.log(`│ Carte originale: "${cardName}"`);
-    console.log(`│ Type d'oracle: "${oracleTypeKey}"`);
-    console.log(`│ Nom normalisé: "${normalizedName}"`);
-    console.log(`│ Clé de traduction: "${translationKey}"`);
+    console.log(`🃏 Traduction: "${cardName}" → "${normalizedName}" → key: "${translationKey}"`);
 
     const translated = t(translationKey);
-    console.log(`│ Résultat t(): "${translated}"`);
-
     const finalName = translated === translationKey ? cardName : translated;
-    console.log(`│ ✅ NOM FINAL: "${finalName}" (langue: ${language})`);
-    console.log(`└───────────────────────────────────────────`);
+
+    console.log(`   → Résultat: "${finalName}" (${language})`);
 
     return finalName;
   };
