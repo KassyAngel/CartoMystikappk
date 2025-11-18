@@ -1797,6 +1797,9 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.loading.offers": 'Chargement des offres...',
     "premium.button.restoring": 'Restauration...',
     "premium.poweredBy": 'Powered by',
+    "premium.error.loadFailed": "Impossible de charger les offres",
+    "premium.error.purchaseFailed": "Erreur lors de l\'achat",
+    "premium.error.unknown": "Erreur inconnue",
 
     // PAGE PAIEMENT SUCESS CANCEL
     "payment.success.title": "Paiement réussi !",
@@ -3625,6 +3628,9 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.button.loading": "Loading...",
     "premium.loading.offers": "Loading offers...",
     "premium.button.restoring": "Restoring...",
+    "premium.error.loadFailed": "Failed to load offers",
+    "premium.error.purchaseFailed": "Error during purchase",
+    "premium.error.unknown": "Unknown error",
 
     // PAGE PAIEMENT SUCESS CANCEL
     "payment.success.title": "Payment Successful!",
@@ -5523,6 +5529,9 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.button.loading": "Cargando...",
     "premium.loading.offers": "Cargando ofertas...",
     "premium.button.restoring": "Restaurando...",
+    "premium.error.loadFailed": "No se pudieron cargar las ofertas",
+    "premium.error.purchaseFailed": "Error durante la compra",
+    "premium.error.unknown": "Error desconocido",
 
     // PAGE PAIEMENT SUCCESS CANCEL
     "payment.success.title": "¡Pago exitoso!",
@@ -7422,6 +7431,9 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.button.loading": "Wird geladen...",
     "premium.loading.offers": "Angebote werden geladen...",
     "premium.button.restoring": "Wird wiederhergestellt...",
+    "premium.error.loadFailed": "Angebote konnten nicht geladen werden",
+    "premium.error.purchaseFailed": "Fehler beim Kauf",
+    "premium.error.unknown": "Unbekannter Fehler",
 
     // PAGE PAIEMENT SUCCESS CANCEL
     "payment.success.title": "Zahlung erfolgreich!",
@@ -9324,6 +9336,9 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.button.loading": "Caricamento...",
     "premium.loading.offers": "Caricamento delle offerte...",
     "premium.button.restoring": "Ripristino...",
+    "premium.error.loadFailed": "Impossibile caricare le offerte",
+    "premium.error.purchaseFailed": "Errore durante l'acquisto",
+    "premium.error.unknown": "Errore sconosciuto",
 
     // PAGE PAIEMENT SUCESS CANCEL
     "payment.success.title": "Pagamento riuscito!",

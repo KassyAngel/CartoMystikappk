@@ -35,7 +35,7 @@ export default function CardGame({
   const [selectedCardsIndices, setSelectedCardsIndices] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [revealedCard, setRevealedCard] = useState<{ card: any; index: number } | null>(null);
-  const { t, language } = useLanguage(); // ✅ AJOUTÉ language
+  const { t, language } = useLanguage();
 
   const playFlip = useSound('Flip-card.wav');
   const playReveal = useSound('Bouton-reveal.wav');
@@ -44,31 +44,13 @@ export default function CardGame({
   const displayCards = isDailyReading ? 3 : 6;
   const maxSelection = isDailyReading ? 1 : 3;
 
-  // ✅ AJOUTEZ CETTE FONCTION ICI
-  const translateCardName = (cardName: string | undefined): string | undefined => {
-    if (!cardName) return undefined;
-
-    const normalizeCardName = (name: string): string => {
-      return name
-        .replace(/\s+/g, '')
-        .replace(/'/g, '')
-        .replace(/'/g, '')
-        .replace(/[àáâãäå]/g, 'a')
-        .replace(/[èéêë]/g, 'e')
-        .replace(/[ìíîï]/g, 'i')
-        .replace(/[òóôõö]/g, 'o')
-        .replace(/[ùúûü]/g, 'u')
-        .replace(/[ñ]/g, 'n')
-        .replace(/[ç]/g, 'c');
-    };
-
-    const oracleType = getCardOracleType();
-    const normalizedName = normalizeCardName(cardName);
-    const translatedName = t(`cards.${oracleType}.${normalizedName}.name`);
-
-    return translatedName.includes(`cards.${oracleType}`) 
-      ? cardName 
-      : translatedName;
+  // ✅ FONCTION UNIQUE ET CORRIGÉE
+  const normalizeCardName = (name: string): string => {
+    return name
+      .trim()
+      .replace(/[''\s]/g, '')  // Supprimer apostrophes ET espaces
+      .normalize('NFD')        // Décomposer les accents
+      .replace(/[\u0300-\u036f]/g, '');  // Supprimer les diacritiques
   };
 
   const getCardOracleType = (): 'tarot' | 'angels' | 'runes' | 'oracle' => {
@@ -77,6 +59,24 @@ export default function CardGame({
     if (oracleType === 'angels') return 'angels';
     if (oracleType === 'runes') return 'runes';
     return 'oracle';
+  };
+
+  // ✅ FONCTION DE TRADUCTION UNIQUE
+  const translateCardName = (cardName: string | undefined): string | undefined => {
+    if (!cardName) return undefined;
+
+    const oracleTypeKey = getCardOracleType();
+    const normalizedName = normalizeCardName(cardName);
+    const translationKey = `cards.${oracleTypeKey}.${normalizedName}.name`;
+
+    console.log(`🃏 Traduction: "${cardName}" → "${normalizedName}" → key: "${translationKey}"`);
+
+    const translated = t(translationKey);
+    const finalName = translated === translationKey ? cardName : translated;
+
+    console.log(`   → Résultat: "${finalName}" (${language})`);
+
+    return finalName;
   };
 
   useEffect(() => {
@@ -122,32 +122,8 @@ export default function CardGame({
     const actualIndex = randomCards[cardIndex];
     const cardData = oracle.cards[actualIndex];
 
-    // ✅ CORRECTION : Traduire le nom de la carte
-    const normalizeCardName = (name: string): string => {
-      return name
-        .toLowerCase() // ✅ CRITIQUE : Tout en minuscule
-        .replace(/\s+/g, '')
-        .replace(/[''\u2019]/g, '') // Tous types d'apostrophes
-        .replace(/[àáâãäå]/gi, 'a')
-        .replace(/[èéêë]/gi, 'e')
-        .replace(/[ìíîï]/gi, 'i')
-        .replace(/[òóôõö]/gi, 'o')
-        .replace(/[ùúûü]/gi, 'u')
-        .replace(/[ñ]/gi, 'n')
-        .replace(/[ç]/gi, 'c')
-        .replace(/[œ]/gi, 'oe') // ✅ AJOUTÉ
-        .replace(/[æ]/gi, 'ae'); // ✅ AJOUTÉ
-    };
-    
-    // ✅ Traduire le nom selon le type d'oracle
-    const oracleTypeForTranslation = getCardOracleType();
-    const normalizedName = normalizeCardName(cardData.name);
-    const translatedCardName = t(`cards.${oracleTypeForTranslation}.${normalizedName}.name`);
-   
-    // ✅ Utiliser le nom traduit (ou français si traduction manquante)
-    const displayName = translatedCardName.includes(`cards.${oracleTypeForTranslation}`) 
-      ? cardData.name 
-      : translatedCardName;
+    // ✅ Traduire le nom de la carte
+    const displayName = translateCardName(cardData.name) || cardData.name;
 
     console.log(`🃏 Carte révélée: "${cardData.name}" (FR) → "${displayName}" (${language})`);
 
@@ -165,23 +141,7 @@ export default function CardGame({
 
   // 🔧 Fonction pour générer l'interprétation complète
   const generateFullInterpretation = (selectedCards: OracleCard[]): string => {
-    // ✅ LOGS DE DEBUG
-    console.log('🌍 Langue actuelle lors de la génération:', language);
-    console.log('📝 Test traduction greeting:', t('interpretation.daily.greeting', { name: user.name }));
-
-    const normalizeCardName = (cardName: string): string => {
-      return cardName
-        .replace(/\s+/g, '')
-        .replace(/'/g, '')
-        .replace(/'/g, '')
-        .replace(/[àáâãäå]/g, 'a')
-        .replace(/[èéêë]/g, 'e')
-        .replace(/[ìíîï]/g, 'i')
-        .replace(/[òóôõö]/g, 'o')
-        .replace(/[ùúûü]/g, 'u')
-        .replace(/[ñ]/g, 'n')
-        .replace(/[ç]/g, 'c');
-    };
+    console.log('🌍 Langue actuelle:', language);
 
     const genderText = t(`interpretation.gender.${user.gender || 'autre'}`);
     const genderSuffix = user.gender === 'femme' ? 'e' : '';
@@ -200,7 +160,7 @@ export default function CardGame({
 
     const zodiacName = getTranslatedZodiacName();
 
-    const getRandomCardMeaning = (cardName: string, oType: 'tarot' | 'angels' | 'runes' | 'daily'): string => {
+    const getRandomCardMeaning = (cardName: string, oType: 'tarot' | 'angels' | 'runes' | 'oracle'): string => {
       const normalizedName = normalizeCardName(cardName);
       const baseMeaningKey = `cards.${oType}.${normalizedName}.meaning`;
       const var1 = t(`${baseMeaningKey}.var1`, { genderSuffix });
@@ -272,8 +232,8 @@ export default function CardGame({
 
     if (isDailyReading) {
       const dailyCard = selectedCards[0];
-      const dailyCardName = t(`cards.daily.${normalizeCardName(dailyCard.name)}.name`) || dailyCard.name;
-      const dailyCardMeaning = getRandomCardMeaning(dailyCard.name, 'daily');
+      const dailyCardName = translateCardName(dailyCard.name) || dailyCard.name;
+      const dailyCardMeaning = getRandomCardMeaning(dailyCard.name, 'oracle');
 
       sections.push({
         icon: '☀️',
@@ -305,9 +265,9 @@ export default function CardGame({
       const card2 = selectedCards[1];
       const card3 = selectedCards[2];
 
-      const card1Name = t(`cards.tarot.${normalizeCardName(card1.name)}.name`) || card1.name;
-      const card2Name = t(`cards.tarot.${normalizeCardName(card2.name)}.name`) || card2.name;
-      const card3Name = t(`cards.tarot.${normalizeCardName(card3.name)}.name`) || card3.name;
+      const card1Name = translateCardName(card1.name) || card1.name;
+      const card2Name = translateCardName(card2.name) || card2.name;
+      const card3Name = translateCardName(card3.name) || card3.name;
 
       sections.push(
         { icon: '✨', title: card1Name, content: getRandomCardMeaning(card1.name, 'tarot') },
@@ -329,9 +289,9 @@ export default function CardGame({
       const card2 = selectedCards[1];
       const card3 = selectedCards[2];
 
-      const card1Name = t(`cards.angels.${normalizeCardName(card1.name)}.name`) || card1.name;
-      const card2Name = t(`cards.angels.${normalizeCardName(card2.name)}.name`) || card2.name;
-      const card3Name = t(`cards.angels.${normalizeCardName(card3.name)}.name`) || card3.name;
+      const card1Name = translateCardName(card1.name) || card1.name;
+      const card2Name = translateCardName(card2.name) || card2.name;
+      const card3Name = translateCardName(card3.name) || card3.name;
 
       sections.push(
         { icon: '👼', title: card1Name, content: getRandomCardMeaning(card1.name, 'angels') },
@@ -354,9 +314,9 @@ export default function CardGame({
       const card2 = selectedCards[1];
       const card3 = selectedCards[2];
 
-      const card1Name = t(`cards.runes.${normalizeCardName(card1.name)}.name`) || card1.name;
-      const card2Name = t(`cards.runes.${normalizeCardName(card2.name)}.name`) || card2.name;
-      const card3Name = t(`cards.runes.${normalizeCardName(card3.name)}.name`) || card3.name;
+      const card1Name = translateCardName(card1.name) || card1.name;
+      const card2Name = translateCardName(card2.name) || card2.name;
+      const card3Name = translateCardName(card3.name) || card3.name;
 
       sections.push(
         { icon: 'ᚱ', title: card1Name, content: getRandomCardMeaning(card1.name, 'runes') },
@@ -368,7 +328,6 @@ export default function CardGame({
       greeting = getRandomGreeting('runes');
     }
 
-    // 📝 Construire le texte complet
     const fullText = [
       greeting,
       '',
@@ -377,13 +336,11 @@ export default function CardGame({
       finalMessage
     ].join('\n\n');
 
-    // ✅ LOG FINAL
-    console.log('📄 Interprétation générée (200 premiers chars):', fullText.substring(0, 200));
+    console.log('📄 Interprétation générée:', fullText.substring(0, 200));
 
     return fullText;
   };
 
-  // ✅ Sauvegarde avec interprétation complète
   const handleCloseModal = async () => {
     setRevealedCard(null);
 
@@ -393,29 +350,22 @@ export default function CardGame({
       const selectedCards = selectedCardsIndices.map(idx => randomCards[idx]);
       const selectedCardsData = selectedCards.map(idx => oracle.cards[idx]);
 
-      // ✅ LOGS DE DEBUG
-      console.log('🔍 Langue au moment de la génération:', language);
-      console.log('🔍 Test traduction:', t('common.back'));
-
-      // 🌟 GÉNÉRER L'INTERPRÉTATION COMPLÈTE
       const fullInterpretation = generateFullInterpretation(selectedCardsData);
 
-      // ✅ SAUVEGARDE AVEC INTERPRÉTATION (pour Grimoire + Pub)
       if (onSaveReading) {
         try {
           await onSaveReading({
             type: oracleType === 'daily' ? 'oracle' : oracleType,
             cards: selectedCardsData.map(card => card.name),
             date: new Date(),
-            answer: fullInterpretation // ✅ INTERPRÉTATION COMPLÈTE !
+            answer: fullInterpretation
           });
-          console.log(`✅ ${oracleType} saved WITH interpretation → pub triggered`);
+          console.log(`✅ ${oracleType} saved WITH interpretation`);
         } catch (error) {
           console.error('❌ Erreur sauvegarde:', error);
         }
       }
 
-      // Sauvegardes locales (localStorage - historique)
       if (isDailyReading) {
         saveDailyReading(selectedCards);
       }
