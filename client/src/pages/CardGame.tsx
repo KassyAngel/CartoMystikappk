@@ -44,6 +44,33 @@ export default function CardGame({
   const displayCards = isDailyReading ? 3 : 6;
   const maxSelection = isDailyReading ? 1 : 3;
 
+  // ✅ AJOUTEZ CETTE FONCTION ICI
+  const translateCardName = (cardName: string | undefined): string | undefined => {
+    if (!cardName) return undefined;
+
+    const normalizeCardName = (name: string): string => {
+      return name
+        .replace(/\s+/g, '')
+        .replace(/'/g, '')
+        .replace(/'/g, '')
+        .replace(/[àáâãäå]/g, 'a')
+        .replace(/[èéêë]/g, 'e')
+        .replace(/[ìíîï]/g, 'i')
+        .replace(/[òóôõö]/g, 'o')
+        .replace(/[ùúûü]/g, 'u')
+        .replace(/[ñ]/g, 'n')
+        .replace(/[ç]/g, 'c');
+    };
+
+    const oracleType = getCardOracleType();
+    const normalizedName = normalizeCardName(cardName);
+    const translatedName = t(`cards.${oracleType}.${normalizedName}.name`);
+
+    return translatedName.includes(`cards.${oracleType}`) 
+      ? cardName 
+      : translatedName;
+  };
+
   const getCardOracleType = (): 'tarot' | 'angels' | 'runes' | 'oracle' => {
     if (oracleType === 'daily') return 'oracle';
     if (oracleType === 'tarot') return 'tarot';
@@ -95,7 +122,39 @@ export default function CardGame({
     const actualIndex = randomCards[cardIndex];
     const cardData = oracle.cards[actualIndex];
 
-    setRevealedCard({ card: cardData, index: cardIndex });
+    // ✅ CORRECTION : Traduire le nom de la carte
+    const normalizeCardName = (cardName: string): string => {
+      return cardName
+        .replace(/\s+/g, '')
+        .replace(/'/g, '')
+        .replace(/[àáâãäå]/g, 'a')
+        .replace(/[èéêë]/g, 'e')
+        .replace(/[ìíîï]/g, 'i')
+        .replace(/[òóôõö]/g, 'o')
+        .replace(/[ùúûü]/g, 'u')
+        .replace(/[ñ]/g, 'n')
+        .replace(/[ç]/g, 'c');
+    };
+
+    // ✅ Traduire le nom selon le type d'oracle
+    const oracleTypeForTranslation = getCardOracleType();
+    const normalizedName = normalizeCardName(cardData.name);
+    const translatedCardName = t(`cards.${oracleTypeForTranslation}.${normalizedName}.name`);
+
+    // ✅ Utiliser le nom traduit (ou français si traduction manquante)
+    const displayName = translatedCardName.includes(`cards.${oracleTypeForTranslation}`) 
+      ? cardData.name 
+      : translatedCardName;
+
+    console.log(`🃏 Carte révélée: "${cardData.name}" (FR) → "${displayName}" (${language})`);
+
+    // ✅ Créer une copie avec le nom traduit
+    const translatedCardData = {
+      ...cardData,
+      name: displayName
+    };
+
+    setRevealedCard({ card: translatedCardData, index: cardIndex });
 
     const newSelected = [...selectedCardsIndices, cardIndex];
     setSelectedCardsIndices(newSelected);
@@ -417,7 +476,7 @@ export default function CardGame({
                       isSelected={false}
                       isSelectable={canClick}
                       onClick={() => handleCardClick(cardIndex)}
-                      cardName={isCardFlipped ? cardData?.name : undefined}
+                      cardName={isCardFlipped ? translateCardName(cardData?.name) : undefined}
                       oracleType={getCardOracleType()}
                     />
                   );
@@ -440,7 +499,7 @@ export default function CardGame({
                         isSelected={isSelected}
                         isSelectable={canClick}
                         onClick={() => handleCardClick(cardIndex)}
-                        cardName={isCardFlipped ? cardData?.name : undefined}
+                        cardName={isCardFlipped ? translateCardName(cardData?.name) : undefined}
                         oracleType={getCardOracleType()}
                       />
                     );
@@ -463,7 +522,7 @@ export default function CardGame({
                         isSelected={isSelected}
                         isSelectable={canClick}
                         onClick={() => handleCardClick(cardIndex)}
-                        cardName={isCardFlipped ? cardData?.name : undefined}
+                        cardName={isCardFlipped ? translateCardName(cardData?.name) : undefined}
                         oracleType={getCardOracleType()}
                       />
                     );
