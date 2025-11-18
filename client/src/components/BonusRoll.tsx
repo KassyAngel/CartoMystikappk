@@ -1,14 +1,67 @@
 import React, { useState } from 'react';
-import { showInterstitialAd } from '@/admobService'; // ✅ Import pub interstitielle
+import { showInterstitialAd } from '@/admobService';
 import MysticalButton from './MysticalButton';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BonusRollProps {
   onComplete?: (result: { total: number; dice: [number, number]; interpretation: string }) => void;
+  variation: string | null;
+  onReset?: () => void;
 }
 
-export default function BonusRoll({ onComplete }: BonusRollProps) {
+// 🎨 STYLES DES DÉS SELON LA VARIATION
+const getDiceStyles = (variation: string | null) => {
+  switch (variation) {
+    case '1':
+      return {
+        gradient: 'from-[#fbbf24] via-[#fcd34d] to-[#fde68a]',
+        border: 'border-[#ffd700]',
+        shadow: 'shadow-[0_6px_24px_rgba(251,191,36,0.5),inset_0_2px_6px_rgba(255,255,255,0.3)]',
+        hoverShadow: 'hover:shadow-[0_8px_32px_rgba(255,215,0,0.6)]',
+        totalBg: 'from-[#ffd700] via-[#fbbf24] to-[#f59e0b]',
+        totalBorder: 'border-white',
+        totalShadow: 'shadow-[0_8px_32px_rgba(255,215,0,0.8),inset_0_2px_6px_rgba(255,255,255,0.5)]'
+      };
+
+    case '2':
+      return {
+        gradient: 'from-[#22d3ee] via-[#67e8f9] to-[#a5f3fc]',
+        border: 'border-[#22d3ee]',
+        shadow: 'shadow-[0_6px_24px_rgba(34,211,238,0.5),inset_0_2px_6px_rgba(255,255,255,0.3)]',
+        hoverShadow: 'hover:shadow-[0_8px_32px_rgba(34,211,238,0.6)]',
+        totalBg: 'from-[#22d3ee] via-[#06b6d4] to-[#0891b2]',
+        totalBorder: 'border-cyan-100',
+        totalShadow: 'shadow-[0_8px_32px_rgba(34,211,238,0.8),inset_0_2px_6px_rgba(255,255,255,0.5)]'
+      };
+
+    case '3':
+      return {
+        gradient: 'from-[#a855f7] via-[#c084fc] to-[#e879f9]',
+        border: 'border-[#e879f9]',
+        shadow: 'shadow-[0_6px_24px_rgba(168,85,247,0.5),inset_0_2px_6px_rgba(255,255,255,0.3)]',
+        hoverShadow: 'hover:shadow-[0_8px_32px_rgba(232,121,249,0.6)]',
+        totalBg: 'from-[#a855f7] via-[#9333ea] to-[#7e22ce]',
+        totalBorder: 'border-fuchsia-200',
+        totalShadow: 'shadow-[0_8px_32px_rgba(168,85,247,0.8),inset_0_2px_6px_rgba(255,255,255,0.5)]'
+      };
+
+    default:
+      return {
+        gradient: 'from-[#fbbf24] via-[#fcd34d] to-[#fde68a]',
+        border: 'border-[#ffd700]',
+        shadow: 'shadow-[0_6px_24px_rgba(251,191,36,0.5),inset_0_2px_6px_rgba(255,255,255,0.3)]',
+        hoverShadow: 'hover:shadow-[0_8px_32px_rgba(255,215,0,0.6)]',
+        totalBg: 'from-[#ffd700] via-[#fbbf24] to-[#f59e0b]',
+        totalBorder: 'border-white',
+        totalShadow: 'shadow-[0_8px_32px_rgba(255,215,0,0.8),inset_0_2px_6px_rgba(255,255,255,0.5)]'
+      };
+  }
+};
+
+// ✅ **Voici la seule et unique version valide**
+export default function BonusRoll({ onComplete, variation, onReset }: BonusRollProps) {
   const { t } = useLanguage();
+
   const [dice, setDice] = useState<[number, number]>([1, 1]);
   const [rolling, setRolling] = useState(false);
   const [hasRolled, setHasRolled] = useState(false);
@@ -17,7 +70,7 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
   const [isLoadingAd, setIsLoadingAd] = useState(false);
   const [rollCount, setRollCount] = useState(0);
 
-  const getRandomVariation = () => (Math.random() < 0.5 ? '1' : '2');
+  const diceStyles = getDiceStyles(variation);
 
   async function rollDice() {
     if (rolling || isLoadingAd) return;
@@ -58,9 +111,12 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
         clearInterval(interval);
         const sum = d1 + d2;
 
-        const variation = getRandomVariation();
-        const title = t(`oracle.bonusRoll.${sum}.title.${variation}`) || '✨ Mystère Cosmique';
-        const interpretationMessage = t(`oracle.bonusRoll.${sum}.message.${variation}`) || 'Les étoiles vous réservent une surprise...';
+        // ✅ UTILISER LA VARIATION REÇUE EN PROP (ou '1' par défaut)
+        const currentVariation = variation || '1';
+        console.log(`🎲 Utilisation variation: ${currentVariation} pour le total: ${sum}`);
+
+        const title = t(`oracle.bonusRoll.${sum}.title.${currentVariation}`) || '✨ Mystère Cosmique';
+        const interpretationMessage = t(`oracle.bonusRoll.${sum}.message.${currentVariation}`) || 'Les étoiles vous réservent une surprise...';
 
         const result = { title, message: interpretationMessage };
 
@@ -129,16 +185,16 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
 
       {/* Dés - Section scrollable si nécessaire */}
       <div className="flex-1 flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden min-h-0">
-        {/* Dés */}
+        {/* Dés avec styles dynamiques */}
         <div className="flex items-center justify-center gap-1 sm:gap-2 md:gap-3 mb-2 sm:mb-3 flex-shrink-0">
           <div
             className={`dice-3d w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg sm:rounded-xl
-            bg-gradient-to-br from-[#8b5cf6] via-[#a78bfa] to-[#c4b5fd]
+            bg-gradient-to-br ${diceStyles.gradient}
             flex items-center justify-center flex-shrink-0
-            border-2 sm:border-3 md:border-4 border-[#ffd700]
-            shadow-[0_6px_24px_rgba(139,92,246,0.5),inset_0_2px_6px_rgba(255,255,255,0.3)]
+            border-2 sm:border-3 md:border-4 ${diceStyles.border}
+            ${diceStyles.shadow}
             ${rolling ? 'animate-shake-3d' : 'hover:scale-105 transition-all duration-300'}
-            ${!hasRolled && !rolling && !isLoadingAd ? 'cursor-pointer hover:shadow-[0_8px_32px_rgba(255,215,0,0.6)]' : ''}
+            ${!hasRolled && !rolling && !isLoadingAd ? `cursor-pointer ${diceStyles.hoverShadow}` : ''}
             relative overflow-hidden`}
             onClick={!hasRolled ? rollDice : undefined}
           >
@@ -152,12 +208,12 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
 
           <div
             className={`dice-3d w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg sm:rounded-xl
-            bg-gradient-to-br from-[#8b5cf6] via-[#a78bfa] to-[#c4b5fd]
+            bg-gradient-to-br ${diceStyles.gradient}
             flex items-center justify-center flex-shrink-0
-            border-2 sm:border-3 md:border-4 border-[#ffd700]
-            shadow-[0_6px_24px_rgba(139,92,246,0.5),inset_0_2px_6px_rgba(255,255,255,0.3)]
+            border-2 sm:border-3 md:border-4 ${diceStyles.border}
+            ${diceStyles.shadow}
             ${rolling ? 'animate-shake-3d' : 'hover:scale-105 transition-all duration-300'}
-            ${!hasRolled && !rolling && !isLoadingAd ? 'cursor-pointer hover:shadow-[0_8px_32px_rgba(255,215,0,0.6)]' : ''}
+            ${!hasRolled && !rolling && !isLoadingAd ? `cursor-pointer ${diceStyles.hoverShadow}` : ''}
             relative overflow-hidden`}
             onClick={!hasRolled ? rollDice : undefined}
           >
@@ -170,13 +226,13 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
               <div className="text-[#ffd700] text-xl sm:text-2xl md:text-3xl font-bold drop-shadow-[0_0_8px_rgba(255,215,0,0.8)] flex-shrink-0">
                 =
               </div>
-              <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg sm:rounded-xl
-              bg-gradient-to-br from-[#ffd700] via-[#fbbf24] to-[#f59e0b]
+              <div className={`w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg sm:rounded-xl
+              bg-gradient-to-br ${diceStyles.totalBg}
               flex items-center justify-center text-[#1a0033] font-bold text-2xl sm:text-3xl md:text-4xl
-              border-2 sm:border-3 md:border-4 border-white flex-shrink-0
-              shadow-[0_8px_32px_rgba(255,215,0,0.8),inset_0_2px_6px_rgba(255,255,255,0.5)]
+              border-2 sm:border-3 md:border-4 ${diceStyles.totalBorder} flex-shrink-0
+              ${diceStyles.totalShadow}
               animate-bounce-in-3d
-              relative overflow-hidden">
+              relative overflow-hidden`}>
                 <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-lg sm:rounded-xl" />
                 <span className="relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
                   {dice[0] + dice[1]}
@@ -233,6 +289,11 @@ export default function BonusRoll({ onComplete }: BonusRollProps) {
                 setInterpretation(null);
                 setDice([1, 1]);
                 setMessage(t('oracle.bonusRoll.ready'));
+
+                // ✅ CHOISIR UNE NOUVELLE VARIATION
+                if (onReset) {
+                  onReset();
+                }
               }}
               className="w-full text-xs sm:text-sm md:text-base min-h-[40px] sm:min-h-[44px]"
             >

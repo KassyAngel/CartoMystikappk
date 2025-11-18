@@ -34,31 +34,40 @@ export default function TarotCard({
 
   const isBack = number === 0;
 
+  // ✅ FONCTION DE NORMALISATION AMÉLIORÉE (identique à CardGame)
   const normalizeCardName = (name: string): string => {
     return name
+      .toLowerCase()
       .replace(/\s+/g, '')
-      .replace(/'/g, '')
-      .replace(/'/g, '')
-      .replace(/[àáâãäå]/g, 'a')
-      .replace(/[èéêë]/g, 'e')
-      .replace(/[ìíîï]/g, 'i')
-      .replace(/[òóôõö]/g, 'o')
-      .replace(/[ùúûü]/g, 'u')
-      .replace(/[ñ]/g, 'n')
-      .replace(/[ç]/g, 'c')
-      .replace(/[ÀÁÂÃÄÅÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÑÇà]/g, (match) => {
-        const accents = 'ÀÁÂÃÄÅÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÑÇà';
-        const normal = 'AAAAAAEEEEIIIIOOOOOUUUUNCa';
-        return normal[accents.indexOf(match)] || match;
-      });
+      .replace(/[''\u2019]/g, '') // Tous les types d'apostrophes
+      .replace(/[àáâãäå]/gi, 'a')
+      .replace(/[èéêë]/gi, 'e')
+      .replace(/[ìíîï]/gi, 'i')
+      .replace(/[òóôõö]/gi, 'o')
+      .replace(/[ùúûü]/gi, 'u')
+      .replace(/[ñ]/gi, 'n')
+      .replace(/[ç]/gi, 'c')
+      .replace(/[œ]/gi, 'oe')
+      .replace(/[æ]/gi, 'ae');
   };
 
+  // ✅ TRADUCTION CORRIGÉE
   const getTranslatedCardName = (): string => {
     if (!cardName) return '';
+
     const normalized = normalizeCardName(cardName);
     const translationKey = `cards.${oracleType}.${normalized}.name`;
+
+    console.log(`🃏 TarotCard traduction: "${cardName}" → normalized: "${normalized}" → key: "${translationKey}"`);
+
     const translated = t(translationKey);
-    return translated.includes(`cards.${oracleType}`) ? cardName : translated;
+
+    // ✅ Si la traduction n'existe pas (retourne la clé), on garde l'original
+    const finalName = translated === translationKey ? cardName : translated;
+
+    console.log(`   → Résultat affiché: "${finalName}"`);
+
+    return finalName;
   };
 
   return (
@@ -125,7 +134,7 @@ export default function TarotCard({
           )}
         </div>
       ) : (
-        /* FACE AVEC NOM TRADUIT */
+        /* ✅ FACE AVEC NOM TRADUIT CORRECTEMENT */
         cardName ? (
           <div className="text-center px-2">
             <span className="text-[#ffd700] font-bold text-xs sm:text-sm md:text-base leading-tight block">

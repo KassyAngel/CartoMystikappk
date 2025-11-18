@@ -123,24 +123,27 @@ export default function CardGame({
     const cardData = oracle.cards[actualIndex];
 
     // ✅ CORRECTION : Traduire le nom de la carte
-    const normalizeCardName = (cardName: string): string => {
-      return cardName
+    const normalizeCardName = (name: string): string => {
+      return name
+        .toLowerCase() // ✅ CRITIQUE : Tout en minuscule
         .replace(/\s+/g, '')
-        .replace(/'/g, '')
-        .replace(/[àáâãäå]/g, 'a')
-        .replace(/[èéêë]/g, 'e')
-        .replace(/[ìíîï]/g, 'i')
-        .replace(/[òóôõö]/g, 'o')
-        .replace(/[ùúûü]/g, 'u')
-        .replace(/[ñ]/g, 'n')
-        .replace(/[ç]/g, 'c');
+        .replace(/[''\u2019]/g, '') // Tous types d'apostrophes
+        .replace(/[àáâãäå]/gi, 'a')
+        .replace(/[èéêë]/gi, 'e')
+        .replace(/[ìíîï]/gi, 'i')
+        .replace(/[òóôõö]/gi, 'o')
+        .replace(/[ùúûü]/gi, 'u')
+        .replace(/[ñ]/gi, 'n')
+        .replace(/[ç]/gi, 'c')
+        .replace(/[œ]/gi, 'oe') // ✅ AJOUTÉ
+        .replace(/[æ]/gi, 'ae'); // ✅ AJOUTÉ
     };
-
+    
     // ✅ Traduire le nom selon le type d'oracle
     const oracleTypeForTranslation = getCardOracleType();
     const normalizedName = normalizeCardName(cardData.name);
     const translatedCardName = t(`cards.${oracleTypeForTranslation}.${normalizedName}.name`);
-
+   
     // ✅ Utiliser le nom traduit (ou français si traduction manquante)
     const displayName = translatedCardName.includes(`cards.${oracleTypeForTranslation}`) 
       ? cardData.name 
