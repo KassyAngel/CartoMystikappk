@@ -96,18 +96,14 @@ const GrimoireModal = ({
     return badges[type as keyof typeof badges] || badges.oracle;
   };
 
-  // ✅ FONCTION CORRIGÉE - Supprime accents et espaces, GARDE les majuscules
   const normalizeCardName = (cardName: string): string => {
     if (!cardName) return '';
 
     return cardName
       .trim()
-      // Supprimer apostrophes ET espaces
-      .replace(/[''\s]/g, '')
-      // ✅ Normaliser les accents (É → E, à → a) en gardant la casse
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-      // ❌ PAS de .toLowerCase() car vos clés sont en majuscules
+      .replace(/[''\s-]/g, '')  // Supprimer apostrophes, espaces, tirets
+      .normalize('NFD')          // Décomposer les accents
+      .replace(/[\u0300-\u036f]/g, '');  // Supprimer les diacritiques
   };
 
   const translateCardName = (cardName: string, readingType: string): string => {

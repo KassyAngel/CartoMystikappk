@@ -34,21 +34,21 @@ export default function TarotCard({
 
   const isBack = number === 0;
 
-  // — MODIFICATION : même normalisation que dans CardGame
+  // ✅ NORMALISATION EXACTE POUR TES CLÉS (garde les majuscules !)
   const normalizeCardName = (name: string): string => {
     return name
       .trim()
-      .replace(/['\s]/g, '')                  // enlever espaces et apostrophes
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');       // enlever accents
+      .replace(/[''\s-]/g, '');  // Supprimer apostrophes, espaces, tirets
+    // ❌ PAS de .toLowerCase() car tes clés ont des majuscules !
   };
 
+  // ✅ TRADUCTION
   const getTranslatedCardName = (): string => {
     if (!cardName) return '';
 
     const normalized = normalizeCardName(cardName);
 
-    console.log(`🔍 TarotCard [${language}]: "${cardName}" → normalized: "${normalized}"`);
+    console.log(`🔍 TarotCard [${language}]: "${cardName}" → "${normalized}"`);
 
     const possibleKeys = [
       `cards.${oracleType}.${normalized}.name`,
@@ -60,12 +60,12 @@ export default function TarotCard({
     for (const key of possibleKeys) {
       const translated = t(key);
       if (translated !== key) {
-        console.log(`   ✅ Traduction trouvée : ${key} → ${translated}`);
+        console.log(`   ✅ "${key}" → "${translated}"`);
         return translated;
       }
     }
 
-    console.log(`   ⚠️ Pas de traduction trouvée pour "${cardName}", on retourne l’original`);
+    console.log(`   ⚠️ Pas de traduction`);
     return cardName;
   };
 
@@ -88,7 +88,39 @@ export default function TarotCard({
     >
       {isBack ? (
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-violet-900">
-          {/* … ton code pour le dos de carte reste identique … */}
+          <div className="absolute inset-0 opacity-40">
+            <div className="absolute top-[20%] left-[30%] w-16 h-16 bg-blue-500/30 rounded-full blur-2xl"></div>
+            <div className="absolute bottom-[30%] right-[25%] w-20 h-20 bg-purple-500/20 rounded-full blur-3xl"></div>
+          </div>
+
+          <div className="absolute inset-0">
+            <div className="absolute top-[15%] left-[20%] w-1 h-1 bg-yellow-200 rounded-full animate-pulse"></div>
+            <div className="absolute top-[40%] right-[15%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+            <div className="absolute bottom-[25%] left-[15%] w-1 h-1 bg-yellow-100 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+            <div className="absolute top-[60%] left-[70%] w-0.5 h-0.5 bg-white/80 rounded-full animate-pulse" style={{animationDelay: '1.5s'}}></div>
+            <div className="absolute top-[80%] right-[40%] w-0.5 h-0.5 bg-yellow-200/80 rounded-full animate-pulse" style={{animationDelay: '0.8s'}}></div>
+            <div className="absolute top-[30%] left-[50%] w-0.5 h-0.5 bg-white/60 rounded-full animate-pulse" style={{animationDelay: '1.2s'}}></div>
+          </div>
+
+          <div className="absolute inset-2 rounded-lg border-2 border-[#ffd700]/30"></div>
+
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative">
+              <div className="absolute inset-0 blur-xl bg-[#ffd700]/20 scale-150"></div>
+              <div className="relative text-4xl sm:text-5xl text-[#ffd700] drop-shadow-[0_0_10px_rgba(255,215,0,0.8)] font-serif">
+                ☽
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute top-3 left-3 text-[#ffd700]/40 text-xs">✦</div>
+          <div className="absolute top-3 right-3 text-[#ffd700]/40 text-xs">✦</div>
+          <div className="absolute bottom-3 left-3 text-[#ffd700]/40 text-xs">✦</div>
+          <div className="absolute bottom-3 right-3 text-[#ffd700]/40 text-xs">✦</div>
+
+          {isHovered && (
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent animate-shimmer"></div>
+          )}
         </div>
       ) : (
         cardName ? (
