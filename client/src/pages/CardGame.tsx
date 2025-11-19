@@ -53,8 +53,8 @@ export default function CardGame({
       .replace(/[\u0300-\u036f]/g, '');  // Supprime les diacritiques
   };
 
-  const getCardOracleType = (): 'tarot' | 'angels' | 'runes' | 'oracle' => {
-    if (oracleType === 'daily') return 'oracle';
+  const getCardOracleType = (): 'tarot' | 'angels' | 'runes' | 'oracle' | 'daily' => {
+    if (oracleType === 'daily') return 'daily'; // ✅ Garde 'daily'
     if (oracleType === 'tarot') return 'tarot';
     if (oracleType === 'angels') return 'angels';
     if (oracleType === 'runes') return 'runes';
@@ -153,9 +153,12 @@ export default function CardGame({
 
     const zodiacName = getTranslatedZodiacName();
 
-    const getRandomCardMeaning = (cardName: string, oType: 'tarot' | 'angels' | 'runes' | 'oracle'): string => {
+    const getRandomCardMeaning = (cardName: string, oType: 'tarot' | 'angels' | 'runes' | 'oracle' | 'daily'): string => {
       const normalizedName = normalizeCardName(cardName);
-      const baseMeaningKey = `cards.${oType}.${normalizedName}.meaning`;
+
+      // ✅ Pour le tirage du jour, utilise 'daily' au lieu de 'oracle'
+      const meaningKey = oType === 'oracle' ? 'daily' : oType;
+      const baseMeaningKey = `cards.${meaningKey}.${normalizedName}.meaning`;
 
       console.log(`🔍 Meaning key: ${baseMeaningKey}`);
 
@@ -166,12 +169,9 @@ export default function CardGame({
       const variations = [var1, var2, var3].filter(v => !v.includes('cards.'));
 
       if (variations.length > 0) {
-        const chosen = variations[getSecureRandomInt(0, variations.length - 1)];
-        console.log(`✅ Meaning trouvé: ${chosen.substring(0, 50)}...`);
-        return chosen;
+        return variations[getSecureRandomInt(0, variations.length - 1)];
       }
 
-      console.warn(`⚠️ Aucune traduction pour ${baseMeaningKey}`);
       return t(baseMeaningKey, { genderSuffix });
     };
 
@@ -235,8 +235,8 @@ export default function CardGame({
     if (isDailyReading) {
       const dailyCard = selectedCards[0];
       const dailyCardName = translateCardName(dailyCard.name) || dailyCard.name;
-      const dailyCardMeaning = getRandomCardMeaning(dailyCard.name, 'oracle');
-
+      const dailyCardMeaning = getRandomCardMeaning(dailyCard.name, 'daily'); // ✅ Utilise 'daily' au lieu de 'oracle'
+      
       sections.push({
         icon: '☀️',
         title: dailyCardName,
@@ -508,7 +508,12 @@ export default function CardGame({
       {revealedCard && (
         <CardRevealModal
           card={revealedCard.card}
-          oracleType={getCardOracleType()}
+          oracleType={
+            (() => {
+              const type = getCardOracleType();
+              return type === 'daily' ? 'oracle' : type;
+            })()
+          }
           onClose={handleCloseModal}
           cardNumber={selectedCardsIndices.length}
           totalCards={maxSelection}

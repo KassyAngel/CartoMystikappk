@@ -3,71 +3,62 @@ import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { OracleType } from '@shared/schema';
 
-interface TarotCardProps {
-  number: number;
-  isSelected?: boolean;
-  isSelectable?: boolean;
-  onClick?: () => void;
-  className?: string;
-  cardName?: string;
-  oracleType?: OracleType | 'oracle';
-}
+  interface TarotCardProps {
+    number: number;
+    isSelected?: boolean;
+    isSelectable?: boolean;
+    onClick?: () => void;
+    className?: string;
+    cardName?: string;
+    oracleType?: 'tarot' | 'angels' | 'runes' | 'oracle' | 'daily'; // ✅ Ajoute 'daily'
+  }
 
-export default function TarotCard({ 
-  number, 
-  isSelected, 
-  isSelectable = true,
-  onClick, 
-  className,
-  cardName,
-  oracleType = 'tarot'
-}: TarotCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  const { t, language } = useLanguage();
+  export default function TarotCard({ 
+    number, 
+    isSelected, 
+    isSelectable = true,
+    onClick, 
+    className,
+    cardName,
+    oracleType = 'tarot'
+  }: TarotCardProps) {
+    const [isHovered, setIsHovered] = useState(false);
+    const { t, language } = useLanguage();
 
-  const handleClick = () => {
-    if (isSelectable) {
-      console.log(`Card ${number} selected`);
-      onClick?.();
-    }
-  };
+    const handleClick = () => {
+      if (isSelectable) {
+        console.log(`Card ${number} selected`);
+        onClick?.();
+      }
+    };
 
-  const isBack = number === 0;
+    const isBack = number === 0;
 
-  // ✅ NORMALISATION EXACTE POUR TES CLÉS (garde les majuscules !)
-  const normalizeCardName = (name: string): string => {
-    return name
-      .trim()
-      .replace(/[''\s-]/g, '');  // Supprimer apostrophes, espaces, tirets
-    // ❌ PAS de .toLowerCase() car tes clés ont des majuscules !
-  };
+    const normalizeCardName = (name: string): string => {
+      return name
+        .trim()
+        .replace(/[''\s-]/g, '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+    };
 
-  // ✅ TRADUCTION
-  const getTranslatedCardName = (): string => {
-    if (!cardName) return '';
+    const getTranslatedCardName = (): string => {
+      if (!cardName) return '';
 
-    const normalized = normalizeCardName(cardName);
+      const normalized = normalizeCardName(cardName);
+      const translationKey = `cards.${oracleType}.${normalized}.name`;
 
-    console.log(`🔍 TarotCard [${language}]: "${cardName}" → "${normalized}"`);
+      console.log(`🔍 TarotCard [${language}]: "${cardName}" → key: "${translationKey}"`);
 
-    const possibleKeys = [
-      `cards.${oracleType}.${normalized}.name`,
-      `cards.${oracleType}.${cardName}.name`,
-      `oracle.${oracleType}.${normalized}.name`,
-      `${oracleType}.cards.${normalized}.name`,
-    ];
-
-    for (const key of possibleKeys) {
-      const translated = t(key);
-      if (translated !== key) {
-        console.log(`   ✅ "${key}" → "${translated}"`);
+      const translated = t(translationKey);
+      if (translated !== translationKey) {
+        console.log(`   ✅ Trouvé: "${translated}"`);
         return translated;
       }
-    }
 
-    console.log(`   ⚠️ Pas de traduction`);
-    return cardName;
-  };
+      console.log(`   ⚠️ Pas de traduction`);
+      return cardName;
+    };
 
   return (
     <div

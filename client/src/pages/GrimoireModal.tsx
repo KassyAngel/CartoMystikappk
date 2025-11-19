@@ -115,11 +115,12 @@ const GrimoireModal = ({
         return '';
       }
 
-      let oracleKey = 'oracle';
+      let oracleKey = 'daily'; // ✅ Par défaut 'daily'
       if (readingType === 'tarot') oracleKey = 'tarot';
       else if (readingType === 'angels') oracleKey = 'angels';
       else if (readingType === 'runes') oracleKey = 'runes';
-      else if (readingType === 'oracle' || readingType === 'daily') oracleKey = 'oracle'; // ✅
+      else if (readingType === 'oracle') oracleKey = 'daily'; // ✅ oracle → daily
+      else if (readingType === 'daily') oracleKey = 'daily';
 
     const normalizedName = normalizeCardName(cardName);
 
