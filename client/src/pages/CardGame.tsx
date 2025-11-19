@@ -246,6 +246,12 @@ export default function CardGame({
       const dailyCardName = translateCardName(dailyCard.name) || dailyCard.name;
       const dailyCardMeaning = getRandomCardMeaning(dailyCard.name, 'oracle');
 
+      console.log('🔍 DEBUG Grimoire:');
+      console.log('   cardName:', dailyCard.name);
+      console.log('   normalized:', normalizeCardName(dailyCard.name));
+      console.log('   meaning KEY cherchée:', `cards.oracle.${normalizeCardName(dailyCard.name)}.meaning`);
+      console.log('   meaning TEXTE reçu:', dailyCardMeaning);
+
       sections.push({
         icon: '☀️',
         title: dailyCardName,
