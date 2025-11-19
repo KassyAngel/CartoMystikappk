@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react';
-import { OracleCard } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
 import MysticalButton from './MysticalButton';
 
 interface CardRevealModalProps {
-  card: OracleCard;
+  card: any;
   oracleType: 'tarot' | 'angels' | 'runes' | 'oracle';
   onClose: () => void;
-  cardNumber: number;
-  totalCards: number;
+  cardNumber?: number;
+  totalCards?: number;
 }
 
 export default function CardRevealModal({ 
   card, 
   oracleType, 
   onClose, 
-  cardNumber, 
-  totalCards 
+  cardNumber = 1, 
+  totalCards = 1
 }: CardRevealModalProps) {
   const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
@@ -27,16 +26,29 @@ export default function CardRevealModal({
 
   const normalizeCardName = (name: string): string => {
     return name
+      .trim()
+      .replace(/[''\s-]/g, '')
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^A-Za-z0-9]/g, '');
+      .replace(/[\u0300-\u036f]/g, '');
   };
 
   const getTranslatedCardName = () => {
-    const cardKey = normalizeCardName(card.name);
-    const translationKey = `cards.${oracleType}.${cardKey}.name`;
-    const translated = t(translationKey);
-    return translated !== translationKey ? translated : card.name;
+    if (!card?.name) return '';
+
+    const normalizedName = normalizeCardName(card.name);
+    const possibleKeys = [
+      `cards.${oracleType}.${normalizedName}.name`,
+      `cards.${oracleType}.${card.name}.name`,
+    ];
+
+    for (const key of possibleKeys) {
+      const translated = t(key);
+      if (translated !== key) {
+        return translated;
+      }
+    }
+
+    return card.name;
   };
 
   return (

@@ -96,28 +96,35 @@ const GrimoireModal = ({
     return badges[type as keyof typeof badges] || badges.oracle;
   };
 
-  const normalizeCardName = (cardName: string): string => {
-    if (!cardName) return '';
+  const normalizeCardName = (cardName: string | undefined | null): string => {
+    if (!cardName || typeof cardName !== 'string') {
+      console.warn('⚠️ cardName invalide:', cardName);
+      return '';
+    }
 
     return cardName
       .trim()
-      .replace(/[''\s-]/g, '')  // Supprimer apostrophes, espaces, tirets
-      .normalize('NFD')          // Décomposer les accents
-      .replace(/[\u0300-\u036f]/g, '');  // Supprimer les diacritiques
+      .replace(/[''\s-]/g, '')  // ✅ Supprime apostrophes, espaces ET tirets
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   };
 
-  const translateCardName = (cardName: string, readingType: string): string => {
-    if (!cardName) return '';
+    const translateCardName = (cardName: string | undefined, readingType: string): string => {
+      if (!cardName || typeof cardName !== 'string') {
+        console.warn('⚠️ translateCardName - cardName invalide:', cardName);
+        return '';
+      }
 
-    let oracleKey = 'daily';
-    if (readingType === 'tarot') oracleKey = 'tarot';
-    else if (readingType === 'angels') oracleKey = 'angels';
-    else if (readingType === 'runes') oracleKey = 'runes';
-    else if (readingType === 'crystalBall') oracleKey = 'daily';
-    else if (readingType === 'horoscope') oracleKey = 'horoscope';
-    else if (readingType === 'daily') oracleKey = 'daily';
+      let oracleKey = 'oracle';
+      if (readingType === 'tarot') oracleKey = 'tarot';
+      else if (readingType === 'angels') oracleKey = 'angels';
+      else if (readingType === 'runes') oracleKey = 'runes';
+      else if (readingType === 'oracle' || readingType === 'daily') oracleKey = 'oracle'; // ✅
 
     const normalizedName = normalizeCardName(cardName);
+
+      // ✅ Si normalisation échoue, retourne l'original
+      if (!normalizedName) return cardName;
 
     console.log('🔍 Traduction carte:', {
       original: cardName,
@@ -293,23 +300,25 @@ const GrimoireModal = ({
                   </div>
 
                   {/* Cartes tirées - TRADUITES */}
-                  {reading.cards && reading.cards.length > 0 && (
+                  {reading.cards && Array.isArray(reading.cards) && reading.cards.length > 0 && (
                     <div className="mb-3 bg-purple-900/30 rounded-lg p-3 border border-purple-500/20">
                       <div className="text-purple-300 text-sm font-semibold mb-2">
                         🎴 {t("grimoire.cards.title")}
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        {reading.cards.map((card, idx) => {
-                          const translatedCard = translateCardName(card, reading.type);
-                          return (
-                            <span 
-                              key={idx}
-                              className="bg-purple-700/50 text-purple-100 px-2.5 py-1 rounded text-xs border border-purple-500/30"
-                            >
-                              • {translatedCard}
-                            </span>
-                          );
-                        })}
+                        {reading.cards
+                          .filter(card => card && typeof card === 'string') // ✅ Filtre les valeurs invalides
+                          .map((card, idx) => {
+                            const translatedCard = translateCardName(card, reading.type);
+                            return (
+                              <span 
+                                key={idx}
+                                className="bg-purple-700/50 text-purple-100 px-2.5 py-1 rounded text-xs border border-purple-500/30"
+                              >
+                                • {translatedCard || card}
+                              </span>
+                            );
+                          })}
                       </div>
                     </div>
                   )}
