@@ -19,12 +19,12 @@ const getRandomVariation = () => {
   return choice;
 };
 
-// 🎨 STYLES PAR VARIATION
-const getVariationStyles = (variation: string | null) => {
+// 🎨 STYLES PAR VARIATION - AVEC TRADUCTIONS
+const getVariationStyles = (variation: string | null, t: any) => { // ✅ Ajoute le paramètre t
   switch (variation) {
     case '1': // 👑 DORÉ ROYAL
       return {
-        name: 'Doré Royal',
+        name: t('oracle.bonusRoll.variations.golden') || 'Doré Royal', // ✅
         emoji: '👑',
         badge: 'from-amber-500 via-yellow-400 to-amber-500',
         badgeText: 'text-purple-900',
@@ -41,7 +41,7 @@ const getVariationStyles = (variation: string | null) => {
 
     case '2': // 🌙 ARGENT MYSTIQUE
       return {
-        name: 'Argent Mystique',
+        name: t('oracle.bonusRoll.variations.silver') || 'Argent Mystique', // ✅
         emoji: '🌙',
         badge: 'from-cyan-400 via-blue-300 to-cyan-400',
         badgeText: 'text-blue-900',
@@ -58,7 +58,7 @@ const getVariationStyles = (variation: string | null) => {
 
     case '3': // 🔮 VIOLET COSMIQUE
       return {
-        name: 'Violet Cosmique',
+        name: t('oracle.bonusRoll.variations.cosmic') || 'Violet Cosmique', // ✅
         emoji: '🔮',
         badge: 'from-purple-500 via-fuchsia-400 to-purple-500',
         badgeText: 'text-purple-900',
@@ -73,9 +73,9 @@ const getVariationStyles = (variation: string | null) => {
         buttonShadow: 'shadow-[0_0_30px_rgba(168,85,247,0.6)]'
       };
 
-    default: // Par défaut = Doré
+    default:
       return {
-        name: 'Doré Royal',
+        name: t('oracle.bonusRoll.variations.golden') || 'Doré Royal', // ✅
         emoji: '👑',
         badge: 'from-amber-500 via-yellow-400 to-amber-500',
         badgeText: 'text-purple-900',
@@ -184,7 +184,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
     console.log(`📖 Interprétation: "${result.interpretation}"`);
   };
 
-  const styles = getVariationStyles(variation);
+  const styles = getVariationStyles(variation, t); // ✅ Passe le 't'
 
   // ✅ Écran de démarrage
   if (!showDice && !isLoadingAd) {
