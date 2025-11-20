@@ -7626,7 +7626,7 @@ const translations: Record<Language, Record<string, string>> = {
     "date.months.6": "Giugno",
     "date.months.7": "Luglio",
     "date.months.8": "Agosto",
-    "date.months�.9": "Settembre",
+    "date.months.9": "Settembre",
     "date.months.10": "Ottobre",
     "date.months.11": "Novembre",
     "date.months.12": "Dicembre",
@@ -7774,7 +7774,7 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.angels.present":
       "In questo momento preciso, {cardName} illumina il tuo presente: {cardMeaning}. Questa luce celeste guida ognuno dei tuoi passi e trasforma le tue sfide in opportunità di crescita spirituale.",
     "interpretation.angels.future":
-      "Verso il tuo futuro radioso, {cardName} spiega le sue ali protettrici: {cardMeaning}. Le porte del para�diso si aprono davanti a te, rivelando un sentiero lastricato di miracoli e sincronie.",
+      "Verso il tuo futuro radioso, {cardName} spiega le sue ali protettrici: {cardMeaning}. Le porte del paradiso si aprono davanti a te, rivelando un sentiero lastricato di miracoli e sincronie.",
     "interpretation.angels.message":
       "Trasmissione angelica: {genderText} {name}, la tua essenza da {zodiacSign} vibra in armonia con queste frequenze divine. Lascia che il tuo cuore si apra a questi messaggi di amore puro e rimani ricettiv{genderSuffix} ai segni che le tue guide ti inviano!",
     "interpretation.runes.greeting":
@@ -7903,7 +7903,7 @@ const translations: Record<Language, Record<string, string>> = {
     "zodiac.virgo": "Vergine",
     "zodiac.libra": "Bilancia",
     "zodiac.scorpio": "Scorpione",
-    "zodiac.sagi�ttarius": "Sagittario",
+    "zodiac.sagittarius": "Sagittario",
     "zodiac.capricorn": "Capricorno",
     "zodiac.aquarius": "Acquario",
     "zodiac.pisces": "Pesci",
@@ -8005,7 +8005,7 @@ const translations: Record<Language, Record<string, string>> = {
       "Esprimiti con chiarezza e benevolenza oggi. Le tue parole hanno il potere di placare tensioni, ispirare chi ti circonda e rafforzare legami importanti nella tua vita. Una comunicazione sincera e rispettosa apre la strada a una migliore comprensione reciproca e scambi profondamente arricchenti.",
     "cards.daily.Equilibre.name": "Equilibrio",
     "cards.daily.Equilibre.meaning":
-      "Oggi cerca equil�ibrio tra ciò che offri agli altri e ciò di cui hai bisogno per te stesso. È importante non dimenticarti in nome delle responsabilità. Prendersi cura di sé significa anche custodire la tua energia e il tuo benessere interiore. Coltivando questa armonia, avanzerai più allineato e sereno nel tuo cammino.",
+      "Oggi cerca equilibrio tra ciò che offri agli altri e ciò di cui hai bisogno per te stesso. È importante non dimenticarti in nome delle responsabilità. Prendersi cura di sé significa anche custodire la tua energia e il tuo benessere interiore. Coltivando questa armonia, avanzerai più allineato e sereno nel tuo cammino.",
     "cards.daily.Confiance.name": "Fiducia",
     "cards.daily.Confiance.meaning":
       "Oggi, credi pienamente nelle tue capacità e avanza con un’energia sicura. La fiducia in te stessə è una forza interiore preziosa che ti rende più forte, più chiaro nelle scelte e più allineato con la tua verità. Anche se il dubbio si presenta, ricorda che ogni passo fatto con fede ti avvicina ai tuoi veri successi.",
@@ -8065,7 +8065,7 @@ const translations: Record<Language, Record<string, string>> = {
       "Rimani fedelə ai tuoi valori e alla tua vera essenza. La tua autenticità attira le persone giuste e ti guida verso scelte in armonia con il tuo cuore. Non aver paura di mostrare chi sei davvero: è nella sincerità che troverai forza e pace interiore.",
     "cards.daily.Revelation.name": "Rivelazione",
     "cards.daily.Revelation.meaning":
-      "Una verità nascosta o una presa di coscienza importante sta per emergere. Rimani attentə e mantieni la mente aperta per accogliere questa rivelazione. Sii prontə a ricevere questa nuova luce: potrà trasformare la tua visione e aiutarti ad avanzare con maggiore� chiarezza.",
+      "Una verità nascosta o una presa di coscienza importante sta per emergere. Rimani attentə e mantieni la mente aperta per accogliere questa rivelazione. Sii prontə a ricevere questa nuova luce: potrà trasformare la tua visione e aiutarti ad avanzare con maggiore chiarezza.",
     "cards.daily.Protection.name": "Protezione",
     "cards.daily.Protection.meaning":
       "Sei circondatə da benevolenza e da forze protettrici che vegliano su di te. Fidati di questa protezione: ti accompagna nelle scelte e nei passi che compi. Non c’è nulla da temere oggi: lascia che questa energia rassicurante ti calmi e ti guidi.",
@@ -8124,7 +8124,7 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.tarot.LeFou.meaning.var1":
       "Il Matto rappresenta un nuovo inizio nella tua vita. È il momento di fidarti del tuo istinto e lanciarti nell’ignoto, anche senza avere tutte le risposte. Questa carta ti invita a uscire dalla tua zona di comfort. Concretamente, può voler dire candidarti per un lavoro che ti spaventa un po’, iniziare una conversazione importante che continui a rimandare, o dare il via a quel progetto che stai pianificando da mesi. Il Matto ti dice: non aspettare di essere completamente pronto, perché quel momento non arriverà mai. Agisci adesso. Tuttavia, fai attenzione a non confondere spontaneità con imprudenza. Informati almeno un minimo, ma non lasciare che la paura ti blocchi.",
     "cards.tarot.LeFou.meaning.var2":
-      "Questa carta annuncia una ventata di freschezza e novità nella tua vita. Sei a una svolta, dove innocenza e curiosità possono essere i tuoi migliori alleati. Il Matto ti incoraggia a guardare la tua situazione con occhi nuovi, come se la vedessi per la prima volta. Nella tua quotidianità, chiediti dove ti senti bloccato da abitudini o paure. È lì che può agire l’energia del Matto. Forse devi osare un approccio diverso nelle relazioni, provare un nuovo metodo al lavoro o sem�plicemente accettare di non poter controllare tutto. Fai quel primo passo con leggerezza. Il rischio è buttarti senza alcuna preparazione: sii spontaneo, ma non ingenuo.",
+      "Questa carta annuncia una ventata di freschezza e novità nella tua vita. Sei a una svolta, dove innocenza e curiosità possono essere i tuoi migliori alleati. Il Matto ti incoraggia a guardare la tua situazione con occhi nuovi, come se la vedessi per la prima volta. Nella tua quotidianità, chiediti dove ti senti bloccato da abitudini o paure. È lì che può agire l’energia del Matto. Forse devi osare un approccio diverso nelle relazioni, provare un nuovo metodo al lavoro o semplicemente accettare di non poter controllare tutto. Fai quel primo passo con leggerezza. Il rischio è buttarti senza alcuna preparazione: sii spontaneo, ma non ingenuo.",
     "cards.tarot.LeFou.meaning.var3":
       "Il Matto ti porta un messaggio di libertà e rinnovamento. È l’inizio di un ciclo in cui puoi reinventarti. Questa carta ti chiede di avere il coraggio dell’innocenza, quella capacità di credere che le cose siano possibili nonostante gli ostacoli apparenti. A livello pratico, identifica cosa ti sta trattenendo in questo momento. È la paura del giudizio? Il timore di fallire? Il Matto ti consiglia di andare avanti nonostante questi dubbi. Inizia in piccolo, se necessario: una telefonata, un’iscrizione, una conversazione. L’importante è muoversi. Tuttavia, resta vigile: l’ottimismo del Matto non deve farti ignorare i veri segnali d’allarme. Ascolta anche la tua prudenza.",
     "cards.tarot.LeBateleur.name": "Il Mago",
@@ -8168,7 +8168,7 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.tarot.LePape.meaning.var2":
       "Il Papa rappresenta un sostegno solido in un momento in cui cerchi stabilità e verità. Ti incoraggia ad ascoltare gli insegnamenti del passato per comprendere meglio il presente. Sei pront{genderSuffix} a trasmettere o ricevere una conoscenza essenziale. Questa carta può anche indicare la presenza di un mentore o di una guida spirituale che ti aiuta ad andare avanti.",
     "cards.tarot.LePape.meaning.var3":
-      "Simbolo di saggezza e tradizione, il Papa ti invita a prendere le distanze e riflettere con chiarezza. Sei in una fase in cui intuizione e ragione devono collaborare. Sei pront{genderSuffix} a incarnare i tuoi valori, mostrare pazienza e cost�ruire basi durature. È il momento di fidarti dei processi lenti ma potenti della maturazione.",
+      "Simbolo di saggezza e tradizione, il Papa ti invita a prendere le distanze e riflettere con chiarezza. Sei in una fase in cui intuizione e ragione devono collaborare. Sei pront{genderSuffix} a incarnare i tuoi valori, mostrare pazienza e costruire basi durature. È il momento di fidarti dei processi lenti ma potenti della maturazione.",
     "cards.tarot.LAmoureux.name": "Gli Amanti",
     "cards.tarot.LAmoureux.meaning": "Scelte, relazioni, armonia",
     "cards.tarot.LAmoureux.meaning.var1":
@@ -8224,7 +8224,7 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.tarot.LePendu.meaning.var1":
       "L’Appeso ti invita a cambiare prospettiva. Sei pront{genderSuffix} a lasciare andare vecchi schemi e osservare la tua situazione da un nuovo punto di vista, anche se ciò comporta un sacrificio temporaneo. Questa carta parla di accettazione e pazienza. A volte è proprio nel lasciar andare che si ritrova la vera libertà.",
     "cards.tarot.LePendu.meaning.var2":
-      "Con l’Appeso entri in una fas�e di pausa necessaria. Sei pront{genderSuffix} a sospendere l’azione per comprendere meglio ciò che accade dentro di te. Questo momento di attesa non è debolezza, ma un passaggio verso maggiore chiarezza. Accogli questo silenzio come terreno fertile per la trasformazione.",
+      "Con l’Appeso entri in una fase di pausa necessaria. Sei pront{genderSuffix} a sospendere l’azione per comprendere meglio ciò che accade dentro di te. Questo momento di attesa non è debolezza, ma un passaggio verso maggiore chiarezza. Accogli questo silenzio come terreno fertile per la trasformazione.",
     "cards.tarot.LePendu.meaning.var3":
       "L’Appeso simboleggia un periodo in cui il lasciar andare diventa essenziale. Sei pront{genderSuffix} a rinunciare a ciò che non serve più alla tua crescita, anche se richiede coraggio e umiltà. Questa carta ti guida verso un risveglio nella semplicità. Abbandona la resistenza: il vuoto apre la strada al rinnovamento.",
     "cards.tarot.LArcanesansnom.name": "La Morte",
@@ -8280,7 +8280,7 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.tarot.LeSoleil.meaning": "Gioia, successo, vitalità",
     "cards.tarot.LeSoleil.meaning.var1":
       "Il Sole ti porta luce ed energia positiva. Sei pront{genderSuffix} ad accogliere la gioia e a celebrare i tuoi successi. Usa questa vitalità per andare avanti con fiducia ed entusiasmo.",
-    "cards.tarot.LeSoleil.meaning.v�ar2":
+    "cards.tarot.LeSoleil.meaning.var2":
       "Con Il Sole si apre un periodo di chiarezza e ottimismo per te. Sei pront{genderSuffix} a brillare, condividere il tuo buon umore e attrarre buone opportunità. Tieni il cuore aperto e assapora ogni momento.",
     "cards.tarot.LeSoleil.meaning.var3":
       "Il Sole ti invita a ritrovare la tua forza interiore e vitalità. Sei pront{genderSuffix} a superare gli ostacoli con un atteggiamento positivo e a ispirare chi ti circonda. Non dubitare della tua capacità di riuscire.",
@@ -8326,7 +8326,7 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.angels.ArchangeRaphael.meaning.var1":
       "L’Arcangelo Raffaele ti avvolge con la sua energia di guarigione. Allevia dolcemente le tue ferite fisiche ed emotive con compassione. Questa carta indica che un processo di guarigione è in corso nella tua vita. Raffaele ti ricorda che prenderti cura di te non è egoismo, ma necessario. In pratica, concediti riposo quando il corpo ne ha bisogno. Se trascuri sintomi, consulta un medico. A livello emotivo, permettiti di sentire e lasciare andare i sentimenti. Raffaele ti guida verso persone e pratiche che sostengono la tua guarigione, che sia medicina, terapia o semplicemente tempo per te.",
     "cards.angels.ArchangeRaphael.meaning.var2":
-      "Raffaele annuncia una fase di recupero e rigenerazione. Ti chiede di rallentare e ascoltare i bisogni del tuo corpo e cuore. Forse hai oltrepassato i limiti, ignorando segnali di allarme o portando fardelli troppo pesanti da solo. Questa carta ti incoraggia a chiedere aiuto e ad accettare il sostegno offerto. Nella vita quotidiana, riconosci cosa necessita di attenzione speciale. Stanchezza persistente? Una ferita emotiva non guarita? Relazioni che ti danneggiano? Raf�faele ti dà la forza per fare cambiamenti necessari al tuo benessere. Prendi un appuntamento dal medico, dal terapeuta o concediti un giorno di completo riposo.",
+      "Raffaele annuncia una fase di recupero e rigenerazione. Ti chiede di rallentare e ascoltare i bisogni del tuo corpo e cuore. Forse hai oltrepassato i limiti, ignorando segnali di allarme o portando fardelli troppo pesanti da solo. Questa carta ti incoraggia a chiedere aiuto e ad accettare il sostegno offerto. Nella vita quotidiana, riconosci cosa necessita di attenzione speciale. Stanchezza persistente? Una ferita emotiva non guarita? Relazioni che ti danneggiano? Raffaele ti dà la forza per fare cambiamenti necessari al tuo benessere. Prendi un appuntamento dal medico, dal terapeuta o concediti un giorno di completo riposo.",
     "cards.angels.ArchangeRaphael.meaning.var3":
       "L’energia di guarigione di Raffaele agisce nella tua vita. Ti aiuta a lasciar andare il dolore passato e a ristabilire il tuo equilibrio interiore. Questa carta ti invita a trattare le tue ferite con gentilezza, visibili o invisibili. In pratica, coltiva abitudini che nutrono corpo e mente. Mangia sano, dormi a sufficienza, muoviti dolcemente. Per le ferite emotive, considera di parlare con persone di fiducia o di scrivere i tuoi sentimenti. Raffaele ti ricorda che guarire richiede tempo ed è normale. Sii paziente con te stesso e celebra ogni piccolo progresso.",
     "cards.angels.ArchangeUriel.name": "Arcangelo Uriele",
@@ -8357,7 +8357,7 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.angels.AngedelaPaix.name": "Angelo della Pace",
     "cards.angels.AngedelaPaix.meaning": "Serenità interiore e calma",
     "cards.angels.AngedelaPaix.meaning.var1":
-      "L’Angelo della Pace ti porta un’energia di serenità e calma profonda. Ti aiuta a trovare il silenzio interiore anche nel caos esterno. Questa carta indica che è tempo di rallentare e coltivare la tua� tranquillità mentale. La vera pace non dipende dalle circostanze, nasce dal tuo stato interiore. Concretamente, crea momenti di pausa nella tua giornata. Cinque minuti di respirazione consapevole, una passeggiata nella natura o semplicemente sederti in silenzio. Se vivi conflitti, l’Angelo della Pace ti incoraggia a scegliere l’appianamento invece di avere ragione. A volte, la pace richiede di lasciare andare il bisogno di controllo. Allontanati da fonti di stress inutili come notizie ansiogene o conversazioni tossiche.",
+      "L’Angelo della Pace ti porta un’energia di serenità e calma profonda. Ti aiuta a trovare il silenzio interiore anche nel caos esterno. Questa carta indica che è tempo di rallentare e coltivare la tua tranquillità mentale. La vera pace non dipende dalle circostanze, nasce dal tuo stato interiore. Concretamente, crea momenti di pausa nella tua giornata. Cinque minuti di respirazione consapevole, una passeggiata nella natura o semplicemente sederti in silenzio. Se vivi conflitti, l’Angelo della Pace ti incoraggia a scegliere l’appianamento invece di avere ragione. A volte, la pace richiede di lasciare andare il bisogno di controllo. Allontanati da fonti di stress inutili come notizie ansiogene o conversazioni tossiche.",
     "cards.angels.AngedelaPaix.meaning.var2":
       "Questa carta annuncia un periodo di riconciliazione e armonia interiore. L’Angelo della Pace ti chiede di fare pace con il tuo passato, i tuoi errori e i tuoi rimpianti. Ti ricorda che non puoi cambiare ciò che è stato, ma puoi scegliere come vivere ora. Nella quotidianità, identifica ciò che turba la tua pace interiore. Pensieri ossessivi? Rancori tenaci? Paure costanti? Lavora attivamente per calmare queste turbolenze. La meditazione, il perdono e l’accettazione sono i tuoi strumenti. Se sei in conflitto con qualcuno, cerca punti di riconciliazione invece di alimentare la divisione. L’Angelo della Pace ti guida verso soluzioni dolci e compromessi rispettosi.",
     "cards.angels.AngedelaPaix.meaning.var3":
@@ -8399,7 +8399,7 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.angels.AngedelaFoi.name": "Angelo della Fede",
     "cards.angels.AngedelaFoi.meaning": "Fiducia nell'universo e speranza",
     "cards.angels.AngedelaFoi.meaning.var1":
-      "L'Angelo della Fede ti invita a fidarti dell'universo e a credere in un futuro migliore. Ti incoraggia a mantenere la speranza anche di fronte alle incertezze. Questa carta ti ricorda che la fede apre porte invisibili e ti guida nel tuo cammino. Concretamente: lascia andare il controllo e accogli l�e sorprese della vita.",
+      "L'Angelo della Fede ti invita a fidarti dell'universo e a credere in un futuro migliore. Ti incoraggia a mantenere la speranza anche di fronte alle incertezze. Questa carta ti ricorda che la fede apre porte invisibili e ti guida nel tuo cammino. Concretamente: lascia andare il controllo e accogli le sorprese della vita.",
     "cards.angels.AngedelaFoi.meaning.var2":
       "Questa carta annuncia un periodo in cui la tua fiducia interiore viene rafforzata. L'Angelo della Fede ti aiuta a superare i dubbi e a mantenere la rotta nonostante gli ostacoli. Nella tua quotidianità, pratica la pazienza e l'accettazione, cercando segni che confermino che sei sostenuto. La fede è un ancora potente per andare avanti.",
     "cards.angels.AngedelaFoi.meaning.var3":
@@ -8454,7 +8454,7 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.angels.AngedelaLiberation.meaning.var2":
       "Questa carta annuncia una fase in cui puoi liberarti da limitazioni interiori ed esteriori. L'Angelo della Liberazione ti sostiene nell'avere il coraggio di uscire dalla tua zona di comfort. Nella tua vita quotidiana, affronta le tue paure con coraggio e accogli la novità con fiducia.",
     "cards.angels.AngedelaLiberation.meaning.var3":
-      "L'energia dell'Angelo della Liberazione ti invita a vivere nella libertà interiore. Ti ricorda che hai il potere di scegliere i tuoi pensieri e le tue reazioni. Concretamente: p�ratica il perdono verso te stesso e gli altri per liberarti dai pesi emotivi.",
+      "L'energia dell'Angelo della Liberazione ti invita a vivere nella libertà interiore. Ti ricorda che hai il potere di scegliere i tuoi pensieri e le tue reazioni. Concretamente: pratica il perdono verso te stesso e gli altri per liberarti dai pesi emotivi.",
     "cards.angels.AngedelaGratitude.name": "Angelo della Gratitudine",
     "cards.angels.AngedelaGratitude.meaning": "Riconoscenza e apprezzamento",
     "cards.angels.AngedelaGratitude.meaning.var1":
@@ -8536,7 +8536,7 @@ const translations: Record<Language, Record<string, string>> = {
     "horoscope.data.descriptions.taurus.7":
       "È il momento ideale per concretizzare i tuoi progetti a lungo termine, seguendo i passaggi necessari per raggiungere i tuoi obiettivi con successo.",
     "horoscope.data.descriptions.taurus.8":
-      "Il tuo senso pratico e discernimento ti aiutano a evitare molti er�rori e a prendere decisioni sagge nelle questioni quotidiane.",
+      "Il tuo senso pratico e discernimento ti aiutano a evitare molti errori e a prendere decisioni sagge nelle questioni quotidiane.",
     "horoscope.data.descriptions.taurus.9":
       "Si prospetta un periodo di prosperità materiale, offrendo opportunità di guadagni finanziari e stabilità economica se rimani attento.",
     "horoscope.data.descriptions.taurus.10":
@@ -8753,7 +8753,7 @@ const translations: Record<Language, Record<string, string>> = {
       "Un’idea innovativa può emergere. Valutala attentamente e agisci con convinzione.",
     "horoscope.data.descriptions.sagittarius.11":
       "Il tuo spirito libero attira attenzioni positive. Condividi entusiasmo senza forzare situazioni.",
-    "horoscope.data.descriptions.sagit�tarius.12":
+    "horoscope.data.descriptions.sagittarius.12":
       "Una lezione importante può arrivare da un’esperienza insolita. Ascolta con attenzione.",
     "horoscope.data.descriptions.sagittarius.13":
       "La tua energia fisica e mentale è alta. Usa questo slancio per avanzare progetti.",
@@ -8874,7 +8874,7 @@ const translations: Record<Language, Record<string, string>> = {
     "horoscope.compatibility.var5":
       "Armonie astrali: {compatibility} condividono oggi le tue vibrazioni. Questi incontri potrebbero essere magici!",
     "horoscope.compatibility.var6":
-      "Complicità stellare: I nativi di {compatibility} comprendono intuitivamente il tuo stato� d’animo oggi. Coltiva questi legami preziosi!",
+      "Complicità stellare: I nativi di {compatibility} comprendono intuitivamente il tuo stato d’animo oggi. Coltiva questi legami preziosi!",
     "horoscope.compatibility.var7":
       "Sinergie planetarie: {compatibility} sono oggi in perfetta risonanza con la tua energia. Sta arrivando una collaborazione fruttuosa!",
     "horoscope.compatibility.var8":
@@ -9023,7 +9023,7 @@ const translations: Record<Language, Record<string, string>> = {
     "horoscope.data.colors.Argent métallique": "Argento metallico",
     "horoscope.data.colors.Turquoise": "Turchese",
     "horoscope.data.colors.Violet": "Viola",
-    "horoscope.data.colors.Néon": "Neon�",
+    "horoscope.data.colors.Néon": "Neon",
     "horoscope.data.colors.Cyan": "Ciano",
     "horoscope.data.colors.Vert aqua": "Verde acqua",
     "horoscope.data.colors.Violet mystique": "Viola mistico",
@@ -9169,7 +9169,7 @@ const translations: Record<Language, Record<string, string>> = {
       "Questa energia manifesterà i tuoi sogni più cari.",
     "interpretation.transition.future.var6":
       "Queste influenze divine illumineranno il tuo cammino.",
-    "interpre�tation.transition.future.var7":
+    "interpretation.transition.future.var7":
       "Questo potere sbloccherà il tuo potenziale nascosto.",
     "interpretation.transition.future.var8":
       "Queste energie sincronizzeranno tutti gli aspetti della tua vita.",
@@ -9322,7 +9322,7 @@ const translations: Record<Language, Record<string, string>> = {
     "premium.benefits.ads": "Nessuna pubblicità",
     "premium.benefits.grimoire": "Grimorio Mistico illimitato",
     "premium.benefits.notes": "Note e preferiti",
-    "premium.benefits.history": "Cronologia co�mpleta delle tue letture",
+    "premium.benefits.history": "Cronologia completa delle tue letture",
     "premium.confirm.1month": "Confermare il pagamento di 3,99 € per 1 mese?",
     "premium.confirm.3months": "Confermare il pagamento di 8,98 € per 3 mesi?",
     "premium.success": "Abbonamento attivato con successo! Goditi un’esperienza senza pubblicità e il Grimorio illimitato.",
@@ -9447,7 +9447,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.6.message.3": "Il numero dell'amore ti avvolge. Relazioni e connessioni fioriscono sotto il tuo sguardo benevolo.",
 
     "oracle.bonusRoll.7.title.1": "🍀 Fortuna Mistica",
-    "oracle.bonusRoll.7.message.1": "Il numero fortunato ti sorride! Aspettati piacevoli s�orprese.",
+    "oracle.bonusRoll.7.message.1": "Il numero fortunato ti sorride! Aspettati piacevoli sorprese.",
     "oracle.bonusRoll.7.title.2": "🎰 Fortuna Divina",
     "oracle.bonusRoll.7.message.2": "I dadi del destino cadono a tuo favore. La provvidenza ti benedice oggi.",
     "oracle.bonusRoll.7.title.3": "🌠 Magia Celeste",
