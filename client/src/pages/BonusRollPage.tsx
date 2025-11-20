@@ -20,11 +20,11 @@ const getRandomVariation = () => {
 };
 
 // 🎨 STYLES PAR VARIATION - AVEC TRADUCTIONS
-const getVariationStyles = (variation: string | null, t: any) => { // ✅ Ajoute le paramètre t
+const getVariationStyles = (variation: string | null, t: any) => {
   switch (variation) {
     case '1': // 👑 DORÉ ROYAL
       return {
-        name: t('oracle.bonusRoll.variations.golden') || 'Doré Royal', // ✅
+        name: t('oracle.bonusRoll.variations.golden') || 'Doré Royal',
         emoji: '👑',
         badge: 'from-amber-500 via-yellow-400 to-amber-500',
         badgeText: 'text-purple-900',
@@ -41,7 +41,7 @@ const getVariationStyles = (variation: string | null, t: any) => { // ✅ Ajoute
 
     case '2': // 🌙 ARGENT MYSTIQUE
       return {
-        name: t('oracle.bonusRoll.variations.silver') || 'Argent Mystique', // ✅
+        name: t('oracle.bonusRoll.variations.silver') || 'Argent Mystique',
         emoji: '🌙',
         badge: 'from-cyan-400 via-blue-300 to-cyan-400',
         badgeText: 'text-blue-900',
@@ -58,7 +58,7 @@ const getVariationStyles = (variation: string | null, t: any) => { // ✅ Ajoute
 
     case '3': // 🔮 VIOLET COSMIQUE
       return {
-        name: t('oracle.bonusRoll.variations.cosmic') || 'Violet Cosmique', // ✅
+        name: t('oracle.bonusRoll.variations.cosmic') || 'Violet Cosmique',
         emoji: '🔮',
         badge: 'from-purple-500 via-fuchsia-400 to-purple-500',
         badgeText: 'text-purple-900',
@@ -75,7 +75,7 @@ const getVariationStyles = (variation: string | null, t: any) => { // ✅ Ajoute
 
     default:
       return {
-        name: t('oracle.bonusRoll.variations.golden') || 'Doré Royal', // ✅
+        name: t('oracle.bonusRoll.variations.golden') || 'Doré Royal',
         emoji: '👑',
         badge: 'from-amber-500 via-yellow-400 to-amber-500',
         badgeText: 'text-purple-900',
@@ -98,46 +98,17 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   const [showDice, setShowDice] = useState(false);
   const [isLoadingAd, setIsLoadingAd] = useState(false);
   const [variation, setVariation] = useState<string | null>(null);
-  const [adTimedOut, setAdTimedOut] = useState(false);
-
-  // ✅ Ref pour stocker le timer
-  const adTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  // ✅ Nettoyer le timeout quand le composant est démonté
-  useEffect(() => {
-    return () => {
-      if (adTimeoutRef.current) {
-        clearTimeout(adTimeoutRef.current);
-      }
-    };
-  }, []);
 
   const handleStartRoll = async () => {
     setIsLoadingAd(true);
-    setAdTimedOut(false);
 
     // ✅ CHOISIR LA VARIATION DÈS LE DÉBUT
     const chosenVariation = getRandomVariation();
     setVariation(chosenVariation);
     console.log('🎯 [BONUS ROLL] Démarrage - Variation choisie:', chosenVariation);
 
-    // ✅ TIMEOUT DE SÉCURITÉ : 30 secondes max
-    adTimeoutRef.current = setTimeout(() => {
-      console.log('⏱️ [BONUS ROLL] Timeout pub (30s) - Déblocage forcé');
-      setIsLoadingAd(false);
-      setAdTimedOut(true);
-      alert(t('oracle.bonusRoll.adTimeout') || 'La publicité a mis trop de temps. Le tirage est débloqué gratuitement.');
-      setShowDice(true);
-    }, 30000); // 30 secondes
-
     try {
       const rewardGranted = await showRewardedAd('bonus_roll_start');
-
-      // ✅ Annuler le timeout si la pub se termine normalement
-      if (adTimeoutRef.current) {
-        clearTimeout(adTimeoutRef.current);
-        adTimeoutRef.current = null;
-      }
 
       setIsLoadingAd(false);
 
@@ -152,29 +123,9 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
       }
     } catch (error) {
       console.error('❌ [BONUS ROLL] Erreur pub récompensée:', error);
-
-      // ✅ Annuler le timeout en cas d'erreur
-      if (adTimeoutRef.current) {
-        clearTimeout(adTimeoutRef.current);
-        adTimeoutRef.current = null;
-      }
-
       setIsLoadingAd(false);
-      alert('Une erreur est survenue. Veuillez réessayer.');
+      alert(t('oracle.bonusRoll.adError') || 'Une erreur est survenue. Veuillez réessayer.');
     }
-  };
-
-  // ✅ FONCTION D'URGENCE : Débloquer si vraiment bloqué
-  const handleForceUnlock = () => {
-    console.log('🚨 [BONUS ROLL] Déblocage manuel forcé par l\'utilisateur');
-
-    if (adTimeoutRef.current) {
-      clearTimeout(adTimeoutRef.current);
-      adTimeoutRef.current = null;
-    }
-
-    setIsLoadingAd(false);
-    setShowDice(true);
   };
 
   const handleComplete = (result: { total: number; dice: [number, number]; interpretation: string }) => {
@@ -184,7 +135,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
     console.log(`📖 Interprétation: "${result.interpretation}"`);
   };
 
-  const styles = getVariationStyles(variation, t); // ✅ Passe le 't'
+  const styles = getVariationStyles(variation, t);
 
   // ✅ Écran de démarrage
   if (!showDice && !isLoadingAd) {
@@ -268,7 +219,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
     );
   }
 
-  // ✅ Loader pendant la pub AVEC BOUTON D'URGENCE
+  // ✅ Loader pendant la pub - SIMPLIFIÉ
   if (isLoadingAd) {
     return (
       <div className="main-content w-full min-h-screen flex flex-col items-center justify-center p-5 relative overflow-hidden">
@@ -309,19 +260,6 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
             <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce"></span>
             <span className="w-3 h-3 bg-yellow-400 rounded-full animate-bounce" style={{animationDelay: '0.15s'}}></span>
             <span className="w-3 h-3 bg-orange-400 rounded-full animate-bounce" style={{animationDelay: '0.3s'}}></span>
-          </div>
-
-          {/* ✅ BOUTON D'URGENCE après 10 secondes */}
-          <div className="mt-8">
-            <p className="text-amber-200/70 text-xs mb-3">
-              {t('oracle.bonusRoll.adStuck') || 'La publicité est bloquée ?'}
-            </p>
-            <button
-              onClick={handleForceUnlock}
-              className="px-4 py-2 bg-red-600/80 hover:bg-red-500 text-white text-sm rounded-lg transition-colors border border-red-400"
-            >
-              🚨 {t('oracle.bonusRoll.forceUnlock') || 'Débloquer maintenant'}
-            </button>
           </div>
         </div>
       </div>
