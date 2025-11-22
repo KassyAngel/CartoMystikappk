@@ -109,11 +109,11 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
     setVariation(chosenVariation);
     console.log('🎯 [BONUS ROLL] Démarrage - Variation choisie:', chosenVariation);
 
-    // ✅ Timeout visible pour l'utilisateur (90 secondes)
-    const userTimeoutId = setTimeout(() => {
-      console.log('⏰ [BONUS ROLL] Timeout visuel atteint (pub longue)');
-      setAdTimeout(true);
-    }, 90000);
+    // ✅ Timeout visuel pour l'utilisateur (60 secondes)
+const userTimeoutId = setTimeout(() => {
+  console.log('⏰ [BONUS ROLL] Message d\'attente affiché (pub longue)');
+  setAdTimeout(true);
+}, 60000); // 60 secondes au lieu de 90
 
     try {
       const rewardGranted = await showRewardedAd('bonus_roll_start');

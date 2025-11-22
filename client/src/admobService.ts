@@ -13,7 +13,7 @@ const isNative = Capacitor.isNativePlatform();
 const platform = Capacitor.getPlatform();
 
 // 🎯 INTERRUPTEUR : Changez cette valeur pour passer de TEST à PRODUCTION
-const IS_PRODUCTION = true; // ⚠️ Mettre à true avant la soumission finale
+const IS_PRODUCTION = false; // ⚠️ Mettre à true avant la soumission finale
 
 console.log('🔍 Détection plateforme AdMob:', {
   isNative,
@@ -260,17 +260,18 @@ export async function showInterstitialAd(context: string = 'unknown') {
   }
 }
 
-// 🎁 PUB RÉCOMPENSÉE - ✅ VERSION CORRIGÉE FINALE
+// 🎁 PUB RÉCOMPENSÉE - ✅ VERSION FINALE OPTIMISÉE CONTRE LES PUBS MULTIPLES
 let rewardedAdCounter = 0;
 
 export async function showRewardedAd(context: string = 'bonus_roll'): Promise<boolean> {
   if (!isNative) {
     console.log('📱 Pas de pub récompensée (web) - Context:', context);
-    return true;
+    return true; // ✅ En web, on débloque directement pour tester
   }
 
+  // ✅ BLOQUER STRICTEMENT si une pub est déjà en cours
   if (isRewardedShowing) {
-    console.log('⚠️ Une pub récompensée est déjà affichée');
+    console.warn(`⚠️ [PUB RÉCOMPENSÉE] BLOQUÉ - Une pub est déjà affichée`);
     return false;
   }
 
@@ -285,10 +286,12 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
     let rewardListener: any;
     let dismissListener: any;
     let failedToShowListener: any;
+    let failedToLoadListener: any;
 
+    // ✅ Timeout de sécurité : 60 secondes max
     const safetyTimeout = setTimeout(() => {
       if (!resolved) {
-        console.log(`⏰ [PUB RÉCOMPENSÉE #${adNumber}] Timeout - Force résolution`);
+        console.log(`⏰ [PUB RÉCOMPENSÉE #${adNumber}] TIMEOUT (60s) - Résolution forcée`);
         cleanup();
         resolved = true;
         isRewardedShowing = false;
@@ -303,47 +306,22 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
         if (rewardListener) rewardListener.remove();
         if (dismissListener) dismissListener.remove();
         if (failedToShowListener) failedToShowListener.remove();
+        if (failedToLoadListener) failedToLoadListener.remove();
       } catch (e) {
         console.error('❌ Erreur cleanup listeners:', e);
       }
     };
 
     try {
-      console.log(`🎁 [PUB RÉCOMPENSÉE #${adNumber}] Préparation... Context: ${context}`);
+      console.log(`🎁 [PUB RÉCOMPENSÉE #${adNumber}] === DÉMARRAGE === Context: ${context}`);
 
-      showedListener = _addListener('onRewardedVideoAdShowed', () => {
-        console.log(`👁️ [PUB RÉCOMPENSÉE #${adNumber}] Affichée à l'écran`);
-        adShown = true;
-        isRewardedShowing = true;
-      });
+      // ✅ MARQUER COMME EN COURS DÈS LE DÉBUT
+      isRewardedShowing = true;
 
-      rewardListener = _addListener('onRewarded', (reward: AdMobRewardItem) => {
-        console.log(`🎁 [PUB RÉCOMPENSÉE #${adNumber}] Récompense obtenue:`, reward);
-        rewardReceived = true;
-      });
-
-      dismissListener = _addListener('onRewardedVideoAdDismissed', () => {
+      // 📡 Enregistrement des listeners AVANT de préparer la pub
+      failedToLoadListener = _addListener('onRewardedVideoAdFailedToLoad', (error: any) => {
         if (!resolved) {
-          console.log(`✅ [PUB RÉCOMPENSÉE #${adNumber}] Fermée`);
-          console.log(`   📊 Statut final: Affichée=${adShown}, Récompense=${rewardReceived}`);
-
-          cleanup();
-          isRewardedShowing = false;
-          resolved = true;
-
-          // ✅ CORRECTION FINALE : On débloque dès que la pub a été AFFICHÉE
-          // Car certains réseaux publicitaires ne déclenchent pas toujours onRewarded
-          const shouldUnlock = adShown;
-
-          console.log(`   🎯 Résultat final: ${shouldUnlock ? '✅ DÉBLOQUÉ (pub affichée)' : '❌ BLOQUÉ (pub non affichée)'}`);
-          console.log(`   ℹ️ Note: onRewarded=${rewardReceived} (peut être false même si pub vue en entier)`);
-          resolve(shouldUnlock);
-        }
-      });
-
-      failedToShowListener = _addListener('onRewardedVideoAdFailedToShow', (error: any) => {
-        if (!resolved) {
-          console.error(`❌ [PUB RÉCOMPENSÉE #${adNumber}] Échec affichage:`, error);
+          console.error(`❌ [PUB RÉCOMPENSÉE #${adNumber}] ÉCHEC CHARGEMENT:`, error);
           cleanup();
           isRewardedShowing = false;
           resolved = true;
@@ -351,21 +329,59 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
         }
       });
 
+      showedListener = _addListener('onRewardedVideoAdShowed', () => {
+        console.log(`👁️ [PUB RÉCOMPENSÉE #${adNumber}] AFFICHÉE à l'écran`);
+        adShown = true;
+      });
+
+      rewardListener = _addListener('onRewarded', (reward: AdMobRewardItem) => {
+        console.log(`🎁 [PUB RÉCOMPENSÉE #${adNumber}] RÉCOMPENSE OBTENUE:`, reward);
+        rewardReceived = true;
+      });
+
+      dismissListener = _addListener('onRewardedVideoAdDismissed', () => {
+        if (!resolved) {
+          console.log(`🚪 [PUB RÉCOMPENSÉE #${adNumber}] FERMÉE`);
+          console.log(`   📊 Statut: Affichée=${adShown}, Récompense=${rewardReceived}`);
+
+          // ✅ On débloque si la pub a été AFFICHÉE (critère le plus fiable)
+          const shouldUnlock = adShown;
+
+          console.log(`   🎯 RÉSULTAT FINAL: ${shouldUnlock ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'}`);
+
+          cleanup();
+          isRewardedShowing = false;
+          resolved = true;
+          resolve(shouldUnlock);
+        }
+      });
+
+      failedToShowListener = _addListener('onRewardedVideoAdFailedToShow', (error: any) => {
+        if (!resolved) {
+          console.error(`❌ [PUB RÉCOMPENSÉE #${adNumber}] ÉCHEC AFFICHAGE:`, error);
+          cleanup();
+          isRewardedShowing = false;
+          resolved = true;
+          resolve(false);
+        }
+      });
+
+      // 🔄 Préparation de la pub
       const options: RewardAdOptions = { adId: REWARDED_AD_ID };
 
-      console.log(`🔄 [PUB RÉCOMPENSÉE #${adNumber}] Préparation de la pub...`);
+      console.log(`🔄 [PUB RÉCOMPENSÉE #${adNumber}] Préparation avec ID: ${REWARDED_AD_ID}`);
       await AdMob.prepareRewardVideoAd(options);
 
-      console.log(`⏳ [PUB RÉCOMPENSÉE #${adNumber}] Attente 1.5s avant affichage...`);
+      console.log(`⏳ [PUB RÉCOMPENSÉE #${adNumber}] Attente 1.5s...`);
       await new Promise(r => setTimeout(r, 1500));
 
       console.log(`🎬 [PUB RÉCOMPENSÉE #${adNumber}] Commande d'affichage...`);
       await AdMob.showRewardVideoAd();
 
-      console.log(`✅ [PUB RÉCOMPENSÉE #${adNumber}] Commande d'affichage envoyée`);
+      console.log(`✅ [PUB RÉCOMPENSÉE #${adNumber}] Commande envoyée avec succès`);
 
     } catch (error: any) {
-      console.error(`❌ [PUB RÉCOMPENSÉE #${adNumber}] Erreur:`, error);
+      console.error(`💥 [PUB RÉCOMPENSÉE #${adNumber}] ERREUR CRITIQUE:`, error);
       cleanup();
       isRewardedShowing = false;
 
@@ -384,7 +400,9 @@ export async function cleanup() {
   try {
     console.log('🧹 Nettoyage listeners AdMob...');
     _removeAllListenersSafe();
-    console.log('🧹 Listeners nettoyés');
+    isRewardedShowing = false;
+    isInterstitialShowing = false;
+    console.log('🧹 Listeners et états nettoyés');
   } catch (e) {
     console.error('❌ Erreur cleanup:', e);
   }
