@@ -97,33 +97,46 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   const [isComplete, setIsComplete] = useState(false);
   const [showDice, setShowDice] = useState(false);
   const [isLoadingAd, setIsLoadingAd] = useState(false);
+  const [adTimeout, setAdTimeout] = useState(false);
   const [variation, setVariation] = useState<string | null>(null);
 
   const handleStartRoll = async () => {
     setIsLoadingAd(true);
+    setAdTimeout(false);
 
     // ✅ CHOISIR LA VARIATION DÈS LE DÉBUT
     const chosenVariation = getRandomVariation();
     setVariation(chosenVariation);
     console.log('🎯 [BONUS ROLL] Démarrage - Variation choisie:', chosenVariation);
 
+    // ✅ Timeout visible pour l'utilisateur (90 secondes)
+    const userTimeoutId = setTimeout(() => {
+      console.log('⏰ [BONUS ROLL] Timeout visuel atteint (pub longue)');
+      setAdTimeout(true);
+    }, 90000);
+
     try {
       const rewardGranted = await showRewardedAd('bonus_roll_start');
 
+      // ✅ Nettoyer le timeout
+      clearTimeout(userTimeoutId);
       setIsLoadingAd(false);
+      setAdTimeout(false);
 
       console.log(`🎁 [BONUS ROLL] Résultat final: ${rewardGranted ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'}`);
 
       if (rewardGranted) {
-        console.log('✅ [BONUS ROLL] Pub affichée → Déblocage du tirage');
+        console.log('✅ [BONUS ROLL] Pub complétée → Déblocage du tirage');
         setShowDice(true);
       } else {
-        console.log('❌ [BONUS ROLL] Pub non affichée → Pas de déblocage');
-        alert(t('oracle.bonusRoll.adNotCompleted') || 'La publicité n\'a pas pu être affichée. Réessayez.');
+        console.log('❌ [BONUS ROLL] Pub non complétée → Pas de déblocage');
+        alert(t('oracle.bonusRoll.adNotCompleted') || 'La publicité n\'a pas pu être complétée. Réessayez.');
       }
     } catch (error) {
       console.error('❌ [BONUS ROLL] Erreur pub récompensée:', error);
+      clearTimeout(userTimeoutId);
       setIsLoadingAd(false);
+      setAdTimeout(false);
       alert(t('oracle.bonusRoll.adError') || 'Une erreur est survenue. Veuillez réessayer.');
     }
   };
@@ -219,7 +232,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
     );
   }
 
-  // ✅ Loader pendant la pub - SIMPLIFIÉ
+  // ✅ Loader pendant la pub - AMÉLIORÉ AVEC MESSAGE POUR PUBS LONGUES
   if (isLoadingAd) {
     return (
       <div className="main-content w-full min-h-screen flex flex-col items-center justify-center p-5 relative overflow-hidden">
@@ -242,7 +255,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
           </div>
         </div>
 
-        <div className="text-center relative z-10">
+        <div className="text-center relative z-10 max-w-md px-4">
           <div className="relative w-24 h-24 mx-auto mb-6">
             <div className="absolute inset-0 bg-amber-500/30 rounded-full blur-2xl animate-pulse"></div>
             <div className="absolute inset-0 flex items-center justify-center">
@@ -256,6 +269,21 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
           <p className="text-amber-200 text-sm mt-3">
             ⏳ {t('oracle.bonusRoll.pleaseWait') || 'Un instant s\'il vous plaît'}
           </p>
+
+          {/* ✅ Message additionnel pour pubs longues */}
+          {adTimeout && (
+  <div className="mt-6 p-4 bg-amber-500/20 border-2 border-amber-400/50 rounded-xl animate-pulse">
+    <p className="text-amber-200 text-base font-semibold mb-2">
+      ⏳ {t('oracle.bonusRoll.adLongWarning') || 'Cette publicité est un peu longue...'}
+    </p>
+    <p className="text-amber-300 text-sm">
+      {t('oracle.bonusRoll.pleaseWaitUntilEnd') || 'Merci de patienter jusqu\'à la fin'}
+    </p>
+    <p className="text-amber-400 text-xs mt-2 font-medium">
+      🚫 {t('oracle.bonusRoll.doNotCloseApp') || 'Ne fermez pas l\'application'}
+    </p>
+  </div>
+)}
           <div className="flex justify-center gap-2 mt-4">
             <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce"></span>
             <span className="w-3 h-3 bg-yellow-400 rounded-full animate-bounce" style={{animationDelay: '0.15s'}}></span>
@@ -327,16 +355,16 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
       {/* Composant des dés - AVEC VARIATION PASSÉE */}
       <div className="flex-1 flex items-center justify-center py-2 sm:py-3 min-h-0">
         <div className="w-full max-w-2xl px-1 sm:px-2">
-              <div className="relative">
-                <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                  <div
-                    className={`bg-gradient-to-br ${styles.gradient}
-                                rounded-2xl 
-                                blur-2xl 
-                                opacity-20
-                                w-[130%] h-[130%]`}
-                  />
-                </div>
+          <div className="relative">
+            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+              <div
+                className={`bg-gradient-to-br ${styles.gradient}
+                            rounded-2xl 
+                            blur-2xl 
+                            opacity-20
+                            w-[130%] h-[130%]`}
+              />
+            </div>
 
             <BonusRoll 
               onComplete={handleComplete}

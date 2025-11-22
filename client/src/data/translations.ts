@@ -1839,6 +1839,9 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.variations.silver": "Argent Mystique", 
     "oracle.bonusRoll.variations.cosmic": "Violet Cosmique",
     "oracle.bonusRoll.adError": "Une erreur est survenue. Veuillez réessayer.",
+    "oracle.bonusRoll.adLongWarning": "Cette publicité est un peu longue…",
+    "oracle.bonusRoll.pleaseWaitUntilEnd": "Merci de patienter jusqu'à la fin",
+    "oracle.bonusRoll.doNotCloseApp": "Ne fermez pas l'application",
     
     // Interprétations Bonus Roll - 3 variations par nombre
     "oracle.bonusRoll.2.title.1": "🌅 Nouveau Départ",
@@ -3678,6 +3681,9 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.variations.silver": "Mystic Silver",
     "oracle.bonusRoll.variations.cosmic": "Cosmic Violet",
     "oracle.bonusRoll.adError": "An error occurred. Please try again.",
+    "oracle.bonusRoll.adLongWarning": "This ad is a bit long…",  
+    "oracle.bonusRoll.pleaseWaitUntilEnd": "Please wait until the end",  
+    "oracle.bonusRoll.doNotCloseApp": "Do not close the app", 
 
     // Interpretations (2 variations per result)
     "oracle.bonusRoll.2.title.1": "🌅 New Beginning",
@@ -5587,6 +5593,9 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.variations.silver": "Plata Mística",
     "oracle.bonusRoll.variations.cosmic": "Violeta Cósmico",
     "oracle.bonusRoll.adError": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+    "oracle.bonusRoll.adLongWarning": "Este anuncio es un poco largo…",  
+    "oracle.bonusRoll.pleaseWaitUntilEnd": "Por favor, espera hasta el final",  
+    "oracle.bonusRoll.doNotCloseApp": "No cierres la aplicación", 
 
     "oracle.bonusRoll.2.title.1": "🌅 Nuevo Comienzo",
     "oracle.bonusRoll.2.message.1": "Las estrellas se alinean para un nuevo inicio. ¡La Doble Suerte te acompaña hoy!",
@@ -7497,6 +7506,9 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.variations.silver": "Mystisches Silber",
     "oracle.bonusRoll.variations.cosmic": "Kosmisches Violett",
     "oracle.bonusRoll.adError": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+    "oracle.bonusRoll.adLongWarning": "Diese Werbung ist ein bisschen lang…",  
+    "oracle.bonusRoll.pleaseWaitUntilEnd": "Bitte warte bis zum Ende",  
+    "oracle.bonusRoll.doNotCloseApp": "Schließe die App nicht",  
 
     "oracle.bonusRoll.2.title.1": "🌅 Neuer Anfang",
     "oracle.bonusRoll.2.message.1": "Die Sterne stehen für einen Neuanfang günstig. Das doppelte Glück begleitet dich heute!",
@@ -9410,6 +9422,9 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.variations.silver": "Argento Mistico",
     "oracle.bonusRoll.variations.cosmic": "Violetto Cosmico",
     "oracle.bonusRoll.adError": "Si è verificato un errore. Per favore riprova.",
+    "oracle.bonusRoll.adLongWarning": "Questa pubblicità è un po’ lunga…",  
+    "oracle.bonusRoll.pleaseWaitUntilEnd": "Per favore attendi fino alla fine",  
+    "oracle.bonusRoll.doNotCloseApp": "Non chiudere l’applicazione",  
 
     "oracle.bonusRoll.2.title.1": "🌅 Nuovo Inizio",
     "oracle.bonusRoll.2.message.1": "Le stelle si allineano per un nuovo inizio. La doppia fortuna ti accompagna oggi!",
