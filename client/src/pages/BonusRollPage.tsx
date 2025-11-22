@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import MysticalButton from '@/components/MysticalButton';
 import BonusRoll from '@/components/BonusRoll';
 import { UserSession } from '@shared/schema';
@@ -11,7 +11,6 @@ interface BonusRollPageProps {
   onSaveReading?: (reading: any) => void; 
 }
 
-// ✅ Fonction pour choisir aléatoirement une variation parmi 3
 const getRandomVariation = () => {
   const variations = ['1', '2', '3'];
   const choice = variations[Math.floor(Math.random() * variations.length)];
@@ -19,10 +18,9 @@ const getRandomVariation = () => {
   return choice;
 };
 
-// 🎨 STYLES PAR VARIATION - AVEC TRADUCTIONS
 const getVariationStyles = (variation: string | null, t: any) => {
   switch (variation) {
-    case '1': // 👑 DORÉ ROYAL
+    case '1':
       return {
         name: t('oracle.bonusRoll.variations.golden') || 'Doré Royal',
         emoji: '👑',
@@ -38,8 +36,7 @@ const getVariationStyles = (variation: string | null, t: any) => {
         button: 'from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500',
         buttonShadow: 'shadow-[0_0_30px_rgba(251,191,36,0.6)]'
       };
-
-    case '2': // 🌙 ARGENT MYSTIQUE
+    case '2':
       return {
         name: t('oracle.bonusRoll.variations.silver') || 'Argent Mystique',
         emoji: '🌙',
@@ -55,8 +52,7 @@ const getVariationStyles = (variation: string | null, t: any) => {
         button: 'from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500',
         buttonShadow: 'shadow-[0_0_30px_rgba(34,211,238,0.6)]'
       };
-
-    case '3': // 🔮 VIOLET COSMIQUE
+    case '3':
       return {
         name: t('oracle.bonusRoll.variations.cosmic') || 'Violet Cosmique',
         emoji: '🔮',
@@ -72,7 +68,6 @@ const getVariationStyles = (variation: string | null, t: any) => {
         button: 'from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500',
         buttonShadow: 'shadow-[0_0_30px_rgba(168,85,247,0.6)]'
       };
-
     default:
       return {
         name: t('oracle.bonusRoll.variations.golden') || 'Doré Royal',
@@ -97,64 +92,58 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   const [isComplete, setIsComplete] = useState(false);
   const [showDice, setShowDice] = useState(false);
   const [isLoadingAd, setIsLoadingAd] = useState(false);
-  const [adTimeout, setAdTimeout] = useState(false);
+  const [showLongAdMessage, setShowLongAdMessage] = useState(false);
   const [variation, setVariation] = useState<string | null>(null);
 
   const handleStartRoll = async () => {
     setIsLoadingAd(true);
-    setAdTimeout(false);
+    setShowLongAdMessage(false);
 
-    // ✅ CHOISIR LA VARIATION DÈS LE DÉBUT
     const chosenVariation = getRandomVariation();
     setVariation(chosenVariation);
-    console.log('🎯 [BONUS ROLL] Démarrage - Variation choisie:', chosenVariation);
+    console.log('🎯 [BONUS ROLL] Démarrage - Variation:', chosenVariation);
 
-    // ✅ Timeout visuel pour l'utilisateur (60 secondes)
-const userTimeoutId = setTimeout(() => {
-  console.log('⏰ [BONUS ROLL] Message d\'attente affiché (pub longue)');
-  setAdTimeout(true);
-}, 60000); // 60 secondes au lieu de 90
+    // ✅ Message visuel après 45s (PAS un timeout de blocage, juste un message)
+    const messageTimeoutId = setTimeout(() => {
+      console.log('💬 [BONUS ROLL] Affichage message "pub longue"');
+      setShowLongAdMessage(true);
+    }, 45000); // ✅ 45 secondes - Juste pour info utilisateur
 
     try {
       const rewardGranted = await showRewardedAd('bonus_roll_start');
 
-      // ✅ Nettoyer le timeout
-      clearTimeout(userTimeoutId);
+      clearTimeout(messageTimeoutId);
       setIsLoadingAd(false);
-      setAdTimeout(false);
+      setShowLongAdMessage(false);
 
-      console.log(`🎁 [BONUS ROLL] Résultat final: ${rewardGranted ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'}`);
+      console.log(`🎁 [BONUS ROLL] Résultat: ${rewardGranted ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'}`);
 
       if (rewardGranted) {
-        console.log('✅ [BONUS ROLL] Pub complétée → Déblocage du tirage');
+        console.log('✅ [BONUS ROLL] Pub complétée → Déblocage');
         setShowDice(true);
       } else {
-        console.log('❌ [BONUS ROLL] Pub non complétée → Pas de déblocage');
-        alert(t('oracle.bonusRoll.adNotCompleted') || 'La publicité n\'a pas pu être complétée. Réessayez.');
+        console.log('❌ [BONUS ROLL] Pub non complétée');
+        alert(t('oracle.bonusRoll.adNotCompleted') || 'Veuillez regarder la publicité jusqu\'à la fin.');
       }
     } catch (error) {
-      console.error('❌ [BONUS ROLL] Erreur pub récompensée:', error);
-      clearTimeout(userTimeoutId);
+      console.error('❌ [BONUS ROLL] Erreur:', error);
+      clearTimeout(messageTimeoutId);
       setIsLoadingAd(false);
-      setAdTimeout(false);
-      alert(t('oracle.bonusRoll.adError') || 'Une erreur est survenue. Veuillez réessayer.');
+      setShowLongAdMessage(false);
+      alert(t('oracle.bonusRoll.adError') || 'Une erreur est survenue. Réessayez.');
     }
   };
 
   const handleComplete = (result: { total: number; dice: [number, number]; interpretation: string }) => {
     setIsComplete(true);
     console.log('✅ Tirage bonus complété:', result);
-    console.log(`🎲 Résultat total: ${result.total} - Variation: ${variation}`);
-    console.log(`📖 Interprétation: "${result.interpretation}"`);
   };
 
   const styles = getVariationStyles(variation, t);
 
-  // ✅ Écran de démarrage
   if (!showDice && !isLoadingAd) {
     return (
       <div className="main-content w-full min-h-screen flex flex-col items-center justify-center p-4 pb-24 relative overflow-x-hidden overflow-y-auto">
-        {/* Fond animé */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033]">
           <div className="absolute inset-0 opacity-20">
             {[...Array(30)].map((_, i) => (
@@ -174,9 +163,7 @@ const userTimeoutId = setTimeout(() => {
           </div>
         </div>
 
-        {/* Contenu */}
         <div className="text-center relative z-10 px-3 w-full max-w-md">
-          {/* Badge BONUS */}
           <div className="inline-block mb-4 sm:mb-6">
             <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-wide shadow-lg animate-pulse max-w-[90vw]">
               <span className="whitespace-nowrap overflow-hidden text-ellipsis block">
@@ -185,7 +172,6 @@ const userTimeoutId = setTimeout(() => {
             </div>
           </div>
 
-          {/* Icône centrale */}
           <div className="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-4 sm:mb-6">
             <div className="absolute inset-0 bg-amber-500/30 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute inset-0 bg-gradient-to-br from-amber-500 via-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-3 sm:border-4 border-yellow-300 shadow-[0_0_40px_rgba(251,191,36,0.7)]">
@@ -203,24 +189,21 @@ const userTimeoutId = setTimeout(() => {
             </p>
           </div>
 
-          {/* Message d'instruction pour la pub */}
           <div className="mb-4 p-3 bg-amber-500/20 border border-amber-400/50 rounded-lg">
             <p className="text-amber-200 text-xs sm:text-sm leading-snug">
-              📺 {t('oracle.bonusRoll.adRequired') || 'Une courte publicité vous sera présentée pour débloquer ce tirage bonus gratuit.'}
+              📺 {t('oracle.bonusRoll.adRequired') || 'Une publicité vous sera présentée'}
             </p>
           </div>
 
-          {/* Bouton */}
           <MysticalButton 
             onClick={handleStartRoll}
             className="w-full py-2.5 sm:py-3 px-2 sm:px-3 text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 shadow-[0_0_30px_rgba(251,191,36,0.6)] transform hover:scale-105 transition-all min-h-[48px] sm:min-h-[52px] flex items-center justify-center"
           >
             <span className="text-center leading-tight break-words block max-w-full">
-               {t('oracle.bonusRoll.startButton') || 'Débloquer le Tirage Bonus'}
+              {t('oracle.bonusRoll.startButton') || 'Débloquer le Tirage Bonus'}
             </span>
           </MysticalButton>
 
-          {/* Bouton retour */}
           <button
             onClick={onBack}
             className="mt-3 sm:mt-4 text-purple-300 hover:text-purple-100 text-xs sm:text-sm transition-colors"
@@ -232,7 +215,6 @@ const userTimeoutId = setTimeout(() => {
     );
   }
 
-  // ✅ Loader pendant la pub - AMÉLIORÉ AVEC MESSAGE POUR PUBS LONGUES
   if (isLoadingAd) {
     return (
       <div className="main-content w-full min-h-screen flex flex-col items-center justify-center p-5 relative overflow-hidden">
@@ -264,26 +246,23 @@ const userTimeoutId = setTimeout(() => {
           </div>
 
           <p className="text-amber-300 text-xl font-bold font-serif mb-2 animate-pulse">
-            {t('oracle.bonusRoll.loadingAd') || 'Chargement de la publicité...'}
+            {t('oracle.bonusRoll.loadingAd') || 'Chargement...'}
           </p>
           <p className="text-amber-200 text-sm mt-3">
-            ⏳ {t('oracle.bonusRoll.pleaseWait') || 'Un instant s\'il vous plaît'}
+            ⏳ {t('oracle.bonusRoll.pleaseWait') || 'Un instant'}
           </p>
 
-          {/* ✅ Message additionnel pour pubs longues */}
-          {adTimeout && (
-  <div className="mt-6 p-4 bg-amber-500/20 border-2 border-amber-400/50 rounded-xl animate-pulse">
-    <p className="text-amber-200 text-base font-semibold mb-2">
-      ⏳ {t('oracle.bonusRoll.adLongWarning') || 'Cette publicité est un peu longue...'}
-    </p>
-    <p className="text-amber-300 text-sm">
-      {t('oracle.bonusRoll.pleaseWaitUntilEnd') || 'Merci de patienter jusqu\'à la fin'}
-    </p>
-    <p className="text-amber-400 text-xs mt-2 font-medium">
-      🚫 {t('oracle.bonusRoll.doNotCloseApp') || 'Ne fermez pas l\'application'}
-    </p>
-  </div>
-)}
+          {showLongAdMessage && (
+            <div className="mt-6 p-4 bg-amber-500/20 border-2 border-amber-400/50 rounded-xl">
+              <p className="text-amber-200 text-base font-semibold mb-2">
+                ⏳ {t('oracle.bonusRoll.adLongWarning') || 'Publicité en cours...'}
+              </p>
+              <p className="text-amber-300 text-sm">
+                {t('oracle.bonusRoll.pleaseWaitUntilEnd') || 'Merci de patienter'}
+              </p>
+            </div>
+          )}
+
           <div className="flex justify-center gap-2 mt-4">
             <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce"></span>
             <span className="w-3 h-3 bg-yellow-400 rounded-full animate-bounce" style={{animationDelay: '0.15s'}}></span>
@@ -294,10 +273,8 @@ const userTimeoutId = setTimeout(() => {
     );
   }
 
-  // ✅ Vue principale avec les dés - AVEC STYLES DYNAMIQUES
   return (
     <div className="main-content w-full min-h-screen flex flex-col p-2 sm:p-4 pt-14 sm:pt-16 pb-[140px] relative overflow-x-hidden overflow-y-auto">
-      {/* Fond amélioré avec particules de la variation */}
       <div className="fixed inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033] -z-10">
         <div className="absolute inset-0 opacity-10">
           {[...Array(30)].map((_, i) => (
@@ -317,7 +294,6 @@ const userTimeoutId = setTimeout(() => {
         </div>
       </div>
 
-      {/* Header compact avec styles de variation */}
       <div className="text-center mb-2 sm:mb-3 relative flex-shrink-0 px-2">
         <div className="inline-block mb-1.5 sm:mb-2">
           <div className={`bg-gradient-to-r ${styles.badge} ${styles.badgeText} px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[8px] sm:text-[9px] font-bold uppercase tracking-wide shadow-lg animate-pulse max-w-[85vw]`}>
@@ -330,10 +306,10 @@ const userTimeoutId = setTimeout(() => {
         <div className="flex justify-center mb-1.5 sm:mb-2">
           <div className="relative w-8 h-8 sm:w-10 sm:h-10">
             <div className={`absolute inset-0 ${styles.glow} rounded-full blur-xl animate-pulse`}></div>
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${styles.gradient} rounded-full flex items-center justify-center border-2 ${styles.border}`}
-                style={{ boxShadow: `0 0 20px ${styles.glowColor}` }}
-              >
+            <div
+              className={`absolute inset-0 bg-gradient-to-br ${styles.gradient} rounded-full flex items-center justify-center border-2 ${styles.border}`}
+              style={{ boxShadow: `0 0 20px ${styles.glowColor}` }}
+            >
               <span className="text-xl sm:text-2xl animate-bounce">🎲</span>
             </div>
           </div>
@@ -352,17 +328,12 @@ const userTimeoutId = setTimeout(() => {
         </div>
       </div>
 
-      {/* Composant des dés - AVEC VARIATION PASSÉE */}
       <div className="flex-1 flex items-center justify-center py-2 sm:py-3 min-h-0">
         <div className="w-full max-w-2xl px-1 sm:px-2">
           <div className="relative">
             <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
               <div
-                className={`bg-gradient-to-br ${styles.gradient}
-                            rounded-2xl 
-                            blur-2xl 
-                            opacity-20
-                            w-[130%] h-[130%]`}
+                className={`bg-gradient-to-br ${styles.gradient} rounded-2xl blur-2xl opacity-20 w-[130%] h-[130%]`}
               />
             </div>
 
@@ -372,14 +343,13 @@ const userTimeoutId = setTimeout(() => {
               onReset={() => {
                 const newVariation = getRandomVariation();
                 setVariation(newVariation);
-                console.log('🔄 Nouvelle variation choisie:', newVariation);
+                console.log('🔄 Nouvelle variation:', newVariation);
               }}
             />
           </div>
         </div>
       </div>
 
-      {/* Boutons navigation avec styles */}
       <div className="flex-shrink-0 pt-2 sm:pt-3 pb-2">
         <div className="flex gap-1.5 sm:gap-2 justify-center max-w-md mx-auto px-2">
           <MysticalButton 
