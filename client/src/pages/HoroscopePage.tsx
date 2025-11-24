@@ -39,6 +39,23 @@ const signMapping: Record<string, string> = {
   'Poissons': 'pisces'
 };
 
+// 🎲 Fonction pour générer un chiffre chance personnalisé
+const generatePersonalLuckyNumber = (userName: string, date: string, sign: string): string => {
+  // Créer une "seed" unique basée sur l'utilisateur + date + signe
+  const seed = `${userName}-${date}-${sign}`;
+
+  // Générer un hash à partir de la seed
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convertir en entier 32 bits
+  }
+
+  // Retourner un nombre entre 1 et 99
+  return String(Math.abs(hash % 99) + 1);
+};
+
 const createHoroscopeDataMapping = () => {
   const descriptions: Record<string, string[]> = {
     aries: [
@@ -108,7 +125,7 @@ const translateHoroscopeData = (
     luckyColor: translateColor(horoscope?.luckyColor),
     compatibility: translateCompatibility(horoscope?.compatibility),
     date: translateDate(sign),
-    luckyNumber: horoscope?.luckyNumber || '0', // ✅ Valeur par défaut
+    luckyNumber: horoscope?.luckyNumber || '0',
   };
 };
 
@@ -141,7 +158,6 @@ export default function HoroscopePage({
     ? signMapping[user.zodiacSign.name]
     : "aries";
 
-  // 🪄 Nouvelle logique de récupération avec timeout + gestion d'erreur détaillée
   const {
     data: horoscope,
     isLoading,
@@ -197,27 +213,34 @@ export default function HoroscopePage({
     if (horoscope && !hasSavedReading && onSaveReading) {
       const saveHoroscope = async () => {
         try {
+          // 🎲 Générer le chiffre personnalisé avant de sauvegarder
+          const personalLuckyNumber = generatePersonalLuckyNumber(
+            user.name, 
+            horoscope.currentDate, 
+            englishSign
+          );
+
           await onSaveReading({
             type: 'horoscope',
             answer: JSON.stringify({
               sign: englishSign,
               description: horoscope.description,
               mood: horoscope.mood,
-              luckyNumber: horoscope.luckyNumber,
+              luckyNumber: personalLuckyNumber, // ✅ Chiffre personnalisé
               luckyColor: horoscope.luckyColor,
               compatibility: horoscope.compatibility
             }),
             date: new Date()
           });
           setHasSavedReading(true);
-          console.log('✅ Horoscope saved → pub triggered via App.tsx');
+          console.log('✅ Horoscope saved with personal lucky number:', personalLuckyNumber);
         } catch (error) {
           console.error('❌ Erreur sauvegarde horoscope:', error);
         }
       };
       saveHoroscope();
     }
-  }, [horoscope, hasSavedReading, onSaveReading, englishSign]);
+  }, [horoscope, hasSavedReading, onSaveReading, englishSign, user.name]);
 
   useEffect(() => {
     if (horoscope) {
@@ -252,6 +275,13 @@ export default function HoroscopePage({
     const translatedHoroscope = translateHoroscopeData(horoscope, englishSign, t);
     const translatedZodiacSign = t(`zodiac.${englishSign}`);
 
+    // 🎲 Générer le chiffre chance personnalisé
+    const personalLuckyNumber = generatePersonalLuckyNumber(
+      user.name, 
+      horoscope.currentDate, 
+      englishSign
+    );
+
     const greeting = t("horoscope.greeting", {
       name: user.name,
       zodiacSign: translatedZodiacSign,
@@ -272,7 +302,7 @@ export default function HoroscopePage({
       {
         icon: "✨",
         title: t("horoscope.assets.title"),
-        content: `🎲 ${t("horoscope.assets.luckyNumber", { luckyNumber: translatedHoroscope.luckyNumber })}\n\n🎨 ${t("horoscope.assets.luckyColor", { luckyColor: translatedHoroscope.luckyColor })}`,
+        content: `🎲 ${t("horoscope.assets.luckyNumber", { luckyNumber: personalLuckyNumber })}\n\n🎨 ${t("horoscope.assets.luckyColor", { luckyColor: translatedHoroscope.luckyColor })}`,
       },
       {
         icon: "💕",

@@ -1265,13 +1265,13 @@ const translations: Record<Language, Record<string, string>> = {
     "horoscope.message.var1":
       "{genderText} {name}, en tant que {zodiacSign}, tu as cette belle énergie qui attire les bonnes choses. Fais confiance aux astres et à ton intuition aujourd'hui !",
     "horoscope.message.var2":
-      "{genderText} {name}, ton signe {zodiacSign} t'apporte une énergie positive aujourd'hui. Laisse-toi guider par les étoiles !",
+      "{genderText} {name}, l’énergie du {zodiacSign} t'apporte une influence positive aujourd'hui. Laisse-toi guider par les étoiles !",
     "horoscope.message.var3":
       "Cher {name}, les astres te sourient aujourd'hui. Profite de cette belle énergie cosmique qui t'entoure !",
     "horoscope.message.var4":
-      "{genderText} {name}, votre {zodiacSign} rayonne aujourd'hui. Que cette journée vous apporte joie et sérénité !",
+      "{genderText} {name}, ton signe astrologique rayonne aujourd'hui. Que cette journée t'apporte joie et sérénité !",
     "horoscope.message.var5":
-      "Les étoiles vous bénissent aujourd'hui, {name}. En tant que {zodiacSign}, vous êtes en parfaite harmonie avec l'univers !",
+      "Les étoiles te bénissent aujourd'hui, {name}. En tant que {zodiacSign}, tu es en parfaite harmonie avec l'univers !",
 
     // Variations pour la compatibilité
     "horoscope.compatibility.var1":
@@ -1624,15 +1624,15 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.tarot.template.advice.var2":
       "{genderText} {name}, en tant que {zodiacSign},",
     "interpretation.tarot.template.advice.var3":
-      "Écoute bien {name} : comme {zodiacSign},",
+      "Écoute bien {name} : avec ta nature de {zodiacSign},",
     "interpretation.tarot.template.advice.var4":
-      "Retiens ceci {name}, ton essence de {zodiacSign}",
+      "Retiens ceci {name}, ton énergie de {zodiacSign}",
     "interpretation.tarot.template.advice.var5":
       "{name}, les astres parlent à travers ta nature de {zodiacSign}.",
     "interpretation.tarot.template.advice.var6":
       "Souviens-toi, {name} : ton signe {zodiacSign} détient une part de vérité essentielle.",
     "interpretation.tarot.template.advice.var7":
-      "{genderText} {name}, ta destinée résonne avec l’énergie du {zodiacSign}.",
+      "{genderText} {name}, ta destinée s’éveille sous la lumière du {zodiacSign}.",
     "interpretation.tarot.template.advice.var8":
       "Sache-le {name}, en tant que {zodiacSign}, tu portes une lumière unique.",
 
@@ -1648,7 +1648,7 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.angels.template.message.var5":
       "{name}, les anges honorent ta lumière de {zodiacSign}.",
     "interpretation.angels.template.message.var6":
-      "Écoutez, {name} : Ton âme de {zodiacSign} reçoit un message divin.",
+      "Écoute, {name} : Ton âme de {zodiacSign} reçoit un message divin.",
     "interpretation.angels.template.message.var7":
       "Message céleste pour toi, {name}, en tant que {zodiacSign}, tu es guidé{genderSuffix}.",
     "interpretation.angels.template.message.var8":
@@ -3112,15 +3112,15 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Varied final messages
     "horoscope.message.var1":
-      "{genderText} {name}, as {zodiacSign}, you have this beautiful energy that attracts good things. Trust the stars and your intuition today!",
+      "{genderText} {name}, as a {zodiacSign}, you carry a beautiful energy that attracts good things. Trust the stars and your intuition today!",
     "horoscope.message.var2":
-      "{genderText} {name}, your {zodiacSign} sign brings you positive energy today. Let yourself be guided by the stars!",
+      "{genderText} {name}, the energy of {zodiacSign} brings you a positive influence today. Let the stars guide you!",
     "horoscope.message.var3":
-      "Dear {zodiacSign} {name}, the stars smile upon you today. Enjoy this beautiful cosmic energy that surrounds you!",
+      "Dear {name}, the stars are smiling upon you today. Enjoy the beautiful cosmic energy surrounding you!",
     "horoscope.message.var4":
-      "{genderText} {name}, your {zodiacSign} shines today. May this day bring you joy and serenity!",
+      "{genderText} {name}, your astrological sign shines brightly today. May this day bring you joy and serenity!",
     "horoscope.message.var5":
-      "The stars bless you today, {name}. As {zodiacSign}, you are in perfect harmony with the universe!",
+      "The stars bless you today, {name}. As a {zodiacSign}, you are in perfect harmony with the universe!",
 
     // Variations for compatibility
     "horoscope.compatibility.var1":
@@ -3469,21 +3469,21 @@ const translations: Record<Language, Record<string, string>> = {
 
     //Translation key variations
     "interpretation.tarot.template.advice.var1":
-      "My advice: {name}, with your {zodiacSign} nature,",
+      "My advice, {name}: with your {zodiacSign} nature,",
     "interpretation.tarot.template.advice.var2":
       "{genderText} {name}, as a {zodiacSign},",
     "interpretation.tarot.template.advice.var3":
-      "Listen well, {name}: as a {zodiacSign},",
+      "Listen closely, {name}: guided by your {zodiacSign} nature,",
     "interpretation.tarot.template.advice.var4":
-      "Remember this, {name}, your {zodiacSign} essence is powerful.",
+      "Remember this, {name}: your {zodiacSign} energy,",
     "interpretation.tarot.template.advice.var5":
       "{name}, the stars speak through your {zodiacSign} nature.",
     "interpretation.tarot.template.advice.var6":
       "Remember, {name}: your {zodiacSign} sign holds an essential truth.",
     "interpretation.tarot.template.advice.var7":
-      "{genderText} {name}, your destiny resonates with the energy of the {zodiacSign}.",
+      "{genderText} {name}, your destiny awakens under the light of {zodiacSign}.",
     "interpretation.tarot.template.advice.var8":
-      "Know this, {name}, as a {zodiacSign}, you carry a unique light.",
+      "Know this, {name}: as a {zodiacSign}, you carry a unique light.",
 
     // Templates for the final message
     "interpretation.angels.template.message.var1":
@@ -5034,15 +5034,15 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Mensajes finales variados
     "horoscope.message.var1":
-      "{genderText} {name}, como {zodiacSign}, tienes esta hermosa energía que atrae cosas buenas. ¡Confía en las estrellas y en tu intuición hoy!",
+      "{genderText} {name}, como {zodiacSign}, tienes esa hermosa energía que atrae cosas buenas. Confía en los astros y en tu intuición hoy.",
     "horoscope.message.var2":
-      "{genderText} {name}, tu signo {zodiacSign} te trae energía positiva hoy. ¡Déjate guiar por las estrellas!",
+      "{genderText} {name}, la energía de {zodiacSign} te aporta una influencia positiva hoy. ¡Déjate guiar por las estrellas!",
     "horoscope.message.var3":
-      "Querido/a {zodiacSign} {name}, las estrellas te sonríen hoy. ¡Disfruta de esta hermosa energía cósmica que te rodea!",
+      "Querido/a {name}, los astros te sonríen hoy. ¡Disfruta de esta hermosa energía cósmica que te rodea!",
     "horoscope.message.var4":
-      "{genderText} {name}, tu {zodiacSign} brilla hoy. ¡Que este día te traiga alegría y serenidad!",
+      "{genderText} {name}, tu signo astrológico brilla hoy. ¡Que este día te aporte alegría y serenidad!",
     "horoscope.message.var5":
-      "¡Las estrellas te bendicen hoy, {name}! Como {zodiacSign}, estás en perfecta armonía con el universo.",
+      "Los astros te bendicen hoy, {name}. Como {zodiacSign}, estás en perfecta armonía con el universo.",
 
     // Variaciones para la compatibilidad
     "horoscope.compatibility.var1":
@@ -5381,21 +5381,21 @@ const translations: Record<Language, Record<string, string>> = {
 
     //Variaciones de clave de traducción
     "interpretation.tarot.template.advice.var1":
-      "Mi consejo: {name}, con tu naturaleza de {zodiacSign},",
+      "Mi consejo, {name}: con tu naturaleza de {zodiacSign},",
     "interpretation.tarot.template.advice.var2":
       "{genderText} {name}, como {zodiacSign},",
     "interpretation.tarot.template.advice.var3":
-      "Escucha bien, {name}: como {zodiacSign},",
+      "Escucha bien, {name}: guiado por tu naturaleza de {zodiacSign},",
     "interpretation.tarot.template.advice.var4":
-      "Recuerda esto, {name}, tu esencia de {zodiacSign} es poderosa.",
+      "Recuerda esto, {name}: tu energía de {zodiacSign},",
     "interpretation.tarot.template.advice.var5":
       "{name}, los astros hablan a través de tu naturaleza de {zodiacSign}.",
     "interpretation.tarot.template.advice.var6":
-      "Recuerda, {name}: tu signo {zodiacSign} contiene una verdad esencial.",
+      "No lo olvides, {name}: tu signo {zodiacSign} guarda una verdad esencial.",
     "interpretation.tarot.template.advice.var7":
-      "{genderText} {name}, tu destino vibra con la energía del {zodiacSign}.",
+      "{genderText} {name}, tu destino despierta bajo la luz de {zodiacSign}.",
     "interpretation.tarot.template.advice.var8":
-      "Sabe esto, {name}, como {zodiacSign}, llevas una luz única.",
+      "Sábelo, {name}: como {zodiacSign}, llevas una luz única.",
 
     // Plantillas para el mensaje final
     "interpretation.angels.template.message.var1":
@@ -6936,15 +6936,15 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Verschiedene Endnachrichten
     "horoscope.message.var1":
-      "{genderText} {name}, als {zodiacSign} hast du diese schöne Energie, die gute Dinge anzieht. Vertraue heute den Sternen und deiner Intuition!",
+      "{genderText} {name}, als {zodiacSign} trägst du eine schöne Energie in dir, die Gutes anzieht. Vertraue heute den Sternen und deiner Intuition!",
     "horoscope.message.var2":
-      "{genderText} {name}, dein {zodiacSign}-Sternzeichen bringt dir heute positive Energie. Lass dich von den Sternen führen!",
+      "{genderText} {name}, die Energie des {zodiacSign} schenkt dir heute positiven Einfluss. Lass dich von den Sternen leiten!",
     "horoscope.message.var3":
-      "Lieber {zodiacSign} {name}, die Sterne lächeln heute über dich. Genieße diese schöne kosmische Energie, die dich umgibt!",
+      "Lieber/Liebe {name}, die Sterne lächeln dir heute zu. Genieße die wundervolle kosmische Energie, die dich umgibt!",
     "horoscope.message.var4":
-      "{genderText} {name}, dein {zodiacSign} strahlt heute. Möge dieser Tag dir Freude und Gelassenheit bringen!",
+      "{genderText} {name}, dein astrologisches Zeichen strahlt heute. Möge dieser Tag dir Freude und Gelassenheit bringen!",
     "horoscope.message.var5":
-      "Die Sterne segnen dich heute, {name}. Als {zodiacSign} bist du in perfekter Harmonie mit dem Universum!",
+      "Die Sterne segnen dich heute, {name}. Als {zodiacSign} bist du in vollkommener Harmonie mit dem Universum!",
 
     // Variationen für die Kompatibilität
     "horoscope.compatibility.var1":
@@ -7293,21 +7293,21 @@ const translations: Record<Language, Record<string, string>> = {
 
     //Übersetzungsschlüssel-Variationen
     "interpretation.tarot.template.advice.var1":
-      "Mein Rat: {name}, mit deinem {zodiacSign}-Wesen,",
+      "Mein Rat, {name}: mit deiner {zodiacSign}-Natur,",
     "interpretation.tarot.template.advice.var2":
       "{genderText} {name}, als {zodiacSign},",
     "interpretation.tarot.template.advice.var3":
-      "Hör gut zu, {name}: als {zodiacSign},",
+      "Hör gut zu, {name}: geführt von deiner {zodiacSign}-Natur,",
     "interpretation.tarot.template.advice.var4":
-      "Merke dir, {name}, dein {zodiacSign}-Wesen ist deine Stärke.",
+      "Merke dir dies, {name}: deine {zodiacSign}-Energie,",
     "interpretation.tarot.template.advice.var5":
-      "{name}, die Sterne sprechen durch dein {zodiacSign}-Wesen.",
+      "{name}, die Sterne sprechen durch deine {zodiacSign}-Natur.",
     "interpretation.tarot.template.advice.var6":
-      "Denk daran, {name}: dein Sternzeichen {zodiacSign} birgt eine wichtige Wahrheit.",
+      "Denk daran, {name}: dein {zodiacSign}-Zeichen birgt eine wesentliche Wahrheit.",
     "interpretation.tarot.template.advice.var7":
-      "{genderText} {name}, dein Schicksal schwingt mit der Energie des {zodiacSign}.",
+      "{genderText} {name}, dein Schicksal erwacht im Licht des {zodiacSign}.",
     "interpretation.tarot.template.advice.var8":
-      "Wisse dies, {name}, als {zodiacSign} trägst du ein einzigartiges Licht in dir.",
+      "Wisse es, {name}: als {zodiacSign} trägst du ein einzigartiges Licht in dir.",
 
     // Vorlagen für die abschließende Botschaft
     "interpretation.angels.template.message.var1":
@@ -8864,13 +8864,13 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Messaggi finali vari
     "horoscope.message.var1":
-      "{genderText} {name}, come {zodiacSign}, hai questa bellissima energia che attira cose positive. Fidati delle stelle e della tua intuizione oggi!",
+      "{genderText} {name}, in quanto {zodiacSign}, possiedi quella splendida energia che attira le cose positive. Oggi, fidati delle stelle e della tua intuizione!",
     "horoscope.message.var2":
-      "{genderText} {name}, il tuo segno {zodiacSign} ti porta energia positiva oggi. Lasciati guidare dalle stelle!",
+      "{genderText} {name}, l’energia del {zodiacSign} ti porta oggi un’influenza positiva. Lasciati guidare dalle stelle!",
     "horoscope.message.var3":
-      "Caro/a {zodiacSign} {name}, le stelle ti sorridono oggi. Goditi questa splendida energia cosmica che ti circonda!",
+      "Caro/Cara {name}, le stelle ti sorridono oggi. Goditi questa splendida energia cosmica che ti circonda!",
     "horoscope.message.var4":
-      "{genderText} {name}, il tuo {zodiacSign} brilla oggi. Che questa giornata ti porti gioia e serenità!",
+      "{genderText} {name}, il tuo segno astrologico risplende oggi. Che questa giornata ti porti gioia e serenità!",
     "horoscope.message.var5":
       "Le stelle ti benedicono oggi, {name}. Come {zodiacSign}, sei in perfetta armonia con l’universo!",
 
@@ -9211,21 +9211,21 @@ const translations: Record<Language, Record<string, string>> = {
 
     //Chiave delle variazioni di traduzione
     "interpretation.tarot.template.advice.var1":
-      "Il mio consiglio: {name}, con la tua natura da {zodiacSign},",
+      "Il mio consiglio, {name}: con la tua natura da {zodiacSign},",
     "interpretation.tarot.template.advice.var2":
       "{genderText} {name}, in quanto {zodiacSign},",
     "interpretation.tarot.template.advice.var3":
-      "Ascolta bene, {name}: come {zodiacSign},",
+      "Ascolta bene, {name}: guidato dalla tua natura da {zodiacSign},",
     "interpretation.tarot.template.advice.var4":
-      "Ricorda questo, {name}, la tua essenza da {zodiacSign} è potente.",
+      "Ricorda questo, {name}: la tua energia {zodiacSign},",
     "interpretation.tarot.template.advice.var5":
-      "{name}, le stelle parlano attraverso la tua natura da {zodiacSign}.",
+      "{name}, gli astri parlano attraverso la tua natura da {zodiacSign}.",
     "interpretation.tarot.template.advice.var6":
-      "Ricorda, {name}: il tuo segno {zodiacSign} contiene una verità essenziale.",
+      "Ricorda, {name}: il tuo segno {zodiacSign} custodisce una verità essenziale.",
     "interpretation.tarot.template.advice.var7":
-      "{genderText} {name}, il tuo destino vibra con l’energia del {zodiacSign}.",
+      "{genderText} {name}, il tuo destino si risveglia sotto la luce di {zodiacSign}.",
     "interpretation.tarot.template.advice.var8":
-      "Sappi questo, {name}, in quanto {zodiacSign}, porti con te una luce unica.",
+      "Sappilo, {name}: come {zodiacSign}, porti con te una luce unica.",
 
     // Template per il messaggio finale
     "interpretation.angels.template.message.var1":
