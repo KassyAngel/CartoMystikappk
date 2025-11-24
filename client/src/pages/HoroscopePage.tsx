@@ -53,7 +53,7 @@ const generatePersonalLuckyNumber = (userName: string, date: string, sign: strin
   }
 
   // Retourner un nombre entre 1 et 99
-  return String(Math.abs(hash % 99) + 1);
+  return String(Math.abs(hash % 50) + 1);
 };
 
 const createHoroscopeDataMapping = () => {
