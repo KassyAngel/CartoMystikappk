@@ -22,6 +22,12 @@ interface HoroscopeData {
   luckyColor: string;
   compatibility: string;
   currentDate: string;
+  // ✅ NOUVELLES SECTIONS
+  love?: string;
+  work?: string;
+  finances?: string;
+  health?: string;
+  advice?: string;
 }
 
 const signMapping: Record<string, string> = {
@@ -41,26 +47,43 @@ const signMapping: Record<string, string> = {
 
 // 🎲 Fonction pour générer un chiffre chance personnalisé
 const generatePersonalLuckyNumber = (userName: string, date: string, sign: string): string => {
-  // Créer une "seed" unique basée sur l'utilisateur + date + signe
   const seed = `${userName}-${date}-${sign}`;
-
-  // Générer un hash à partir de la seed
   let hash = 0;
   for (let i = 0; i < seed.length; i++) {
     const char = seed.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convertir en entier 32 bits
+    hash = hash & hash;
   }
-
-  // Retourner un nombre entre 1 et 99
   return String(Math.abs(hash % 50) + 1);
+};
+
+// ✅ NOUVELLE : Fonction pour sélectionner une variation aléatoire
+const getRandomVariation = (sign: string, category: 'love' | 'work' | 'finances' | 'health' | 'advice', t: (key: string) => string): string => {
+  // Déterminer le nombre de variations disponibles pour chaque catégorie
+  const variationCounts = {
+    love: 8,      // 8 variations pour l'amour
+    work: 8,      // 8 variations pour le travail
+    finances: 8,  // 8 variations pour les finances
+    health: 8,    // 8 variations pour la santé
+    advice: 5     // 5 variations pour les conseils
+  };
+
+  const maxVariations = variationCounts[category];
+  const randomIndex = Math.floor(Math.random() * maxVariations);
+
+  const key = `horoscope.data.${category}.${sign}.${randomIndex}`;
+  const translation = t(key);
+
+  console.log(`🔮 ${category} - Sign: ${sign} - Index: ${randomIndex} - Key: ${key}`);
+
+  // Si la traduction n'existe pas, retourner un fallback
+  return translation !== key ? translation : t(`horoscope.data.${category}.fallback`);
 };
 
 const createHoroscopeDataMapping = () => {
   const descriptions: Record<string, string[]> = {
     aries: [
-      "Votre énergie débordante attire toutes les bonnes opportunités aujourd'hui. C'est le moment de foncer vers vos objectifs avec confiance.",
-      "Mars vous donne un courage extraordinaire pour surmonter tous les obstacles. Vos initiatives seront couronnées de succès.",
+      "Votre énergie débordante attire toutes les bonnes opportunités aujourd'hui.",
     ],
   };
   return { descriptions };
@@ -94,21 +117,18 @@ const translateHoroscopeData = (
 
   const translateMood = (frenchMood: string): string => {
     if (!frenchMood) return t('horoscope.data.moods.fallback') || 'Non disponible';
-
     const key = `horoscope.data.moods.${frenchMood}`;
     return t(key) !== key ? t(key) : frenchMood;
   };
 
   const translateColor = (frenchColor: string): string => {
     if (!frenchColor) return t('horoscope.data.colors.fallback') || 'Non disponible';
-
     const key = `horoscope.data.colors.${frenchColor}`;
     return t(key) !== key ? t(key) : frenchColor;
   };
 
   const translateCompatibility = (frenchCompatibility: string): string => {
     if (!frenchCompatibility) return t('horoscope.data.compatibility.fallback') || 'Non disponible';
-
     const key = `horoscope.data.compatibility.${frenchCompatibility}`;
     return t(key) !== key ? t(key) : frenchCompatibility;
   };
@@ -205,15 +225,10 @@ export default function HoroscopePage({
     enabled: !!user.zodiacSign,
   });
 
-  const handleRetry = async () => {
-    await refetch();
-  };
-
   useEffect(() => {
     if (horoscope && !hasSavedReading && onSaveReading) {
       const saveHoroscope = async () => {
         try {
-          // 🎲 Générer le chiffre personnalisé avant de sauvegarder
           const personalLuckyNumber = generatePersonalLuckyNumber(
             user.name, 
             horoscope.currentDate, 
@@ -226,9 +241,14 @@ export default function HoroscopePage({
               sign: englishSign,
               description: horoscope.description,
               mood: horoscope.mood,
-              luckyNumber: personalLuckyNumber, // ✅ Chiffre personnalisé
+              luckyNumber: personalLuckyNumber,
               luckyColor: horoscope.luckyColor,
-              compatibility: horoscope.compatibility
+              compatibility: horoscope.compatibility,
+              love: horoscope.love,
+              work: horoscope.work,
+              finances: horoscope.finances,
+              health: horoscope.health,
+              advice: horoscope.advice
             }),
             date: new Date()
           });
@@ -275,7 +295,6 @@ export default function HoroscopePage({
     const translatedHoroscope = translateHoroscopeData(horoscope, englishSign, t);
     const translatedZodiacSign = t(`zodiac.${englishSign}`);
 
-    // 🎲 Générer le chiffre chance personnalisé
     const personalLuckyNumber = generatePersonalLuckyNumber(
       user.name, 
       horoscope.currentDate, 
@@ -288,31 +307,55 @@ export default function HoroscopePage({
       zodiacSymbol: user.zodiacSign.symbol,
     });
 
+    // ✅ SECTIONS COMPLÈTES AVEC LES NOUVELLES CATÉGORIES
     const sections = [
       {
         icon: "🔮",
         title: t("horoscope.predictions.title"),
         content: t(`horoscope.data.descriptions.${englishSign}.0`),
       },
+            // ✅ NOUVELLE : Section Amour
+      {
+        icon: "💕",
+        title: t("horoscope.love.title"),
+        content: getRandomVariation(englishSign, 'love', t),
+      },
+      // ✅ NOUVELLE : Section Travail
+      {
+        icon: "💼",
+        title: t("horoscope.work.title"),
+        content: getRandomVariation(englishSign, 'work', t),
+      },
+      // ✅ NOUVELLE : Section Finances
+      {
+        icon: "💰",
+        title: t("horoscope.finances.title"),
+        content: getRandomVariation(englishSign, 'finances', t),
+      },
       {
         icon: "😊",
         title: t("horoscope.mood.title"),
         content: getRandomMoodMessage(t, translatedHoroscope.mood),
       },
-      {
+        {
         icon: "✨",
         title: t("horoscope.assets.title"),
         content: `🎲 ${t("horoscope.assets.luckyNumber", { luckyNumber: personalLuckyNumber })}\n\n🎨 ${t("horoscope.assets.luckyColor", { luckyColor: translatedHoroscope.luckyColor })}`,
       },
       {
-        icon: "💕",
+        icon: "💞",
         title: t("horoscope.compatibility.title"),
         content: getRandomCompatibilityMessage(t, translatedHoroscope.compatibility),
       },
+      // ✅ NOUVELLE : Conseil du jour
+      {
+        icon: "🌟",
+        title: t("horoscope.advice.title"),
+        content: getRandomVariation(englishSign, 'advice', t),
+      },
     ];
 
-    const finalMessage = getRandomFinalMessage(t, user, translatedZodiacSign);
-    return { sections, greeting, finalMessage };
+    return { sections, greeting, finalMessage: "" }; // ✅ Pas de message final
   };
 
   if (!user.zodiacSign) {
@@ -380,7 +423,7 @@ export default function HoroscopePage({
             <SummaryCard
               title={t("horoscope.predictions.title")}
               sections={sections}
-              finalMessage={finalMessage}
+              finalMessage="" 
               isVisible={showInterpretation}
               openFirst={false}
             />

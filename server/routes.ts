@@ -207,7 +207,7 @@
             "Votre santé semble robuste aujourd'hui. Cependant, évitez les excès, surtout côté alimentation."
           ],
           moods: ["Énergique", "Confiant", "Déterminé", "Passionné", "Optimiste", "Dynamique"],
-          colors: ["Rouge", "Orange vif", "Bordeaux", "Corail", "Écarlate", "Vermillon"],
+          colors: ["Rouge", "Orange vif", "Bordeaux", "Corail", "Granat", "Rouge Royal"],
           compatibility: ["Lion, Sagittaire", "Gémeaux, Verseau", "Balance, Lion", "Verseau, Gémeaux", "Sagittaire, Balance", "Lion, Verseau"]
         },
         taurus: {
@@ -220,7 +220,7 @@
             "Ne négligez pas votre bien-être physique, prenez le temps de vous détendre et de faire de l'exercice."
           ],
           moods: ["Paisible", "Sensuel", "Stable", "Généreux", "Patient", "Harmonieux"],
-          colors: ["Vert émeraude", "Rose tendre", "Beige doré", "Terre de Sienne", "Vert olive", "Rose poudré"],
+          colors: ["Vert émeraude", "Rose", "Beige", "Marron", "Vert olive", "Rose poudré"],
           compatibility: ["Vierge, Capricorne", "Cancer, Poissons", "Scorpion, Vierge", "Capricorne, Cancer", "Poissons, Scorpion", "Vierge, Poissons"]
         },
         gemini: {
@@ -233,7 +233,7 @@
             "Votre état d'esprit créatif vous pousse à explorer de nouveaux moyens pour améliorer votre santé mentale et physique."
           ],
           moods: ["Curieux", "Communicatif", "Vif", "Sociable", "Adaptable", "Créatif"],
-          colors: ["Jaune citron", "Bleu ciel", "Argent", "Lavande", "Jaune d'or", "Bleu pervenche"],
+          colors: ["Jaune", "Bleu ciel", "Argent", "Lavande", "Doré", "Bleu pervenche"],
           compatibility: ["Balance, Verseau", "Bélier, Lion", "Sagittaire, Balance", "Verseau, Bélier", "Lion, Sagittaire", "Balance, Bélier"]
         },
         cancer: {
@@ -246,7 +246,7 @@
             "Votre bienveillance naturelle attire les confidences et renforce vos amitiés. Vous êtes un refuge pour ceux qui vous entourent."
           ],
           moods: ["Émotionnel", "Protecteur", "Intuitif", "Tendre", "Maternel", "Empathique"],
-          colors: ["Blanc nacré", "Bleu océan", "Argent lunaire", "Rose pâle", "Perle", "Bleu laiteux"],
+          colors: ["Blanc", "Bleu océan", "Argent", "Rose pâle", "Blanc nacré", "Bleu"],
           compatibility: ["Scorpion, Poissons", "Taureau, Vierge", "Capricorne, Scorpion", "Poissons, Taureau", "Vierge, Capricorne", "Scorpion, Vierge"]
         },
         leo: {
@@ -259,7 +259,7 @@
             "Votre générosité et votre chaleur humaine vous valent l'admiration de tous. Vous inspirez et motivez ceux qui vous entourent."
           ],
           moods: ["Rayonnant", "Généreux", "Créatif", "Majestueux", "Charismatique", "Théâtral"],
-          colors: ["Or", "Orange solaire", "Jaune impérial", "Rouge royal", "Doré", "Ambre"],
+          colors: ["Or", "Orange", "Jaune", "Rouge royal", "Doré", "Ambre"],
           compatibility: ["Bélier, Sagittaire", "Gémeaux, Balance", "Verseau, Bélier", "Sagittaire, Gémeaux", "Balance, Verseau", "Bélier, Balance"]
         },
         virgo: {
@@ -272,7 +272,7 @@
             "Votre serviabilité et votre dévouement touchent profondément votre entourage. Vos conseils sont précieux et recherchés."
           ],
           moods: ["Méthodique", "Serviable", "Précis", "Sage", "Analytique", "Perfectionniste"],
-          colors: ["Beige naturel", "Vert olive", "Gris perle", "Bleu marine", "Taupe", "Kaki"],
+          colors: ["Beige", "Vert olive", "Gris", "Bleu marine", "Taupe", "Kaki"],
           compatibility: ["Taureau, Capricorne", "Cancer, Scorpion", "Poissons, Taureau", "Capricorne, Cancer", "Scorpion, Poissons", "Taureau, Scorpion"]
         },
         libra: {
@@ -285,7 +285,7 @@
             "L'équilibre que vous recherchez se manifeste dans tous les domaines de votre vie. Savourez cette période de sérénité."
           ],
           moods: ["Harmonieux", "Raffiné", "Diplomatique", "Équilibré", "Artistique", "Charmeur"],
-          colors: ["Rose pastel", "Bleu ciel", "Vert menthe", "Ivoire", "Lilas", "Bleu poudré"],
+          colors: ["Rose pastel", "Bleu ciel", "Vert menthe", "Ivoire", "Lilas", "Rose"], 
           compatibility: ["Gémeaux, Verseau", "Lion, Sagittaire", "Bélier, Gémeaux", "Verseau, Lion", "Sagittaire, Bélier", "Gémeaux, Lion"]
         },
         scorpio: {
@@ -298,7 +298,7 @@
             "Votre intuition perçante révèle des vérités cachées. Utilisez cette clairvoyance pour prendre les bonnes décisions."
           ],
           moods: ["Intense", "Mystérieux", "Passionné", "Transformateur", "Magnétique", "Profond"],
-          colors: ["Rouge bordeaux", "Noir profond", "Pourpre", "Grenat", "Cramoisi", "Brun acajou"],
+          colors: ["Bordeaux", "Noir", "Pourpre", "Grenat", "Rouge", "Marron"],
           compatibility: ["Cancer, Poissons", "Vierge, Capricorne", "Taureau, Cancer", "Poissons, Vierge", "Capricorne, Taureau", "Cancer, Vierge"]
         },
         sagittarius: {
@@ -311,7 +311,7 @@
             "Votre soif d'aventure vous mène vers des expériences enrichissantes. Osez sortir de votre zone de confort."
           ],
           moods: ["Aventurier", "Optimiste", "Philosophe", "Libre", "Explorateur", "Enthousiaste"],
-          colors: ["Bleu turquoise", "Violet royal", "Orange mandarine", "Vert forêt", "Indigo", "Cobalt"],
+          colors: ["Bleu turquoise", "Violet", "Orange mandarine", "Vert forêt", "Indigo", "Cobalt"],
           compatibility: ["Bélier, Lion", "Balance, Verseau", "Gémeaux, Bélier", "Lion, Balance", "Verseau, Gémeaux", "Bélier, Verseau"]
         },
         capricorn: {
@@ -324,7 +324,7 @@
             "Votre détermination inébranlable vous mène vers vos objectifs les plus ambitieux. Rien ne peut arrêter votre ascension."
           ],
           moods: ["Ambitieux", "Responsable", "Persévérant", "Sage", "Discipliné", "Pragmatique"],
-          colors: ["Gris anthracite", "Marron chocolat", "Vert foncé", "Bleu nuit", "Sépia", "Vert sapin"],
+          colors: ["Gris anthracite", "Marron", "Vert foncé", "Bleu nuit", "Sépia", "Violet"],
           compatibility: ["Taureau, Vierge", "Scorpion, Poissons", "Cancer, Taureau", "Vierge, Scorpion", "Poissons, Cancer", "Taureau, Poissons"]
         },
         aquarius: {
@@ -337,7 +337,7 @@
             "Votre indépendance d'esprit vous libère des conventions limitantes. Suivez votre voie unique avec confiance."
           ],
           moods: ["Visionnaire", "Indépendant", "Humaniste", "Original", "Innovateur", "Altruiste"],
-          colors: ["Bleu électrique", "Argent métallique", "Turquoise", "Violet", "Néon", "Cyan"],
+          colors: ["Bleu ciel", "Argent", "Turquoise", "Violet", "Jaune", "Cyan"],
           compatibility: ["Gémeaux, Balance", "Sagittaire, Bélier", "Lion, Gémeaux", "Balance, Sagittaire", "Bélier, Lion", "Gémeaux, Sagittaire"]
         },
         pisces: {
@@ -350,7 +350,7 @@
             "Votre intuition vous guide vers des révélations spirituelles importantes. Faites confiance à votre sagesse intérieure."
           ],
           moods: ["Intuitif", "Compassionnel", "Artistique", "Spirituel", "Rêveur", "Sensible"],
-          colors: ["Bleu océan", "Vert aqua", "Violet mystique", "Blanc perle", "Bleu lagon", "Vert d'eau"],
+          colors: ["Bleu océan", "Vert menthe", "Violet mystique", "Blanc", "Bleu lagon", "Bleu nuit"],
           compatibility: ["Cancer, Scorpion", "Capricorne, Taureau", "Vierge, Cancer", "Scorpion, Capricorne", "Taureau, Vierge", "Cancer, Capricorne"]
         }
       };

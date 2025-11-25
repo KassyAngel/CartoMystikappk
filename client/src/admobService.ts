@@ -13,7 +13,7 @@ const isNative = Capacitor.isNativePlatform();
 const platform = Capacitor.getPlatform();
 
 // 🎯 INTERRUPTEUR : Changez cette valeur pour passer de TEST à PRODUCTION
-const IS_PRODUCTION = false; // ⚠️ Mettre à true avant la soumission finale
+const IS_PRODUCTION = true; // ⚠️ Mettre à true avant la soumission finale
 
 console.log('🔍 Détection plateforme AdMob:', {
   isNative,

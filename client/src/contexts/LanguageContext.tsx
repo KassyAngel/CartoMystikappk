@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
-import { Language, translations } from '@/data/translations';
+import { Language } from '@/data/translations'; // Garde le type unique
+import { translations as generalTranslations } from '@/data/translations';
+import { translations as horoscopeTranslations } from '@/data/translationHoroscope';
 import { saveLanguage, getSavedLanguage } from '@/lib/userStorage';
 import { scheduleNotificationWithLanguage } from '@/components/NotificationPermissionModal';
 
@@ -41,29 +43,30 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     saveLanguage(lang);
   }, [language]);
 
-  // Fonction de traduction optimisée avec useCallback
+  // Fonction de traduction optimisée
   const t = useCallback((key: string, params?: Record<string, any>) => {
-    let translation = translations[language][key] || key;
+    // Priorité : horoscopeTranslations puis generalTranslations
+    let translation =
+      horoscopeTranslations[language][key] ||
+      generalTranslations[language][key] ||
+      key;
+
     if (params) {
       Object.entries(params).forEach(([paramKey, paramValue]) => {
-        const regex = new RegExp('\\{' + paramKey + '\\}', 'g');
+        const regex = new RegExp(`\\{${paramKey}\\}`, 'g');
         translation = translation.replace(regex, String(paramValue || ''));
       });
     }
     return translation;
   }, [language]);
 
-  // ✅ NOUVEAU : Recréer les notifications quand la langue change
+  // Recréer les notifications si la langue change
   useEffect(() => {
-    // Ne rien faire si la langue n'est pas encore chargée
     if (!isLanguageLoaded) return;
 
     const permission = localStorage.getItem('notificationPermission');
-
     if (permission === 'granted') {
       const savedLanguage = localStorage.getItem('notificationLanguage');
-
-      // Si la langue a changé, recréer les notifications
       if (savedLanguage !== language) {
         console.log('🔄 Langue changée, mise à jour des notifications:', language);
         scheduleNotificationWithLanguage(t);
@@ -80,9 +83,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
 
 export function useLanguage() {
   const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
+  if (!context) throw new Error('useLanguage must be used within a LanguageProvider');
   return context;
 }
 

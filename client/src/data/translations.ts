@@ -903,363 +903,260 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Horoscope Data Translations - Descriptions
     "horoscope.data.descriptions.aries.0":
-      "Votre énergie débordante vous pousse à agir avec audace aujourd’hui. Profitez-en pour initier de nouveaux projets.",
+      "Ton énergie est forte aujourd’hui. Profite-en pour entreprendre quelque chose de nouveau ou relever un défi personnel.",
     "horoscope.data.descriptions.aries.1":
-      "Une rencontre inattendue pourrait bouleverser vos émotions. Restez attentif, cette personne pourrait marquer votre journée.",
+      "Une rencontre inattendue pourrait éveiller tes émotions. Sois attentif, cette personne pourrait marquer ta journée.",
     "horoscope.data.descriptions.aries.2":
-      "Votre enthousiasme communicatif attire l’attention de votre entourage. Faites preuve de patience pour éviter les malentendus.",
+      "Ton enthousiasme attire l’attention de ton entourage. Reste patient pour éviter les malentendus.",
     "horoscope.data.descriptions.aries.3":
-      "Au travail, une opportunité pourrait se présenter. Analysez-la soigneusement avant de prendre une décision.",
+      "Une surprise ou une opportunité pourrait se présenter. Observe bien avant de te lancer.",
     "horoscope.data.descriptions.aries.4":
-      "Attention aux tensions dans vos relations proches. Gardez votre calme et privilégiez le dialogue pour éviter les conflits.",
+      "Fais attention aux tensions dans tes relations proches. Garde ton calme et privilégie le dialogue.",
+    "horoscope.data.descriptions.aries.5":
+      "Aujourd’hui, tu pourrais avoir une idée originale qui t’apportera satisfaction si tu la concrétises.",
     "horoscope.data.descriptions.aries.6":
-      "Votre spontanéité est un atout, mais évitez les excès ou les décisions impulsives qui pourraient vous créer des problèmes.",
+      "Ta spontanéité est un atout, mais évite les excès ou les décisions impulsives qui pourraient créer des problèmes.",
     "horoscope.data.descriptions.aries.7":
-      "Une idée originale pourrait vous apporter succès et reconnaissance. N’hésitez pas à la partager et à la concrétiser.",
+      "Une information importante pourrait se révéler. Reste attentif et utilise-la à ton avantage.",
     "horoscope.data.descriptions.aries.8":
-      "Une vérité cachée pourrait se révéler. Restez attentif et utilisez cette information à bon escient.",
+      "Tes efforts dans ce que tu entreprends commencent à porter leurs fruits. C’est le moment de profiter des résultats.",
     "horoscope.data.descriptions.aries.9":
-      "Vos efforts constants commencent à porter leurs fruits. C’est le moment de récolter les résultats de votre travail.",
+      "Ta confiance naturelle attire les autres. Profite-en pour renforcer tes liens avec ceux que tu apprécies.",
     "horoscope.data.descriptions.aries.10":
-      "Votre assurance naturelle attire la confiance des autres. Profitez-en pour consolider vos relations personnelles et professionnelles.",
+      "Une petite surprise agréable pourrait illuminer ta journée, comme un message, une rencontre ou un événement positif.",
     "horoscope.data.descriptions.aries.11":
-      "Une surprise agréable pourrait illuminer votre journée, que ce soit une rencontre, un message ou un événement positif.",
+      "Tes liens familiaux ou amicaux se renforcent. Profite de ces moments pour créer de beaux souvenirs.",
     "horoscope.data.descriptions.aries.12":
-      "Vos liens amicaux ou familiaux sont renforcés. Profitez de ces moments pour créer des souvenirs précieux.",
+      "Ton intuition est particulièrement fine aujourd’hui. Suis tes ressentis pour prendre les bonnes décisions.",
     "horoscope.data.descriptions.aries.13":
-      "Votre intuition est particulièrement fine aujourd’hui. Suivez vos ressentis pour prendre de bonnes décisions.",
+      "Une énergie positive t’accompagne toute la journée. Avance avec confiance et réalise tes projets personnels.",
     "horoscope.data.descriptions.aries.14":
-      "Une énergie positive vous accompagne toute la journée. Profitez-en pour avancer avec confiance et réaliser vos ambitions.",
+      "Prends soin de ton énergie et concentre-toi sur ce qui compte vraiment. Cela te donnera de bons résultats pour la journée.",
     "horoscope.data.descriptions.taurus.0":
-      "La stabilité que vous recherchez se manifeste enfin dans votre vie. Profitez de cette période de sérénité pour savourer les plaisirs simples.",
+      "Ta stabilité intérieure se renforce aujourd'hui. Profite de ce calme pour savourer les plaisirs simples.",
     "horoscope.data.descriptions.taurus.1":
-      "Une rencontre prometteuse pourrait se produire aujourd'hui, apportant une belle complicité et des émotions positives à partager.",
+      "Une surprise inattendue pourrait égayer ta journée et t'apporter des moments agréables à vivre.",
     "horoscope.data.descriptions.taurus.2":
-      "Vénus vous apporte douceur et harmonie dans vos relations. C'est un jour parfait pour cultiver l'amour et l'amitié.",
+      "Tu te sens en harmonie avec toi-même, ce qui t'aide à garder ton équilibre tout au long de la journée.",
     "horoscope.data.descriptions.taurus.3":
-      "Votre patience et votre persévérance portent leurs fruits. Les résultats de vos efforts passés se concrétisent aujourd'hui.",
+      "Ta patience porte ses fruits aujourd'hui. Tu verras les résultats de tes efforts récents se manifester.",
     "horoscope.data.descriptions.taurus.4":
-      "Les relations familiales sont particulièrement harmonieuses. Profitez de ce moment pour renforcer les liens avec ceux qui vous sont chers.",
+      "Prends le temps d'apprécier les petites choses autour de toi, elles contribuent à ton bien-être et à ta sérénité.",
     "horoscope.data.descriptions.taurus.5":
-      "Ne négligez pas votre bien-être physique, prenez le temps de vous détendre et de faire de l'exercice.",
+      "Veille à ton corps et à ton énergie : une promenade ou un moment de détente t'aidera à te ressourcer.",
     "horoscope.data.descriptions.taurus.6":
-      "Vos talents artistiques sont mis en lumière aujourd'hui, et vous aurez l'occasion de les exprimer pleinement dans vos projets personnels ou professionnels.",
+      "Une idée ou un projet créatif pourrait te donner de la satisfaction si tu t'y consacres aujourd'hui.",
     "horoscope.data.descriptions.taurus.7":
-      "C'est le moment idéal pour concrétiser vos projets à long terme, en mettant en place les étapes nécessaires pour atteindre vos objectifs avec succès.",
+      "C'est un bon moment pour planifier des objectifs à long terme, en prenant le temps de poser les étapes nécessaires.",
     "horoscope.data.descriptions.taurus.8":
-      "Votre sens pratique et votre discernement vous permettent d'éviter de nombreux pièges et de prendre des décisions judicieuses dans vos affaires quotidiennes.",
+      "Ton sens pratique t'aide à éviter les pièges et à prendre des décisions avisées pour ta journée.",
     "horoscope.data.descriptions.taurus.9":
-      "Une période de prospérité matérielle s'annonce, offrant des opportunités de gains financiers et de stabilité économique si vous restez attentif.",
+      "Une période positive se profile, avec des occasions favorables à saisir si tu restes attentif.",
     "horoscope.data.descriptions.taurus.10":
-      "Votre fidélité et votre loyauté en amitié sont reconnues et appréciées par votre entourage, créant des liens encore plus forts et harmonieux.",
+      "Ta fiabilité et ta constance sont reconnues par ton entourage, ce qui renforce les liens et la confiance mutuelle.",
     "horoscope.data.descriptions.taurus.11":
-      "Les plaisirs simples de la vie vous apportent une grande satisfaction et contribuent à votre bien-être émotionnel et mental aujourd'hui.",
+      "Les petits plaisirs simples d'aujourd'hui t'apportent de la joie et participent à ton bien-être général.",
     "horoscope.data.descriptions.taurus.12":
-      "Votre stabilité émotionnelle rassure votre entourage, et vous êtes perçu comme un point de référence fiable et apaisant pour ceux qui vous entourent.",
+      "Ta sérénité influence positivement ceux qui t'entourent, et tu deviens un point de repère rassurant pour eux.",
     "horoscope.data.descriptions.taurus.13":
-      "C'est un jour idéal pour les activités en pleine nature, qui vous permettront de vous ressourcer, de prendre du recul et de retrouver votre énergie.",
+      "Profite de moments en plein air pour te ressourcer et retrouver ton énergie et ta clarté intérieure.",
     "horoscope.data.descriptions.taurus.14":
-      "Vos efforts passés commencent enfin à être récompensés, et vous constaterez que votre persévérance porte ses fruits dans vos projets et vos relations.",
+      "Tes efforts passés commencent à porter leurs fruits, et tu pourras en constater les effets positifs aujourd'hui.",
     "horoscope.data.descriptions.gemini.0":
-      "Votre curiosité naturelle vous mène vers de merveilleuses découvertes. Restez ouvert aux nouvelles rencontres et aux idées innovantes.",
+      "Ta curiosité naturelle te mène vers de belles découvertes. Reste ouvert aux nouvelles idées et aux expériences inattendues.",
     "horoscope.data.descriptions.gemini.1":
-      "Des opportunités professionnelles se présentent. Osez proposer vos idées innovantes, elles seront bien accueillies.",
+      "Des occasions intéressantes peuvent se présenter aujourd'hui. N'hésite pas à exprimer tes idées, elles pourraient surprendre agréablement.",
     "horoscope.data.descriptions.gemini.2":
-      "Mercure stimule votre intelligence et votre créativité. C'est le jour idéal pour communiquer, écrire ou apprendre quelque chose de nouveau.",
+      "Mercure stimule ton esprit et ta créativité. C'est un bon jour pour apprendre quelque chose de nouveau ou expérimenter une idée.",
     "horoscope.data.descriptions.gemini.3":
-      "Votre capacité à vous adapter est remarquable aujourd’hui, profitez-en pour explorer de nouvelles opportunités qui s’offrent à vous.",
+      "Ta capacité à t'adapter est un atout aujourd'hui, profite-en pour explorer de nouvelles possibilités qui s'offrent à toi.",
     "horoscope.data.descriptions.gemini.4":
-      "Soyez attentif à votre entourage, certaines personnes pourraient avoir des informations cruciales à partager avec vous.",
+      "Sois attentif à ton entourage, certaines personnes pourraient partager des informations utiles ou inspirantes.",
     "horoscope.data.descriptions.gemini.5":
-      "Aujourd'hui, votre esprit est vif et curieux, mais attention aux malentendus ou aux petites disputes qui pourraient surgir autour de vous.",
+      "Ton esprit est vif et curieux, mais fais attention aux malentendus ou aux petites disputes qui pourraient surgir autour de toi.",
     "horoscope.data.descriptions.gemini.6":
-      "Une surprise agréable pourrait illuminer votre journée, que ce soit une rencontre, un message ou une idée inspirante.",
+      "Une surprise agréable pourrait égayer ta journée, que ce soit une idée, un message ou un événement inattendu.",
     "horoscope.data.descriptions.gemini.7":
-      "Votre aisance à communiquer attire l'attention aujourd'hui, mais attention à ne pas révéler trop d'informations ou à provoquer des malentendus.",
+      "Ta façon de communiquer attire l'attention aujourd'hui, mais veille à ne pas partager trop d'informations ou créer des quiproquos.",
     "horoscope.data.descriptions.gemini.8":
-      "Une conversation inattendue change votre point de vue et ouvre de nouvelles perspectives dans vos relations ou vos projets.",
+      "Une conversation inattendue peut changer ton point de vue et t'ouvrir de nouvelles perspectives dans tes projets personnels.",
     "horoscope.data.descriptions.gemini.9":
-      "Votre polyvalence vous permet de jongler avec plusieurs projets à la fois, sans perdre en efficacité ni en créativité.",
+      "Ta polyvalence te permet de gérer plusieurs projets à la fois, sans perdre en efficacité ni en créativité.",
     "horoscope.data.descriptions.gemini.10":
-      "Les nouvelles technologies vous ouvrent de nouveaux horizons et facilitent vos échanges ou vos projets innovants.",
+      "De nouvelles idées ou outils peuvent t'apporter des solutions simples et efficaces pour tes activités quotidiennes.",
     "horoscope.data.descriptions.gemini.11":
-      "Votre esprit vif et votre humour détendent l'atmosphère, attirant les autres vers vous avec légèreté et charisme.",
+      "Ton esprit vif et ton humour détendent l'atmosphère, attirant les autres vers toi avec légèreté et charisme.",
     "horoscope.data.descriptions.gemini.12":
-      "C'est un moment parfait pour apprendre quelque chose de nouveau et enrichir vos connaissances ou vos compétences.",
+      "C'est le moment idéal pour apprendre quelque chose de nouveau et enrichir tes connaissances.",
     "horoscope.data.descriptions.gemini.13":
-      "Vos réseaux sociaux et vos contacts vous apportent aujourd'hui des opportunités inattendues et profitables.",
+      "Tes contacts et échanges aujourd'hui peuvent t'apporter des opportunités inattendues et intéressantes.",
     "horoscope.data.descriptions.gemini.14":
-      "Faites attention aux confidences : une amitié pourrait être mise à l'épreuve par un malentendu ou un secret révélé.",
+      "Fais attention aux confidences : un secret mal compris pourrait créer un petit malentendu.",
     "horoscope.data.descriptions.cancer.0":
-      "Votre intuition est particulièrement développée aujourd'hui. Suivez votre cœur, il vous guidera vers les bonnes décisions.",
+      "Ton intuition est particulièrement forte aujourd'hui. Suis tes ressentis, ils te guideront vers les bonnes décisions.",
     "horoscope.data.descriptions.cancer.1":
-      "Cette journée pourrait vous donner le tournis. Ne vous laissez pas submerger par de petites contrariétés. Une énergie intérieure vous soutient positivement, alors ménagez votre système nerveux et offrez-vous une pause hors du quotidien !",
+      "Cette journée pourrait être un peu agitée. Ne te laisse pas submerger par de petites contrariétés. Prends soin de ton énergie et accorde-toi une pause bien méritée.",
     "horoscope.data.descriptions.cancer.2":
-      "La famille et les amis jouent un rôle clé dans votre épanouissement aujourd'hui. Soyez à l'écoute et offrez votre soutien.",
+      "Accorde de l’attention à ton entourage proche. Être à l’écoute peut créer des échanges positifs et renforcer tes liens.",
     "horoscope.data.descriptions.cancer.3":
-      "Un petit moment de relaxation pourrait faire des merveilles pour votre énergie. Pensez à méditer ou à prendre un bain apaisant.",
+      "Un petit moment de détente peut faire des merveilles pour ton énergie. Pense à méditer ou à prendre un bain relaxant.",
     "horoscope.data.descriptions.cancer.4":
-      "La Lune illumine votre sensibilité et renforce vos liens familiaux. C'est un moment privilégié pour exprimer vos sentiments.",
+      "Aujourd'hui, ta sensibilité est renforcée. Observe ce que tu ressens et laisse-toi guider par ton instinct pour prendre des décisions équilibrées.",
     "horoscope.data.descriptions.cancer.5":
-      "Votre bienveillance naturelle attire les confidences et renforce vos amitiés. Vous êtes un refuge pour ceux qui vous entourent.",
+      "Ta bienveillance attire naturellement la confiance. Profite de ce moment pour échanger et offrir ton soutien autour de toi.",
     "horoscope.data.descriptions.cancer.6":
-      "C'est un jour parfait pour exprimer vos émotions et partager vos sentiments avec sincérité, ce qui renforcera vos relations.",
+      "Exprime tes émotions avec sincérité. Cela t’aidera à clarifier tes pensées et à te sentir plus léger tout au long de la journée.",
     "horoscope.data.descriptions.cancer.7":
-      "Votre empathie naturelle vous permet de comprendre profondément les autres et de leur offrir un soutien précieux.",
+      "Ton empathie te permet de comprendre les situations autour de toi. Utilise-la pour agir avec calme et discernement.",
     "horoscope.data.descriptions.cancer.8":
-      "Vos relations sont placées sous le signe de l'amitié et de la complicité aujourd'hui. Cherchez l'écoute et le soutien de votre entourage, tout en restant attentif à leurs besoins comme aux vôtres, sans les négliger.",
+      "Cherche l’équilibre dans tes relations aujourd’hui. Sois attentif aux besoins des autres sans négliger les tiens.",
     "horoscope.data.descriptions.cancer.9":
-      "Votre foyer se transforme en un véritable havre de paix et de bonheur, propice au repos et à la sérénité.",
+      "Crée un espace calme autour de toi. Un moment de tranquillité t’aidera à te ressourcer et à retrouver ton énergie.",
     "horoscope.data.descriptions.cancer.10":
-      "Une intuition forte vous guide vers la bonne décision, même face à des situations complexes ou incertaines.",
+      "Ton intuition te guide pour prendre de bonnes décisions, même face à des situations complexes.",
     "horoscope.data.descriptions.cancer.11":
-      "Vos souvenirs d'enfance vous inspirent positivement et vous rappellent les valeurs essentielles qui vous motivent.",
+      "Fais confiance à tes souvenirs et expériences passées pour éclairer tes choix aujourd’hui.",
     "horoscope.data.descriptions.cancer.12":
-      "On vous demandera de faire preuve de diplomatie, il y a du positif à en extraire pour vous. C'est à travers vos loisirs préférés que vous trouverez matière à vous détendre. Laissez vos soucis au vestiaire.",
+      "Prends le temps de te détendre et de profiter de tes loisirs. Laisse tes soucis de côté pour retrouver ton équilibre.",
     "horoscope.data.descriptions.cancer.13":
-      "Vos liens avec de nouvelles connaissances combleront le vide et les manques que vous ressentez. Votre goût prononcé pour les bonnes choses risque de vous faire commettre quelques excès, allez-y doucement.",
+      "Tes interactions avec de nouvelles personnes peuvent t’apporter des idées et des perspectives intéressantes. Reste modéré dans tes plaisirs pour garder ton énergie.",
     "horoscope.data.descriptions.cancer.14":
-      "Une réconciliation familiale apporte une profonde harmonie et installe un climat de paix dans votre entourage.",
+      "Une journée calme et harmonieuse t’apporte de la sérénité et te permet de recharger tes batteries.",
     "horoscope.data.descriptions.leo.0":
-      "Votre magnétisme attire les regards aujourd’hui, surtout en amour. Si vous êtes en couple, attention à ne pas susciter la jalousie. Au travail, vos idées brillantes séduisent, mais prenez le temps de bien les défendre. Une reconnaissance inattendue pourrait flatter votre ego.",
+      "Aujourd'hui, ton magnétisme naturel attire les regards. Profite de cette énergie pour te sentir confiant et rayonner dans tout ce que tu fais.",
     "horoscope.data.descriptions.leo.1":
-      "Une opportunité professionnelle se présente, mais elle demande du courage et un engagement total. Ne laissez pas vos peurs saboter votre élan. Côté personnel, un proche pourrait avoir besoin de votre soutien. Soyez attentif aux signaux autour de vous.",
+      "Une belle opportunité se présente, mais elle demande courage et engagement. Ose passer à l’action et n’aie pas peur d’essayer.",
     "horoscope.data.descriptions.leo.2":
-      "Dans votre famille, une discussion importante éclaire une situation confuse. Même si les mots peuvent être durs, ils permettront d’avancer. En amour, une sincérité désarmante sera votre meilleure alliée. La vérité finira par renforcer vos liens.",
+      "Une discussion importante pourrait t’éclairer sur une situation confuse. Écoute attentivement et sois ouvert à de nouvelles perspectives.",
     "horoscope.data.descriptions.leo.3":
-      "Une rencontre amicale pourrait se transformer en une complicité solide. Vous avez besoin d’entourer votre vie de personnes vraies et bienveillantes. Au travail, votre créativité vous aide à surmonter un obstacle. Laissez vos intuitions guider vos choix.",
+      "Entoure-toi de personnes sincères et bienveillantes. Leur présence te donnera de l’énergie et renforcera ton équilibre.",
     "horoscope.data.descriptions.leo.4":
-      "La chance vous sourit aujourd’hui, mais seulement si vous osez la provoquer. Une surprise agréable peut se manifester dans votre vie sentimentale. Côté finances, évitez les dépenses impulsives. Un petit geste de générosité pourrait vous rapporter gros plus tard.",
+      "La chance sourit à ceux qui osent la provoquer. Sois attentif aux opportunités inattendues et n’hésite pas à saisir le moment.",
     "horoscope.data.descriptions.leo.5":
-      "Vous débordez d’énergie et d’enthousiasme, mais votre corps a aussi besoin de repos. Ne négligez pas votre équilibre intérieur. Un projet qui vous tient à cœur commence à prendre forme. Laissez vos proches partager votre joie.",
+      "Ton énergie est débordante aujourd'hui, mais prends aussi le temps de te reposer. L’équilibre entre action et détente est essentiel.",
     "horoscope.data.descriptions.leo.6":
-      "La jalousie d’une personne de votre entourage pourrait troubler votre tranquillité. Restez vigilant sans céder à la méfiance excessive. En amour, privilégiez la tendresse plutôt que la confrontation. Votre lumière intérieure est votre meilleure protection.",
+      "Reste attentif aux tensions autour de toi et garde ton calme. Ta sérénité intérieure est ta meilleure protection.",
     "horoscope.data.descriptions.leo.7":
-      "Des imprévus financiers risquent de vous déstabiliser, mais rien d’insurmontable. Prenez le temps d’analyser avant de réagir. Dans vos relations, la sincérité d’un ami vous aidera à garder le cap. Un soutien extérieur pourrait vous surprendre positivement.",
+      "Des imprévus peuvent te surprendre, mais rien d’insurmontable. Analyse avant d’agir et garde confiance en toi.",
     "horoscope.data.descriptions.leo.8":
-      "Les célibataires pourraient croiser une personne qui réveille leur cœur. Pour les couples, un moment de complicité renforce l’union. Au travail, vos efforts constants commencent enfin à payer. La journée est porteuse d’espoir et d’élan nouveau.",
+      "Une rencontre ou un moment agréable pourrait illuminer ta journée. Accueille les surprises avec ouverture et curiosité.",
     "horoscope.data.descriptions.leo.9":
-      "Votre travail est remarqué et pourrait vous valoir une belle opportunité, mais un rival jaloux pourrait chercher à vous freiner. Ne laissez pas les critiques entamer votre confiance. Côté personnel, prenez du temps pour souffler et savourer vos petites victoires.",
+      "Prends le temps de savourer tes petites victoires. Chaque pas compte et contribue à ton élan vers tes objectifs.",
     "horoscope.data.descriptions.leo.10":
-      "La chaleur d’un moment en famille ou avec vos proches vous ressource profondément. Vous réalisez que votre bonheur passe par ces instants simples. En amour, une parole tendre guérit une tension récente. La sérénité revient doucement.",
+      "Un moment simple et chaleureux avec tes proches ou amis te ressource profondément. Apprécie ces instants et leur énergie positive.",
     "horoscope.data.descriptions.leo.11":
-      "Le retour d’un vieil ami ou d’une personne du passé réveille de beaux souvenirs. Ce lien peut se transformer en un projet constructif ou en un soutien inattendu. En amour, des sentiments enfouis remontent à la surface. C’est une journée riche en émotions.",
+      "Le retour de souvenirs ou de relations anciennes peut t’apporter inspiration et soutien. Sois ouvert aux expériences du passé qui te nourrissent.",
     "horoscope.data.descriptions.leo.12":
-      "Une rencontre fortuite pourrait bouleverser vos habitudes et ouvrir une porte inattendue. Laissez la surprise opérer sans chercher à tout contrôler. Professionnellement, une proposition originale peut émerger. Restez ouvert aux synchronicités.",
+      "Laisse-toi surprendre par les événements inattendus. Une ouverture à l’inattendu peut créer de belles opportunités.",
     "horoscope.data.descriptions.leo.13":
-      "Votre désir de reconnaissance est fort aujourd’hui, mais veillez à ne pas en demander trop à vos proches ou collègues. En amour, un geste tendre vaut parfois mieux que mille discours. Vous inspirez, mais veillez à rester authentique.",
+      "Ton envie de reconnaissance est forte, mais reste authentique et modéré. Inspire les autres par tes actions sincères.",
     "horoscope.data.descriptions.leo.14":
-      "Une décision importante s’impose, et votre intuition vous guidera vers la bonne voie. Ne vous laissez pas influencer par les avis contradictoires. Dans vos relations, la franchise reste la clé. La clarté que vous trouverez aujourd’hui marquera un tournant.",
-    "horoscope.data.descriptions.virgo.0":
-      "Votre sens du détail est aiguisé aujourd’hui, ce qui vous aide à résoudre un problème délicat. En amour, évitez d’être trop critique, car votre exigence peut blesser. Côté finances, une gestion prudente porte déjà ses fruits.",
-    "horoscope.data.descriptions.virgo.1":
-      "Une personne de votre entourage pourrait chercher à tester votre patience. Gardez votre calme et ne tombez pas dans le piège des conflits inutiles. Votre sagesse naturelle vous permettra de sortir gagnant de cette situation.",
-    "horoscope.data.descriptions.virgo.2":
-      "L’amour prend une place importante aujourd’hui. Si vous êtes célibataire, une rencontre prometteuse pourrait éveiller votre curiosité. En couple, privilégiez les petites attentions qui consolident vos liens au quotidien.",
-    "horoscope.data.descriptions.virgo.3":
-      "Votre organisation et votre sérieux impressionnent vos collègues. Une nouvelle responsabilité pourrait vous être confiée. Même si cela demande un effort supplémentaire, cette reconnaissance sera bénéfique à long terme.",
-    "horoscope.data.descriptions.virgo.4":
-      "Votre sensibilité est mise en avant aujourd’hui. Un proche pourrait avoir besoin de votre écoute. Montrez de l’empathie, mais ne portez pas tous les fardeaux des autres. Prenez aussi soin de votre propre équilibre.",
-    "horoscope.data.descriptions.virgo.5":
-      "Une opportunité financière ou matérielle se profile. Mais attention aux décisions prises dans la précipitation. Analysez chaque détail avant de vous engager, votre prudence habituelle sera votre meilleure alliée.",
-    "horoscope.data.descriptions.virgo.6":
-      "Votre esprit critique est fort aujourd’hui, mais il peut créer des tensions avec vos proches. Transformez cette énergie en conseils constructifs plutôt qu’en reproches. Votre clarté sera alors perçue comme un soutien.",
-    "horoscope.data.descriptions.virgo.7":
-      "Une petite dispute pourrait troubler votre quotidien, mais elle aura le mérite de clarifier une situation restée floue. Acceptez ce moment comme une étape nécessaire pour avancer vers des relations plus sincères.",
-    "horoscope.data.descriptions.virgo.8":
-      "Vous ressentez le besoin de faire un tri, que ce soit dans vos affaires, vos relations ou vos habitudes. Cette démarche de purification vous permettra d’y voir plus clair et de repartir sur de meilleures bases.",
-    "horoscope.data.descriptions.virgo.9":
-      "La chance vous accompagne aujourd’hui, mais seulement si vous osez sortir de votre zone de confort. Une rencontre ou une idée pourrait ouvrir des perspectives nouvelles et positives. Ne laissez pas vos doutes freiner cet élan.",
-    "horoscope.data.descriptions.virgo.10":
-      "Votre sens de la loyauté est remarqué et apprécié par vos amis. Mais prenez garde à ne pas vous oublier en voulant trop donner. Vos besoins personnels sont tout aussi importants que ceux de votre entourage.",
-    "horoscope.data.descriptions.virgo.11":
-      "Un imprévu au travail ou à la maison vous oblige à revoir vos plans. Même si cela vous dérange, cette adaptation vous apportera finalement une solution plus efficace. Faites confiance au processus.",
-    "horoscope.data.descriptions.virgo.12":
-      "L’amour pourrait vous surprendre là où vous ne l’attendiez pas. Restez attentif aux signes et aux gestes discrets autour de vous. Pour les couples, un moment tendre renforce vos liens et ranime la flamme.",
-    "horoscope.data.descriptions.virgo.13":
-      "Votre esprit est en ébullition aujourd’hui, rempli de nouvelles idées. Canalisez cette créativité en projets concrets plutôt qu’en réflexions trop nombreuses. Un pas après l’autre, vos efforts porteront leurs fruits.",
-    "horoscope.data.descriptions.virgo.14":
-      "Une révélation ou une confidence pourrait bouleverser vos certitudes. Même si la vérité est parfois difficile à entendre, elle vous libérera d’un poids. Accueillez ce changement avec sagesse et ouverture.",
-    "horoscope.data.descriptions.libra.0":
-      "Votre charme naturel attire les regards aujourd’hui. En amour, une rencontre pourrait éveiller votre cœur. Si vous êtes en couple, un moment romantique apporte équilibre et complicité.",
-    "horoscope.data.descriptions.libra.1":
-      "Un différend pourrait surgir dans votre entourage. Faites preuve de diplomatie et évitez les jugements hâtifs. Votre capacité à rester juste sera une force pour rétablir l’harmonie.",
-    "horoscope.data.descriptions.libra.2":
-      "Vos talents relationnels brillent aujourd’hui. Profitez-en pour renforcer vos liens amicaux et professionnels. Une conversation sincère pourrait ouvrir la porte à une belle opportunité.",
-    "horoscope.data.descriptions.libra.3":
-      "Une décision importante se présente à vous. Ne laissez pas l’hésitation vous bloquer. Écoutez votre intuition et pesez le pour et le contre avec sagesse, la réponse viendra naturellement.",
-    "horoscope.data.descriptions.libra.4":
-      "Votre équilibre intérieur est mis à l’épreuve. Trop de responsabilités risquent de vous fatiguer. Prenez du recul, déléguez si possible, et accordez-vous un moment rien que pour vous.",
-    "horoscope.data.descriptions.libra.5":
-      "Une surprise agréable pourrait illuminer votre journée, que ce soit une attention d’un proche ou une opportunité inattendue. Accueillez-la avec gratitude et optimisme.",
-    "horoscope.data.descriptions.libra.6":
-      "Un secret ou une vérité cachée pourrait être révélé aujourd’hui. Même si cela vous déstabilise, cette clarté vous permettra de mieux avancer et de renforcer vos choix futurs.",
-    "horoscope.data.descriptions.libra.7":
-      "Vous ressentez le besoin de renforcer vos liens familiaux. Un moment partagé avec vos proches vous apporte chaleur et réconfort. C’est une journée idéale pour exprimer votre affection.",
-    "horoscope.data.descriptions.libra.8":
-      "Au travail, votre sens de la coopération est apprécié. Mais attention à ne pas vous effacer devant les autres. Faites entendre vos idées, elles méritent d’être reconnues.",
-    "horoscope.data.descriptions.libra.9":
-      "Votre cœur pourrait être mis à l’épreuve par des doutes ou des hésitations. Prenez le temps de clarifier vos sentiments. La sincérité, même délicate, est le chemin de la paix intérieure.",
-    "horoscope.data.descriptions.libra.10":
-      "Un regain de confiance vous pousse à aller de l’avant. C’est le moment idéal pour lancer un projet personnel ou prendre une initiative audacieuse. Osez, les astres vous soutiennent.",
-    "horoscope.data.descriptions.libra.11":
-      "Une rencontre inspirante pourrait transformer votre vision d’une situation. Soyez attentif aux conseils ou aux signes subtils autour de vous, ils portent en eux des réponses précieuses.",
-    "horoscope.data.descriptions.libra.12":
-      "Votre quête d’harmonie peut être perturbée par une personne jalouse ou envieuse. Ne vous laissez pas atteindre par ces énergies négatives. Restez centré sur vos objectifs et votre lumière.",
-    "horoscope.data.descriptions.libra.13":
-      "La chance semble vous sourire aujourd’hui. Une opportunité financière ou relationnelle se dessine. Restez ouvert et saisissez-la, elle pourrait marquer un tournant positif dans votre vie.",
-    "horoscope.data.descriptions.libra.14":
-      "Votre besoin d’équilibre vous guide vers de nouveaux choix. Que ce soit en amour, au travail ou dans vos amitiés, vous trouvez enfin le courage de poser des limites justes et nécessaires.",
-    "horoscope.data.descriptions.scorpio.0":
-      "Votre intuition est particulièrement forte aujourd’hui. Suivez vos pressentiments, ils vous guideront vers des choix justes, notamment en amour et en amitié.",
-    "horoscope.data.descriptions.scorpio.1":
-      "Une tension pourrait éclater dans votre entourage. Ne laissez pas la jalousie ou les rancunes gâcher vos relations, misez sur la franchise pour apaiser les esprits.",
-    "horoscope.data.descriptions.scorpio.2":
-      "Vous pourriez croiser une personne intrigante qui éveille en vous curiosité et émotions. Cette rencontre pourrait bouleverser vos certitudes.",
-    "horoscope.data.descriptions.scorpio.3":
-      "Votre détermination impressionne. C’est une journée idéale pour franchir un cap professionnel ou clarifier une situation qui traîne depuis trop longtemps.",
-    "horoscope.data.descriptions.scorpio.4":
-      "Un secret bien gardé pourrait voir le jour. Même si cela vous surprend, cette révélation vous aidera à avancer et à comprendre davantage votre entourage.",
-    "horoscope.data.descriptions.scorpio.5":
-      "Votre intensité attire autant qu’elle déstabilise. Utilisez cette énergie pour séduire ou renforcer vos liens affectifs, mais évitez les excès de possessivité.",
-    "horoscope.data.descriptions.scorpio.6":
-      "Une proposition inattendue pourrait se présenter. Avant de dire oui, analysez les dessous de la situation : tout n’est pas toujours ce qu’il paraît.",
-    "horoscope.data.descriptions.scorpio.7":
-      "Vous ressentez le besoin de vous isoler pour réfléchir. Cette introspection vous permettra de clarifier vos priorités et de retrouver votre équilibre intérieur.",
-    "horoscope.data.descriptions.scorpio.8":
-      "Un projet ou une idée que vous portiez depuis longtemps trouve enfin un élan favorable. Votre persévérance commence à porter ses fruits.",
-    "horoscope.data.descriptions.scorpio.9":
-      "Attention aux malentendus amoureux. Vos émotions intenses peuvent brouiller votre communication. Restez calme et exprimez vos ressentis avec douceur.",
-    "horoscope.data.descriptions.scorpio.10":
-      "Votre magnétisme est puissant aujourd’hui. Vous pourriez captiver l’attention de quelqu’un qui jouera un rôle important dans vos projets futurs.",
-    "horoscope.data.descriptions.scorpio.11":
-      "La jalousie ou la compétition d’une personne de votre entourage pourrait se révéler. Protégez votre énergie et ne vous laissez pas entraîner dans des conflits inutiles.",
-    "horoscope.data.descriptions.scorpio.12":
-      "Votre passion est un moteur incroyable, mais veillez à ne pas vous épuiser. Accordez-vous des pauses pour préserver votre équilibre émotionnel et physique.",
-    "horoscope.data.descriptions.scorpio.13":
-      "Une bonne nouvelle pourrait éclairer votre journée, que ce soit sur le plan professionnel, affectif ou financier. Accueillez-la avec confiance.",
-    "horoscope.data.descriptions.scorpio.14":
-      "Votre pouvoir de transformation est à son apogée. Profitez de cette énergie pour tourner la page d’un chapitre difficile et entamer un nouveau départ plus lumineux.",
-    "horoscope.data.descriptions.sagittarius.0":
-      "Votre optimisme naturel illumine votre journée. Profitez-en pour entreprendre quelque chose de nouveau et partager votre joie avec vos proches.",
-    "horoscope.data.descriptions.sagittarius.1":
-      "Une rencontre inattendue pourrait éveiller votre curiosité et vos émotions. Soyez ouvert aux nouvelles personnes autour de vous, elles pourraient vous surprendre.",
-    "horoscope.data.descriptions.sagittarius.2":
-      "Votre esprit d’aventure vous pousse à explorer de nouvelles idées ou lieux. Cependant, évitez de vous disperser, concentrez-vous sur ce qui compte vraiment.",
-    "horoscope.data.descriptions.sagittarius.3":
-      "Au travail, une opportunité vous est offerte. Saisissez-la, mais vérifiez les détails pour éviter les malentendus ou les déceptions.",
-    "horoscope.data.descriptions.sagittarius.4":
-      "Vos amis comptent sur votre énergie positive. Une dispute pourrait surgir, mais votre diplomatie naturelle permet de rétablir l’harmonie rapidement.",
-    "horoscope.data.descriptions.sagittarius.5":
-      "L’amour est favorisé aujourd’hui. Un geste tendre ou un mot sincère pourrait renforcer vos liens ou provoquer une rencontre marquante.",
-    "horoscope.data.descriptions.sagittarius.6":
-      "Vous pourriez être tenté par des excès ou des dépenses impulsives. Gardez votre équilibre et évitez les regrets futurs.",
-    "horoscope.data.descriptions.sagittarius.7":
-      "Votre créativité et vos idées originales sont à l’honneur. Exprimez-les pleinement, elles pourraient inspirer votre entourage et ouvrir de nouvelles portes.",
-    "horoscope.data.descriptions.sagittarius.8":
-      "Une vérité cachée ou une confidence pourrait être révélée. Restez attentif et ne laissez pas les malentendus perturber vos relations.",
-    "horoscope.data.descriptions.sagittarius.9":
-      "Une journée propice aux voyages ou aux apprentissages. Profitez-en pour élargir vos horizons et découvrir quelque chose de nouveau sur vous-même.",
-    "horoscope.data.descriptions.sagittarius.10":
-      "Votre humour et votre légèreté attirent les autres. Partagez ces moments de bonne humeur, mais restez sincère pour éviter les faux-semblants.",
-    "horoscope.data.descriptions.sagittarius.11":
-      "Un challenge ou un obstacle pourrait surgir. Votre persévérance et votre enthousiasme vous permettront de le surmonter avec succès.",
-    "horoscope.data.descriptions.sagittarius.12":
-      "Attention aux tensions dans le cercle familial. Prenez le temps d’écouter et de comprendre les besoins de chacun pour éviter les conflits inutiles.",
-    "horoscope.data.descriptions.sagittarius.13":
-      "Votre intuition est renforcée aujourd’hui. Suivez vos ressentis dans vos décisions, surtout en amour et en amitié.",
-    "horoscope.data.descriptions.sagittarius.14":
-      "Une énergie favorable vous accompagne pour réaliser vos projets. Profitez de ce soutien cosmique pour faire avancer vos ambitions et nourrir votre bonheur.",
-    "horoscope.data.descriptions.capricorn.0":
-      "Votre sérieux et votre persévérance attirent l’admiration aujourd’hui. C’est le moment idéal pour avancer sur un projet important.",
-    "horoscope.data.descriptions.capricorn.1":
-      "Une personne de votre entourage pourrait vous surprendre par ses réactions. Restez attentif et ne tirez pas de conclusions hâtives.",
-    "horoscope.data.descriptions.capricorn.2":
-      "Votre sens de l’organisation vous permet de gérer vos responsabilités avec efficacité. Mais n’oubliez pas de prendre du temps pour vous détendre.",
-    "horoscope.data.descriptions.capricorn.3":
-      "Une opportunité professionnelle ou financière se présente. Analysez-la avec soin avant de prendre votre décision.",
-    "horoscope.data.descriptions.capricorn.4":
-      "Votre loyauté et votre fidélité sont appréciées, mais veillez à ne pas vous laisser exploiter. Posez des limites claires si nécessaire.",
-    "horoscope.data.descriptions.capricorn.5":
-      "Un moment agréable avec un proche pourrait raviver des liens affectifs ou familiaux. Profitez de cette complicité pour renforcer votre relation.",
-    "horoscope.data.descriptions.capricorn.6":
-      "Vous pourriez être tenté par des excès ou des dépenses impulsives. Restez prudent pour éviter les regrets futurs.",
-    "horoscope.data.descriptions.capricorn.7":
-      "Une idée créative ou un projet que vous aviez mis de côté trouve enfin un élan favorable. N’hésitez pas à le concrétiser.",
-    "horoscope.data.descriptions.capricorn.8":
-      "Une vérité cachée ou un secret pourrait être révélé. Prenez le temps de comprendre les implications avant de réagir.",
-    "horoscope.data.descriptions.capricorn.9":
-      "Vos efforts constants portent leurs fruits aujourd’hui. C’est le moment de récolter les résultats de votre travail et de vos sacrifices.",
-    "horoscope.data.descriptions.capricorn.10":
-      "Votre sérieux inspire confiance et respect. Profitez-en pour montrer vos compétences et faire valoir vos talents.",
-    "horoscope.data.descriptions.capricorn.11":
-      "Attention aux tensions dans votre cercle professionnel ou familial. Gardez votre calme et privilégiez le dialogue pour désamorcer les conflits.",
-    "horoscope.data.descriptions.capricorn.12":
-      "Votre intuition est particulièrement fine. Suivez vos ressentis pour prendre des décisions justes, surtout en amour et en amitié.",
-    "horoscope.data.descriptions.capricorn.13":
-      "Une journée propice aux contacts et aux échanges enrichissants. Une rencontre ou une conversation pourrait apporter des perspectives nouvelles.",
-    "horoscope.data.descriptions.capricorn.14":
-      "Votre persévérance et votre rigueur vous aident à surmonter les obstacles. Une énergie favorable accompagne vos actions, profitez-en pour avancer.",
-    "horoscope.data.descriptions.aquarius.0":
-      "Votre originalité et votre créativité sont mises en avant aujourd’hui. N’hésitez pas à partager vos idées, elles pourraient inspirer votre entourage.",
-    "horoscope.data.descriptions.aquarius.1":
-      "Une rencontre inattendue pourrait éveiller votre curiosité et vos émotions. Soyez attentif, cette personne pourrait marquer votre journée.",
-    "horoscope.data.descriptions.aquarius.2":
-      "Votre esprit d’innovation est à son apogée. Profitez-en pour expérimenter de nouvelles méthodes dans votre travail ou vos projets personnels.",
-    "horoscope.data.descriptions.aquarius.3":
-      "Attention aux malentendus avec un proche. Écoutez attentivement avant de réagir, la clarté et la patience éviteront les conflits inutiles.",
-    "horoscope.data.descriptions.aquarius.4":
-      "Une opportunité surprenante pourrait se présenter. Analysez-la avant de vous engager, tout n’est pas toujours ce qu’il semble.",
-    "horoscope.data.descriptions.aquarius.5":
-      "Votre énergie communicative attire l’attention des autres. C’est le moment idéal pour renforcer vos liens amicaux ou professionnels.",
-    "horoscope.data.descriptions.aquarius.6":
-      "Un moment de solitude pourrait vous permettre de recharger vos batteries et de réfléchir à vos priorités. Écoutez vos besoins intérieurs.",
-    "horoscope.data.descriptions.aquarius.7":
-      "Vos idées originales pourraient provoquer l’admiration… mais aussi un peu de jalousie. Restez concentré sur vos objectifs et ignorez les distractions.",
-    "horoscope.data.descriptions.aquarius.8":
-      "Une surprise agréable pourrait égayer votre journée, que ce soit un message, un geste ou un projet qui prend forme.",
-    "horoscope.data.descriptions.aquarius.9":
-      "Votre sens de la justice et de l’équilibre est sollicité aujourd’hui. Aidez à apaiser les tensions autour de vous, votre rôle est important.",
-    "horoscope.data.descriptions.aquarius.10":
-      "Attention aux excès ou aux décisions impulsives. Prenez le temps de réfléchir et de peser le pour et le contre avant d’agir.",
-    "horoscope.data.descriptions.aquarius.11":
-      "Une vérité cachée ou un secret pourrait se révéler. Restez calme et utilisez cette information pour améliorer vos relations ou vos projets.",
-    "horoscope.data.descriptions.aquarius.12":
-      "Vos relations amicales ou amoureuses sont favorisées. Un geste sincère ou un mot tendre pourrait renforcer vos liens et créer de beaux souvenirs.",
-    "horoscope.data.descriptions.aquarius.13":
-      "Une idée ou un projet ancien pourrait renaître sous un nouvel éclairage. C’est le moment de lui donner vie et de concrétiser vos aspirations.",
-    "horoscope.data.descriptions.aquarius.14":
-      "Votre énergie et votre intuition vous guident vers des choix positifs. Profitez de cette journée pour avancer avec confiance et audace.",
-    "horoscope.data.descriptions.pisces.0":
-      "Votre sensibilité est votre force aujourd’hui. Écoutez vos émotions, elles vous guideront dans vos relations et vos choix.",
-    "horoscope.data.descriptions.pisces.1":
-      "Une personne chère pourrait vous surprendre par sa franchise. Restez ouvert et attentif pour éviter les malentendus.",
-    "horoscope.data.descriptions.pisces.2":
-      "Votre créativité est à son apogée. Profitez-en pour exprimer vos idées artistiques ou originales dans vos projets.",
-    "horoscope.data.descriptions.pisces.3":
-      "Attention aux décisions impulsives, surtout en matière financière. Réfléchissez avant de vous engager.",
-    "horoscope.data.descriptions.pisces.4":
-      "Vos relations amicales sont favorisées. Un geste ou un mot sincère pourrait renforcer vos liens et apporter de la joie.",
-    "horoscope.data.descriptions.pisces.5":
-      "Une journée propice à l’introspection. Prenez du temps pour vous reconnecter à vos besoins et à vos désirs profonds.",
-    "horoscope.data.descriptions.pisces.6":
-      "Une opportunité inattendue pourrait se présenter. Évaluez-la avec discernement avant de vous lancer.",
-    "horoscope.data.descriptions.pisces.7":
-      "Votre intuition est particulièrement fine aujourd’hui. Faites-lui confiance pour guider vos décisions personnelles et professionnelles.",
-    "horoscope.data.descriptions.pisces.8":
-      "Un proche pourrait chercher votre soutien. Écoutez-le attentivement et offrez-lui votre empathie sans vous oublier.",
-    "horoscope.data.descriptions.pisces.9":
-      "Une surprise romantique ou affective pourrait égayer votre journée. Soyez ouvert aux signes et aux gestes d’affection.",
-    "horoscope.data.descriptions.pisces.10":
-      "Des tensions mineures pourraient surgir. Restez calme et privilégiez la communication pour éviter les conflits.",
-    "horoscope.data.descriptions.pisces.11":
-      "Votre sens de la compassion attire les autres vers vous. Profitez-en pour créer des liens sincères et durables.",
-    "horoscope.data.descriptions.pisces.12":
-      "Un projet ancien pourrait retrouver un nouvel élan. C’est le moment idéal pour concrétiser vos idées et ambitions.",
-    "horoscope.data.descriptions.pisces.13":
-      "Vos émotions sont intenses et enrichissantes aujourd’hui. Canalisez-les pour renforcer vos relations et vos initiatives.",
-    "horoscope.data.descriptions.pisces.14":
-      "Une énergie positive vous accompagne tout au long de la journée. Suivez vos intuitions et laissez votre cœur guider vos choix.",
+      "Une décision importante se présente. Écoute ton intuition et reste fidèle à tes convictions pour trouver le bon chemin.",
+    "horoscope.data.descriptions.virgo.0": "Aujourd'hui, ton sens du détail t'aidera à dénouer une situation délicate. Reste attentif aux signes autour de toi, ils pourraient guider tes choix.",
+    "horoscope.data.descriptions.virgo.1": "Une personne ou un événement pourrait tester ta patience. Garde ton calme et laisse les choses se dérouler à leur rythme.",
+    "horoscope.data.descriptions.virgo.2": "Une curiosité soudaine pourrait te pousser à découvrir quelque chose de nouveau et stimulant.",
+    "horoscope.data.descriptions.virgo.3": "Ton organisation et ton discernement seront mis en avant. C'est le moment idéal pour structurer tes projets ou tes idées.",
+    "horoscope.data.descriptions.virgo.4": "Ton intuition est renforcée aujourd'hui. Écoute tes ressentis et fais confiance à ton instinct pour naviguer dans la journée.",
+    "horoscope.data.descriptions.virgo.5": "Des opportunités intéressantes se présenteront, mais il faudra les analyser avec attention avant de t'engager.",
+    "horoscope.data.descriptions.virgo.6": "Ton esprit critique est actif, et il t’aidera à clarifier des situations floues si tu le canalises de manière constructive.",
+    "horoscope.data.descriptions.virgo.7": "Un petit contretemps pourrait te surprendre, mais il apportera de la clarté et t’aidera à mieux organiser la suite.",
+    "horoscope.data.descriptions.virgo.8": "Le moment est propice pour faire un tri dans tes affaires ou tes habitudes. Cela t’aidera à repartir sur des bases plus claires.",
+    "horoscope.data.descriptions.virgo.9": "La chance est de ton côté, surtout si tu oses sortir de ta zone de confort et explorer de nouvelles perspectives.",
+    "horoscope.data.descriptions.virgo.10": "Ta loyauté et ta constance seront remarquées. Prends le temps de t’occuper aussi de toi et de tes besoins.",
+    "horoscope.data.descriptions.virgo.11": "Un imprévu pourrait bouleverser ton emploi du temps, mais il ouvrira la voie à une solution plus efficace.",
+    "horoscope.data.descriptions.virgo.12": "Une surprise ou un événement inattendu pourrait éveiller ton attention et te pousser à découvrir de nouvelles choses.",
+    "horoscope.data.descriptions.virgo.13": "Ton esprit est en pleine effervescence aujourd'hui. Canalise tes idées en actions concrètes et avance pas à pas.",
+    "horoscope.data.descriptions.virgo.14": "Une information ou une révélation pourrait t’amener à revoir certaines certitudes. Accueille ce changement avec ouverture et sérénité.",
+    "horoscope.data.descriptions.libra.0": "Ton charme naturel attire l’attention aujourd’hui, et des rencontres inattendues pourraient égayer ta journée.",
+    "horoscope.data.descriptions.libra.1": "Un différend pourrait surgir autour de toi. Ta capacité à rester calme et juste te permettra de rétablir l’harmonie.",
+    "horoscope.data.descriptions.libra.2": "Tes qualités relationnelles brillent aujourd’hui. Une conversation sincère pourrait ouvrir de nouvelles perspectives.",
+    "horoscope.data.descriptions.libra.3": "Une décision importante se présente. Écoute ton intuition et laisse les réponses venir naturellement.",
+    "horoscope.data.descriptions.libra.4": "Ton équilibre intérieur est mis à l’épreuve. Prends du recul et accorde-toi un moment pour toi-même.",
+    "horoscope.data.descriptions.libra.5": "Une surprise agréable pourrait illuminer ta journée. Accueille-la avec optimisme et curiosité.",
+    "horoscope.data.descriptions.libra.6": "Un secret ou une vérité cachée pourrait se révéler aujourd’hui. Cette clarté t’aidera à avancer plus sereinement.",
+    "horoscope.data.descriptions.libra.7": "Le besoin de renforcer tes liens avec tes proches se fait sentir. Un moment partagé apportera chaleur et réconfort.",
+    "horoscope.data.descriptions.libra.8": "Ta capacité à coopérer et à écouter est mise en avant. Fais entendre tes idées, elles méritent d’être reconnues.",
+    "horoscope.data.descriptions.libra.9": "Des doutes ou hésitations pourraient troubler ton esprit. Prends le temps de clarifier tes pensées pour retrouver la sérénité.",
+    "horoscope.data.descriptions.libra.10": "Un regain de confiance t’incite à agir. C’est le moment idéal pour initier quelque chose de nouveau.",
+    "horoscope.data.descriptions.libra.11": "Une rencontre ou une observation pourrait transformer ta vision d’une situation. Sois attentif aux signes subtils autour de toi.",
+    "horoscope.data.descriptions.libra.12": "Des énergies négatives pourraient t’atteindre, mais rester centré te permettra de garder le cap.",
+    "horoscope.data.descriptions.libra.13": "La chance semble te sourire aujourd’hui. Une opportunité pourrait marquer un tournant positif.",
+    "horoscope.data.descriptions.libra.14": "Ton besoin d’équilibre te guide vers de nouveaux choix. Tu trouves enfin le courage de poser des limites justes et nécessaires.",
+    "horoscope.data.descriptions.scorpio.0": "Ton intuition est particulièrement forte aujourd’hui. Tes pressentiments te guideront vers des choix justes.",
+    "horoscope.data.descriptions.scorpio.1": "Une tension pourrait éclater autour de toi. Garde ton calme et privilégie la franchise pour apaiser les esprits.",
+    "horoscope.data.descriptions.scorpio.2": "Tu pourrais rencontrer une personne intrigante qui éveillera ta curiosité et tes émotions, chamboulant un peu tes certitudes.",
+    "horoscope.data.descriptions.scorpio.3": "Ta détermination se remarque aujourd’hui. C’est une journée idéale pour franchir un cap ou clarifier une situation qui traîne.",
+    "horoscope.data.descriptions.scorpio.4": "Un secret ou une vérité cachée pourrait se révéler. Même si cela te surprend, cela t’aidera à mieux comprendre ton entourage.",
+    "horoscope.data.descriptions.scorpio.5": "Ton intensité attire et déstabilise. Utilise cette énergie pour avancer, mais veille à ne pas te laisser emporter.",
+    "horoscope.data.descriptions.scorpio.6": "Une proposition inattendue pourrait se présenter. Analyse bien la situation avant de te lancer.",
+    "horoscope.data.descriptions.scorpio.7": "Tu ressentiras le besoin de t’isoler pour réfléchir. Cette introspection clarifiera tes priorités et renforcera ton équilibre intérieur.",
+    "horoscope.data.descriptions.scorpio.8": "Un projet ou une idée que tu portais depuis longtemps trouve enfin un élan favorable. Ta persévérance commence à porter ses fruits.",
+    "horoscope.data.descriptions.scorpio.9": "Fais attention aux malentendus. Tes émotions intenses pourraient brouiller la communication. Reste calme et exprime-toi avec douceur.",
+    "horoscope.data.descriptions.scorpio.10": "Ton magnétisme est puissant aujourd’hui. Tu pourrais captiver l’attention de quelqu’un qui jouera un rôle important pour toi.",
+    "horoscope.data.descriptions.scorpio.11": "La jalousie ou la compétition d’autrui pourrait se révéler. Protège ton énergie et évite les conflits inutiles.",
+    "horoscope.data.descriptions.scorpio.12": "Ta passion est un moteur incroyable, mais pense à te ménager. Prends des pauses pour préserver ton équilibre.",
+    "horoscope.data.descriptions.scorpio.13": "Une bonne nouvelle pourrait illuminer ta journée. Accueille-la avec confiance.",
+    "horoscope.data.descriptions.scorpio.14": "Ton pouvoir de transformation est à son apogée. Profite de cette énergie pour tourner la page et commencer un nouveau chapitre.",
+    "horoscope.data.descriptions.sagittarius.0": "Ton optimisme naturel illumine ta journée. Tu ressens l’envie d’entreprendre quelque chose de nouveau et de partager ta joie.",
+    "horoscope.data.descriptions.sagittarius.1": "Une rencontre inattendue pourrait éveiller ta curiosité et tes émotions, apportant une surprise dans ta journée.",
+    "horoscope.data.descriptions.sagittarius.2": "Ton esprit d’aventure te pousse à explorer de nouvelles idées ou lieux. Il te faudra rester concentré sur l’essentiel.",
+    "horoscope.data.descriptions.sagittarius.3": "Une opportunité se présente aujourd’hui. Les détails pourraient nécessiter ton attention pour éviter les malentendus.",
+    "horoscope.data.descriptions.sagittarius.4": "Ton énergie positive influence ton entourage. Même si une dispute surgit, l’équilibre revient rapidement.",
+    "horoscope.data.descriptions.sagittarius.5": "Des moments tendres ou des échanges significatifs peuvent marquer la journée et renforcer des liens précieux.",
+    "horoscope.data.descriptions.sagittarius.6": "Une tentation de dépasser les limites ou de faire des dépenses impulsives pourrait se présenter. Ton équilibre reste important.",
+    "horoscope.data.descriptions.sagittarius.7": "Ta créativité et tes idées originales sont mises en avant. Elles pourraient inspirer ton entourage et ouvrir de nouvelles perspectives.",
+    "horoscope.data.descriptions.sagittarius.8": "Une vérité cachée ou une confidence pourrait se révéler. Les malentendus se dissipent si tu restes attentif.",
+    "horoscope.data.descriptions.sagittarius.9": "Une journée propice à la découverte et à l’apprentissage. Tu peux élargir tes horizons et en apprendre davantage sur toi-même.",
+    "horoscope.data.descriptions.sagittarius.10": "Ton humour et ta légèreté attirent l’attention. Ces moments de bonne humeur sont partagés de manière sincère.",
+    "horoscope.data.descriptions.sagittarius.11": "Un obstacle ou un challenge pourrait se présenter. Ton enthousiasme et ta persévérance te permettent de le surmonter.",
+    "horoscope.data.descriptions.sagittarius.12": "Des tensions dans ton entourage familial peuvent apparaître. L’écoute et la compréhension permettent de maintenir l’harmonie.",
+    "horoscope.data.descriptions.sagittarius.13": "Ton intuition est renforcée aujourd’hui. Tes ressentis te guident dans tes décisions et interactions.",
+    "horoscope.data.descriptions.sagittarius.14": "Une énergie favorable t’accompagne pour avancer dans tes projets et nourrir ton bonheur.",
+    "horoscope.data.descriptions.capricorn.0": "Ton sérieux et ta persévérance attirent l’attention aujourd’hui. Tu avances sur un projet important avec énergie.",
+    "horoscope.data.descriptions.capricorn.1": "Une personne de ton entourage surprend par ses réactions inattendues, apportant une touche d’imprévu à ta journée.",
+    "horoscope.data.descriptions.capricorn.2": "Ton sens de l’organisation se manifeste fortement aujourd’hui, permettant de gérer plusieurs responsabilités efficacement.",
+    "horoscope.data.descriptions.capricorn.3": "Une opportunité professionnelle ou financière se présente et apporte de nouvelles perspectives.",
+    "horoscope.data.descriptions.capricorn.4": "Ta loyauté et fidélité sont visibles et reconnues, renforçant la confiance autour de toi.",
+    "horoscope.data.descriptions.capricorn.5": "Un moment agréable avec un proche apporte chaleur et complicité, illuminant la journée.",
+    "horoscope.data.descriptions.capricorn.6": "Une tentation d’excès ou de dépenses impulsives pourrait surgir, mais l’énergie générale reste positive.",
+    "horoscope.data.descriptions.capricorn.7": "Une idée ou un projet laissé de côté trouve un nouvel élan et avance aujourd’hui.",
+    "horoscope.data.descriptions.capricorn.8": "Une vérité cachée ou une révélation pourrait émerger, apportant de la clarté dans tes relations.",
+    "horoscope.data.descriptions.capricorn.9": "Les efforts fournis jusqu’ici commencent à porter leurs fruits, offrant satisfaction et accomplissement.",
+    "horoscope.data.descriptions.capricorn.10": "Ton sérieux et ta rigueur sont remarqués et inspirent confiance autour de toi.",
+    "horoscope.data.descriptions.capricorn.11": "Des tensions peuvent apparaître dans ton entourage, mais la situation se stabilise au fil de la journée.",
+    "horoscope.data.descriptions.capricorn.12": "Ton intuition est forte aujourd’hui, guidant tes choix et tes interactions.",
+    "horoscope.data.descriptions.capricorn.13": "Une rencontre ou un échange apporte de nouvelles perspectives et stimule ton intérêt.",
+    "horoscope.data.descriptions.capricorn.14": "La persévérance et la rigueur t’accompagnent, t’aidant à surmonter les obstacles et avancer dans tes projets.",
+    "horoscope.data.descriptions.aquarius.0": "Ton originalité et ta créativité illuminent la journée. Tes idées captivent l’attention autour de toi.",
+    "horoscope.data.descriptions.aquarius.1": "Une rencontre inattendue éveille curiosité et émotions, laissant une empreinte notable dans ta journée.",
+    "horoscope.data.descriptions.aquarius.2": "Ton esprit d’innovation est à son apogée, apportant de nouvelles perspectives dans tes projets et activités.",
+    "horoscope.data.descriptions.aquarius.3": "Des malentendus peuvent surgir avec un proche, mais la situation se clarifie au fil de la journée.",
+    "horoscope.data.descriptions.aquarius.4": "Une opportunité surprenante se présente, ajoutant un tournant inattendu à ta journée.",
+    "horoscope.data.descriptions.aquarius.5": "Ton énergie communicative attire l’attention et renforce les liens amicaux ou professionnels.",
+    "horoscope.data.descriptions.aquarius.6": "Un moment de solitude apporte clarté et recentrage sur tes priorités.",
+    "horoscope.data.descriptions.aquarius.7": "Tes idées originales suscitent admiration et parfois jalousie, mais ton focus reste intact.",
+    "horoscope.data.descriptions.aquarius.8": "Une surprise agréable égaye ta journée et apporte une touche positive et lumineuse.",
+    "horoscope.data.descriptions.aquarius.9": "Ton sens de la justice et de l’équilibre influence positivement ton entourage aujourd’hui.",
+    "horoscope.data.descriptions.aquarius.10": "Des décisions importantes pourraient émerger, nécessitant réflexion et discernement.",
+    "horoscope.data.descriptions.aquarius.11": "Une vérité ou un secret se révèle, apportant plus de clarté dans tes relations ou projets.",
+    "horoscope.data.descriptions.aquarius.12": "Tes relations amicales et amoureuses connaissent un élan positif, renforçant les liens et créant de beaux souvenirs.",
+    "horoscope.data.descriptions.aquarius.13": "Un projet ancien renaît sous un nouvel éclairage et prend forme dans la journée.",
+    "horoscope.data.descriptions.aquarius.14": "Ton énergie et ton intuition te guident vers des choix positifs, marquant une journée confiante et audacieuse.",
+    "horoscope.data.descriptions.pisces.0": "Ta sensibilité éclaire la journée et guide tes relations et décisions.",
+    "horoscope.data.descriptions.pisces.1": "Une personne chère se montre surprenamment franche, marquant tes interactions aujourd’hui.",
+    "horoscope.data.descriptions.pisces.2": "Ta créativité atteint son apogée, donnant vie à des idées originales et artistiques.",
+    "horoscope.data.descriptions.pisces.3": "Des décisions financières ou personnelles nécessitent réflexion, apportant prudence à tes choix.",
+    "horoscope.data.descriptions.pisces.4": "Les liens amicaux se renforcent et des gestes sincères ajoutent de la joie à ta journée.",
+    "horoscope.data.descriptions.pisces.5": "Une période d’introspection profonde apporte clarté et recentrage sur tes désirs.",
+    "horoscope.data.descriptions.pisces.6": "Une opportunité inattendue émerge, révélant de nouvelles perspectives.",
+    "horoscope.data.descriptions.pisces.7": "Ton intuition est particulièrement forte et guide tes décisions avec justesse.",
+    "horoscope.data.descriptions.pisces.8": "Un proche cherche ton soutien, créant un moment de partage empreint d’empathie.",
+    "horoscope.data.descriptions.pisces.9": "Une surprise affective ou romantique colore la journée de manière positive.",
+    "horoscope.data.descriptions.pisces.10": "De petites tensions apparaissent, mais la communication apporte apaisement et équilibre.",
+    "horoscope.data.descriptions.pisces.11": "Ta compassion attire les autres et favorise des liens sincères et durables.",
+    "horoscope.data.descriptions.pisces.12": "Un projet ancien retrouve un nouvel élan et prend forme dans la journée.",
+    "horoscope.data.descriptions.pisces.13": "Tes émotions intenses enrichissent tes relations et inspirent tes initiatives.",
+    "horoscope.data.descriptions.pisces.14": "Une énergie positive t’accompagne, guidée par tes intuitions et ton cœur.",
 
     // Messages de fin variés
     "horoscope.message.var1":
@@ -2727,362 +2624,245 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Horoscope Data Translations - Descriptions
     "horoscope.data.descriptions.aries.0":
-      "Your overflowing energy pushes you to act boldly today. Take advantage to start new projects.",
+      "Your energy is strong today. Use it to start something new or take on a personal challenge.",
     "horoscope.data.descriptions.aries.1":
-      "An unexpected encounter could stir your emotions. Stay alert, this person might make your day memorable.",
+      "An unexpected encounter could stir your emotions. Be attentive, this person may mark your day.",
     "horoscope.data.descriptions.aries.2":
-      "Your communicative enthusiasm attracts attention. Be patient to avoid misunderstandings.",
+      "Your enthusiasm draws attention from those around you. Stay patient to avoid misunderstandings.",
     "horoscope.data.descriptions.aries.3":
-      "At work, an opportunity might appear. Analyze it carefully before making a decision.",
+      "A surprise or opportunity may come your way. Observe carefully before jumping in.",
     "horoscope.data.descriptions.aries.4":
-      "Beware of tensions in close relationships. Stay calm and favor dialogue to prevent conflicts.",
+      "Watch for tensions in close relationships. Stay calm and favor dialogue.",
+    "horoscope.data.descriptions.aries.5":
+      "Today, you might have an original idea that brings you satisfaction if you make it happen.",
     "horoscope.data.descriptions.aries.6":
       "Your spontaneity is an asset, but avoid excesses or impulsive decisions that could cause problems.",
     "horoscope.data.descriptions.aries.7":
-      "An original idea could bring success and recognition. Don’t hesitate to share and realize it.",
+      "Important information might come to light. Stay alert and use it wisely.",
     "horoscope.data.descriptions.aries.8":
-      "A hidden truth may be revealed. Stay attentive and use this information wisely.",
+      "Your efforts in what you do are beginning to pay off. Take the moment to enjoy the results.",
     "horoscope.data.descriptions.aries.9":
-      "Your constant efforts are beginning to pay off. It’s time to reap the results of your work.",
+      "Your natural confidence draws others. Use it to strengthen your bonds with those you care about.",
     "horoscope.data.descriptions.aries.10":
-      "Your natural confidence attracts trust from others. Use it to strengthen personal and professional relationships.",
+      "A pleasant surprise could brighten your day, like a message, a meeting, or a positive event.",
     "horoscope.data.descriptions.aries.11":
-      "A pleasant surprise could brighten your day, whether a meeting, a message, or a positive event.",
+      "Your family or friendship ties are strengthened. Enjoy these moments to create cherished memories.",
     "horoscope.data.descriptions.aries.12":
-      "Your friendships or family ties are strengthened. Enjoy these moments to create precious memories.",
+      "Your intuition is particularly sharp today. Follow your feelings to make good decisions.",
     "horoscope.data.descriptions.aries.13":
-      "Your intuition is especially sharp today. Follow your feelings to make good decisions.",
+      "Positive energy accompanies you throughout the day. Move forward with confidence and pursue your personal projects.",
     "horoscope.data.descriptions.aries.14":
-      "Positive energy accompanies you all day. Use it to move forward with confidence and achieve your ambitions.",
+      "Take care of your energy and focus on what really matters. This will give you good results for the day.",
     "horoscope.data.descriptions.taurus.0":
-      "The stability you seek is finally manifesting in your life. Enjoy this period of serenity to savor simple pleasures.",
+      "Your inner stability strengthens today. Take advantage of this calm to enjoy simple pleasures.",
     "horoscope.data.descriptions.taurus.1":
-      "A promising encounter could happen today, bringing a beautiful connection and positive emotions to share.",
+      "An unexpected surprise might brighten your day and bring enjoyable moments.",
     "horoscope.data.descriptions.taurus.2":
-      "Venus brings you sweetness and harmony in your relationships. It’s a perfect day to cultivate love and friendship.",
+      "You feel in harmony with yourself, which helps you maintain balance throughout the day.",
     "horoscope.data.descriptions.taurus.3":
-      "Your patience and perseverance are paying off. The results of your past efforts materialize today.",
+      "Your patience pays off today. You'll see the results of recent efforts manifest.",
     "horoscope.data.descriptions.taurus.4":
-      "Family relationships are particularly harmonious. Take this moment to strengthen bonds with your loved ones.",
+      "Take time to appreciate the small things around you; they contribute to your well-being and serenity.",
     "horoscope.data.descriptions.taurus.5":
-      "Don’t neglect your physical well-being; take time to relax and exercise.",
+      "Look after your body and energy: a walk or some relaxation will help you recharge.",
     "horoscope.data.descriptions.taurus.6":
-      "Your artistic talents are highlighted today, giving you the opportunity to fully express them in personal or professional projects.",
+      "A creative idea or project could bring you satisfaction if you focus on it today.",
     "horoscope.data.descriptions.taurus.7":
-      "This is the perfect time to realize your long-term projects by taking the necessary steps to achieve your goals successfully.",
+      "It's a good time to plan long-term goals, taking the time to set the necessary steps.",
     "horoscope.data.descriptions.taurus.8":
-      "Your practical sense and discernment help you avoid many pitfalls and make wise decisions in your daily affairs.",
+      "Your practical sense helps you avoid pitfalls and make wise decisions for your day.",
     "horoscope.data.descriptions.taurus.9":
-      "A period of material prosperity is approaching, offering opportunities for financial gain and economic stability if you remain attentive.",
+      "A positive period is ahead, with favorable opportunities to seize if you stay attentive.",
     "horoscope.data.descriptions.taurus.10":
-      "Your fidelity and loyalty in friendship are recognized and appreciated by those around you, creating even stronger and more harmonious bonds.",
+      "Your reliability and consistency are recognized by those around you, strengthening trust and connections.",
     "horoscope.data.descriptions.taurus.11":
-      "Simple pleasures in life bring you great satisfaction and contribute to your emotional and mental well-being today.",
+      "Today's simple pleasures bring joy and contribute to your overall well-being.",
     "horoscope.data.descriptions.taurus.12":
-      "Your emotional stability reassures those around you, and you are seen as a reliable and calming reference point for others.",
+      "Your serenity positively influences those around you, making you a reassuring reference point.",
     "horoscope.data.descriptions.taurus.13":
-      "This is an ideal day for outdoor activities, which will allow you to recharge, take a step back, and regain your energy.",
+      "Enjoy some time outdoors to recharge and regain your energy and clarity.",
     "horoscope.data.descriptions.taurus.14":
-      "Your past efforts are finally being rewarded, and you will see that your perseverance pays off in your projects and relationships.",
+      "Your past efforts begin to pay off, and you will notice positive effects today.",
     "horoscope.data.descriptions.gemini.0":
-      "Your natural curiosity leads you to wonderful discoveries. Stay open to new encounters and innovative ideas.",
-    "horoscope.data.descriptions.gemini.1":"Professional opportunities are presenting themselves. Dare to propose your innovative ideas; they will be well received.",
+      "Your natural curiosity leads you to wonderful discoveries. Stay open to new ideas and unexpected experiences.",
+    "horoscope.data.descriptions.gemini.1":
+      "Interesting opportunities may come your way today. Don't hesitate to share your ideas; they could pleasantly surprise you.",
     "horoscope.data.descriptions.gemini.2":
-      "Mercury stimulates your intelligence and creativity. It’s the ideal day to communicate, write, or learn something new.",
+      "Mercury stimulates your mind and creativity. It's a good day to learn something new or try out an idea.",
     "horoscope.data.descriptions.gemini.3":
-      "Your ability to adapt is remarkable today, take advantage of it to explore new opportunities that come your way.",
+      "Your ability to adapt is a strength today, take advantage of it to explore new possibilities.",
     "horoscope.data.descriptions.gemini.4":
-      "Be attentive to your surroundings; some people may have crucial information to share with you.",
+      "Pay attention to your surroundings, some people may share useful or inspiring information.",
     "horoscope.data.descriptions.gemini.5":
-      "Today, your mind is sharp and curious, but beware of misunderstandings or small disputes that may arise around you.",
+      "Your mind is sharp and curious, but be careful of misunderstandings or minor disputes that could arise around you.",
     "horoscope.data.descriptions.gemini.6":
-      "A pleasant surprise could brighten your day, whether it's a meeting, a message, or an inspiring idea.",
+      "A pleasant surprise could brighten your day, whether it's an idea, a message, or an unexpected event.",
     "horoscope.data.descriptions.gemini.7":
-      "Your ease in communicating attracts attention today, but be careful not to reveal too much information or cause misunderstandings.",
+      "Your communication skills draw attention today, but make sure not to share too much or create confusion.",
     "horoscope.data.descriptions.gemini.8":
-      "An unexpected conversation changes your perspective and opens new doors in your relationships or projects.",
+      "An unexpected conversation might change your perspective and open new possibilities in your personal projects.",
     "horoscope.data.descriptions.gemini.9":
-      "Your versatility allows you to juggle multiple projects at once without losing efficiency or creativity.",
+      "Your versatility allows you to handle multiple projects at once without losing efficiency or creativity.",
     "horoscope.data.descriptions.gemini.10":
-      "New technologies open new horizons for you, facilitating exchanges and innovative projects.",
+      "New ideas or tools can bring you simple and effective solutions for your daily activities.",
     "horoscope.data.descriptions.gemini.11":
-      "Your wit and humor lighten the atmosphere, attracting others to you with charm and ease.",
+      "Your quick mind and humor lighten the atmosphere, drawing others to you with ease and charm.",
     "horoscope.data.descriptions.gemini.12":
-      "This is the perfect time to learn something new and expand your knowledge or skills.",
+      "It's a perfect moment to learn something new and expand your knowledge.",
     "horoscope.data.descriptions.gemini.13":
-      "Your social networks and contacts bring you unexpected and profitable opportunities today.",
+      "Your contacts and interactions today could bring unexpected and interesting opportunities.",
     "horoscope.data.descriptions.gemini.14":
-      "Be careful with confidences: a friendship could be tested by a misunderstanding or a revealed secret.",
+      "Be careful with confidences: a misunderstood secret could cause a small misunderstanding.",
     "horoscope.data.descriptions.cancer.0":
-      "Your intuition is particularly developed today. Follow your heart; it will guide you to the right decisions.",
+      "Your intuition is especially strong today. Follow your feelings; they will guide you to the right decisions.",
     "horoscope.data.descriptions.cancer.1":
-      "This day could leave you feeling dizzy. Don't let yourself be overwhelmed by minor annoyances. An inner energy supports you positively, so take care of your nervous system and allow yourself a break from the daily routine!",
+      "Today might feel a bit hectic. Don’t let small annoyances overwhelm you. Take care of your energy and allow yourself a well-deserved break.",
     "horoscope.data.descriptions.cancer.2":
-      "Family and friends play a key role in your fulfillment today. Be attentive and offer your support.",
+      "Pay attention to those around you. Being attentive can create positive interactions and strengthen your connections.",
     "horoscope.data.descriptions.cancer.3":
-      "A little moment of relaxation could do wonders for your energy. Consider meditating or taking a soothing bath.",
+      "A short moment of relaxation can do wonders for your energy. Consider meditating or taking a calming bath.",
     "horoscope.data.descriptions.cancer.4":
-      "The Moon illuminates your sensitivity and strengthens family bonds. It’s a special moment to express your feelings.",
+      "Your sensitivity is heightened today. Observe your feelings and let your instinct guide you to balanced decisions.",
     "horoscope.data.descriptions.cancer.5":
-      "Your natural kindness attracts confidences and strengthens your friendships. You are a refuge for those around you.",
+      "Your kindness naturally attracts trust. Take advantage of this moment to share and support those around you.",
     "horoscope.data.descriptions.cancer.6":
-      "Today is a perfect day to express your emotions and share your feelings sincerely, strengthening your relationships.",
+      "Express your emotions sincerely. This will help you clarify your thoughts and feel lighter throughout the day.",
     "horoscope.data.descriptions.cancer.7":
-      "Your natural empathy allows you to deeply understand others and offer them valuable support.",
+      "Your empathy allows you to understand situations around you. Use it to act calmly and wisely.",
     "horoscope.data.descriptions.cancer.8":
-      "Your relationships are marked by friendship and complicity today. Seek the listening ear and support of those around you, while remaining attentive to their needs as well as your own, without neglecting either.",
+      "Seek balance in your interactions today. Pay attention to others’ needs without neglecting your own.",
     "horoscope.data.descriptions.cancer.9":
-      "Your home becomes a true haven of peace and happiness, ideal for rest and serenity.",
+      "Create a calm space around you. A peaceful moment will help you recharge and regain energy.",
     "horoscope.data.descriptions.cancer.10":
-      "A strong intuition guides you toward the right decision, even in complex or uncertain situations.",
+      "Your intuition guides you to make the right decisions, even in complex situations.",
     "horoscope.data.descriptions.cancer.11":
-      "Your childhood memories inspire you positively and remind you of the essential values that drive you.",
+      "Trust your past experiences and memories to inform your choices today.",
     "horoscope.data.descriptions.cancer.12":
-      "You will be asked to show diplomacy, and there is something positive to gain from it. Through your favorite hobbies, you will find ways to relax. Leave your worries at the door.",
+      "Take time to relax and enjoy your hobbies. Leave your worries aside to regain balance.",
     "horoscope.data.descriptions.cancer.13":
-      "Your connections with new acquaintances will fill the voids and lacks you feel. Your strong taste for the good things may lead you to a few excesses, so take it easy.",
+      "Interactions with new people may bring interesting ideas and perspectives. Stay moderate in pleasures to preserve your energy.",
     "horoscope.data.descriptions.cancer.14":
-      "A family reconciliation brings deep harmony and creates a peaceful atmosphere around you.",
-    "horoscope.data.descriptions.leo.0":
-      "Your magnetism draws attention today, especially in love. If you're in a relationship, be careful not to provoke jealousy. At work, your brilliant ideas impress, but take the time to defend them well. Unexpected recognition could flatter your ego.",
-    "horoscope.data.descriptions.leo.1":
-      "A professional opportunity arises, but it requires courage and full commitment. Don't let fear sabotage your momentum. Personally, a loved one may need your support. Be attentive to the signals around you.",
-    "horoscope.data.descriptions.leo.2":
-      "Within your family, an important discussion clarifies a confusing situation. Even if the words are harsh, they will help you move forward. In love, disarming sincerity will be your best ally. Truth will ultimately strengthen your bonds.",
-    "horoscope.data.descriptions.leo.3":
-      "A friendly encounter could turn into a solid bond. You need to surround yourself with genuine and caring people. At work, your creativity helps you overcome obstacles. Let your intuition guide your choices.",
-    "horoscope.data.descriptions.leo.4":
-      "Luck smiles upon you today, but only if you dare to provoke it. A pleasant surprise may appear in your love life. Financially, avoid impulsive spending. A small act of generosity could bring great returns later.",
-    "horoscope.data.descriptions.leo.5":
-      "You overflow with energy and enthusiasm, but your body also needs rest. Don't neglect your inner balance. A project close to your heart begins to take shape. Let your loved ones share your joy.",
-    "horoscope.data.descriptions.leo.6":
-      "Jealousy from someone around you could disturb your peace. Stay vigilant without succumbing to excessive suspicion. In love, favor tenderness over confrontation. Your inner light is your best protection.",
-    "horoscope.data.descriptions.leo.7":
-      "Unexpected financial setbacks may unsettle you, but nothing insurmountable. Take time to analyze before reacting. In relationships, a friend's sincerity will help you stay on track. External support could pleasantly surprise you.",
-    "horoscope.data.descriptions.leo.8":
-      "Singles might meet someone who awakens their heart. For couples, a moment of complicity strengthens the bond. At work, your constant efforts are finally paying off. The day is full of hope and renewed energy.",
-    "horoscope.data.descriptions.leo.9":
-      "Your work is noticed and could bring a great opportunity, but a jealous rival might try to slow you down. Don't let criticism undermine your confidence. Personally, take time to relax and enjoy your small victories.",
-    "horoscope.data.descriptions.leo.10":
-      "A warm moment with family or loved ones deeply refreshes you. You realize your happiness comes from these simple moments. In love, a tender word heals recent tension. Serenity returns slowly.",
-    "horoscope.data.descriptions.leo.11":
-      "The return of an old friend or someone from your past revives beautiful memories. This bond could turn into a constructive project or unexpected support. In love, buried feelings resurface. It's an emotionally rich day.",
-    "horoscope.data.descriptions.leo.12":
-      "A chance encounter could disrupt your habits and open an unexpected door. Let the surprise unfold without trying to control everything. Professionally, an original proposal may emerge. Stay open to synchronicities.",
-    "horoscope.data.descriptions.leo.13":
-      "Your desire for recognition is strong today, but be careful not to demand too much from loved ones or colleagues. In love, a tender gesture is sometimes worth a thousand words. You inspire, but remain authentic.",
-    "horoscope.data.descriptions.leo.14":
-      "An important decision is required, and your intuition will guide you on the right path. Don't be influenced by conflicting opinions. In relationships, honesty remains key. The clarity you gain today will mark a turning point.",
-    "horoscope.data.descriptions.virgo.0":
-      "Your attention to detail is sharp today, helping you solve a tricky problem. In love, avoid being too critical, as your high standards could hurt. Financially, careful management is already paying off.",
-    "horoscope.data.descriptions.virgo.1":
-      "Someone around you might test your patience. Stay calm and don't fall into unnecessary conflicts. Your natural wisdom will help you come out ahead.",
-    "horoscope.data.descriptions.virgo.2":
-      "Love takes center stage today. If single, a promising encounter may spark your curiosity. In a relationship, small gestures strengthen your daily bonds.",
-    "horoscope.data.descriptions.virgo.3":
-      "Your organization and seriousness impress your colleagues. A new responsibility might be entrusted to you. Although it requires extra effort, this recognition will benefit you long-term.",
-    "horoscope.data.descriptions.virgo.4":
-      "Your sensitivity is highlighted today. A loved one may need your attention. Show empathy, but don't carry all their burdens. Take care of your own balance as well.",
-    "horoscope.data.descriptions.virgo.5":
-      "A financial or material opportunity arises. But beware of hasty decisions. Analyze every detail before committing; your usual caution is your best ally.",
-    "horoscope.data.descriptions.virgo.6":
-      "Your critical mind is strong today, but it could create tensions with loved ones. Turn this energy into constructive advice rather than reproaches. Your clarity will then be seen as supportive.",
-    "horoscope.data.descriptions.virgo.7":
-      "A minor argument might disrupt your day, but it will clarify a previously unclear situation. Accept it as a necessary step toward more sincere relationships.",
-    "horoscope.data.descriptions.virgo.8":
-      "You feel the need to declutter, whether in your belongings, relationships, or habits. This purification process will allow you to see things clearly and start afresh.",
-    "horoscope.data.descriptions.virgo.9":
-      "Luck accompanies you today, but only if you step out of your comfort zone. A meeting or idea could open new, positive horizons. Don't let doubts hinder this momentum.",
-    "horoscope.data.descriptions.virgo.10":
-      "Your loyalty is noticed and appreciated by your friends. But beware of neglecting yourself while giving too much. Your own needs are just as important as those of others.",
-    "horoscope.data.descriptions.virgo.11":
-      "An unexpected event at work or home forces you to revise your plans. Even if inconvenient, this adaptation will ultimately bring a more effective solution. Trust the process.",
-    "horoscope.data.descriptions.virgo.12":
-      "Love could surprise you where you least expect it. Stay attentive to subtle signs and gestures. For couples, a tender moment strengthens bonds and rekindles passion.",
-    "horoscope.data.descriptions.virgo.13":
-      "Your mind is buzzing with new ideas today. Channel this creativity into concrete projects rather than endless reflection. Step by step, your efforts will bear fruit.",
-    "horoscope.data.descriptions.virgo.14":
-      "A revelation or confession may shake your certainties. Even if the truth is hard to hear, it will free you from a burden. Embrace this change with wisdom and openness.",
-    "horoscope.data.descriptions.libra.0":
-      "Your natural charm draws attention today. In love, a meeting could awaken your heart. If in a relationship, a romantic moment brings balance and complicity.",
-    "horoscope.data.descriptions.libra.1":
-      "A disagreement might arise among those close to you. Be diplomatic and avoid hasty judgments. Your ability to remain fair will help restore harmony.",
-    "horoscope.data.descriptions.libra.2":
-      "Your relational talents shine today. Use them to strengthen your friendships and professional ties. A sincere conversation could open the door to a great opportunity.",
-    "horoscope.data.descriptions.libra.3":
-      "An important decision awaits you. Don't let hesitation block you. Listen to your intuition and weigh the pros and cons wisely; the answer will come naturally.",
-    "horoscope.data.descriptions.libra.4":
-      "Your inner balance is challenged. Too many responsibilities may tire you. Step back, delegate if possible, and take a moment just for yourself.",
-    "horoscope.data.descriptions.libra.5":
-      "A pleasant surprise could brighten your day, whether a thoughtful gesture from a loved one or an unexpected opportunity. Welcome it with gratitude and optimism.",
-    "horoscope.data.descriptions.libra.6":
-      "A secret or hidden truth may come to light today. Even if unsettling, this clarity will help you move forward and strengthen future choices.",
-    "horoscope.data.descriptions.libra.7":
-      "You feel the need to strengthen family ties. A shared moment with loved ones brings warmth and comfort. It's an ideal day to express affection.",
-    "horoscope.data.descriptions.libra.8":
-      "At work, your cooperative spirit is appreciated. But be careful not to fade into the background. Speak up, your ideas deserve recognition.",
-    "horoscope.data.descriptions.libra.9":
-      "Your heart may be tested by doubts or hesitation. Take time to clarify your feelings. Sincerity, even if delicate, leads to inner peace.",
-    "horoscope.data.descriptions.libra.10":
-      "A boost of confidence encourages you to move forward. It's the perfect time to start a personal project or take a bold initiative. Dare, the stars support you.",
-    "horoscope.data.descriptions.libra.11":
-      "An inspiring encounter could transform your view of a situation. Pay attention to subtle advice or signs around you; they hold valuable answers.",
-    "horoscope.data.descriptions.libra.12":
-      "Your quest for harmony may be disturbed by a jealous or envious person. Don't let negative energies affect you. Stay focused on your goals and your light.",
-    "horoscope.data.descriptions.libra.13":
-      "Luck seems to favor you today. A financial or relational opportunity arises. Stay open and seize it; it could mark a positive turning point in your life.",
-    "horoscope.data.descriptions.libra.14":
-      "Your need for balance guides you to new choices. Whether in love, work, or friendships, you finally find the courage to set fair and necessary boundaries.",
-    "horoscope.data.descriptions.scorpio.0":
-      "Your intuition is particularly strong today. Follow your gut feelings; they will guide you to the right choices, especially in love and friendship.",
-    "horoscope.data.descriptions.scorpio.1":
-      "Tension might arise in your surroundings. Don't let jealousy or grudges spoil your relationships; rely on honesty to calm things down.",
-    "horoscope.data.descriptions.scorpio.2":
-      "You may encounter an intriguing person who awakens curiosity and emotions. This meeting could shake up your certainties.",
-    "horoscope.data.descriptions.scorpio.3":
-      "Your determination impresses. It's an ideal day to take a professional step forward or clarify a long-standing situation.",
-    "horoscope.data.descriptions.scorpio.4":
-      "A well-kept secret could come to light. Even if surprising, this revelation will help you progress and understand your surroundings better.",
-    "horoscope.data.descriptions.scorpio.5":
-      "Your intensity attracts as much as it unsettles. Use this energy to charm or strengthen your emotional bonds, but avoid possessiveness.",
-    "horoscope.data.descriptions.scorpio.6":
-      "An unexpected offer may arise. Before saying yes, analyze the situation carefully: not everything is as it seems.",
-    "horoscope.data.descriptions.scorpio.7":
-      "You feel the need to isolate yourself to reflect. This introspection will help clarify priorities and regain inner balance.",
-    "horoscope.data.descriptions.scorpio.8":
-      "A long-standing project or idea finally gets favorable momentum. Your perseverance is beginning to pay off.",
-    "horoscope.data.descriptions.scorpio.9":
-      "Beware of misunderstandings in love. Intense emotions may cloud communication. Stay calm and express feelings gently.",
-    "horoscope.data.descriptions.scorpio.10":
-      "Your magnetism is powerful today. You may captivate someone who will play an important role in your future projects.",
-    "horoscope.data.descriptions.scorpio.11":
-      "Jealousy or competition from someone around you might surface. Protect your energy and avoid unnecessary conflicts.",
-    "horoscope.data.descriptions.scorpio.12":
-      "Your passion is a tremendous driving force, but take care not to overexert yourself. Allow breaks to preserve emotional and physical balance.",
-    "horoscope.data.descriptions.scorpio.13":
-      "Good news could brighten your day, whether professionally, romantically, or financially. Receive it with confidence.",
-    "horoscope.data.descriptions.scorpio.14":
-      "Your transformative power is at its peak. Use this energy to close a difficult chapter and start a brighter new beginning.",
-    "horoscope.data.descriptions.sagittarius.0":
-      "Your natural optimism lights up your day. Take this chance to try something new and share your joy with loved ones.",
-    "horoscope.data.descriptions.sagittarius.1":
-      "An unexpected encounter may spark curiosity and emotions. Be open to new people around you; they might surprise you.",
-    "horoscope.data.descriptions.sagittarius.2":
-      "Your adventurous spirit drives you to explore new ideas or places. Avoid spreading yourself too thin; focus on what truly matters.",
-    "horoscope.data.descriptions.sagittarius.3":
-      "At work, an opportunity is offered. Seize it, but check the details to avoid misunderstandings or disappointments.",
-    "horoscope.data.descriptions.sagittarius.4":
-      "Your friends rely on your positive energy. A dispute may arise, but your natural diplomacy will quickly restore harmony.",
-    "horoscope.data.descriptions.sagittarius.5":
-      "Love is favored today. A tender gesture or sincere word could strengthen bonds or spark a significant encounter.",
-    "horoscope.data.descriptions.sagittarius.6":
-      "You may be tempted by excesses or impulsive spending. Maintain balance to avoid future regrets.",
-    "horoscope.data.descriptions.sagittarius.7":
-      "Your creativity and original ideas are highlighted. Express them fully; they could inspire others and open new doors.",
-    "horoscope.data.descriptions.sagittarius.8":
-      "A hidden truth or confidence might be revealed. Stay attentive and don't let misunderstandings affect your relationships.",
-    "horoscope.data.descriptions.sagittarius.9":
-      "A day suitable for travel or learning. Use it to broaden your horizons and discover something new about yourself.",
-    "horoscope.data.descriptions.sagittarius.10":
-      "Your humor and lightness attract others. Share these cheerful moments, but stay sincere to avoid pretenses.",
-    "horoscope.data.descriptions.sagittarius.11":
-      "A challenge or obstacle may appear. Your perseverance and enthusiasm will help you overcome it successfully.",
-    "horoscope.data.descriptions.sagittarius.12":
-      "Be mindful of tensions in the family circle. Take time to listen and understand everyone's needs to avoid unnecessary conflicts.",
-    "horoscope.data.descriptions.sagittarius.13":
-      "Your intuition is enhanced today. Follow your feelings in decisions, especially in love and friendship.",
-    "horoscope.data.descriptions.sagittarius.14":
-      "A favorable energy accompanies you to achieve your projects. Use this cosmic support to advance your ambitions and nurture happiness.",
-    "horoscope.data.descriptions.capricorn.0":
-      "Your seriousness and perseverance attract admiration today. It's the perfect moment to progress on an important project.",
-    "horoscope.data.descriptions.capricorn.1":
-      "Someone around you may surprise you with their reactions. Stay attentive and avoid jumping to conclusions.",
-    "horoscope.data.descriptions.capricorn.2":
-      "Your organizational skills allow you to manage responsibilities effectively. Don't forget to take time to relax.",
-    "horoscope.data.descriptions.capricorn.3":
-      "A professional or financial opportunity arises. Analyze it carefully before making a decision.",
-    "horoscope.data.descriptions.capricorn.4":
-      "Your loyalty and fidelity are appreciated, but avoid being exploited. Set clear boundaries if necessary.",
-    "horoscope.data.descriptions.capricorn.5":
-      "A pleasant moment with a loved one could rekindle emotional or family bonds. Enjoy this connection to strengthen your relationship.",
-    "horoscope.data.descriptions.capricorn.6":
-      "You might be tempted by excess or impulsive spending. Stay cautious to avoid regrets.",
-    "horoscope.data.descriptions.capricorn.7":
-      "A creative idea or project you set aside gains momentum. Don't hesitate to bring it to life.",
-    "horoscope.data.descriptions.capricorn.8":
-      "A hidden truth or secret may be revealed. Take time to understand the implications before reacting.",
-    "horoscope.data.descriptions.capricorn.9":
-      "Your consistent efforts pay off today. It's time to reap the rewards of your work and sacrifices.",
-    "horoscope.data.descriptions.capricorn.10":
-      "Your seriousness inspires trust and respect. Take advantage to showcase your skills and talents.",
-    "horoscope.data.descriptions.capricorn.11":
-      "Watch for tensions in your professional or family circle. Stay calm and prioritize dialogue to defuse conflicts.",
-    "horoscope.data.descriptions.capricorn.12":
-      "Your intuition is particularly sharp. Follow your instincts for fair decisions, especially in love and friendship.",
-    "horoscope.data.descriptions.capricorn.13":
-      "A day favorable for enriching contacts and exchanges. A meeting or conversation could bring new perspectives.",
-    "horoscope.data.descriptions.capricorn.14":
-      "Your perseverance and rigor help you overcome obstacles. Favorable energy accompanies your actions; use it to move forward.",
-    "horoscope.data.descriptions.aquarius.0":
-      "Your originality and creativity are highlighted today. Don't hesitate to share your ideas; they may inspire those around you.",
-    "horoscope.data.descriptions.aquarius.1":
-      "An unexpected meeting may awaken curiosity and emotions. Pay attention; this person could leave a mark on your day.",
-    "horoscope.data.descriptions.aquarius.2":
-      "Your innovative spirit is at its peak. Use it to experiment with new methods in work or personal projects.",
-    "horoscope.data.descriptions.aquarius.3":
-      "Beware of misunderstandings with a loved one. Listen carefully before reacting; clarity and patience will prevent unnecessary conflicts.",
-    "horoscope.data.descriptions.aquarius.4":
-      "A surprising opportunity may present itself. Analyze it before committing; things are not always what they seem.",
-    "horoscope.data.descriptions.aquarius.5":
-      "Your communicative energy draws attention. It's a perfect moment to strengthen friendships or professional connections.",
-    "horoscope.data.descriptions.aquarius.6":
-      "A moment of solitude may allow you to recharge and reflect on priorities. Listen to your inner needs.",
-    "horoscope.data.descriptions.aquarius.7":
-      "Your original ideas could inspire admiration… but also a bit of jealousy. Stay focused on your goals and ignore distractions.",
-    "horoscope.data.descriptions.aquarius.8":
-      "A pleasant surprise could brighten your day, whether a message, gesture, or project taking shape.",
-    "horoscope.data.descriptions.aquarius.9":
-      "Your sense of justice and balance is called upon today. Help ease tensions around you; your role is important.",
-    "horoscope.data.descriptions.aquarius.10":
-      "Beware of excesses or impulsive decisions. Take time to think and weigh pros and cons before acting.",
-    "horoscope.data.descriptions.aquarius.11":
-      "A hidden truth or secret may emerge. Stay calm and use this information to improve relationships or projects.",
-    "horoscope.data.descriptions.aquarius.12":
-      "Your friendships or romantic relationships are favored. A sincere gesture or kind word can strengthen bonds and create lasting memories.",
-    "horoscope.data.descriptions.aquarius.13":
-      "An old idea or project may be reborn in a new light. It's time to bring it to life and achieve your aspirations.",
-    "horoscope.data.descriptions.aquarius.14":
-      "Your energy and intuition guide you toward positive choices. Use today to move forward with confidence and boldness.",
-    "horoscope.data.descriptions.pisces.0":
-      "Your sensitivity is your strength today. Listen to your emotions; they will guide your relationships and choices.",
-    "horoscope.data.descriptions.pisces.1":
-      "A dear person may surprise you with their honesty. Stay open and attentive to avoid misunderstandings.",
-    "horoscope.data.descriptions.pisces.2":
-      "Your creativity is at its peak. Use it to express artistic or original ideas in your projects.",
-    "horoscope.data.descriptions.pisces.3":
-      "Be cautious with impulsive decisions, especially regarding finances. Think carefully before committing.",
-    "horoscope.data.descriptions.pisces.4":
-      "Your friendships are favored. A sincere gesture or word can strengthen bonds and bring joy.",
-    "horoscope.data.descriptions.pisces.5":
-      "A day conducive to introspection. Take time to reconnect with your needs and deep desires.",
-    "horoscope.data.descriptions.pisces.6":
-      "An unexpected opportunity may arise. Evaluate it with discernment before diving in.",
-    "horoscope.data.descriptions.pisces.7":
-      "Your intuition is particularly sharp today. Trust it to guide personal and professional decisions.",
-    "horoscope.data.descriptions.pisces.8":
-      "A loved one may seek your support. Listen carefully and offer empathy without neglecting yourself.",
-    "horoscope.data.descriptions.pisces.9":
-      "A romantic or affectionate surprise could brighten your day. Be open to signs and gestures of affection.",
-    "horoscope.data.descriptions.pisces.10":
-      "Minor tensions may arise. Stay calm and prioritize communication to avoid conflicts.",
-    "horoscope.data.descriptions.pisces.11":
-      "Your compassion draws others to you. Take advantage to create sincere and lasting connections.",
-    "horoscope.data.descriptions.pisces.12":
-      "An old project may gain new momentum. It's the perfect time to realize your ideas and ambitions.",
-    "horoscope.data.descriptions.pisces.13":
-      "Your emotions are intense and enriching today. Channel them to strengthen relationships and initiatives.",
-    "horoscope.data.descriptions.pisces.14":
-      "Positive energy accompanies you throughout the day. Follow your intuition and let your heart guide your choices.",
+      "A calm and harmonious day brings you serenity and allows you to recharge your batteries.",
+    "horoscope.data.descriptions.leo.0": "Today, your natural charisma attracts attention. Use this energy to feel confident and shine in everything you do.",
+    "horoscope.data.descriptions.leo.1": "A great opportunity appears, but it requires courage and commitment. Dare to take action and don’t be afraid to try.",
+    "horoscope.data.descriptions.leo.2": "An important discussion could clarify a confusing situation. Listen carefully and stay open to new perspectives.",
+    "horoscope.data.descriptions.leo.3": "Surround yourself with sincere and kind people. Their presence will give you energy and strengthen your balance.",
+    "horoscope.data.descriptions.leo.4": "Luck favors those who dare. Pay attention to unexpected opportunities and seize the moment.",
+    "horoscope.data.descriptions.leo.5": "Your energy is high today, but also take time to rest. Balance between action and relaxation is essential.",
+    "horoscope.data.descriptions.leo.6": "Stay aware of tensions around you and remain calm. Your inner peace is your best protection.",
+    "horoscope.data.descriptions.leo.7": "Unexpected events may surprise you, but nothing is insurmountable. Think before you act and trust yourself.",
+    "horoscope.data.descriptions.leo.8": "A pleasant meeting or moment could brighten your day. Welcome surprises with openness and curiosity.",
+    "horoscope.data.descriptions.leo.9": "Take time to enjoy your small victories. Every step counts and contributes to your progress.",
+    "horoscope.data.descriptions.leo.10": "Simple, warm moments with loved ones or friends recharge you. Appreciate these times and their positive energy.",
+    "horoscope.data.descriptions.leo.11": "Returning memories or old connections can bring inspiration and support. Be open to experiences from the past that nourish you.",
+    "horoscope.data.descriptions.leo.12": "Let yourself be surprised by unexpected events. Being open to the unknown can create great opportunities.",
+    "horoscope.data.descriptions.leo.13": "Your desire for recognition is strong, but stay authentic and moderate. Inspire others through sincere actions.",
+    "horoscope.data.descriptions.leo.14": "An important decision is coming. Listen to your intuition and stay true to your convictions to find the right path.",
+    "horoscope.data.descriptions.virgo.0": "Today, your attention to detail will help you untangle a tricky situation. Stay alert to the signs around you; they could guide your choices.",
+    "horoscope.data.descriptions.virgo.1": "Someone or something might test your patience. Stay calm and let things unfold naturally.",
+    "horoscope.data.descriptions.virgo.2": "A sudden curiosity may push you to discover something new and exciting.",
+    "horoscope.data.descriptions.virgo.3": "Your organization and judgment will be highlighted. It's a great moment to structure your projects or ideas.",
+    "horoscope.data.descriptions.virgo.4": "Your intuition is strong today. Trust your feelings to navigate the day.",
+    "horoscope.data.descriptions.virgo.5": "Interesting opportunities may appear, but you should analyze them carefully before taking action.",
+    "horoscope.data.descriptions.virgo.6": "Your critical mind is active and can help clarify unclear situations if used constructively.",
+    "horoscope.data.descriptions.virgo.7": "A minor setback might surprise you, but it will bring clarity and help you organize what comes next.",
+    "horoscope.data.descriptions.virgo.8": "It's a good time to sort through your belongings or habits. This will help you start fresh with clarity.",
+    "horoscope.data.descriptions.virgo.9": "Luck is on your side, especially if you step out of your comfort zone and explore new possibilities.",
+    "horoscope.data.descriptions.virgo.10": "Your loyalty and consistency will be noticed. Take time to care for yourself and your own needs as well.",
+    "horoscope.data.descriptions.virgo.11": "An unexpected event may disrupt your schedule, but it will ultimately lead to a more effective solution.",
+    "horoscope.data.descriptions.virgo.12": "A surprise or unexpected event may catch your attention and lead you to discover something new.",
+    "horoscope.data.descriptions.virgo.13": "Your mind is buzzing with ideas today. Channel them into concrete actions and take it step by step.",
+    "horoscope.data.descriptions.virgo.14": "Information or a revelation may challenge your certainties. Embrace this change with openness and calm.",
+    "horoscope.data.descriptions.libra.0": "Your natural charm draws attention today, and unexpected encounters might brighten your day.",
+    "horoscope.data.descriptions.libra.1": "A disagreement could arise around you. Staying calm and fair will help restore harmony.",
+    "horoscope.data.descriptions.libra.2": "Your relational skills shine today. A sincere conversation could open new perspectives.",
+    "horoscope.data.descriptions.libra.3": "An important decision comes your way. Listen to your intuition and let the answers come naturally.",
+    "horoscope.data.descriptions.libra.4": "Your inner balance is tested. Take a step back and give yourself some personal time.",
+    "horoscope.data.descriptions.libra.5": "A pleasant surprise could brighten your day. Welcome it with optimism and curiosity.",
+    "horoscope.data.descriptions.libra.6": "A secret or hidden truth might be revealed today. This clarity will help you move forward more calmly.",
+    "horoscope.data.descriptions.libra.7": "You feel the need to strengthen bonds with your close ones. A shared moment brings warmth and comfort.",
+    "horoscope.data.descriptions.libra.8": "Your ability to cooperate and listen is highlighted. Speak up; your ideas deserve recognition.",
+    "horoscope.data.descriptions.libra.9": "Doubts or hesitations may cloud your mind. Take time to clarify your thoughts for serenity.",
+    "horoscope.data.descriptions.libra.10": "A boost of confidence encourages you to act. It’s the perfect moment to start something new.",
+    "horoscope.data.descriptions.libra.11": "An encounter or observation could change your perspective. Pay attention to subtle signs around you.",
+    "horoscope.data.descriptions.libra.12": "Negative energies might affect you, but staying centered will keep you on track.",
+    "horoscope.data.descriptions.libra.13": "Luck seems to smile on you today. An opportunity may mark a positive turning point.",
+    "horoscope.data.descriptions.libra.14": "Your need for balance guides you toward new choices. You finally find the courage to set fair and necessary boundaries.",
+    "horoscope.data.descriptions.scorpio.0": "Your intuition is especially strong today. Your instincts will guide you to the right choices.",
+    "horoscope.data.descriptions.scorpio.1": "A tension might arise around you. Stay calm and prioritize honesty to ease the situation.",
+    "horoscope.data.descriptions.scorpio.2": "You may meet an intriguing person who sparks your curiosity and emotions, shaking up your certainties.",
+    "horoscope.data.descriptions.scorpio.3": "Your determination stands out today. It's a perfect day to overcome a hurdle or clarify an ongoing situation.",
+    "horoscope.data.descriptions.scorpio.4": "A hidden truth or secret may come to light. Even if it surprises you, it will help you understand your surroundings better.",
+    "horoscope.data.descriptions.scorpio.5": "Your intensity draws attention and can unsettle. Use this energy to move forward but avoid overdoing it.",
+    "horoscope.data.descriptions.scorpio.6": "An unexpected opportunity might appear. Analyze the situation carefully before taking action.",
+    "horoscope.data.descriptions.scorpio.7": "You will feel the need to withdraw and reflect. This introspection will clarify your priorities and strengthen your inner balance.",
+    "horoscope.data.descriptions.scorpio.8": "A long-standing project or idea finally gains momentum. Your perseverance starts paying off.",
+    "horoscope.data.descriptions.scorpio.9": "Be mindful of misunderstandings. Your intense emotions might cloud communication. Stay calm and express yourself gently.",
+    "horoscope.data.descriptions.scorpio.10": "Your magnetism is strong today. You may capture the attention of someone influential for your path ahead.",
+    "horoscope.data.descriptions.scorpio.11": "Jealousy or competition from others might surface. Protect your energy and avoid unnecessary conflicts.",
+    "horoscope.data.descriptions.scorpio.12": "Your passion is a powerful driver, but remember to pace yourself. Take breaks to maintain balance.",
+    "horoscope.data.descriptions.scorpio.13": "Good news may brighten your day. Welcome it with confidence.",
+    "horoscope.data.descriptions.scorpio.14": "Your transformative power is at its peak. Use this energy to close a chapter and start anew.",
+    "horoscope.data.descriptions.sagittarius.0": "Your natural optimism lights up your day. You feel drawn to start something new and share your joy.",
+    "horoscope.data.descriptions.sagittarius.1": "An unexpected encounter may spark your curiosity and emotions, bringing a pleasant surprise.",
+    "horoscope.data.descriptions.sagittarius.2": "Your adventurous spirit pushes you to explore new ideas or places, though focusing on what matters remains key.",
+    "horoscope.data.descriptions.sagittarius.3": "An opportunity arises today. Attention to details could help avoid misunderstandings.",
+    "horoscope.data.descriptions.sagittarius.4": "Your positive energy influences those around you. Even if a dispute occurs, balance returns quickly.",
+    "horoscope.data.descriptions.sagittarius.5": "Tender moments or meaningful exchanges may mark the day and strengthen important connections.",
+    "horoscope.data.descriptions.sagittarius.6": "You might feel tempted to go beyond limits or make impulsive choices. Maintaining balance is important.",
+    "horoscope.data.descriptions.sagittarius.7": "Your creativity and original ideas are highlighted. They may inspire others and open new opportunities.",
+    "horoscope.data.descriptions.sagittarius.8": "A hidden truth or secret might be revealed. Misunderstandings fade if you stay attentive.",
+    "horoscope.data.descriptions.sagittarius.9": "A day favorable for discovery and learning. You can broaden your horizons and learn more about yourself.",
+    "horoscope.data.descriptions.sagittarius.10": "Your humor and lightness attract attention. These cheerful moments are shared sincerely.",
+    "horoscope.data.descriptions.sagittarius.11": "A challenge or obstacle may appear. Your enthusiasm and perseverance help you overcome it.",
+    "horoscope.data.descriptions.sagittarius.12": "Tensions within your family circle may arise. Listening and understanding help maintain harmony.",
+    "horoscope.data.descriptions.sagittarius.13": "Your intuition is strong today. Your instincts guide your decisions and interactions.",
+    "horoscope.data.descriptions.sagittarius.14": "A favorable energy supports you in advancing your projects and nurturing your happiness.",
+    "horoscope.data.descriptions.capricorn.0": "Your seriousness and perseverance attract attention today. You progress energetically on an important project.",
+    "horoscope.data.descriptions.capricorn.1": "Someone around you surprises with unexpected reactions, adding a touch of unpredictability to your day.",
+    "horoscope.data.descriptions.capricorn.2": "Your organizational skills are highlighted today, allowing you to manage multiple responsibilities effectively.",
+    "horoscope.data.descriptions.capricorn.3": "A professional or financial opportunity arises, offering new perspectives.",
+    "horoscope.data.descriptions.capricorn.4": "Your loyalty and fidelity are recognized, strengthening the trust around you.",
+    "horoscope.data.descriptions.capricorn.5": "A pleasant moment with a close person brings warmth and connection, brightening the day.",
+    "horoscope.data.descriptions.capricorn.6": "A temptation for excess or impulsive spending might arise, but the overall energy remains positive.",
+    "horoscope.data.descriptions.capricorn.7": "An idea or project previously set aside finds new momentum and progresses today.",
+    "horoscope.data.descriptions.capricorn.8": "A hidden truth or revelation may emerge, bringing clarity to your relationships.",
+    "horoscope.data.descriptions.capricorn.9": "Your efforts start to bear fruit, offering satisfaction and accomplishment.",
+    "horoscope.data.descriptions.capricorn.10": "Your seriousness and diligence are noticed and inspire trust around you.",
+    "horoscope.data.descriptions.capricorn.11": "Tensions may appear in your environment, but the situation stabilizes as the day progresses.",
+    "horoscope.data.descriptions.capricorn.12": "Your intuition is strong today, guiding your choices and interactions.",
+    "horoscope.data.descriptions.capricorn.13": "A meeting or exchange brings new perspectives and stimulates your interest.",
+    "horoscope.data.descriptions.capricorn.14": "Perseverance and diligence accompany you, helping you overcome obstacles and move forward in your projects.",
+    "horoscope.data.descriptions.aquarius.0": "Your originality and creativity shine today, capturing the attention of those around you.",
+    "horoscope.data.descriptions.aquarius.1": "An unexpected encounter sparks curiosity and emotions, leaving a notable mark on your day.",
+    "horoscope.data.descriptions.aquarius.2": "Your innovative spirit reaches its peak, bringing new perspectives to your projects and activities.",
+    "horoscope.data.descriptions.aquarius.3": "Misunderstandings may arise with someone close, but clarity unfolds as the day progresses.",
+    "horoscope.data.descriptions.aquarius.4": "A surprising opportunity appears, adding an unexpected twist to your day.",
+    "horoscope.data.descriptions.aquarius.5": "Your communicative energy draws attention and strengthens friendships or professional ties.",
+    "horoscope.data.descriptions.aquarius.6": "A moment of solitude provides clarity and helps you refocus on your priorities.",
+    "horoscope.data.descriptions.aquarius.7": "Your original ideas attract admiration and sometimes jealousy, yet your focus remains strong.",
+    "horoscope.data.descriptions.aquarius.8": "A pleasant surprise brightens your day and adds a positive, uplifting touch.",
+    "horoscope.data.descriptions.aquarius.9": "Your sense of fairness and balance positively influences those around you today.",
+    "horoscope.data.descriptions.aquarius.10": "Important decisions may arise, requiring reflection and discernment.",
+    "horoscope.data.descriptions.aquarius.11": "A hidden truth or secret comes to light, bringing clarity to relationships or projects.",
+    "horoscope.data.descriptions.aquarius.12": "Your friendships and romantic connections flourish, strengthening bonds and creating cherished memories.",
+    "horoscope.data.descriptions.aquarius.13": "An old project is revived with a fresh perspective and takes shape today.",
+    "horoscope.data.descriptions.aquarius.14": "Your energy and intuition guide you toward positive choices, marking a confident and bold day.",
+    "horoscope.data.descriptions.pisces.0": "Your sensitivity lights up the day, guiding your relationships and decisions.",
+    "horoscope.data.descriptions.pisces.1": "A close person shows surprising frankness, leaving an impression on your interactions today.",
+    "horoscope.data.descriptions.pisces.2": "Your creativity peaks, bringing original and artistic ideas to life.",
+    "horoscope.data.descriptions.pisces.3": "Financial or personal decisions require thought, bringing caution to your choices.",
+    "horoscope.data.descriptions.pisces.4": "Friendships strengthen, and sincere gestures bring joy to your day.",
+    "horoscope.data.descriptions.pisces.5": "A period of deep introspection brings clarity and refocuses your desires.",
+    "horoscope.data.descriptions.pisces.6": "An unexpected opportunity arises, revealing new possibilities.",
+    "horoscope.data.descriptions.pisces.7": "Your intuition is particularly strong, guiding your decisions accurately.",
+    "horoscope.data.descriptions.pisces.8": "A close one seeks your support, creating a moment of empathetic sharing.",
+    "horoscope.data.descriptions.pisces.9": "A romantic or affectionate surprise colors the day positively.",
+    "horoscope.data.descriptions.pisces.10": "Minor tensions appear, but communication brings calm and balance.",
+    "horoscope.data.descriptions.pisces.11": "Your compassion attracts others and fosters sincere, lasting bonds.",
+    "horoscope.data.descriptions.pisces.12": "An old project gains new momentum and takes shape today.",
+    "horoscope.data.descriptions.pisces.13": "Your intense emotions enrich relationships and inspire your initiatives.",
+    "horoscope.data.descriptions.pisces.14": "Positive energy accompanies you, guided by your intuition and heart.",
 
     // Varied final messages
     "horoscope.message.var1":
@@ -3227,7 +3007,7 @@ const translations: Record<Language, Record<string, string>> = {
     "horoscope.data.colors.Pourpre": "Purple",
     "horoscope.data.colors.Grenat": "Garnet",
     "horoscope.data.colors.Bleu turquoise": "Turquoise blue",
-    "horoscope.data.colors.Violet": "Violet",
+    "horoscope.data.colors.Violet": "Purple",
     "horoscope.data.colors.Indigo": "Indigo",
     "horoscope.data.colors.Gris": "Gray",
     "horoscope.data.colors.Marron": "Brown",
@@ -4622,363 +4402,245 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Horoscope Data Translations - Descriptions
     "horoscope.data.descriptions.aries.0":
-      "Tu energía desbordante te impulsa a actuar con audacia hoy. Aprovecha para iniciar nuevos proyectos.",
+      "Tu energía es fuerte hoy. Aprovechala para empezar algo nuevo o asumir un desafío personal.",
     "horoscope.data.descriptions.aries.1":
-      "Un encuentro inesperado podría alterar tus emociones. Mantente atento, esta persona podría marcar tu día.",
+      "Un encuentro inesperado podría despertar tus emociones. Mantente atento, esta persona podría marcar tu día.",
     "horoscope.data.descriptions.aries.2":
-      "Tu entusiasmo comunicativo atrae la atención de quienes te rodean. Ten paciencia para evitar malentendidos.",
+      "Tu entusiasmo llama la atención de quienes te rodean. Mantén la paciencia para evitar malentendidos.",
     "horoscope.data.descriptions.aries.3":
-      "En el trabajo, podría presentarse una oportunidad. Analízala cuidadosamente antes de decidir.",
+      "Una sorpresa o una oportunidad puede aparecer. Obsérvala con cuidado antes de actuar.",
     "horoscope.data.descriptions.aries.4":
-      "Atento a las tensiones en tus relaciones cercanas. Mantén la calma y prioriza el diálogo para evitar conflictos.",
+      "Cuidado con las tensiones en tus relaciones cercanas. Mantén la calma y favorece el diálogo.",
+    "horoscope.data.descriptions.aries.5":
+      "Hoy podrías tener una idea original que te traerá satisfacción si la llevas a cabo.",
     "horoscope.data.descriptions.aries.6":
-      "Tu espontaneidad es un activo, pero evita excesos o decisiones impulsivas que puedan causarte problemas.",
+      "Tu espontaneidad es un punto fuerte, pero evita excesos o decisiones impulsivas que puedan causarte problemas.",
     "horoscope.data.descriptions.aries.7":
-      "Una idea original podría traerte éxito y reconocimiento. No dudes en compartirla y concretarla.",
+      "Podría revelarse información importante. Mantente alerta y úsala con sabiduría.",
     "horoscope.data.descriptions.aries.8":
-      "Una verdad oculta podría revelarse. Mantente atento y utiliza esta información sabiamente.",
+      "Tus esfuerzos comienzan a dar frutos. Aprovecha el momento para disfrutar los resultados.",
     "horoscope.data.descriptions.aries.9":
-      "Tus esfuerzos constantes comienzan a dar frutos. Es momento de cosechar los resultados de tu trabajo.",
+      "Tu confianza natural atrae a los demás. Úsala para fortalecer los lazos con quienes te importan.",
     "horoscope.data.descriptions.aries.10":
-      "Tu seguridad natural atrae la confianza de los demás. Aprovecha para consolidar tus relaciones personales y profesionales.",
+      "Una agradable sorpresa podría alegrar tu día, como un mensaje, un encuentro o un evento positivo.",
     "horoscope.data.descriptions.aries.11":
-      "Una agradable sorpresa podría iluminar tu día, ya sea un encuentro, un mensaje o un evento positivo.",
+      "Tus lazos familiares o de amistad se fortalecen. Disfruta estos momentos para crear recuerdos valiosos.",
     "horoscope.data.descriptions.aries.12":
-      "Tus lazos de amistad o familiares se fortalecen. Disfruta estos momentos para crear recuerdos valiosos.",
+      "Tu intuición está particularmente afinada hoy. Sigue tus sentimientos para tomar buenas decisiones.",
     "horoscope.data.descriptions.aries.13":
-      "Tu intuición está especialmente aguda hoy. Sigue tus sentimientos para tomar buenas decisiones.",
+      "Una energía positiva te acompaña todo el día. Avanza con confianza y realiza tus proyectos personales.",
     "horoscope.data.descriptions.aries.14":
-      "Una energía positiva te acompaña todo el día. Úsala para avanzar con confianza y lograr tus objetivos.",
+      "Cuida tu energía y concéntrate en lo que realmente importa. Esto te dará buenos resultados durante el día.",
     "horoscope.data.descriptions.taurus.0":
-      "La estabilidad que buscas finalmente se manifiesta en tu vida. Disfruta de este período de serenidad para saborear los placeres simples.",
+      "Tu estabilidad interior se fortalece hoy. Aprovecha esta calma para disfrutar de los placeres simples.",
     "horoscope.data.descriptions.taurus.1":
-      "Un encuentro prometedor podría ocurrir hoy, trayendo una hermosa complicidad y emociones positivas para compartir.",
+      "Una sorpresa inesperada puede alegrar tu día y brindarte momentos agradables.",
     "horoscope.data.descriptions.taurus.2":
-      "Venus te trae dulzura y armonía en tus relaciones. Es un día perfecto para cultivar el amor y la amistad.",
+      "Te sientes en armonía contigo mismo, lo que te ayuda a mantener el equilibrio durante todo el día.",
     "horoscope.data.descriptions.taurus.3":
-      "Tu paciencia y perseverancia están dando frutos. Los resultados de tus esfuerzos pasados se concretan hoy.",
+      "Tu paciencia da frutos hoy. Verás los resultados de tus esfuerzos recientes manifestarse.",
     "horoscope.data.descriptions.taurus.4":
-      "Las relaciones familiares son particularmente armoniosas. Aprovecha este momento para fortalecer los lazos con tus seres queridos.",
+      "Tómate el tiempo para apreciar las pequeñas cosas a tu alrededor; contribuyen a tu bienestar y serenidad.",
     "horoscope.data.descriptions.taurus.5":
-      "No descuides tu bienestar físico; tómate tiempo para relajarte y hacer ejercicio.",
+      "Cuida tu cuerpo y tu energía: un paseo o un momento de relajación te ayudará a recargarte.",
     "horoscope.data.descriptions.taurus.6":
-      "Tus talentos artísticos se destacan hoy, y tendrás la oportunidad de expresarlos plenamente en tus proyectos personales o profesionales.",
+      "Una idea o proyecto creativo podría darte satisfacción si te concentras en ello hoy.",
     "horoscope.data.descriptions.taurus.7":
-      "Es el momento ideal para concretar tus proyectos a largo plazo, estableciendo los pasos necesarios para alcanzar tus objetivos con éxito.",
+      "Es un buen momento para planificar objetivos a largo plazo, tomando el tiempo necesario para establecer los pasos.",
     "horoscope.data.descriptions.taurus.8":
-      "Tu sentido práctico y tu discernimiento te permiten evitar muchos errores y tomar decisiones sabias en tus asuntos diarios.",
+      "Tu sentido práctico te ayuda a evitar trampas y tomar decisiones sabias durante el día.",
     "horoscope.data.descriptions.taurus.9":
-      "Se aproxima un período de prosperidad material, ofreciendo oportunidades de ganancias financieras y estabilidad económica si permaneces atento.",
+      "Se aproxima un período positivo, con oportunidades favorables si permaneces atento.",
     "horoscope.data.descriptions.taurus.10":
-      "Tu fidelidad y lealtad en la amistad son reconocidas y apreciadas por quienes te rodean, creando vínculos aún más fuertes y armoniosos.",
+      "Tu fiabilidad y constancia son reconocidas por quienes te rodean, fortaleciendo la confianza y los vínculos.",
     "horoscope.data.descriptions.taurus.11":
-      "Los placeres simples de la vida te brindan gran satisfacción y contribuyen a tu bienestar emocional y mental hoy.",
+      "Los placeres simples de hoy te brindan alegría y contribuyen a tu bienestar general.",
     "horoscope.data.descriptions.taurus.12":
-      "Tu estabilidad emocional tranquiliza a quienes te rodean, y eres percibido como un referente confiable y calmante para los demás.",
+      "Tu serenidad influye positivamente en los que te rodean, convirtiéndote en un punto de referencia tranquilizador.",
     "horoscope.data.descriptions.taurus.13":
-      "Es un día ideal para actividades al aire libre, que te permitirán recargarte, tomar distancia y recuperar tu energía.",
+      "Disfruta de momentos al aire libre para recargarte y recuperar tu energía y claridad.",
     "horoscope.data.descriptions.taurus.14":
-      "Tus esfuerzos pasados finalmente están siendo recompensados, y verás que tu perseverancia da frutos en tus proyectos y relaciones.",
+      "Tus esfuerzos pasados comienzan a dar frutos, y notarás efectos positivos hoy.",
     "horoscope.data.descriptions.gemini.0":
-      "Tu curiosidad natural te lleva a maravillosos descubrimientos. Mantente abierto a nuevos encuentros e ideas innovadoras.",
+      "Tu curiosidad natural te lleva a maravillosos descubrimientos. Mantente abierto a nuevas ideas y experiencias inesperadas.",
     "horoscope.data.descriptions.gemini.1":
-      "Se presentan oportunidades profesionales. Atrévete a proponer tus ideas innovadoras; serán bien recibidas.",
+      "Hoy pueden surgir oportunidades interesantes. No dudes en compartir tus ideas, podrían sorprenderte gratamente.",
     "horoscope.data.descriptions.gemini.2":
-      "Mercurio estimula tu inteligencia y creatividad. Es el día ideal para comunicar, escribir o aprender algo nuevo.",
+      "Mercurio estimula tu mente y creatividad. Es un buen día para aprender algo nuevo o probar una idea.",
     "horoscope.data.descriptions.gemini.3":
-      "Tu capacidad de adaptarte es notable hoy, aprovecha para explorar nuevas oportunidades que se presenten.",
+      "Tu capacidad de adaptarte es una fortaleza hoy, aprovéchala para explorar nuevas posibilidades.",
     "horoscope.data.descriptions.gemini.4":
-      "Presta atención a tu entorno; algunas personas podrían tener información crucial para compartir contigo.",
+      "Presta atención a tu entorno, algunas personas podrían compartir información útil o inspiradora.",
     "horoscope.data.descriptions.gemini.5":
-      "Hoy tu mente está aguda y curiosa, pero ten cuidado con malentendidos o pequeñas disputas que puedan surgir a tu alrededor.",
+      "Tu mente está aguda y curiosa, pero ten cuidado con malentendidos o pequeñas discusiones que puedan surgir a tu alrededor.",
     "horoscope.data.descriptions.gemini.6":
-      "Una sorpresa agradable podría iluminar tu día, ya sea un encuentro, un mensaje o una idea inspiradora.",
+      "Una sorpresa agradable podría alegrar tu día, ya sea una idea, un mensaje o un evento inesperado.",
     "horoscope.data.descriptions.gemini.7":
-      "Tu facilidad para comunicar atrae la atención hoy, pero ten cuidado de no revelar demasiada información o causar malentendidos.",
+      "Tu habilidad para comunicar atrae atención hoy, pero asegúrate de no compartir demasiado o crear confusión.",
     "horoscope.data.descriptions.gemini.8":
-      "Una conversación inesperada cambia tu punto de vista y abre nuevas perspectivas en tus relaciones o proyectos.",
+      "Una conversación inesperada podría cambiar tu perspectiva y abrir nuevas posibilidades en tus proyectos personales.",
     "horoscope.data.descriptions.gemini.9":
-      "Tu versatilidad te permite manejar varios proyectos a la vez sin perder eficacia ni creatividad.",
+      "Tu versatilidad te permite manejar varios proyectos a la vez sin perder eficiencia ni creatividad.",
     "horoscope.data.descriptions.gemini.10":
-      "Las nuevas tecnologías te abren nuevos horizontes y facilitan tus intercambios o proyectos innovadores.",
+      "Nuevas ideas o herramientas pueden traerte soluciones simples y efectivas para tus actividades diarias.",
     "horoscope.data.descriptions.gemini.11":
-      "Tu ingenio y sentido del humor relajan el ambiente, atrayendo a los demás hacia ti con ligereza y carisma.",
+      "Tu mente rápida y tu humor alivian el ambiente, atrayendo a los demás hacia ti con facilidad y encanto.",
     "horoscope.data.descriptions.gemini.12":
-      "Es un momento perfecto para aprender algo nuevo y enriquecer tus conocimientos o habilidades.",
+      "Es un momento perfecto para aprender algo nuevo y ampliar tus conocimientos.",
     "horoscope.data.descriptions.gemini.13":
-      "Tus redes sociales y contactos te aportan hoy oportunidades inesperadas y provechosas.",
+      "Tus contactos e interacciones hoy podrían traer oportunidades inesperadas e interesantes.",
     "horoscope.data.descriptions.gemini.14":
-      "Cuidado con las confidencias: una amistad podría ponerse a prueba por un malentendido o un secreto revelado.",
+      "Ten cuidado con las confidencias: un secreto mal entendido podría causar un pequeño malentendido.",
     "horoscope.data.descriptions.cancer.0":
-      "Tu intuición está especialmente desarrollada hoy. Sigue tu corazón; te guiará hacia las decisiones correctas.",
+      "Tu intuición está especialmente fuerte hoy. Sigue tus sentimientos; te guiarán hacia las decisiones correctas.",
     "horoscope.data.descriptions.cancer.1":
-      "Este día podría marearte. No dejes que las pequeñas molestias te abrumen. Una energía interior te apoya positivamente, así que cuida tu sistema nervioso y date un respiro del día a día.",
+      "Hoy puede ser un día un poco agitado. No dejes que pequeñas molestias te abrumen. Cuida tu energía y date un merecido descanso.",
     "horoscope.data.descriptions.cancer.2":
-      "La familia y los amigos juegan un papel clave en tu bienestar hoy. Escucha y ofrece tu apoyo.",
+      "Presta atención a quienes te rodean. Estar atento puede crear interacciones positivas y fortalecer tus vínculos.",
     "horoscope.data.descriptions.cancer.3":
-      "Un pequeño momento de relajación podría hacer maravillas para tu energía. Considera meditar o tomar un baño relajante.",
+      "Un pequeño momento de relajación puede hacer maravillas por tu energía. Considera meditar o tomar un baño calmante.",
     "horoscope.data.descriptions.cancer.4":
-      "La Luna ilumina tu sensibilidad y fortalece los lazos familiares. Es un momento especial para expresar tus sentimientos.",
+      "Tu sensibilidad está elevada hoy. Observa tus sentimientos y deja que tu instinto te guíe hacia decisiones equilibradas.",
     "horoscope.data.descriptions.cancer.5":
-      "Tu bondad natural atrae confidencias y fortalece tus amistades. Eres un refugio para quienes te rodean.",
+      "Tu amabilidad atrae naturalmente confianza. Aprovecha este momento para compartir y apoyar a quienes te rodean.",
     "horoscope.data.descriptions.cancer.6":
-      "Hoy es un día perfecto para expresar tus emociones y compartir tus sentimientos con sinceridad, fortaleciendo tus relaciones.",
+      "Expresa tus emociones con sinceridad. Esto te ayudará a aclarar tus pensamientos y sentirte más ligero durante el día.",
     "horoscope.data.descriptions.cancer.7":
-      "Tu empatía natural te permite comprender profundamente a los demás y brindarles un apoyo valioso.",
+      "Tu empatía te permite entender las situaciones que te rodean. Úsala para actuar con calma y sensatez.",
     "horoscope.data.descriptions.cancer.8":
-      "Tus relaciones hoy se caracterizan por la amistad y la complicidad. Busca la atención y el apoyo de tu entorno, mientras permaneces atento a sus necesidades y a las tuyas, sin descuidar ninguna.",
+      "Busca equilibrio en tus interacciones hoy. Presta atención a las necesidades de los demás sin descuidar las tuyas.",
     "horoscope.data.descriptions.cancer.9":
-      "Tu hogar se convierte en un verdadero refugio de paz y felicidad, ideal para el descanso y la serenidad.",
+      "Crea un espacio tranquilo a tu alrededor. Un momento de paz te ayudará a recargar energías.",
     "horoscope.data.descriptions.cancer.10":
-      "Una fuerte intuición te guía hacia la decisión correcta, incluso en situaciones complejas o inciertas.",
+      "Tu intuición te guía para tomar las decisiones correctas, incluso en situaciones complejas.",
     "horoscope.data.descriptions.cancer.11":
-      "Los recuerdos de tu infancia te inspiran positivamente y te recuerdan los valores esenciales que te motivan.",
+      "Confía en tus experiencias y recuerdos pasados para orientar tus elecciones hoy.",
     "horoscope.data.descriptions.cancer.12":
-      "Se te pedirá que muestres diplomacia, y hay algo positivo que obtener de ello. A través de tus pasatiempos favoritos encontrarás formas de relajarte. Deja tus preocupaciones a un lado.",
+      "Tómate tiempo para relajarte y disfrutar de tus hobbies. Deja de lado tus preocupaciones para recuperar el equilibrio.",
     "horoscope.data.descriptions.cancer.13":
-      "Tus vínculos con nuevos conocidos llenarán los vacíos y carencias que sientes. Tu gusto pronunciado por las cosas buenas podría llevarte a algunos excesos, así que ve con calma.",
+      "Las interacciones con nuevas personas pueden traer ideas y perspectivas interesantes. Mantente moderado en los placeres para conservar tu energía.",
     "horoscope.data.descriptions.cancer.14":
-      "Una reconciliación familiar trae una profunda armonía e instala un clima de paz en tu entorno.",
-    "horoscope.data.descriptions.leo.0":
-      "Tu magnetismo atrae las miradas hoy, especialmente en el amor. Si estás en pareja, ten cuidado de no provocar celos. En el trabajo, tus ideas brillantes cautivan, pero tómate el tiempo para defenderlas bien. Un reconocimiento inesperado podría halagar tu ego.",
-    "horoscope.data.descriptions.leo.1":
-      "Se presenta una oportunidad profesional, pero requiere coraje y compromiso total. No dejes que tus miedos saboteen tu impulso. En lo personal, un cercano podría necesitar tu apoyo. Presta atención a las señales a tu alrededor.",
-    "horoscope.data.descriptions.leo.2":
-      "En tu familia, una conversación importante aclara una situación confusa. Aunque las palabras puedan ser duras, permitirán avanzar. En el amor, la sinceridad será tu mejor aliada. La verdad fortalecerá tus lazos.",
-    "horoscope.data.descriptions.leo.3":
-      "Un encuentro amistoso podría convertirse en una complicidad sólida. Necesitas rodearte de personas auténticas y bondadosas. En el trabajo, tu creatividad te ayuda a superar un obstáculo. Deja que tus intuiciones guíen tus decisiones.",
-    "horoscope.data.descriptions.leo.4":
-      "La suerte te sonríe hoy, pero solo si te atreves a provocarla. Una sorpresa agradable puede aparecer en tu vida amorosa. En finanzas, evita gastos impulsivos. Un pequeño gesto de generosidad podría traerte grandes beneficios más adelante.",
-    "horoscope.data.descriptions.leo.5":
-      "Estás lleno de energía y entusiasmo, pero tu cuerpo también necesita descanso. No descuides tu equilibrio interior. Un proyecto que te importa empieza a tomar forma. Permite que tus seres queridos compartan tu alegría.",
-    "horoscope.data.descriptions.leo.6":
-      "Los celos de alguien cercano podrían alterar tu tranquilidad. Mantente alerta sin caer en la desconfianza excesiva. En el amor, prioriza la ternura sobre la confrontación. Tu luz interior es tu mejor protección.",
-    "horoscope.data.descriptions.leo.7":
-      "Imprevistos financieros podrían desestabilizarte, pero nada insuperable. Tómate el tiempo de analizar antes de reaccionar. En tus relaciones, la sinceridad de un amigo te ayudará a mantener el rumbo. Un apoyo externo podría sorprenderte positivamente.",
-    "horoscope.data.descriptions.leo.8":
-      "Los solteros podrían conocer a alguien que despierte su corazón. Para las parejas, un momento de complicidad fortalece la unión. En el trabajo, tus esfuerzos constantes comienzan a dar frutos. El día trae esperanza y renovado impulso.",
-    "horoscope.data.descriptions.leo.9":
-      "Tu trabajo es reconocido y podría traerte una gran oportunidad, pero un rival celoso podría intentar frenarte. No dejes que las críticas afecten tu confianza. En lo personal, tómate tiempo para respirar y disfrutar tus pequeñas victorias.",
-    "horoscope.data.descriptions.leo.10":
-      "La calidez de un momento familiar o con tus seres queridos te renueva profundamente. Te das cuenta de que tu felicidad pasa por estos instantes simples. En el amor, una palabra tierna sana tensiones recientes. La serenidad vuelve poco a poco.",
-    "horoscope.data.descriptions.leo.11":
-      "El regreso de un viejo amigo o alguien del pasado despierta buenos recuerdos. Este vínculo puede transformarse en un proyecto constructivo o en un apoyo inesperado. En el amor, sentimientos enterrados resurgen. Día lleno de emociones.",
-    "horoscope.data.descriptions.leo.12":
-      "Un encuentro fortuito podría alterar tus hábitos y abrir una puerta inesperada. Deja que la sorpresa actúe sin intentar controlar todo. Profesionalmente, puede surgir una propuesta original. Mantente abierto a las sincronicidades.",
-    "horoscope.data.descriptions.leo.13":
-      "Tu deseo de reconocimiento es fuerte hoy, pero no pidas demasiado a tus seres queridos o colegas. En el amor, un gesto tierno vale más que mil palabras. Inspiras a otros, pero mantente auténtico.",
-    "horoscope.data.descriptions.leo.14":
-      "Se impone una decisión importante, y tu intuición te guiará por el camino correcto. No te dejes influir por opiniones contradictorias. En relaciones, la franqueza es clave. La claridad de hoy marcará un giro significativo.",
-    "horoscope.data.descriptions.virgo.0":
-      "Tu sentido del detalle está afinado hoy, lo que te ayuda a resolver un problema delicado. En el amor, evita ser demasiado crítico, tu exigencia puede herir. En finanzas, la gestión prudente ya da frutos.",
-    "horoscope.data.descriptions.virgo.1":
-      "Alguien cercano podría poner a prueba tu paciencia. Mantén la calma y evita caer en conflictos innecesarios. Tu sabiduría natural te permitirá salir ganador.",
-    "horoscope.data.descriptions.virgo.2":
-      "El amor toma un lugar importante hoy. Si estás soltero, un encuentro prometedor podría despertar tu curiosidad. En pareja, valora las pequeñas atenciones que consolidan los lazos diarios.",
-    "horoscope.data.descriptions.virgo.3":
-      "Tu organización y seriedad impresionan a los colegas. Puede que te confíen una nueva responsabilidad. Aunque requiera esfuerzo extra, este reconocimiento será beneficioso a largo plazo.",
-    "horoscope.data.descriptions.virgo.4":
-      "Tu sensibilidad está destacada hoy. Alguien cercano podría necesitar tu escucha. Muestra empatía, pero no cargues con todas las cargas ajenas. Cuida también tu propio equilibrio.",
-    "horoscope.data.descriptions.virgo.5":
-      "Se vislumbra una oportunidad financiera o material. Pero cuidado con decisiones precipitadas. Analiza cada detalle antes de comprometerte; tu prudencia habitual es tu mejor aliada.",
-    "horoscope.data.descriptions.virgo.6":
-      "Tu espíritu crítico es fuerte hoy, pero puede generar tensiones con los cercanos. Convierte esta energía en consejos constructivos en lugar de reproches. Tu claridad será vista como apoyo.",
-    "horoscope.data.descriptions.virgo.7":
-      "Una pequeña disputa podría alterar tu día, pero aclarará una situación confusa. Acepta este momento como paso necesario para avanzar hacia relaciones más sinceras.",
-    "horoscope.data.descriptions.virgo.8":
-      "Sientes necesidad de hacer limpieza, ya sea en tus cosas, relaciones o hábitos. Esta purificación te permitirá ver con claridad y empezar con mejores bases.",
-    "horoscope.data.descriptions.virgo.9":
-      "La suerte te acompaña hoy, pero solo si te atreves a salir de tu zona de confort. Un encuentro o idea podría abrir nuevas y positivas perspectivas. No dejes que las dudas frenen este impulso.",
-    "horoscope.data.descriptions.virgo.10":
-      "Tu sentido de lealtad es valorado por tus amigos. Pero cuida de no olvidarte a ti mismo al dar demasiado. Tus necesidades personales son tan importantes como las de los demás.",
-    "horoscope.data.descriptions.virgo.11":
-      "Un imprevisto en trabajo o casa te obliga a replantear tus planes. Aunque moleste, esta adaptación traerá una solución más eficaz. Confía en el proceso.",
-    "horoscope.data.descriptions.virgo.12":
-      "El amor podría sorprenderte donde menos lo esperas. Mantente atento a señales y gestos discretos. Para parejas, un momento tierno fortalece los lazos y reaviva la chispa.",
-    "horoscope.data.descriptions.virgo.13":
-      "Tu mente está en ebullición hoy, llena de ideas nuevas. Canaliza esta creatividad en proyectos concretos en lugar de demasiadas reflexiones. Paso a paso, tus esfuerzos darán frutos.",
-    "horoscope.data.descriptions.virgo.14":
-      "Una revelación o confidencia podría sacudir tus certezas. Aunque la verdad a veces duela, te liberará de un peso. Acepta el cambio con sabiduría y apertura.",
-    "horoscope.data.descriptions.libra.0":
-      "Tu encanto natural atrae miradas hoy. En el amor, un encuentro podría despertar tu corazón. En pareja, un momento romántico aporta equilibrio y complicidad.",
-    "horoscope.data.descriptions.libra.1":
-      "Puede surgir un desacuerdo en tu entorno. Sé diplomático y evita juicios apresurados. Tu capacidad de justicia será clave para restaurar la armonía.",
-    "horoscope.data.descriptions.libra.2":
-      "Tus habilidades sociales brillan hoy. Aprovecha para fortalecer lazos amistosos y profesionales. Una conversación sincera puede abrir una gran oportunidad.",
-    "horoscope.data.descriptions.libra.3":
-      "Se presenta una decisión importante. No dejes que la indecisión te bloquee. Escucha tu intuición y sopesa pros y contras con sabiduría; la respuesta vendrá naturalmente.",
-    "horoscope.data.descriptions.libra.4":
-      "Tu equilibrio interior se pone a prueba. Demasiadas responsabilidades podrían agotarte. Toma distancia, delega si puedes y date un momento solo para ti.",
-    "horoscope.data.descriptions.libra.5":
-      "Una sorpresa agradable puede iluminar tu día, ya sea un gesto de un ser querido o una oportunidad inesperada. Recíbela con gratitud y optimismo.",
-    "horoscope.data.descriptions.libra.6":
-      "Un secreto o verdad oculta podría revelarse hoy. Aunque te desestabilice, esta claridad te permitirá avanzar y reforzar futuras decisiones.",
-    "horoscope.data.descriptions.libra.7":
-      "Sientes la necesidad de fortalecer lazos familiares. Un momento compartido con los seres queridos aporta calor y consuelo. Día ideal para expresar afecto.",
-    "horoscope.data.descriptions.libra.8":
-      "En el trabajo, tu cooperación es apreciada. Pero cuidado de no eclipsarte ante otros. Haz oír tus ideas, merecen reconocimiento.",
-    "horoscope.data.descriptions.libra.9":
-      "Tu corazón puede ser puesto a prueba por dudas o vacilaciones. Tómate tiempo para clarificar sentimientos. La sinceridad, aunque delicada, es el camino a la paz interior.",
-    "horoscope.data.descriptions.libra.10":
-      "Un aumento de confianza te impulsa hacia adelante. Momento ideal para lanzar un proyecto personal o tomar iniciativa audaz. Atrévete, los astros te respaldan.",
-    "horoscope.data.descriptions.libra.11":
-      "Un encuentro inspirador puede transformar tu visión de una situación. Presta atención a consejos o señales sutiles, llevan respuestas valiosas.",
-    "horoscope.data.descriptions.libra.12":
-      "Tu búsqueda de armonía puede ser perturbada por alguien celoso o envidioso. No permitas que estas energías negativas te afecten. Mantente centrado en tus objetivos y luz.",
-    "horoscope.data.descriptions.libra.13":
-      "La suerte parece sonreírte hoy. Surge una oportunidad financiera o relacional. Mantente abierto y aprovecha, podría marcar un giro positivo en tu vida.",
-    "horoscope.data.descriptions.libra.14":
-      "Tu necesidad de equilibrio guía nuevas elecciones. Ya sea en amor, trabajo o amistades, encuentras el valor de establecer límites justos y necesarios.",
-    "horoscope.data.descriptions.scorpio.0":
-      "Tu intuición es particularmente fuerte hoy. Sigue tus presentimientos, te guiarán hacia decisiones acertadas, especialmente en amor y amistad.",
-    "horoscope.data.descriptions.scorpio.1":
-      "Puede surgir tensión en tu entorno. No permitas que los celos o rencores arruinen tus relaciones, apuesta por la franqueza para calmar los ánimos.",
-    "horoscope.data.descriptions.scorpio.2":
-      "Podrías encontrarte con alguien intrigante que despierte tu curiosidad y emociones. Este encuentro podría alterar tus certezas.",
-    "horoscope.data.descriptions.scorpio.3":
-      "Tu determinación impresiona. Día ideal para avanzar profesionalmente o aclarar una situación que lleva tiempo pendiente.",
-    "horoscope.data.descriptions.scorpio.4":
-      "Un secreto bien guardado podría revelarse. Aunque te sorprenda, esta revelación te ayudará a avanzar y comprender mejor a tu entorno.",
-    "horoscope.data.descriptions.scorpio.5":
-      "Tu intensidad atrae y a la vez desestabiliza. Usa esta energía para seducir o fortalecer vínculos afectivos, evitando excesos de posesividad.",
-    "horoscope.data.descriptions.scorpio.6":
-      "Podría presentarse una propuesta inesperada. Antes de aceptar, analiza los detalles: no todo es lo que parece.",
-    "horoscope.data.descriptions.scorpio.7":
-      "Sientes la necesidad de aislarte para reflexionar. Esta introspección te permitirá clarificar prioridades y recuperar tu equilibrio interior.",
-    "horoscope.data.descriptions.scorpio.8":
-      "Un proyecto o idea que llevas tiempo desarrollando encuentra un impulso favorable. Tu perseverancia empieza a dar frutos.",
-    "horoscope.data.descriptions.scorpio.9":
-      "Cuidado con malentendidos amorosos. Tus emociones intensas pueden nublar la comunicación. Mantente calmado y expresa tus sentimientos con suavidad.",
-    "horoscope.data.descriptions.scorpio.10":
-      "Tu magnetismo es poderoso hoy. Podrías captar la atención de alguien importante para tus proyectos futuros.",
-    "horoscope.data.descriptions.scorpio.11":
-      "Los celos o la competencia de alguien cercano podrían aparecer. Protege tu energía y evita conflictos innecesarios.",
-    "horoscope.data.descriptions.scorpio.12":
-      "Tu pasión es un motor increíble, pero evita agotarte. Tómate pausas para preservar tu equilibrio emocional y físico.",
-    "horoscope.data.descriptions.scorpio.13":
-      "Una buena noticia podría iluminar tu día, ya sea en lo profesional, afectivo o financiero. Recíbela con confianza.",
-    "horoscope.data.descriptions.scorpio.14":
-      "Tu poder de transformación está en su punto máximo. Aprovecha esta energía para cerrar un capítulo difícil y empezar uno nuevo más luminoso.",
-    "horoscope.data.descriptions.sagittarius.0":
-      "Tu optimismo natural ilumina tu día. Aprovecha para emprender algo nuevo y compartir tu alegría con los demás.",
-    "horoscope.data.descriptions.sagittarius.1":
-      "Un encuentro inesperado podría despertar tu curiosidad y emociones. Sé abierto a nuevas personas, podrían sorprenderte.",
-    "horoscope.data.descriptions.sagittarius.2":
-      "Tu espíritu aventurero te impulsa a explorar ideas o lugares nuevos. Evita dispersarte, enfócate en lo importante.",
-    "horoscope.data.descriptions.sagittarius.3":
-      "En el trabajo se presenta una oportunidad. Aprovecha, pero revisa los detalles para evitar malentendidos o decepciones.",
-    "horoscope.data.descriptions.sagittarius.4":
-      "Tus amigos cuentan con tu energía positiva. Puede surgir una disputa, pero tu diplomacia restaurará la armonía rápidamente.",
-    "horoscope.data.descriptions.sagittarius.5":
-      "El amor está favorecido hoy. Un gesto tierno o palabra sincera puede fortalecer lazos o provocar un encuentro memorable.",
-    "horoscope.data.descriptions.sagittarius.6":
-      "Podrías sentir tentación de excesos o gastos impulsivos. Mantén tu equilibrio y evita futuros arrepentimientos.",
-    "horoscope.data.descriptions.sagittarius.7":
-      "Tu creatividad e ideas originales están destacadas. Exprésalas plenamente, podrían inspirar a tu entorno y abrir nuevas puertas.",
-    "horoscope.data.descriptions.sagittarius.8":
-      "Puede revelarse una verdad oculta o confidencia. Mantente atento y evita malentendidos en tus relaciones.",
-    "horoscope.data.descriptions.sagittarius.9":
-      "Día propicio para viajes o aprendizaje. Amplía horizontes y descubre algo nuevo sobre ti mismo.",
-    "horoscope.data.descriptions.sagittarius.10":
-      "Tu humor y ligereza atraen a los demás. Comparte estos momentos, pero mantente sincero para evitar falsedades.",
-    "horoscope.data.descriptions.sagittarius.11":
-      "Puede surgir un desafío u obstáculo. Tu perseverancia y entusiasmo te permitirán superarlo exitosamente.",
-    "horoscope.data.descriptions.sagittarius.12":
-      "Atento a tensiones familiares. Escucha y comprende las necesidades de cada uno para evitar conflictos.",
-    "horoscope.data.descriptions.sagittarius.13":
-      "Tu intuición se refuerza hoy. Sigue tus sentimientos en decisiones, sobre todo en amor y amistad.",
-    "horoscope.data.descriptions.sagittarius.14":
-      "Una energía favorable te acompaña para realizar proyectos. Aprovecha este apoyo cósmico para avanzar en tus metas y felicidad.",
-    "horoscope.data.descriptions.capricorn.0":
-      "Tu seriedad y perseverancia atraen admiración hoy. Momento ideal para avanzar en un proyecto importante.",
-    "horoscope.data.descriptions.capricorn.1":
-      "Alguien cercano podría sorprenderte con sus reacciones. Mantente atento y no saques conclusiones rápidas.",
-    "horoscope.data.descriptions.capricorn.2":
-      "Tu sentido de organización te permite manejar responsabilidades con eficacia. No olvides relajarte de vez en cuando.",
-    "horoscope.data.descriptions.capricorn.3":
-      "Surge una oportunidad profesional o financiera. Analízala con cuidado antes de decidir.",
-    "horoscope.data.descriptions.capricorn.4":
-      "Tu lealtad y fidelidad son apreciadas, pero evita ser explotado. Establece límites claros si es necesario.",
-    "horoscope.data.descriptions.capricorn.5":
-      "Un momento agradable con un ser querido podría fortalecer lazos afectivos o familiares. Aprovecha esta complicidad.",
-    "horoscope.data.descriptions.capricorn.6":
-      "Podrías sentir tentación de excesos o gastos impulsivos. Mantente prudente para evitar arrepentimientos.",
-    "horoscope.data.descriptions.capricorn.7":
-      "Una idea creativa o proyecto dejado de lado encuentra impulso favorable. No dudes en concretarlo.",
-    "horoscope.data.descriptions.capricorn.8":
-      "Una verdad oculta o secreto podría revelarse. Tómate tiempo para comprender antes de reaccionar.",
-    "horoscope.data.descriptions.capricorn.9":
-      "Tus esfuerzos constantes dan frutos hoy. Momento de recoger resultados de tu trabajo y sacrificios.",
-    "horoscope.data.descriptions.capricorn.10":
-      "Tu seriedad inspira confianza y respeto. Aprovecha para mostrar habilidades y talentos.",
-    "horoscope.data.descriptions.capricorn.11":
-      "Atento a tensiones en el ámbito profesional o familiar. Mantén la calma y prioriza diálogo para desactivar conflictos.",
-    "horoscope.data.descriptions.capricorn.12":
-      "Tu intuición está particularmente fina. Sigue tus presentimientos para tomar decisiones acertadas, sobre todo en amor y amistad.",
-    "horoscope.data.descriptions.capricorn.13":
-      "Día propicio para contactos e intercambios enriquecedores. Un encuentro o conversación podría aportar nuevas perspectivas.",
-    "horoscope.data.descriptions.capricorn.14":
-      "Tu perseverancia y disciplina ayudan a superar obstáculos. Una energía favorable acompaña tus acciones, aprovéchala.",
-    "horoscope.data.descriptions.aquarius.0":
-      "Tu originalidad y creatividad destacan hoy. Comparte tus ideas, podrían inspirar a tu entorno.",
-    "horoscope.data.descriptions.aquarius.1":
-      "Un encuentro inesperado puede despertar curiosidad y emociones. Presta atención, esta persona podría marcar tu día.",
-    "horoscope.data.descriptions.aquarius.2":
-      "Tu espíritu innovador está en su apogeo. Aprovecha para experimentar nuevas metodologías en trabajo o proyectos personales.",
-    "horoscope.data.descriptions.aquarius.3":
-      "Cuidado con malentendidos con un cercano. Escucha antes de reaccionar; claridad y paciencia evitarán conflictos.",
-    "horoscope.data.descriptions.aquarius.4":
-      "Puede presentarse una oportunidad sorprendente. Analízala antes de comprometerte, no todo es lo que parece.",
-    "horoscope.data.descriptions.aquarius.5":
-      "Tu energía comunicativa atrae atención de otros. Momento ideal para fortalecer lazos amistosos o profesionales.",
-    "horoscope.data.descriptions.aquarius.6":
-      "Un momento de soledad te permitirá recargar energía y reflexionar sobre prioridades. Escucha tus necesidades interiores.",
-    "horoscope.data.descriptions.aquarius.7":
-      "Tus ideas originales podrían causar admiración… y algo de envidia. Mantente enfocado en objetivos e ignora distracciones.",
-    "horoscope.data.descriptions.aquarius.8":
-      "Una sorpresa agradable puede alegrar tu día, ya sea mensaje, gesto o proyecto que toma forma.",
-    "horoscope.data.descriptions.aquarius.9":
-      "Tu sentido de justicia y equilibrio es solicitado hoy. Ayuda a calmar tensiones, tu rol es importante.",
-    "horoscope.data.descriptions.aquarius.10":
-      "Cuidado con excesos o decisiones impulsivas. Reflexiona y sopesa pros y contras antes de actuar.",
-    "horoscope.data.descriptions.aquarius.11":
-      "Una verdad oculta o secreto podría revelarse. Mantén calma y usa información para mejorar relaciones o proyectos.",
-    "horoscope.data.descriptions.aquarius.12":
-      "Tus relaciones amorosas o amistosas están favorecidas. Gesto sincero o palabra tierna puede fortalecer vínculos y crear recuerdos.",
-    "horoscope.data.descriptions.aquarius.13":
-      "Una idea o proyecto antiguo podría renacer bajo nueva luz. Momento de darle vida y concretar aspiraciones.",
-    "horoscope.data.descriptions.aquarius.14":
-      "Tu energía e intuición te guían hacia elecciones positivas. Aprovecha el día para avanzar con confianza y audacia.",
-    "horoscope.data.descriptions.pisces.0":
-      "Tu sensibilidad es tu fuerza hoy. Escucha emociones, te guiarán en relaciones y decisiones.",
-    "horoscope.data.descriptions.pisces.1":
-      "Alguien cercano puede sorprenderte con franqueza. Mantente abierto y atento para evitar malentendidos.",
-    "horoscope.data.descriptions.pisces.2":
-      "Tu creatividad está en su apogeo. Exprésala en ideas artísticas u originales en tus proyectos.",
-    "horoscope.data.descriptions.pisces.3":
-      "Atento a decisiones impulsivas, especialmente financieras. Reflexiona antes de comprometerte.",
-    "horoscope.data.descriptions.pisces.4":
-      "Tus relaciones amistosas están favorecidas. Un gesto o palabra sincera puede fortalecer vínculos y traer alegría.",
-    "horoscope.data.descriptions.pisces.5":
-      "Día propicio para introspección. Tómate tiempo para reconectar con tus necesidades y deseos profundos.",
-    "horoscope.data.descriptions.pisces.6":
-      "Puede presentarse oportunidad inesperada. Evalúa con discernimiento antes de lanzarte.",
-    "horoscope.data.descriptions.pisces.7":
-      "Tu intuición está especialmente afinada hoy. Confía en ella para decisiones personales y profesionales.",
-    "horoscope.data.descriptions.pisces.8":
-      "Alguien cercano puede buscar tu apoyo. Escúchalo atentamente y ofrece empatía sin descuidarte.",
-    "horoscope.data.descriptions.pisces.9":
-      "Sorpresa romántica o afectiva puede alegrar tu día. Mantente abierto a señales y gestos de cariño.",
-    "horoscope.data.descriptions.pisces.10":
-      "Pueden surgir tensiones menores. Mantén calma y comunica para evitar conflictos.",
-    "horoscope.data.descriptions.pisces.11":
-      "Tu sentido de compasión atrae a otros hacia ti. Crea vínculos sinceros y duraderos.",
-    "horoscope.data.descriptions.pisces.12":
-      "Proyecto antiguo puede recibir nuevo impulso. Momento ideal para concretar ideas y ambiciones.",
-    "horoscope.data.descriptions.pisces.13":
-      "Emociones intensas y enriquecedoras hoy. Canalízalas para fortalecer relaciones e iniciativas.",
-    "horoscope.data.descriptions.pisces.14":
-      "Energía positiva te acompaña todo el día. Sigue intuiciones y deja que corazón guíe decisiones.",
+      "Un día tranquilo y armonioso te brinda serenidad y te permite recargar tus energías.",
+  "horoscope.data.descriptions.leo.0": "Hoy, tu carisma natural atrae la atención. Usa esta energía para sentirte seguro y brillar en todo lo que haces.",
+  "horoscope.data.descriptions.leo.1": "Aparece una gran oportunidad, pero requiere valor y compromiso. Atrévete a actuar y no tengas miedo de intentarlo.",
+  "horoscope.data.descriptions.leo.2": "Una conversación importante podría aclarar una situación confusa. Escucha con atención y mantente abierto a nuevas perspectivas.",
+  "horoscope.data.descriptions.leo.3": "Rodéate de personas sinceras y amables. Su presencia te dará energía y reforzará tu equilibrio.",
+  "horoscope.data.descriptions.leo.4": "La suerte favorece a quienes se atreven. Presta atención a oportunidades inesperadas y aprovéchalas.",
+  "horoscope.data.descriptions.leo.5": "Tu energía está alta hoy, pero también toma tiempo para descansar. El equilibrio entre acción y relajación es esencial.",
+  "horoscope.data.descriptions.leo.6": "Mantente atento a las tensiones a tu alrededor y permanece calmado. Tu paz interior es tu mejor protección.",
+  "horoscope.data.descriptions.leo.7": "Los eventos inesperados pueden sorprenderte, pero nada es insuperable. Piensa antes de actuar y confía en ti.",
+  "horoscope.data.descriptions.leo.8": "Un encuentro o momento agradable podría iluminar tu día. Recibe las sorpresas con apertura y curiosidad.",
+  "horoscope.data.descriptions.leo.9": "Tómate el tiempo para disfrutar tus pequeñas victorias. Cada paso cuenta y contribuye a tu progreso.",
+  "horoscope.data.descriptions.leo.10": "Momentos simples y cálidos con seres queridos o amigos te recargan. Aprecia estos instantes y su energía positiva.",
+  "horoscope.data.descriptions.leo.11": "Recuerdos o conexiones antiguas pueden traer inspiración y apoyo. Mantente abierto a experiencias del pasado que te nutran.",
+  "horoscope.data.descriptions.leo.12": "Déjate sorprender por eventos inesperados. Estar abierto a lo desconocido puede crear grandes oportunidades.",
+  "horoscope.data.descriptions.leo.13": "Tu deseo de reconocimiento es fuerte, pero mantente auténtico y moderado. Inspira a otros con acciones sinceras.",
+  "horoscope.data.descriptions.leo.14": "Se presenta una decisión importante. Escucha tu intuición y mantente fiel a tus convicciones para encontrar el camino correcto.",
+  "horoscope.data.descriptions.virgo.0": "Hoy, tu atención al detalle te ayudará a resolver una situación complicada. Mantente atento a las señales a tu alrededor; podrían guiar tus decisiones.",
+  "horoscope.data.descriptions.virgo.1": "Alguien o algo podría poner a prueba tu paciencia. Mantén la calma y deja que las cosas sigan su curso.",
+  "horoscope.data.descriptions.virgo.2": "Una curiosidad repentina puede impulsarte a descubrir algo nuevo y emocionante.",
+  "horoscope.data.descriptions.virgo.3": "Tu organización y tu juicio se destacarán. Es un buen momento para estructurar tus proyectos o ideas.",
+  "horoscope.data.descriptions.virgo.4": "Tu intuición es fuerte hoy. Confía en tus sentimientos para orientarte durante el día.",
+  "horoscope.data.descriptions.virgo.5": "Pueden surgir oportunidades interesantes, pero deberías analizarlas cuidadosamente antes de actuar.",
+  "horoscope.data.descriptions.virgo.6": "Tu mente crítica está activa y puede ayudarte a aclarar situaciones confusas si la usas de manera constructiva.",
+  "horoscope.data.descriptions.virgo.7": "Un pequeño contratiempo podría sorprenderte, pero traerá claridad y te ayudará a organizar lo que sigue.",
+  "horoscope.data.descriptions.virgo.8": "Es un buen momento para ordenar tus pertenencias o hábitos. Esto te ayudará a empezar de nuevo con claridad.",
+  "horoscope.data.descriptions.virgo.9": "La suerte está de tu lado, especialmente si sales de tu zona de confort y exploras nuevas posibilidades.",
+  "horoscope.data.descriptions.virgo.10": "Tu lealtad y constancia serán notadas. Tómate tiempo para cuidar también de ti y de tus propias necesidades.",
+  "horoscope.data.descriptions.virgo.11": "Un evento inesperado puede alterar tu rutina, pero finalmente llevará a una solución más eficaz.",
+  "horoscope.data.descriptions.virgo.12": "Una sorpresa o evento inesperado puede llamar tu atención y llevarte a descubrir algo nuevo.",
+  "horoscope.data.descriptions.virgo.13": "Tu mente está llena de ideas hoy. Canalízalas en acciones concretas y avanza paso a paso.",
+  "horoscope.data.descriptions.virgo.14": "Información o una revelación puede desafiar tus certezas. Acepta este cambio con apertura y serenidad.",
+  "horoscope.data.descriptions.libra.0": "Tu encanto natural atrae la atención hoy, y encuentros inesperados podrían alegrar tu día.",
+  "horoscope.data.descriptions.libra.1": "Podría surgir un desacuerdo a tu alrededor. Mantener la calma y la justicia ayudará a restablecer la armonía.",
+  "horoscope.data.descriptions.libra.2": "Tus habilidades para relacionarte brillan hoy. Una conversación sincera podría abrir nuevas perspectivas.",
+  "horoscope.data.descriptions.libra.3": "Se presenta una decisión importante. Escucha tu intuición y deja que las respuestas lleguen de forma natural.",
+  "horoscope.data.descriptions.libra.4": "Tu equilibrio interior se pone a prueba. Tómate un respiro y dedica tiempo para ti mismo.",
+  "horoscope.data.descriptions.libra.5": "Una sorpresa agradable podría iluminar tu día. Acéptala con optimismo y curiosidad.",
+  "horoscope.data.descriptions.libra.6": "Un secreto o una verdad oculta podría revelarse hoy. Esta claridad te ayudará a avanzar con calma.",
+  "horoscope.data.descriptions.libra.7": "Sientes la necesidad de fortalecer los lazos con tus seres queridos. Un momento compartido aporta calidez y confort.",
+  "horoscope.data.descriptions.libra.8": "Tu capacidad para cooperar y escuchar se destaca. Hazte escuchar; tus ideas merecen reconocimiento.",
+  "horoscope.data.descriptions.libra.9": "Las dudas o vacilaciones podrían nublar tu mente. Tómate tiempo para aclarar tus pensamientos y encontrar serenidad.",
+  "horoscope.data.descriptions.libra.10": "Un aumento de confianza te impulsa a actuar. Es el momento perfecto para iniciar algo nuevo.",
+  "horoscope.data.descriptions.libra.11": "Un encuentro u observación podría cambiar tu perspectiva. Presta atención a las señales sutiles a tu alrededor.",
+  "horoscope.data.descriptions.libra.12": "Energías negativas podrían afectarte, pero mantenerte centrado te ayudará a seguir en el buen camino.",
+  "horoscope.data.descriptions.libra.13": "La suerte parece sonreírte hoy. Una oportunidad podría marcar un giro positivo.",
+  "horoscope.data.descriptions.libra.14": "Tu necesidad de equilibrio te guía hacia nuevas decisiones. Finalmente encuentras el valor para establecer límites justos y necesarios.",
+    "horoscope.data.descriptions.scorpio.0": "Tu intuición está especialmente fuerte hoy. Tus instintos te guiarán hacia las decisiones correctas.",
+    "horoscope.data.descriptions.scorpio.1": "Podría surgir tensión a tu alrededor. Mantén la calma y prioriza la sinceridad para aliviar la situación.",
+    "horoscope.data.descriptions.scorpio.2": "Podrías conocer a alguien intrigante que despierte tu curiosidad y emociones, cambiando algunas de tus certezas.",
+    "horoscope.data.descriptions.scorpio.3": "Tu determinación destaca hoy. Es un día ideal para superar un obstáculo o aclarar una situación pendiente.",
+    "horoscope.data.descriptions.scorpio.4": "Un secreto o verdad oculta podría revelarse. Aunque te sorprenda, te ayudará a comprender mejor tu entorno.",
+    "horoscope.data.descriptions.scorpio.5": "Tu intensidad atrae y puede desestabilizar. Usa esta energía para avanzar, pero evita los excesos.",
+    "horoscope.data.descriptions.scorpio.6": "Podría presentarse una oportunidad inesperada. Analiza bien la situación antes de actuar.",
+    "horoscope.data.descriptions.scorpio.7": "Sentirás la necesidad de retirarte y reflexionar. Esta introspección aclarará tus prioridades y fortalecerá tu equilibrio interior.",
+    "horoscope.data.descriptions.scorpio.8": "Un proyecto o idea que has mantenido mucho tiempo finalmente gana impulso. Tu perseverancia comienza a dar frutos.",
+    "horoscope.data.descriptions.scorpio.9": "Cuidado con los malentendidos. Tus emociones intensas podrían nublar la comunicación. Mantente tranquilo y exprésate con suavidad.",
+    "horoscope.data.descriptions.scorpio.10": "Tu magnetismo es fuerte hoy. Podrías captar la atención de alguien importante para tu camino.",
+    "horoscope.data.descriptions.scorpio.11": "La envidia o competencia de otros podría aparecer. Protege tu energía y evita conflictos innecesarios.",
+    "horoscope.data.descriptions.scorpio.12": "Tu pasión es un motor poderoso, pero recuerda cuidar de ti. Tómate descansos para mantener el equilibrio.",
+    "horoscope.data.descriptions.scorpio.13": "Una buena noticia podría iluminar tu día. Acéptala con confianza.",
+    "horoscope.data.descriptions.scorpio.14": "Tu poder de transformación está en su punto máximo. Usa esta energía para cerrar un capítulo y comenzar uno nuevo.",
+    "horoscope.data.descriptions.sagittarius.0": "Tu optimismo natural ilumina tu día. Sientes ganas de comenzar algo nuevo y compartir tu alegría.",
+    "horoscope.data.descriptions.sagittarius.1": "Un encuentro inesperado podría despertar tu curiosidad y emociones, trayendo una agradable sorpresa.",
+    "horoscope.data.descriptions.sagittarius.2": "Tu espíritu aventurero te impulsa a explorar nuevas ideas o lugares, aunque es importante concentrarte en lo esencial.",
+    "horoscope.data.descriptions.sagittarius.3": "Hoy surge una oportunidad. Prestar atención a los detalles puede evitar malentendidos.",
+    "horoscope.data.descriptions.sagittarius.4": "Tu energía positiva influye en los que te rodean. Incluso si surge una disputa, el equilibrio vuelve rápidamente.",
+    "horoscope.data.descriptions.sagittarius.5": "Momentos tiernos o intercambios significativos pueden marcar el día y fortalecer vínculos importantes.",
+    "horoscope.data.descriptions.sagittarius.6": "Podrías sentir la tentación de excederte o tomar decisiones impulsivas. Mantener el equilibrio es importante.",
+    "horoscope.data.descriptions.sagittarius.7": "Tu creatividad e ideas originales están en primer plano. Pueden inspirar a otros y abrir nuevas oportunidades.",
+    "horoscope.data.descriptions.sagittarius.8": "Una verdad oculta o confidencia podría revelarse. Los malentendidos desaparecen si prestas atención.",
+    "horoscope.data.descriptions.sagittarius.9": "Un día favorable para el descubrimiento y el aprendizaje. Puedes ampliar tus horizontes y conocerte mejor.",
+    "horoscope.data.descriptions.sagittarius.10": "Tu humor y ligereza atraen atención. Estos momentos alegres se comparten de manera sincera.",
+    "horoscope.data.descriptions.sagittarius.11": "Un desafío u obstáculo puede aparecer. Tu entusiasmo y perseverancia te permiten superarlo.",
+    "horoscope.data.descriptions.sagittarius.12": "Pueden surgir tensiones en tu círculo familiar. La escucha y comprensión ayudan a mantener la armonía.",
+    "horoscope.data.descriptions.sagittarius.13": "Tu intuición se fortalece hoy. Tus percepciones guían tus decisiones e interacciones.",
+    "horoscope.data.descriptions.sagittarius.14": "Una energía favorable te acompaña para avanzar en tus proyectos y alimentar tu felicidad.",
+    "horoscope.data.descriptions.capricorn.0": "Tu seriedad y perseverancia atraen atención hoy. Avanzas con energía en un proyecto importante.",
+    "horoscope.data.descriptions.capricorn.1": "Alguien de tu entorno sorprende con reacciones inesperadas, añadiendo un toque de imprevisibilidad al día.",
+    "horoscope.data.descriptions.capricorn.2": "Tu sentido de la organización se destaca hoy, permitiéndote manejar varias responsabilidades con eficacia.",
+    "horoscope.data.descriptions.capricorn.3": "Surge una oportunidad profesional o financiera, ofreciendo nuevas perspectivas.",
+    "horoscope.data.descriptions.capricorn.4": "Tu lealtad y fidelidad son reconocidas, fortaleciendo la confianza a tu alrededor.",
+    "horoscope.data.descriptions.capricorn.5": "Un momento agradable con un ser querido aporta calidez y conexión, iluminando el día.",
+    "horoscope.data.descriptions.capricorn.6": "Puede surgir la tentación de excesos o gastos impulsivos, pero la energía general sigue siendo positiva.",
+    "horoscope.data.descriptions.capricorn.7": "Una idea o proyecto previamente dejado de lado encuentra un nuevo impulso y avanza hoy.",
+    "horoscope.data.descriptions.capricorn.8": "Una verdad oculta o revelación puede emerger, trayendo claridad a tus relaciones.",
+    "horoscope.data.descriptions.capricorn.9": "Tus esfuerzos comienzan a dar frutos, ofreciendo satisfacción y logro.",
+    "horoscope.data.descriptions.capricorn.10": "Tu seriedad y diligencia son notadas e inspiran confianza a tu alrededor.",
+    "horoscope.data.descriptions.capricorn.11": "Pueden aparecer tensiones en tu entorno, pero la situación se estabiliza a lo largo del día.",
+    "horoscope.data.descriptions.capricorn.12": "Tu intuición es fuerte hoy, guiando tus decisiones e interacciones.",
+    "horoscope.data.descriptions.capricorn.13": "Un encuentro o intercambio aporta nuevas perspectivas y estimula tu interés.",
+    "horoscope.data.descriptions.capricorn.14": "La perseverancia y la diligencia te acompañan, ayudándote a superar obstáculos y avanzar en tus proyectos.",
+    "horoscope.data.descriptions.aquarius.0": "Tu originalidad y creatividad brillan hoy, captando la atención de quienes te rodean.",
+    "horoscope.data.descriptions.aquarius.1": "Un encuentro inesperado despierta curiosidad y emociones, dejando una huella notable en tu día.",
+    "horoscope.data.descriptions.aquarius.2": "Tu espíritu innovador alcanza su punto máximo, aportando nuevas perspectivas a tus proyectos y actividades.",
+    "horoscope.data.descriptions.aquarius.3": "Pueden surgir malentendidos con alguien cercano, pero la claridad se manifiesta a medida que avanza el día.",
+    "horoscope.data.descriptions.aquarius.4": "Se presenta una oportunidad sorprendente, agregando un giro inesperado a tu jornada.",
+    "horoscope.data.descriptions.aquarius.5": "Tu energía comunicativa atrae atención y fortalece vínculos amistosos o profesionales.",
+    "horoscope.data.descriptions.aquarius.6": "Un momento de soledad brinda claridad y ayuda a reenfocarte en tus prioridades.",
+    "horoscope.data.descriptions.aquarius.7": "Tus ideas originales despiertan admiración y, a veces, envidia, pero tu concentración se mantiene firme.",
+    "horoscope.data.descriptions.aquarius.8": "Una agradable sorpresa ilumina tu día y aporta un toque positivo y estimulante.",
+    "horoscope.data.descriptions.aquarius.9": "Tu sentido de la justicia y del equilibrio influye positivamente en tu entorno hoy.",
+    "horoscope.data.descriptions.aquarius.10": "Pueden surgir decisiones importantes, requiriendo reflexión y discernimiento.",
+    "horoscope.data.descriptions.aquarius.11": "Una verdad o secreto oculto sale a la luz, aportando claridad a relaciones o proyectos.",
+    "horoscope.data.descriptions.aquarius.12": "Tus relaciones de amistad y amorosas experimentan un impulso positivo, fortaleciendo vínculos y creando recuerdos valiosos.",
+    "horoscope.data.descriptions.aquarius.13": "Un proyecto antiguo renace con una nueva perspectiva y toma forma hoy.",
+    "horoscope.data.descriptions.aquarius.14": "Tu energía e intuición te guían hacia elecciones positivas, marcando un día confiado y audaz.",
+    "horoscope.data.descriptions.pisces.0": "Tu sensibilidad ilumina el día y guía tus relaciones y decisiones.",
+    "horoscope.data.descriptions.pisces.1": "Una persona cercana se muestra sorprendentemente franca, marcando tus interacciones hoy.",
+    "horoscope.data.descriptions.pisces.2": "Tu creatividad alcanza su punto máximo, dando vida a ideas originales y artísticas.",
+    "horoscope.data.descriptions.pisces.3": "Las decisiones financieras o personales requieren reflexión, aportando prudencia a tus elecciones.",
+    "horoscope.data.descriptions.pisces.4": "Los lazos de amistad se fortalecen y los gestos sinceros aportan alegría a tu día.",
+    "horoscope.data.descriptions.pisces.5": "Un período de profunda introspección aporta claridad y te reconecta con tus deseos.",
+    "horoscope.data.descriptions.pisces.6": "Surge una oportunidad inesperada, revelando nuevas perspectivas.",
+    "horoscope.data.descriptions.pisces.7": "Tu intuición es especialmente fuerte y guía tus decisiones con precisión.",
+    "horoscope.data.descriptions.pisces.8": "Alguien cercano busca tu apoyo, creando un momento de empatía compartida.",
+    "horoscope.data.descriptions.pisces.9": "Una sorpresa romántica o afectiva llena el día de positividad.",
+    "horoscope.data.descriptions.pisces.10": "Aparecen pequeñas tensiones, pero la comunicación trae calma y equilibrio.",
+    "horoscope.data.descriptions.pisces.11": "Tu compasión atrae a otros y fomenta vínculos sinceros y duraderos.",
+    "horoscope.data.descriptions.pisces.12": "Un proyecto antiguo encuentra un nuevo impulso y toma forma hoy.",
+    "horoscope.data.descriptions.pisces.13": "Tus emociones intensas enriquecen relaciones e inspiran tus iniciativas.",
+    "horoscope.data.descriptions.pisces.14": "Una energía positiva te acompaña, guiada por tu intuición y corazón.",
 
     // Mensajes finales variados
     "horoscope.message.var1":
@@ -6497,364 +6159,246 @@ const translations: Record<Language, Record<string, string>> = {
       "Die Energie des Engels des Neuen Lebens begleitet dich dabei, ein wichtiges Kapitel umzublättern. Sie erinnert dich daran, dass jedes Ende ein neuer Anfang ist und dass du die nötige Kraft in dir trägst, dich neu zu erfinden und mit Gelassenheit zu wachsen.",
 
     // Horoscope Data Translations - Descriptions
-    "horoscope.data.descriptions.aries.0":
-      "Deine überschäumende Energie treibt dich heute zu mutigem Handeln. Nutze die Gelegenheit, neue Projekte zu starten.",
-    "horoscope.data.descriptions.aries.1":
-      "Eine unerwartete Begegnung könnte deine Gefühle aufwühlen. Sei aufmerksam, diese Person könnte deinen Tag prägen.",
-    "horoscope.data.descriptions.aries.2":
-      "Dein kommunikativer Enthusiasmus zieht Aufmerksamkeit auf sich. Sei geduldig, um Missverständnisse zu vermeiden.",
-    "horoscope.data.descriptions.aries.3":
-      "Bei der Arbeit könnte sich eine Gelegenheit ergeben. Analysiere sie sorgfältig, bevor du entscheidest.",
-    "horoscope.data.descriptions.aries.4":
-      "Achte auf Spannungen in engen Beziehungen. Bleib ruhig und setze auf Dialog, um Konflikte zu vermeiden.",
-    "horoscope.data.descriptions.aries.6":
-      "Deine Spontaneität ist ein Vorteil, aber vermeide Übermaß oder impulsive Entscheidungen, die Probleme verursachen könnten.",
-    "horoscope.data.descriptions.aries.7":
-      "Eine originelle Idee könnte Erfolg und Anerkennung bringen. Zögere nicht, sie zu teilen und umzusetzen.",
-    "horoscope.data.descriptions.aries.8":
-      "Eine verborgene Wahrheit könnte ans Licht kommen. Sei aufmerksam und nutze die Information weise.",
-    "horoscope.data.descriptions.aries.9":
-      "Deine ständigen Bemühungen beginnen sich auszuzahlen. Es ist Zeit, die Früchte deiner Arbeit zu ernten.",
-    "horoscope.data.descriptions.aries.10":
-      "Dein natürliches Selbstvertrauen zieht das Vertrauen anderer an. Nutze es, um persönliche und berufliche Beziehungen zu stärken.",
-    "horoscope.data.descriptions.aries.11":
-      "Eine angenehme Überraschung könnte deinen Tag erhellen, sei es ein Treffen, eine Nachricht oder ein positives Ereignis.",
-    "horoscope.data.descriptions.aries.12":
-      "Deine Freundschaften oder familiären Bindungen werden gestärkt. Genieße diese Momente, um wertvolle Erinnerungen zu schaffen.",
-    "horoscope.data.descriptions.aries.13":
-      "Deine Intuition ist heute besonders scharf. Folge deinen Gefühlen, um gute Entscheidungen zu treffen.",
-    "horoscope.data.descriptions.aries.14":
-      "Positive Energie begleitet dich den ganzen Tag. Nutze sie, um mit Zuversicht voranzukommen und deine Ziele zu erreichen.",
+        "horoscope.data.descriptions.aries.0":
+          "Deine Energie ist heute stark. Nutze sie, um etwas Neues zu beginnen oder eine persönliche Herausforderung anzunehmen.",
+        "horoscope.data.descriptions.aries.1":
+          "Eine unerwartete Begegnung könnte deine Gefühle wecken. Sei aufmerksam, diese Person könnte deinen Tag prägen.",
+        "horoscope.data.descriptions.aries.2":
+          "Dein Enthusiasmus zieht die Aufmerksamkeit deiner Umgebung auf sich. Bleib geduldig, um Missverständnisse zu vermeiden.",
+        "horoscope.data.descriptions.aries.3":
+          "Eine Überraschung oder Gelegenheit könnte auftauchen. Beobachte genau, bevor du handelst.",
+        "horoscope.data.descriptions.aries.4":
+          "Achte auf Spannungen in engen Beziehungen. Bleib ruhig und setze auf Dialog.",
+        "horoscope.data.descriptions.aries.5":
+          "Heute könntest du eine originelle Idee haben, die dir Zufriedenheit bringt, wenn du sie umsetzt.",
+        "horoscope.data.descriptions.aries.6":
+          "Deine Spontaneität ist ein Vorteil, aber vermeide Übertreibungen oder impulsive Entscheidungen, die Probleme verursachen könnten.",
+        "horoscope.data.descriptions.aries.7":
+          "Wichtige Informationen könnten ans Licht kommen. Bleib aufmerksam und nutze sie klug.",
+        "horoscope.data.descriptions.aries.8":
+          "Deine Bemühungen beginnen Früchte zu tragen. Nutze den Moment, um die Ergebnisse zu genießen.",
+        "horoscope.data.descriptions.aries.9":
+          "Dein natürliches Selbstvertrauen zieht andere an. Nutze es, um deine Beziehungen zu stärken.",
+        "horoscope.data.descriptions.aries.10":
+          "Eine angenehme Überraschung könnte deinen Tag erhellen, wie eine Nachricht, ein Treffen oder ein positives Ereignis.",
+        "horoscope.data.descriptions.aries.11":
+          "Deine familiären oder freundschaftlichen Bindungen werden gestärkt. Genieße diese Momente, um wertvolle Erinnerungen zu schaffen.",
+        "horoscope.data.descriptions.aries.12":
+          "Deine Intuition ist heute besonders stark. Folge deinem Gefühl, um gute Entscheidungen zu treffen.",
+        "horoscope.data.descriptions.aries.13":
+          "Positive Energie begleitet dich den ganzen Tag. Gehe selbstbewusst voran und verwirkliche deine persönlichen Projekte.",
+        "horoscope.data.descriptions.aries.14":
+          "Achte auf deine Energie und konzentriere dich auf das, was wirklich zählt. Das bringt dir gute Ergebnisse für den Tag.",
     "horoscope.data.descriptions.taurus.0":
-      "Die Stabilität, die du suchst, zeigt sich endlich in deinem Leben. Genieße diese Phase der Gelassenheit und die einfachen Freuden.",
+      "Deine innere Stabilität stärkt sich heute. Nutze diese Ruhe, um einfache Freuden zu genießen.",
     "horoscope.data.descriptions.taurus.1":
-      "Eine vielversprechende Begegnung könnte heute stattfinden und eine schöne Verbindung sowie positive Emotionen zum Teilen bringen.",
+      "Eine unerwartete Überraschung könnte deinen Tag erhellen und angenehme Momente bringen.",
     "horoscope.data.descriptions.taurus.2":
-      "Venus bringt dir Sanftheit und Harmonie in deinen Beziehungen. Ein perfekter Tag, um Liebe und Freundschaft zu pflegen.",
+      "Du fühlst dich im Einklang mit dir selbst, was dir hilft, den ganzen Tag über das Gleichgewicht zu halten.",
     "horoscope.data.descriptions.taurus.3":
-      "Deine Geduld und Ausdauer tragen Früchte. Die Ergebnisse deiner vergangenen Anstrengungen manifestieren sich heute.",
+      "Deine Geduld zahlt sich heute aus. Du wirst die Ergebnisse deiner jüngsten Anstrengungen sehen.",
     "horoscope.data.descriptions.taurus.4":
-      "Familienbeziehungen sind besonders harmonisch. Nutze diesen Moment, um die Bindungen zu deinen Lieben zu stärken.",
+      "Nimm dir Zeit, die kleinen Dinge um dich herum zu schätzen; sie tragen zu deinem Wohlbefinden und deiner Gelassenheit bei.",
     "horoscope.data.descriptions.taurus.5":
-      "Vernachlässige dein körperliches Wohlbefinden nicht; nimm dir Zeit zum Entspannen und Sporttreiben.",
+      "Achte auf deinen Körper und deine Energie: Ein Spaziergang oder eine Entspannungspause hilft dir, neue Kraft zu tanken.",
     "horoscope.data.descriptions.taurus.6":
-      "Ihre künstlerischen Talente stehen heute im Vordergrund, und Sie haben die Möglichkeit, sie in persönlichen oder beruflichen Projekten vollständig auszudrücken.",
+      "Eine kreative Idee oder ein Projekt könnte dir heute Zufriedenheit bringen, wenn du dich darauf konzentrierst.",
     "horoscope.data.descriptions.taurus.7":
-      "Jetzt ist der perfekte Zeitpunkt, Ihre langfristigen Projekte umzusetzen, indem Sie die notwendigen Schritte unternehmen, um Ihre Ziele erfolgreich zu erreichen.",
+      "Es ist ein guter Zeitpunkt, um langfristige Ziele zu planen und die notwendigen Schritte festzulegen.",
     "horoscope.data.descriptions.taurus.8":
-      "Ihr praktischer Sinn und Ihr Urteilsvermögen helfen Ihnen, viele Fallstricke zu vermeiden und kluge Entscheidungen in Ihrem Alltag zu treffen.",
+      "Dein praktischer Sinn hilft dir, Fallstricke zu vermeiden und weise Entscheidungen zu treffen.",
     "horoscope.data.descriptions.taurus.9":
-      "Eine Phase des materiellen Wohlstands steht bevor und bietet Chancen auf finanzielle Gewinne und wirtschaftliche Stabilität, wenn Sie aufmerksam bleiben.",
+      "Eine positive Phase steht bevor, mit günstigen Gelegenheiten, wenn du aufmerksam bleibst.",
     "horoscope.data.descriptions.taurus.10":
-      "Deine Treue und Loyalität in der Freundschaft werden von deinem Umfeld anerkannt und geschätzt, wodurch noch stärkere und harmonischere Bindungen entstehen.",
+      "Deine Zuverlässigkeit und Beständigkeit werden von deinem Umfeld anerkannt und stärken Vertrauen und Beziehungen.",
     "horoscope.data.descriptions.taurus.11":
-      "Einfache Freuden des Lebens bringen Ihnen heute große Zufriedenheit und tragen zu Ihrem emotionalen und mentalen Wohlbefinden bei.",
+      "Die einfachen Freuden des heutigen Tages bringen Freude und tragen zu deinem allgemeinen Wohlbefinden bei.",
     "horoscope.data.descriptions.taurus.12":
-      "Ihre emotionale Stabilität beruhigt Ihr Umfeld, und Sie werden als verlässlicher und beruhigender Bezugspunkt für andere wahrgenommen.",
+      "Deine Gelassenheit wirkt positiv auf die Menschen um dich herum und macht dich zu einem beruhigenden Bezugspunkt.",
     "horoscope.data.descriptions.taurus.13":
-      "Dies ist ein idealer Tag für Aktivitäten im Freien, die Ihnen ermöglichen, neue Energie zu tanken, Abstand zu gewinnen und sich zu erholen.",
+      "Genieße Zeit im Freien, um dich zu erholen und deine Energie und Klarheit wiederzugewinnen.",
     "horoscope.data.descriptions.taurus.14":
-      "Ihre bisherigen Anstrengungen werden endlich belohnt, und Sie werden sehen, dass sich Ihre Ausdauer in Projekten und Beziehungen auszahlt.",
+      "Deine vergangenen Anstrengungen beginnen Früchte zu tragen, und du wirst heute positive Effekte bemerken.",
     "horoscope.data.descriptions.gemini.0":
-      "Deine natürliche Neugier führt dich zu wunderbaren Entdeckungen. Bleibe offen für neue Begegnungen und innovative Ideen.",
+      "Deine natürliche Neugier führt dich zu wunderbaren Entdeckungen. Bleib offen für neue Ideen und unerwartete Erfahrungen.",
     "horoscope.data.descriptions.gemini.1":
-      "Berufliche Chancen ergeben sich. Trau dich, deine innovativen Ideen vorzuschlagen, sie werden gut aufgenommen.",
+      "Heute könnten interessante Gelegenheiten auf dich zukommen. Zögere nicht, deine Ideen zu teilen, sie könnten dich positiv überraschen.",
     "horoscope.data.descriptions.gemini.2":
-      "Merkur fördert deinen Verstand und deine Kreativität. Ein idealer Tag zum Kommunizieren, Schreiben oder Lernen.",
+      "Merkur stimuliert deinen Geist und deine Kreativität. Es ist ein guter Tag, etwas Neues zu lernen oder eine Idee auszuprobieren.",
     "horoscope.data.descriptions.gemini.3":
-      "Deine Anpassungsfähigkeit ist heute bemerkenswert, nutze sie, um neue Möglichkeiten zu erkunden, die sich dir bieten.",
+      "Deine Anpassungsfähigkeit ist heute eine Stärke, nutze sie, um neue Möglichkeiten zu erkunden.",
     "horoscope.data.descriptions.gemini.4":
-      "Achte auf dein Umfeld, manche Menschen könnten wichtige Informationen mit dir teilen.",
+      "Achte auf dein Umfeld, manche Menschen könnten nützliche oder inspirierende Informationen teilen.",
     "horoscope.data.descriptions.gemini.5":
-      "Heute ist dein Geist wach und neugierig, aber achte auf Missverständnisse oder kleine Streitigkeiten, die um dich herum entstehen könnten.",
+      "Dein Geist ist scharf und neugierig, aber achte auf Missverständnisse oder kleine Streitigkeiten, die auftreten könnten.",
     "horoscope.data.descriptions.gemini.6":
-      "Eine angenehme Überraschung könnte deinen Tag erhellen, sei es ein Treffen, eine Nachricht oder eine inspirierende Idee.",
+      "Eine angenehme Überraschung könnte deinen Tag erhellen, sei es eine Idee, eine Nachricht oder ein unerwartetes Ereignis.",
     "horoscope.data.descriptions.gemini.7":
-      "Deine Kommunikationsfähigkeit zieht heute Aufmerksamkeit auf sich, aber achte darauf, nicht zu viele Informationen preiszugeben oder Missverständnisse zu verursachen.",
+      "Deine Kommunikationsfähigkeiten ziehen heute Aufmerksamkeit auf sich, achte jedoch darauf, nicht zu viel zu teilen oder Verwirrung zu stiften.",
     "horoscope.data.descriptions.gemini.8":
-      "Ein unerwartetes Gespräch verändert Ihre Sichtweise und eröffnet neue Perspektiven in Beziehungen oder Projekten.",
+      "Ein unerwartetes Gespräch könnte deine Perspektive ändern und neue Möglichkeiten für deine persönlichen Projekte eröffnen.",
     "horoscope.data.descriptions.gemini.9":
-      "Ihre Vielseitigkeit ermöglicht es Ihnen, mehrere Projekte gleichzeitig zu bewältigen, ohne an Effizienz oder Kreativität zu verlieren.",
+      "Deine Vielseitigkeit erlaubt es dir, mehrere Projekte gleichzeitig zu managen, ohne an Effizienz oder Kreativität zu verlieren.",
     "horoscope.data.descriptions.gemini.10":
-      "Neue Technologien eröffnen Ihnen neue Horizonte und erleichtern Ihre Kommunikation oder innovativen Projekte.",
+      "Neue Ideen oder Werkzeuge können dir einfache und effektive Lösungen für deine täglichen Aktivitäten bringen.",
     "horoscope.data.descriptions.gemini.11":
-      "Ihr Witz und Ihr Humor lockern die Atmosphäre auf und ziehen andere mit Leichtigkeit und Charisma an.",
+      "Dein wacher Geist und Humor lockern die Atmosphäre, ziehen andere mit Leichtigkeit und Charme an.",
     "horoscope.data.descriptions.gemini.12":
-      "Dies ist ein perfekter Moment, um etwas Neues zu lernen und Ihr Wissen oder Ihre Fähigkeiten zu erweitern.",
+      "Es ist der perfekte Moment, etwas Neues zu lernen und dein Wissen zu erweitern.",
     "horoscope.data.descriptions.gemini.13":
-      "Ihre sozialen Netzwerke und Kontakte bringen Ihnen heute unerwartete und vorteilhafte Chancen.",
+      "Deine Kontakte und Interaktionen können heute unerwartete und interessante Möglichkeiten bringen.",
     "horoscope.data.descriptions.gemini.14":
-      "Achte auf vertrauliche Gespräche: eine Freundschaft könnte durch ein Missverständnis oder ein enthülltes Geheimnis auf die Probe gestellt werden.",
+      "Sei vorsichtig mit Vertraulichkeiten: Ein missverstandenes Geheimnis könnte ein kleines Missverständnis verursachen.",
     "horoscope.data.descriptions.cancer.0":
-      "Deine Intuition ist heute besonders stark. Folge deinem Herzen, es führt dich zu den richtigen Entscheidungen.",
+      "Deine Intuition ist heute besonders stark. Folge deinen Gefühlen, sie werden dich zu den richtigen Entscheidungen führen.",
     "horoscope.data.descriptions.cancer.1":
-      "Dieser Tag könnte dich schwindelig machen. Lass dich nicht von kleinen Ärgernissen überwältigen. Eine innere Energie unterstützt dich positiv, also schone dein Nervensystem und gönn dir eine Pause vom Alltag!",
+      "Heute könnte ein etwas unruhiger Tag sein. Lass dich nicht von kleinen Ärgernissen überwältigen. Achte auf deine Energie und gönn dir eine wohlverdiente Pause.",
     "horoscope.data.descriptions.cancer.2":
-      "Familie und Freunde spielen heute eine Schlüsselrolle für dein Wohlbefinden. Sei aufmerksam und unterstütze sie.",
+      "Achte auf die Menschen um dich herum. Aufmerksamkeit kann positive Interaktionen schaffen und deine Verbindungen stärken.",
     "horoscope.data.descriptions.cancer.3":
-      "Eine kleine Entspannungspause kann deiner Energie guttun. Denke an Meditation oder ein beruhigendes Bad.",
+      "Ein kurzer Moment der Entspannung kann Wunder für deine Energie wirken. Denke daran zu meditieren oder ein beruhigendes Bad zu nehmen.",
     "horoscope.data.descriptions.cancer.4":
-      "Der Mond erhellt deine Sensibilität und stärkt familiäre Bindungen. Ein besonderer Moment, um deine Gefühle auszudrücken.",
+      "Deine Sensibilität ist heute erhöht. Beobachte deine Gefühle und lass dich von deinem Instinkt zu ausgewogenen Entscheidungen führen.",
     "horoscope.data.descriptions.cancer.5":
-      "Deine natürliche Güte zieht Vertrauen an und stärkt deine Freundschaften. Du bist ein Rückzugsort für deine Mitmenschen.",
+      "Deine Freundlichkeit zieht natürlich Vertrauen an. Nutze den Moment, um zu teilen und andere zu unterstützen.",
     "horoscope.data.descriptions.cancer.6":
-      "Heute ist ein perfekter Tag, um Ihre Emotionen auszudrücken und Ihre Gefühle aufrichtig zu teilen, was Ihre Beziehungen stärkt.",
+      "Drücke deine Gefühle aufrichtig aus. Das hilft dir, deine Gedanken zu ordnen und dich leichter zu fühlen.",
     "horoscope.data.descriptions.cancer.7":
-      "Ihre natürliche Empathie ermöglicht es Ihnen, andere tief zu verstehen und ihnen wertvolle Unterstützung zu bieten.",
+      "Deine Empathie erlaubt es dir, Situationen um dich herum zu verstehen. Nutze sie, um ruhig und weise zu handeln.",
     "horoscope.data.descriptions.cancer.8":
-      "Deine Beziehungen stehen heute unter dem Zeichen von Freundschaft und Verbundenheit. Suche die Aufmerksamkeit und Unterstützung deiner Mitmenschen, während du sowohl auf ihre als auch auf deine eigenen Bedürfnisse achtest, ohne etwas zu vernachlässigen.",
+      "Strebe heute nach Ausgewogenheit in deinen Beziehungen. Achte auf die Bedürfnisse anderer, ohne deine eigenen zu vernachlässigen.",
     "horoscope.data.descriptions.cancer.9":
-      "Ihr Zuhause verwandelt sich in eine wahre Oase des Friedens und des Glücks, ideal für Ruhe und Gelassenheit.",
+      "Schaffe dir einen ruhigen Raum um dich herum. Ein Moment der Ruhe hilft dir, neue Energie zu tanken.",
     "horoscope.data.descriptions.cancer.10":
-      "Eine starke Intuition führt Sie zur richtigen Entscheidung, selbst in komplexen oder unsicheren Situationen.",
+      "Deine Intuition leitet dich, die richtigen Entscheidungen zu treffen, auch in komplexen Situationen.",
     "horoscope.data.descriptions.cancer.11":
-      "Ihre Kindheitserinnerungen inspirieren Sie positiv und erinnern Sie an die wesentlichen Werte, die Sie antreiben.",
+      "Vertraue auf deine vergangenen Erfahrungen und Erinnerungen, um heute Entscheidungen zu treffen.",
     "horoscope.data.descriptions.cancer.12":
-      "Du wirst gebeten, Diplomatie zu zeigen, und es gibt etwas Positives, das du daraus ziehen kannst. Durch deine liebsten Hobbys findest du Möglichkeiten, dich zu entspannen. Leg deine Sorgen beiseite.",
+      "Nimm dir Zeit, um dich zu entspannen und deinen Hobbys nachzugehen. Lass Sorgen beiseite, um dein Gleichgewicht wiederzufinden.",
     "horoscope.data.descriptions.cancer.13":
-      "Deine Verbindungen zu neuen Bekanntschaften werden die Lücken und Mängel füllen, die du empfindest. Dein ausgeprägter Geschmack für die schönen Dinge könnte zu ein paar Übertreibungen führen, also sei vorsichtig.",
+      "Neue Begegnungen können interessante Ideen und Perspektiven bringen. Bleib maßvoll bei Vergnügungen, um deine Energie zu bewahren.",
     "horoscope.data.descriptions.cancer.14":
-      "Eine familiäre Versöhnung bringt tiefe Harmonie und schafft eine friedliche Atmosphäre in Ihrem Umfeld.",
-    "horoscope.data.descriptions.leo.0":
-      "Deine Energie ist heute stark. Nutze sie, um wichtige Aufgaben zu erledigen und positiv auf andere einzuwirken.",
-    "horoscope.data.descriptions.leo.1":
-      "Eine Begegnung könnte deine Gefühle wecken. Sei offen, aber achte auf deine Grenzen.",
-    "horoscope.data.descriptions.leo.2":
-      "Dein Charisma zieht Aufmerksamkeit an. Nutze es, um Beziehungen zu stärken oder Projekte voranzutreiben.",
-    "horoscope.data.descriptions.leo.3":
-      "Achte auf Eifersucht oder Konkurrenz in deinem Umfeld. Bleib ruhig und konzentriert.",
-    "horoscope.data.descriptions.leo.4":
-      "Ein kreativer Einfall könnte dein Projekt bereichern. Setze ihn um, solange die Energie günstig ist.",
-    "horoscope.data.descriptions.leo.5":
-      "Liebe und Freundschaft werden begünstigt. Zeige deine Zuneigung offen und ehrlich.",
-    "horoscope.data.descriptions.leo.6":
-      "Deine Entschlossenheit wird getestet. Bleib standhaft, um Hindernisse erfolgreich zu meistern.",
-    "horoscope.data.descriptions.leo.7":
-      "Ein altes Problem könnte sich klären. Nutze die Gelegenheit, um Harmonie herzustellen.",
-    "horoscope.data.descriptions.leo.8":
-      "Achte auf Überarbeitung. Pausen helfen, deine Energie aufzuladen und produktiv zu bleiben.",
-    "horoscope.data.descriptions.leo.9":
-      "Dein Humor bringt Freude. Teile ihn, um Spannungen zu lösen und Beziehungen zu vertiefen.",
-    "horoscope.data.descriptions.leo.10":
-      "Ein beruflicher Impuls kann sich ergeben. Prüfe Details sorgfältig, bevor du entscheidest.",
-    "horoscope.data.descriptions.leo.11":
-      "Eine Überraschung könnte deinen Tag bereichern. Bleib offen für Neues.",
-    "horoscope.data.descriptions.leo.12":
-      "Deine Kreativität inspiriert andere. Nutze sie, um Projekte oder persönliche Ziele voranzubringen.",
-    "horoscope.data.descriptions.leo.13":
-      "Deine Leidenschaft ist spürbar. Sie motiviert dich und andere, Positives zu erreichen.",
-    "horoscope.data.descriptions.leo.14":
-      "Positive Energie begleitet dich. Nutze sie, um Beziehungen und Projekte zu fördern.",
-    "horoscope.data.descriptions.virgo.0":
-      "Deine Aufmerksamkeit für Details zahlt sich aus. Nutze sie, um Aufgaben effizient abzuschließen.",
-    "horoscope.data.descriptions.virgo.1":
-      "Achte auf deine Gesundheit. Kleine Anpassungen können große Wirkung zeigen.",
-    "horoscope.data.descriptions.virgo.2":
-      "Ein organisatorisches Talent hilft dir, Projekte und Termine optimal zu managen.",
-    "horoscope.data.descriptions.virgo.3":
-      "Jemand könnte deine Hilfe benötigen. Zeige Unterstützung, achte aber auf deine Grenzen.",
-    "horoscope.data.descriptions.virgo.4":
-      "Deine analytische Fähigkeit löst ein Problem, das dich lange beschäftigt hat.",
-    "horoscope.data.descriptions.virgo.5":
-      "Ein Moment der Ruhe stärkt dein emotionales Gleichgewicht.",
-    "horoscope.data.descriptions.virgo.6":
-      "Liebe und Freundschaft werden gefördert. Ehrliche Gesten schaffen Vertrauen.",
-    "horoscope.data.descriptions.virgo.7":
-      "Berufliche Chancen können auftauchen. Prüfe sie genau, bevor du Entscheidungen triffst.",
-    "horoscope.data.descriptions.virgo.8":
-      "Kleine Spannungen könnten auftreten. Bleib gelassen und kommuniziere klar.",
-    "horoscope.data.descriptions.virgo.9":
-      "Deine Genauigkeit beeindruckt andere. Nutze sie, um Projekte erfolgreich abzuschließen.",
-    "horoscope.data.descriptions.virgo.10":
-      "Eine Gelegenheit zur Verbesserung deines Alltags kann sich ergeben. Sei aufmerksam.",
-    "horoscope.data.descriptions.virgo.11":
-      "Deine Fürsorge wird geschätzt. Ein nettes Wort oder eine Geste kann viel bewirken.",
-    "horoscope.data.descriptions.virgo.12":
-      "Ein altes Projekt könnte wiederbelebt werden. Nutze deine Energie, um Fortschritt zu erzielen.",
-    "horoscope.data.descriptions.virgo.13":
-      "Achte auf Details in zwischenmenschlichen Beziehungen. Kleine Gesten können Harmonie schaffen.",
-    "horoscope.data.descriptions.virgo.14":
-      "Positive Energie begleitet dich. Folge deiner Intuition und handle bedacht.",
-    "horoscope.data.descriptions.libra.0":
-      "Dein Sinn für Harmonie ist heute stark. Nutze ihn, um Konflikte zu lösen und Frieden zu fördern.",
-    "horoscope.data.descriptions.libra.1":
-      "Eine Begegnung könnte neue Perspektiven eröffnen. Sei offen und neugierig.",
-    "horoscope.data.descriptions.libra.2":
-      "Deine Diplomatie beeindruckt andere. Nutze sie, um Missverständnisse zu vermeiden.",
-    "horoscope.data.descriptions.libra.3":
-      "Liebe und Freundschaft werden begünstigt. Zeige deine Gefühle ehrlich und offen.",
-    "horoscope.data.descriptions.libra.4":
-      "Ein kreativer Impuls hilft, Projekte oder Aufgaben voranzutreiben.",
-    "horoscope.data.descriptions.libra.5":
-      "Achte auf Gleichgewicht zwischen Arbeit und Privatleben. Kleine Pausen helfen, Energie zu bewahren.",
-    "horoscope.data.descriptions.libra.6":
-      "Eine Chance zur Versöhnung oder Klärung kann sich ergeben. Nutze sie sinnvoll.",
-    "horoscope.data.descriptions.libra.7":
-      "Deine Charme zieht Aufmerksamkeit an. Bleib authentisch, um echte Verbindungen zu fördern.",
-    "horoscope.data.descriptions.libra.8":
-      "Deine Kreativität inspiriert andere. Setze Ideen um, um Projekte oder Beziehungen zu stärken.",
-    "horoscope.data.descriptions.libra.9":
-      "Kleine Missverständnisse könnten auftreten. Bleib ruhig und kommuniziere klar.",
-    "horoscope.data.descriptions.libra.10":
-      "Ein beruflicher Impuls oder eine neue Gelegenheit kann sich bieten. Prüfe die Details sorgfältig.",
-    "horoscope.data.descriptions.libra.11":
-      "Deine Geduld wird belohnt. Ein liebevolles Wort oder eine Geste kann Harmonie schaffen.",
-    "horoscope.data.descriptions.libra.12":
-      "Eine überraschende Chance könnte deinen Tag bereichern. Bleib offen für Neues.",
-    "horoscope.data.descriptions.libra.13":
-      "Deine Intuition ist stark. Folge ihr bei wichtigen Entscheidungen.",
-    "horoscope.data.descriptions.libra.14":
-      "Positive Energie begleitet dich. Nutze sie, um Beziehungen, Projekte und persönliche Ziele zu fördern.",
-    "horoscope.data.descriptions.scorpio.0":
-      "Deine Intuition ist heute besonders stark. Folge deinen Eingebungen, sie führen dich zu guten Entscheidungen, besonders in Liebe und Freundschaft.",
-    "horoscope.data.descriptions.scorpio.1":
-      "Spannungen könnten in deinem Umfeld auftreten. Lass Eifersucht oder Groll deine Beziehungen nicht stören; setze auf Offenheit.",
-    "horoscope.data.descriptions.scorpio.2":
-      "Du könntest jemand Interessantes treffen, der deine Neugier und Gefühle weckt. Diese Begegnung könnte deine Gewissheiten erschüttern.",
-    "horoscope.data.descriptions.scorpio.3":
-      "Deine Entschlossenheit beeindruckt. Ideal, um beruflich voranzukommen oder eine langjährige Angelegenheit zu klären.",
-    "horoscope.data.descriptions.scorpio.4":
-      "Ein gut gehütetes Geheimnis könnte ans Licht kommen. Obwohl es überrascht, wird es dir helfen, dein Umfeld besser zu verstehen.",
-    "horoscope.data.descriptions.scorpio.5":
-      "Deine Intensität zieht an und kann destabilisieren. Nutze diese Energie, um Beziehungen zu stärken, aber vermeide Besitzgier.",
-    "horoscope.data.descriptions.scorpio.6":
-      "Eine unerwartete Gelegenheit könnte sich ergeben. Prüfe die Details, bevor du zusagst: nicht alles ist, wie es scheint.",
-    "horoscope.data.descriptions.scorpio.7":
-      "Du fühlst das Bedürfnis, dich zurückzuziehen, um nachzudenken. Diese Reflexion hilft dir, Prioritäten zu klären und dein inneres Gleichgewicht wiederzufinden.",
-    "horoscope.data.descriptions.scorpio.8":
-      "Ein Projekt oder eine Idee, die du schon lange verfolgst, erhält Auftrieb. Deine Ausdauer beginnt Früchte zu tragen.",
-    "horoscope.data.descriptions.scorpio.9":
-      "Achte auf Missverständnisse in der Liebe. Deine starken Gefühle können die Kommunikation trüben. Bleib ruhig und drücke deine Gefühle sanft aus.",
-    "horoscope.data.descriptions.scorpio.10":
-      "Dein Charisma ist heute stark. Du könntest die Aufmerksamkeit einer wichtigen Person für zukünftige Projekte auf dich ziehen.",
-    "horoscope.data.descriptions.scorpio.11":
-      "Eifersucht oder Konkurrenz aus deinem Umfeld könnte auftauchen. Schütze deine Energie und vermeide unnötige Konflikte.",
-    "horoscope.data.descriptions.scorpio.12":
-      "Deine Leidenschaft ist ein unglaublicher Motor, aber überanstrenge dich nicht. Mach Pausen, um emotionales und körperliches Gleichgewicht zu bewahren.",
-    "horoscope.data.descriptions.scorpio.13":
-      "Eine gute Nachricht könnte deinen Tag erhellen – beruflich, emotional oder finanziell. Nimm sie mit Vertrauen an.",
-    "horoscope.data.descriptions.scorpio.14":
-      "Deine Fähigkeit zur Transformation ist auf ihrem Höhepunkt. Nutze diese Energie, um ein schwieriges Kapitel zu schließen und ein neues zu beginnen.",
-    "horoscope.data.descriptions.sagittarius.0":
-      "Dein Optimismus erhellt heute deinen Tag. Nutze ihn, um Neues zu beginnen und Freude zu teilen.",
-    "horoscope.data.descriptions.sagittarius.1":
-      "Eine unerwartete Begegnung könnte deine Neugier und Gefühle wecken. Sei offen für neue Menschen, sie könnten dich überraschen.",
-    "horoscope.data.descriptions.sagittarius.2":
-      "Dein abenteuerlicher Geist treibt dich an, neue Ideen oder Orte zu erkunden. Vermeide Zerstreuung, fokussiere dich auf Wichtiges.",
-    "horoscope.data.descriptions.sagittarius.3":
-      "Im Job tut sich eine Gelegenheit auf. Nutze sie, prüfe aber die Details, um Missverständnisse zu vermeiden.",
-    "horoscope.data.descriptions.sagittarius.4":
-      "Deine Freunde schätzen deine positive Energie. Ein Streit kann auftreten, aber deine Diplomatie stellt schnell Harmonie her.",
-    "horoscope.data.descriptions.sagittarius.5":
-      "Die Liebe ist heute begünstigt. Eine liebevolle Geste oder ein ehrliches Wort kann Beziehungen stärken oder ein besonderes Treffen auslösen.",
-    "horoscope.data.descriptions.sagittarius.6":
-      "Du könntest Versuchungen zu Übermaß oder impulsiven Ausgaben verspüren. Halte dein Gleichgewicht, um spätere Reue zu vermeiden.",
-    "horoscope.data.descriptions.sagittarius.7":
-      "Deine Kreativität und originellen Ideen stehen im Vordergrund. Drücke sie aus, sie könnten dein Umfeld inspirieren und neue Türen öffnen.",
-    "horoscope.data.descriptions.sagittarius.8":
-      "Eine verborgene Wahrheit oder ein Geheimnis könnte aufgedeckt werden. Bleib aufmerksam, um Missverständnisse zu vermeiden.",
-    "horoscope.data.descriptions.sagittarius.9":
-      "Ein günstiger Tag für Reisen oder Lernen. Erweitere deinen Horizont und entdecke etwas Neues über dich selbst.",
-    "horoscope.data.descriptions.sagittarius.10":
-      "Dein Humor und deine Leichtigkeit ziehen andere an. Teile diese Momente, bleib aber ehrlich, um Täuschungen zu vermeiden.",
-    "horoscope.data.descriptions.sagittarius.11":
-      "Eine Herausforderung oder ein Hindernis kann auftauchen. Deine Ausdauer und Begeisterung helfen, es erfolgreich zu überwinden.",
-    "horoscope.data.descriptions.sagittarius.12":
-      "Achte auf familiäre Spannungen. Höre zu und verstehe die Bedürfnisse aller, um Konflikte zu vermeiden.",
-    "horoscope.data.descriptions.sagittarius.13":
-      "Deine Intuition ist gestärkt. Folge deinen Gefühlen bei Entscheidungen, vor allem in Liebe und Freundschaft.",
-    "horoscope.data.descriptions.sagittarius.14":
-      "Eine günstige Energie begleitet dich, um Projekte zu realisieren. Nutze diese kosmische Unterstützung, um deine Ziele und dein Glück voranzubringen.",
-    "horoscope.data.descriptions.capricorn.0":
-      "Deine Ernsthaftigkeit und Ausdauer ziehen heute Bewunderung auf sich. Ideale Zeit, um ein wichtiges Projekt voranzutreiben.",
-    "horoscope.data.descriptions.capricorn.1":
-      "Jemand aus deinem Umfeld könnte dich mit seinen Reaktionen überraschen. Sei aufmerksam und ziehe keine voreiligen Schlüsse.",
-    "horoscope.data.descriptions.capricorn.2":
-      "Dein Organisationssinn ermöglicht es dir, Verantwortung effektiv zu managen. Vergiss nicht, dich zwischendurch zu entspannen.",
-    "horoscope.data.descriptions.capricorn.3":
-      "Eine berufliche oder finanzielle Gelegenheit taucht auf. Prüfe sie sorgfältig, bevor du entscheidest.",
-    "horoscope.data.descriptions.capricorn.4":
-      "Deine Loyalität wird geschätzt, aber lass dich nicht ausnutzen. Setze klare Grenzen, wenn nötig.",
-    "horoscope.data.descriptions.capricorn.5":
-      "Ein schöner Moment mit einem geliebten Menschen könnte die Bindung stärken. Genieße diese Nähe.",
-    "horoscope.data.descriptions.capricorn.6":
-      "Du könntest zu Übermaß oder impulsiven Ausgaben neigen. Sei vorsichtig, um späteren Ärger zu vermeiden.",
-    "horoscope.data.descriptions.capricorn.7":
-      "Eine kreative Idee oder ein zurückgestelltes Projekt erhält Auftrieb. Zögere nicht, es umzusetzen.",
-    "horoscope.data.descriptions.capricorn.8":
-      "Ein verborgenes Geheimnis könnte ans Licht kommen. Nimm dir Zeit, bevor du reagierst.",
-    "horoscope.data.descriptions.capricorn.9":
-      "Deine konstanten Bemühungen zeigen heute Ergebnisse. Zeit, die Früchte deiner Arbeit zu ernten.",
-    "horoscope.data.descriptions.capricorn.10":
-      "Deine Ernsthaftigkeit inspiriert Vertrauen und Respekt. Zeige deine Fähigkeiten und Talente.",
-    "horoscope.data.descriptions.capricorn.11":
-      "Achte auf Spannungen im Berufs- oder Familienumfeld. Ruhe bewahren und den Dialog priorisieren.",
-    "horoscope.data.descriptions.capricorn.12":
-      "Deine Intuition ist besonders fein. Folge deinen Eingebungen, besonders in Liebe und Freundschaft.",
-    "horoscope.data.descriptions.capricorn.13":
-      "Ein Tag für bereichernde Kontakte und Gespräche. Begegnungen könnten neue Perspektiven eröffnen.",
-    "horoscope.data.descriptions.capricorn.14":
-      "Deine Ausdauer und Disziplin helfen, Hindernisse zu überwinden. Eine günstige Energie begleitet dich, nutze sie.",
-    "horoscope.data.descriptions.aquarius.0":
-      "Deine Originalität und Kreativität stehen heute im Vordergrund. Teile deine Ideen, sie könnten inspirieren.",
-    "horoscope.data.descriptions.aquarius.1":
-      "Eine unerwartete Begegnung kann Neugier und Gefühle wecken. Achte darauf, diese Person könnte den Tag prägen.",
-    "horoscope.data.descriptions.aquarius.2":
-      "Dein innovativer Geist ist stark. Nutze neue Methoden in Arbeit oder Projekten.",
-    "horoscope.data.descriptions.aquarius.3":
-      "Achte auf Missverständnisse mit Nahestehenden. Höre zu, um Konflikte zu vermeiden.",
-    "horoscope.data.descriptions.aquarius.4":
-      "Eine überraschende Gelegenheit kann auftauchen. Prüfe sie, bevor du dich verpflichtest.",
-    "horoscope.data.descriptions.aquarius.5":
-      "Deine kommunikative Energie zieht Aufmerksamkeit an. Ideal, um freundschaftliche oder berufliche Beziehungen zu stärken.",
-    "horoscope.data.descriptions.aquarius.6":
-      "Ein Moment der Einsamkeit hilft, Energie aufzuladen und über Prioritäten nachzudenken.",
-    "horoscope.data.descriptions.aquarius.7":
-      "Deine originellen Ideen könnten Bewunderung und etwas Neid hervorrufen. Bleib fokussiert.",
-    "horoscope.data.descriptions.aquarius.8":
-      "Eine angenehme Überraschung kann deinen Tag bereichern.",
-    "horoscope.data.descriptions.aquarius.9":
-      "Dein Sinn für Gerechtigkeit ist gefragt. Hilf, Spannungen zu entschärfen.",
-    "horoscope.data.descriptions.aquarius.10":
-      "Achte auf impulsive Entscheidungen. Überlege gut, bevor du handelst.",
-    "horoscope.data.descriptions.aquarius.11":
-      "Ein verborgenes Geheimnis könnte ans Licht kommen. Nutze die Informationen, um Beziehungen oder Projekte zu verbessern.",
-    "horoscope.data.descriptions.aquarius.12":
-      "Liebe und Freundschaften werden begünstigt. Ehrliche Gesten stärken Bindungen.",
-    "horoscope.data.descriptions.aquarius.13":
-      "Ein altes Projekt könnte neue Impulse bekommen. Ideal, um Ideen umzusetzen.",
-    "horoscope.data.descriptions.aquarius.14":
-      "Positive Energie begleitet dich. Folge deiner Intuition und handle mutig.",
-    "horoscope.data.descriptions.pisces.0":
-      "Deine Sensibilität ist heute deine Stärke. Höre auf deine Gefühle in Beziehungen und Entscheidungen.",
-    "horoscope.data.descriptions.pisces.1":
-      "Jemand Nahestehendes könnte dich überraschen. Bleib aufmerksam, um Missverständnisse zu vermeiden.",
-    "horoscope.data.descriptions.pisces.2":
-      "Deine Kreativität ist stark. Setze sie künstlerisch oder in Projekten ein.",
-    "horoscope.data.descriptions.pisces.3":
-      "Achte auf impulsive Entscheidungen, besonders finanziell. Überlege sorgfältig.",
-    "horoscope.data.descriptions.pisces.4":
-      "Freundschaften werden gestärkt. Ein ehrliches Wort kann Beziehungen vertiefen.",
-    "horoscope.data.descriptions.pisces.5":
-      "Zeit für Selbstreflexion. Verbinde dich mit deinen Bedürfnissen und Wünschen.",
-    "horoscope.data.descriptions.pisces.6":
-      "Eine unerwartete Chance kann sich bieten. Prüfe sie gut.",
-    "horoscope.data.descriptions.pisces.7":
-      "Deine Intuition ist besonders fein. Vertraue ihr bei persönlichen und beruflichen Entscheidungen.",
-    "horoscope.data.descriptions.pisces.8":
-      "Nahestehende könnten deine Unterstützung suchen. Zeige Empathie, achte aber auf dich.",
-    "horoscope.data.descriptions.pisces.9":
-      "Eine romantische oder emotionale Überraschung kann den Tag verschönern.",
-    "horoscope.data.descriptions.pisces.10":
-      "Kleine Spannungen können auftreten. Bleib ruhig und kommuniziere klar.",
-    "horoscope.data.descriptions.pisces.11":
-      "Dein Mitgefühl zieht andere an. Schaffe echte und dauerhafte Bindungen.",
-    "horoscope.data.descriptions.pisces.12":
-      "Ein altes Projekt könnte neuen Schwung bekommen. Ideal, um Ideen umzusetzen.",
-    "horoscope.data.descriptions.pisces.13":
-      "Intensive und bereichernde Emotionen heute. Nutze sie für Beziehungen und Initiativen.",
-    "horoscope.data.descriptions.pisces.14":
-      "Positive Energie begleitet dich. Folge deiner Intuition und lasse dein Herz Entscheidungen führen.",
+      "Ein ruhiger und harmonischer Tag schenkt dir Gelassenheit und ermöglicht es dir, deine Energie wieder aufzuladen.",
+        "horoscope.data.descriptions.leo.0": "Heute zieht dein natürliches Charisma Aufmerksamkeit auf sich. Nutze diese Energie, um selbstbewusst zu sein und in allem zu glänzen, was du tust.",
+        "horoscope.data.descriptions.leo.1": "Eine großartige Gelegenheit ergibt sich, aber sie erfordert Mut und Engagement. Wage es zu handeln und habe keine Angst, es zu versuchen.",
+        "horoscope.data.descriptions.leo.2": "Ein wichtiges Gespräch könnte eine verwirrende Situation klären. Höre aufmerksam zu und bleibe offen für neue Perspektiven.",
+        "horoscope.data.descriptions.leo.3": "Umgebe dich mit aufrichtigen und freundlichen Menschen. Ihre Anwesenheit gibt dir Energie und stärkt dein Gleichgewicht.",
+        "horoscope.data.descriptions.leo.4": "Das Glück begünstigt diejenigen, die es wagen. Achte auf unerwartete Chancen und nutze den Moment.",
+        "horoscope.data.descriptions.leo.5": "Deine Energie ist heute hoch, aber nimm dir auch Zeit zum Ausruhen. Das Gleichgewicht zwischen Aktion und Entspannung ist wichtig.",
+        "horoscope.data.descriptions.leo.6": "Achte auf Spannungen um dich herum und bleibe ruhig. Dein innerer Frieden ist dein bester Schutz.",
+        "horoscope.data.descriptions.leo.7": "Unerwartete Ereignisse können dich überraschen, aber nichts ist unüberwindbar. Überlege, bevor du handelst, und vertraue dir selbst.",
+        "horoscope.data.descriptions.leo.8": "Ein angenehmes Treffen oder Erlebnis könnte deinen Tag erhellen. Begrüße Überraschungen mit Offenheit und Neugier.",
+        "horoscope.data.descriptions.leo.9": "Nimm dir Zeit, deine kleinen Siege zu genießen. Jeder Schritt zählt und trägt zu deinem Fortschritt bei.",
+        "horoscope.data.descriptions.leo.10": "Einfache, warme Momente mit deinen Liebsten oder Freunden geben dir neue Energie. Genieße diese Zeit und ihre positive Wirkung.",
+        "horoscope.data.descriptions.leo.11": "Erinnerungen oder alte Verbindungen können Inspiration und Unterstützung bringen. Sei offen für Erfahrungen aus der Vergangenheit, die dich bereichern.",
+        "horoscope.data.descriptions.leo.12": "Lass dich von unerwarteten Ereignissen überraschen. Offenheit gegenüber dem Unbekannten kann großartige Chancen schaffen.",
+        "horoscope.data.descriptions.leo.13": "Dein Wunsch nach Anerkennung ist stark, aber bleibe authentisch und maßvoll. Inspiriere andere durch aufrichtiges Handeln.",
+        "horoscope.data.descriptions.leo.14": "Eine wichtige Entscheidung steht an. Höre auf deine Intuition und bleibe deinen Überzeugungen treu, um den richtigen Weg zu finden.",
+        "horoscope.data.descriptions.virgo.0": "Heute hilft dir dein Blick fürs Detail, eine knifflige Situation zu lösen. Achte auf die Zeichen um dich herum; sie könnten deine Entscheidungen leiten.",
+        "horoscope.data.descriptions.virgo.1": "Jemand oder etwas könnte deine Geduld testen. Bleib ruhig und lass die Dinge sich natürlich entwickeln.",
+        "horoscope.data.descriptions.virgo.2": "Eine plötzliche Neugier könnte dich dazu bringen, etwas Neues und Spannendes zu entdecken.",
+        "horoscope.data.descriptions.virgo.3": "Deine Organisation und dein Urteilsvermögen stehen im Vordergrund. Es ist ein guter Moment, um deine Projekte oder Ideen zu strukturieren.",
+        "horoscope.data.descriptions.virgo.4": "Deine Intuition ist heute stark. Vertraue deinen Gefühlen, um durch den Tag zu navigieren.",
+        "horoscope.data.descriptions.virgo.5": "Interessante Möglichkeiten könnten auftauchen, aber du solltest sie sorgfältig prüfen, bevor du handelst.",
+        "horoscope.data.descriptions.virgo.6": "Dein kritischer Verstand ist aktiv und kann dir helfen, unklare Situationen zu klären, wenn du ihn konstruktiv einsetzt.",
+        "horoscope.data.descriptions.virgo.7": "Ein kleiner Rückschlag könnte dich überraschen, wird aber Klarheit bringen und dir helfen, den nächsten Schritt zu planen.",
+        "horoscope.data.descriptions.virgo.8": "Jetzt ist ein guter Zeitpunkt, um deine Sachen oder Gewohnheiten zu ordnen. Das hilft dir, mit Klarheit neu zu starten.",
+        "horoscope.data.descriptions.virgo.9": "Das Glück ist auf deiner Seite, besonders wenn du deine Komfortzone verlässt und neue Möglichkeiten erkundest.",
+        "horoscope.data.descriptions.virgo.10": "Deine Loyalität und Beständigkeit werden bemerkt. Nimm dir auch Zeit, auf dich selbst und deine Bedürfnisse zu achten.",
+        "horoscope.data.descriptions.virgo.11": "Ein unerwartetes Ereignis könnte deinen Tagesplan durcheinanderbringen, führt aber letztendlich zu einer effektiveren Lösung.",
+        "horoscope.data.descriptions.virgo.12": "Eine Überraschung oder ein unerwartetes Ereignis könnte deine Aufmerksamkeit erregen und dich etwas Neues entdecken lassen.",
+        "horoscope.data.descriptions.virgo.13": "Dein Geist sprüht heute vor Ideen. Nutze sie für konkrete Handlungen und gehe Schritt für Schritt vor.",
+        "horoscope.data.descriptions.virgo.14": "Eine Information oder Offenbarung könnte deine Gewissheiten herausfordern. Nimm diese Veränderung offen und ruhig an.",
+        "horoscope.data.descriptions.libra.0": "Dein natürlicher Charme zieht heute Aufmerksamkeit auf sich, und unerwartete Begegnungen könnten deinen Tag erhellen.",
+        "horoscope.data.descriptions.libra.1": "Ein Streit könnte in deiner Umgebung entstehen. Ruhig und gerecht zu bleiben hilft, Harmonie wiederherzustellen.",
+        "horoscope.data.descriptions.libra.2": "Deine sozialen Fähigkeiten glänzen heute. Ein aufrichtiges Gespräch könnte neue Perspektiven eröffnen.",
+        "horoscope.data.descriptions.libra.3": "Eine wichtige Entscheidung steht an. Höre auf deine Intuition und lass die Antworten natürlich kommen.",
+        "horoscope.data.descriptions.libra.4": "Dein inneres Gleichgewicht wird auf die Probe gestellt. Nimm dir eine Auszeit und gönn dir persönliche Zeit.",
+        "horoscope.data.descriptions.libra.5": "Eine angenehme Überraschung könnte deinen Tag erhellen. Begrüße sie mit Optimismus und Neugier.",
+        "horoscope.data.descriptions.libra.6": "Ein Geheimnis oder eine verborgene Wahrheit könnte heute ans Licht kommen. Diese Klarheit hilft dir, ruhiger voranzukommen.",
+        "horoscope.data.descriptions.libra.7": "Du spürst das Bedürfnis, deine Bindungen zu deinen Lieben zu stärken. Ein gemeinsamer Moment bringt Wärme und Geborgenheit.",
+        "horoscope.data.descriptions.libra.8": "Deine Fähigkeit zur Kooperation und zum Zuhören wird hervorgehoben. Lass deine Ideen hören; sie verdienen Anerkennung.",
+        "horoscope.data.descriptions.libra.9": "Zweifel oder Unsicherheiten könnten deinen Geist trüben. Nimm dir Zeit, um deine Gedanken zu klären und innere Ruhe zu finden.",
+        "horoscope.data.descriptions.libra.10": "Ein Vertrauensschub motiviert dich zum Handeln. Jetzt ist der perfekte Moment, etwas Neues zu beginnen.",
+        "horoscope.data.descriptions.libra.11": "Eine Begegnung oder Beobachtung könnte deine Sichtweise verändern. Achte auf subtile Zeichen um dich herum.",
+        "horoscope.data.descriptions.libra.12": "Negative Energien könnten dich beeinflussen, aber wenn du zentriert bleibst, bleibst du auf Kurs.",
+        "horoscope.data.descriptions.libra.13": "Das Glück scheint dir heute zuzulächeln. Eine Gelegenheit könnte eine positive Wende markieren.",
+        "horoscope.data.descriptions.libra.14": "Dein Bedürfnis nach Gleichgewicht führt dich zu neuen Entscheidungen. Du findest endlich den Mut, faire und notwendige Grenzen zu setzen.",
+    "horoscope.data.descriptions.scorpio.0": "Deine Intuition ist heute besonders stark. Deine Instinkte führen dich zu den richtigen Entscheidungen.",
+    "horoscope.data.descriptions.scorpio.1": "Es könnte Spannung in deiner Umgebung entstehen. Bleib ruhig und setze auf Ehrlichkeit, um die Situation zu beruhigen.",
+    "horoscope.data.descriptions.scorpio.2": "Du könntest eine faszinierende Person treffen, die deine Neugier und Emotionen weckt und deine Gewissheiten ein wenig durcheinanderbringt.",
+    "horoscope.data.descriptions.scorpio.3": "Deine Entschlossenheit fällt heute auf. Es ist ein idealer Tag, um ein Hindernis zu überwinden oder eine offene Situation zu klären.",
+    "horoscope.data.descriptions.scorpio.4": "Ein Geheimnis oder eine verborgene Wahrheit könnte ans Licht kommen. Auch wenn es dich überrascht, hilft es dir, dein Umfeld besser zu verstehen.",
+    "horoscope.data.descriptions.scorpio.5": "Deine Intensität zieht Aufmerksamkeit auf sich und kann verunsichern. Nutze diese Energie, um voranzukommen, aber übertreibe es nicht.",
+    "horoscope.data.descriptions.scorpio.6": "Eine unerwartete Gelegenheit könnte erscheinen. Analysiere die Situation sorgfältig, bevor du handelst.",
+    "horoscope.data.descriptions.scorpio.7": "Du wirst das Bedürfnis verspüren, dich zurückzuziehen und nachzudenken. Diese Reflexion klärt deine Prioritäten und stärkt dein inneres Gleichgewicht.",
+    "horoscope.data.descriptions.scorpio.8": "Ein lang gehegtes Projekt oder eine Idee gewinnt endlich an Fahrt. Deine Ausdauer beginnt sich auszuzahlen.",
+    "horoscope.data.descriptions.scorpio.9": "Achte auf Missverständnisse. Deine intensiven Emotionen könnten die Kommunikation trüben. Bleib ruhig und drücke dich sanft aus.",
+    "horoscope.data.descriptions.scorpio.10": "Dein Magnetismus ist heute stark. Du könntest die Aufmerksamkeit von jemandem auf dich ziehen, der für deinen Weg wichtig ist.",
+    "horoscope.data.descriptions.scorpio.11": "Eifersucht oder Konkurrenz von anderen könnte sichtbar werden. Schütze deine Energie und vermeide unnötige Konflikte.",
+    "horoscope.data.descriptions.scorpio.12": "Deine Leidenschaft ist ein starker Motor, aber achte darauf, dich nicht zu überlasten. Mach Pausen, um dein Gleichgewicht zu bewahren.",
+    "horoscope.data.descriptions.scorpio.13": "Eine gute Nachricht könnte deinen Tag erhellen. Begrüße sie mit Vertrauen.",
+    "horoscope.data.descriptions.scorpio.14": "Deine Transformationskraft ist auf ihrem Höhepunkt. Nutze diese Energie, um ein Kapitel zu schließen und ein neues zu beginnen.",
+    "horoscope.data.descriptions.sagittarius.0": "Dein natürlicher Optimismus erhellt deinen Tag. Du fühlst dich motiviert, etwas Neues zu beginnen und Freude zu teilen.",
+    "horoscope.data.descriptions.sagittarius.1": "Eine unerwartete Begegnung könnte deine Neugier und Emotionen wecken und eine angenehme Überraschung bringen.",
+    "horoscope.data.descriptions.sagittarius.2": "Dein Abenteuergeist treibt dich an, neue Ideen oder Orte zu erkunden, wobei der Fokus auf dem Wesentlichen bleibt.",
+    "horoscope.data.descriptions.sagittarius.3": "Heute ergibt sich eine Gelegenheit. Auf Details zu achten, kann Missverständnisse vermeiden.",
+    "horoscope.data.descriptions.sagittarius.4": "Deine positive Energie wirkt auf dein Umfeld. Auch wenn ein Streit entsteht, kehrt schnell wieder Gleichgewicht ein.",
+    "horoscope.data.descriptions.sagittarius.5": "Zärtliche Momente oder bedeutsame Begegnungen können den Tag prägen und wichtige Verbindungen stärken.",
+    "horoscope.data.descriptions.sagittarius.6": "Du könntest versucht sein, Grenzen zu überschreiten oder impulsiv zu handeln. Dein Gleichgewicht ist wichtig.",
+    "horoscope.data.descriptions.sagittarius.7": "Deine Kreativität und originellen Ideen stehen im Vordergrund. Sie können andere inspirieren und neue Möglichkeiten eröffnen.",
+    "horoscope.data.descriptions.sagittarius.8": "Eine verborgene Wahrheit oder ein Geheimnis könnte enthüllt werden. Missverständnisse lösen sich, wenn du aufmerksam bleibst.",
+    "horoscope.data.descriptions.sagittarius.9": "Ein Tag günstig für Entdeckung und Lernen. Du kannst deinen Horizont erweitern und mehr über dich erfahren.",
+    "horoscope.data.descriptions.sagittarius.10": "Dein Humor und Leichtigkeit ziehen Aufmerksamkeit auf sich. Diese fröhlichen Momente teilst du aufrichtig.",
+    "horoscope.data.descriptions.sagittarius.11": "Eine Herausforderung oder ein Hindernis könnte auftauchen. Dein Enthusiasmus und deine Ausdauer helfen dir, es zu überwinden.",
+    "horoscope.data.descriptions.sagittarius.12": "In deinem familiären Umfeld könnten Spannungen auftreten. Zuhören und Verständnis helfen, Harmonie zu bewahren.",
+    "horoscope.data.descriptions.sagittarius.13": "Deine Intuition ist heute verstärkt. Deine Wahrnehmungen leiten deine Entscheidungen und Interaktionen.",
+    "horoscope.data.descriptions.sagittarius.14": "Eine günstige Energie begleitet dich, um deine Projekte voranzubringen und dein Glück zu fördern.",
+    "horoscope.data.descriptions.capricorn.0": "Deine Ernsthaftigkeit und Ausdauer ziehen heute Aufmerksamkeit auf sich. Du machst energische Fortschritte bei einem wichtigen Projekt.",
+    "horoscope.data.descriptions.capricorn.1": "Jemand in deiner Umgebung überrascht mit unerwarteten Reaktionen und bringt Unvorhersehbarkeit in deinen Tag.",
+    "horoscope.data.descriptions.capricorn.2": "Dein Organisationssinn zeigt sich heute stark und ermöglicht es dir, mehrere Verantwortlichkeiten effektiv zu managen.",
+    "horoscope.data.descriptions.capricorn.3": "Eine berufliche oder finanzielle Gelegenheit taucht auf und bietet neue Perspektiven.",
+    "horoscope.data.descriptions.capricorn.4": "Deine Loyalität und Treue werden anerkannt und stärken das Vertrauen um dich herum.",
+    "horoscope.data.descriptions.capricorn.5": "Ein angenehmer Moment mit einer nahestehenden Person bringt Wärme und Verbindung und erhellt den Tag.",
+    "horoscope.data.descriptions.capricorn.6": "Es könnte die Versuchung auftreten, über die Stränge zu schlagen oder impulsiv auszugeben, doch die Gesamtenergie bleibt positiv.",
+    "horoscope.data.descriptions.capricorn.7": "Eine zuvor zurückgestellte Idee oder ein Projekt bekommt neuen Schwung und entwickelt sich heute weiter.",
+    "horoscope.data.descriptions.capricorn.8": "Eine verborgene Wahrheit oder Enthüllung könnte auftauchen und Klarheit in deine Beziehungen bringen.",
+    "horoscope.data.descriptions.capricorn.9": "Deine bisherigen Anstrengungen beginnen Früchte zu tragen und bieten Zufriedenheit und Erfolg.",
+    "horoscope.data.descriptions.capricorn.10": "Deine Ernsthaftigkeit und Genauigkeit werden bemerkt und inspirieren Vertrauen in deiner Umgebung.",
+    "horoscope.data.descriptions.capricorn.11": "Spannungen können in deiner Umgebung auftreten, aber die Situation stabilisiert sich im Laufe des Tages.",
+    "horoscope.data.descriptions.capricorn.12": "Deine Intuition ist heute stark und leitet deine Entscheidungen und Interaktionen.",
+    "horoscope.data.descriptions.capricorn.13": "Ein Treffen oder Austausch bringt neue Perspektiven und weckt dein Interesse.",
+    "horoscope.data.descriptions.capricorn.14": "Ausdauer und Genauigkeit begleiten dich, helfen dir, Hindernisse zu überwinden und deine Projekte voranzubringen.",
+    "horoscope.data.descriptions.aquarius.0": "Deine Originalität und Kreativität strahlen heute und ziehen die Aufmerksamkeit deiner Umgebung auf sich.",
+    "horoscope.data.descriptions.aquarius.1": "Eine unerwartete Begegnung weckt Neugier und Emotionen und hinterlässt einen deutlichen Eindruck im Tagesverlauf.",
+    "horoscope.data.descriptions.aquarius.2": "Dein innovativer Geist erreicht seinen Höhepunkt und bringt neue Perspektiven in deine Projekte und Aktivitäten.",
+    "horoscope.data.descriptions.aquarius.3": "Missverständnisse mit einer nahestehenden Person können auftreten, aber im Laufe des Tages klärt sich alles.",
+    "horoscope.data.descriptions.aquarius.4": "Eine überraschende Gelegenheit taucht auf und bringt eine unerwartete Wendung in den Tag.",
+    "horoscope.data.descriptions.aquarius.5": "Deine kommunikative Energie zieht Aufmerksamkeit auf sich und stärkt Freundschaften oder berufliche Beziehungen.",
+    "horoscope.data.descriptions.aquarius.6": "Ein Moment der Einsamkeit verschafft Klarheit und hilft dir, dich auf deine Prioritäten zu konzentrieren.",
+    "horoscope.data.descriptions.aquarius.7": "Deine originellen Ideen erzeugen Bewunderung und manchmal Eifersucht, dein Fokus bleibt jedoch ungebrochen.",
+    "horoscope.data.descriptions.aquarius.8": "Eine angenehme Überraschung erhellt deinen Tag und fügt einen positiven, aufmunternden Akzent hinzu.",
+    "horoscope.data.descriptions.aquarius.9": "Dein Sinn für Gerechtigkeit und Ausgewogenheit wirkt sich heute positiv auf dein Umfeld aus.",
+    "horoscope.data.descriptions.aquarius.10": "Wichtige Entscheidungen könnten anstehen, die Reflexion und Urteilsvermögen erfordern.",
+    "horoscope.data.descriptions.aquarius.11": "Eine verborgene Wahrheit oder ein Geheimnis wird offenbar und bringt Klarheit in Beziehungen oder Projekte.",
+    "horoscope.data.descriptions.aquarius.12": "Deine Freundschaften und romantischen Beziehungen erleben positive Impulse, stärken Bindungen und schaffen wertvolle Erinnerungen.",
+    "horoscope.data.descriptions.aquarius.13": "Ein altes Projekt wird unter einem neuen Licht wiederbelebt und nimmt heute Gestalt an.",
+    "horoscope.data.descriptions.aquarius.14": "Deine Energie und Intuition leiten dich zu positiven Entscheidungen und machen den Tag selbstbewusst und mutig.",
+    "horoscope.data.descriptions.pisces.0": "Deine Sensibilität erhellt den Tag und leitet deine Beziehungen und Entscheidungen.",
+    "horoscope.data.descriptions.pisces.1": "Eine nahestehende Person zeigt überraschende Offenheit und hinterlässt einen Eindruck in deinen Interaktionen heute.",
+    "horoscope.data.descriptions.pisces.2": "Deine Kreativität erreicht ihren Höhepunkt und bringt originelle und künstlerische Ideen hervor.",
+    "horoscope.data.descriptions.pisces.3": "Finanzielle oder persönliche Entscheidungen erfordern Nachdenken und bringen Vorsicht in deine Wahl.",
+    "horoscope.data.descriptions.pisces.4": "Freundschaften werden gestärkt und aufrichtige Gesten bringen Freude in deinen Tag.",
+    "horoscope.data.descriptions.pisces.5": "Eine Phase tiefer Introspektion bringt Klarheit und richtet deine Wünsche neu aus.",
+    "horoscope.data.descriptions.pisces.6": "Eine unerwartete Gelegenheit entsteht und eröffnet neue Perspektiven.",
+    "horoscope.data.descriptions.pisces.7": "Deine Intuition ist besonders stark und leitet deine Entscheidungen präzise.",
+    "horoscope.data.descriptions.pisces.8": "Ein nahestehender Mensch sucht deine Unterstützung, wodurch ein Moment empathischen Teilens entsteht.",
+    "horoscope.data.descriptions.pisces.9": "Eine romantische oder liebevolle Überraschung färbt den Tag positiv.",
+    "horoscope.data.descriptions.pisces.10": "Kleine Spannungen treten auf, doch Kommunikation bringt Ruhe und Ausgleich.",
+    "horoscope.data.descriptions.pisces.11": "Dein Mitgefühl zieht andere an und fördert aufrichtige, dauerhafte Bindungen.",
+    "horoscope.data.descriptions.pisces.12": "Ein altes Projekt gewinnt neue Dynamik und nimmt heute Gestalt an.",
+    "horoscope.data.descriptions.pisces.13": "Deine intensiven Emotionen bereichern Beziehungen und inspirieren deine Initiativen.",
+    "horoscope.data.descriptions.pisces.14": "Positive Energie begleitet dich, geleitet von Intuition und Herz.",
 
     // Verschiedene Endnachrichten
     "horoscope.message.var1":
@@ -8399,364 +7943,246 @@ const translations: Record<Language, Record<string, string>> = {
       "L'energia dell'Angelo della Nuova Vita ti accompagna nel voltare una pagina importante. Ti ricorda che ogni fine è un nuovo inizio e che dentro di te hai la forza di reinventarti e crescere con serenità.",
 
     // Horoscope Data Translations - Descriptions
-    "horoscope.data.descriptions.aries.0":
-      "La tua energia traboccante ti spinge ad agire con audacia oggi. Approfitta per iniziare nuovi progetti.",
-    "horoscope.data.descriptions.aries.1":
-      "Un incontro inaspettato potrebbe scuotere le tue emozioni. Rimani attento, questa persona potrebbe segnare la tua giornata.",
-    "horoscope.data.descriptions.aries.2":
-      "Il tuo entusiasmo comunicativo attira l’attenzione. Sii paziente per evitare malintesi.",
-    "horoscope.data.descriptions.aries.3":
-      "Al lavoro, potrebbe presentarsi un’opportunità. Analizzala attentamente prima di decidere.",
-    "horoscope.data.descriptions.aries.4":
-      "Attenzione alle tensioni nelle relazioni vicine. Mantieni la calma e favorisci il dialogo per evitare conflitti.",
-    "horoscope.data.descriptions.aries.6":
-      "La tua spontaneità è un punto di forza, ma evita eccessi o decisioni impulsive che potrebbero causarti problemi.",
-    "horoscope.data.descriptions.aries.7":
-      "Un’idea originale potrebbe portarti successo e riconoscimento. Non esitare a condividerla e realizzarla.",
-    "horoscope.data.descriptions.aries.8":
-      "Una verità nascosta potrebbe emergere. Rimani attento e usa queste informazioni saggiamente.",
-    "horoscope.data.descriptions.aries.9":
-      "I tuoi sforzi costanti cominciano a dare frutti. È il momento di raccogliere i risultati del tuo lavoro.",
-    "horoscope.data.descriptions.aries.10":
-      "La tua sicurezza naturale attira la fiducia degli altri. Usala per consolidare le relazioni personali e professionali.",
-    "horoscope.data.descriptions.aries.11":
-      "Una piacevole sorpresa potrebbe illuminare la tua giornata, che sia un incontro, un messaggio o un evento positivo.",
-    "horoscope.data.descriptions.aries.12":
-      "I tuoi legami di amicizia o familiari si rafforzano. Goditi questi momenti per creare ricordi preziosi.",
-    "horoscope.data.descriptions.aries.13":
-      "La tua intuizione è particolarmente acuta oggi. Segui i tuoi sentimenti per prendere buone decisioni.",
-    "horoscope.data.descriptions.aries.14":
-      "Un’energia positiva ti accompagna per tutta la giornata. Usala per avanzare con fiducia e realizzare le tue ambizioni.",
+        "horoscope.data.descriptions.aries.0":
+          "La tua energia è forte oggi. Usala per iniziare qualcosa di nuovo o affrontare una sfida personale.",
+        "horoscope.data.descriptions.aries.1":
+          "Un incontro inaspettato potrebbe suscitare emozioni. Stai attento, questa persona potrebbe segnare la tua giornata.",
+        "horoscope.data.descriptions.aries.2":
+          "Il tuo entusiasmo attira l’attenzione di chi ti circonda. Mantieni la pazienza per evitare malintesi.",
+        "horoscope.data.descriptions.aries.3":
+          "Una sorpresa o un’opportunità potrebbe presentarsi. Osserva bene prima di agire.",
+        "horoscope.data.descriptions.aries.4":
+          "Fai attenzione alle tensioni nelle tue relazioni strette. Mantieni la calma e favorisci il dialogo.",
+        "horoscope.data.descriptions.aries.5":
+          "Oggi potresti avere un’idea originale che ti porterà soddisfazione se la realizzi.",
+        "horoscope.data.descriptions.aries.6":
+          "La tua spontaneità è un punto di forza, ma evita eccessi o decisioni impulsive che potrebbero causarti problemi.",
+        "horoscope.data.descriptions.aries.7":
+          "Potrebbero emergere informazioni importanti. Stai attento e usale saggiamente.",
+        "horoscope.data.descriptions.aries.8":
+          "I tuoi sforzi iniziano a dare frutti. Approfitta del momento per goderti i risultati.",
+        "horoscope.data.descriptions.aries.9":
+          "La tua naturale fiducia attira gli altri. Usala per rafforzare i legami con chi ti sta a cuore.",
+        "horoscope.data.descriptions.aries.10":
+          "Una piacevole sorpresa potrebbe illuminare la tua giornata, come un messaggio, un incontro o un evento positivo.",
+        "horoscope.data.descriptions.aries.11":
+          "I tuoi legami familiari o di amicizia si rafforzano. Goditi questi momenti per creare ricordi preziosi.",
+        "horoscope.data.descriptions.aries.12":
+          "La tua intuizione è particolarmente acuta oggi. Segui i tuoi sentimenti per prendere buone decisioni.",
+        "horoscope.data.descriptions.aries.13":
+          "Un’energia positiva ti accompagna per tutta la giornata. Avanza con fiducia e realizza i tuoi progetti personali.",
+        "horoscope.data.descriptions.aries.14":
+          "Prenditi cura della tua energia e concentrati su ciò che conta davvero. Questo ti porterà buoni risultati per la giornata.",
     "horoscope.data.descriptions.taurus.0":
-      "La stabilità che cerchi si manifesta finalmente nella tua vita. Goditi questa fase di serenità e le gioie semplici.",
+      "La tua stabilità interiore si rafforza oggi. Approfitta di questa calma per goderti i piaceri semplici.",
     "horoscope.data.descriptions.taurus.1":
-      "Un incontro promettente potrebbe avvenire oggi, portando una bella complicità e emozioni positive da condividere.",
+      "Una sorpresa inaspettata potrebbe illuminare la tua giornata e portarti momenti piacevoli.",
     "horoscope.data.descriptions.taurus.2":
-      "Venere ti porta dolcezza e armonia nelle relazioni. Una giornata perfetta per coltivare amore e amicizia.",
+      "Ti senti in armonia con te stesso, il che ti aiuta a mantenere l'equilibrio per tutta la giornata.",
     "horoscope.data.descriptions.taurus.3":
-      "La tua pazienza e perseveranza portano frutti. I risultati dei tuoi sforzi passati si manifestano oggi.",
+      "La tua pazienza dà i suoi frutti oggi. Vedrai i risultati dei tuoi sforzi recenti manifestarsi.",
     "horoscope.data.descriptions.taurus.4":
-      "Le relazioni familiari sono particolarmente armoniose. Approfitta di questo momento per rafforzare i legami con i tuoi cari.",
+      "Prenditi del tempo per apprezzare le piccole cose intorno a te; contribuiscono al tuo benessere e alla serenità.",
     "horoscope.data.descriptions.taurus.5":
-      "Non trascurare il tuo benessere fisico; prenditi del tempo per rilassarti e fare attività sportiva.",
+      "Prenditi cura del tuo corpo e della tua energia: una passeggiata o un momento di relax ti aiuterà a ricaricarti.",
     "horoscope.data.descriptions.taurus.6":
-      "I tuoi talenti artistici sono messi in luce oggi e avrai l'opportunità di esprimerli appieno nei tuoi progetti personali o professionali.",
+      "Un’idea o un progetto creativo potrebbe darti soddisfazione se ti concentri su di esso oggi.",
     "horoscope.data.descriptions.taurus.7":
-      "È il momento ideale per concretizzare i tuoi progetti a lungo termine, seguendo i passaggi necessari per raggiungere i tuoi obiettivi con successo.",
+      "È un buon momento per pianificare obiettivi a lungo termine, prendendo il tempo necessario per stabilire i passaggi.",
     "horoscope.data.descriptions.taurus.8":
-      "Il tuo senso pratico e discernimento ti aiutano a evitare molti errori e a prendere decisioni sagge nelle questioni quotidiane.",
+      "Il tuo senso pratico ti aiuta a evitare trappole e a prendere decisioni sagge durante la giornata.",
     "horoscope.data.descriptions.taurus.9":
-      "Si prospetta un periodo di prosperità materiale, offrendo opportunità di guadagni finanziari e stabilità economica se rimani attento.",
+      "Si prospetta un periodo positivo, con opportunità favorevoli da cogliere se resti attento.",
     "horoscope.data.descriptions.taurus.10":
-      "La tua fedeltà e lealtà nell'amicizia sono riconosciute e apprezzate da chi ti circonda, creando legami ancora più forti e armoniosi.",
+      "La tua affidabilità e costanza sono riconosciute da chi ti circonda, rafforzando la fiducia e i legami.",
     "horoscope.data.descriptions.taurus.11":
-      "I piaceri semplici della vita ti portano grande soddisfazione e contribuiscono al tuo benessere emotivo e mentale oggi.",
+      "I piccoli piaceri di oggi ti portano gioia e contribuiscono al tuo benessere generale.",
     "horoscope.data.descriptions.taurus.12":
-      "La tua stabilità emotiva rassicura chi ti circonda, e sei visto come un punto di riferimento affidabile e calmante per gli altri.",
+      "La tua serenità influenza positivamente chi ti circonda, diventando un punto di riferimento rassicurante.",
     "horoscope.data.descriptions.taurus.13":
-      "È una giornata ideale per attività all'aperto, che ti permetteranno di ricaricarti, prendere distanza e ritrovare energia.",
+      "Approfitta di momenti all'aperto per ricaricarti e ritrovare energia e chiarezza.",
     "horoscope.data.descriptions.taurus.14":
-      "I tuoi sforzi passati vengono finalmente premiati e vedrai che la tua perseveranza dà frutti nei tuoi progetti e nelle tue relazioni.",
+      "I tuoi sforzi passati cominciano a dare frutti, e noterai effetti positivi oggi.",
     "horoscope.data.descriptions.gemini.0":
-      "La tua curiosità naturale ti conduce a meravigliose scoperte. Rimani aperto a nuovi incontri e idee innovative.",
+      "La tua curiosità naturale ti porta a meravigliose scoperte. Rimani aperto a nuove idee ed esperienze inaspettate.",
     "horoscope.data.descriptions.gemini.1":
-      "Si presentano opportunità professionali. Abbi il coraggio di proporre le tue idee innovative, saranno ben accolte.",
+      "Oggi potrebbero presentarsi opportunità interessanti. Non esitare a condividere le tue idee, potrebbero sorprenderti piacevolmente.",
     "horoscope.data.descriptions.gemini.2":
-      "Mercurio favorisce la tua mente e creatività. Un giorno ideale per comunicare, scrivere o imparare.",
+      "Mercurio stimola la tua mente e creatività. È un buon giorno per imparare qualcosa di nuovo o provare un’idea.",
     "horoscope.data.descriptions.gemini.3":
-      "La tua capacità di adattarti è straordinaria oggi, approfittane per esplorare nuove opportunità che si presentano.",
+      "La tua capacità di adattarti è un punto di forza oggi, approfittane per esplorare nuove possibilità.",
     "horoscope.data.descriptions.gemini.4":
-      "Fai attenzione all’ambiente che ti circonda, alcune persone potrebbero condividere informazioni importanti con te.",
+      "Fai attenzione a chi ti circonda, alcune persone potrebbero condividere informazioni utili o ispiratrici.",
     "horoscope.data.descriptions.gemini.5":
-      "Oggi la tua mente è vivace e curiosa, ma attenzione a malintesi o piccole discussioni che potrebbero sorgere intorno a te.",
+      "La tua mente è vivace e curiosa, ma fai attenzione a malintesi o piccoli litigi che potrebbero sorgere intorno a te.",
     "horoscope.data.descriptions.gemini.6":
-      "Una piacevole sorpresa potrebbe illuminare la tua giornata, che si tratti di un incontro, un messaggio o un'idea ispiratrice.",
+      "Una piacevole sorpresa potrebbe rallegrare la tua giornata, sia che si tratti di un’idea, un messaggio o un evento inatteso.",
     "horoscope.data.descriptions.gemini.7":
-      "La tua facilità di comunicare attira l'attenzione oggi, ma fai attenzione a non rivelare troppe informazioni o a creare malintesi.",
+      "Il tuo modo di comunicare attira l’attenzione oggi, ma assicurati di non condividere troppo o creare confusione.",
     "horoscope.data.descriptions.gemini.8":
-      "Una conversazione inaspettata cambia il tuo punto di vista e apre nuove prospettive nelle tue relazioni o nei tuoi progetti.",
+      "Una conversazione inaspettata potrebbe cambiare la tua prospettiva e aprire nuove possibilità nei tuoi progetti personali.",
     "horoscope.data.descriptions.gemini.9":
       "La tua versatilità ti permette di gestire più progetti contemporaneamente senza perdere efficienza o creatività.",
     "horoscope.data.descriptions.gemini.10":
-      "Le nuove tecnologie ti aprono nuovi orizzonti e facilitano i tuoi scambi o progetti innovativi.",
+      "Nuove idee o strumenti possono offrirti soluzioni semplici ed efficaci per le tue attività quotidiane.",
     "horoscope.data.descriptions.gemini.11":
-      "Il tuo spirito vivace e il tuo senso dell'umorismo alleggeriscono l'atmosfera, attirando gli altri verso di te con carisma e naturalezza.",
+      "La tua mente vivace e il tuo umorismo rendono l’atmosfera più leggera, attirando gli altri verso di te con facilità e fascino.",
     "horoscope.data.descriptions.gemini.12":
-      "È un momento perfetto per imparare qualcosa di nuovo ed arricchire le tue conoscenze o competenze.",
+      "È il momento perfetto per imparare qualcosa di nuovo e ampliare le tue conoscenze.",
     "horoscope.data.descriptions.gemini.13":
-      "I tuoi social network e i tuoi contatti ti portano oggi opportunità inaspettate e vantaggiose.",
+      "I tuoi contatti e le interazioni di oggi possono portarti opportunità inattese e interessanti.",
     "horoscope.data.descriptions.gemini.14":
-      "Fai attenzione alle confidenze: un'amicizia potrebbe essere messa alla prova da un malinteso o da un segreto rivelato.",
+      "Fai attenzione alle confidenze: un segreto frainteso potrebbe creare un piccolo malinteso.",
     "horoscope.data.descriptions.cancer.0":
-      "La tua intuizione è particolarmente forte oggi. Segui il tuo cuore, ti guiderà alle decisioni giuste.",
+      "La tua intuizione è particolarmente forte oggi. Segui i tuoi sentimenti; ti guideranno verso le decisioni giuste.",
     "horoscope.data.descriptions.cancer.1":
-      "Questa giornata potrebbe farti girare la testa. Non lasciarti sopraffare dai piccoli fastidi. Un'energia interiore ti sostiene positivamente, quindi risparmia il tuo sistema nervoso e concediti una pausa dalla routine quotidiana!",
+      "Oggi potrebbe essere una giornata un po' agitata. Non lasciarti sopraffare dai piccoli fastidi. Prenditi cura della tua energia e concediti una pausa meritata.",
     "horoscope.data.descriptions.cancer.2":
-      "Famiglia e amici giocano oggi un ruolo chiave per il tuo benessere. Sii attento e sostienili.",
+      "Presta attenzione a chi ti sta intorno. Essere presente può creare scambi positivi e rafforzare i tuoi legami.",
     "horoscope.data.descriptions.cancer.3":
-      "Una piccola pausa di relax può fare bene alla tua energia. Pensa a meditazione o a un bagno rilassante.",
+      "Un breve momento di relax può fare miracoli per la tua energia. Considera di meditare o fare un bagno rilassante.",
     "horoscope.data.descriptions.cancer.4":
-      "La luna illumina la tua sensibilità e rafforza i legami familiari. Un momento speciale per esprimere i tuoi sentimenti.",
+      "La tua sensibilità è più intensa oggi. Osserva i tuoi sentimenti e lascia che il tuo istinto ti guidi verso decisioni equilibrate.",
     "horoscope.data.descriptions.cancer.5":
-      "La tua bontà naturale attira fiducia e rafforza le amicizie. Sei un rifugio per chi ti sta intorno.",
+      "La tua gentilezza attira naturalmente fiducia. Approfitta di questo momento per condividere e supportare chi ti circonda.",
     "horoscope.data.descriptions.cancer.6":
-      "Oggi è un giorno perfetto per esprimere le tue emozioni e condividere i tuoi sentimenti con sincerità, rafforzando le tue relazioni.",
+      "Esprimi le tue emozioni con sincerità. Ti aiuterà a chiarire i tuoi pensieri e a sentirti più leggero durante la giornata.",
     "horoscope.data.descriptions.cancer.7":
-      "La tua naturale empatia ti permette di comprendere profondamente gli altri e di offrire loro un supporto prezioso.",
+      "La tua empatia ti permette di capire le situazioni intorno a te. Usala per agire con calma e saggezza.",
     "horoscope.data.descriptions.cancer.8":
-      "Le tue relazioni oggi sono caratterizzate da amicizia e complicità. Cerca l'ascolto e il sostegno di chi ti circonda, restando attento ai loro bisogni così come ai tuoi, senza trascurarne nessuno.",
+      "Cerca equilibrio nelle tue relazioni oggi. Presta attenzione ai bisogni degli altri senza trascurare i tuoi.",
     "horoscope.data.descriptions.cancer.9":
-      "La tua casa diventa un vero rifugio di pace e felicità, ideale per il riposo e la serenità.",
+      "Crea uno spazio calmo intorno a te. Un momento di pace ti aiuterà a ricaricare le energie.",
     "horoscope.data.descriptions.cancer.10":
-      "Una forte intuizione ti guida verso la decisione giusta, anche in situazioni complesse o incerte.",
+      "La tua intuizione ti guida a prendere le decisioni giuste, anche nelle situazioni complesse.",
     "horoscope.data.descriptions.cancer.11":
-      "I ricordi della tua infanzia ti ispirano positivamente e ti ricordano i valori essenziali che ti motivano.",
+      "Fidati delle tue esperienze e dei tuoi ricordi passati per orientare le tue scelte oggi.",
     "horoscope.data.descriptions.cancer.12":
-      "Ti verrà chiesto di mostrare diplomazia, e c'è del positivo da trarne. Attraverso i tuoi hobby preferiti troverai modi per rilassarti. Lascia i tuoi pensieri da parte.",
+      "Prenditi del tempo per rilassarti e goderti i tuoi hobby. Metti da parte le preoccupazioni per ritrovare equilibrio.",
     "horoscope.data.descriptions.cancer.13":
-      "I tuoi legami con nuove conoscenze colmeranno i vuoti e le mancanze che senti. Il tuo gusto marcato per le cose belle potrebbe portarti a qualche eccesso, quindi vai con calma.",
+      "Le interazioni con nuove persone possono portare idee e prospettive interessanti. Mantieniti moderato nei piaceri per conservare energia.",
     "horoscope.data.descriptions.cancer.14":
-      "Una riconciliazione familiare porta una profonda armonia e crea un clima di pace intorno a te.",
-    "horoscope.data.descriptions.leo.0":
-      "La tua energia oggi è potente. Usala per completare compiti importanti e influenzare positivamente chi ti circonda.",
-    "horoscope.data.descriptions.leo.1":
-      "Un incontro potrebbe risvegliare emozioni. Sii aperto ma attento ai tuoi limiti.",
-    "horoscope.data.descriptions.leo.2":
-      "Il tuo carisma attira l’attenzione. Usalo per rafforzare relazioni o portare avanti progetti.",
-    "horoscope.data.descriptions.leo.3":
-      "Fai attenzione alla gelosia o alla competizione intorno a te. Mantieni la calma e resta concentrato.",
-    "horoscope.data.descriptions.leo.4":
-      "Un’idea creativa potrebbe arricchire un progetto. Approfitta dell’energia favorevole per realizzarla.",
-    "horoscope.data.descriptions.leo.5":
-      "Amore e amicizia sono favoriti. Mostra affetto in modo sincero e aperto.",
-    "horoscope.data.descriptions.leo.6":
-      "La tua determinazione verrà messa alla prova. Rimani saldo per superare gli ostacoli con successo.",
-    "horoscope.data.descriptions.leo.7":
-      "Un vecchio problema potrebbe chiarirsi. Sfrutta l’opportunità per ristabilire armonia.",
-    "horoscope.data.descriptions.leo.8":
-      "Attenzione al sovraccarico. Fare pause ti aiuterà a ricaricare energia e mantenere produttività.",
-    "horoscope.data.descriptions.leo.9":
-      "Il tuo senso dell’umorismo porta gioia. Condividilo per risolvere tensioni e approfondire relazioni.",
-    "horoscope.data.descriptions.leo.10":
-      "Potrebbe presentarsi un impulso professionale. Controlla i dettagli prima di prendere decisioni.",
-    "horoscope.data.descriptions.leo.11":
-      "Una sorpresa potrebbe rendere la giornata più piacevole. Sii aperto alle novità.",
-    "horoscope.data.descriptions.leo.12":
-   "La tua creatività ispira gli altri. Usala per far progredire progetti o obiettivi personali.",
-    "horoscope.data.descriptions.leo.13":
-      "La tua passione è percepibile. Motiva te stesso e gli altri a raggiungere risultati positivi.",
-    "horoscope.data.descriptions.leo.14":
-      "Energia positiva ti accompagna. Usala per rafforzare relazioni e portare avanti progetti.",
-    "horoscope.data.descriptions.virgo.0":
-      "La tua attenzione ai dettagli oggi dà frutti. Usala per completare compiti in modo efficiente.",
-    "horoscope.data.descriptions.virgo.1":
-      "Fai attenzione alla salute. Piccoli accorgimenti possono avere grandi effetti.",
-    "horoscope.data.descriptions.virgo.2":
-      "Il tuo talento organizzativo ti aiuta a gestire progetti e scadenze in modo ottimale.",
-    "horoscope.data.descriptions.virgo.3":
-      "Qualcuno potrebbe aver bisogno del tuo aiuto. Mostra supporto senza trascurare i tuoi limiti.",
-    "horoscope.data.descriptions.virgo.4":
-      "La tua capacità analitica risolve un problema che ti preoccupava da tempo.",
-    "horoscope.data.descriptions.virgo.5":
-      "Un momento di calma rafforza il tuo equilibrio emotivo.",
-    "horoscope.data.descriptions.virgo.6":
-      "Amore e amicizia sono favoriti. Gestures sincere creano fiducia.",
-    "horoscope.data.descriptions.virgo.7":
-      "Opportunità professionali possono emergere. Valutale attentamente prima di decidere.",
-    "horoscope.data.descriptions.virgo.8":
-      "Piccole tensioni potrebbero verificarsi. Mantieni la calma e comunica chiaramente.",
-    "horoscope.data.descriptions.virgo.9":
-      "La tua precisione impressiona gli altri. Usala per portare a termine progetti con successo.",
-    "horoscope.data.descriptions.virgo.10":
-      "Si presenta un’occasione per migliorare la tua routine. Sii attento ai dettagli.",
-    "horoscope.data.descriptions.virgo.11":
-      "La tua premura è apprezzata. Una parola gentile o un gesto fa la differenza.",
-    "horoscope.data.descriptions.virgo.12":
-      "Un progetto passato potrebbe rinascere. Usa energia e determinazione per fare progressi.",
-    "horoscope.data.descriptions.virgo.13":
-      "Presta attenzione ai dettagli nelle relazioni. Piccoli gesti creano armonia.",
-    "horoscope.data.descriptions.virgo.14":
-      "Energia positiva ti accompagna. Segui l’intuizione e agisci con attenzione.",
-    "horoscope.data.descriptions.libra.0":
-      "Il tuo senso dell’armonia è forte oggi. Usalo per risolvere conflitti e favorire la pace.",
-    "horoscope.data.descriptions.libra.1":
-      "Un incontro può aprire nuove prospettive. Sii aperto e curioso.",
-    "horoscope.data.descriptions.libra.2":
-      "La tua diplomazia impressiona gli altri. Usala per evitare malintesi.",
-    "horoscope.data.descriptions.libra.3":
-      "Amore e amicizia sono favoriti. Mostra sentimenti in modo sincero.",
-    "horoscope.data.descriptions.libra.4":
-      "Un impulso creativo aiuta a far avanzare progetti o compiti.",
-    "horoscope.data.descriptions.libra.5":
-      "Attenzione all’equilibrio tra lavoro e vita privata. Brevi pause aiutano a mantenere energia.",
-    "horoscope.data.descriptions.libra.6":
-      "Si presenta un’occasione di riconciliazione o chiarimento. Usala saggiamente.",
-    "horoscope.data.descriptions.libra.7":
-      "Il tuo fascino attira attenzione. Rimani autentico per creare legami veri.",
-    "horoscope.data.descriptions.libra.8":
-      "La tua creatività ispira altri. Metti in pratica le idee per rafforzare progetti o relazioni.",
-    "horoscope.data.descriptions.libra.9":
-      "Piccoli malintesi possono sorgere. Mantieni calma e comunica chiaramente.",
-    "horoscope.data.descriptions.libra.10":
-      "Si può presentare un impulso professionale o una nuova opportunità. Controlla i dettagli.",
-    "horoscope.data.descriptions.libra.11":
-      "La tua pazienza è ricompensata. Un gesto affettuoso può creare armonia.",
-    "horoscope.data.descriptions.libra.12":
-      "Un’opportunità inaspettata può arricchire la giornata. Rimani aperto al nuovo.",
-    "horoscope.data.descriptions.libra.13":
-      "Intuizione forte oggi. Seguila nelle decisioni importanti.",
-    "horoscope.data.descriptions.libra.14":
-      "Energia positiva ti accompagna. Usala per progetti, relazioni e obiettivi personali.",
-    "horoscope.data.descriptions.scorpio.0":
-      "L’intuizione è particolarmente forte oggi. Segui i tuoi presentimenti in amore e amicizia.",
-    "horoscope.data.descriptions.scorpio.1":
-      "Una tensione può esplodere nell’ambiente. La franchezza aiuta a calmare gli animi.",
-    "horoscope.data.descriptions.scorpio.2":
-      "Potresti incontrare qualcuno di intrigante che suscita curiosità ed emozioni.",
-    "horoscope.data.descriptions.scorpio.3":
-      "La tua determinazione impressiona. Giornata ideale per avanzamenti professionali o chiarimenti.",
-    "horoscope.data.descriptions.scorpio.4":
-      "Un segreto potrebbe emergere. Anche se sorprendente, aiuta a comprendere meglio gli altri.",
-    "horoscope.data.descriptions.scorpio.5":
-      "La tua intensità attrae e destabilizza. Usala per rafforzare legami senza eccessi di possessività.",
-    "horoscope.data.descriptions.scorpio.6":
-      "Può presentarsi una proposta inaspettata. Valutala attentamente prima di accettare.",
-    "horoscope.data.descriptions.scorpio.7":
-      "Hai bisogno di isolamento per riflettere. Questa introspezione chiarisce priorità ed equilibrio interiore.",
-    "horoscope.data.descriptions.scorpio.8":
-      "Un progetto o un’idea di lunga data riceve slancio favorevole. La perseveranza porta frutti.",
-    "horoscope.data.descriptions.scorpio.9":
-      "Attenzione a malintesi amorosi. Esprimi sentimenti con calma e dolcezza.",
-    "horoscope.data.descriptions.scorpio.10":
-      "Il tuo magnetismo è potente. Potresti attrarre qualcuno importante per i tuoi progetti.",
-    "horoscope.data.descriptions.scorpio.11":
-      "Gelosia o competizione possono emergere. Proteggi la tua energia evitando conflitti inutili.",
-    "horoscope.data.descriptions.scorpio.12":
-      "La passione è un motore potente. Non esaurirti: concediti pause per equilibrio emotivo e fisico.",
-    "horoscope.data.descriptions.scorpio.13":
-      "Una buona notizia può illuminare la giornata: professionale, affettiva o finanziaria.",
-    "horoscope.data.descriptions.scorpio.14":
-      "Il tuo potere di trasformazione è al massimo. Usa questa energia per chiudere capitoli difficili e aprire nuove strade.",
-    "horoscope.data.descriptions.sagittarius.0":
-      "Il tuo ottimismo illumina la giornata. Approfittane per nuove iniziative e condividere gioia.",
-    "horoscope.data.descriptions.sagittarius.1":
-      "Un incontro inaspettato può portare divertimento e nuove prospettive.",
-    "horoscope.data.descriptions.sagittarius.2":
-      "La tua curiosità ti porta a scoprire nuove opportunità lavorative o personali.",
-    "horoscope.data.descriptions.sagittarius.3":
-      "Una comunicazione chiara evita malintesi. Esprimi idee e sentimenti apertamente.",
-    "horoscope.data.descriptions.sagittarius.4":
-      "Avventure e progetti all’aria aperta portano energia e soddisfazione.",
-    "horoscope.data.descriptions.sagittarius.5":
-      "Attenzione a spese impulsive. Pianifica per mantenere equilibrio finanziario.",
-    "horoscope.data.descriptions.sagittarius.6":
-      "La tua allegria contagia gli altri. Usa questa energia per rafforzare relazioni.",
-    "horoscope.data.descriptions.sagittarius.7":
-      "Un viaggio, reale o mentale, porta chiarezza e nuove opportunità.",
-    "horoscope.data.descriptions.sagittarius.8":
-      "La fortuna ti accompagna in attività creative o professionali. Sfruttala.",
-    "horoscope.data.descriptions.sagittarius.9":
-      "Relazioni con amici o partner sono favorite. Mostra apertura e sincerità.",
-    "horoscope.data.descriptions.sagittarius.10":
-      "Un’idea innovativa può emergere. Valutala attentamente e agisci con convinzione.",
-    "horoscope.data.descriptions.sagittarius.11":
-      "Il tuo spirito libero attira attenzioni positive. Condividi entusiasmo senza forzare situazioni.",
-    "horoscope.data.descriptions.sagittarius.12":
-      "Una lezione importante può arrivare da un’esperienza insolita. Ascolta con attenzione.",
-    "horoscope.data.descriptions.sagittarius.13":
-      "La tua energia fisica e mentale è alta. Usa questo slancio per avanzare progetti.",
-    "horoscope.data.descriptions.sagittarius.14":
-      "Giornata favorevole a esprimere sentimenti e creatività. Approfittane appieno.",
-    "horoscope.data.descriptions.capricorn.0":
-      "Determinazione e disciplina portano risultati. Mantieni costanza nei tuoi obiettivi.",
-    "horoscope.data.descriptions.capricorn.1":
-      "Un progetto lavorativo richiede attenzione ai dettagli. La precisione paga.",
-    "horoscope.data.descriptions.capricorn.2":
-      "Fai attenzione all’equilibrio tra vita privata e lavoro. Pausa necessaria per energia.",
-    "horoscope.data.descriptions.capricorn.3":
-      "Una responsabilità potrebbe pesare. Affrontala con pragmatismo e serenità.",
-    "horoscope.data.descriptions.capricorn.4":
-      "Le relazioni beneficiano di gesti concreti e sinceri. Mostra affidabilità e ascolto.",
-    "horoscope.data.descriptions.capricorn.5":
-      "Un passo avanti in carriera o progetti è possibile. Pianifica bene i dettagli.",
-    "horoscope.data.descriptions.capricorn.6":
-      "Amicizie e collaborazioni offrono supporto. Accetta consigli senza ostilità.",
-    "horoscope.data.descriptions.capricorn.7":
-      "Un’occasione di risolvere questioni pratiche si presenta. Approfitta della chiarezza mentale.",
-    "horoscope.data.descriptions.capricorn.8":
-      "Attenzione a stress e tensioni fisiche. Pause e organizzazione mantengono equilibrio.",
-    "horoscope.data.descriptions.capricorn.9":
-      "Lavoro e responsabilità richiedono impegno. La tua perseveranza porterà risultati concreti.",
-    "horoscope.data.descriptions.capricorn.10":
-      "Una decisione importante va ponderata. Non affrettare scelte cruciali.",
-    "horoscope.data.descriptions.capricorn.11":
-      "Momento favorevole per consolidare rapporti e progetti a lungo termine.",
-    "horoscope.data.descriptions.capricorn.12":
-      "Piccole soddisfazioni personali rafforzano motivazione e determinazione.",
-    "horoscope.data.descriptions.capricorn.13":
-      "Fiducia in te stesso e costanza creano opportunità di successo.",
-    "horoscope.data.descriptions.capricorn.14":
-      "Energia stabile oggi. Approfitta per pianificare e realizzare progetti importanti.",
-    "horoscope.data.descriptions.aquarius.0":
-      "Creatività e innovazione sono in primo piano. Esplora nuove idee e soluzioni.",
-    "horoscope.data.descriptions.aquarius.1":
-      "Incontri sociali portano ispirazione. Sii aperto a nuove prospettive.",
-    "horoscope.data.descriptions.aquarius.2":
-      "Un progetto innovativo può ricevere impulso favorevole. Sfrutta l’energia.",
-    "horoscope.data.descriptions.aquarius.3":
-      "La tua originalità colpisce gli altri. Condividi intuizioni senza timore.",
-    "horoscope.data.descriptions.aquarius.4":
-      "Comunicazione chiara evita malintesi. Usa diplomazia e spirito creativo.",
-    "horoscope.data.descriptions.aquarius.5":
-      "Amicizia e affetto sono stimolati. Mostra disponibilità senza invadenza.",
-    "horoscope.data.descriptions.aquarius.6":
-      "Una soluzione insolita porta vantaggio. Sii flessibile e aperto a cambiamenti.",
-    "horoscope.data.descriptions.aquarius.7":
-      "Attività mentali o tecnologiche favoriscono successo. Concentrati su dettagli importanti.",
-    "horoscope.data.descriptions.aquarius.8":
-      "Momento ideale per apprendere o condividere conoscenze. Sfrutta opportunità.",
-    "horoscope.data.descriptions.aquarius.9":
-      "Incontri o conversazioni possono aprire nuove porte. Mantieni mente aperta.",
-    "horoscope.data.descriptions.aquarius.10":
-      "Una decisione sociale o professionale richiede equilibrio tra razionalità e intuizione.",
-    "horoscope.data.descriptions.aquarius.11":
-      "La tua energia unica ispira chi ti circonda. Usa influenza in modo positivo.",
-    "horoscope.data.descriptions.aquarius.12":
-      "Idee originali possono cambiare la prospettiva su progetti o relazioni.",
-    "horoscope.data.descriptions.aquarius.13":
-      "Giornata favorevole a collaborazioni e networking creativo.",
-    "horoscope.data.descriptions.aquarius.14":
-      "Energia positiva per innovazione e relazioni. Sfrutta opportunità senza esitazioni.",
-    "horoscope.data.descriptions.pisces.0":
-      "Intuizione e sensibilità sono al massimo. Segui il tuo istinto per decisioni importanti.",
-    "horoscope.data.descriptions.pisces.1":
-      "Attenzione ai sentimenti altrui. Empatia favorisce armonia e comprensione.",
-    "horoscope.data.descriptions.pisces.2":
-      "Creatività e immaginazione portano soluzioni sorprendenti. Sfrutta talento artistico o creativo.",
-    "horoscope.data.descriptions.pisces.3":
-      "Momento favorevole per relazioni profonde e sincerità emotiva.",
-    "horoscope.data.descriptions.pisces.4":
-      "Rifletti prima di agire in situazioni complesse. Intuizione e calma guidano scelte corrette.",
-    "horoscope.data.descriptions.pisces.5":
-      "Piccoli gesti di gentilezza rafforzano legami e amicizie.",
-    "horoscope.data.descriptions.pisces.6":
-      "Un’occasione spirituale o emotiva porta crescita e chiarezza interiore.",
-    "horoscope.data.descriptions.pisces.7":
-      "Attenzione a illusioni o aspettative irrealistiche. Mantieni equilibrio tra cuore e ragione.",
-    "horoscope.data.descriptions.pisces.8":
-      "Momento favorevole a creatività, introspezione e sviluppo personale.",
-    "horoscope.data.descriptions.pisces.9":
-      "La tua empatia è potente. Aiuta chi ha bisogno senza trascurare te stesso.",
-    "horoscope.data.descriptions.pisces.10":
-      "Una proposta o opportunità può emergere. Valutala con sensibilità e razionalità.",
-    "horoscope.data.descriptions.pisces.11":
-      "Giornata favorevole a meditazione, riflessione e intuizione personale.",
-    "horoscope.data.descriptions.pisces.12":
-      "Creatività e immaginazione portano a risultati sorprendenti in progetti o relazioni.",
-    "horoscope.data.descriptions.pisces.13":
-      "Un momento di dolcezza emotiva rinforza legami e fiducia reciproca.",
-    "horoscope.data.descriptions.pisces.14":
-      "Energia positiva accompagna intuizione e sentimenti. Approfitta per crescere e creare armonia.",
+      "Una giornata tranquilla e armoniosa ti porta serenità e ti permette di ricaricare le batterie.",
+        "horoscope.data.descriptions.leo.0": "Oggi il tuo carisma naturale attira l’attenzione. Usa questa energia per sentirti sicuro e brillare in tutto ciò che fai.",
+        "horoscope.data.descriptions.leo.1": "Si presenta una grande opportunità, ma richiede coraggio e impegno. Osa agire e non avere paura di provare.",
+        "horoscope.data.descriptions.leo.2": "Una discussione importante potrebbe chiarire una situazione confusa. Ascolta attentamente e rimani aperto a nuove prospettive.",
+        "horoscope.data.descriptions.leo.3": "Circondati di persone sincere e gentili. La loro presenza ti darà energia e rafforzerà il tuo equilibrio.",
+        "horoscope.data.descriptions.leo.4": "La fortuna sorride a chi osa. Presta attenzione alle opportunità inaspettate e coglile al volo.",
+        "horoscope.data.descriptions.leo.5": "Oggi la tua energia è alta, ma prenditi anche del tempo per riposare. L’equilibrio tra azione e relax è essenziale.",
+        "horoscope.data.descriptions.leo.6": "Rimani attento alle tensioni intorno a te e mantieni la calma. La tua serenità interiore è la tua migliore protezione.",
+        "horoscope.data.descriptions.leo.7": "Eventi imprevisti potrebbero sorprenderti, ma nulla è insormontabile. Rifletti prima di agire e fidati di te stesso.",
+        "horoscope.data.descriptions.leo.8": "Un incontro o un momento piacevole potrebbe illuminare la tua giornata. Accogli le sorprese con apertura e curiosità.",
+        "horoscope.data.descriptions.leo.9": "Prenditi il tempo per gustare le tue piccole vittorie. Ogni passo conta e contribuisce al tuo progresso.",
+        "horoscope.data.descriptions.leo.10": "Momenti semplici e caldi con persone care o amici ti rigenerano. Apprezza questi istanti e la loro energia positiva.",
+        "horoscope.data.descriptions.leo.11": "Ricordi o vecchie conoscenze possono portare ispirazione e supporto. Sii aperto alle esperienze del passato che ti arricchiscono.",
+        "horoscope.data.descriptions.leo.12": "Lasciati sorprendere dagli eventi inaspettati. Essere aperto all’ignoto può creare grandi opportunità.",
+        "horoscope.data.descriptions.leo.13": "Il tuo desiderio di riconoscimento è forte, ma rimani autentico e moderato. Ispira gli altri con azioni sincere.",
+        "horoscope.data.descriptions.leo.14": "Si presenta una decisione importante. Ascolta la tua intuizione e rimani fedele alle tue convinzioni per trovare la strada giusta.",
+        "horoscope.data.descriptions.virgo.0": "Oggi la tua attenzione ai dettagli ti aiuterà a risolvere una situazione delicata. Stai attento ai segnali intorno a te; potrebbero guidare le tue scelte.",
+        "horoscope.data.descriptions.virgo.1": "Qualcuno o qualcosa potrebbe mettere alla prova la tua pazienza. Mantieni la calma e lascia che le cose seguano il loro corso naturale.",
+        "horoscope.data.descriptions.virgo.2": "Una curiosità improvvisa potrebbe spingerti a scoprire qualcosa di nuovo ed entusiasmante.",
+        "horoscope.data.descriptions.virgo.3": "La tua organizzazione e il tuo giudizio saranno messi in evidenza. È un ottimo momento per strutturare i tuoi progetti o le tue idee.",
+        "horoscope.data.descriptions.virgo.4": "La tua intuizione è forte oggi. Fidati dei tuoi sentimenti per orientarti nella giornata.",
+        "horoscope.data.descriptions.virgo.5": "Potrebbero presentarsi opportunità interessanti, ma dovresti analizzarle attentamente prima di agire.",
+        "horoscope.data.descriptions.virgo.6": "La tua mente critica è attiva e può aiutarti a chiarire situazioni poco chiare se usata in modo costruttivo.",
+        "horoscope.data.descriptions.virgo.7": "Un piccolo contrattempo potrebbe sorprenderti, ma porterà chiarezza e ti aiuterà a organizzare i prossimi passi.",
+        "horoscope.data.descriptions.virgo.8": "È un buon momento per fare ordine tra le tue cose o abitudini. Questo ti aiuterà a ricominciare con chiarezza.",
+        "horoscope.data.descriptions.virgo.9": "La fortuna è dalla tua parte, soprattutto se esci dalla tua zona di comfort ed esplori nuove possibilità.",
+        "horoscope.data.descriptions.virgo.10": "La tua lealtà e costanza saranno notate. Prenditi anche cura di te stesso e dei tuoi bisogni.",
+        "horoscope.data.descriptions.virgo.11": "Un imprevisto potrebbe sconvolgere i tuoi piani, ma alla fine porterà a una soluzione più efficace.",
+        "horoscope.data.descriptions.virgo.12": "Una sorpresa o un evento inatteso potrebbe attirare la tua attenzione e portarti a scoprire qualcosa di nuovo.",
+        "horoscope.data.descriptions.virgo.13": "La tua mente è piena di idee oggi. Canalizzale in azioni concrete e procedi passo dopo passo.",
+        "horoscope.data.descriptions.virgo.14": "Un’informazione o una rivelazione potrebbe sfidare le tue certezze. Accogli questo cambiamento con apertura e serenità.",
+        "horoscope.data.descriptions.libra.0": "Il tuo fascino naturale attira l’attenzione oggi, e incontri inaspettati potrebbero illuminare la tua giornata.",
+        "horoscope.data.descriptions.libra.1": "Potrebbe sorgere un disaccordo intorno a te. Mantenere calma e giustizia ti aiuterà a ristabilire l’armonia.",
+        "horoscope.data.descriptions.libra.2": "Le tue capacità relazionali brillano oggi. Una conversazione sincera potrebbe aprire nuove prospettive.",
+        "horoscope.data.descriptions.libra.3": "Ti si presenta una decisione importante. Ascolta la tua intuizione e lascia che le risposte arrivino naturalmente.",
+        "horoscope.data.descriptions.libra.4": "Il tuo equilibrio interiore viene messo alla prova. Prenditi una pausa e concediti del tempo per te stesso.",
+        "horoscope.data.descriptions.libra.5": "Una piacevole sorpresa potrebbe illuminare la tua giornata. Accoglila con ottimismo e curiosità.",
+        "horoscope.data.descriptions.libra.6": "Un segreto o una verità nascosta potrebbe rivelarsi oggi. Questa chiarezza ti aiuterà ad andare avanti più serenamente.",
+        "horoscope.data.descriptions.libra.7": "Senti il bisogno di rafforzare i legami con i tuoi cari. Un momento condiviso porta calore e conforto.",
+        "horoscope.data.descriptions.libra.8": "La tua capacità di cooperare e ascoltare viene messa in evidenza. Fai sentire le tue idee; meritano riconoscimento.",
+        "horoscope.data.descriptions.libra.9": "Dubbi o esitazioni potrebbero offuscare la tua mente. Prenditi il tempo di chiarire i pensieri per trovare serenità.",
+        "horoscope.data.descriptions.libra.10": "Una spinta di fiducia ti incoraggia ad agire. È il momento perfetto per iniziare qualcosa di nuovo.",
+        "horoscope.data.descriptions.libra.11": "Un incontro o un’osservazione potrebbe cambiare la tua prospettiva. Presta attenzione ai segnali sottili intorno a te.",
+        "horoscope.data.descriptions.libra.12": "Energie negative potrebbero influenzarti, ma restando centrato manterrai il giusto equilibrio.",
+        "horoscope.data.descriptions.libra.13": "La fortuna sembra sorriderti oggi. Un’opportunità potrebbe segnare una svolta positiva.",
+        "horoscope.data.descriptions.libra.14": "Il tuo bisogno di equilibrio ti guida verso nuove scelte. Trovi finalmente il coraggio di stabilire limiti giusti e necessari.",
+    "horoscope.data.descriptions.scorpio.0": "La tua intuizione è particolarmente forte oggi. I tuoi presentimenti ti guideranno verso scelte giuste.",
+    "horoscope.data.descriptions.scorpio.1": "Potrebbe sorgere tensione intorno a te. Mantieni la calma e punta sulla sincerità per tranquillizzare la situazione.",
+    "horoscope.data.descriptions.scorpio.2": "Potresti incontrare una persona intrigante che stimola la tua curiosità e le tue emozioni, mettendo in discussione alcune certezze.",
+    "horoscope.data.descriptions.scorpio.3": "La tua determinazione si nota oggi. È una giornata ideale per superare un ostacolo o chiarire una situazione in sospeso.",
+    "horoscope.data.descriptions.scorpio.4": "Un segreto o una verità nascosta potrebbe venire a galla. Anche se ti sorprende, ti aiuterà a comprendere meglio chi ti circonda.",
+    "horoscope.data.descriptions.scorpio.5": "La tua intensità attira e può destabilizzare. Usa questa energia per andare avanti, ma evita gli eccessi.",
+    "horoscope.data.descriptions.scorpio.6": "Potrebbe presentarsi un’opportunità inaspettata. Analizza bene la situazione prima di agire.",
+    "horoscope.data.descriptions.scorpio.7": "Sentirai il bisogno di isolarti per riflettere. Questa introspezione chiarirà le tue priorità e rafforzerà il tuo equilibrio interiore.",
+    "horoscope.data.descriptions.scorpio.8": "Un progetto o un’idea che porti da tempo finalmente prende slancio. La tua perseveranza comincia a dare frutti.",
+    "horoscope.data.descriptions.scorpio.9": "Fai attenzione ai malintesi. Le tue emozioni intense potrebbero offuscare la comunicazione. Mantieni la calma ed esprimiti con dolcezza.",
+    "horoscope.data.descriptions.scorpio.10": "Il tuo magnetismo è potente oggi. Potresti catturare l’attenzione di qualcuno importante per il tuo percorso.",
+    "horoscope.data.descriptions.scorpio.11": "Gelosia o competizione da parte degli altri potrebbero emergere. Proteggi la tua energia ed evita conflitti inutili.",
+    "horoscope.data.descriptions.scorpio.12": "La tua passione è un motore incredibile, ma ricordati di dosarti. Fai pause per mantenere l’equilibrio.",
+    "horoscope.data.descriptions.scorpio.13": "Una buona notizia potrebbe illuminare la tua giornata. Accoglila con fiducia.",
+    "horoscope.data.descriptions.scorpio.14": "Il tuo potere di trasformazione è al massimo. Usa questa energia per chiudere un capitolo e iniziare uno nuovo.",
+    "horoscope.data.descriptions.sagittarius.0": "Il tuo ottimismo naturale illumina la giornata. Senti il desiderio di iniziare qualcosa di nuovo e condividere la tua gioia.",
+    "horoscope.data.descriptions.sagittarius.1": "Un incontro inaspettato potrebbe stimolare la tua curiosità e le tue emozioni, portando una piacevole sorpresa.",
+    "horoscope.data.descriptions.sagittarius.2": "Il tuo spirito d’avventura ti spinge a esplorare nuove idee o luoghi, pur restando concentrato sull’essenziale.",
+    "horoscope.data.descriptions.sagittarius.3": "Oggi si presenta un’opportunità. Prestare attenzione ai dettagli può aiutare a evitare fraintendimenti.",
+    "horoscope.data.descriptions.sagittarius.4": "La tua energia positiva influenza chi ti circonda. Anche se emerge un litigio, l’equilibrio torna rapidamente.",
+    "horoscope.data.descriptions.sagittarius.5": "Momenti teneri o scambi significativi possono segnare la giornata e rafforzare legami importanti.",
+    "horoscope.data.descriptions.sagittarius.6": "Potresti essere tentato da eccessi o scelte impulsive. Mantenere l’equilibrio è importante.",
+    "horoscope.data.descriptions.sagittarius.7": "La tua creatività e le idee originali sono in evidenza. Possono ispirare chi ti circonda e aprire nuove possibilità.",
+    "horoscope.data.descriptions.sagittarius.8": "Una verità nascosta o una confidenza potrebbe emergere. I malintesi si dissolvono se rimani attento.",
+    "horoscope.data.descriptions.sagittarius.9": "Una giornata favorevole alla scoperta e all’apprendimento. Puoi ampliare i tuoi orizzonti e conoscere meglio te stesso.",
+    "horoscope.data.descriptions.sagittarius.10": "Il tuo umorismo e leggerezza attirano l’attenzione. Questi momenti gioiosi sono condivisi sinceramente.",
+    "horoscope.data.descriptions.sagittarius.11": "Una sfida o un ostacolo potrebbe presentarsi. Il tuo entusiasmo e la tua perseveranza ti aiutano a superarlo.",
+    "horoscope.data.descriptions.sagittarius.12": "Tensioni nel cerchio familiare possono emergere. Ascoltare e comprendere aiuta a mantenere l’armonia.",
+    "horoscope.data.descriptions.sagittarius.13": "La tua intuizione è rafforzata oggi. I tuoi istinti guidano le tue decisioni e interazioni.",
+    "horoscope.data.descriptions.sagittarius.14": "Un’energia favorevole ti accompagna per portare avanti i tuoi progetti e alimentare la tua felicità.",
+    "horoscope.data.descriptions.capricorn.0": "La tua serietà e perseveranza attirano attenzione oggi. Avanzi con energia in un progetto importante.",
+    "horoscope.data.descriptions.capricorn.1": "Una persona del tuo entourage sorprende con reazioni inaspettate, portando un tocco di imprevedibilità alla giornata.",
+    "horoscope.data.descriptions.capricorn.2": "Il tuo senso dell’organizzazione emerge oggi, permettendoti di gestire efficacemente molte responsabilità.",
+    "horoscope.data.descriptions.capricorn.3": "Si presenta un’opportunità professionale o finanziaria, offrendo nuove prospettive.",
+    "horoscope.data.descriptions.capricorn.4": "La tua lealtà e fedeltà sono riconosciute, rafforzando la fiducia intorno a te.",
+    "horoscope.data.descriptions.capricorn.5": "Un momento piacevole con una persona cara porta calore e connessione, illuminando la giornata.",
+    "horoscope.data.descriptions.capricorn.6": "Potrebbe sorgere la tentazione di eccessi o spese impulsive, ma l’energia generale rimane positiva.",
+    "horoscope.data.descriptions.capricorn.7": "Un’idea o progetto precedentemente accantonato trova nuovo slancio e avanza oggi.",
+    "horoscope.data.descriptions.capricorn.8": "Una verità nascosta o una rivelazione potrebbe emergere, portando chiarezza nelle tue relazioni.",
+    "horoscope.data.descriptions.capricorn.9": "I tuoi sforzi iniziano a dare frutti, offrendo soddisfazione e realizzazione.",
+    "horoscope.data.descriptions.capricorn.10": "La tua serietà e diligenza vengono notate e ispirano fiducia intorno a te.",
+    "horoscope.data.descriptions.capricorn.11": "Tensioni possono emergere nel tuo ambiente, ma la situazione si stabilizza nel corso della giornata.",
+    "horoscope.data.descriptions.capricorn.12": "La tua intuizione è forte oggi, guidando le tue scelte e interazioni.",
+    "horoscope.data.descriptions.capricorn.13": "Un incontro o uno scambio porta nuove prospettive e stimola il tuo interesse.",
+    "horoscope.data.descriptions.capricorn.14": "Perseveranza e rigore ti accompagnano, aiutandoti a superare ostacoli e avanzare nei tuoi progetti.",
+    "horoscope.data.descriptions.aquarius.0": "La tua originalità e creatività brillano oggi, catturando l’attenzione di chi ti circonda.",
+    "horoscope.data.descriptions.aquarius.1": "Un incontro inaspettato suscita curiosità ed emozioni, lasciando un segno importante nella tua giornata.",
+    "horoscope.data.descriptions.aquarius.2": "Il tuo spirito innovativo è al massimo, portando nuove prospettive nei tuoi progetti e attività.",
+    "horoscope.data.descriptions.aquarius.3": "Possono sorgere malintesi con una persona cara, ma la situazione si chiarisce nel corso della giornata.",
+    "horoscope.data.descriptions.aquarius.4": "Si presenta un’opportunità sorprendente, aggiungendo un giro inaspettato alla giornata.",
+    "horoscope.data.descriptions.aquarius.5": "La tua energia comunicativa attira l’attenzione e rafforza legami di amicizia o professionali.",
+    "horoscope.data.descriptions.aquarius.6": "Un momento di solitudine porta chiarezza e aiuta a concentrarti sulle tue priorità.",
+    "horoscope.data.descriptions.aquarius.7": "Le tue idee originali suscitano ammirazione e a volte gelosia, ma la tua concentrazione rimane forte.",
+    "horoscope.data.descriptions.aquarius.8": "Una piacevole sorpresa illumina la tua giornata e aggiunge un tocco positivo e stimolante.",
+    "horoscope.data.descriptions.aquarius.9": "Il tuo senso di giustizia ed equilibrio influenza positivamente chi ti circonda oggi.",
+    "horoscope.data.descriptions.aquarius.10": "Possono emergere decisioni importanti, richiedendo riflessione e discernimento.",
+    "horoscope.data.descriptions.aquarius.11": "Una verità nascosta o un segreto viene rivelato, portando chiarezza nelle relazioni o nei progetti.",
+    "horoscope.data.descriptions.aquarius.12": "Le tue relazioni amicali e amorose conoscono un impulso positivo, rafforzando legami e creando ricordi preziosi.",
+    "horoscope.data.descriptions.aquarius.13": "Un progetto antico rinasce sotto una nuova luce e prende forma oggi.",
+    "horoscope.data.descriptions.aquarius.14": "La tua energia e intuizione ti guidano verso scelte positive, segnando una giornata sicura e audace.",
+    "horoscope.data.descriptions.pisces.0": "La tua sensibilità illumina la giornata e guida relazioni e decisioni.",
+    "horoscope.data.descriptions.pisces.1": "Una persona cara si mostra sorprendentemente franca, lasciando un segno nelle tue interazioni oggi.",
+    "horoscope.data.descriptions.pisces.2": "La tua creatività raggiunge l’apice, dando vita a idee originali e artistiche.",
+    "horoscope.data.descriptions.pisces.3": "Decisioni finanziarie o personali richiedono riflessione, portando prudenza nelle tue scelte.",
+    "horoscope.data.descriptions.pisces.4": "I legami di amicizia si rafforzano e gesti sinceri portano gioia nella giornata.",
+    "horoscope.data.descriptions.pisces.5": "Un periodo di profonda introspezione porta chiarezza e ricollega ai tuoi desideri.",
+    "horoscope.data.descriptions.pisces.6": "Emerge un’opportunità inattesa, rivelando nuove prospettive.",
+    "horoscope.data.descriptions.pisces.7": "La tua intuizione è particolarmente forte e guida le tue decisioni con precisione.",
+    "horoscope.data.descriptions.pisces.8": "Una persona cara cerca il tuo sostegno, creando un momento di condivisione empatica.",
+    "horoscope.data.descriptions.pisces.9": "Una sorpresa affettiva o romantica colora positivamente la giornata.",
+    "horoscope.data.descriptions.pisces.10": "Si presentano piccole tensioni, ma la comunicazione porta calma ed equilibrio.",
+    "horoscope.data.descriptions.pisces.11": "La tua compassione attira gli altri e favorisce legami sinceri e duraturi.",
+    "horoscope.data.descriptions.pisces.12": "Un progetto antico trova nuovo slancio e prende forma oggi.",
+    "horoscope.data.descriptions.pisces.13": "Le tue emozioni intense arricchiscono le relazioni e ispirano le tue iniziative.",
+    "horoscope.data.descriptions.pisces.14": "Un’energia positiva ti accompagna, guidata dall’intuizione e dal cuore.",
 
     // Messaggi finali vari
     "horoscope.message.var1":
