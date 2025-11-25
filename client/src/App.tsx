@@ -1,3 +1,5 @@
+// ✅ NOUVELLE APPROCHE : La pub se lance AVANT le tirage (pas après)
+
 import { useState, useEffect } from "react";
 import GrimoireModal from './pages/GrimoireModal';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
@@ -14,11 +16,11 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { UserProvider } from "@/contexts/UserContext";
 import OracleMystiqueApp from "@/pages/OracleMystiqueApp";
 import NotFound from "@/pages/not-found";
-import { initialize as initializeAdMob, showBanner, hideBanner, showInterstitialAd } from './admobService';
+import { initialize as initializeAdMob, showBanner, hideBanner, showInterstitialAd, preloadInterstitial } from './admobService';
 import { initializeRevenueCat } from './services/revenueCatService';
 import { config } from '@/config';
 import { getUserEmail } from '@/lib/userStorage';
-import { getDeviceId } from '@/lib/deviceId'; // ✅ NOUVEAU
+import { getDeviceId } from '@/lib/deviceId';
 
 export interface Reading {
   id: string;
@@ -38,9 +40,10 @@ type AppStep =
   | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'bonusRoll'
   | 'responsiveTest';
 
-function Router({ onSaveReading, onStepChange }: {
+function Router({ onSaveReading, onStepChange, shouldShowAdBeforeReading }: {
   onSaveReading: (reading: any) => Promise<void>;
   onStepChange: (step: AppStep) => void;
+  shouldShowAdBeforeReading: () => Promise<boolean>;
 }) {
   return (
     <Switch>
@@ -50,6 +53,7 @@ function Router({ onSaveReading, onStepChange }: {
         <OracleMystiqueApp
           onSaveReading={onSaveReading}
           onStepChange={onStepChange as any}
+          shouldShowAdBeforeReading={shouldShowAdBeforeReading}
         />
       </Route>
       <Route component={NotFound} />
@@ -67,9 +71,8 @@ function App() {
   const [showNotificationModal, setShowNotificationModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
   const [bannerShown, setBannerShown] = useState(false);
-  const [deviceId, setDeviceId] = useState<string>(''); // ✅ NOUVEAU
+  const [deviceId, setDeviceId] = useState<string>('');
 
-  // ✅ NOUVEAU : Initialiser Device ID au démarrage
   useEffect(() => {
     const initDeviceId = async () => {
       const id = await getDeviceId();
@@ -79,7 +82,6 @@ function App() {
     initDeviceId();
   }, []);
 
-  // ✅ MIGRATION DES DONNÉES (à exécuter UNE FOIS)
   useEffect(() => {
     const migrateData = async () => {
       if (!deviceId) return;
@@ -109,7 +111,6 @@ function App() {
     migrateData();
   }, [deviceId]);
 
-  // Initialiser AdMob et RevenueCat
   useEffect(() => {
     const initServices = async () => {
       try {
@@ -123,7 +124,6 @@ function App() {
     initServices();
   }, []);
 
-  // Afficher la bannière
   useEffect(() => {
     if (isPremium) {
       console.log('👑 Premium actif : bannière cachée');
@@ -158,9 +158,8 @@ function App() {
     checkNotificationPermission();
   }, [currentStep]);
 
-  // Charger les données utilisateur
   useEffect(() => {
-    if (!deviceId) return; // ✅ Attendre le Device ID
+    if (!deviceId) return;
     loadUserData();
     checkPremiumExpiration();
 
@@ -169,12 +168,12 @@ function App() {
     }, 60 * 60 * 1000);
 
     return () => clearInterval(interval);
-  }, [deviceId]); // ✅ Dépend du Device ID
+  }, [deviceId]);
 
   const loadUserData = async () => {
     if (!deviceId) {
       console.log('⏳ Device ID pas encore initialisé, on attend...');
-      return; // ✅ Sortir si pas de Device ID
+      return;
     }
 
     try {
@@ -189,15 +188,13 @@ function App() {
 
       console.log('✅ Statut Premium:', premiumData.isPremium, savedEmail ? `(email: ${savedEmail})` : '(sans email)');
 
-      // ✅ Envoyer le Device ID
       const readingsResponse = await fetch(`${config.apiBaseUrl}/api/readings`, {
         credentials: 'include',
         headers: {
-          'X-Device-ID': deviceId // ✅ CRITICAL
+          'X-Device-ID': deviceId
         }
       });
 
-      // ✅ Vérifier le statut de la réponse
       if (!readingsResponse.ok) {
         const errorData = await readingsResponse.json();
         console.error('❌ Erreur chargement tirages:', errorData);
@@ -254,14 +251,14 @@ function App() {
   };
 
   const handleSaveNote = async (readingId: string, note: string) => {
-    if (!deviceId) return; // ✅ Sécurité
+    if (!deviceId) return;
 
     try {
       await fetch(`${config.apiBaseUrl}/api/readings/${readingId}/note`, {
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',
-          'X-Device-ID': deviceId // ✅ NOUVEAU
+          'X-Device-ID': deviceId
         },
         credentials: 'include',
         body: JSON.stringify({ note })
@@ -276,7 +273,7 @@ function App() {
   };
 
   const handleToggleFavorite = async (readingId: string) => {
-    if (!deviceId) return; // ✅ Sécurité
+    if (!deviceId) return;
 
     const reading = readings.find(r => r.id === readingId);
     if (!reading) return;
@@ -286,7 +283,7 @@ function App() {
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',
-          'X-Device-ID': deviceId // ✅ NOUVEAU
+          'X-Device-ID': deviceId
         },
         credentials: 'include',
         body: JSON.stringify({ isFavorite: !reading.isFavorite })
@@ -301,7 +298,7 @@ function App() {
   };
 
   const clearAllReadings = async () => {
-    if (!deviceId) return; // ✅ Sécurité
+    if (!deviceId) return;
 
     try {
       console.log('🗑️ Suppression de tous les tirages du Grimoire...');
@@ -309,7 +306,7 @@ function App() {
         method: 'DELETE',
         credentials: 'include',
         headers: {
-          'X-Device-ID': deviceId // ✅ NOUVEAU
+          'X-Device-ID': deviceId
         }
       });
 
@@ -322,8 +319,38 @@ function App() {
     }
   };
 
-  // ✅ REMPLACE la fonction addReading() complète dans App.tsx
+  // 🎯 NOUVELLE FONCTION : Vérifie si on doit afficher une pub AVANT le tirage
+  const shouldShowAdBeforeReading = async (): Promise<boolean> => {
+    if (isPremium) {
+      console.log('👑 Premium : pas de pub');
+      return false;
+    }
 
+    const nextCount = readingCount + 1;
+    const shouldShow = nextCount % 3 === 0;
+
+    console.log(`🎯 Prochain tirage: #${nextCount} → Pub: ${shouldShow ? 'OUI ✅' : 'NON ❌'}`);
+
+    if (shouldShow) {
+      console.log('⚡ Affichage pub AVANT le tirage');
+      try {
+        await showInterstitialAd('before_reading');
+        console.log('✅ Pub affichée avec succès');
+      } catch (error) {
+        console.error('❌ Erreur pub:', error);
+      }
+    }
+
+    // 🔄 Pré-charger la prochaine pub si on est au tirage #2, #5, #8, etc.
+    if ((nextCount + 1) % 3 === 0) {
+      console.log(`🔄 Tirage #${nextCount} → Pré-chargement pub pour le #${nextCount + 1}`);
+      setTimeout(() => preloadInterstitial(), 1000);
+    }
+
+    return shouldShow;
+  };
+
+  // ✅ NOUVELLE VERSION : Plus de gestion de pub ici, juste la sauvegarde
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
     if (!deviceId) return;
 
@@ -333,7 +360,6 @@ function App() {
     try {
       console.log('📤 Envoi tirage:', reading.type, 'Device:', deviceId);
 
-      // ✅ Sauvegarde dans Grimoire
       if (shouldSaveInGrimoire) {
         const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
           method: 'POST',
@@ -346,7 +372,7 @@ function App() {
         });
 
         if (response.status === 403) {
-          console.log('⚠️ Erreur 403 ignorée (limite supprimée côté serveur)');
+          console.log('⚠️ Erreur 403 ignorée');
         } else if (!response.ok) {
           const errorText = await response.text();
           console.error(`❌ Erreur HTTP ${response.status}:`, errorText);
@@ -357,45 +383,22 @@ function App() {
             { ...newReading, date: new Date(newReading.date) },
             ...prev
           ]);
-          console.log('✅ Tirage enregistré dans Grimoire:', newReading.id);
+          console.log('✅ Tirage enregistré:', newReading.id);
         }
-      } else {
-        console.log(`🚫 ${reading.type} non sauvegardé dans Grimoire (type exclu)`);
       }
 
-      // ✅ Publicités interstitielles (AMÉLIORÉ)
-      if (!isPremium && reading.type !== 'bonusRoll') {
-        const newCount = readingCount + 1;
-        setReadingCount(newCount);
-
-        const shouldShowAd = newCount % 3 === 0;
-        console.log(`📊 Tirage n°${newCount} (${reading.type}) → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
-
-        if (shouldShowAd) {
-          console.log(`🎬 Affichage pub interstitielle après 3 tirages`);
-
-          // ✅ AMÉLIORATION : Attendre la fin de l'animation + petit délai
-          setTimeout(async () => {
-            try {
-              await showInterstitialAd(`after_${reading.type}_reading`);
-            } catch (error) {
-              console.error('❌ Erreur affichage pub:', error);
-            }
-          }, 1500); // ✅ Augmenté à 1.5s pour laisser l'UI se stabiliser
-        }
-      } else if (reading.type === 'bonusRoll') {
-        console.log('🎁 Bonus Roll : pubs gérées en interne (pas de pub globale)');
-      } else {
-        console.log('👑 Premium actif : pas de publicité');
+      // ✅ Incrémenter le compteur APRÈS sauvegarde
+      if (reading.type !== 'bonusRoll') {
+        setReadingCount(prev => prev + 1);
+        console.log(`📊 Compteur mis à jour: ${readingCount + 1}`);
       }
 
     } catch (error) {
       console.error('❌ Erreur ajout tirage:', error);
-      // ✅ AMÉLIORATION : Afficher un message à l'utilisateur
-      alert('⚠️ Erreur lors de la sauvegarde du tirage. Veuillez réessayer.');
+      alert('⚠️ Erreur lors de la sauvegarde du tirage.');
     }
   };
-  
+
   if (isLoading) {
     return (
       <div className="w-screen h-screen flex items-center justify-center bg-gray-900">
@@ -465,6 +468,7 @@ function App() {
                 <Router
                   onSaveReading={addReading}
                   onStepChange={setCurrentStep}
+                  shouldShowAdBeforeReading={shouldShowAdBeforeReading}
                 />
               </div>
             </div>

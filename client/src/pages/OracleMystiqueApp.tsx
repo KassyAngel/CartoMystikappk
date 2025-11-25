@@ -32,10 +32,15 @@ type AppStep =
 
 interface OracleMystiqueAppProps {
   onSaveReading?: (reading: any) => Promise<void>;
-  onStepChange?: ((step: AppStep) => void) | ((step: AppStep) => Promise<void>); // ✅ Union explicite
+  onStepChange?: ((step: AppStep) => void) | ((step: AppStep) => Promise<void>);
+  shouldShowAdBeforeReading?: () => Promise<boolean>; // ✅ NOUVEAU
 }
 
-export default function OracleMystiqueApp({ onSaveReading, onStepChange }: OracleMystiqueAppProps) {
+export default function OracleMystiqueApp({ 
+  onSaveReading, 
+  onStepChange,
+  shouldShowAdBeforeReading // ✅ NOUVEAU
+}: OracleMystiqueAppProps) {
   const [currentStep, setCurrentStep] = useState<AppStep>('landing');
   const { user, setUser, clearUser } = useUser();
   const [selectedOracle, setSelectedOracle] = useState('');
@@ -43,7 +48,6 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
 
   useEffect(() => {
     if (onStepChange) {
-      // ✅ Gère les deux cas (sync et async)
       const result = onStepChange(currentStep);
       if (result instanceof Promise) {
         result.catch(err => console.error('Error in onStepChange:', err));
@@ -76,7 +80,17 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
     setCurrentStep('oracle');
   };
 
-  const handleOracleSelect = (oracleType: string) => {
+  // ✅ MODIFIÉ : Afficher la pub AVANT de sélectionner l'oracle
+  const handleOracleSelect = async (oracleType: string) => {
+    console.log(`🎯 Oracle sélectionné: ${oracleType}`);
+
+    // ⚡ Afficher la pub AVANT (si nécessaire)
+    if (shouldShowAdBeforeReading) {
+      console.log('🎬 Vérification pub avant tirage...');
+      await shouldShowAdBeforeReading();
+    }
+
+    // ✅ PUIS lancer le tirage
     setSelectedOracle(oracleType);
     if (oracleType === 'horoscope') setCurrentStep('horoscope');
     else if (oracleType === 'crystalBall') setCurrentStep('crystalBall');
@@ -133,7 +147,6 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
           />
         )}
 
-        {/* ✅ CORRIGÉ : Ajout onSaveReading */}
         {currentStep === 'game' && oracle && (
           <CardGame
             user={user}
@@ -170,7 +183,6 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
           />
         )}
 
-        {/* ✅ CORRIGÉ : Ajout onSaveReading */}
         {currentStep === 'horoscope' && (
           <HoroscopePage
             user={user}
@@ -180,7 +192,6 @@ export default function OracleMystiqueApp({ onSaveReading, onStepChange }: Oracl
           />
         )}
 
-        {/* ✅ CORRIGÉ : Ajout onSaveReading */}
         {currentStep === 'crystalBall' && (
           <CrystalBallPage
             user={user}

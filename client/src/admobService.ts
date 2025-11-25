@@ -13,7 +13,7 @@ const isNative = Capacitor.isNativePlatform();
 const platform = Capacitor.getPlatform();
 
 // 🎯 INTERRUPTEUR : Changez cette valeur pour passer de TEST à PRODUCTION
-const IS_PRODUCTION = true; // ⚠️ Mettre à true avant la soumission finale
+const IS_PRODUCTION = false; // ⚠️ Mettre à true avant la soumission finale
 
 console.log('🔍 Détection plateforme AdMob:', {
   isNative,
@@ -63,8 +63,9 @@ function _removeAllListenersSafe() {
   _allListeners = [];
 }
 
-// Variables pubs
+// 🎯 Variables pour le pré-chargement intelligent
 let isInterstitialReady = false;
+let isInterstitialLoading = false;
 let isInterstitialShowing = false;
 
 export async function initialize() {
@@ -86,11 +87,13 @@ export async function initialize() {
     _addListener('interstitialAdLoaded', () => {
       console.log('✅ Pub interstitielle chargée et prête');
       isInterstitialReady = true;
+      isInterstitialLoading = false;
     });
 
     _addListener('interstitialAdFailedToLoad', (error: any) => {
       console.error('❌ Échec chargement pub interstitielle:', error);
       isInterstitialReady = false;
+      isInterstitialLoading = false;
     });
 
     _addListener('interstitialAdShowed', () => {
@@ -102,6 +105,8 @@ export async function initialize() {
       console.log('✅ Pub interstitielle fermée par l\'utilisateur');
       isInterstitialReady = false;
       isInterstitialShowing = false;
+      // 🔄 Recharger une nouvelle pub pour la prochaine fois
+      setTimeout(() => preloadInterstitial(), 1000);
     });
 
     _addListener('interstitialAdFailedToShow', (error: any) => {
@@ -113,6 +118,87 @@ export async function initialize() {
     console.log(`✅ AdMob initialisé en mode ${IS_PRODUCTION ? 'PRODUCTION' : 'TEST'}`);
   } catch (error) {
     console.error('❌ Erreur init AdMob:', error);
+  }
+}
+
+// 🎯 NOUVELLE FONCTION : Pré-charger la pub sans l'afficher
+export async function preloadInterstitial() {
+  if (!isNative) return;
+
+  // Éviter de charger plusieurs fois
+  if (isInterstitialReady || isInterstitialLoading) {
+    console.log('⏭️ Pub déjà prête ou en chargement, skip');
+    return;
+  }
+
+  try {
+    console.log('🔄 PRÉ-CHARGEMENT pub interstitielle...');
+    isInterstitialLoading = true;
+
+    await AdMob.prepareInterstitial({
+      adId: INTERSTITIAL_AD_ID,
+    });
+
+    console.log('✅ Pub interstitielle pré-chargée avec succès');
+  } catch (error) {
+    console.error('❌ Erreur pré-chargement interstitielle:', error);
+    isInterstitialLoading = false;
+  }
+}
+
+// 🎯 FONCTION AMÉLIORÉE : Affiche instantanément si prête, sinon attend
+export async function showInterstitialAd(context: string = 'unknown'): Promise<boolean> {
+  if (!isNative) {
+    console.log('📱 Pas de pub (web) - Context:', context);
+    return true;
+  }
+
+  if (isInterstitialShowing) {
+    console.log('⚠️ Une pub interstitielle est déjà affichée');
+    return false;
+  }
+
+  try {
+    console.log(`📺 [PUB INTERSTITIEL] Context: ${context}`);
+
+    // ✅ Si la pub est prête, l'afficher IMMÉDIATEMENT
+    if (isInterstitialReady) {
+      console.log('⚡ Pub prête ! Affichage instantané...');
+      await AdMob.showInterstitial();
+      console.log('✅ Pub affichée instantanément');
+      return true;
+    }
+
+    // ⏳ Sinon, charger puis afficher (avec timeout)
+    console.log('⏳ Pub pas prête, chargement...');
+
+    if (!isInterstitialLoading) {
+      await AdMob.prepareInterstitial({
+        adId: INTERSTITIAL_AD_ID,
+      });
+    }
+
+    // Attendre max 5 secondes que la pub soit prête
+    const maxWait = 5000;
+    const startTime = Date.now();
+
+    while (!isInterstitialReady && (Date.now() - startTime) < maxWait) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
+    if (isInterstitialReady) {
+      await AdMob.showInterstitial();
+      console.log('✅ Pub affichée après chargement');
+      return true;
+    } else {
+      console.log('⏰ Timeout : pub pas prête après 5s');
+      return false;
+    }
+
+  } catch (error: any) {
+    console.error(`❌ Erreur pub interstitielle:`, error);
+    isInterstitialShowing = false;
+    return false;
   }
 }
 
@@ -156,91 +242,19 @@ export async function removeBanner() {
   }
 }
 
-export async function prepareInterstitial() {
-  if (!isNative) return;
-
-  try {
-    await AdMob.prepareInterstitial({
-      adId: INTERSTITIAL_AD_ID,
-    });
-    console.log('✅ Interstitielle préparée');
-  } catch (error) {
-    console.error('❌ Erreur préparation interstitielle:', error);
-  }
-}
-
-export async function showInterstitial() {
-  if (!isNative) return;
-
-  try {
-    await AdMob.showInterstitial();
-    console.log('✅ Interstitielle affichée');
-  } catch (error) {
-    console.error('❌ Erreur affichage interstitielle:', error);
-  }
-}
-
-// Compteur global
-let interstitialAdCounter = 0;
-
-export async function showInterstitialAd(context: string = 'unknown') {
-  if (!isNative) {
-    console.log('📱 Pas de pub (web) - Context:', context);
-    return;
-  }
-
-  if (isInterstitialShowing) {
-    console.log('⚠️ Une pub interstitielle est déjà affichée, on attend...');
-    return;
-  }
-
-  interstitialAdCounter++;
-  const adNumber = interstitialAdCounter;
-
-  try {
-    console.log(`📺 [PUB INTERSTITIEL #${adNumber}] Préparation... Context: ${context}`);
-
-    await AdMob.prepareInterstitial({
-      adId: INTERSTITIAL_AD_ID,
-    });
-
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    const result = await AdMob.showInterstitial();
-    console.log(`✅ [PUB INTERSTITIEL #${adNumber}] Affichée - Context: ${context}`, result);
-
-  } catch (error: any) {
-    console.error(`❌ [PUB INTERSTITIEL #${adNumber}] Erreur - Context: ${context}`, error);
-    isInterstitialShowing = false;
-
-    if (error?.message?.includes('not ready')) {
-      console.log(`⏳ [PUB INTERSTITIEL #${adNumber}] Pas prête, réessai...`);
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      try {
-        await AdMob.showInterstitial();
-        console.log(`✅ [PUB INTERSTITIEL #${adNumber}] Affichée après réessai`);
-      } catch (retryError) {
-        console.error(`❌ [PUB INTERSTITIEL #${adNumber}] Échec après réessai`, retryError);
-        isInterstitialShowing = false;
-      }
-    }
-  }
-}
-
-// 🎁 PUB RÉCOMPENSÉE - ✅ VERSION PRODUCTION ULTRA-ROBUSTE
+// 🎁 PUB RÉCOMPENSÉE - VERSION PRODUCTION ULTRA-ROBUSTE
 let rewardedAdCounter = 0;
 let currentRewardedAdPromise: Promise<boolean> | null = null;
 
 export async function showRewardedAd(context: string = 'bonus_roll'): Promise<boolean> {
   if (!isNative) {
     console.log('📱 Pas de pub récompensée (web) - Context:', context);
-    return true; // ✅ Mode web : débloque directement
+    return true;
   }
 
-  // ✅ BLOQUER si une pub est déjà en cours (empêche les doublons)
   if (currentRewardedAdPromise) {
     console.warn(`⚠️ [PUB RÉCOMPENSÉE] BLOQUÉ - Pub déjà en cours`);
-    return currentRewardedAdPromise; // Retourne la promesse en cours
+    return currentRewardedAdPromise;
   }
 
   rewardedAdCounter++;
@@ -256,7 +270,6 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
     let failedToShowListener: any;
     let failedToLoadListener: any;
 
-    // ✅ TIMEOUT AUGMENTÉ : 120 secondes (2 minutes) pour pubs longues/doubles
     const safetyTimeout = setTimeout(() => {
       if (!resolved) {
         console.log(`⏰ [PUB RÉCOMPENSÉE #${adNumber}] TIMEOUT (120s) - Résolution forcée`);
@@ -265,7 +278,7 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
         currentRewardedAdPromise = null;
         resolve(false);
       }
-    }, 120000); // ✅ 120 secondes
+    }, 120000);
 
     const cleanup = () => {
       clearTimeout(safetyTimeout);
@@ -283,7 +296,6 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
     try {
       console.log(`🎁 [PUB RÉCOMPENSÉE #${adNumber}] === DÉMARRAGE === Context: ${context}`);
 
-      // 📡 Enregistrement des listeners AVANT préparation
       failedToLoadListener = _addListener('onRewardedVideoAdFailedToLoad', (error: any) => {
         if (!resolved) {
           console.error(`❌ [PUB RÉCOMPENSÉE #${adNumber}] ÉCHEC CHARGEMENT:`, error);
@@ -309,9 +321,7 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
           console.log(`🚪 [PUB RÉCOMPENSÉE #${adNumber}] FERMÉE`);
           console.log(`   📊 Affichée=${adShown}, Récompense=${rewardReceived}`);
 
-          // ✅ Déblocage si pub AFFICHÉE (critère fiable)
           const shouldUnlock = adShown;
-
           console.log(`   🎯 RÉSULTAT: ${shouldUnlock ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'}`);
 
           cleanup();
@@ -331,14 +341,13 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
         }
       });
 
-      // 🔄 Préparation
       const options: RewardAdOptions = { adId: REWARDED_AD_ID };
 
       console.log(`🔄 [PUB RÉCOMPENSÉE #${adNumber}] Préparation...`);
       await AdMob.prepareRewardVideoAd(options);
 
       console.log(`⏳ [PUB RÉCOMPENSÉE #${adNumber}] Attente 2s...`);
-      await new Promise(r => setTimeout(r, 2000)); // ✅ 2s au lieu de 1.5s
+      await new Promise(r => setTimeout(r, 2000));
 
       console.log(`🎬 [PUB RÉCOMPENSÉE #${adNumber}] Affichage...`);
       await AdMob.showRewardVideoAd();
@@ -359,7 +368,6 @@ export async function showRewardedAd(context: string = 'bonus_roll'): Promise<bo
 
   currentRewardedAdPromise = promise;
 
-  // ✅ Nettoyer après résolution
   promise.finally(() => {
     setTimeout(() => {
       currentRewardedAdPromise = null;
