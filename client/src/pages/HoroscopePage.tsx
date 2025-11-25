@@ -5,12 +5,14 @@ import SummaryCard from "@/components/SummaryCard";
 import { UserSession } from "@shared/schema";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { config } from '@/config';
+import { showInterstitialAd } from '@/admobService'; // ✅ AJOUT
 
 interface HoroscopePageProps {
   user: UserSession;
   onBack: () => void;
   onHome: () => void;
   onSaveReading?: (reading: any) => Promise<void>;
+  isPremium?: boolean; // ✅ AJOUT
 }
 
 interface HoroscopeData {
@@ -22,7 +24,6 @@ interface HoroscopeData {
   luckyColor: string;
   compatibility: string;
   currentDate: string;
-  // ✅ NOUVELLES SECTIONS
   love?: string;
   work?: string;
   finances?: string;
@@ -45,7 +46,6 @@ const signMapping: Record<string, string> = {
   'Poissons': 'pisces'
 };
 
-// 🎲 Fonction pour générer un chiffre chance personnalisé
 const generatePersonalLuckyNumber = (userName: string, date: string, sign: string): string => {
   const seed = `${userName}-${date}-${sign}`;
   let hash = 0;
@@ -57,15 +57,13 @@ const generatePersonalLuckyNumber = (userName: string, date: string, sign: strin
   return String(Math.abs(hash % 50) + 1);
 };
 
-// ✅ NOUVELLE : Fonction pour sélectionner une variation aléatoire
 const getRandomVariation = (sign: string, category: 'love' | 'work' | 'finances' | 'health' | 'advice', t: (key: string) => string): string => {
-  // Déterminer le nombre de variations disponibles pour chaque catégorie
   const variationCounts = {
-    love: 8,      // 8 variations pour l'amour
-    work: 8,      // 8 variations pour le travail
-    finances: 8,  // 8 variations pour les finances
-    health: 8,    // 8 variations pour la santé
-    advice: 5     // 5 variations pour les conseils
+    love: 8,
+    work: 8,
+    finances: 8,
+    health: 8,
+    advice: 5
   };
 
   const maxVariations = variationCounts[category];
@@ -76,7 +74,6 @@ const getRandomVariation = (sign: string, category: 'love' | 'work' | 'finances'
 
   console.log(`🔮 ${category} - Sign: ${sign} - Index: ${randomIndex} - Key: ${key}`);
 
-  // Si la traduction n'existe pas, retourner un fallback
   return translation !== key ? translation : t(`horoscope.data.${category}.fallback`);
 };
 
@@ -167,11 +164,13 @@ const getRandomFinalMessage = (
 export default function HoroscopePage({
   user,
   onBack,
-  onSaveReading
+  onSaveReading,
+  isPremium = false // ✅ AJOUT
 }: HoroscopePageProps) {
   const [showInterpretation, setShowInterpretation] = useState(false);
   const [hasSavedReading, setHasSavedReading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [sectionOpenCount, setSectionOpenCount] = useState(0); // ✅ NOUVEAU : Compteur d'ouvertures
   const { t } = useLanguage();
 
   const englishSign = user.zodiacSign
@@ -271,6 +270,33 @@ export default function HoroscopePage({
     }
   }, [horoscope]);
 
+  // ✅ NOUVEAU : Gestion de la pub à l'ouverture de section
+  const handleSectionOpen = async (sectionTitle: string) => {
+    if (isPremium) {
+      console.log('👑 Premium : pas de pub sur section');
+      return;
+    }
+
+    const newCount = sectionOpenCount + 1;
+    setSectionOpenCount(newCount);
+
+    console.log(`📂 Section ouverte: "${sectionTitle}" (${newCount}ème ouverture)`);
+
+    // ✅ Afficher la pub à la 2ème ouverture de section
+    if (newCount === 2) {
+      console.log('🎬 2ème section ouverte → Affichage pub interstitielle');
+
+      // Petit délai pour laisser la section s'ouvrir
+      setTimeout(async () => {
+        try {
+          await showInterstitialAd(`horoscope_section_${sectionTitle}`);
+        } catch (error) {
+          console.error('❌ Erreur pub section:', error);
+        }
+      }, 300);
+    }
+  };
+
   const getRandomCompatibilityMessage = (
     t: (key: string, vars?: Record<string, any>) => string,
     compatibility: string
@@ -307,26 +333,22 @@ export default function HoroscopePage({
       zodiacSymbol: user.zodiacSign.symbol,
     });
 
-    // ✅ SECTIONS COMPLÈTES AVEC LES NOUVELLES CATÉGORIES
     const sections = [
       {
         icon: "🔮",
         title: t("horoscope.predictions.title"),
         content: t(`horoscope.data.descriptions.${englishSign}.0`),
       },
-            // ✅ NOUVELLE : Section Amour
       {
         icon: "💕",
         title: t("horoscope.love.title"),
         content: getRandomVariation(englishSign, 'love', t),
       },
-      // ✅ NOUVELLE : Section Travail
       {
         icon: "💼",
         title: t("horoscope.work.title"),
         content: getRandomVariation(englishSign, 'work', t),
       },
-      // ✅ NOUVELLE : Section Finances
       {
         icon: "💰",
         title: t("horoscope.finances.title"),
@@ -337,7 +359,7 @@ export default function HoroscopePage({
         title: t("horoscope.mood.title"),
         content: getRandomMoodMessage(t, translatedHoroscope.mood),
       },
-        {
+      {
         icon: "✨",
         title: t("horoscope.assets.title"),
         content: `🎲 ${t("horoscope.assets.luckyNumber", { luckyNumber: personalLuckyNumber })}\n\n🎨 ${t("horoscope.assets.luckyColor", { luckyColor: translatedHoroscope.luckyColor })}`,
@@ -347,7 +369,6 @@ export default function HoroscopePage({
         title: t("horoscope.compatibility.title"),
         content: getRandomCompatibilityMessage(t, translatedHoroscope.compatibility),
       },
-      // ✅ NOUVELLE : Conseil du jour
       {
         icon: "🌟",
         title: t("horoscope.advice.title"),
@@ -355,7 +376,7 @@ export default function HoroscopePage({
       },
     ];
 
-    return { sections, greeting, finalMessage: "" }; // ✅ Pas de message final
+    return { sections, greeting, finalMessage: "" };
   };
 
   if (!user.zodiacSign) {
@@ -426,6 +447,7 @@ export default function HoroscopePage({
               finalMessage="" 
               isVisible={showInterpretation}
               openFirst={false}
+              onSectionOpen={handleSectionOpen} // ✅ NOUVEAU : Callback pour pub
             />
           </div>
         </>

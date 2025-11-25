@@ -17,6 +17,7 @@ interface SummaryCardProps {
   isVisible?: boolean;
   className?: string;
   openFirst?: boolean;
+  onSectionOpen?: (sectionTitle: string) => void | Promise<void>; // ✅ NOUVEAU
 }
 
 export default function SummaryCard({ 
@@ -26,7 +27,8 @@ export default function SummaryCard({
   finalMessage,
   isVisible = false, 
   className,
-  openFirst = false
+  openFirst = false,
+  onSectionOpen // ✅ NOUVEAU
 }: SummaryCardProps) {
   const [openSections, setOpenSections] = useState<number[]>(openFirst ? [0] : []);
   const { t } = useLanguage();
@@ -57,12 +59,27 @@ export default function SummaryCard({
     return null;
   }
 
-  const toggleSection = (index: number) => {
+  // ✅ MODIFIÉ : Gestion de l'ouverture avec callback
+  const toggleSection = async (index: number) => {
+    const isOpening = !openSections.includes(index);
+
+    // Mettre à jour l'état d'abord
     setOpenSections(prev => 
       prev.includes(index) 
         ? prev.filter(i => i !== index)
         : [...prev, index]
     );
+
+    // ✅ Appeler le callback si on OUVRE une section
+    if (isOpening && onSectionOpen && sections[index]) {
+      console.log(`📂 Section ouverte: "${sections[index].title}"`);
+
+      // Supporter les callbacks async et sync
+      const result = onSectionOpen(sections[index].title);
+      if (result instanceof Promise) {
+        result.catch(err => console.error('Erreur callback onSectionOpen:', err));
+      }
+    }
   };
 
   return (
@@ -115,7 +132,7 @@ export default function SummaryCard({
           </div>
         ))}
 
-        {/* Message final toujours visible - ✅ TRADUIT */}
+        {/* Message final toujours visible */}
         {finalMessage && (
           <div className="mt-6 p-4 bg-gradient-to-r from-[#ffd700]/10 to-[#ffd700]/5 rounded-xl border border-[#ffd700]/40">
             <div className="flex items-center gap-2 mb-2">

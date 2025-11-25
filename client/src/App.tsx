@@ -1,5 +1,3 @@
-// ✅ NOUVELLE APPROCHE : La pub se lance AVANT le tirage (pas après)
-
 import { useState, useEffect } from "react";
 import GrimoireModal from './pages/GrimoireModal';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
@@ -40,10 +38,11 @@ type AppStep =
   | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'bonusRoll'
   | 'responsiveTest';
 
-function Router({ onSaveReading, onStepChange, shouldShowAdBeforeReading }: {
+function Router({ onSaveReading, onStepChange, shouldShowAdBeforeReading, isPremium }: {
   onSaveReading: (reading: any) => Promise<void>;
   onStepChange: (step: AppStep) => void;
   shouldShowAdBeforeReading: () => Promise<boolean>;
+  isPremium: boolean;
 }) {
   return (
     <Switch>
@@ -54,6 +53,7 @@ function Router({ onSaveReading, onStepChange, shouldShowAdBeforeReading }: {
           onSaveReading={onSaveReading}
           onStepChange={onStepChange as any}
           shouldShowAdBeforeReading={shouldShowAdBeforeReading}
+          isPremium={isPremium}
         />
       </Route>
       <Route component={NotFound} />
@@ -469,6 +469,7 @@ function App() {
                   onSaveReading={addReading}
                   onStepChange={setCurrentStep}
                   shouldShowAdBeforeReading={shouldShowAdBeforeReading}
+                  isPremium={isPremium}
                 />
               </div>
             </div>

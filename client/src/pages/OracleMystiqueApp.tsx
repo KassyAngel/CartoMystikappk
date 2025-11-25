@@ -33,13 +33,15 @@ type AppStep =
 interface OracleMystiqueAppProps {
   onSaveReading?: (reading: any) => Promise<void>;
   onStepChange?: ((step: AppStep) => void) | ((step: AppStep) => Promise<void>);
-  shouldShowAdBeforeReading?: () => Promise<boolean>; // ✅ NOUVEAU
+  shouldShowAdBeforeReading?: () => Promise<boolean>;
+  isPremium?: boolean; // ✅ NOUVEAU
 }
 
 export default function OracleMystiqueApp({ 
   onSaveReading, 
   onStepChange,
-  shouldShowAdBeforeReading // ✅ NOUVEAU
+  shouldShowAdBeforeReading,
+  isPremium = false // ✅ NOUVEAU
 }: OracleMystiqueAppProps) {
   const [currentStep, setCurrentStep] = useState<AppStep>('landing');
   const { user, setUser, clearUser } = useUser();
@@ -189,6 +191,7 @@ export default function OracleMystiqueApp({
             onBack={handleBackToOracle}
             onHome={handleBackToHome}
             onSaveReading={onSaveReading}
+            isPremium={isPremium}
           />
         )}
 
