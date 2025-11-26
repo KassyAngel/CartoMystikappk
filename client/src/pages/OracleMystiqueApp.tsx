@@ -82,14 +82,19 @@ export default function OracleMystiqueApp({
     setCurrentStep('oracle');
   };
 
-  // ✅ MODIFIÉ : Passer le type d'oracle pour vérifier si pub nécessaire
+  // ✅ CORRIGÉ : N'appeler la pub QUE pour les tirages comptabilisés
   const handleOracleSelect = async (oracleType: string) => {
     console.log(`🎯 Oracle sélectionné: "${oracleType}"`);
 
-    // ⚡ Vérifier si pub interstitielle nécessaire AVANT le tirage
-    if (shouldShowAdBeforeReading) {
+    // ⚡ Vérifier pub interstitielle UNIQUEMENT pour les tirages comptabilisés
+    // ❌ PAS pour horoscope et bonusRoll (ont leur propre système)
+    const typesWithInterstitialAd = ['tarot', 'oracle', 'angels', 'runes', 'crystalBall', 'crystal'];
+
+    if (typesWithInterstitialAd.includes(oracleType) && shouldShowAdBeforeReading) {
       console.log('🎬 Vérification pub avant tirage...');
       await shouldShowAdBeforeReading(oracleType);
+    } else {
+      console.log(`⏭️ "${oracleType}" exclu de la pub interstitielle (système propre)`);
     }
 
     // ✅ PUIS lancer le tirage
