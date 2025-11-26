@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import MysticalButton from "@/components/MysticalButton";
 import SummaryCard from "@/components/SummaryCard";
 import { UserSession } from "@shared/schema";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { config } from '@/config';
-import { showInterstitialAd } from '@/admobService'; // ✅ AJOUT
+import { showInterstitialAd } from '@/admobService';
 
 interface HoroscopePageProps {
   user: UserSession;
   onBack: () => void;
   onHome: () => void;
   onSaveReading?: (reading: any) => Promise<void>;
-  isPremium?: boolean; // ✅ AJOUT
+  isPremium?: boolean;
 }
 
 interface HoroscopeData {
@@ -57,7 +57,8 @@ const generatePersonalLuckyNumber = (userName: string, date: string, sign: strin
   return String(Math.abs(hash % 50) + 1);
 };
 
-const getRandomVariation = (sign: string, category: 'love' | 'work' | 'finances' | 'health' | 'advice', t: (key: string) => string): string => {
+// ✅ CORRIGÉ : Fonction stable qui génère une SEULE FOIS par signe/catégorie/date
+const getStableVariation = (sign: string, category: 'love' | 'work' | 'finances' | 'health' | 'advice', date: string, t: (key: string) => string): string => {
   const variationCounts = {
     love: 8,
     work: 8,
@@ -67,12 +68,21 @@ const getRandomVariation = (sign: string, category: 'love' | 'work' | 'finances'
   };
 
   const maxVariations = variationCounts[category];
-  const randomIndex = Math.floor(Math.random() * maxVariations);
+
+  // ✅ Utiliser la date pour avoir une variation stable pendant la journée
+  const seed = `${sign}-${category}-${date}`;
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+    hash = hash & hash;
+  }
+
+  const randomIndex = Math.abs(hash) % maxVariations;
 
   const key = `horoscope.data.${category}.${sign}.${randomIndex}`;
   const translation = t(key);
 
-  console.log(`🔮 ${category} - Sign: ${sign} - Index: ${randomIndex} - Key: ${key}`);
+  console.log(`🔮 ${category} - Sign: ${sign} - Date: ${date} - Index: ${randomIndex} - Key: ${key}`);
 
   return translation !== key ? translation : t(`horoscope.data.${category}.fallback`);
 };
@@ -165,12 +175,12 @@ export default function HoroscopePage({
   user,
   onBack,
   onSaveReading,
-  isPremium = false // ✅ AJOUT
+  isPremium = false
 }: HoroscopePageProps) {
   const [showInterpretation, setShowInterpretation] = useState(false);
   const [hasSavedReading, setHasSavedReading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [sectionOpenCount, setSectionOpenCount] = useState(0); // ✅ NOUVEAU : Compteur d'ouvertures
+  const [sectionOpenCount, setSectionOpenCount] = useState(0);
   const { t } = useLanguage();
 
   const englishSign = user.zodiacSign
@@ -270,7 +280,6 @@ export default function HoroscopePage({
     }
   }, [horoscope]);
 
-  // ✅ NOUVEAU : Gestion de la pub à l'ouverture de section
   const handleSectionOpen = async (sectionTitle: string) => {
     if (isPremium) {
       console.log('👑 Premium : pas de pub sur section');
@@ -282,11 +291,9 @@ export default function HoroscopePage({
 
     console.log(`📂 Section ouverte: "${sectionTitle}" (${newCount}ème ouverture)`);
 
-    // ✅ Afficher la pub à la 2ème ouverture de section
     if (newCount === 2) {
       console.log('🎬 2ème section ouverte → Affichage pub interstitielle');
 
-      // Petit délai pour laisser la section s'ouvrir
       setTimeout(async () => {
         try {
           await showInterstitialAd(`horoscope_section_${sectionTitle}`);
@@ -297,25 +304,45 @@ export default function HoroscopePage({
     }
   };
 
-  const getRandomCompatibilityMessage = (
+  // ✅ CORRIGÉ : Variations stables basées sur la date
+  const getStableCompatibilityMessage = (
     t: (key: string, vars?: Record<string, any>) => string,
-    compatibility: string
+    compatibility: string,
+    date: string
   ): string => {
-    const randomVariant = Math.floor(Math.random() * 8) + 1;
+    // Hash basé sur la date pour avoir une variation stable pendant la journée
+    const seed = `compatibility-${date}`;
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+      hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+      hash = hash & hash;
+    }
+
+    const randomVariant = (Math.abs(hash) % 8) + 1;
     const compatibilityKey = `horoscope.compatibility.var${randomVariant}`;
     return t(compatibilityKey, { compatibility: compatibility });
   };
 
-  const getRandomMoodMessage = (
+  const getStableMoodMessage = (
     t: (key: string, vars?: Record<string, any>) => string,
-    mood: string
+    mood: string,
+    date: string
   ): string => {
-    const randomVariant = Math.floor(Math.random() * 6) + 1;
+    // Hash basé sur la date pour avoir une variation stable pendant la journée
+    const seed = `mood-${date}`;
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+      hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+      hash = hash & hash;
+    }
+
+    const randomVariant = (Math.abs(hash) % 6) + 1;
     const moodKey = `horoscope.mood.var${randomVariant}`;
     return t(moodKey, { mood: mood });
   };
 
-  const generateHoroscopeSections = () => {
+  // ✅ CORRIGÉ : useMemo pour générer les sections UNE SEULE FOIS
+  const horoscopeSections = useMemo(() => {
     if (!horoscope || !user.zodiacSign) return { sections: [], greeting: "", finalMessage: "" };
 
     const translatedHoroscope = translateHoroscopeData(horoscope, englishSign, t);
@@ -333,6 +360,7 @@ export default function HoroscopePage({
       zodiacSymbol: user.zodiacSign.symbol,
     });
 
+    // ✅ Les variations sont générées UNE SEULE FOIS grâce à useMemo
     const sections = [
       {
         icon: "🔮",
@@ -342,22 +370,22 @@ export default function HoroscopePage({
       {
         icon: "💕",
         title: t("horoscope.love.title"),
-        content: getRandomVariation(englishSign, 'love', t),
+        content: getStableVariation(englishSign, 'love', horoscope.currentDate, t),
       },
       {
         icon: "💼",
         title: t("horoscope.work.title"),
-        content: getRandomVariation(englishSign, 'work', t),
+        content: getStableVariation(englishSign, 'work', horoscope.currentDate, t),
       },
       {
         icon: "💰",
         title: t("horoscope.finances.title"),
-        content: getRandomVariation(englishSign, 'finances', t),
+        content: getStableVariation(englishSign, 'finances', horoscope.currentDate, t),
       },
       {
         icon: "😊",
         title: t("horoscope.mood.title"),
-        content: getRandomMoodMessage(t, translatedHoroscope.mood),
+        content: getStableMoodMessage(t, translatedHoroscope.mood, horoscope.currentDate),
       },
       {
         icon: "✨",
@@ -367,17 +395,17 @@ export default function HoroscopePage({
       {
         icon: "💞",
         title: t("horoscope.compatibility.title"),
-        content: getRandomCompatibilityMessage(t, translatedHoroscope.compatibility),
+        content: getStableCompatibilityMessage(t, translatedHoroscope.compatibility, horoscope.currentDate),
       },
       {
         icon: "🌟",
         title: t("horoscope.advice.title"),
-        content: getRandomVariation(englishSign, 'advice', t),
+        content: getStableVariation(englishSign, 'advice', horoscope.currentDate, t),
       },
     ];
 
     return { sections, greeting, finalMessage: "" };
-  };
+  }, [horoscope, user.zodiacSign, user.name, englishSign, t]); // ✅ Dépendances correctes
 
   if (!user.zodiacSign) {
     return (
@@ -391,7 +419,7 @@ export default function HoroscopePage({
     );
   }
 
-  const { sections, greeting, finalMessage } = generateHoroscopeSections();
+  const { sections, greeting, finalMessage } = horoscopeSections;
 
   return (
     <div className="horoscope-page p-3 sm:p-4 pt-16 sm:pt-20 min-h-screen flex flex-col pb-6">
@@ -447,7 +475,7 @@ export default function HoroscopePage({
               finalMessage="" 
               isVisible={showInterpretation}
               openFirst={false}
-              onSectionOpen={handleSectionOpen} // ✅ NOUVEAU : Callback pour pub
+              onSectionOpen={handleSectionOpen}
             />
           </div>
         </>
