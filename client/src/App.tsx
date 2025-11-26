@@ -319,7 +319,8 @@ function App() {
     }
   };
 
-  // 🎯 NOUVELLE FONCTION : Vérifie si on doit afficher une pub AVANT le tirage
+  // 🎯 FONCTION CORRIGÉE : Pub interstitielle tous les 3 tirages
+  // ✅ Exclut : horoscope (a sa propre pub), bonusRoll (tirage bonus)
   const shouldShowAdBeforeReading = async (): Promise<boolean> => {
     if (isPremium) {
       console.log('👑 Premium : pas de pub');
@@ -350,12 +351,17 @@ function App() {
     return shouldShow;
   };
 
-  // ✅ NOUVELLE VERSION : Plus de gestion de pub ici, juste la sauvegarde
+  // ✅ FONCTION CORRIGÉE : Compteur mis à jour UNIQUEMENT pour les tirages concernés
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
     if (!deviceId) return;
 
+    // 🎯 Types exclus du Grimoire (pas de sauvegarde)
     const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
     const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
+
+    // 🎯 Types exclus du compteur de pub (ont déjà leur propre pub ou sont bonus)
+    const typesExcludedFromAdCounter = ['horoscope', 'bonusRoll'];
+    const shouldIncrementCounter = !typesExcludedFromAdCounter.includes(reading.type);
 
     try {
       console.log('📤 Envoi tirage:', reading.type, 'Device:', deviceId);
@@ -387,10 +393,15 @@ function App() {
         }
       }
 
-      // ✅ Incrémenter le compteur APRÈS sauvegarde
-      if (reading.type !== 'bonusRoll') {
-        setReadingCount(prev => prev + 1);
-        console.log(`📊 Compteur mis à jour: ${readingCount + 1}`);
+      // ✅ Incrémenter le compteur UNIQUEMENT pour les tirages concernés
+      if (shouldIncrementCounter) {
+        setReadingCount(prev => {
+          const newCount = prev + 1;
+          console.log(`📊 Compteur mis à jour: ${newCount} (type: ${reading.type})`);
+          return newCount;
+        });
+      } else {
+        console.log(`⏭️ Type "${reading.type}" exclu du compteur (a sa propre pub ou est bonus)`);
       }
 
     } catch (error) {
