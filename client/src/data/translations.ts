@@ -1541,6 +1541,7 @@ const translations: Record<Language, Record<string, string>> = {
     "crystalBall.example.bad": "Ex : Quand vais-je me marier ?",
     "crystalBall.newQuestion": "Poser une autre question",
     "crystalBall.backHome": "🏠 Retour à l'accueil",
+    "crystalBall.yourQuestion": "Votre question :",
 
     // Français
     "oracle.crystalBall.title": "Boule de Cristal",
@@ -3245,6 +3246,7 @@ const translations: Record<Language, Record<string, string>> = {
     "crystalBall.backHome": "🏠 Back to home",
     "crystalBall.closedQuestionHint": "What do you want to know? Ask the crystal ball… but be careful: it only answers yes or no...",
     "crystalBall.example.good": "E.g.: Will I find love this year?",
+    "crystalBall.yourQuestion": "Your question :",
 
     // English
     "oracle.crystalBall.title": "Crystal Ball",
@@ -5013,6 +5015,7 @@ const translations: Record<Language, Record<string, string>> = {
     "crystalBall.backHome": "🏠 Volver al inicio",
     "crystalBall.closedQuestionHint": "¿Qué quieres saber? Pregunta a la bola de cristal… pero cuidado: solo responde sí o no...",
     "crystalBall.example.good": "Ej.: ¿Encontraré el amor este año?",
+    "crystalBall.yourQuestion": "Tu pregunta :",
 
     // Español
     "oracle.crystalBall.title": "Bola de Cristal",
@@ -6782,6 +6785,7 @@ const translations: Record<Language, Record<string, string>> = {
       "crystalBall.backHome": "🏠 Zurück zur Startseite",
     "crystalBall.closedQuestionHint": "Was möchtest du wissen? Frag die Kristallkugel… aber Vorsicht: Sie antwortet nur mit Ja oder Nein...",
     "crystalBall.example.good": "Z. B.: Werde ich dieses Jahr die Liebe finden?",
+    "crystalBall.yourQuestion": "Ihre Frage :",
 
     // Deutsch
     "oracle.crystalBall.title": "Kristallkugel",
@@ -8557,6 +8561,7 @@ const translations: Record<Language, Record<string, string>> = {
       "crystalBall.backHome": "🏠 Torna alla home",
     "crystalBall.closedQuestionHint": "Cosa vuoi sapere? Chiedi alla sfera di cristallo… ma attenzione: risponde solo sì o no...",
     "crystalBall.example.good": "Es.: Troverò l'amore quest'anno?",
+    "crystalBall.yourQuestion": "La tua domanda :",
 
     // Italiano
     "oracle.crystalBall.title": "Sfera di Cristallo",

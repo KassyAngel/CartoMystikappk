@@ -77,9 +77,15 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
 
         {/* ✨ HEADER AMÉLIORÉ - Plus visible */}
         <div className="text-center space-y-2 pt-4">
-          <h1 className="mystical-title text-3xl sm:text-4xl md:text-5xl font-serif text-[#ffd700] drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif
+                         text-[#ffe87a]
+                         drop-shadow-[0_0_15px_rgba(255,231,125,0.8)]
+                         [text-shadow:_0_0_20px_rgba(155,100,255,0.6)]
+                         tracking-[0.15em] 
+                         uppercase">
             {t('crystalBall.title')}
           </h1>
+
           <p className="text-[#e6d7ff] text-sm sm:text-base font-medium">
             {t('crystalBall.subtitle')}
           </p>
@@ -201,7 +207,7 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
               </div>
 
               {/* Réponse principale */}
-              <div className="bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-4 border-[#ffd700] rounded-2xl p-8 shadow-[0_0_40px_rgba(255,215,0,0.3)] shimmer">
+                <div className="bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-4 border-[#ffd700] rounded-2xl p-8 shadow-[0_0_40px_rgba(255,215,0,0.3)]">
                 <div className="text-center space-y-4">
                   <div className={`text-3xl sm:text-4xl font-bold ${currentAnswer.color} font-serif drop-shadow-[0_0_10px_currentColor]`}>
                     {t(`crystalBall.answers.${currentAnswer.key}`)}
