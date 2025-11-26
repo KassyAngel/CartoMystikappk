@@ -8,7 +8,8 @@ import { showRewardedAd } from '@/admobService';
 interface BonusRollPageProps {
   user: UserSession;
   onBack: () => void;
-  onSaveReading?: (reading: any) => void; 
+  onSaveReading?: (reading: any) => void;
+  isPremium?: boolean; // ✅ AJOUT
 }
 
 const getRandomVariation = () => {
@@ -87,7 +88,12 @@ const getVariationStyles = (variation: string | null, t: any) => {
   }
 };
 
-export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRollPageProps) {
+export default function BonusRollPage({ 
+  user, 
+  onBack, 
+  onSaveReading,
+  isPremium = false // ✅ AJOUT
+}: BonusRollPageProps) {
   const { t } = useLanguage();
   const [isComplete, setIsComplete] = useState(false);
   const [showDice, setShowDice] = useState(false);
@@ -95,19 +101,27 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
   const [showLongAdMessage, setShowLongAdMessage] = useState(false);
   const [variation, setVariation] = useState<string | null>(null);
 
+  // ✅ NOUVELLE FONCTION : Avec check Premium
   const handleStartRoll = async () => {
-    setIsLoadingAd(true);
-    setShowLongAdMessage(false);
-
     const chosenVariation = getRandomVariation();
     setVariation(chosenVariation);
     console.log('🎯 [BONUS ROLL] Démarrage - Variation:', chosenVariation);
 
-    // ✅ Message visuel après 45s (PAS un timeout de blocage, juste un message)
+    // 👑 PREMIUM : Déblocage immédiat sans pub
+    if (isPremium) {
+      console.log('👑 [BONUS ROLL] Premium actif → Déblocage instantané sans pub');
+      setShowDice(true);
+      return;
+    }
+
+    // 📺 GRATUIT : Pub récompensée obligatoire
+    setIsLoadingAd(true);
+    setShowLongAdMessage(false);
+
     const messageTimeoutId = setTimeout(() => {
       console.log('💬 [BONUS ROLL] Affichage message "pub longue"');
       setShowLongAdMessage(true);
-    }, 45000); // ✅ 45 secondes - Juste pour info utilisateur
+    }, 45000);
 
     try {
       const rewardGranted = await showRewardedAd('bonus_roll_start');
@@ -164,6 +178,17 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
         </div>
 
         <div className="text-center relative z-10 px-3 w-full max-w-md">
+          {/* ✅ Badge Premium si applicable */}
+          {isPremium && (
+            <div className="inline-block mb-3">
+              <div className="bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-400 text-purple-900 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-lg">
+                <span className="flex items-center gap-1">
+                  👑 {t('premium.badge') || 'Premium'}
+                </span>
+              </div>
+            </div>
+          )}
+
           <div className="inline-block mb-4 sm:mb-6">
             <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-wide shadow-lg animate-pulse max-w-[90vw]">
               <span className="whitespace-nowrap overflow-hidden text-ellipsis block">
@@ -189,18 +214,32 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
             </p>
           </div>
 
-          <div className="mb-4 p-3 bg-amber-500/20 border border-amber-400/50 rounded-lg">
-            <p className="text-amber-200 text-xs sm:text-sm leading-snug">
-              📺 {t('oracle.bonusRoll.adRequired') || 'Une publicité vous sera présentée'}
-            </p>
-          </div>
+          {/* ✅ Message différent selon Premium ou Gratuit */}
+          {!isPremium && (
+            <div className="mb-4 p-3 bg-amber-500/20 border border-amber-400/50 rounded-lg">
+              <p className="text-amber-200 text-xs sm:text-sm leading-snug">
+                📺 {t('oracle.bonusRoll.adRequired') || 'Une publicité vous sera présentée'}
+              </p>
+            </div>
+          )}
+
+          {isPremium && (
+            <div className="mb-4 p-3 bg-yellow-500/20 border border-yellow-400/50 rounded-lg">
+              <p className="text-yellow-200 text-xs sm:text-sm leading-snug">
+                👑 {t('oracle.bonusRoll.premiumAccess') || 'Accès instantané sans publicité'}
+              </p>
+            </div>
+          )}
 
           <MysticalButton 
             onClick={handleStartRoll}
             className="w-full py-2.5 sm:py-3 px-2 sm:px-3 text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 shadow-[0_0_30px_rgba(251,191,36,0.6)] transform hover:scale-105 transition-all min-h-[48px] sm:min-h-[52px] flex items-center justify-center"
           >
             <span className="text-center leading-tight break-words block max-w-full">
-              {t('oracle.bonusRoll.startButton') || 'Débloquer le Tirage Bonus'}
+              {isPremium 
+                ? (t('oracle.bonusRoll.startButtonPremium') || '🎲 Lancer les Dés')
+                : (t('oracle.bonusRoll.startButton') || 'Débloquer le Tirage Bonus')
+              }
             </span>
           </MysticalButton>
 
@@ -340,6 +379,7 @@ export default function BonusRollPage({ user, onBack, onSaveReading }: BonusRoll
             <BonusRoll 
               onComplete={handleComplete}
               variation={variation}
+              isPremium={isPremium}
               onReset={() => {
                 const newVariation = getRandomVariation();
                 setVariation(newVariation);

@@ -33,15 +33,15 @@ type AppStep =
 interface OracleMystiqueAppProps {
   onSaveReading?: (reading: any) => Promise<void>;
   onStepChange?: ((step: AppStep) => void) | ((step: AppStep) => Promise<void>);
-  shouldShowAdBeforeReading?: () => Promise<boolean>;
-  isPremium?: boolean; // ✅ NOUVEAU
+  shouldShowAdBeforeReading?: (oracleType: string) => Promise<boolean>;
+  isPremium?: boolean;
 }
 
 export default function OracleMystiqueApp({ 
   onSaveReading, 
   onStepChange,
   shouldShowAdBeforeReading,
-  isPremium = false // ✅ NOUVEAU
+  isPremium = false
 }: OracleMystiqueAppProps) {
   const [currentStep, setCurrentStep] = useState<AppStep>('landing');
   const { user, setUser, clearUser } = useUser();
@@ -82,14 +82,14 @@ export default function OracleMystiqueApp({
     setCurrentStep('oracle');
   };
 
-  // ✅ MODIFIÉ : Afficher la pub AVANT de sélectionner l'oracle
+  // ✅ MODIFIÉ : Passer le type d'oracle pour vérifier si pub nécessaire
   const handleOracleSelect = async (oracleType: string) => {
-    console.log(`🎯 Oracle sélectionné: ${oracleType}`);
+    console.log(`🎯 Oracle sélectionné: "${oracleType}"`);
 
-    // ⚡ Afficher la pub AVANT (si nécessaire)
+    // ⚡ Vérifier si pub interstitielle nécessaire AVANT le tirage
     if (shouldShowAdBeforeReading) {
       console.log('🎬 Vérification pub avant tirage...');
-      await shouldShowAdBeforeReading();
+      await shouldShowAdBeforeReading(oracleType);
     }
 
     // ✅ PUIS lancer le tirage
@@ -207,6 +207,7 @@ export default function OracleMystiqueApp({
           <BonusRollPage
             user={user}
             onBack={handleBackToOracle}
+            isPremium={isPremium}
           />
         )}
       </main>

@@ -7,6 +7,7 @@ interface BonusRollProps {
   onComplete?: (result: { total: number; dice: [number, number]; interpretation: string }) => void;
   variation: string | null;
   onReset?: () => void;
+  isPremium?: boolean; // ✅ AJOUT
 }
 
 // 🎨 STYLES DES DÉS SELON LA VARIATION
@@ -58,8 +59,8 @@ const getDiceStyles = (variation: string | null) => {
   }
 };
 
-// ✅ **Voici la seule et unique version valide**
-export default function BonusRoll({ onComplete, variation, onReset }: BonusRollProps) {
+// ✅ AJOUT isPremium dans les props
+export default function BonusRoll({ onComplete, variation, onReset, isPremium = false }: BonusRollProps) {
   const { t } = useLanguage();
 
   const [dice, setDice] = useState<[number, number]>([1, 1]);
@@ -78,10 +79,10 @@ export default function BonusRoll({ onComplete, variation, onReset }: BonusRollP
     const newRollCount = rollCount + 1;
     setRollCount(newRollCount);
 
-    // ✅ Pub interstitielle tous les 3 lancers (3, 6, 9...)
-    const shouldShowAd = newRollCount % 3 === 0;
+    // ✅ MODIFIÉ : Pub interstitielle tous les 3 lancers SAUF si Premium
+    const shouldShowAd = newRollCount % 3 === 0 && !isPremium;
 
-    console.log(`🎲 Bonus Roll - Lancer n°${newRollCount} → Pub: ${shouldShowAd ? 'OUI ✅' : 'NON ❌'}`);
+    console.log(`🎲 Bonus Roll - Lancer n°${newRollCount} → Pub: ${shouldShowAd ? 'OUI ✅' : isPremium ? 'NON (Premium 👑)' : 'NON ❌'}`);
 
     if (shouldShowAd) {
       setIsLoadingAd(true);
@@ -111,7 +112,6 @@ export default function BonusRoll({ onComplete, variation, onReset }: BonusRollP
         clearInterval(interval);
         const sum = d1 + d2;
 
-        // ✅ UTILISER LA VARIATION REÇUE EN PROP (ou '1' par défaut)
         const currentVariation = variation || '1';
         console.log(`🎲 Utilisation variation: ${currentVariation} pour le total: ${sum}`);
 
@@ -290,7 +290,6 @@ export default function BonusRoll({ onComplete, variation, onReset }: BonusRollP
                 setDice([1, 1]);
                 setMessage(t('oracle.bonusRoll.ready'));
 
-                // ✅ CHOISIR UNE NOUVELLE VARIATION
                 if (onReset) {
                   onReset();
                 }
