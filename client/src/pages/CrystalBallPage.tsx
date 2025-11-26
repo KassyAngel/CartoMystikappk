@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import MysticalButton from '@/components/MysticalButton';
 import MysticalInput from '@/components/MysticalInput';
 import { UserSession } from '@shared/schema';
@@ -17,7 +17,6 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
   const [question, setQuestion] = useState('');
   const [phase, setPhase] = useState<Phase>('question');
   const [currentAnswer, setCurrentAnswer] = useState<{ key: string; icon: string; color: string } | null>(null);
-  // ❌ SUPPRIMÉ : const [questionCount, setQuestionCount] = useState(0);
   const { t } = useLanguage();
 
   const mysticalAnswers = [
@@ -46,189 +45,197 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           answer: answerKey,
           date: new Date()
         });
-        console.log('✅ Crystal Ball saved → pub triggered via App.tsx');
+        console.log('✅ Crystal Ball saved');
       } catch (error) {
         console.error('❌ Save error:', error);
       }
     }
   };
 
-  // ✅ MODIFIÉ : Suppression du système de pub interne
   const handleAskQuestion = async () => {
     if (!question.trim()) return;
 
-    // ❌ SUPPRIMÉ : Toute la logique de compteur et pub
-    // La pub sera gérée par App.tsx via onSaveReading()
-
-    console.log('🔮 Phase: LOADING');
     setPhase('loading');
 
     setTimeout(() => {
       const randomAnswer = mysticalAnswers[getSecureRandomInt(0, mysticalAnswers.length - 1)];
-      console.log('✨ Phase: ANSWER -', randomAnswer.key);
-
       setCurrentAnswer(randomAnswer);
       setPhase('answer');
-
-      // ✅ Sauvegarder (déclenchera la pub via App.tsx)
       saveReading(randomAnswer.key);
     }, 2500);
   };
 
   const handleNewQuestion = () => {
-    console.log('🔄 Phase: QUESTION');
     setQuestion('');
     setCurrentAnswer(null);
     setPhase('question');
   };
-  return (
-    <div className="crystal-ball-page min-h-screen w-full flex justify-center items-start px-4 py-4 pt-20 sm:pt-24">
-      <div className="max-w-lg w-full flex flex-col gap-3 sm:gap-4">
 
-        {/* Header - Compact */}
-        <div className="text-center space-y-1">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-serif text-amber-100/90 tracking-wide">
+  return (
+    <div className="crystal-ball-page min-h-screen w-full flex justify-center items-start px-4 pt-16 sm:pt-20 pb-8 overflow-y-auto">
+      <div className="max-w-xl w-full flex flex-col gap-6">
+
+        {/* ✨ HEADER AMÉLIORÉ - Plus visible */}
+        <div className="text-center space-y-2 pt-4">
+          <h1 className="mystical-title text-3xl sm:text-4xl md:text-5xl font-serif text-[#ffd700] drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]">
             {t('crystalBall.title')}
           </h1>
-          <p className="text-purple-200/70 text-xs sm:text-sm italic">
+          <p className="text-[#e6d7ff] text-sm sm:text-base font-medium">
             {t('crystalBall.subtitle')}
           </p>
         </div>
 
-        {/* Boule de cristal - Plus petite */}
-        <div className="flex justify-center py-2 sm:py-3">
-          <div className={`relative w-32 h-32 sm:w-40 sm:h-40 ${phase === 'loading' ? 'animate-pulse' : ''}`}>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-600 via-blue-500 to-purple-800 opacity-70 blur-2xl"></div>
-            <div className="absolute inset-3 rounded-full bg-gradient-to-br from-purple-400 via-blue-300 to-indigo-500 flex items-center justify-center shadow-2xl">
+        {/* ✨ BOULE DE CRISTAL - Plus grande et magique */}
+        <div className="flex justify-center py-4">
+          <div className={`relative w-48 h-48 sm:w-56 sm:h-56 ${phase === 'loading' ? 'animate-pulse' : ''}`}>
+            {/* Halo extérieur */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-600 via-blue-500 to-purple-800 opacity-50 blur-3xl animate-pulse"></div>
+
+            {/* Cercle magique tournant */}
+            <div className="absolute inset-0 rounded-full border-4 border-[#ffd700]/30 animate-spin" style={{ animationDuration: '8s' }}></div>
+            <div className="absolute inset-3 rounded-full border-2 border-purple-400/40 animate-spin" style={{ animationDuration: '12s', animationDirection: 'reverse' }}></div>
+
+            {/* Boule principale */}
+            <div className="absolute inset-6 rounded-full bg-gradient-to-br from-purple-400 via-blue-300 to-indigo-500 flex items-center justify-center shadow-[0_0_50px_rgba(138,43,226,0.6)]">
               {phase === 'loading' ? (
-                <div className="text-4xl sm:text-5xl animate-spin">🔮</div>
+                <div className="text-6xl sm:text-7xl animate-spin">🔮</div>
               ) : phase === 'answer' && currentAnswer ? (
-                <div className={`text-4xl sm:text-5xl ${currentAnswer.color}`}>
+                <div className={`text-6xl sm:text-7xl animate-bounce ${currentAnswer.color}`}>
                   {currentAnswer.icon}
                 </div>
               ) : (
-                <div className="text-4xl sm:text-5xl opacity-60">🔮</div>
+                <div className="text-6xl sm:text-7xl opacity-80">🔮</div>
               )}
             </div>
+
+            {/* Particules flottantes */}
+            {phase === 'loading' && (
+              <>
+                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-yellow-300 rounded-full animate-ping"></div>
+                <div className="absolute bottom-1/3 right-1/4 w-1.5 h-1.5 bg-purple-300 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+                <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-blue-300 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
+              </>
+            )}
           </div>
         </div>
 
-        {/* Contenu principal - Compact */}
-        <div className="min-h-[250px]">
+        {/* ✨ CONTENU PRINCIPAL - Cards avec fond */}
+        <div className="space-y-4">
 
-          {/* Page Question */}
+          {/* PAGE QUESTION */}
           {phase === 'question' && (
-            <div className="space-y-4">
-              <div className="text-center">
-                <h2 className="text-lg sm:text-xl font-serif text-amber-300 mb-2">
+            <div className="space-y-5">
+              {/* Card principale */}
+              <div className="bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-2 border-[#ffd700] rounded-2xl p-6 shadow-[0_0_30px_rgba(255,215,0,0.2)]">
+                <h2 className="text-xl sm:text-2xl font-serif text-[#ffd700] mb-4 text-center">
                   {t('crystalBall.askPrompt')}
                 </h2>
-              </div>
 
-              <MysticalInput
-                placeholder={t('crystalBall.questionPlaceholder')}
-                value={question}
-                onChange={setQuestion}
-                maxLength={200}
-                className="text-sm sm:text-base"
-              />
+                <MysticalInput
+                  placeholder={t('crystalBall.questionPlaceholder')}
+                  value={question}
+                  onChange={setQuestion}
+                  maxLength={200}
+                  className="text-base sm:text-lg mb-4"
+                />
 
-              <p className="text-purple-200/80 text-xs sm:text-sm text-center leading-relaxed px-2">
-                💡 {t('crystalBall.closedQuestionHint')}
-              </p>
+                {/* Hint visible */}
+                <div className="bg-purple-900/50 rounded-xl p-4 border border-purple-400/30 mb-4">
+                  <p className="text-[#e6d7ff] text-sm sm:text-base leading-relaxed flex items-start gap-2">
+                    <span className="text-2xl flex-shrink-0">💡</span>
+                    <span>{t('crystalBall.closedQuestionHint')}</span>
+                  </p>
+                </div>
 
-              <MysticalButton
-                onClick={handleAskQuestion}
-                disabled={!question.trim()}
-                className="w-full min-h-[48px] text-sm sm:text-base"
-              >
-                🔮 {t('crystalBall.submitQuestion')}
-              </MysticalButton>
-
-              <div className="text-center pt-1">
-                <button
-                  onClick={onBack}
-                  className="
-                    text-purple-200 
-                    hover:text-amber-300 
-                    text-sm sm:text-base 
-                    font-semibold 
-                    drop-shadow-md 
-                    transition-all
-                  "
+                <MysticalButton
+                  onClick={handleAskQuestion}
+                  disabled={!question.trim()}
+                  className="w-full text-base sm:text-lg py-4 disabled:opacity-40"
                 >
-                  ← {t('common.back')}
-                </button>
+                  <span className="flex items-center justify-center gap-3">
+                    <span className="text-2xl">🔮</span>
+                    <span className="font-semibold">{t('crystalBall.submitQuestion')}</span>
+                  </span>
+                </MysticalButton>
               </div>
+
+              {/* Bouton retour */}
+              <button
+                onClick={onBack}
+                className="w-full text-[#ffd700] hover:text-white text-base sm:text-lg font-semibold py-3 transition-all"
+              >
+                ← {t('common.back')}
+              </button>
             </div>
           )}
 
-          {/* Page Loading */}
+          {/* PAGE LOADING */}
           {phase === 'loading' && (
-            <div className="flex items-center justify-center py-8">
-              <div className="text-center space-y-3">
-                <p className="text-white/90 text-base sm:text-lg font-serif animate-pulse">
+            <div className="bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-2 border-[#ffd700] rounded-2xl p-8 shadow-[0_0_30px_rgba(255,215,0,0.2)]">
+              <div className="text-center space-y-6">
+                <p className="text-white text-xl sm:text-2xl font-serif animate-pulse">
                   {t('crystalBall.thinking')}
                 </p>
-                <div className="flex justify-center gap-2">
-                  <span className="w-2.5 h-2.5 bg-purple-400 rounded-full animate-bounce"></span>
-                  <span className="w-2.5 h-2.5 bg-blue-400 rounded-full animate-bounce" style={{animationDelay: '0.15s'}}></span>
-                  <span className="w-2.5 h-2.5 bg-indigo-400 rounded-full animate-bounce" style={{animationDelay: '0.3s'}}></span>
+                <div className="flex justify-center gap-3">
+                  <span className="w-3 h-3 bg-purple-400 rounded-full animate-bounce"></span>
+                  <span className="w-3 h-3 bg-blue-400 rounded-full animate-bounce" style={{animationDelay: '0.15s'}}></span>
+                  <span className="w-3 h-3 bg-indigo-400 rounded-full animate-bounce" style={{animationDelay: '0.3s'}}></span>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Page Réponse */}
+          {/* PAGE RÉPONSE */}
           {phase === 'answer' && currentAnswer && (
-            <div className="space-y-3">
-              <div className="text-center mb-2">
-                <p className="text-purple-200/60 text-xs sm:text-sm italic px-2">
-                  "{question}"
+            <div className="space-y-4">
+              {/* Question rappel - AMÉLIORATION */}
+              <div className="bg-purple-900/60 rounded-xl p-4 border-2 border-[#ffd700]/40 mb-4">
+                <p className="text-center">
+                  <span className="text-[#ffd700] text-sm font-semibold block mb-1">
+                    📝 {t('crystalBall.yourQuestion')}
+                  </span>
+                  <span className="text-white text-base sm:text-lg">
+                    "{question}"
+                  </span>
                 </p>
               </div>
 
-              <div className="bg-gradient-to-br from-purple-900/40 to-blue-900/40 rounded-2xl p-5 sm:p-6 backdrop-blur-sm border-2 border-amber-400/50 shadow-2xl">
-                <div className="text-center space-y-3">
-                  <div className={`text-2xl sm:text-3xl font-bold ${currentAnswer.color} font-serif`}>
+              {/* Réponse principale */}
+              <div className="bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-4 border-[#ffd700] rounded-2xl p-8 shadow-[0_0_40px_rgba(255,215,0,0.3)] shimmer">
+                <div className="text-center space-y-4">
+                  <div className={`text-3xl sm:text-4xl font-bold ${currentAnswer.color} font-serif drop-shadow-[0_0_10px_currentColor]`}>
                     {t(`crystalBall.answers.${currentAnswer.key}`)}
                   </div>
-                  <div className="h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent"></div>
-                  <p className="text-white/90 text-xs sm:text-sm leading-relaxed">
+                  <div className="h-px bg-gradient-to-r from-transparent via-[#ffd700] to-transparent"></div>
+                  <p className="text-[#e6d7ff] text-sm sm:text-base leading-relaxed">
                     {t('crystalBall.guidance')}
                   </p>
                 </div>
               </div>
 
-              <div className="space-y-2.5">
+              {/* Actions */}
+              <div className="space-y-3">
                 <MysticalButton
                   onClick={handleNewQuestion}
                   variant="primary"
-                  className="w-full min-h-[48px] text-sm sm:text-base"
+                  className="w-full text-base sm:text-lg py-4"
                 >
                   ✨ {t('crystalBall.newQuestion')}
                 </MysticalButton>
                 <button
                   onClick={onBack}
-                  className="
-                    w-full 
-                    text-purple-200 
-                    hover:text-amber-300 
-                    text-sm sm:text-base 
-                    font-semibold 
-                    py-4 
-                    drop-shadow-[0_0_6px_rgba(255,200,100,0.5)]
-                    hover:drop-shadow-[0_0_10px_rgba(255,200,100,0.9)]
-                    transition-all
-                  "
+                  className="w-full text-[#ffd700] hover:text-white text-base sm:text-lg font-semibold py-3 transition-all"
                 >
                   ← {t('crystalBall.backHome')}
                 </button>
               </div>
 
-              <div className="bg-purple-900/30 rounded-lg p-2.5 border border-purple-500/30">
-                <p className="text-purple-100/80 text-[10px] sm:text-xs text-center leading-relaxed">
-                  ⚠️ {t('crystalBall.disclaimer')}
+              {/* Disclaimer visible */}
+              <div className="bg-purple-900/60 rounded-xl p-4 border border-purple-400/40">
+                <p className="text-[#e6d7ff] text-sm sm:text-base text-center leading-relaxed">
+                  <span className="text-yellow-400 text-lg">⚠️</span>
+                  <br />
+                  {t('crystalBall.disclaimer')}
                 </p>
               </div>
             </div>
