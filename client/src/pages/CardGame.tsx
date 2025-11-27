@@ -244,47 +244,73 @@ export default function CardGame({
       });
 
       const getRandomWisdom = (zodiacSign: string): string => {
-        const variations = [
-          'interpretation.daily.wisdom',
-          'interpretation.daily.wisdom.var1',
-          'interpretation.daily.wisdom.var2',
-          'interpretation.daily.wisdom.var3',
-          'interpretation.daily.wisdom.var4',
-          'interpretation.daily.wisdom.var5'
-        ];
-        const randomKey = variations[getSecureRandomInt(0, variations.length - 1)];
-        const translated = t(randomKey, { zodiacSign });
+        const variationCount = 15; // var0 à var14 = 15 variations
+        const randomIndex = getSecureRandomInt(0, variationCount - 1); // 0 à 14
+
+        // ✅ CORRECTION : Utiliser var0, var1, var2... var14
+        const key = `interpretation.daily.wisdom.var${randomIndex}`;
+
+        console.log(`🔮 Wisdom: index=${randomIndex}, key="${key}"`);
+
+        const translated = t(key, { zodiacSign });
+
+        // ✅ Fallback si traduction manquante
         return translated.includes('interpretation.daily') 
-          ? t('interpretation.daily.wisdom', { zodiacSign })
+          ? t('interpretation.daily.wisdom.var0', { zodiacSign }) // Fallback sur var0
           : translated;
       };
 
       finalMessage = getRandomWisdom(fallbackZodiac);
       greeting = getRandomGreeting('daily');
 
-    } else if (oracle.title === 'Tarot de Marseille') {
-      const card1 = selectedCards[0];
-      const card2 = selectedCards[1];
-      const card3 = selectedCards[2];
+      } else if (oracle.title === 'Tarot de Marseille') {
+        const card1 = selectedCards[0];
+        const card2 = selectedCards[1];
+        const card3 = selectedCards[2];
 
-      const card1Name = translateCardName(card1.name) || card1.name;
-      const card2Name = translateCardName(card2.name) || card2.name;
-      const card3Name = translateCardName(card3.name) || card3.name;
+        const card1Name = translateCardName(card1.name) || card1.name;
+        const card2Name = translateCardName(card2.name) || card2.name;
+        const card3Name = translateCardName(card3.name) || card3.name;
 
-      sections.push(
-        { icon: '✨', title: card1Name, content: getRandomCardMeaning(card1.name, 'tarot') },
-        { icon: '🌙', title: card2Name, content: getRandomCardMeaning(card2.name, 'tarot') },
-        { icon: '⭐', title: card3Name, content: getRandomCardMeaning(card3.name, 'tarot') }
-      );
+        sections.push(
+          { icon: '✨', title: card1Name, content: getRandomCardMeaning(card1.name, 'tarot') },
+          { icon: '🌙', title: card2Name, content: getRandomCardMeaning(card2.name, 'tarot') },
+          { icon: '⭐', title: card3Name, content: getRandomCardMeaning(card3.name, 'tarot') }
+        );
 
-      const templates = [
+      // ✅ NOUVEAU : Conseils Tarot spécifiques
+      const tarotTemplates = [
         t('interpretation.tarot.template.advice.var1', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
         t('interpretation.tarot.template.advice.var2', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
         t('interpretation.tarot.template.advice.var3', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.tarot.template.advice.var4', { name: user.name, zodiacSign: fallbackZodiac, genderText })
+        t('interpretation.tarot.template.advice.var4', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
+        t('interpretation.tarot.template.advice.var5', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
+        t('interpretation.tarot.template.advice.var6', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
+        t('interpretation.tarot.template.advice.var7', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
+        t('interpretation.tarot.template.advice.var8', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
+        t('interpretation.tarot.template.advice.var9', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
+        t('interpretation.tarot.template.advice.var10', { name: user.name, zodiacSign: fallbackZodiac, genderText })
       ];
-      finalMessage = templates[getSecureRandomInt(0, templates.length - 1)] + ' ' + getRandomAdvice();
+      const selectedTemplate = tarotTemplates[getSecureRandomInt(0, tarotTemplates.length - 1)];
+
+      // ✅ Conseils Tarot finaux séparés
+      const tarotAdvices = [
+        t('interpretation.tarot.advice.var1', { genderSuffix }),
+        t('interpretation.tarot.advice.var2', { genderSuffix }),
+        t('interpretation.tarot.advice.var3', { genderSuffix }),
+        t('interpretation.tarot.advice.var4', { genderSuffix }),
+        t('interpretation.tarot.advice.var5', { genderSuffix }),
+        t('interpretation.tarot.advice.var6', { genderSuffix }),
+        t('interpretation.tarot.advice.var7', { genderSuffix }),
+        t('interpretation.tarot.advice.var8', { genderSuffix }),
+        t('interpretation.tarot.advice.var9', { genderSuffix }),
+        t('interpretation.tarot.advice.var10', { genderSuffix })  
+      ];
+      const selectedAdvice = tarotAdvices[getSecureRandomInt(0, tarotAdvices.length - 1)];
+
+      finalMessage = selectedTemplate + ' ' + selectedAdvice;
       greeting = getRandomGreeting('tarot');
+
 
     } else if (oracle.title === 'Oracle des Anges') {
       const card1 = selectedCards[0];

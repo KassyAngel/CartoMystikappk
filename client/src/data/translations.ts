@@ -253,27 +253,22 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.daily.closing.var10":
       "Passe une journée inspirante, {genderText} {name}, sous la protection des étoiles !",
 
-    // Variations pour "Wisdom"
-    "interpretation.daily.wisdom.var1":
-      "En tant que {zodiacSign}, tu as la sagesse nécessaire pour bien utiliser ce conseil. Fais confiance à ton instinct et laisse cette énergie positive guider tes actions aujourd'hui.",
-    "interpretation.daily.wisdom.var2":
-    "Ton signe astrologique t'apporte une belle intuition. Fais-lui confiance et laisse-toi guider par l’énergie positive qui t’entoure",
-    "interpretation.daily.wisdom.var3":
-      "Les astres t’accompagnent aujourd’hui. Laisse cette belle énergie t’aider à avancer sereinement.",
-    "interpretation.daily.wisdom.var4":
-      "En tant que {zodiacSign}, tu détiens les clés pour interpréter ce message céleste. Fais-en bon usage tout au long de la journée.",
-    "interpretation.daily.wisdom.var5":
-      "Ton caractère de {zodiacSign} résonne parfaitement avec ce conseil. Laisse cette harmonie cosmique éclairer ton chemin aujourd'hui.",
-    "interpretation.daily.wisdom.var6":
-      "Le ciel parle à travers ton signe zodiacal. Sois à l'écoute des signes et avance confiant.",
-    "interpretation.daily.wisdom.var7":
-      "En tant que {zodiacSign}, tu es aligné{genderSuffix} avec une énergie subtile aujourd'hui. Suis-la, elle te mènera là où tu dois être.",
-    "interpretation.daily.wisdom.var8":
-    "Ton signe {zodiacSign} te guide avec sagesse. Laisse ton cœur ouvert et ton esprit clair te montrer le chemin.",
-    "interpretation.daily.wisdom.var9":
-      "Tu portes en toi, une lumière unique. Que ce message t'aide à la faire rayonner pleinement et fièrement.",
-    "interpretation.daily.wisdom.var10":
-      "Ton énergie de {zodiacSign} est en résonance avec les vibrations du jour. Accueille ce conseil comme un guide bienveillant et inspirant.",
+    // Variations pour "Wisdom" tirage du jour
+      "interpretation.daily.wisdom.var0": "Fais confiance à ton instinct aujourd’hui. Si ça te semble juste, fonce !",
+      "interpretation.daily.wisdom.var1": "Tu as tout ce qu’il te faut pour avancer. Crois en toi et passe à l’action!",
+      "interpretation.daily.wisdom.var2": "Ne te complique pas la vie. Prends la décision qui te paraît la meilleure et fonce!",
+      "interpretation.daily.wisdom.var3": "Ouvre les yeux et saisis les opportunités qui se présentent, même les petites.",
+      "interpretation.daily.wisdom.var4": "Laisse-toi guider par ce que tu sais déjà. Tu es capable de gérer cette journée.",
+      "interpretation.daily.wisdom.var5": "Prends le temps de remarquer les détails autour de toi, ils peuvent t’aider à décider.",
+      "interpretation.daily.wisdom.var6": "Écoute ce que tu ressens. Si quelque chose te paraît juste, fais-le sans hésiter!",
+      "interpretation.daily.wisdom.var7": "Garde la tête froide et le cœur ouvert. Les bonnes décisions viennent souvent de là.",
+      "interpretation.daily.wisdom.var8": "Ne sous-estime pas ce que tu sais déjà. Tu as les ressources pour avancer.",
+      "interpretation.daily.wisdom.var9": "Reste attentif aux opportunités et fais les choix qui te rapprochent de tes objectifs.",
+      "interpretation.daily.wisdom.var10": "Concentre-toi sur ce qui compte pour toi. Ne te laisse pas distraire par le reste.",
+      "interpretation.daily.wisdom.var11": "Ose avancer même si tout n’est pas parfait. Le simple fait d’agir fait la différence.",
+      "interpretation.daily.wisdom.var12": "Accepte que tu ne puisses pas tout contrôler. Tu peux faire de ton mieux et ça suffit!",
+      "interpretation.daily.wisdom.var13": "Ne laisse pas la peur te bloquer. Tu as déjà ce qu’il faut pour y arriver.",
+      "interpretation.daily.wisdom.var14": "Sois présent et attentif aujourd’hui. Prends tes décisions, avance et ne doute pas!",
 
     // Horoscope daily sections
     "horoscope.greeting": `Salut {name} ! Voici ton horoscope du jour en tant que {zodiacSign} {zodiacSymbol}`,
@@ -371,147 +366,100 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.runes.Othala.meaning": "Héritage, propriété, tradition familiale",
 
     // Card Names and Meanings - Daily
-    "cards.daily.NouveauDepart.name": "Nouveau Départ",
-    "cards.daily.NouveauDepart.meaning":
-      "Aujourd’hui marque la fin d’un cycle important et l’ouverture d’une toute nouvelle page dans votre vie. C’est un moment privilégié pour oser franchir les barrières qui vous retenaient jusqu’à présent, que ce soit dans un domaine personnel, professionnel ou sentimental. L’univers vous envoie un message d’encouragement : avancez sans peur, faites confiance à votre intuition et soyez réceptif{genderSuffix} aux opportunités qui se présentent. Chaque petit pas posé aujourd’hui, même s’il paraît modeste, construit la fondation d’un avenir plus riche, plus serein et profondément épanouissant. Ce renouveau vous invite à lâcher le passé, à vous renouveler et à embrasser pleinement les changements qui vous mèneront vers votre mieux-être.",
-    "cards.daily.Patience.name": "Patience",
-    "cards.daily.Patience.meaning":
-      "Ce tirage vous rappelle que certaines choses prennent du temps pour se manifester. Ne vous découragez pas si les résultats tardent à venir : la patience est votre plus grand atout aujourd’hui. Prenez le temps d’observer, de respirer profondément et d’accepter le rythme naturel des événements. La tranquillité intérieure que vous cultiverez vous permettra de rester serein{genderSuffix} face aux défis, et sera la clé pour attirer la réussite et les bonnes opportunités au moment parfait. Rappelez-vous que tout vient en son temps, et que la persévérance finit toujours par payer.",
-    "cards.daily.Creativite.name": "Créativité",
-    "cards.daily.Creativite.meaning":
-      "Votre esprit est particulièrement fertile aujourd’hui. Laissez vos idées jaillir librement, même les plus inattendues, car elles pourraient se transformer en solutions brillantes ou en projets porteurs d’avenir. La créativité n’est pas seulement artistique : elle éclaire aussi vos choix, vos relations et vos défis. Écoutez vos inspirations profondes et osez les concrétiser avec confiance. En libérant cette énergie créative, vous ouvrez la porte à des opportunités inédites qui nourriront votre épanouissement personnel et professionnel. N’hésitez pas à expérimenter et à suivre votre intuition, car votre originalité est votre plus grande force aujourd’hui.",
-    "cards.daily.Amour.name": "Amour",
-    "cards.daily.Amour.meaning":
-      "L’énergie d’aujourd’hui est tournée vers le cœur. Exprimez votre tendresse et votre gratitude envers vos proches, car un simple geste peut avoir un grand impact. Si vous êtes en couple, renforcez vos liens par des attentions sincères et authentiques qui nourrissent votre relation. Si vous êtes célibataire, ouvrez-vous à la possibilité de nouvelles rencontres : l’amour pourrait se manifester là où vous ne l’attendiez pas. Soyez à l’écoute de vos émotions et laissez votre cœur guider vos actions. Cette journée favorise les échanges affectueux et les moments de complicité, essentiels à votre équilibre émotionnel.",
-    "cards.daily.Courage.name": "Courage",
-    "cards.daily.Courage.meaning":
-      "Des défis peuvent se présenter aujourd’hui, mais vous possédez la force et la résilience nécessaires pour les surmonter. Le courage ne signifie pas l’absence de peur, mais la capacité à agir malgré elle. En affrontant vos obstacles avec détermination, vous gagnerez en confiance et en maturité. Chaque pas courageux que vous ferez renforcera votre chemin et affirmera votre valeur, apportant une croissance personnelle profonde.",
-    "cards.daily.Intuition.name": "Intuition",
-    "cards.daily.Intuition.meaning":
-      "Votre voix intérieure est particulièrement forte aujourd’hui. Faites confiance à vos pressentiments, même si vous ne pouvez pas toujours les expliquer rationnellement. Ils vous guideront vers des choix plus alignés avec vos véritables besoins et votre chemin de vie. Prenez un moment de silence pour écouter vos ressentis, car votre intuition détient la réponse aux questions que vous vous posez en ce moment, et elle vous soutiendra dans vos décisions importantes.",
-    "cards.daily.Gratitude.name": "Gratitude",
-    "cards.daily.Gratitude.meaning":
-      "Prends un moment pour apprécier profondément ce que tu as déjà. Reconnaître tes bénédictions, même les plus petites, attire encore plus de positif dans ta vie et ouvre la porte à de nouvelles opportunités. Cultiver la gratitude aujourd’hui t’aidera à ressentir plus de paix intérieure et à renforcer tes liens avec les autres.",
-    "cards.daily.Communication.name": "Communication",
-    "cards.daily.Communication.meaning":
-      "Exprime-toi avec clarté et bienveillance aujourd’hui. Tes paroles ont le pouvoir d’apaiser les tensions, d’inspirer ceux qui t’entourent et de renforcer les liens importants dans ta vie. Une communication sincère et respectueuse ouvre la voie à une meilleure compréhension mutuelle et à des échanges profondément enrichissants.",
-    "cards.daily.Equilibre.name": "Équilibre",
-    "cards.daily.Equilibre.meaning":
-      "Aujourd’hui, trouvez l’équilibre entre ce que vous donnez aux autres et ce dont vous avez besoin pour vous-même. Il est important de ne pas vous oublier au nom de vos responsabilités. Prendre soin de vous, c’est aussi prendre soin de votre énergie et de votre bien-être intérieur. En cultivant cette harmonie, vous avancerez plus aligné{genderSuffix} et plus serein{genderSuffix} sur votre chemin.",
-    "cards.daily.Confiance.name": "Confiance",
-    "cards.daily.Confiance.meaning":
-      "Aujourd’hui, croyez pleinement en vos capacités et avancez avec une énergie assurée. La confiance en vous est une force intérieure précieuse qui vous rend plus fort{genderSuffix}, plus clair{genderSuffix} dans vos choix, et plus aligné{genderSuffix} avec votre vérité. Même si le doute surgit, souvenez-vous que chaque pas fait avec foi vous rapproche de vos véritables réussites.",
-    "cards.daily.Lacher-prise.name": "Lâcher-prise",
-    "cards.daily.Lacher-prise.meaning":
-      "Aujourd’hui, libérez-vous des poids du passé et des préoccupations qui n’ont plus lieu d’être. Ce que vous ne pouvez pas contrôler ne mérite pas de drainer votre énergie. En acceptant de lâcher prise, vous ouvrez la voie à plus de paix intérieure et de clarté. Vous vous sentirez plus léger{genderSuffix}, plus centré{genderSuffix}, et prêt{genderSuffix} à accueillir ce qui vient avec confiance.",
-    "cards.daily.Joie.name": "Joie",
-    "cards.daily.Joie.meaning":
-      "Aujourd’hui, ouvrez votre cœur à la joie simple des petits instants : un sourire, un geste sincère, une pensée lumineuse. Même au milieu des obligations, cette énergie positive peut transformer votre état d’esprit. En cultivant la joie, vous devenez plus rayonnant{genderSuffix}, plus présent{genderSuffix}, et vous attirez naturellement des expériences qui nourrissent votre bien-être.",
-    "cards.daily.Sagesse.name": "Sagesse",
-    "cards.daily.Sagesse.meaning":
-      "Aujourd’hui, ralentissez et accordez-vous un moment de recul avant d’agir. Votre sagesse intérieure est une alliée précieuse : elle vous guide, vous protège et vous éclaire dans vos choix. En vous connectant à cette voix calme et lucide, vous deviendrez plus ancré{genderSuffix}, plus clair{genderSuffix} dans vos décisions, et capable de voir au-delà des apparences.",
-    "cards.daily.Transformation.name": "Transformation",
-    "cards.daily.Transformation.meaning":
-      "Aujourd’hui, accueillez les changements qui se présentent à vous, même s’ils semblent déstabilisants au premier abord. Ces transformations ne sont pas là par hasard : elles vous poussent à grandir, à évoluer et à vous rapprocher de la meilleure version de vous-même. En embrassant ce mouvement, vous deviendrez plus aligné{genderSuffix}, plus confiant{genderSuffix}, et prêt{genderSuffix} à franchir une nouvelle étape.",
-    "cards.daily.Abondance.name": "Abondance",
-    "cards.daily.Abondance.meaning":
-      "Rappelle-toi que tu possèdes déjà toutes les ressources nécessaires pour réussir. L’abondance se manifeste véritablement lorsque tu crois pleinement en ton potentiel et que tu t’ouvres aux opportunités qui se présentent. Sois confiant{genderSuffix} en tes capacités, car tu as en toi la force d’attirer tout ce dont tu as besoin pour prospérer aujourd’hui et demain.",
-    "cards.daily.Paix.name": "Paix",
-    "cards.daily.Paix.meaning":
-      "Cultive la paix intérieure en libérant les tensions et les conflits qui t’entourent. La sérénité que tu trouveras t’apportera la clarté d’esprit et l’harmonie nécessaires pour avancer serein{genderSuffix} aujourd’hui.",
-    "cards.daily.Force.name": "Force",
-    "cards.daily.Force.meaning":
-      "Puise au plus profond de ta force intérieure, elle est bien plus grande que tu ne l'imagines. Elle te soutient dans les défis, t'apporte courage et résilience, et t'aide à avancer avec confiance malgré les obstacles.",
-    "cards.daily.Pardon.name": "Pardon",
-    "cards.daily.Pardon.meaning":
-      "Offre le pardon, à toi-même comme aux autres. Ce geste puissant libère ton cœur des poids du passé et ouvre la voie à une véritable guérison intérieure, te permettant d'avancer plus léger{genderSuffix} et apaisé{genderSuffix}.",
-    "cards.daily.Espoir.name": "Espoir",
-    "cards.daily.Espoir.meaning":
-      "Garde espoir, même dans les moments difficiles. La lumière finit toujours par revenir, tout comme le soleil après la nuit la plus sombre. Ce message t'invite à cultiver la patience et la confiance en un avenir meilleur, car chaque épreuve prépare un renouveau prometteur pour toi, qui grandira et s'épanouira à son heure.",
-    "cards.daily.Action.name": "Action",
-    "cards.daily.Action.meaning":
-      "Le moment est venu de passer à l’action. Ne laisse plus tes projets en attente, c’est aujourd’hui que les choses avancent. Ose franchir le pas avec confiance{genderSuffix}, car chaque initiative que tu prendras te rapprochera de tes objectifs et ouvrira de nouvelles portes dans ta vie.",
-    "cards.daily.Compassion.name": "Compassion",
-    "cards.daily.Compassion.meaning":
-      "Fais preuve de compassion envers toi-même et envers les autres. La bienveillance adoucit les cœurs et renforce les liens. En cultivant cette douceur, tu crées un espace de guérison et de compréhension, essentiel pour toi comme pour ceux qui t’entourent. Ce tirage t’invite à ouvrir ton cœur pleinement aujourd’hui, à écouter sans juger et à offrir ton soutien avec empathie. En agissant ainsi, tu contribues à un climat harmonieux et tu fais grandir ta propre paix intérieure.",
-    "cards.daily.Inspiration.name": "Inspiration",
-    "cards.daily.Inspiration.meaning":
-      "Ouvre grand les yeux et ton esprit à tout ce qui t’entoure. L’inspiration se cache dans les détails du quotidien, prête à nourrir ta créativité et à éveiller de nouvelles idées. Ce message t’encourage à rester curieux{genderSuffix} et réceptif{genderSuffix}, à accueillir les signes et les étincelles qui peuvent illuminer ton chemin. Prends le temps d’écouter ces impulsions, elles te guideront vers des solutions innovantes et des moments de joie renouvelée.",
-    "cards.daily.Determination.name": "Détermination",
-    "cards.daily.Determination.meaning":
-      "Ta persévérance et ta volonté sont tes meilleurs alliés aujourd’hui. Même si des obstacles se dressent sur ton chemin, continue d’avancer avec confiance et détermination. Ta ténacité te permettra de surmonter les difficultés et t’ouvrira la voie vers le succès durable. Ce message t’invite à ne pas baisser les bras, car chaque effort compte et te rapproche de tes objectifs les plus chers.",
-    "cards.daily.Aventure.name": "Aventure",
-    "cards.daily.Aventure.meaning":
-      "Sors de ta routine et ose découvrir de nouvelles expériences aujourd’hui. Qu’elle soit grande ou petite, cette aventure nourrira ton esprit et réchauffera ton cœur. Prends ce temps pour explorer, t’émerveiller et te laisser surprendre. Ce message t’encourage à ouvrir ton horizon et à accueillir le changement avec enthousiasme.",
-    "cards.daily.Reconciliation.name": "Réconciliation",
-    "cards.daily.Reconciliation.meaning":
-      "Il est temps de guérir tes blessures intérieures et de faire la paix avec ton passé. La réconciliation t’apporte liberté et légèreté, te permettant d’avancer plus sereinement sur ton chemin. Accueille ce processus avec bienveillance et laisse-toi transformer par cette guérison intérieure.",
-    "cards.daily.Innovation.name": "Innovation",
-    "cards.daily.Innovation.meaning":
-      "Aujourd’hui, laisse tes idées originales prendre vie. Ta capacité à penser différemment est une vraie richesse qui peut transformer tes projets et inspirer ton entourage. N’hésite pas à sortir des sentiers battus et à oser exprimer ta créativité unique pour ouvrir de nouvelles voies.",
-    "cards.daily.Connexion.name": "Connexion",
-    "cards.daily.Connexion.meaning":
-      "Renforce tes liens avec les autres, mais aussi avec toi-même. Les connexions authentiques nourrissent ton âme, apportent soutien et réconfort, et te rappellent que tu n’es jamais seul{genderSuffix}. Prends le temps d’écouter et de partager sincèrement, cela t’apportera équilibre et épanouissement.",
-    "cards.daily.Prosperite.name": "Prospérité",
-    "cards.daily.Prosperite.meaning":
-      "La prospérité arrive dans ta vie sous différentes formes : matérielles, émotionnelles ou spirituelles. Accueille cette abondance avec gratitude et confiance. Sois ouvert{genderSuffix} à recevoir et à partager ce que la vie t’offre aujourd’hui pour renforcer ta richesse intérieure et extérieure.",
-    "cards.daily.Authenticite.name": "Authenticité",
-    "cards.daily.Authenticite.meaning":
-      "Reste fidèle à tes valeurs et à ta véritable nature. Ton authenticité attire les bonnes personnes et t’oriente vers des choix en harmonie avec ton cœur. N’aie pas peur de montrer qui tu es vraiment, car c’est dans cette sincérité que tu trouveras ta force et ta paix intérieure.",
-    "cards.daily.Revelation.name": "Révélation",
-    "cards.daily.Revelation.meaning":
-      "Une vérité cachée ou une prise de conscience importante va bientôt se manifester. Reste attentif et garde l’esprit ouvert pour accueillir cette révélation. Sois prêt à recevoir ce nouvel éclairage, car il pourra transformer ta vision et t’aider à avancer avec plus de clarté.",
-    "cards.daily.Protection.name": "Protection",
-    "cards.daily.Protection.meaning":
-      "Tu es entouré{genderSuffix} de bienveillance et de forces protectrices qui veillent sur toi. Fais confiance à cette protection, elle t’accompagne dans tes choix et tes pas. N’aie rien à craindre aujourd’hui, laisse cette énergie rassurante t’apaiser et te guider.",
-    "cards.daily.Renaissance.name": "Renaissance",
-    "cards.daily.Renaissance.meaning":
-      "Un nouveau cycle s’ouvre devant toi, t’invitant à te libérer de tout ce qui appartient au passé. Accueille cette renaissance comme une opportunité précieuse de te réinventer, de grandir et de te renouveler. Ose tourner la page pour embrasser pleinement ce nouveau départ.",
-    "cards.daily.Clarte.name": "Clarté",
-    "cards.daily.Clarte.meaning":
-      "Les réponses que tu cherches vont bientôt se révéler. Prends du recul, observe attentivement les signes qui t’entourent et laisse le brouillard se dissiper progressivement. Cette clarté nouvelle t’aidera à prendre des décisions éclairées et alignées avec ta vérité intérieure. Conseil : prends un moment calme aujourd’hui pour réfléchir posément avant d’agir, cela te permettra de voir la situation sous un angle plus clair.",
-    "cards.daily.Passion.name": "Passion",
-    "cards.daily.Passion.meaning":
-      "Suis ce qui te passionne vraiment, car ton enthousiasme est une énergie puissante qui peut transformer ta vie. Nourris cette flamme intérieure, donne-lui de l’espace pour grandir et laisse-la guider tes choix vers ce qui te rend vivant{genderSuffix}. Conseil : consacre du temps à ce qui t’allume le cœur aujourd’hui, même dans les petites actions, cela renforcera ta motivation et ta joie de vivre.",
-    "cards.daily.Equite.name": "Équité",
-    "cards.daily.Equite.meaning":
-      "La justice et l’équilibre vont bientôt se rétablir dans tes affaires. Reste intègre et patient{genderSuffix} : tes actions justes porteront leurs fruits et ramèneront l’harmonie autour de toi. Conseil : garde la tête froide face aux défis, et continue d’agir avec honnêteté et respect, même si les résultats tardent à venir.",
-    "cards.daily.Harmonie.name": "Harmonie",
-    "cards.daily.Harmonie.meaning":
-      "Tous les éléments de ta vie tendent à s’aligner aujourd’hui. Profite de cette période pour consolider ce qui fonctionne bien et pour instaurer des routines qui nourrissent ton bien-être physique, mental et émotionnel. Conseil : prends le temps de t’écouter et d’équilibrer tes différentes sphères de vie pour maintenir cette belle harmonie sur le long terme.",
-    "cards.daily.Eveil.name": "Éveil",
-    "cards.daily.Eveil.meaning":
-      "Ta conscience s’élargit aujourd’hui, ouvrant la porte à de nouvelles perspectives et à une meilleure compréhension de toi-même et du monde qui t’entoure. Accueille ces prises de conscience avec ouverture et curiosité : elles peuvent transformer ton regard sur la vie et guider tes prochains pas vers une voie plus authentique. Conseil : prends le temps de réfléchir à ce que ces nouvelles révélations signifient pour toi, et ose agir en accord avec cette nouvelle clarté.",
-    "cards.daily.Generosite.name": "Générosité",
-    "cards.daily.Generosite.meaning":
-      "Donne sans compter aujourd’hui, non par devoir, mais par cœur. Ce geste sincère et désintéressé créera un cercle de réciprocité autour de toi et attirera des expériences bienfaisantes qui enrichiront ta vie. Conseil : sois attentif{genderSuffix} aux besoins des autres, tout en veillant à ne pas t’oublier toi-même dans cet élan généreux.",
-    "cards.daily.Perseverance.name": "Persévérance",
-    "cards.daily.Perseverance.meaning":
-      "N’abandonne pas maintenant : ta détermination est sur le point de porter ses fruits. Continue avec constance et discipline, la victoire est plus proche que tu ne le penses. Conseil : garde le cap même si le chemin semble long, chaque effort te rapproche de ton but.",
-    "cards.daily.Simplicite.name": "Simplicité",
-    "cards.daily.Simplicite.meaning":
-      "La solution est souvent plus simple que ce que l’on imagine. Va à l’essentiel, élimine le superflu, et tu trouveras des réponses claires et efficaces. Conseil : simplifie ta vie aujourd’hui pour mieux te concentrer sur ce qui compte vraiment.",
-    "cards.daily.Legerete.name": "Légèreté",
-    "cards.daily.Legerete.meaning":
-      "Adopte une attitude légère aujourd’hui : ris, joue, et déleste-toi des poids inutiles. Cette légèreté t’ouvrira au plaisir et à la créativité. Conseil : permets-toi de t’amuser et de prendre du recul pour mieux avancer.",
-    "cards.daily.Ancrage.name": "Ancrage",
-    "cards.daily.Ancrage.meaning":
-      "Reviens à tes racines pour trouver stabilité et force. Des pratiques simples comme la respiration, la marche ou des routines régulières t’aideront à te recentrer et à avancer plus sereinement. Conseil : prends le temps de te connecter à toi-même et au moment présent.",
-    "cards.daily.Mystere.name": "Mystère",
-    "cards.daily.Mystere.meaning":
-      "Accepte ce que tu ne peux pas encore comprendre. Le mystère fait partie de la magie de la vie : en laissant de l’espace à l’inconnu, tu ouvres la porte à des révélations qui se dévoileront au bon moment. Conseil : fais confiance au temps et reste ouvert{genderSuffix} aux surprises que l’univers t’envoie.",
-    "cards.daily.Celebration.name": "Célébration",
-    "cards.daily.Celebration.meaning":
-      "C’est le moment de célébrer tes succès, même les plus petits. Reconnaître tes accomplissements nourrit ta confiance en toi et attire encore plus de raisons de te réjouir. Conseil : prends le temps de te féliciter et partage ta joie avec ceux qui t’entourent.",
-    "cards.daily.Guidance.name": "Guidance",
-    "cards.daily.Guidance.meaning":
-      "Aujourd’hui, une aide inattendue ou un signe discret peut se manifester sur ton chemin. Reste attentif{genderSuffix} aux petites synchronicités qui croisent ta route, car elles portent un message important. Ces signes t’orienteront vers des choix plus éclairés et bénéfiques. Accueille ces indications avec confiance, elles ouvrent une porte vers une direction nouvelle et favorable.",
-    "cards.daily.Purification.name": "Purification",
-    "cards.daily.Purification.meaning":
-      "C’est le moment idéal pour faire le tri autour de toi et en toi. En débarrassant ton espace et ton esprit du superflu, tu invites un souffle de renouveau. Cette purification crée un environnement propice aux transformations positives, libérant ton énergie pour accueillir de nouvelles opportunités avec clarté et légèreté.",
-    "cards.daily.Vision.name": "Vision",
-    "cards.daily.Vision.meaning":
-      "Ta vision du futur se clarifie aujourd'hui. Identifie la direction qui t’attire et avance avec confiance vers cet horizon nouvellement révélé. Garde l’esprit ouvert aux possibilités qui s’offrent à toi et laisse-toi guider par cette clarté intérieure vers tes objectifs les plus authentiques.",
+    "cards.daily.NouveauDepart.name":"Nouveau Départ",
+    "cards.daily.NouveauDepart.meaning":"Aujourd’hui marque la fin d’un cycle important et l’ouverture d’une toute nouvelle page dans ta vie. C’est un moment privilégié pour oser franchir les barrières qui te retenaient jusqu’à présent, que ce soit dans un domaine personnel, professionnel ou sentimental. L’univers t’envoie un message d’encouragement : avance sans peur, fais confiance à ton intuition et sois réceptif aux opportunités qui se présentent. Chaque petit pas posé aujourd’hui, même s’il paraît modeste, construit la fondation d’un avenir plus riche, plus serein et profondément épanouissant. Ce renouveau t’invite à lâcher le passé, à te renouveler et à embrasser pleinement les changements qui te mèneront vers ton mieux-être.",
+    "cards.daily.Patience.name":"Patience",
+    "cards.daily.Patience.meaning":"Ce tirage te rappelle que certaines choses prennent du temps pour se manifester. Ne te décourage pas si les résultats tardent à venir : la patience est ton plus grand atout aujourd’hui. Prends le temps d’observer, de respirer profondément et d’accepter le rythme naturel des événements. La tranquillité intérieure que tu cultiveras te permettra de rester serein face aux défis et sera la clé pour attirer la réussite et les bonnes opportunités au moment parfait. Rappelle-toi que tout vient en son temps et que la persévérance finit toujours par payer.",
+    "cards.daily.Creativite.name":"Créativité",
+    "cards.daily.Creativite.meaning":"Ton esprit est particulièrement fertile aujourd’hui. Laisse tes idées jaillir librement, même les plus inattendues, car elles pourraient se transformer en solutions brillantes ou en projets porteurs d’avenir. La créativité n’est pas seulement artistique : elle éclaire aussi tes choix, tes relations et tes défis. Écoute tes inspirations profondes et ose les concrétiser avec confiance. En libérant cette énergie créative, tu ouvres la porte à des opportunités inédites qui nourriront ton épanouissement personnel et professionnel. N’hésite pas à expérimenter et à suivre ton intuition, car ton originalité est ta plus grande force aujourd’hui.",
+    "cards.daily.Amour.name":"Amour",
+    "cards.daily.Amour.meaning":"L’énergie d’aujourd’hui est tournée vers le cœur. Exprime ta tendresse et ta gratitude envers tes proches, car un simple geste peut avoir un grand impact. Si tu es en couple, renforce tes liens par des attentions sincères et authentiques qui nourrissent ta relation. Si tu es célibataire, ouvre-toi à la possibilité de nouvelles rencontres : l’amour pourrait se manifester là où tu ne l’attendais pas. Sois à l’écoute de tes émotions et laisse ton cœur guider tes actions. Cette journée favorise les échanges affectueux et les moments de complicité, essentiels à ton équilibre émotionnel.",
+    "cards.daily.Courage.name":"Courage",
+    "cards.daily.Courage.meaning":"Des défis peuvent se présenter aujourd’hui, mais tu possèdes la force et la résilience nécessaires pour les surmonter. Le courage ne signifie pas l’absence de peur, mais la capacité à agir malgré elle. En affrontant tes obstacles avec détermination, tu gagneras en confiance et en maturité. Chaque pas courageux que tu feras renforcera ton chemin et affirmera ta valeur, apportant une croissance personnelle profonde.",
+    "cards.daily.Intuition.name":"Intuition",
+    "cards.daily.Intuition.meaning":"Ta voix intérieure est particulièrement forte aujourd’hui. Fais confiance à tes pressentiments, même si tu ne peux pas toujours les expliquer rationnellement. Ils te guideront vers des choix plus alignés avec tes véritables besoins et ton chemin de vie. Prends un moment de silence pour écouter tes ressentis, car ton intuition détient la réponse aux questions que tu te poses en ce moment, et elle te soutiendra dans tes décisions importantes.",
+    "cards.daily.Gratitude.name":"Gratitude",
+    "cards.daily.Gratitude.meaning":"Prends un moment pour apprécier profondément ce que tu as déjà. Reconnaître tes bénédictions, même les plus petites, attire encore plus de positif dans ta vie et ouvre la porte à de nouvelles opportunités. Cultiver la gratitude aujourd’hui t’aidera à ressentir plus de paix intérieure et à renforcer tes liens avec les autres !",
+    "cards.daily.Communication.name":"Communication",
+    "cards.daily.Communication.meaning":"Exprime-toi avec clarté et bienveillance aujourd’hui. Tes paroles ont le pouvoir d’apaiser les tensions, d’inspirer ceux qui t’entourent et de renforcer les liens importants dans ta vie. Une communication sincère et respectueuse ouvre la voie à une meilleure compréhension mutuelle et à des échanges profondément enrichissants !",
+    "cards.daily.Equilibre.name":"Équilibre",
+    "cards.daily.Equilibre.meaning":"Aujourd’hui, trouve l’équilibre entre ce que tu donnes aux autres et ce dont tu as besoin pour toi-même. Il est important de ne pas t’oublier au nom de tes responsabilités. Prendre soin de toi, c’est aussi prendre soin de ton énergie et de ton bien-être intérieur. En cultivant cette harmonie, tu avanceras plus aligné{genderSuffix} et plus serein{genderSuffix} sur ton chemin !",
+    "cards.daily.Confiance.name":"Confiance",
+    "cards.daily.Confiance.meaning":"Aujourd’hui, crois pleinement en tes capacités et avance avec une énergie assurée ! La confiance en toi est une force intérieure précieuse qui te rend plus fort{genderSuffix}, plus clair{genderSuffix} dans tes choix, et plus aligné{genderSuffix} avec ta vérité. Même si le doute surgit, souviens-toi que chaque pas fait avec foi te rapproche de tes véritables réussites.",
+    "cards.daily.Lacher-prise.name":"Lâcher-prise",
+    "cards.daily.Lacher-prise.meaning":"Aujourd’hui, libère-toi des poids du passé et des préoccupations qui n’ont plus lieu d’être. Ce que tu ne peux pas contrôler ne mérite pas de drainer ton énergie. En acceptant de lâcher prise, tu ouvres la voie à plus de paix intérieure et de clarté. Tu te sentiras plus léger{genderSuffix}, plus centré{genderSuffix}, et prêt{genderSuffix} à accueillir ce qui vient avec confiance !",
+    "cards.daily.Joie.name":"Joie",
+    "cards.daily.Joie.meaning":"Aujourd’hui, ouvre ton cœur à la joie simple des petits instants : un sourire, un geste sincère, une pensée lumineuse. Même au milieu des obligations, cette énergie positive peut transformer ton état d’esprit. En cultivant la joie, tu deviens plus rayonnant{genderSuffix}, plus présent{genderSuffix}, et tu attires naturellement des expériences qui nourrissent ton bien-être !",
+    "cards.daily.Sagesse.name":"Sagesse",
+    "cards.daily.Sagesse.meaning":"Aujourd’hui, ralentis et accorde-toi un moment de recul avant d’agir. Ta sagesse intérieure est une alliée précieuse : elle te guide, te protège et t’éclaire dans tes choix. En te connectant à cette voix calme et lucide, tu deviendras plus ancré{genderSuffix}, plus clair{genderSuffix} dans tes décisions, et capable de voir au-delà des apparences !",
+    "cards.daily.Transformation.name":"Transformation",
+    "cards.daily.Transformation.meaning":"Aujourd’hui, accueille les changements qui se présentent à toi, même s’ils semblent déstabilisants au premier abord. Ces transformations ne sont pas là par hasard : elles te poussent à grandir, à évoluer et à te rapprocher de la meilleure version de toi-même. En embrassant ce mouvement, tu deviendras plus aligné{genderSuffix}, plus confiant{genderSuffix}, et prêt{genderSuffix} à franchir une nouvelle étape !",
+    "cards.daily.Abondance.name":"Abondance",
+    "cards.daily.Abondance.meaning":"Rappelle-toi que tu possèdes déjà toutes les ressources nécessaires pour réussir ! L’abondance se manifeste véritablement lorsque tu crois pleinement en ton potentiel et que tu t’ouvres aux opportunités qui se présentent. Sois confiant{genderSuffix} en tes capacités, car tu as en toi la force d’attirer tout ce dont tu as besoin pour prospérer aujourd’hui et demain.",
+    "cards.daily.Paix.name":"Paix",
+    "cards.daily.Paix.meaning":"Cultive la paix intérieure en libérant les tensions et les conflits qui t’entourent ! La sérénité que tu trouveras t’apportera la clarté d’esprit et l’harmonie nécessaires pour avancer serein{genderSuffix} aujourd’hui.",
+    "cards.daily.Force.name":"Force",
+    "cards.daily.Force.meaning":"Puise au plus profond de ta force intérieure, elle est bien plus grande que tu ne l'imagines ! Elle te soutient dans les défis, t'apporte courage et résilience, et t'aide à avancer avec confiance malgré les obstacles.",
+    "cards.daily.Pardon.name":"Pardon",
+    "cards.daily.Pardon.meaning":"Offre le pardon, à toi-même comme aux autres ! Ce geste puissant libère ton cœur des poids du passé et ouvre la voie à une véritable guérison intérieure, te permettant d'avancer plus léger{genderSuffix} et apaisé{genderSuffix}.",
+    "cards.daily.Espoir.name":"Espoir",
+    "cards.daily.Espoir.meaning":"Garde espoir, même dans les moments difficiles ! La lumière finit toujours par revenir, tout comme le soleil après la nuit la plus sombre. Ce message t'invite à cultiver la patience et la confiance en un avenir meilleur, car chaque épreuve prépare un renouveau prometteur pour toi, qui grandira et s'épanouira à son heure.",
+    "cards.daily.Action.name":"Action",
+    "cards.daily.Action.meaning":"Le moment est venu de passer à l’action ! Ne laisse plus tes projets en attente, c’est aujourd’hui que les choses avancent. Ose franchir le pas avec confiance{genderSuffix}, car chaque initiative que tu prendras te rapprochera de tes objectifs et ouvrira de nouvelles portes dans ta vie.",
+    "cards.daily.Compassion.name":"Compassion",
+    "cards.daily.Compassion.meaning":"Fais preuve de compassion envers toi-même et envers les autres ! La bienveillance adoucit les cœurs et renforce les liens. En cultivant cette douceur, tu crées un espace de guérison et de compréhension, essentiel pour toi comme pour ceux qui t’entourent. Ce tirage t’invite à ouvrir ton cœur pleinement aujourd’hui, à écouter sans juger et à offrir ton soutien avec empathie. En agissant ainsi, tu contribues à un climat harmonieux et tu fais grandir ta propre paix intérieure.",
+    "cards.daily.Inspiration.name":"Inspiration",
+    "cards.daily.Inspiration.meaning":"Ouvre grand les yeux et ton esprit à tout ce qui t’entoure ! L’inspiration se cache dans les détails du quotidien, prête à nourrir ta créativité et à éveiller de nouvelles idées. Ce message t’encourage à rester curieux{genderSuffix} et réceptif{genderSuffix}, à accueillir les signes et les étincelles qui peuvent illuminer ton chemin. Prends le temps d’écouter ces impulsions, elles te guideront vers des solutions innovantes et des moments de joie renouvelée.",
+    "cards.daily.Determination.name":"Détermination",
+    "cards.daily.Determination.meaning":"Ta persévérance et ta volonté sont tes meilleurs alliés aujourd’hui ! Même si des obstacles se dressent sur ton chemin, continue d’avancer avec confiance et détermination. Ta ténacité te permettra de surmonter les difficultés et t’ouvrira la voie vers le succès durable. Ce message t’invite à ne pas baisser les bras, car chaque effort compte et te rapproche de tes objectifs les plus chers.",
+    "cards.daily.Aventure.name":"Aventure",
+    "cards.daily.Aventure.meaning":"Sors de ta routine et ose découvrir de nouvelles expériences aujourd’hui ! Qu’elle soit grande ou petite, cette aventure nourrira ton esprit et réchauffera ton cœur. Prends ce temps pour explorer, t’émerveiller et te laisser surprendre. Ce message t’encourage à ouvrir ton horizon et à accueillir le changement avec enthousiasme.",
+    "cards.daily.Reconciliation.name":"Réconciliation",
+    "cards.daily.Reconciliation.meaning":"Il est temps de guérir tes blessures intérieures et de faire la paix avec ton passé ! La réconciliation t’apporte liberté et légèreté, te permettant d’avancer plus sereinement sur ton chemin. Accueille ce processus avec bienveillance et laisse-toi transformer par cette guérison intérieure.",
+    "cards.daily.Innovation.name":"Innovation",
+    "cards.daily.Innovation.meaning":"Aujourd’hui, laisse tes idées originales prendre vie ! Ta capacité à penser différemment est une vraie richesse qui peut transformer tes projets et inspirer ton entourage. N’hésite pas à sortir des sentiers battus et à oser exprimer ta créativité unique pour ouvrir de nouvelles voies.",
+    "cards.daily.Connexion.name":"Connexion",
+    "cards.daily.Connexion.meaning":"Renforce tes liens avec les autres, mais aussi avec toi-même ! Les connexions authentiques nourrissent ton âme, apportent soutien et réconfort, et te rappellent que tu n’es jamais seul{genderSuffix}. Prends le temps d’écouter et de partager sincèrement, cela t’apportera équilibre et épanouissement.",
+    "cards.daily.Prosperite.name":"Prospérité",
+    "cards.daily.Prosperite.meaning":"La prospérité arrive dans ta vie sous différentes formes : matérielles, émotionnelles ou spirituelles ! Accueille cette abondance avec gratitude et confiance. Sois ouvert{genderSuffix} à recevoir et à partager ce que la vie t’offre aujourd’hui pour renforcer ta richesse intérieure et extérieure.",
+    "cards.daily.Authenticite.name":"Authenticité",
+    "cards.daily.Authenticite.meaning":"Reste fidèle à tes valeurs et à ta véritable nature ! Ton authenticité attire les bonnes personnes et t’oriente vers des choix en harmonie avec ton cœur. N’aie pas peur de montrer qui tu es vraiment, car c’est dans cette sincérité que tu trouveras ta force et ta paix intérieure.",
+    "cards.daily.Revelation.name":"Révélation",
+    "cards.daily.Revelation.meaning":"Une vérité cachée ou une prise de conscience importante va bientôt se manifester ! Reste attentif et garde l’esprit ouvert pour accueillir cette révélation. Sois prêt à recevoir ce nouvel éclairage, car il pourra transformer ta vision et t’aider à avancer avec plus de clarté.",
+    "cards.daily.Protection.name":"Protection",
+    "cards.daily.Protection.meaning":"Tu es entouré{genderSuffix} de bienveillance et de forces protectrices qui veillent sur toi ! Fais confiance à cette protection, elle t’accompagne dans tes choix et tes pas. N’aie rien à craindre aujourd’hui, laisse cette énergie rassurante t’apaiser et te guider.",
+    "cards.daily.Renaissance.name":"Renaissance",
+    "cards.daily.Renaissance.meaning":"Un nouveau cycle s’ouvre devant toi, t’invitant à te libérer de tout ce qui appartient au passé ! Accueille cette renaissance comme une opportunité précieuse de te réinventer, de grandir et de te renouveler. Ose tourner la page pour embrasser pleinement ce nouveau départ.",
+    "cards.daily.Clarte.name":"Clarté",
+    "cards.daily.Clarte.meaning":"Les réponses que tu cherches vont bientôt se révéler ! Prends du recul, observe attentivement les signes qui t’entourent et laisse le brouillard se dissiper progressivement. Cette clarté nouvelle t’aidera à prendre des décisions éclairées et alignées avec ta vérité intérieure. Conseil : prends un moment calme aujourd’hui pour réfléchir posément avant d’agir, cela te permettra de voir la situation sous un angle plus clair.",
+    "cards.daily.Passion.name":"Passion",
+    "cards.daily.Passion.meaning":"Suis ce qui te passionne vraiment, car ton enthousiasme est une énergie puissante qui peut transformer ta vie ! Nourris cette flamme intérieure, donne-lui de l’espace pour grandir et laisse-la guider tes choix vers ce qui te rend vivant{genderSuffix}. Conseil : consacre du temps à ce qui t’allume le cœur aujourd’hui, même dans les petites actions, cela renforcera ta motivation et ta joie de vivre.",
+    "cards.daily.Equite.name":"Équité",
+    "cards.daily.Equite.meaning":"La justice et l’équilibre vont bientôt se rétablir dans tes affaires ! Reste intègre et patient{genderSuffix} : tes actions justes porteront leurs fruits et ramèneront l’harmonie autour de toi. Conseil : garde la tête froide face aux défis, et continue d’agir avec honnêteté et respect, même si les résultats tardent à venir.",
+    "cards.daily.Harmonie.name":"Harmonie",
+    "cards.daily.Harmonie.meaning":"Tous les éléments de ta vie tendent à s’aligner aujourd’hui ! Profite de cette période pour consolider ce qui fonctionne bien et pour instaurer des routines qui nourrissent ton bien-être physique, mental et émotionnel. Conseil : prends le temps de t’écouter et d’équilibrer tes différentes sphères de vie pour maintenir cette belle harmonie sur le long terme.",
+    "cards.daily.Eveil.name":"Éveil",
+    "cards.daily.Eveil.meaning":"Ta conscience s’élargit aujourd’hui, ouvrant la porte à de nouvelles perspectives et à une meilleure compréhension de toi-même et du monde qui t’entoure ! Accueille ces prises de conscience avec ouverture et curiosité : elles peuvent transformer ton regard sur la vie et guider tes prochains pas vers une voie plus authentique. Conseil : prends le temps de réfléchir à ce que ces nouvelles révélations signifient pour toi, et ose agir en accord avec cette nouvelle clarté.",
+    "cards.daily.Generosite.name":"Générosité",
+    "cards.daily.Generosite.meaning":"Donne sans compter aujourd’hui, non par devoir, mais par cœur ! Ce geste sincère et désintéressé créera un cercle de réciprocité autour de toi et attirera des expériences bienfaisantes qui enrichiront ta vie. Conseil : sois attentif{genderSuffix} aux besoins des autres, tout en veillant à ne pas t’oublier toi-même dans cet élan généreux.",
+    "cards.daily.Perseverance.name":"Persévérance",
+    "cards.daily.Perseverance.meaning":"N’abandonne pas maintenant : ta détermination est sur le point de porter ses fruits ! Continue avec constance et discipline, la victoire est plus proche que tu ne le penses. Conseil : garde le cap même si le chemin semble long, chaque effort te rapproche de ton but.",
+    "cards.daily.Simplicite.name":"Simplicité",
+    "cards.daily.Simplicite.meaning":"La solution est souvent plus simple que ce que l’on imagine ! Va à l’essentiel, élimine le superflu, et tu trouveras des réponses claires et efficaces. Conseil : simplifie ta vie aujourd’hui pour mieux te concentrer sur ce qui compte vraiment.",
+    "cards.daily.Legerete.name":"Légèreté",
+    "cards.daily.Legerete.meaning":"Adopte une attitude légère aujourd’hui : ris, joue, et déleste-toi des poids inutiles ! Cette légèreté t’ouvrira au plaisir et à la créativité. Conseil : permets-toi de t’amuser et de prendre du recul pour mieux avancer.",
+    "cards.daily.Ancrage.name":"Ancrage",
+    "cards.daily.Ancrage.meaning":"Reviens à tes racines pour trouver stabilité et force ! Des pratiques simples comme la respiration, la marche ou des routines régulières t’aideront à te recentrer et à avancer plus sereinement. Conseil : prends le temps de te connecter à toi-même et au moment présent.",
+    "cards.daily.Mystere.name":"Mystère",
+    "cards.daily.Mystere.meaning":"Accepte ce que tu ne peux pas encore comprendre ! Le mystère fait partie de la magie de la vie : en laissant de l’espace à l’inconnu, tu ouvres la porte à des révélations qui se dévoileront au bon moment. Conseil : fais confiance au temps et reste ouvert{genderSuffix} aux surprises que l’univers t’envoie.",
+    "cards.daily.Celebration.name":"Célébration",
+    "cards.daily.Celebration.meaning":"C’est le moment de célébrer tes succès, même les plus petits ! Reconnaître tes accomplissements nourrit ta confiance en toi et attire encore plus de raisons de te réjouir. Conseil : prends le temps de te féliciter et partage ta joie avec ceux qui t’entourent.",
+    "cards.daily.Guidance.name":"Guidance",
+    "cards.daily.Guidance.meaning":"Aujourd’hui, une aide inattendue ou un signe discret peut se manifester sur ton chemin ! Reste attentif{genderSuffix} aux petites synchronicités qui croisent ta route, car elles portent un message important. Ces signes t’orienteront vers des choix plus éclairés et bénéfiques. Accueille ces indications avec confiance, elles ouvrent une porte vers une direction nouvelle et favorable.",
+    "cards.daily.Purification.name":"Purification",
+    "cards.daily.Purification.meaning":"C’est le moment idéal pour faire le tri autour de toi et en toi ! En débarrassant ton espace et ton esprit du superflu, tu invites un souffle de renouveau. Cette purification crée un environnement propice aux transformations positives, libérant ton énergie pour accueillir de nouvelles opportunités avec clarté et légèreté.",
+    "cards.daily.Vision.name":"Vision",
+    "cards.daily.Vision.meaning":"Ta vision du futur se clarifie aujourd'hui ! Identifie la direction qui t’attire et avance avec confiance vers cet horizon nouvellement révélé. Garde l’esprit ouvert aux possibilités qui s’offrent à toi et laisse-toi guider par cette clarté intérieure vers tes objectifs les plus authentiques.",
 
     // Card Names and Meanings - Tarot
     "cards.tarot.LeFou.name": "Le Fou",
@@ -1466,65 +1414,54 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.transition.future.var8":
       "Ces énergies vont synchroniser tous les aspects de ta vie.",
 
-    // ========== CONSEILS VARIÉS ==========
+    // ========== CONSEILS VARIÉS ANGES==========
 
-    "interpretation.advice.var1":
-      "fais confiance à ton instinct. Tu as tout ce qu'il faut pour réussir !",
-    "interpretation.advice.var2":
-      "écoute ta sagesse intérieure. Elle ne te trahira jamais !",
-    "interpretation.advice.var3":
-      "suis ton cœur et tes intuitions. Ils te guident vers le bonheur !",
-    "interpretation.advice.var4":
-      "reste connecté{genderSuffix} à tes valeurs. Elles sont ton meilleur guide !",
-    "interpretation.advice.var5":
-      "garde foi en tes capacités. Tu es plus fort{genderSuffix} que tu ne le penses !",
-    "interpretation.advice.var6":
-      "reste ouvert{genderSuffix} aux opportunités. L'univers travaille pour toi !",
-    "interpretation.advice.var7":
-      "cultive ta patience. Tout arrive au moment parfait !",
-    "interpretation.advice.var8":
-      "maintiens ta détermination. Tes efforts seront récompensés !",
-    "interpretation.advice.var9":
-      "préserve ton optimisme. Il attire les meilleures énergies !",
-    "interpretation.advice.var10":
-      "nourris ta confiance. Elle est la clé de toutes tes réussites !",
+    // Templates pour le message final ANGES (début de phrase)
+    "interpretation.angels.template.message.var1":"Les anges veillent sur toi {name} et t’envoient une guidance importante :",
+    "interpretation.angels.template.message.var2":"Un message doux t’est adressé {name}. Les guides souhaitent que tu entendes ceci :",
+    "interpretation.angels.template.message.var3":"Les présences célestes t’accompagnent {name} et te soufflent ce message :",
+    "interpretation.angels.template.message.var4":"Une énergie lumineuse t’entoure aujourd’hui {name}. Voici la guidance qu’elle t’apporte :",
+    "interpretation.angels.template.message.var5":"{name}, les anges t’enveloppent de bienveillance et te transmettent ceci :",
+    "interpretation.angels.template.message.var6":"Une présence angélique s’approche de toi {name}. Ouvre ton cœur à ce message :",
+    "interpretation.angels.template.message.var7":"Ton âme est entendue {name}. Les anges te partagent ce conseil pour avancer :",
+    "interpretation.angels.template.message.var8":"Une présence divine se tourne vers toi {name}. Voici le message que tu es prêt{genderSuffix} à recevoir :",
+    
+    // Conseils variés ANGES (fin de phrase)
+    "interpretation.advice.var1":"Ton ange gardien veut que tu saches que ton intuition est un guide sûr : fais-lui pleinement confiance.",
+    "interpretation.advice.var2":"Les anges te rappellent d’écouter ton cœur : il connaît déjà la direction qui t’apportera la paix.",
+    "interpretation.advice.var3":"Ton guide de lumière t’invite à prêter attention aux signes autour de toi, car rien n’apparaît par hasard.",
+    "interpretation.advice.var4":"Les êtres célestes veulent que tu restes aligné{genderSuffix} avec ce que tu ressens profondément. C’est là que se trouve ta vérité.",
+    "interpretation.advice.var5":"Ton ange protecteur t’encourage à croire en ta force intérieure : elle ne t’abandonne jamais.",
+    "interpretation.advice.var6":"Un murmure divin te souffle de t’ouvrir aux opportunités qui se présentent : elles sont là pour t’aider.",
+    "interpretation.advice.var7":"Les anges te demandent de ralentir et de respirer : la patience permettra à ton chemin de se clarifier naturellement.",
+    "interpretation.advice.var8":"Ton guide angélique veut que tu continues d’avancer avec confiance : tes efforts sont déjà bénis.",
+    "interpretation.advice.var9":"Une lumière céleste t’invite à préserver ton optimisme, car il attire vers toi des énergies hautement positives.",
+    "interpretation.advice.var10":"Ton ange gardien te murmure de renforcer ta confiance en toi : elle ouvre les portes que tu attends depuis longtemps.",
+   
+      // Débuts de phrases TAROT (début de phrase)
+      "interpretation.tarot.template.advice.var1":"Écoute bien {name},",
+      "interpretation.tarot.template.advice.var2":"Mon conseil pour toi {name},",
+      "interpretation.tarot.template.advice.var3":"Je vais te dire quelque chose {name},",
+      "interpretation.tarot.template.advice.var4":"Sache une chose {name},",
+      "interpretation.tarot.template.advice.var5":"Prends un moment {name},",
+      "interpretation.tarot.template.advice.var6":"Je te le dis clairement {name},",
+      "interpretation.tarot.template.advice.var7":"Voilà ce que je te conseille {name},",
+      "interpretation.tarot.template.advice.var8":"Je te le dis {name},",
+      "interpretation.tarot.template.advice.var9":"N’oublie pas {name},",
+      "interpretation.tarot.template.advice.var10":"{name},",
 
-    //Clé de traductions variations
-    "interpretation.tarot.template.advice.var1":
-      "Mon conseil : {name}, avec ton caractère de {zodiacSign},",
-    "interpretation.tarot.template.advice.var2":
-      "{genderText} {name}, en tant que {zodiacSign},",
-    "interpretation.tarot.template.advice.var3":
-      "Écoute bien {name} : avec ta nature de {zodiacSign},",
-    "interpretation.tarot.template.advice.var4":
-      "Retiens ceci {name}, ton énergie de {zodiacSign}",
-    "interpretation.tarot.template.advice.var5":
-      "{name}, les astres parlent à travers ta nature de {zodiacSign}.",
-    "interpretation.tarot.template.advice.var6":
-      "Souviens-toi, {name} : ton signe {zodiacSign} détient une part de vérité essentielle.",
-    "interpretation.tarot.template.advice.var7":
-      "{genderText} {name}, ta destinée s’éveille sous la lumière du {zodiacSign}.",
-    "interpretation.tarot.template.advice.var8":
-      "Sache-le {name}, en tant que {zodiacSign}, tu portes une lumière unique.",
-
-    // Templates pour le message final
-    "interpretation.angels.template.message.var1":
-      "Message angélique : {genderText} {name}, avec ton essence de {zodiacSign}",
-    "interpretation.angels.template.message.var2":
-      "Les anges te transmettent {name} : en tant que {zodiacSign}",
-    "interpretation.angels.template.message.var3":
-      "Guidance céleste {name} : comme {zodiacSign}",
-    "interpretation.angels.template.message.var4":
-      "Bénédiction angélique {name}, ta nature de {zodiacSign}",
-    "interpretation.angels.template.message.var5":
-      "{name}, les anges honorent ta lumière de {zodiacSign}.",
-    "interpretation.angels.template.message.var6":
-      "Écoute, {name} : Ton âme de {zodiacSign} reçoit un message divin.",
-    "interpretation.angels.template.message.var7":
-      "Message céleste pour toi, {name}, en tant que {zodiacSign}, tu es guidé{genderSuffix}.",
-    "interpretation.angels.template.message.var8":
-      "Les sphères célestes murmurent à {name} : ton essence de {zodiacSign} est en éveil.",
-
+      // Fins de phrases TAROT (fin de phrase)
+      "interpretation.tarot.advice.var1":"tes choix actuels auront un impact direct sur ton futur, alors reste attentif.",
+      "interpretation.tarot.advice.var2":"Fais confiance à ton instinct et ose prendre le chemin qui te semble juste, même s’il te fait un peu peur.",
+      "interpretation.tarot.advice.var3":"tes émotions sont des guides puissants, suis-les avec confiance.",
+      "interpretation.tarot.advice.var4":"parfois, il vaut mieux lâcher prise que forcer les choses.",
+      "interpretation.tarot.advice.var5":"tu as toutes les clés en mains pour réussir alors ne baisse pas les bras!",
+      "interpretation.tarot.advice.var6":"tu as déjà tout ce qu’il faut en toi pour avancer : crois en toi!",
+      "interpretation.tarot.advice.var7":"ne laisse pas le doute te freiner, avance malgré tout.",
+      "interpretation.tarot.advice.var8":"Tes intuitions te montrent clairement la bonne voie à suivre. Suis-les en toute confiance!",
+      "interpretation.tarot.advice.var9":"reste positif, ton énergie attire ce dont tu as besoin.",
+      "interpretation.tarot.advice.var10":"accepte ce qui arrive et fonce, le moment est le bon.",
+   
     // Crystal Ball French
     "crystalBall.title": "Boule de Cristal Mystique",
     "crystalBall.subtitle":
@@ -1721,7 +1658,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.2.title.2": "✨ Renaissance Cosmique",
     "oracle.bonusRoll.2.message.2": "Tu renais sous une nouvelle étoile. L'univers efface les anciennes blessures et t'offre une page blanche. Écris ton histoire avec audace, tu le mérites.",
     "oracle.bonusRoll.2.title.3": "🦋 Transformation Douce",
-    "oracle.bonusRoll.2.message.3": "Comme le papillon sort de sa chrysalide, tu émerges transformé(e). Le 2 symbolise l'équilibre parfait entre ce que tu étais et ce que tu deviens. Savoure cette métamorphose.",
+    "oracle.bonusRoll.2.message.3": "Comme le papillon sort de sa chrysalide, tu émerges transformé. Le 2 symbolise l'équilibre parfait entre ce que tu étais et ce que tu deviens. Savoure cette métamorphose.",
 
     "oracle.bonusRoll.3.title.1": "🔮 Intuition Divine",
     "oracle.bonusRoll.3.message.1": "Ton sixième sens est en pleine puissance. Aujourd'hui, chaque pressentiment est un message de l'univers. Écoute cette petite voix intérieure, elle connaît le chemin.",
@@ -1735,10 +1672,10 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.4.title.2": "⚓ Ancrage Puissant",
     "oracle.bonusRoll.4.message.2": "Ta stabilité intérieure rayonne autour de toi. Les autres sentent cette force tranquille qui t'habite. Continue sur cette voie, tu inspires ceux qui te regardent.",
     "oracle.bonusRoll.4.title.3": "🗿 Structure Divine",
-    "oracle.bonusRoll.4.message.3": "Les quatre éléments - terre, eau, air, feu - s'unissent pour te soutenir. Ta détermination est inébranlable. Aucun obstacle ne peut te faire dévier de ton chemin.",
+    "oracle.bonusRoll.4.message.3": "Les quatre éléments: la terre, l'eau, l'air et le feu, s'unissent pour te soutenir. Ta détermination est inébranlable. Aucun obstacle ne peut te faire dévier de ton chemin.",
 
     "oracle.bonusRoll.5.title.1": "✨ Opportunités Magiques",
-    "oracle.bonusRoll.5.message.1": "L'inattendu frappe à ta porte et apporte des cadeaux inespérés. Le 5 annonce une période de surprises merveilleuses. Reste ouvert(e), la magie opère dans les détails.",
+    "oracle.bonusRoll.5.message.1": "L'inattendu frappe à ta porte et apporte des cadeaux inespérés. Le 5 annonce une période de surprises merveilleuses. Reste ouvert, la magie opère dans les détails.",
     "oracle.bonusRoll.5.title.2": "🌪️ Vent du Changement",
     "oracle.bonusRoll.5.message.2": "Un tourbillon de nouveautés t'emporte vers des horizons inconnus. N'aie pas peur de cette transformation, elle t'amène exactement là où tu dois être. Fais-lui confiance.",
     "oracle.bonusRoll.5.title.3": "🎭 Liberté Créatrice",
@@ -1749,14 +1686,14 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.6.title.2": "🕊️ Sérénité Absolue",
     "oracle.bonusRoll.6.message.2": "Une paix profonde habite ton cœur. Les tempêtes extérieures ne peuvent plus t'atteindre car tu as trouvé ton centre. Partage cette sérénité avec ceux qui en ont besoin.",
     "oracle.bonusRoll.6.title.3": "💝 Amour Universel",
-    "oracle.bonusRoll.6.message.3": "Le nombre de l'amour t'enveloppe d'une douce chaleur. Tes relations s'épanouissent naturellement. Ouvre ton cœur encore plus grand, tu es aimé(e) bien plus que tu ne le crois.",
+    "oracle.bonusRoll.6.message.3": "Le nombre de l'amour t'enveloppe d'une douce chaleur. Tes relations s'épanouissent naturellement. Ouvre ton cœur encore plus grand, tu es aimé bien plus que tu ne le crois.",
 
     "oracle.bonusRoll.7.title.1": "🍀 Chance Mystique",
-    "oracle.bonusRoll.7.message.1": "Le 7 magique te bénit d'une chance extraordinaire ! Aujourd'hui, l'univers conspire en ta faveur. Ose tenter ce que tu n'osais pas avant, les étoiles sont avec toi.",
+    "oracle.bonusRoll.7.message.1": "Le 7 magique te bénit d'une chance extraordinaire ! Aujourd'hui, l'univers conspire en ta faveur. Ose tenter ce que tu n'osais pas avant, les étoiles sont avec toi!",
     "oracle.bonusRoll.7.title.2": "🎰 Fortune Divine",
     "oracle.bonusRoll.7.message.2": "Les dés cosmiques tombent en ta faveur encore et encore. Ce n'est pas du hasard, c'est la récompense de tout ce que tu as semé. Reçois cette abondance avec gratitude.",
     "oracle.bonusRoll.7.title.3": "🌠 Magie Céleste",
-    "oracle.bonusRoll.7.message.3": "Le nombre sacré par excellence illumine ton chemin. Des synchronicités miraculeuses jalonnent ta journée. Sois attentif(ve) aux signes, l'univers te parle directement.",
+    "oracle.bonusRoll.7.message.3": "Aujourd’hui, ton chiffre sacré va t’aider et te montrer le bon chemin. Des coïncidences étonnantes vont arriver. Ouvre bien les yeux, l’univers te donne des signes!",
 
     "oracle.bonusRoll.8.title.1": "💎 Abondance Cosmique",
     "oracle.bonusRoll.8.message.1": "La prospérité coule vers toi comme une rivière d'or. Le 8 récompense enfin tous tes efforts. Accepte cette abondance sans culpabilité, tu la mérites pleinement.",
@@ -1770,24 +1707,24 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.9.title.2": "🦋 Métamorphose Sacrée",
     "oracle.bonusRoll.9.message.2": "Tu n'es plus la même personne qu'hier. Une transformation profonde s'opère en toi. Ton âme s'élève vers des dimensions nouvelles, laisse-toi porter par cette ascension.",
     "oracle.bonusRoll.9.title.3": "🌌 Sagesse Universelle",
-    "oracle.bonusRoll.9.message.3": "Un cycle se termine, chargé de leçons précieuses. Le 9 te couronne de sagesse. Tu es devenu(e) un phare pour les autres. Partage généreusement ce que tu as appris.",
+    "oracle.bonusRoll.9.message.3": "Un cycle se termine, chargé de leçons précieuses. Le 9 te couronne de sagesse. Tu es devenu un phare pour les autres. Partage généreusement ce que tu as appris.",
 
     "oracle.bonusRoll.10.title.1": "🎯 Défis Stimulants",
-    "oracle.bonusRoll.10.message.1": "De beaux challenges t'attendent, mais tu n'as jamais été aussi prêt(e). Le 10 annonce un nouveau cycle de croissance. Relève ces défis avec l'assurance de celui qui sait qu'il va réussir.",
+    "oracle.bonusRoll.10.message.1": "De beaux challenges t'attendent, mais tu n'as jamais été aussi prêt. Le 10 annonce un nouveau cycle de croissance. Relève ces défis avec l'assurance de celui qui sait qu'il va réussir.",
     "oracle.bonusRoll.10.title.2": "⚔️ Épreuves Formatrices",
     "oracle.bonusRoll.10.message.2": "Chaque obstacle devient un tremplin sous tes pieds. Ta résilience transforme les difficultés en victoires éclatantes. Continue d'avancer, rien ne peut t'arrêter maintenant.",
     "oracle.bonusRoll.10.title.3": "🔟 Nouveau Cycle Maître",
     "oracle.bonusRoll.10.message.3": "Une porte se ferme, une autre s'ouvre sur l'infini. Le 10 marque la fin ET le commencement. Tu renais dans une version encore plus puissante de toi-même.",
 
     "oracle.bonusRoll.11.title.1": "🔥 Persévérance Victorieuse",
-    "oracle.bonusRoll.11.message.1": "Ton courage porte enfin ses fruits. Le nombre maître 11 te récompense de ta ténacité. Tout ce pour quoi tu as combattu se concrétise enfin. Savoure cette victoire méritée !",
+    "oracle.bonusRoll.11.message.1": "Ton courage porte enfin ses fruits. Le nombre 11 te récompense de ta ténacité. Tout ce pour quoi tu as combattu se concrétise enfin. Savoure cette victoire méritée !",
     "oracle.bonusRoll.11.title.2": "⚡ Maître Illuminé",
-    "oracle.bonusRoll.11.message.2": "Le 11 sacré révèle ton potentiel illimité. Tu es un canal de lumière pour ce monde. Ta simple présence élève l'énergie autour de toi. Assume pleinement cette mission.",
+    "oracle.bonusRoll.11.message.2": "Le nombre 11 sacré révèle ton potentiel illimité. Tu es un canal de lumière pour ce monde. Ta simple présence élève l'énergie autour de toi. Assume pleinement cette mission.",
     "oracle.bonusRoll.11.title.3": "✨ Éveil Spirituel",
-    "oracle.bonusRoll.11.message.3": "Une opportunité rare et précieuse se présente maintenant. Le nombre maître t'appelle vers ta plus haute destinée. Ne laisse pas passer cette chance, elle ne reviendra pas.",
+    "oracle.bonusRoll.11.message.3": "Une opportunité rare et précieuse se présente maintenant. Le nombre 11 t'appelle vers ta plus haute destinée. Ne laisse pas passer cette chance, elle ne reviendra pas.",
 
     "oracle.bonusRoll.12.title.1": "👑 Accomplissement Total",
-    "oracle.bonusRoll.12.message.1": "Tu touches du doigt la plénitude absolue. Le 12 couronne ton parcours d'une harmonie parfaite. Chaque pièce du puzzle trouve sa place. Tu es exactement où tu devais arriver.",
+    "oracle.bonusRoll.12.message.1": "Tu touches du doigt la plénitude absolue. Le nombre 12 couronne ton parcours d'une harmonie parfaite. Chaque pièce du puzzle trouve sa place. Tu es exactement où tu devais arriver.",
     "oracle.bonusRoll.12.title.2": "🌟 Perfection Cosmique",
     "oracle.bonusRoll.12.message.2": "Un cycle majeur s'achève dans l'excellence. Les 12 signes du zodiaque te bénissent d'un alignement parfait. Tout ce que tu touches maintenant se transforme en or. C'est ton moment de gloire.",
     "oracle.bonusRoll.12.title.3": "🏆 Triomphe Absolu",
@@ -2038,27 +1975,22 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.daily.cardMessage.var10":
       'The card "{cardName}" accompanies you with a bright energy throughout the day.',
 
-    //Variations for "Wisdom"
-    "interpretation.daily.wisdom.var1":
-      "As a {zodiacSign}, you have the wisdom needed to make good use of this advice. Trust your instinct and let this positive energy guide your actions today.",
-    "interpretation.daily.wisdom.var2":
-      "Your zodiac sign brings you beautiful intuition. Trust it and let yourself be guided by the positive energy around you.",
-    "interpretation.daily.wisdom.var3":
-      "The stars are with you today. Let this beautiful energy help you move forward peacefully.",
-    "interpretation.daily.wisdom.var4":
-      "As a {zodiacSign}, you hold the keys to interpreting this celestial message. Use it well throughout the day.",
-    "interpretation.daily.wisdom.var5":
-      "Your {zodiacSign} nature resonates perfectly with this advice. Let this cosmic harmony illuminate your path today.",
-    "interpretation.daily.wisdom.var6":
-      "The sky speaks through your zodiac sign. Be attentive to the signs and move forward with confidence.",
-    "interpretation.daily.wisdom.var7":
-      "As a {zodiacSign}, you are aligned{genderSuffix} with a subtle energy today. Follow it, it will lead you where you need to be.",
-    "interpretation.daily.wisdom.var8":
-      "Your {zodiacSign} sign guides you with wisdom. Let your heart be open and your mind clear to show you the way.",
-    "interpretation.daily.wisdom.var9":
-      "You carry a unique light within you. May this message help you shine it fully and proudly.",
-    "interpretation.daily.wisdom.var10":
-      "Your {zodiacSign} energy resonates with the vibrations of the day. Welcome this advice as a kind and inspiring guide.",
+    //Variations for "Wisdom" tirage du jour
+     "interpretation.daily.wisdom.var1": "Trust your instinct today. If it feels right, go for it!",
+      "interpretation.daily.wisdom.var2": "You have everything you need to move forward. Believe in yourself and take action!",
+      "interpretation.daily.wisdom.var3": "Don't complicate things. Make the decision that feels best and move!",
+      "interpretation.daily.wisdom.var4": "Open your eyes and seize the opportunities that come your way, even the small ones.",
+      "interpretation.daily.wisdom.var5": "Let yourself be guided by what you already know. You can handle this day.",
+      "interpretation.daily.wisdom.var6": "Take the time to notice the details around you, they can help you decide.",
+      "interpretation.daily.wisdom.var7": "Listen to what you feel. If something seems right, do it without hesitation!",
+      "interpretation.daily.wisdom.var8": "Keep a clear head and an open heart. Good decisions often come from there.",
+      "interpretation.daily.wisdom.var9": "Don't underestimate what you already know. You have the resources to move forward.",
+      "interpretation.daily.wisdom.var10": "Stay alert to opportunities and make choices that bring you closer to your goals.",
+      "interpretation.daily.wisdom.var11": "Focus on what matters to you. Don't let distractions get in your way.",
+      "interpretation.daily.wisdom.var12": "Dare to move forward even if everything isn’t perfect. Just taking action makes a difference.",
+      "interpretation.daily.wisdom.var13": "Accept that you can’t control everything. Do your best and that’s enough!",
+      "interpretation.daily.wisdom.var14": "Don’t let fear stop you. You already have what it takes to succeed.",
+      "interpretation.daily.wisdom.var15": "Be present and attentive today. Make your decisions, move forward, and don’t doubt yourself!",
 
     // Variations for "Have a good day"
     "interpretation.daily.closing.var1":
@@ -3175,62 +3107,51 @@ const translations: Record<Language, Record<string, string>> = {
 
     // ========== VARIED ADVICE ==========
 
-    "interpretation.advice.var1":
-      "trust your instinct. You have everything it takes to succeed!",
-    "interpretation.advice.var2":
-      "listen to your inner wisdom. It will never betray you!",
-    "interpretation.advice.var3":
-      "follow your heart and your intuitions. They guide you to happiness!",
-    "interpretation.advice.var4":
-      "stay connected to your values. They are your best guide!",
-    "interpretation.advice.var5":
-      "keep faith in your abilities. You are stronger than you think!",
-    "interpretation.advice.var6":
-      "stay open to opportunities. The universe works for you!",
-    "interpretation.advice.var7":
-      "cultivate your patience. Everything happens at the perfect time!",
-    "interpretation.advice.var8":
-      "maintain your determination. Your efforts will be rewarded!",
-    "interpretation.advice.var9":
-      "preserve your optimism. It attracts the best energies!",
-    "interpretation.advice.var10":
-      "nourish your confidence. It's the key to all your successes!",
+    // Templates for the final message ANGE (début de phrase) 
+    "interpretation.angels.template.message.var1":"The angels watch over you {name} and send you an important guidance:",
+    "interpretation.angels.template.message.var2":"A gentle message is addressed to you {name}. The guides wish for you to hear this:",
+    "interpretation.angels.template.message.var3":"Heavenly presences accompany you {name} and whisper this message to you:",
+    "interpretation.angels.template.message.var4":"A luminous energy surrounds you today {name}. Here is the guidance it brings:",
+    "interpretation.angels.template.message.var5":"{name}, the angels wrap you in kindness and convey this to you:",
+    "interpretation.angels.template.message.var6":"An angelic presence approaches you {name}. Open your heart to this message:",
+    "interpretation.angels.template.message.var7":"Your soul is heard {name}. The angels share this advice with you to move forward:",
+    "interpretation.angels.template.message.var8":"A divine presence turns toward you {name}. Here is the message you are ready to receive:",
 
-    //Translation key variations
-    "interpretation.tarot.template.advice.var1":
-      "My advice, {name}: with your {zodiacSign} nature,",
-    "interpretation.tarot.template.advice.var2":
-      "{genderText} {name}, as a {zodiacSign},",
-    "interpretation.tarot.template.advice.var3":
-      "Listen closely, {name}: guided by your {zodiacSign} nature,",
-    "interpretation.tarot.template.advice.var4":
-      "Remember this, {name}: your {zodiacSign} energy,",
-    "interpretation.tarot.template.advice.var5":
-      "{name}, the stars speak through your {zodiacSign} nature.",
-    "interpretation.tarot.template.advice.var6":
-      "Remember, {name}: your {zodiacSign} sign holds an essential truth.",
-    "interpretation.tarot.template.advice.var7":
-      "{genderText} {name}, your destiny awakens under the light of {zodiacSign}.",
-    "interpretation.tarot.template.advice.var8":
-      "Know this, {name}: as a {zodiacSign}, you carry a unique light.",
+    // Advice variations ANGEL (fin de phrase )
+    "interpretation.advice.var1":"Your guardian angel wants you to know that your intuition is a reliable guide: trust it fully.",
+    "interpretation.advice.var2":"The angels remind you to listen to your heart: it already knows the direction that will bring you peace.",
+    "interpretation.advice.var3":"Your light guide invites you to pay attention to the signs around you, for nothing appears by chance.",
+    "interpretation.advice.var4":"Heavenly beings want you to stay aligned with what you deeply feel. There lies your truth.",
+    "interpretation.advice.var5":"Your protective angel encourages you to believe in your inner strength: it never abandons you.",
+    "interpretation.advice.var6":"A divine whisper urges you to open yourself to the opportunities that arise: they are here to help you.",
+    "interpretation.advice.var7":"The angels ask you to slow down and breathe: patience will naturally clarify your path.",
+    "interpretation.advice.var8":"Your angelic guide wants you to keep moving forward with confidence: your efforts are already blessed.",
+    "interpretation.advice.var9":"A celestial light invites you to preserve your optimism, for it attracts highly positive energies toward you.",
+    "interpretation.advice.var10":"Your guardian angel whispers to you to strengthen your self-confidence: it opens the doors you have long awaited.",
+    
+    // TAROT phrase beginnings
+    "interpretation.tarot.template.advice.var1":"Listen carefully {name},",
+    "interpretation.tarot.template.advice.var2":"My advice for you {name},",
+    "interpretation.tarot.template.advice.var3":"I’m going to tell you something {name},",
+    "interpretation.tarot.template.advice.var4":"Know one thing {name},",
+    "interpretation.tarot.template.advice.var5":"Take a moment {name},",
+    "interpretation.tarot.template.advice.var6":"I’ll say it clearly {name},",
+    "interpretation.tarot.template.advice.var7":"Here’s my advice for you {name},",
+    "interpretation.tarot.template.advice.var8":"I’m telling you {name},",
+    "interpretation.tarot.template.advice.var9":"Don’t forget {name},",
+    "interpretation.tarot.template.advice.var10":"{name},",
 
-    // Templates for the final message
-    "interpretation.angels.template.message.var1":
-      "Angelic message: {genderText} {name}, with your {zodiacSign} essence",
-    "interpretation.angels.template.message.var2":
-      "The angels speak to you, {name}: as a {zodiacSign}",
-    "interpretation.angels.template.message.var3":
-      "Heavenly guidance, {name}: like a true {zodiacSign}",
-    "interpretation.angels.template.message.var4":
-      "Angelic blessing, {name}, your {zodiacSign} nature shines through",
-    "interpretation.angels.template.message.var5":
-      "{name}, the angels honor your {zodiacSign} light.",
-    "interpretation.angels.template.message.var6":
-      "Listen closely, {name}: your {zodiacSign} soul receives a divine message.",
-    "interpretation.angels.template.message.var7":
-      "Celestial message for you, {name} — as a {zodiacSign}, you are divinely guided.",
-    "interpretation.angels.template.message.var8":
-      "The heavenly realms whisper to you, {name}: your {zodiacSign} essence is awakening.",
+    // TAROT phrase endings
+    "interpretation.tarot.advice.var1":"your current choices will directly impact your future, so stay alert.",
+    "interpretation.tarot.advice.var2":"Trust your instincts and dare to take the path that feels right, even if it scares you a little.",
+    "interpretation.tarot.advice.var3":"your emotions are powerful guides, follow them with confidence.",
+    "interpretation.tarot.advice.var4":"sometimes it’s better to let go than to force things.",
+    "interpretation.tarot.advice.var5":"you have all the keys to succeed, so don’t give up!",
+    "interpretation.tarot.advice.var6":"you already have everything inside you to move forward: believe in yourself!",
+    "interpretation.tarot.advice.var7":"don’t let doubt hold you back, move forward anyway.",
+    "interpretation.tarot.advice.var8": "Your intuition clearly shows you the right path to follow. Trust it completely!",
+    "interpretation.tarot.advice.var9":"stay positive, your energy attracts what you need.",
+    "interpretation.tarot.advice.var10":"accept what comes and go for it, the time is right.",
 
     // Crystal Ball English
     "crystalBall.title": "Mystic Crystal Ball",
@@ -3456,7 +3377,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.7.title.2": "🎰 Divine Fortune",
     "oracle.bonusRoll.7.message.2": "The cosmic dice fall in your favor again and again. This is not chance; it is the reward for everything you have sown. Receive this abundance with gratitude.",
     "oracle.bonusRoll.7.title.3": "🌠 Celestial Magic",
-    "oracle.bonusRoll.7.message.3": "The sacred number par excellence illuminates your path. Miraculous synchronicities mark your day. Be attentive to signs; the universe speaks directly to you.",
+    "oracle.bonusRoll.7.message.3": "Today, your sacred number will help you and show you the right path. Amazing coincidences will happen. Keep your eyes open, the universe is sending you signs!",
 
     "oracle.bonusRoll.8.title.1": "💎 Cosmic Abundance",
     "oracle.bonusRoll.8.message.1": "Prosperity flows toward you like a river of gold. The 8 finally rewards all your efforts. Accept this abundance without guilt; you fully deserve it.",
@@ -3737,27 +3658,22 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.daily.cardMessage.var10":
       'La carta "{cardName}" te acompaña con una energía luminosa durante todo el día.',
 
-    //Variaciones para "Wisdom"
-    "interpretation.daily.wisdom.var1":
-      "Como {zodiacSign}, tienes la sabiduría necesaria para aprovechar bien este consejo. Confía en tu instinto y deja que esta energía positiva guíe tus acciones hoy.",
-    "interpretation.daily.wisdom.var2":
-      "Tu signo zodiacal te aporta una hermosa intuición. Confía en ella y déjate guiar por la energía positiva que te rodea.",
-    "interpretation.daily.wisdom.var3":
-      "Los astros te acompañan hoy. Deja que esta hermosa energía te ayude a avanzar con serenidad.",
-    "interpretation.daily.wisdom.var4":
-      "Como {zodiacSign}, tienes las claves para interpretar este mensaje celestial. Haz buen uso de ellas durante el día.",
-    "interpretation.daily.wisdom.var5":
-      "Tu carácter de {zodiacSign} resuena perfectamente con este consejo. Deja que esta armonía cósmica ilumine tu camino hoy.",
-    "interpretation.daily.wisdom.var6":
-      "El cielo habla a través de tu signo zodiacal. Estate atento a las señales y avanza con confianza.",
-    "interpretation.daily.wisdom.var7":
-      "Como {zodiacSign}, estás alineado{genderSuffix} con una energía sutil hoy. Síguela, te llevará a donde debes estar.",
-    "interpretation.daily.wisdom.var8":
-      "Tu signo {zodiacSign} te guía con sabiduría. Deja tu corazón abierto y tu mente clara para mostrarte el camino.",
-    "interpretation.daily.wisdom.var9":
-      "Llevas una luz única dentro de ti. Que este mensaje te ayude a hacerla brillar plenamente y con orgullo.",
-    "interpretation.daily.wisdom.var10":
-      "La energía de tu {zodiacSign} está en resonancia con las vibraciones del día. Recibe este consejo como una guía amable e inspiradora.",
+    //Variaciones para "Wisdom" tirage du jour
+    "interpretation.daily.wisdom.var1": "Confía en tu instinto hoy. Si se siente bien, ¡adelante!",
+      "interpretation.daily.wisdom.var2": "Tienes todo lo que necesitas para avanzar. ¡Cree en ti y actúa!",
+      "interpretation.daily.wisdom.var3": "No compliques las cosas. Toma la decisión que te parezca mejor y actúa.",
+      "interpretation.daily.wisdom.var4": "Abre los ojos y aprovecha las oportunidades que se presenten, incluso las pequeñas.",
+      "interpretation.daily.wisdom.var5": "Déjate guiar por lo que ya sabes. Puedes manejar este día.",
+      "interpretation.daily.wisdom.var6": "Tómate el tiempo de notar los detalles a tu alrededor, pueden ayudarte a decidir.",
+      "interpretation.daily.wisdom.var7": "Escucha lo que sientes. Si algo te parece correcto, ¡hazlo sin dudar!",
+      "interpretation.daily.wisdom.var8": "Mantén la cabeza fría y el corazón abierto. Las buenas decisiones suelen venir de ahí.",
+      "interpretation.daily.wisdom.var9": "No subestimes lo que ya sabes. Tienes los recursos para avanzar.",
+      "interpretation.daily.wisdom.var10": "Mantente atento a las oportunidades y toma decisiones que te acerquen a tus metas.",
+      "interpretation.daily.wisdom.var11": "Concéntrate en lo que te importa. No dejes que las distracciones te desvíen.",
+      "interpretation.daily.wisdom.var12": "Atrévete a avanzar aunque no todo sea perfecto. El simple hecho de actuar hace la diferencia.",
+      "interpretation.daily.wisdom.var13": "Acepta que no puedes controlar todo. Haz lo mejor que puedas y eso es suficiente.",
+      "interpretation.daily.wisdom.var14": "No dejes que el miedo te detenga. Ya tienes lo que hace falta para lograrlo.",
+      "interpretation.daily.wisdom.var15": "Esté presente y atento hoy. Toma tus decisiones, avanza y no dudes de ti mismo.",
 
     // Variaciones para "Buen día"
     "interpretation.daily.closing.var1":
@@ -4944,62 +4860,51 @@ const translations: Record<Language, Record<string, string>> = {
 
     // ========== CONSEJOS VARIADOS ==========
 
-    "interpretation.advice.var1":
-      "confía en tu instinto. ¡Tienes todo lo que hace falta para triunfar!",
-    "interpretation.advice.var2":
-      "escucha tu sabiduría interior. ¡Nunca te traicionará!",
-    "interpretation.advice.var3":
-      "sigue tu corazón y tus intuiciones. ¡Te guían hacia la felicidad!",
-    "interpretation.advice.var4":
-      "mantente conectad{genderSuffix} a tus valores. ¡Son tu mejor guía!",
-    "interpretation.advice.var5":
-      "mantén fe en tus capacidades. ¡Eres más fuerte{genderSuffix} de lo que piensas!",
-    "interpretation.advice.var6":
-      "mantente abiert{genderSuffix} a las oportunidades. ¡El universo trabaja para ti!",
-    "interpretation.advice.var7":
-      "cultiva tu paciencia. ¡Todo llega en el momento perfecto!",
-    "interpretation.advice.var8":
-      "mantén tu determinación. ¡Tus esfuerzos serán recompensados!",
-    "interpretation.advice.var9":
-      "preserva tu optimismo. ¡Atrae las mejores energías!",
-    "interpretation.advice.var10":
-      "nutre tu confianza. ¡Es la clave de todos tus éxitos!",
+    // Templates para el mensaje final ÁNGELES (inicio de frase)
+    "interpretation.angels.template.message.var1":"Los ángeles velan por ti {name} y te envían una guía importante:",
+    "interpretation.angels.template.message.var2":"Un mensaje dulce te es dirigido {name}. Los guías desean que escuches esto:",
+    "interpretation.angels.template.message.var3":"Las presencias celestiales te acompañan {name} y te susurran este mensaje:",
+    "interpretation.angels.template.message.var4":"Una energía luminosa te rodea hoy {name}. Aquí está la guía que te aporta:",
+    "interpretation.angels.template.message.var5":"{name}, los ángeles te envuelven con benevolencia y te transmiten esto:",
+    "interpretation.angels.template.message.var6":"Una presencia angelical se acerca a ti {name}. Abre tu corazón a este mensaje:",
+    "interpretation.angels.template.message.var7":"Tu alma es escuchada {name}. Los ángeles te comparten este consejo para avanzar:",
+    "interpretation.angels.template.message.var8":"Una presencia divina se dirige hacia ti {name}. Aquí está el mensaje que estás listo para recibir:",
 
-    //Variaciones de clave de traducción
-    "interpretation.tarot.template.advice.var1":
-      "Mi consejo, {name}: con tu naturaleza de {zodiacSign},",
-    "interpretation.tarot.template.advice.var2":
-      "{genderText} {name}, como {zodiacSign},",
-    "interpretation.tarot.template.advice.var3":
-      "Escucha bien, {name}: guiado por tu naturaleza de {zodiacSign},",
-    "interpretation.tarot.template.advice.var4":
-      "Recuerda esto, {name}: tu energía de {zodiacSign},",
-    "interpretation.tarot.template.advice.var5":
-      "{name}, los astros hablan a través de tu naturaleza de {zodiacSign}.",
-    "interpretation.tarot.template.advice.var6":
-      "No lo olvides, {name}: tu signo {zodiacSign} guarda una verdad esencial.",
-    "interpretation.tarot.template.advice.var7":
-      "{genderText} {name}, tu destino despierta bajo la luz de {zodiacSign}.",
-    "interpretation.tarot.template.advice.var8":
-      "Sábelo, {name}: como {zodiacSign}, llevas una luz única.",
+    // Consejos variados ÁNGELES (final de frase)
+    "interpretation.advice.var1":"Tu ángel guardián quiere que sepas que tu intuición es una guía segura: confía plenamente en ella.",
+    "interpretation.advice.var2":"Los ángeles te recuerdan escuchar a tu corazón: él ya conoce la dirección que te traerá paz.",
+    "interpretation.advice.var3":"Tu guía de luz te invita a prestar atención a las señales a tu alrededor, pues nada aparece por casualidad.",
+    "interpretation.advice.var4":"Los seres celestiales quieren que permanezcas alineado con lo que sientes profundamente. Ahí se encuentra tu verdad.",
+    "interpretation.advice.var5":"Tu ángel protector te anima a creer en tu fuerza interior: nunca te abandona.",
+    "interpretation.advice.var6":"Un susurro divino te aconseja abrirte a las oportunidades que se presentan: están ahí para ayudarte.",
+    "interpretation.advice.var7":"Los ángeles te piden que reduzcas la velocidad y respires: la paciencia permitirá que tu camino se aclare naturalmente.",
+    "interpretation.advice.var8":"Tu guía angelical quiere que continúes avanzando con confianza: tus esfuerzos ya están bendecidos.",
+    "interpretation.advice.var9":"Una luz celestial te invita a mantener tu optimismo, pues atrae hacia ti energías altamente positivas.",
+    "interpretation.advice.var10":"Tu ángel guardián te susurra que refuerces tu confianza en ti: abre las puertas que esperas desde hace tiempo.",
 
-    // Plantillas para el mensaje final
-    "interpretation.angels.template.message.var1":
-      "Mensaje angelical: {genderText} {name}, con tu esencia de {zodiacSign}",
-    "interpretation.angels.template.message.var2":
-      "Los ángeles te transmiten, {name}: como {zodiacSign}",
-    "interpretation.angels.template.message.var3":
-      "Guía celestial, {name}: como un verdadero {zodiacSign}",
-    "interpretation.angels.template.message.var4":
-      "Bendición angelical, {name}, tu naturaleza de {zodiacSign} brilla",
-    "interpretation.angels.template.message.var5":
-      "{name}, los ángeles honran tu luz de {zodiacSign}.",
-    "interpretation.angels.template.message.var6":
-      "Escucha, {name}: tu alma de {zodiacSign} recibe un mensaje divino.",
-    "interpretation.angels.template.message.var7":
-      "Mensaje celestial para ti, {name} — como {zodiacSign}, estás guiado{genderSuffix}.",
-    "interpretation.angels.template.message.var8":
-      "Los reinos celestiales te susurran, {name}: tu esencia de {zodiacSign} está despertando.",
+    // Comienzos de frases TAROT
+    "interpretation.tarot.template.advice.var1":"Escucha atentamente {name},",
+    "interpretation.tarot.template.advice.var2":"Mi consejo para ti {name},",
+    "interpretation.tarot.template.advice.var3":"Te voy a decir algo {name},",
+    "interpretation.tarot.template.advice.var4":"Sabe una cosa {name},",
+    "interpretation.tarot.template.advice.var5":"Tómate un momento {name},",
+    "interpretation.tarot.template.advice.var6":"Te lo digo claramente {name},",
+    "interpretation.tarot.template.advice.var7":"Aquí tienes mi consejo {name},",
+    "interpretation.tarot.template.advice.var8":"Te lo digo {name},",
+    "interpretation.tarot.template.advice.var9":"No olvides {name},",
+    "interpretation.tarot.template.advice.var10":"{name},",
+
+    // Finales de frases TAROT
+    "interpretation.tarot.advice.var1":"tus decisiones actuales tendrán un impacto directo en tu futuro, así que mantente alerta.",
+    "interpretation.tarot.advice.var2":"Confía en tu instinto y atrévete a tomar el camino que sientas correcto, aunque te dé un poco de miedo.",
+    "interpretation.tarot.advice.var3":"tus emociones son guías poderosas, síguelas con confianza.",
+    "interpretation.tarot.advice.var4":"a veces es mejor dejar ir que forzar las cosas.",
+    "interpretation.tarot.advice.var5":"tienes todas las claves para tener éxito, ¡así que no te rindas!",
+    "interpretation.tarot.advice.var6":"ya tienes todo lo necesario dentro de ti para avanzar: ¡cree en ti!",
+    "interpretation.tarot.advice.var7":"no dejes que la duda te detenga, sigue adelante de todos modos.",
+    "interpretation.tarot.advice.var8": "Tu intuición te muestra claramente el camino correcto a seguir. ¡Confía en ella por completo!",
+    "interpretation.tarot.advice.var9":"mantente positivo, tu energía atrae lo que necesitas.",
+    "interpretation.tarot.advice.var10":"acepta lo que llega y ve a por ello, el momento es el adecuado.",
 
     // Crystal Ball Spanish
     "crystalBall.title": "Bola de Cristal Mística",
@@ -5225,7 +5130,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.7.title.2": "🎰 Fortuna Divina",
     "oracle.bonusRoll.7.message.2": "Los dados cósmicos caen a tu favor una y otra vez. No es casualidad; es la recompensa de todo lo que has sembrado. Recibe esta abundancia con gratitud.",
     "oracle.bonusRoll.7.title.3": "🌠 Magia Celestial",
-    "oracle.bonusRoll.7.message.3": "El número sagrado por excelencia ilumina tu camino. Sincronías milagrosas marcan tu día. Presta atención a las señales; el universo te habla directamente.",
+    "oracle.bonusRoll.7.message.3": "Hoy, tu número sagrado te ayudará y te mostrará el camino correcto. Sucederán coincidencias asombrosas. ¡Mantén los ojos abiertos, el universo te está enviando señales!",
 
     "oracle.bonusRoll.8.title.1": "💎 Abundancia Cósmica",
     "oracle.bonusRoll.8.message.1": "La prosperidad fluye hacia ti como un río de oro. El 8 finalmente recompensa todos tus esfuerzos. Acepta esta abundancia sin culpa; la mereces plenamente.",
@@ -5507,27 +5412,22 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.daily.cardMessage.var10":
       'Die Karte "{cardName}" begleitet dich den ganzen Tag mit heller Energie.',
 
-    //Variationen für "Wisdom"
-    "interpretation.daily.wisdom.var1":
-      "Als {zodiacSign} hast du die Weisheit, diesen Rat gut zu nutzen. Vertraue deinem Instinkt und lasse diese positive Energie heute deine Handlungen leiten.",
-    "interpretation.daily.wisdom.var2":
-      "Dein Sternzeichen schenkt dir eine schöne Intuition. Vertraue ihr und lass dich von der positiven Energie um dich herum führen.",
-    "interpretation.daily.wisdom.var3":
-      "Die Sterne begleiten dich heute. Lass diese schöne Energie dir helfen, gelassen voranzukommen.",
-    "interpretation.daily.wisdom.var4":
-      "Als {zodiacSign} hältst du die Schlüssel, um diese himmlische Botschaft zu deuten. Nutze sie gut im Laufe des Tages.",
-    "interpretation.daily.wisdom.var5":
-      "Dein {zodiacSign}-Charakter stimmt perfekt mit diesem Rat überein. Lass diese kosmische Harmonie deinen Weg heute erleuchten.",
-    "interpretation.daily.wisdom.var6":
-      "Der Himmel spricht durch dein Sternzeichen. Sei aufmerksam für die Zeichen und gehe selbstbewusst voran.",
-    "interpretation.daily.wisdom.var7":
-      "Als {zodiacSign} bist du heute mit einer feinen Energie ausgerichtet{genderSuffix}. Folge ihr, sie wird dich dorthin führen, wo du sein sollst.",
-    "interpretation.daily.wisdom.var8":
-      "Dein {zodiacSign} Zeichen führt dich mit Weisheit. Lass dein Herz offen und deinen Geist klar sein, um dir den Weg zu zeigen.",
-    "interpretation.daily.wisdom.var9":
-      "Du trägst ein einzigartiges Licht in dir. Möge dir diese Botschaft helfen, es voll und stolz erstrahlen zu lassen.",
-    "interpretation.daily.wisdom.var10":
-      "Deine {zodiacSign}-Energie schwingt mit den Vibrationen des Tages. Nimm diesen Rat als einen wohlwollenden und inspirierenden Führer an.",
+    //Variationen für "Wisdom" tirage du jour
+     "interpretation.daily.wisdom.var1": "Vertraue heute deinem Instinkt. Wenn es sich richtig anfühlt, leg los!",
+      "interpretation.daily.wisdom.var2": "Du hast alles, was du brauchst, um voranzukommen. Glaube an dich und handle!",
+      "interpretation.daily.wisdom.var3": "Mach es dir nicht kompliziert. Triff die Entscheidung, die sich richtig anfühlt, und geh voran!",
+      "interpretation.daily.wisdom.var4": "Öffne die Augen und nutze die Chancen, die sich bieten, auch die kleinen.",
+      "interpretation.daily.wisdom.var5": "Lass dich von dem leiten, was du bereits weißt. Du schaffst diesen Tag.",
+      "interpretation.daily.wisdom.var6": "Nimm dir Zeit, die Details um dich herum zu beachten, sie können dir bei Entscheidungen helfen.",
+      "interpretation.daily.wisdom.var7": "Höre auf das, was du fühlst. Wenn etwas richtig erscheint, tu es ohne Zögern!",
+      "interpretation.daily.wisdom.var8": "Behalte einen klaren Kopf und ein offenes Herz. Gute Entscheidungen kommen oft daher.",
+      "interpretation.daily.wisdom.var9": "Unterschätze nicht, was du bereits weißt. Du hast die Mittel, um voranzukommen.",
+      "interpretation.daily.wisdom.var10": "Bleib aufmerksam für Chancen und triff Entscheidungen, die dich deinen Zielen näherbringen.",
+      "interpretation.daily.wisdom.var11": "Konzentriere dich auf das, was für dich wichtig ist. Lass dich nicht ablenken.",
+      "interpretation.daily.wisdom.var12": "Wage es voranzukommen, auch wenn nicht alles perfekt ist. Allein das Handeln macht den Unterschied.",
+      "interpretation.daily.wisdom.var13": "Akzeptiere, dass du nicht alles kontrollieren kannst. Gib dein Bestes, das reicht!",
+      "interpretation.daily.wisdom.var14": "Lass dich von Angst nicht stoppen. Du hast bereits, was du brauchst, um erfolgreich zu sein.",
+      "interpretation.daily.wisdom.var15": "Sei heute präsent und aufmerksam. Triff deine Entscheidungen, geh voran und zweifle nicht an dir selbst.",
 
     // Variationen für "Schönen Tag"
     "interpretation.daily.closing.var1":
@@ -6714,64 +6614,53 @@ const translations: Record<Language, Record<string, string>> = {
 
     // ========== VERSCHIEDENE RATSCHLÄGE ==========
 
-    "interpretation.advice.var1":
-      "vertraue deinem Instinkt. Du hast alles, was zum Erfolg nötig ist!",
-    "interpretation.advice.var2":
-      "höre auf deine innere Weisheit. Sie wird dich niemals verraten!",
-    "interpretation.advice.var3":
-      "folge deinem Herzen und deinen Intuitionen. Sie führen dich zum Glück!",
-    "interpretation.advice.var4":
-      "bleibe mit deinen Werten verbunden{genderSuffix}. Sie sind dein bester Führer!",
-    "interpretation.advice.var5":
-      "glaube an deine Fähigkeiten. Du bist stärker{genderSuffix} als du denkst!",
-    "interpretation.advice.var6":
-      "bleibe offen{genderSuffix} für Gelegenheiten. Das Universum arbeitet für dich!",
-    "interpretation.advice.var7":
-      "kultiviere deine Geduld. Alles kommt zur perfekten Zeit!",
-    "interpretation.advice.var8":
-      "bewahre deine Entschlossenheit. Deine Anstrengungen werden belohnt werden!",
-    "interpretation.advice.var9":
-      "bewahre deinen Optimismus. Er zieht die besten Energien an!",
-    "interpretation.advice.var10":
-      "nähre dein Vertrauen. Es ist der Schlüssel zu all deinen Erfolgen!",
+    // Vorlagen für die endgültige ENGELSBOTSCHAFT (Satzanfang)
+    "interpretation.angels.template.message.var1":"Die Engel wachen über dich {name} und senden dir eine wichtige Botschaft:",
+    "interpretation.angels.template.message.var2":"Eine sanfte Botschaft richtet sich an dich {name}. Die Führer möchten, dass du dies hörst:",
+    "interpretation.angels.template.message.var3":"Die himmlischen Wesen begleiten dich {name} und flüstern dir diese Botschaft zu:",
+    "interpretation.angels.template.message.var4":"Eine leuchtende Energie umgibt dich heute {name}. Hier ist die Führung, die sie dir bringt:",
+    "interpretation.angels.template.message.var5":"{name}, die Engel umhüllen dich mit Wohlwollen und übermitteln dir dies:",
+    "interpretation.angels.template.message.var6":"Eine engelsgleiche Präsenz nähert sich dir {name}. Öffne dein Herz für diese Botschaft:",
+    "interpretation.angels.template.message.var7":"Deine Seele wird gehört {name}. Die Engel teilen diesen Rat, um voranzukommen:",
+    "interpretation.angels.template.message.var8":"Eine göttliche Präsenz wendet sich dir zu {name}. Hier ist die Botschaft, die du bereit bist zu empfangen:",
 
-    //Übersetzungsschlüssel-Variationen
-    "interpretation.tarot.template.advice.var1":
-      "Mein Rat, {name}: mit deiner {zodiacSign}-Natur,",
-    "interpretation.tarot.template.advice.var2":
-      "{genderText} {name}, als {zodiacSign},",
-    "interpretation.tarot.template.advice.var3":
-      "Hör gut zu, {name}: geführt von deiner {zodiacSign}-Natur,",
-    "interpretation.tarot.template.advice.var4":
-      "Merke dir dies, {name}: deine {zodiacSign}-Energie,",
-    "interpretation.tarot.template.advice.var5":
-      "{name}, die Sterne sprechen durch deine {zodiacSign}-Natur.",
-    "interpretation.tarot.template.advice.var6":
-      "Denk daran, {name}: dein {zodiacSign}-Zeichen birgt eine wesentliche Wahrheit.",
-    "interpretation.tarot.template.advice.var7":
-      "{genderText} {name}, dein Schicksal erwacht im Licht des {zodiacSign}.",
-    "interpretation.tarot.template.advice.var8":
-      "Wisse es, {name}: als {zodiacSign} trägst du ein einzigartiges Licht in dir.",
+    // Verschiedene Ratschläge ENGEL (Satzende)
+    "interpretation.advice.var1":"Dein Schutzengel möchte, dass du weißt, dass deine Intuition ein sicherer Führer ist: vertraue ihr vollständig.",
+    "interpretation.advice.var2":"Die Engel erinnern dich daran, auf dein Herz zu hören: es kennt bereits die Richtung, die dir Frieden bringt.",
+    "interpretation.advice.var3":"Dein Lichtführer lädt dich ein, auf die Zeichen um dich herum zu achten, denn nichts geschieht zufällig.",
+    "interpretation.advice.var4":"Die himmlischen Wesen möchten, dass du im Einklang mit dem bleibst, was du tief empfindest. Dort liegt deine Wahrheit.",
+    "interpretation.advice.var5":"Dein Schutzengel ermutigt dich, an deine innere Stärke zu glauben: sie verlässt dich niemals.",
+    "interpretation.advice.var6":"Ein göttliches Flüstern rät dir, dich den sich bietenden Möglichkeiten zu öffnen: sie sind da, um dir zu helfen.",
+    "interpretation.advice.var7":"Die Engel bitten dich, langsamer zu werden und zu atmen: Geduld wird deinen Weg auf natürliche Weise klären.",
+    "interpretation.advice.var8":"Dein Engelguide möchte, dass du weiterhin mit Vertrauen voranschreitest: deine Bemühungen sind bereits gesegnet.",
+    "interpretation.advice.var9":"Ein himmlisches Licht lädt dich ein, deinen Optimismus zu bewahren, da er hoch positive Energien zu dir zieht.",
+    "interpretation.advice.var10":"Dein Schutzengel flüstert dir zu, dein Selbstvertrauen zu stärken: es öffnet die Türen, auf die du lange gewartet hast.",
 
-    // Vorlagen für die abschließende Botschaft
-    "interpretation.angels.template.message.var1":
-      "Engelbotschaft: {genderText} {name}, mit deiner {zodiacSign}-Essenz",
-    "interpretation.angels.template.message.var2":
-      "Die Engel übermitteln dir, {name}: als {zodiacSign}",
-    "interpretation.angels.template.message.var3":
-      "Himmlische Führung, {name}: wie ein echter {zodiacSign}",
-    "interpretation.angels.template.message.var4":
-      "Engelssegen, {name}, deine {zodiacSign}-Natur leuchtet hell",
-    "interpretation.angels.template.message.var5":
-      "{name}, die Engel ehren dein {zodiacSign}-Licht.",
-    "interpretation.angels.template.message.var6":
-      "Höre hin, {name}: deine {zodiacSign}-Seele empfängt eine göttliche Botschaft.",
-    "interpretation.angels.template.message.var7":
-      "Himmlische Botschaft für dich, {name} — als {zodiacSign} wirst du geführt{genderSuffix}.",
-    "interpretation.angels.template.message.var8":
-      "Die himmlischen Sphären flüstern dir zu, {name}: deine {zodiacSign}-Essenz erwacht.",
+    // Anfänge von TAROT-Sätzen
+    "interpretation.tarot.template.advice.var1":"Hör gut zu {name},",
+    "interpretation.tarot.template.advice.var2":"Mein Rat an dich {name},",
+    "interpretation.tarot.template.advice.var3":"Ich werde dir etwas sagen {name},",
+    "interpretation.tarot.template.advice.var4":"Merke dir eines {name},",
+    "interpretation.tarot.template.advice.var5":"Nimm dir einen Moment {name},",
+    "interpretation.tarot.template.advice.var6":"Ich sage es dir klar {name},",
+    "interpretation.tarot.template.advice.var7":"Hier ist mein Rat für dich {name},",
+    "interpretation.tarot.template.advice.var8":"Ich sage es dir {name},",
+    "interpretation.tarot.template.advice.var9":"Vergiss nicht {name},",
+    "interpretation.tarot.template.advice.var10":"{name},",
 
-    // Crystal Ball German
+    // Enden von TAROT-Sätzen
+    "interpretation.tarot.advice.var1":"deine aktuellen Entscheidungen werden direkte Auswirkungen auf deine Zukunft haben, also sei aufmerksam.",
+    "interpretation.tarot.advice.var2":"Vertraue deinem Instinkt und wage den Weg, der sich richtig anfühlt, auch wenn er dir etwas Angst macht.",
+    "interpretation.tarot.advice.var3":"deine Gefühle sind starke Führer, folge ihnen mit Vertrauen.",
+    "interpretation.tarot.advice.var4":"manchmal ist es besser loszulassen, als Dinge zu erzwingen.",
+    "interpretation.tarot.advice.var5":"du hast alle Schlüssel zum Erfolg, also gib nicht auf!",
+    "interpretation.tarot.advice.var6":"du hast bereits alles, was du brauchst, in dir, um voranzukommen: glaube an dich!",
+    "interpretation.tarot.advice.var7":"lass dich nicht vom Zweifel aufhalten, gehe trotzdem voran.",
+    "interpretation.tarot.advice.var8": "Deine Intuition zeigt dir klar den richtigen Weg. Vertraue ihr voll und ganz!",
+    "interpretation.tarot.advice.var9":"bleib positiv, deine Energie zieht an, was du brauchst.",
+    "interpretation.tarot.advice.var10":"akzeptiere, was kommt, und geh voran, der Moment ist günstig.",
+
+      // Crystal Ball German
     "crystalBall.title": "Mystische Kristallkugel",
     "crystalBall.subtitle": "Stelle deine Frage und lass die Magie dich führen",
     "crystalBall.askPrompt": "Was ist deine Frage?",
@@ -6996,7 +6885,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.7.title.2": "🎰 Göttlicher Reichtum",
     "oracle.bonusRoll.7.message.2": "Die kosmischen Würfel fallen immer wieder zu deinen Gunsten. Es ist kein Zufall – es ist die Belohnung für alles, was du gesät hast. Empfange diesen Überfluss mit Dankbarkeit.",
     "oracle.bonusRoll.7.title.3": "🌠 Himmlische Magie",
-    "oracle.bonusRoll.7.message.3": "Die heilige Zahl schlechthin erleuchtet deinen Weg. Wunderbare Synchronizitäten säumen deinen Tag. Achte auf die Zeichen – das Universum spricht direkt zu dir.",
+    "oracle.bonusRoll.7.message.3": "Heute wird dir deine heilige Zahl helfen und den richtigen Weg zeigen. Erstaunliche Zufälle werden passieren. Halte die Augen offen, das Universum sendet dir Zeichen!",
 
     "oracle.bonusRoll.8.title.1": "💎 Kosmischer Überfluss",
     "oracle.bonusRoll.8.message.1": "Der Wohlstand fließt zu dir wie ein Fluss aus Gold. Die 8 belohnt endlich all deine Anstrengungen. Nimm diesen Überfluss ohne Schuldgefühle an – du hast ihn mehr als verdient.",
@@ -7278,27 +7167,22 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.daily.cardMessage.var10":
       'La carta "{cardName}" ti accompagna con un’energia luminosa per tutta la giornata.',
 
-    //Variazioni per "Wisdom"
-    "interpretation.daily.wisdom.var1":
-      "Come {zodiacSign}, hai la saggezza necessaria per usare bene questo consiglio. Fidati del tuo istinto e lascia che questa energia positiva guidi le tue azioni oggi.",
-    "interpretation.daily.wisdom.var2":
-      "Il tuo segno zodiacale ti dona una bella intuizione. Fidati e lasciati guidare dall’energia positiva che ti circonda.",
-    "interpretation.daily.wisdom.var3":
-      "Gli astri ti accompagnano oggi. Lascia che questa bella energia ti aiuti ad andare avanti serenamente.",
-    "interpretation.daily.wisdom.var4":
-      "Come {zodiacSign}, possiedi le chiavi per interpretare questo messaggio celeste. Usale bene durante la giornata.",
-    "interpretation.daily.wisdom.var5":
-      "Il tuo carattere da {zodiacSign} risuona perfettamente con questo consiglio. Lascia che questa armonia cosmica illumini il tuo cammino oggi.",
-    "interpretation.daily.wisdom.var6":
-      "Il cielo parla attraverso il tuo segno zodiacale. Sii attento ai segni e avanza con fiducia.",
-    "interpretation.daily.wisdom.var7":
-      "Come {zodiacSign}, sei allineato{genderSuffix} con un’energia sottile oggi. Seguila, ti porterà dove devi essere.",
-    "interpretation.daily.wisdom.var8":
-      "Il tuo segno {zodiacSign} ti guida con saggezza. Lascia il cuore aperto e la mente chiara per mostrarti la strada.",
-    "interpretation.daily.wisdom.var9":
-      "Porti dentro di te una luce unica. Che questo messaggio ti aiuti a farla brillare pienamente e con orgoglio.",
-    "interpretation.daily.wisdom.var10":
-      "La tua energia da {zodiacSign} è in risonanza con le vibrazioni del giorno. Accogli questo consiglio come una guida gentile e ispiratrice.",
+    //Variazioni per "Wisdom" tirage du jour
+    "interpretation.daily.wisdom.var1": "Fidati del tuo istinto oggi. Se sembra giusto, vai avanti!",
+      "interpretation.daily.wisdom.var2": "Hai tutto ciò che serve per andare avanti. Credi in te stesso e agisci!",
+      "interpretation.daily.wisdom.var3": "Non complicarti la vita. Prendi la decisione che ti sembra migliore e vai!",
+      "interpretation.daily.wisdom.var4": "Apri gli occhi e cogli le opportunità che si presentano, anche le piccole.",
+      "interpretation.daily.wisdom.var5": "Lasciati guidare da ciò che già sai. Sei in grado di gestire questa giornata.",
+      "interpretation.daily.wisdom.var6": "Prenditi il tempo di notare i dettagli intorno a te, possono aiutarti a decidere.",
+      "interpretation.daily.wisdom.var7": "Ascolta ciò che senti. Se qualcosa ti sembra giusto, fallo senza esitazione!",
+      "interpretation.daily.wisdom.var8": "Mantieni la mente lucida e il cuore aperto. Le buone decisioni vengono spesso da lì.",
+      "interpretation.daily.wisdom.var9": "Non sottovalutare ciò che già sai. Hai le risorse per andare avanti.",
+      "interpretation.daily.wisdom.var10": "Rimani attento alle opportunità e fai scelte che ti avvicinano ai tuoi obiettivi.",
+      "interpretation.daily.wisdom.var11": "Concentrati su ciò che conta per te. Non farti distrarre dal resto.",
+      "interpretation.daily.wisdom.var12": "Osa andare avanti anche se non tutto è perfetto. Il semplice fatto di agire fa la differenza.",
+      "interpretation.daily.wisdom.var13": "Accetta che non puoi controllare tutto. Fai del tuo meglio e basta!",
+      "interpretation.daily.wisdom.var14": "Non lasciare che la paura ti blocchi. Hai già ciò che serve per riuscire.",
+      "interpretation.daily.wisdom.var15": "Sii presente e attento oggi. Prendi le tue decisioni, vai avanti e non dubitare di te stesso.",
 
     // Variazioni per "Buona giornata"
     "interpretation.daily.closing.var1":
@@ -7437,114 +7321,78 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.runes.Othala.meaning": "Eredità, proprietà, tradizione familiare",
 
     // Card Names and Meanings - Daily
-    "cards.daily.NouveauDepart.name": "Nuovo Inizio",
-    "cards.daily.NouveauDepart.meaning":
-      "Oggi segna la fine di un ciclo importante e l’apertura di una pagina completamente nuova nella tua vita. È un momento privilegiato per osare superare le barriere che ti trattenevano finora, sia nel campo personale, professionale o sentimentale. L’universo ti invia un messaggio di incoraggiamento: avanza senza paura, fidati della tua intuizione e sii ricettivo alle opportunità che si presentano. Ogni piccolo passo che compi oggi, anche se sembra modesto, costruisce le fondamenta per un futuro più ricco, sereno e profondamente appagante. Questa rinascita ti invita a lasciare il passato, a rinnovarti e ad abbracciare pienamente i cambiamenti che ti condurranno al tuo benessere.",
-    "cards.daily.Patience.name": "Pazienza",
-    "cards.daily.Patience.meaning":
-      "Questo tiro ricorda che alcune cose impiegano tempo per manifestarsi. Non scoraggiarti se i risultati tardano ad arrivare: la pazienza è il tuo più grande alleato oggi. Prenditi il tempo per osservare, respirare profondamente e accettare il ritmo naturale degli eventi. La tranquillità interiore che coltiverai ti permetterà di restare sereno di fronte alle sfide e sarà la chiave per attrarre successo e opportunità al momento giusto. Ricorda che tutto arriva al momento giusto, e che la perseveranza paga sempre.",
-    "cards.daily.Creativite.name": "Creatività",
-    "cards.daily.Creativite.meaning":
-      "La tua mente è particolarmente fertile oggi. Lascia che le tue idee sgorghino liberamente, anche le più inaspettate, perché potrebbero trasformarsi in soluzioni brillanti o progetti promettenti. La creatività non è solo artistica: illumina anche le tue scelte, relazioni e sfide. Ascolta le tue ispirazioni profonde e osa concretizzarle con fiducia. Liberando questa energia creativa, apri la porta a opportunità inedite che nutriranno il tuo sviluppo personale e professionale. Non esitare a sperimentare e a seguire la tua intuizione: la tua originalità è oggi la tua forza più grande.",
-    "cards.daily.Amour.name": "Amore",
-    "cards.daily.Amour.meaning":
-      "L’energia di oggi è rivolta al cuore. Esprimi la tua tenerezza e gratitudine verso i tuoi cari, perché un semplice gesto può avere un grande impatto. Se sei in coppia, rafforza i tuoi legami con attenzioni sincere e autentiche che nutrono la relazione. Se sei single, apriti alla possibilità di nuovi incontri: l’amore potrebbe manifestarsi dove meno te lo aspetti. Ascolta le tue emozioni e lascia che il tuo cuore guidi le tue azioni. Questa giornata favorisce scambi affettuosi e momenti di complicità, essenziali per il tuo equilibrio emotivo.",
-    "cards.daily.Courage.name": "Coraggio",
-    "cards.daily.Courage.meaning":
-      "Oggi potrebbero presentarsi delle sfide, ma possiedi la forza e la resilienza per superarle. Il coraggio non significa assenza di paura, ma la capacità di agire nonostante essa. Affrontando i tuoi ostacoli con determinazione, guadagnerai fiducia e maturità. Ogni passo coraggioso che farai rafforzerà il tuo cammino e affermerà il tuo valore, portando a una crescita personale profonda.",
-    "cards.daily.Intuition.name": "Intuizione",
-    "cards.daily.Intuition.meaning":
-      "La tua voce interiore è particolarmente forte oggi. Fai fiducia ai tuoi presentimenti, anche se non puoi sempre spiegarli razionalmente. Ti guideranno verso scelte maggiormente allineate con i tuoi bisogni veri e il percorso che stai seguendo. Prenditi un momento di silenzio per ascoltare le tue sensazioni, perché la tua intuizione custodisce le risposte alle domande che ti poni in questo momento e ti sosterrà nelle decisioni importanti.",
-    "cards.daily.Gratitude.name": "Gratitudine",
-    "cards.daily.Gratitude.meaning":
-      "Prenditi un momento per apprezzare profondamente ciò che hai già. Riconoscere le tue benedizioni, anche le più piccole, attrae ulteriore positività nella tua vita e apre la porta a nuove opportunità. Coltivare la gratitudine oggi ti aiuterà a nutrire la pace interiore e a rafforzare i legami con gli altri.",
-    "cards.daily.Communication.name": "Comunicazione",
-    "cards.daily.Communication.meaning":
-      "Esprimiti con chiarezza e benevolenza oggi. Le tue parole hanno il potere di placare tensioni, ispirare chi ti circonda e rafforzare legami importanti nella tua vita. Una comunicazione sincera e rispettosa apre la strada a una migliore comprensione reciproca e scambi profondamente arricchenti.",
-    "cards.daily.Equilibre.name": "Equilibrio",
-    "cards.daily.Equilibre.meaning":
-      "Oggi cerca equilibrio tra ciò che offri agli altri e ciò di cui hai bisogno per te stesso. È importante non dimenticarti in nome delle responsabilità. Prendersi cura di sé significa anche custodire la tua energia e il tuo benessere interiore. Coltivando questa armonia, avanzerai più allineato e sereno nel tuo cammino.",
-    "cards.daily.Confiance.name": "Fiducia",
-    "cards.daily.Confiance.meaning":
-      "Oggi, credi pienamente nelle tue capacità e avanza con un’energia sicura. La fiducia in te stessə è una forza interiore preziosa che ti rende più forte, più chiaro nelle scelte e più allineato con la tua verità. Anche se il dubbio si presenta, ricorda che ogni passo fatto con fede ti avvicina ai tuoi veri successi.",
-    "cards.daily.Lacher-prise.name": "Lasciare Andare",
-    "cards.daily.Lacher-prise.meaning":
-      "Oggi, liberati dei pesi del passato e delle preoccupazioni che non ti appartengono più. Ciò che non puoi controllare non merita di prosciugare la tua energia. Accettando di lasciar andare, apri la strada a una maggiore pace interiore e chiarezza. Ti sentirai più leggerə, più centrato e prontə ad accogliere ciò che arriva con fiducia.",
-    "cards.daily.Joie.name": "Gioia",
-    "cards.daily.Joie.meaning":
-      "Oggi, apri il cuore alla gioia semplice dei piccoli momenti: un sorriso, un gesto sincero, un pensiero luminoso. Anche in mezzo agli impegni, questa energia positiva può trasformare il tuo stato d’animo. Coltivando la gioia, diventi più radioso, più presente e attiri naturalmente esperienze che nutrono il tuo benessere.",
-    "cards.daily.Sagesse.name": "Saggezza",
-    "cards.daily.Sagesse.meaning":
-      "Oggi, rallenta e concediti un momento di riflessione prima di agire. La tua saggezza interiore è un’alleata preziosa: ti guida, ti protegge e illumina le tue scelte. Connettendoti a questa voce calma e lucida, diventerai più radicato, più chiaro nelle decisioni e capace di vedere oltre le apparenze.",
-    "cards.daily.Transformation.name": "Trasformazione",
-    "cards.daily.Transformation.meaning":
-      "Oggi, accogli i cambiamenti che si presentano, anche se all’inizio possono sembrare destabilizzanti. Queste trasformazioni non arrivano per caso: ti spingono a crescere, evolvere e avvicinarti alla migliore versione di te stessə. Abbracciando questo movimento, diventerai più allineato, più fiducioso e prontə a compiere un nuovo passo.",
-    "cards.daily.Abondance.name": "Abbondanza",
-    "cards.daily.Abondance.meaning":
-      "Ricorda che possiedi già tutte le risorse necessarie per avere successo. L’abbondanza si manifesta davvero quando credi pienamente nel tuo potenziale e ti apri alle opportunità che la vita ti offre. Abbi fiducia nelle tue capacità, perché dentro di te c’è la forza per attrarre tutto ciò di cui hai bisogno per prosperare oggi e domani.",
-    "cards.daily.Paix.name": "Pace",
-    "cards.daily.Paix.meaning":
-      "Coltiva la pace interiore liberandoti dalle tensioni e dai conflitti che ti circondano. La serenità che troverai ti porterà chiarezza mentale e armonia, essenziali per proseguire con calma oggi.",
-    "cards.daily.Force.name": "Forza",
-    "cards.daily.Force.meaning":
-      "Attingi alla tua forza interiore: è molto più grande di quanto immagini. Ti sostiene nelle sfide, ti dona coraggio e resilienza, e ti aiuta ad avanzare con fiducia, nonostante gli ostacoli.",
-    "cards.daily.Pardon.name": "Perdono",
-    "cards.daily.Pardon.meaning":
-      "Offri il perdono, a te stessə e agli altri. Questo gesto potente libera il tuo cuore dai pesi del passato e apre la strada a una vera guarigione interiore, permettendoti di andare avanti più leggerə e in pace.",
-    "cards.daily.Espoir.name": "Speranza",
-    "cards.daily.Espoir.meaning":
-      "Mantieni la speranza, anche nei momenti difficili. La luce torna sempre, proprio come il sole dopo la notte più buia. Questo messaggio ti invita a coltivare la pazienza e la fiducia in un futuro migliore, perché ogni prova prepara un rinnovamento promettente che fiorirà al momento giusto.",
-    "cards.daily.Compassion.name": "Compassione",
-    "cards.daily.Compassion.meaning":
-      "Abbi compassione per te stessə e per gli altri. La gentilezza addolcisce i cuori e rafforza i legami. Coltivando questa dolcezza, crei uno spazio di guarigione e comprensione, essenziale tanto per te quanto per chi ti circonda. Questo messaggio ti invita ad aprire pienamente il cuore oggi, ad ascoltare senza giudicare e a offrire il tuo sostegno con empatia. Agendo così, contribuisci a un clima armonioso e fai crescere la tua pace interiore.",
-    "cards.daily.Inspiration.name": "Ispirazione",
-    "cards.daily.Inspiration.meaning":
-      "Apri bene gli occhi e la mente a tutto ciò che ti circonda. L’ispirazione si nasconde nei dettagli del quotidiano, pronta a nutrire la tua creatività e ad accendere nuove idee. Questo messaggio ti incoraggia a rimanere curiosə e ricettivə, ad accogliere i segni e le scintille che possono illuminare il tuo cammino. Prenditi il tempo per ascoltare questi impulsi: ti guideranno verso soluzioni innovative e momenti di gioia rinnovata.",
-    "cards.daily.Determination.name": "Determinazione",
-    "cards.daily.Determination.meaning":
-      "La tua perseveranza e la tua volontà sono i tuoi migliori alleati oggi. Anche se incontrerai ostacoli, continua ad avanzare con fiducia e determinazione. La tua tenacia ti permetterà di superare le difficoltà e ti aprirà la strada verso un successo duraturo. Questo messaggio ti invita a non arrenderti: ogni sforzo conta e ti avvicina ai tuoi obiettivi più cari.",
-    "cards.daily.Aventure.name": "Avventura",
-    "cards.daily.Aventure.meaning":
-      "Esci dalla tua routine e osa vivere nuove esperienze oggi. Che siano grandi o piccole, queste avventure nutriranno il tuo spirito e scalderanno il tuo cuore. Concediti del tempo per esplorare, meravigliarti e lasciarti sorprendere. Questo messaggio ti invita ad ampliare i tuoi orizzonti e ad accogliere il cambiamento con entusiasmo.",
-    "cards.daily.Reconciliation.name": "Riconciliazione",
-    "cards.daily.Reconciliation.meaning":
-      "È tempo di guarire le tue ferite interiori e fare pace con il passato. La riconciliazione ti porta libertà e leggerezza, permettendoti di avanzare con maggiore serenità. Accogli questo processo con gentilezza e lasciati trasformare da questa guarigione profonda.",
-    "cards.daily.Innovation.name": "Innovazione",
-    "cards.daily.Innovation.meaning":
-      "Oggi, lascia fluire le tue idee originali. La tua capacità di pensare in modo diverso è una vera ricchezza che può trasformare i tuoi progetti e ispirare chi ti sta attorno. Non esitare a uscire dai sentieri battuti ed esprimere la tua creatività unica per aprire nuove strade.",
-    "cards.daily.Connexion.name": "Connessione",
-    "cards.daily.Connexion.meaning":
-      "Rafforza i tuoi legami con gli altri, ma anche con te stessə. Le connessioni autentiche nutrono l’anima, portano sostegno e conforto, e ti ricordano che non sei mai solə. Prenditi il tempo per ascoltare e condividere con sincerità: questo ti porterà equilibrio e realizzazione.",
-    "cards.daily.Prosperite.name": "Prosperità",
-    "cards.daily.Prosperite.meaning":
-      "La prosperità arriva nella tua vita in molte forme: materiali, emotive o spirituali. Accogli questa abbondanza con gratitudine e fiducia. Sii apertə a ricevere e condividere ciò che la vita ti offre oggi, per rafforzare la tua ricchezza interiore ed esteriore.",
-    "cards.daily.Authenticite.name": "Autenticità",
-    "cards.daily.Authenticite.meaning":
-      "Rimani fedelə ai tuoi valori e alla tua vera essenza. La tua autenticità attira le persone giuste e ti guida verso scelte in armonia con il tuo cuore. Non aver paura di mostrare chi sei davvero: è nella sincerità che troverai forza e pace interiore.",
-    "cards.daily.Revelation.name": "Rivelazione",
-    "cards.daily.Revelation.meaning":
-      "Una verità nascosta o una presa di coscienza importante sta per emergere. Rimani attentə e mantieni la mente aperta per accogliere questa rivelazione. Sii prontə a ricevere questa nuova luce: potrà trasformare la tua visione e aiutarti ad avanzare con maggiore chiarezza.",
-    "cards.daily.Protection.name": "Protezione",
-    "cards.daily.Protection.meaning":
-      "Sei circondatə da benevolenza e da forze protettrici che vegliano su di te. Fidati di questa protezione: ti accompagna nelle scelte e nei passi che compi. Non c’è nulla da temere oggi: lascia che questa energia rassicurante ti calmi e ti guidi.",
-    "cards.daily.Renaissance.name": "Rinascita",
-    "cards.daily.Renaissance.meaning":
-      "Un nuovo ciclo si apre davanti a te, invitandoti a lasciar andare tutto ciò che appartiene al passato. Accogli questa rinascita come un’opportunità preziosa per reinventarti, crescere e rinnovarti. Osa voltare pagina per abbracciare pienamente questo nuovo inizio.",
-    "cards.daily.Clarte.name": "Chiarezza",
-    "cards.daily.Clarte.meaning":
-      "Le risposte che cerchi presto si riveleranno. Prenditi del tempo, osserva con attenzione i segnali che ti circondano e lascia che la nebbia si dissolva gradualmente. Questa nuova chiarezza ti aiuterà a prendere decisioni consapevoli e allineate con la tua verità interiore. Suggerimento: trova un momento di calma oggi per riflettere con serenità prima di agire, così potrai vedere la situazione da un’angolazione più limpida.",
-    "cards.daily.Passion.name": "Passione",
-    "cards.daily.Passion.meaning":
-      "Segui ciò che ti appassiona veramente, perché il tuo entusiasmo è un’energia potente che può trasformare la tua vita. Nutri questa fiamma interiore, concedile spazio per crescere e lascia che guidi le tue scelte verso ciò che ti fa sentire vivo. Suggerimento: dedica del tempo oggi a ciò che accende il tuo cuore, anche nelle piccole azioni, questo rafforzerà la tua motivazione e la gioia di vivere.",
-    "cards.daily.Equite.name": "Equità",
-    "cards.daily.Equite.meaning":
-      "Giustizia ed equilibrio stanno per ristabilirsi nelle tue questioni. Rimani integro e paziente: le tue azioni giuste daranno frutti e riporteranno armonia intorno a te. Suggerimento: mantieni la calma davanti alle sfide e continua ad agire con onestà e rispetto, anche se i risultati tardano ad arrivare.",
-    "cards.daily.Harmonie.name": "Armonia",
-    "cards.daily.Harmonie.meaning":
-      "Tutti gli elementi della tua vita tendono ad allinearsi oggi. Approfitta di questo periodo per consolidare ciò che funziona bene e per instaurare routine che nutrano il tuo benessere fisico, mentale ed emotivo. Suggerimento: prenditi il tempo per ascoltarti e bilanciare le tue diverse aree di vita per mantenere questa bella armonia nel tempo.",
+       "cards.daily.NouveauDepart.name": "Nuovo Inizio",
+        "cards.daily.NouveauDepart.meaning": "Oggi segna la fine di un ciclo importante e l’apertura di una pagina completamente nuova nella tua vita. È un momento privilegiato per osare superare le barriere che ti trattenevano finora, sia nel campo personale, professionale o sentimentale. L’universo ti invia un messaggio di incoraggiamento: avanza senza paura, fidati della tua intuizione e sii ricettivo alle opportunità che si presentano. Ogni piccolo passo che compi oggi, anche se sembra modesto, costruisce le fondamenta per un futuro più ricco, sereno e profondamente appagante. Questa rinascita ti invita a lasciare il passato, a rinnovarti e ad abbracciare pienamente i cambiamenti che ti condurranno al tuo benessere.",
+        "cards.daily.Patience.name": "Pazienza",
+        "cards.daily.Patience.meaning": "Questo tiro ricorda che alcune cose impiegano tempo per manifestarsi. Non scoraggiarti se i risultati tardano ad arrivare: la pazienza è il tuo più grande alleato oggi. Prenditi il tempo per osservare, respirare profondamente e accettare il ritmo naturale degli eventi. La tranquillità interiore che coltiverai ti permetterà di restare sereno di fronte alle sfide e sarà la chiave per attrarre successo e opportunità al momento giusto. Ricorda che tutto arriva al momento giusto, e che la perseveranza paga sempre.",
+        "cards.daily.Creativite.name": "Creatività",
+        "cards.daily.Creativite.meaning": "La tua mente è particolarmente fertile oggi. Lascia che le tue idee sgorghino liberamente, anche le più inaspettate, perché potrebbero trasformarsi in soluzioni brillanti o progetti promettenti. La creatività non è solo artistica: illumina anche le tue scelte, relazioni e sfide. Ascolta le tue ispirazioni profonde e osa concretizzarle con fiducia. Liberando questa energia creativa, apri la porta a opportunità inedite che nutriranno il tuo sviluppo personale e professionale. Non esitare a sperimentare e a seguire la tua intuizione: la tua originalità è oggi la tua forza più grande.",
+        "cards.daily.Amour.name": "Amore",
+        "cards.daily.Amour.meaning": "L’energia di oggi è rivolta al cuore. Esprimi la tua tenerezza e gratitudine verso i tuoi cari, perché un semplice gesto può avere un grande impatto. Se sei in coppia, rafforza i tuoi legami con attenzioni sincere e autentiche che nutrono la relazione. Se sei single, apriti alla possibilità di nuovi incontri: l’amore potrebbe manifestarsi dove meno te lo aspetti. Ascolta le tue emozioni e lascia che il tuo cuore guidi le tue azioni. Questa giornata favorisce scambi affettuosi e momenti di complicità, essenziali per il tuo equilibrio emotivo.",
+        "cards.daily.Courage.name": "Coraggio",
+        "cards.daily.Courage.meaning": "Oggi potrebbero presentarsi delle sfide, ma possiedi la forza e la resilienza per superarle. Il coraggio non significa assenza di paura, ma la capacità di agire nonostante essa. Affrontando i tuoi ostacoli con determinazione, guadagnerai fiducia e maturità. Ogni passo coraggioso che farai rafforzerà il tuo cammino e affermerà il tuo valore, portando a una crescita personale profonda.",
+        "cards.daily.Intuition.name": "Intuizione",
+        "cards.daily.Intuition.meaning": "La tua voce interiore è particolarmente forte oggi. Fai fiducia ai tuoi presentimenti, anche se non puoi sempre spiegarli razionalmente. Ti guideranno verso scelte maggiormente allineate con i tuoi bisogni veri e il percorso che stai seguendo. Prenditi un momento di silenzio per ascoltare le tue sensazioni, perché la tua intuizione custodisce le risposte alle domande che ti poni in questo momento e ti sosterrà nelle decisioni importanti.",
+        "cards.daily.Gratitude.name": "Gratitudine",
+        "cards.daily.Gratitude.meaning": "Prenditi un momento per apprezzare profondamente ciò che hai già. Riconoscere le tue benedizioni, anche le più piccole, attrae ulteriore positività nella tua vita e apre la porta a nuove opportunità. Coltivare la gratitudine oggi ti aiuterà a nutrire la pace interiore e a rafforzare i legami con gli altri.",
+        "cards.daily.Communication.name": "Comunicazione",
+        "cards.daily.Communication.meaning": "Esprimiti con chiarezza e benevolenza oggi. Le tue parole hanno il potere di placare tensioni, ispirare chi ti circonda e rafforzare legami importanti nella tua vita. Una comunicazione sincera e rispettosa apre la strada a una migliore comprensione reciproca e scambi profondamente arricchenti.",
+        "cards.daily.Equilibre.name": "Equilibrio",
+        "cards.daily.Equilibre.meaning": "Oggi cerca equilibrio tra ciò che offri agli altri e ciò di cui hai bisogno per te stesso. È importante non dimenticarti in nome delle responsabilità. Prendersi cura di sé significa anche custodire la tua energia e il tuo benessere interiore. Coltivando questa armonia, avanzerai più allineato e sereno nel tuo cammino.",
+        "cards.daily.Confiance.name": "Fiducia",
+        "cards.daily.Confiance.meaning": "Oggi, credi pienamente nelle tue capacità e avanza con un’energia sicura. La fiducia in te stessə è una forza interiore preziosa che ti rende più forte, più chiaro nelle scelte e più allineato con la tua verità. Anche se il dubbio si presenta, ricorda che ogni passo fatto con fede ti avvicina ai tuoi veri successi.",
+        "cards.daily.Lacher-prise.name": "Lasciare Andare",
+        "cards.daily.Lacher-prise.meaning": "Oggi, liberati dei pesi del passato e delle preoccupazioni che non ti appartengono più. Ciò che non puoi controllare non merita di prosciugare la tua energia. Accettando di lasciar andare, apri la strada a una maggiore pace interiore e chiarezza. Ti sentirai più leggerə, più centrato e prontə ad accogliere ciò che arriva con fiducia.",
+        "cards.daily.Joie.name": "Gioia",
+        "cards.daily.Joie.meaning": "Oggi, apri il cuore alla gioia semplice dei piccoli momenti: un sorriso, un gesto sincero, un pensiero luminoso. Anche in mezzo agli impegni, questa energia positiva può trasformare il tuo stato d’animo. Coltivando la gioia, diventi più radioso, più presente e attiri naturalmente esperienze che nutrono il tuo benessere.",
+        "cards.daily.Sagesse.name": "Saggezza",
+        "cards.daily.Sagesse.meaning": "Oggi, rallenta e concediti un momento di riflessione prima di agire. La tua saggezza interiore è un’alleata preziosa: ti guida, ti protegge e illumina le tue scelte. Connettendoti a questa voce calma e lucida, diventerai più radicato, più chiaro nelle decisioni e capace di vedere oltre le apparenze.",
+        "cards.daily.Transformation.name": "Trasformazione",
+        "cards.daily.Transformation.meaning": "Oggi, accogli i cambiamenti che si presentano, anche se all’inizio possono sembrare destabilizzanti. Queste trasformazioni non arrivano per caso: ti spingono a crescere, evolvere e avvicinarti alla migliore versione di te stessə. Abbracciando questo movimento, diventerai più allineato, più fiducioso e prontə a compiere un nuovo passo.",
+        "cards.daily.Abondance.name": "Abbondanza",
+        "cards.daily.Abondance.meaning": "Ricorda che possiedi già tutte le risorse necessarie per avere successo. L’abbondanza si manifesta davvero quando credi pienamente nel tuo potenziale e ti apri alle opportunità che la vita ti offre. Abbi fiducia nelle tue capacità, perché dentro di te c’è la forza per attrarre tutto ciò di cui hai bisogno per prosperare oggi e domani.",
+        "cards.daily.Paix.name": "Pace",
+        "cards.daily.Paix.meaning": "Coltiva la pace interiore liberandoti dalle tensioni e dai conflitti che ti circondano. La serenità che troverai ti porterà chiarezza mentale e armonia, essenziali per proseguire con calma oggi.",
+        "cards.daily.Force.name": "Forza",
+        "cards.daily.Force.meaning": "Attingi alla tua forza interiore: è molto più grande di quanto immagini. Ti sostiene nelle sfide, ti dona coraggio e resilienza, e ti aiuta ad avanzare con fiducia, nonostante gli ostacoli.",
+        "cards.daily.Pardon.name": "Perdono",
+        "cards.daily.Pardon.meaning": "Offri il perdono, a te stessə e agli altri. Questo gesto potente libera il tuo cuore dai pesi del passato e apre la strada a una vera guarigione interiore, permettendoti di andare avanti più leggerə e in pace.",
+        "cards.daily.Espoir.name": "Speranza",
+        "cards.daily.Espoir.meaning": "Mantieni la speranza, anche nei momenti difficili. La luce torna sempre, proprio come il sole dopo la notte più buia. Questo messaggio ti invita a coltivare la pazienza e la fiducia in un futuro migliore, perché ogni prova prepara un rinnovamento promettente che fiorirà al momento giusto.",
+        "cards.daily.Compassion.name": "Compassione",
+        "cards.daily.Compassion.meaning": "Abbi compassione per te stessə e per gli altri. La gentilezza addolcisce i cuori e rafforza i legami. Coltivando questa dolcezza, crei uno spazio di guarigione e comprensione, essenziale tanto per te quanto per chi ti circonda. Questo messaggio ti invita ad aprire pienamente il cuore oggi, ad ascoltare senza giudicare e a offrire il tuo sostegno con empatia. Agendo così, contribuisci a un clima armonioso e fai crescere la tua pace interiore.",
+        "cards.daily.Inspiration.name": "Ispirazione",
+        "cards.daily.Inspiration.meaning": "Apri bene gli occhi e la mente a tutto ciò che ti circonda. L’ispirazione si nasconde nei dettagli del quotidiano, pronta a nutrire la tua creatività e ad accendere nuove idee. Questo messaggio ti incoraggia a rimanere curiosə e ricettivə, ad accogliere i segni e le scintille che possono illuminare il tuo cammino. Prenditi il tempo per ascoltare questi impulsi: ti guideranno verso soluzioni innovative e momenti di gioia rinnovata.",
+        "cards.daily.Determination.name": "Determinazione",
+        "cards.daily.Determination.meaning": "La tua perseveranza e la tua volontà sono i tuoi migliori alleati oggi. Anche se incontrerai ostacoli, continua ad avanzare con fiducia e determinazione. La tua tenacia ti permetterà di superare le difficoltà e ti aprirà la strada verso un successo duraturo. Questo messaggio ti invita a non arrenderti: ogni sforzo conta e ti avvicina ai tuoi obiettivi più cari.",
+        "cards.daily.Aventure.name": "Avventura",
+        "cards.daily.Aventure.meaning": "Esci dalla tua routine e osa vivere nuove esperienze oggi. Che siano grandi o piccole, queste avventure nutriranno il tuo spirito e scalderanno il tuo cuore. Concediti del tempo per esplorare, meravigliarti e lasciarti sorprendere. Questo messaggio ti invita ad ampliare i tuoi orizzonti e ad accogliere il cambiamento con entusiasmo.",
+        "cards.daily.Reconciliation.name": "Riconciliazione",
+        "cards.daily.Reconciliation.meaning": "È tempo di guarire le tue ferite interiori e fare pace con il passato. La riconciliazione ti porta libertà e leggerezza, permettendoti di avanzare con maggiore serenità. Accogli questo processo con gentilezza e lasciati trasformare da questa guarigione profonda.",
+        "cards.daily.Innovation.name": "Innovazione",
+        "cards.daily.Innovation.meaning": "Oggi, lascia fluire le tue idee originali. La tua capacità di pensare in modo diverso è una vera ricchezza che può trasformare i tuoi progetti e ispirare chi ti sta attorno. Non esitare a uscire dai sentieri battuti ed esprimere la tua creatività unica per aprire nuove strade.",
+        "cards.daily.Connexion.name": "Connessione",
+        "cards.daily.Connexion.meaning": "Rafforza i tuoi legami con gli altri, ma anche con te stessə. Le connessioni autentiche nutrono l’anima, portano sostegno e conforto, e ti ricordano che non sei mai solə. Prenditi il tempo per ascoltare e condividere con sincerità: questo ti porterà equilibrio e realizzazione.",
+        "cards.daily.Prosperite.name": "Prosperità",
+        "cards.daily.Prosperite.meaning": "La prosperità arriva nella tua vita in molte forme: materiali, emotive o spirituali. Accogli questa abbondanza con gratitudine e fiducia. Sii apertə a ricevere e condividere ciò che la vita ti offre oggi, per rafforzare la tua ricchezza interiore ed esteriore.",
+        "cards.daily.Authenticite.name": "Autenticità",
+        "cards.daily.Authenticite.meaning": "Rimani fedelə ai tuoi valori e alla tua vera essenza. La tua autenticità attira le persone giuste e ti guida verso scelte in armonia con il tuo cuore. Non aver paura di mostrare chi sei davvero: è nella sincerità che troverai forza e pace interiore.",
+        "cards.daily.Revelation.name": "Rivelazione",
+        "cards.daily.Revelation.meaning": "Una verità nascosta o una presa di coscienza importante sta per emergere. Rimani attentə e mantieni la mente aperta per accogliere questa rivelazione. Sii prontə a ricevere questa nuova luce: potrà trasformare la tua visione e aiutarti ad avanzare con maggiore chiarezza.",
+        "cards.daily.Protection.name": "Protezione",
+        "cards.daily.Protection.meaning": "Sei circondatə da benevolenza e da forze protettrici che vegliano su di te. Fidati di questa protezione: ti accompagna nelle scelte e nei passi che compi. Non c’è nulla da temere oggi: lascia che questa energia rassicurante ti calmi e ti guidi.",
+        "cards.daily.Renaissance.name": "Rinascita",
+        "cards.daily.Renaissance.meaning": "Un nuovo ciclo si apre davanti a te, invitandoti a lasciar andare tutto ciò che appartiene al passato. Accogli questa rinascita come un’opportunità preziosa per reinventarti, crescere e rinnovarti. Osa voltare pagina per abbracciare pienamente questo nuovo inizio.",
+        "cards.daily.Clarte.name": "Chiarezza",
+        "cards.daily.Clarte.meaning": "Le risposte che cerchi presto si riveleranno. Prenditi del tempo, osserva con attenzione i segnali che ti circondano e lascia che la nebbia si dissolva gradualmente. Questa nuova chiarezza ti aiuterà a prendere decisioni consapevoli e allineate con la tua verità interiore. Suggerimento: trova un momento di calma oggi per riflettere con serenità prima di agire, così potrai vedere la situazione da un’angolazione più limpida.",
+        "cards.daily.Passion.name": "Passione",
+    "cards.daily.Passion.meaning": "Segui ciò che ti appassiona veramente, perché il tuo entusiasmo è un’energia potente che può trasformare la tua vita. Nutri questa fiamma interiore, concedile spazio per crescere e lascia che guidi le tue scelte verso ciò che ti fa sentire vivo. Suggerimento: dedica del tempo oggi a ciò che accende il tuo cuore, anche nelle piccole azioni, questo rafforzerà la tua motivazione e la gioia di vivere.",
+      "cards.daily.Equite.name": "Equità",
+      "cards.daily.Equite.meaning": "Giustizia ed equilibrio stanno per ristabilirsi nelle tue questioni. Rimani integro e paziente: le tue azioni giuste daranno frutti e riporteranno armonia intorno a te. Suggerimento: mantieni la calma davanti alle sfide e continua ad agire con onestà e rispetto, anche se i risultati tardano ad arrivare.",
+      "cards.daily.Harmonie.name": "Armonia",
+      "cards.daily.Harmonie.meaning": "Tutti gli elementi della tua vita tendono ad allinearsi oggi. Approfitta di questo periodo per consolidare ciò che funziona bene e per instaurare routine che nutrano il tuo benessere fisico, mentale ed emotivo. Suggerimento: prenditi il tempo per ascoltarti e bilanciare le tue diverse aree di vita per mantenere questa bella armonia nel tempo.",
     "cards.daily.Eveil.name": "Risveglio",
-    "cards.daily.Eveil.meaning":
-      "La tua coscienza si espande oggi, aprendo la porta a nuove prospettive e a una migliore comprensione di te stesso e del mondo che ti circonda. Accogli queste consapevolezze con apertura e curiosità: esse possono trasformare il tuo sguardo sulla vita e guidarti verso passi più autentici. Suggerimento: prenditi il tempo di riflettere su ciò che queste nuove rivelazioni significano per te e osa agire in accordo con questa nuova chiarezza.",
+      "cards.daily.Eveil.meaning": "La tua coscienza si espande oggi, aprendo la porta a nuove prospettive e a una migliore comprensione di te stesso e del mondo che ti circonda. Accogli queste consapevolezze con apertura e curiosità: esse possono trasformare il tuo sguardo sulla vita e guidarti verso passi più autentici. Suggerimento: prenditi il tempo di riflettere su ciò che queste nuove rivelazioni significano per te e osa agire in accordo con questa nuova chiarezza.",
     "cards.daily.Generosite.name": "Generosità",
     "cards.daily.Generosite.meaning":
       "Dona oggi senza misura, non per dovere, ma col cuore. Questo gesto sincero e disinteressato creerà un cerchio di reciprocità intorno a te e attrarrà esperienze benefiche che arricchiranno la tua vita. Suggerimento: sii attento ai bisogni degli altri, senza però dimenticarti di te stesso in questo slancio generoso.",
@@ -8490,62 +8338,51 @@ const translations: Record<Language, Record<string, string>> = {
 
     // ========== CONSIGLI VARIATI ==========
 
-    "interpretation.advice.var1":
-      "fidati del tuo istinto. Hai tutto quello che serve per riuscire!",
-    "interpretation.advice.var2":
-      "ascolta la tua saggezza interiore. Non ti tradirà mai!",
-    "interpretation.advice.var3":
-      "segui il tuo cuore e le tue intuizioni. Ti guidano verso la felicità!",
-    "interpretation.advice.var4":
-      "rimani conness{genderSuffix} ai tuoi valori. Sono la tua migliore guida!",
-    "interpretation.advice.var5":
-      "mantieni fede nelle tue capacità. Sei più forte{genderSuffix} di quanto pensi!",
-    "interpretation.advice.var6":
-      "rimani apert{genderSuffix} alle opportunità. L'universo lavora per te!",
-    "interpretation.advice.var7":
-      "coltiva la tua pazienza. Tutto arriva al momento perfetto!",
-    "interpretation.advice.var8":
-      "mantieni la tua determinazione. I tuoi sforzi saranno ricompensati!",
-    "interpretation.advice.var9":
-      "preserva il tuo ottimismo. Attira le migliori energie!",
-    "interpretation.advice.var10":
-      "nutri la tua fiducia. È la chiave di tutti i tuoi successi!",
+    // Template per il messaggio finale ANGELI (inizio frase)
+    "interpretation.angels.template.message.var1":"Gli angeli vegliano su di te {name} e ti inviano una guida importante:",
+    "interpretation.angels.template.message.var2":"Un messaggio dolce ti è rivolto {name}. Le guide desiderano che tu ascolti questo:",
+    "interpretation.angels.template.message.var3":"Le presenze celesti ti accompagnano {name} e ti sussurrano questo messaggio:",
+    "interpretation.angels.template.message.var4":"Un’energia luminosa ti circonda oggi {name}. Ecco la guida che ti porta:",
+    "interpretation.angels.template.message.var5":"{name}, gli angeli ti avvolgono con benevolenza e ti trasmettono questo:",
+    "interpretation.angels.template.message.var6":"Una presenza angelica si avvicina a te {name}. Apri il tuo cuore a questo messaggio:",
+    "interpretation.angels.template.message.var7":"La tua anima è ascoltata {name}. Gli angeli ti condividono questo consiglio per andare avanti:",
+    "interpretation.angels.template.message.var8":"Una presenza divina si rivolge a te {name}. Ecco il messaggio che sei pronto a ricevere:",
 
-    //Chiave delle variazioni di traduzione
-    "interpretation.tarot.template.advice.var1":
-      "Il mio consiglio, {name}: con la tua natura da {zodiacSign},",
-    "interpretation.tarot.template.advice.var2":
-      "{genderText} {name}, in quanto {zodiacSign},",
-    "interpretation.tarot.template.advice.var3":
-      "Ascolta bene, {name}: guidato dalla tua natura da {zodiacSign},",
-    "interpretation.tarot.template.advice.var4":
-      "Ricorda questo, {name}: la tua energia {zodiacSign},",
-    "interpretation.tarot.template.advice.var5":
-      "{name}, gli astri parlano attraverso la tua natura da {zodiacSign}.",
-    "interpretation.tarot.template.advice.var6":
-      "Ricorda, {name}: il tuo segno {zodiacSign} custodisce una verità essenziale.",
-    "interpretation.tarot.template.advice.var7":
-      "{genderText} {name}, il tuo destino si risveglia sotto la luce di {zodiacSign}.",
-    "interpretation.tarot.template.advice.var8":
-      "Sappilo, {name}: come {zodiacSign}, porti con te una luce unica.",
+    // Consigli vari ANGELI (fine frase)
+    "interpretation.advice.var1":"Il tuo angelo custode vuole che tu sappia che la tua intuizione è una guida sicura: fidati pienamente di essa.",
+    "interpretation.advice.var2":"Gli angeli ti ricordano di ascoltare il tuo cuore: conosce già la direzione che ti porterà pace.",
+    "interpretation.advice.var3":"La tua guida di luce ti invita a prestare attenzione ai segni intorno a te, perché nulla accade per caso.",
+    "interpretation.advice.var4":"Gli esseri celesti vogliono che tu rimanga allineato con ciò che senti profondamente. Qui si trova la tua verità.",
+    "interpretation.advice.var5":"Il tuo angelo protettore ti incoraggia a credere nella tua forza interiore: non ti abbandona mai.",
+    "interpretation.advice.var6":"Un sussurro divino ti invita ad aprirti alle opportunità che si presentano: sono lì per aiutarti.",
+    "interpretation.advice.var7":"Gli angeli ti chiedono di rallentare e respirare: la pazienza permetterà al tuo cammino di chiarirsi naturalmente.",
+    "interpretation.advice.var8":"La tua guida angelica vuole che tu continui ad avanzare con fiducia: i tuoi sforzi sono già benedetti.",
+    "interpretation.advice.var9":"Una luce celeste ti invita a mantenere l’ottimismo, poiché attira verso di te energie altamente positive.",
+    "interpretation.advice.var10":"Il tuo angelo custode ti sussurra di rafforzare la fiducia in te stesso: apre le porte che aspettavi da tempo.",
 
-    // Template per il messaggio finale
-    "interpretation.angels.template.message.var1":
-      "Messaggio angelico: {genderText} {name}, con la tua essenza da {zodiacSign}",
-    "interpretation.angels.template.message.var2":
-      "Gli angeli ti parlano, {name}: in quanto {zodiacSign}",
-    "interpretation.angels.template.message.var3":
-      "Guida celeste, {name}: come un vero {zodiacSign}",
-    "interpretation.angels.template.message.var4":
-      "Benedizione angelica, {name}, la tua natura da {zodiacSign} risplende",
-    "interpretation.angels.template.message.var5":
-      "{name}, gli angeli onorano la tua luce da {zodiacSign}.",
-    "interpretation.angels.template.message.var6":
-      "Ascolta, {name}: la tua anima da {zodiacSign} riceve un messaggio divino.",
-    "interpretation.angels.template.message.var7":
-      "Messaggio celeste per te, {name} — come {zodiacSign}, sei guidat{genderSuffix}.",
-    "interpretation.angels.template.message.var8":
-      "I regni celesti ti sussurrano, {name}: la tua essenza da {zodiacSign} è in risveglio.",
+    // Inizi delle frasi TAROT
+    "interpretation.tarot.template.advice.var1":"Ascolta bene {name},",
+    "interpretation.tarot.template.advice.var2":"Il mio consiglio per te {name},",
+    "interpretation.tarot.template.advice.var3":"Ti dirò una cosa {name},",
+    "interpretation.tarot.template.advice.var4":"Sappi una cosa {name},",
+    "interpretation.tarot.template.advice.var5":"Prenditi un momento {name},",
+    "interpretation.tarot.template.advice.var6":"Te lo dico chiaramente {name},",
+    "interpretation.tarot.template.advice.var7":"Ecco cosa ti consiglio {name},",
+    "interpretation.tarot.template.advice.var8":"Te lo dico {name},",
+    "interpretation.tarot.template.advice.var9":"Non dimenticare {name},",
+    "interpretation.tarot.template.advice.var10":"{name},",
+
+    // Finali delle frasi TAROT
+    "interpretation.tarot.advice.var1":"le tue scelte attuali avranno un impatto diretto sul tuo futuro, quindi resta attento.",
+    "interpretation.tarot.advice.var2":"Fidati del tuo istinto e osa seguire la strada che ti sembra giusta, anche se ti spaventa un po'.",
+    "interpretation.tarot.advice.var3":"le tue emozioni sono guide potenti, segui loro con fiducia.",
+    "interpretation.tarot.advice.var4":"a volte è meglio lasciar andare che forzare le cose.",
+    "interpretation.tarot.advice.var5":"hai tutte le chiavi per avere successo, quindi non mollare!",
+    "interpretation.tarot.advice.var6":"hai già tutto ciò che serve dentro di te per andare avanti: credi in te stesso!",
+    "interpretation.tarot.advice.var7":"non lasciare che il dubbio ti blocchi, vai avanti comunque.",
+    "interpretation.tarot.advice.var8": "La tua intuizione ti indica chiaramente la strada giusta da seguire. Fidati completamente!",
+    "interpretation.tarot.advice.var9":"rimani positivo, la tua energia attira ciò di cui hai bisogno.",
+    "interpretation.tarot.advice.var10":"accetta ciò che arriva e vai avanti, il momento è quello giusto.",
 
     // Crystal Ball Italian
     "crystalBall.title": "Sfera di Cristallo Mistica",
@@ -8770,7 +8607,7 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.7.title.2": "🎰 Fortuna Divina",
     "oracle.bonusRoll.7.message.2": "I dadi cosmici cadono continuamente a tuo favore. Non è caso, è la ricompensa di tutto ciò che hai seminato. Ricevi questa abbondanza con gratitudine.",
     "oracle.bonusRoll.7.title.3": "🌠 Magia Celeste",
-    "oracle.bonusRoll.7.message.3": "Il numero sacro per eccellenza illumina il tuo cammino. Sincronicità miracolose segnano la tua giornata. Sii attento/a ai segnali, l'universo ti parla direttamente.",
+    "oracle.bonusRoll.7.message.3": "Oggi, il tuo numero sacro ti aiuterà e ti mostrerà la strada giusta. Accadranno coincidenze sorprendenti. Tieni gli occhi aperti, l’universo ti sta mandando dei segni!",
 
     "oracle.bonusRoll.8.title.1": "💎 Abbondanza Cosmica",
     "oracle.bonusRoll.8.message.1": "La prosperità scorre verso di te come un fiume d'oro. L'8 premia finalmente tutti i tuoi sforzi. Accogli questa abbondanza senza sensi di colpa, la meriti pienamente.",

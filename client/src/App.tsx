@@ -41,7 +41,7 @@ type AppStep =
 function Router({ onSaveReading, onStepChange, shouldShowAdBeforeReading, isPremium }: {
   onSaveReading: (reading: any) => Promise<void>;
   onStepChange: (step: AppStep) => void;
-  shouldShowAdBeforeReading: () => Promise<boolean>;
+  shouldShowAdBeforeReading: (oracleType: string) => Promise<boolean>;
   isPremium: boolean;
 }) {
   return (
@@ -319,52 +319,53 @@ function App() {
     }
   };
 
-  // 🎯 FONCTION CORRIGÉE : Pub interstitielle tous les 3 tirages
-  // ✅ Exclut : horoscope (a sa propre pub), bonusRoll (tirage bonus)
-  const shouldShowAdBeforeReading = async (): Promise<boolean> => {
+  const shouldShowAdBeforeReading = async (oracleType: string): Promise<boolean> => {
+    console.log(`🎯 [PUB CHECK] Oracle sélectionné: "${oracleType}"`);
+
     if (isPremium) {
-      console.log('👑 Premium : pas de pub');
+      console.log('👑 Premium actif : pas de pub');
+      return false;
+    }
+
+    if (oracleType === 'horoscope' || oracleType === 'bonusRoll') {
+      console.log(`⏭️ "${oracleType}" exclu : pas de pub interstitielle (système propre)`);
       return false;
     }
 
     const nextCount = readingCount + 1;
     const shouldShow = nextCount % 3 === 0;
 
-    console.log(`🎯 Prochain tirage: #${nextCount} → Pub: ${shouldShow ? 'OUI ✅' : 'NON ❌'}`);
+    console.log(`📊 Compteur: ${readingCount} → ${nextCount} | Pub: ${shouldShow ? 'OUI ✅' : 'NON ❌'}`);
 
     if (shouldShow) {
-      console.log('⚡ Affichage pub AVANT le tirage');
+      console.log('🎬 Affichage pub interstitielle AVANT le tirage');
       try {
-        await showInterstitialAd('before_reading');
-        console.log('✅ Pub affichée avec succès');
+        await showInterstitialAd(`before_${oracleType}`);
+        console.log('✅ Pub interstitielle affichée avec succès');
       } catch (error) {
-        console.error('❌ Erreur pub:', error);
+        console.error('❌ Erreur pub interstitielle:', error);
       }
     }
 
-    // 🔄 Pré-charger la prochaine pub si on est au tirage #2, #5, #8, etc.
     if ((nextCount + 1) % 3 === 0) {
-      console.log(`🔄 Tirage #${nextCount} → Pré-chargement pub pour le #${nextCount + 1}`);
+      console.log(`🔄 Pré-chargement pub pour le tirage #${nextCount + 1}`);
       setTimeout(() => preloadInterstitial(), 1000);
     }
 
     return shouldShow;
   };
 
-  // ✅ FONCTION CORRIGÉE : Compteur mis à jour UNIQUEMENT pour les tirages concernés
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
     if (!deviceId) return;
 
-    // 🎯 Types exclus du Grimoire (pas de sauvegarde)
     const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
     const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
 
-    // 🎯 Types exclus du compteur de pub (ont déjà leur propre pub ou sont bonus)
-    const typesExcludedFromAdCounter = ['horoscope', 'bonusRoll'];
-    const shouldIncrementCounter = !typesExcludedFromAdCounter.includes(reading.type);
+    const typesCountedForAds = ['tarot', 'oracle', 'angels', 'runes', 'crystalBall', 'crystal'];
+    const shouldIncrementCounter = typesCountedForAds.includes(reading.type);
 
     try {
-      console.log('📤 Envoi tirage:', reading.type, 'Device:', deviceId);
+      console.log(`📤 Sauvegarde tirage: "${reading.type}" | Grimoire: ${shouldSaveInGrimoire} | Compteur: ${shouldIncrementCounter}`);
 
       if (shouldSaveInGrimoire) {
         const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
@@ -389,19 +390,18 @@ function App() {
             { ...newReading, date: new Date(newReading.date) },
             ...prev
           ]);
-          console.log('✅ Tirage enregistré:', newReading.id);
+          console.log('✅ Tirage enregistré dans le Grimoire:', newReading.id);
         }
       }
 
-      // ✅ Incrémenter le compteur UNIQUEMENT pour les tirages concernés
       if (shouldIncrementCounter) {
         setReadingCount(prev => {
           const newCount = prev + 1;
-          console.log(`📊 Compteur mis à jour: ${newCount} (type: ${reading.type})`);
+          console.log(`📊 ✅ Compteur mis à jour: ${prev} → ${newCount} (type: ${reading.type})`);
           return newCount;
         });
       } else {
-        console.log(`⏭️ Type "${reading.type}" exclu du compteur (a sa propre pub ou est bonus)`);
+        console.log(`📊 ⏭️ Type "${reading.type}" NON comptabilisé (système pub propre)`);
       }
 
     } catch (error) {

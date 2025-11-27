@@ -137,13 +137,39 @@ export const selectRandomCardsWithoutRepeat = (
   const availableCards = Array.from({ length: totalCards }, (_, i) => i)
     .filter(cardIndex => !recentCards.includes(cardIndex));
 
-  // Si pas assez de cartes disponibles, mélanger toutes les cartes
-  const cardsToUse = availableCards.length >= requestedCount 
-    ? availableCards 
-    : Array.from({ length: totalCards }, (_, i) => i);
+  console.log(`🎴 Oracle: ${oracleType} | Total: ${totalCards} | Demandé: ${requestedCount} | Récentes: ${recentCards.length} | Dispos: ${availableCards.length}`);
 
-  // Mélanger et prendre le nombre demandé
-  const shuffled = shuffleArray(cardsToUse);
+  // ✅ AMÉLIORATION : Si moins de 50% de cartes dispo, réinitialiser l'historique
+  if (availableCards.length < totalCards * 0.5) {
+    console.log('⚠️ Moins de 50% de cartes disponibles → Réinitialisation partielle');
+
+    // Garder seulement les cartes des 2 derniers tirages
+    const history = getTirageHistory();
+    const recentHistory = history
+      .filter(t => t.oracleType === oracleType)
+      .slice(-2); // 2 derniers tirages seulement
+
+    const veryRecentCards = new Set<number>();
+    recentHistory.forEach(tirage => {
+      tirage.cardIndices.forEach(index => veryRecentCards.add(index));
+    });
+
+    // Cartes vraiment récentes (2 derniers tirages)
+    const freshAvailableCards = Array.from({ length: totalCards }, (_, i) => i)
+      .filter(cardIndex => !veryRecentCards.has(cardIndex));
+
+    console.log(`   ✅ Nouvelle pool: ${freshAvailableCards.length} cartes disponibles`);
+
+    const cardsToUse = freshAvailableCards.length >= requestedCount
+      ? freshAvailableCards
+      : Array.from({ length: totalCards }, (_, i) => i); // Dernier recours
+
+    const shuffled = shuffleArray(cardsToUse);
+    return shuffled.slice(0, requestedCount);
+  }
+
+  // Cas normal : assez de cartes disponibles
+  const shuffled = shuffleArray(availableCards);
   return shuffled.slice(0, requestedCount);
 };
 

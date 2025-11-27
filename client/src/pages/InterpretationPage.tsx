@@ -36,15 +36,14 @@ export default function InterpretationPage({
 }: InterpretationPageProps) {
   const { t } = useLanguage();
 
-  // ✅ FONCTION CORRIGÉE - Identique à GrimoireModal
   const normalizeCardName = (cardName: string): string => {
     if (!cardName) return '';
 
     return cardName
       .trim()
-      .replace(/[''\s]/g, '')  // Supprimer apostrophes ET espaces
-      .normalize('NFD')        // Décomposer les accents
-      .replace(/[\u0300-\u036f]/g, '');  // Supprimer les diacritiques
+      .replace(/[''\s]/g, '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   };
 
   const isDailyReading = oracleType === 'daily';
@@ -132,6 +131,7 @@ export default function InterpretationPage({
       return selectedAdvice.replace('{genderSuffix}', genderSuffix);
     };
 
+    // ✅ NOUVELLE FONCTION : Conseil Tarot séparé
     const createTarotAdviceSentence = (name: string, zodiacSign: string): string => {
       const templates = [
         t('interpretation.tarot.template.advice.var1', { name, zodiacSign, genderText }),
@@ -144,9 +144,24 @@ export default function InterpretationPage({
         t('interpretation.tarot.template.advice.var8', { name, zodiacSign, genderText })
       ];
       const selectedTemplate = templates[getSecureRandomInt(0, templates.length - 1)];
-      return `${selectedTemplate} ${getRandomAdvice()}`;
+
+      // ✅ Conseil Tarot final séparé (plus de getRandomAdvice())
+      const tarotAdvices = [
+        t('interpretation.tarot.advice.var1', { genderSuffix }),
+        t('interpretation.tarot.advice.var2', { genderSuffix }),
+        t('interpretation.tarot.advice.var3', { genderSuffix }),
+        t('interpretation.tarot.advice.var4', { genderSuffix }),
+        t('interpretation.tarot.advice.var5', { genderSuffix }),
+        t('interpretation.tarot.advice.var6', { genderSuffix }),
+        t('interpretation.tarot.advice.var7', { genderSuffix }),
+        t('interpretation.tarot.advice.var8', { genderSuffix })
+      ];
+      const selectedAdvice = tarotAdvices[getSecureRandomInt(0, tarotAdvices.length - 1)];
+
+      return `${selectedTemplate} ${selectedAdvice}`;
     };
 
+    // ✅ Message Anges inchangé (utilise interpretation.advice général)
     const createAngelsMessageSentence = (name: string, zodiacSign: string): string => {
       const templates = [
         t('interpretation.angels.template.message.var1', { name, zodiacSign, genderText }),
@@ -225,6 +240,7 @@ export default function InterpretationPage({
         }
       );
 
+      // ✅ Utilise la fonction Tarot avec conseils spécifiques
       finalMessage = createTarotAdviceSentence(user.name, fallbackZodiac);
       greeting = getRandomGreeting('tarot');
 
@@ -256,6 +272,7 @@ export default function InterpretationPage({
         }
       );
 
+      // ✅ Utilise la fonction Anges avec conseils généraux
       finalMessage = createAngelsMessageSentence(user.name, fallbackZodiac);
       greeting = getRandomGreeting('angels');
 
