@@ -891,6 +891,144 @@ h1, h2, h3 {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
-    
+    /* ========================================
+       ANIMATIONS CRYSTAL BALL
+       À ajouter dans index.css ou globals.css
+       ======================================== */
+
+    /* Flottement doux */
+    @keyframes float {
+      0%, 100% { 
+        transform: translateY(0px); 
+      }
+      50% { 
+        transform: translateY(-8px); 
+      }
+    }
+
+    /* Flottement lent pour orbes */
+    @keyframes float-slow {
+      0%, 100% { 
+        transform: translate(0, 0); 
+      }
+      50% { 
+        transform: translate(20px, -20px); 
+      }
+    }
+
+    /* Particules flottantes */
+    @keyframes float-particle {
+      0%, 100% { 
+        transform: translateY(0px) translateX(0px);
+        opacity: 0.3;
+      }
+      50% { 
+        transform: translateY(-15px) translateX(8px);
+        opacity: 0.8;
+      }
+    }
+
+    /* Rotation lente */
+    @keyframes spin-slow {
+      from { 
+        transform: rotate(0deg); 
+      }
+      to { 
+        transform: rotate(360deg); 
+      }
+    }
+
+    /* Rotation inversée */
+    @keyframes spin-reverse {
+      from { 
+        transform: rotate(360deg); 
+      }
+      to { 
+        transform: rotate(0deg); 
+      }
+    }
+
+    /* Pulse lent */
+    @keyframes pulse-slow {
+      0%, 100% { 
+        opacity: 0.6; 
+      }
+      50% { 
+        opacity: 1; 
+      }
+    }
+
+    /* Scintillement reflet */
+    @keyframes shimmer {
+      0%, 100% { 
+        opacity: 0.4; 
+        transform: scale(1); 
+      }
+      50% { 
+        opacity: 0.7; 
+        transform: scale(1.1); 
+      }
+    }
+
+    /* Étoiles scintillantes */
+    @keyframes twinkle {
+      0%, 100% { 
+        opacity: 0.3; 
+        transform: scale(1); 
+      }
+      50% { 
+        opacity: 1; 
+        transform: scale(1.5); 
+      }
+    }
+
+    /* Apparition avec échelle */
+    @keyframes fade-in-scale {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* Classes utilitaires */
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .animate-float-slow {
+      animation: float-slow 8s ease-in-out infinite;
+    }
+
+    .animate-float-particle {
+      animation: float-particle linear infinite;
+    }
+
+    .animate-spin-slow {
+      animation: spin-slow 20s linear infinite;
+    }
+
+    .animate-spin-reverse {
+      animation: spin-reverse 15s linear infinite;
+    }
+
+    .animate-pulse-slow {
+      animation: pulse-slow 3s ease-in-out infinite;
+    }
+
+    .animate-shimmer {
+      animation: shimmer 2s ease-in-out infinite;
+    }
+
+    .animate-twinkle {
+      animation: twinkle ease-in-out infinite;
+    }
+
+    .animate-fade-in-scale {
+      animation: fade-in-scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
   }
   }

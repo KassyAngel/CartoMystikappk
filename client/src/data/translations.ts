@@ -1978,7 +1978,7 @@ const translations: Record<Language, Record<string, string>> = {
     //Variations for "Wisdom" tirage du jour
      "interpretation.daily.wisdom.var0": "Trust your instinct today. If it feels right, go for it!",
       "interpretation.daily.wisdom.var1": "You have everything you need to move forward. Believe in yourself and take action!",
-      "interpretation.daily.wisdom.var2": "Don't complicate things. Make the decision that feels best and move!",
+      "interpretation.daily.wisdom.var2": "Don't complicate things. Make the decision that feels best and move forward!",
       "interpretation.daily.wisdom.var3": "Open your eyes and seize the opportunities that come your way, even the small ones.",
       "interpretation.daily.wisdom.var4": "Let yourself be guided by what you already know. You can handle this day.",
       "interpretation.daily.wisdom.var5": "Take the time to notice the details around you, they can help you decide.",
@@ -7170,7 +7170,7 @@ const translations: Record<Language, Record<string, string>> = {
     //Variazioni per "Wisdom" tirage du jour
       "interpretation.daily.wisdom.var0": "Fidati del tuo istinto oggi. Se sembra giusto, vai avanti!",
       "interpretation.daily.wisdom.var1": "Hai tutto ciò che serve per andare avanti. Credi in te stesso e agisci!",
-      "interpretation.daily.wisdom.var2": "Non complicarti la vita. Prendi la decisione che ti sembra migliore e vai!",
+      "interpretation.daily.wisdom.var2": "Non complicarti la vita. Prendi la decisione che ti sembra migliore e corri!",
       "interpretation.daily.wisdom.var3": "Apri gli occhi e cogli le opportunità che si presentano, anche le piccole.",
       "interpretation.daily.wisdom.var4": "Lasciati guidare da ciò che già sai. Sei in grado di gestire questa giornata.",
       "interpretation.daily.wisdom.var5": "Prenditi il tempo di notare i dettagli intorno a te, possono aiutarti a decidere.",
