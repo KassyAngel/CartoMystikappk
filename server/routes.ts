@@ -207,7 +207,7 @@
             "Votre santé semble robuste aujourd'hui. Cependant, évitez les excès, surtout côté alimentation."
           ],
           moods: ["Énergique", "Confiant", "Déterminé", "Passionné", "Optimiste", "Dynamique"],
-          colors: ["Rouge", "Orange vif", "Bordeaux", "Corail", "Granat", "Rouge Royal"],
+          colors: ["Rouge", "Orange vif", "Bordeaux", "Corail", "Grenat", "Rouge Royal"],
           compatibility: ["Lion, Sagittaire", "Gémeaux, Verseau", "Balance, Lion", "Verseau, Gémeaux", "Sagittaire, Balance", "Lion, Verseau"]
         },
         taurus: {
