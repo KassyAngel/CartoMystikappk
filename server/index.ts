@@ -4,35 +4,28 @@ import { setupVite, serveStatic, log } from "./vite";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { createServer } from "http";
-import { registerPremiumRevenueCatRoutes } from "./routes/premiumRevenueCat"; // ✅ Ajout de ton import
+import { registerPremiumRevenueCatRoutes } from "./routes/premiumRevenueCat";
+import { fileURLToPath } from "url";
+import path from "path";
+import Stripe from "stripe";
 
 // Charger les variables d'environnement
 dotenv.config();
-const app = express();
-app.use(cookieParser());
-
-// ⚠️ SERVIR app-ads.txt
-import { fileURLToPath } from "url";
-import path from "path";
-import fs from "fs";
 
 // Calculer le répertoire actuel
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Servir le fichier app-ads.txt
-app.get("/app-ads.txt", (req: Request, res: Response) => {
-  const filePath = path.join(__dirname, "app-ads.txt");
-  if (fs.existsSync(filePath)) {
-    res.sendFile(filePath);
-  } else {
-    res.status(404).send("Fichier app-ads.txt introuvable");
-  }
-});
+const app = express();
+app.use(cookieParser());
+
+// ✅ SERVIR LE DOSSIER PUBLIC EN PREMIER (pour app-ads.txt)
+// Cela permet de servir tous les fichiers statiques du dossier public/
+const publicPath = path.join(__dirname, "../public");
+app.use(express.static(publicPath));
+console.log(`📁 Dossier public servi depuis: ${publicPath}`);
 
 // ⚠️ IMPORTANT : Définir la route webhook AVANT express.json()
-import Stripe from "stripe";
-
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2025-09-30.clover",
 });
@@ -110,7 +103,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// 🆕 Ajout de la route Premium RevenueCat
+// Ajout de la route Premium RevenueCat
 registerPremiumRevenueCatRoutes(app);
 
 // Démarrage du serveur
@@ -139,6 +132,7 @@ registerPremiumRevenueCatRoutes(app);
 
   httpServer.listen(PORT, "0.0.0.0", () => {
     log(`✅ Serveur démarré sur le port ${PORT}`);
+    log(`📄 Fichier app-ads.txt accessible sur: http://localhost:${PORT}/app-ads.txt`);
   });
 
   httpServer.on("error", (err: NodeJS.ErrnoException) => {
@@ -152,6 +146,5 @@ registerPremiumRevenueCatRoutes(app);
     }
   });
 
-  // 🆕 Retour du serveur HTTP à la fin
   return httpServer;
 })();
