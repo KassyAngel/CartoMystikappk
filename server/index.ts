@@ -12,9 +12,15 @@ const app = express();
 app.use(cookieParser());
 
 // ⚠️ SERVIR app-ads.txt
+import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 
+// Calculer le répertoire actuel
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Servir le fichier app-ads.txt
 app.get("/app-ads.txt", (req: Request, res: Response) => {
   const filePath = path.join(__dirname, "app-ads.txt");
   if (fs.existsSync(filePath)) {
