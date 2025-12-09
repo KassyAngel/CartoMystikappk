@@ -11,6 +11,19 @@ dotenv.config();
 const app = express();
 app.use(cookieParser());
 
+// ⚠️ SERVIR app-ads.txt
+import path from "path";
+import fs from "fs";
+
+app.get("/app-ads.txt", (req: Request, res: Response) => {
+  const filePath = path.join(__dirname, "app-ads.txt");
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    res.status(404).send("Fichier app-ads.txt introuvable");
+  }
+});
+
 // ⚠️ IMPORTANT : Définir la route webhook AVANT express.json()
 import Stripe from "stripe";
 
