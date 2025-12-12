@@ -23,6 +23,7 @@ export default function TarotCard({
   oracleType = 'tarot'
 }: TarotCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const { t, language } = useLanguage();
 
   const handleClick = () => {
@@ -78,22 +79,39 @@ export default function TarotCard({
       data-testid={`card-${number}`}
     >
       {isBack ? (
-        /* ✅ DOS DE LA CARTE AVEC IMAGE PERSONNALISÉE */
+        /* ✅ DOS DE LA CARTE - CORRIGÉ */
         <div className="absolute inset-0 rounded-xl overflow-hidden">
-          {/* Image de fond haute résolution */}
-          <img 
-            src="/Image/Dos-carte.jpg" 
-            srcSet="/Image/Dos-carte.jpg 1x, /Image/Dos-carte@2x.jpg 2x"
-            alt="Dos de carte"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ 
-              filter: 'contrast(1.05) saturate(1.1)'
-            } as React.CSSProperties}
-            loading="lazy"
-          />
+          {!imageError ? (
+            <>
+              {/* ✅ Image avec fallback */}
+              <img 
+                src="/Image/Dos-carte.jpg" 
+                alt="Dos de carte"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ 
+                  filter: 'contrast(1.05) saturate(1.1)'
+                } as React.CSSProperties}
+                loading="lazy"
+                onError={() => {
+                  console.error('❌ Erreur chargement image: /Image/Dos-carte.jpg');
+                  setImageError(true);
+                }}
+              />
 
-          {/* Overlay léger pour uniformiser */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-indigo-900/20"></div>
+              {/* Overlay léger pour uniformiser */}
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-indigo-900/20"></div>
+            </>
+          ) : (
+            /* ✅ FALLBACK si l'image ne charge pas */
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-800">
+              <div className="absolute inset-0 opacity-20">
+                <div className="absolute inset-0" style={{
+                  backgroundImage: `radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                                   radial-gradient(circle at 80% 70%, rgba(138, 43, 226, 0.15) 0%, transparent 50%)`
+                }}></div>
+              </div>
+            </div>
+          )}
 
           {/* Bordure dorée */}
           <div className="absolute inset-2 rounded-lg border-2 border-[#ffd700]/40 pointer-events-none"></div>

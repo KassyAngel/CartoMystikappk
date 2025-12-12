@@ -15,7 +15,6 @@ export function log(message: string, source = "express") {
     second: "2-digit",
     hour12: true,
   });
-
   console.log(`${formattedTime} [${source}] ${message}`);
 }
 
@@ -41,9 +40,16 @@ export async function setupVite(app: Express, server: Server) {
   });
 
   app.use(vite.middlewares);
+
+  // ✅ NOUVEAU : Servir les images statiques en développement
+  const imagePath = path.resolve(import.meta.dirname, "..", "client", "public", "Image");
+  if (fs.existsSync(imagePath)) {
+    app.use("/Image", express.static(imagePath));
+    log(`Serving images from: ${imagePath}`, "vite");
+  }
+
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
-
     try {
       const clientTemplate = path.resolve(
         import.meta.dirname,
@@ -58,6 +64,7 @@ export async function setupVite(app: Express, server: Server) {
         `src="/src/main.tsx"`,
         `src="/src/main.tsx?v=${nanoid()}"`,
       );
+
       const page = await vite.transformIndexHtml(url, template);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
@@ -67,10 +74,9 @@ export async function setupVite(app: Express, server: Server) {
   });
 }
 
-// ✅ CORRIGÉ ICI
+// ✅ CORRIGÉ : Servir les fichiers statiques en production
 export function serveStatic(app: Express) {
-  // On monte d’un dossier depuis dist/server → pour aller dans dist/public
-  const distPath = path.resolve(import.meta.dirname, "../public");
+  const distPath = path.resolve(import.meta.dirname, "..", "public");
 
   if (!fs.existsSync(distPath)) {
     throw new Error(
@@ -78,6 +84,16 @@ export function serveStatic(app: Express) {
     );
   }
 
+  // ✅ Servir le dossier Image spécifiquement
+  const imagePath = path.resolve(distPath, "Image");
+  if (fs.existsSync(imagePath)) {
+    app.use("/Image", express.static(imagePath));
+    log(`Serving images from: ${imagePath}`, "static");
+  } else {
+    log(`⚠️ Warning: Image folder not found at ${imagePath}`, "static");
+  }
+
+  // Servir les autres fichiers statiques
   app.use(express.static(distPath));
 
   // fall through to index.html if the file doesn't exist
