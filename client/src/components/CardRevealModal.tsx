@@ -24,31 +24,47 @@ export default function CardRevealModal({
     setTimeout(() => setIsVisible(true), 50);
   }, []);
 
-  const normalizeCardName = (name: string): string => {
-    return name
+  // ✅ FONCTION AMÉLIORÉE : Plusieurs variantes pour trouver la traduction
+  const getTranslatedCardName = () => {
+    if (!card?.name) return '';
+
+    const originalName = card.name;
+
+    // Variante 1 : Nom original exact
+    const key1 = `cards.${oracleType}.${originalName}.name`;
+    const translation1 = t(key1);
+    if (translation1 !== key1) return translation1;
+
+    // Variante 2 : Sans accents ni tirets (pour "Lache-prise")
+    const normalizedName = originalName
       .trim()
       .replace(/[''\s-]/g, '')
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
-  };
 
-  const getTranslatedCardName = () => {
-    if (!card?.name) return '';
+    const key2 = `cards.${oracleType}.${normalizedName}.name`;
+    const translation2 = t(key2);
+    if (translation2 !== key2) return translation2;
 
-    const normalizedName = normalizeCardName(card.name);
-    const possibleKeys = [
-      `cards.${oracleType}.${normalizedName}.name`,
-      `cards.${oracleType}.${card.name}.name`,
-    ];
+    // Variante 3 : Avec tiret mais sans accent (pour "Lache-prise")
+    const withHyphen = originalName
+      .trim()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
 
-    for (const key of possibleKeys) {
-      const translated = t(key);
-      if (translated !== key) {
-        return translated;
-      }
-    }
+    const key3 = `cards.${oracleType}.${withHyphen}.name`;
+    const translation3 = t(key3);
+    if (translation3 !== key3) return translation3;
 
-    return card.name;
+    // Variante 4 : Lowercase (au cas où)
+    const lowercase = originalName.toLowerCase().replace(/\s+/g, '');
+    const key4 = `cards.${oracleType}.${lowercase}.name`;
+    const translation4 = t(key4);
+    if (translation4 !== key4) return translation4;
+
+    // Si aucune traduction trouvée, retourner le nom original
+    console.warn(`⚠️ Traduction non trouvée pour: "${originalName}" (oracleType: ${oracleType})`);
+    return originalName;
   };
 
   return (

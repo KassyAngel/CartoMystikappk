@@ -6,26 +6,35 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-// ==================== NOUVELLES FONCTIONS D'ALÉATOIRE ====================
+// ==================== FONCTIONS D'ALÉATOIRE OPTIMISÉES ====================
 
 /**
- * Mélange Fisher-Yates - Vrai aléatoire uniforme
- * Remplace le .sort(() => Math.random() - 0.5) défaillant
+ * Mélange Fisher-Yates avec crypto.getRandomValues (plus sécurisé)
  */
 export const shuffleArray = <T>(array: T[]): T[] => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = getSecureRandomInt(0, i);
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return shuffled;
 };
 
 /**
- * Génère un nombre aléatoire sécurisé entre min et max (inclus)
+ * ✅ AMÉLIORATION : Utilise crypto.getRandomValues pour un vrai aléatoire
  */
 export const getSecureRandomInt = (min: number, max: number): number => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  const range = max - min + 1;
+
+  // Utiliser crypto.getRandomValues si disponible (meilleur aléatoire)
+  if (typeof window !== 'undefined' && window.crypto && window.crypto.getRandomValues) {
+    const randomBuffer = new Uint32Array(1);
+    window.crypto.getRandomValues(randomBuffer);
+    return min + (randomBuffer[0] % range);
+  }
+
+  // Fallback sur Math.random
+  return Math.floor(Math.random() * range) + min;
 };
 
 /**
@@ -35,10 +44,12 @@ interface TirageHistory {
   date: string;
   oracleType: string;
   cardIndices: number[];
+  timestamp: number; // ✅ AJOUT : timestamp précis
 }
 
 const STORAGE_KEY_HISTORY = 'cartomystik_tirage_history';
 const MAX_HISTORY_DAYS = 7; // Éviter répétition sur 7 jours
+const MAX_HISTORY_ENTRIES = 50; // ✅ AJOUT : Limiter la taille
 
 /**
  * Vérifie si localStorage est disponible
@@ -70,7 +81,8 @@ export const saveTirageToHistory = (
     const newTirage: TirageHistory = {
       date: today,
       oracleType,
-      cardIndices
+      cardIndices,
+      timestamp: Date.now() // ✅ AJOUT
     };
 
     // Ajouter le nouveau tirage
@@ -81,9 +93,16 @@ export const saveTirageToHistory = (
     cutoffDate.setDate(cutoffDate.getDate() - MAX_HISTORY_DAYS);
     const cutoffString = cutoffDate.toISOString().split('T')[0];
 
-    const cleanedHistory = history.filter(tirage => tirage.date >= cutoffString);
+    let cleanedHistory = history.filter(tirage => tirage.date >= cutoffString);
+
+    // ✅ AMÉLIORATION : Limiter le nombre total d'entrées
+    if (cleanedHistory.length > MAX_HISTORY_ENTRIES) {
+      cleanedHistory = cleanedHistory.slice(-MAX_HISTORY_ENTRIES);
+    }
 
     localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(cleanedHistory));
+
+    console.log(`💾 Historique sauvegardé: ${oracleType}, cartes [${cardIndices.join(', ')}]`);
   } catch (error) {
     console.warn('Impossible de sauvegarder l\'historique:', error);
   }
@@ -107,70 +126,94 @@ export const getTirageHistory = (): TirageHistory[] => {
 };
 
 /**
- * Obtient les cartes récemment tirées pour un oracle spécifique
+ * ✅ AMÉLIORATION : Obtient les cartes récemment tirées avec pondération temporelle
+ * Les cartes des derniers tirages ont plus de poids
  */
-export const getRecentCards = (oracleType: string): number[] => {
+export const getRecentCards = (oracleType: string, daysBack: number = MAX_HISTORY_DAYS): number[] => {
   const history = getTirageHistory();
+  const now = Date.now();
+  const cutoff = now - (daysBack * 24 * 60 * 60 * 1000);
+
+  // Filtrer par type d'oracle et date
+  const relevantHistory = history
+    .filter(tirage => 
+      tirage.oracleType === oracleType && 
+      (tirage.timestamp || 0) > cutoff
+    )
+    .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); // Plus récent en premier
+
   const recentCards = new Set<number>();
 
-  // Récupérer toutes les cartes tirées récemment pour ce type d'oracle
-  history
-    .filter(tirage => tirage.oracleType === oracleType)
-    .forEach(tirage => {
-      tirage.cardIndices.forEach(index => recentCards.add(index));
-    });
+  // ✅ PONDÉRATION : Les 3 derniers tirages comptent plus
+  const veryRecentTirages = relevantHistory.slice(0, 3);
+  veryRecentTirages.forEach(tirage => {
+    tirage.cardIndices.forEach(index => recentCards.add(index));
+  });
+
+  console.log(`📜 Historique ${oracleType}: ${relevantHistory.length} tirages, ${recentCards.size} cartes à éviter`);
 
   return Array.from(recentCards);
 };
 
 /**
- * Sélectionne des cartes en évitant les répétitions récentes
+ * ✅ AMÉLIORATION MAJEURE : Sélectionne des cartes avec anti-répétition intelligente
  */
 export const selectRandomCardsWithoutRepeat = (
   totalCards: number,
   requestedCount: number,
   oracleType: string
 ): number[] => {
+  console.log(`\n🎴 === TIRAGE ${oracleType.toUpperCase()} ===`);
+  console.log(`   Total cartes: ${totalCards} | Demandées: ${requestedCount}`);
+
   const recentCards = getRecentCards(oracleType);
 
   // Cartes disponibles (non tirées récemment)
-  const availableCards = Array.from({ length: totalCards }, (_, i) => i)
+  let availableCards = Array.from({ length: totalCards }, (_, i) => i)
     .filter(cardIndex => !recentCards.includes(cardIndex));
 
-  console.log(`🎴 Oracle: ${oracleType} | Total: ${totalCards} | Demandé: ${requestedCount} | Récentes: ${recentCards.length} | Dispos: ${availableCards.length}`);
+  console.log(`   Cartes récentes à éviter: ${recentCards.length}`);
+  console.log(`   Cartes disponibles: ${availableCards.length}`);
 
-  // ✅ AMÉLIORATION : Si moins de 50% de cartes dispo, réinitialiser l'historique
-  if (availableCards.length < totalCards * 0.5) {
-    console.log('⚠️ Moins de 50% de cartes disponibles → Réinitialisation partielle');
+  // ✅ AMÉLIORATION : Seuil adaptatif selon le nombre de cartes demandées
+  const minimumThreshold = Math.max(requestedCount * 2, totalCards * 0.3);
 
-    // Garder seulement les cartes des 2 derniers tirages
+  // Si trop peu de cartes disponibles, réduire l'historique considéré
+  if (availableCards.length < minimumThreshold) {
+    console.log(`   ⚠️ Peu de cartes dispos (${availableCards.length} < ${minimumThreshold})`);
+    console.log(`   → Réduction de l'historique aux 2 derniers tirages`);
+
     const history = getTirageHistory();
     const recentHistory = history
       .filter(t => t.oracleType === oracleType)
-      .slice(-2); // 2 derniers tirages seulement
+      .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+      .slice(0, 2); // ✅ Seulement les 2 derniers tirages
 
     const veryRecentCards = new Set<number>();
     recentHistory.forEach(tirage => {
       tirage.cardIndices.forEach(index => veryRecentCards.add(index));
     });
 
-    // Cartes vraiment récentes (2 derniers tirages)
-    const freshAvailableCards = Array.from({ length: totalCards }, (_, i) => i)
+    availableCards = Array.from({ length: totalCards }, (_, i) => i)
       .filter(cardIndex => !veryRecentCards.has(cardIndex));
 
-    console.log(`   ✅ Nouvelle pool: ${freshAvailableCards.length} cartes disponibles`);
-
-    const cardsToUse = freshAvailableCards.length >= requestedCount
-      ? freshAvailableCards
-      : Array.from({ length: totalCards }, (_, i) => i); // Dernier recours
-
-    const shuffled = shuffleArray(cardsToUse);
-    return shuffled.slice(0, requestedCount);
+    console.log(`   ✅ Nouvelle pool: ${availableCards.length} cartes`);
   }
 
-  // Cas normal : assez de cartes disponibles
-  const shuffled = shuffleArray(availableCards);
-  return shuffled.slice(0, requestedCount);
+  // ✅ Dernier recours : si vraiment pas assez de cartes
+  if (availableCards.length < requestedCount) {
+    console.log(`   🔄 Dernier recours: utilisation de toutes les cartes`);
+    availableCards = Array.from({ length: totalCards }, (_, i) => i);
+  }
+
+  // ✅ AMÉLIORATION : Mélange multiple pour meilleure distribution
+  const shuffled = shuffleArray(shuffleArray(availableCards)); // Double mélange
+  const selected = shuffled.slice(0, requestedCount);
+
+  console.log(`   🎯 Cartes sélectionnées: [${selected.join(', ')}]`);
+  console.log(`   ===========================\n`);
+
+  return selected;
 };
 
 /**
@@ -200,6 +243,56 @@ export const generateHoroscopePrediction = (zodiacSign: string) => {
     luckyColor: colors[getSecureRandomInt(0, colors.length - 1)],
     compatibility: compatibilities[getSecureRandomInt(0, compatibilities.length - 1)]
   };
+};
+
+/**
+ * ✅ AJOUT : Réinitialiser l'historique (pour debug)
+ */
+export const resetTirageHistory = (): void => {
+  if (!isLocalStorageAvailable()) return;
+  localStorage.removeItem(STORAGE_KEY_HISTORY);
+  console.log('🗑️ Historique des tirages réinitialisé');
+};
+
+/**
+ * ✅ AJOUT : Statistiques de l'historique (pour debug)
+ */
+export const getHistoryStats = (oracleType?: string): void => {
+  const history = getTirageHistory();
+
+  if (oracleType) {
+    const filtered = history.filter(h => h.oracleType === oracleType);
+    console.log(`📊 Statistiques ${oracleType}:`);
+    console.log(`   Nombre de tirages: ${filtered.length}`);
+
+    const cardCounts = new Map<number, number>();
+    filtered.forEach(tirage => {
+      tirage.cardIndices.forEach(cardIndex => {
+        cardCounts.set(cardIndex, (cardCounts.get(cardIndex) || 0) + 1);
+      });
+    });
+
+    const sortedCards = Array.from(cardCounts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10);
+
+    console.log(`   Top 10 cartes les plus tirées:`);
+    sortedCards.forEach(([card, count]) => {
+      console.log(`      Carte ${card}: ${count} fois`);
+    });
+  } else {
+    console.log(`📊 Statistiques globales:`);
+    console.log(`   Total tirages: ${history.length}`);
+
+    const byOracle = history.reduce((acc, h) => {
+      acc[h.oracleType] = (acc[h.oracleType] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    Object.entries(byOracle).forEach(([oracle, count]) => {
+      console.log(`   ${oracle}: ${count} tirages`);
+    });
+  }
 };
 
 /**

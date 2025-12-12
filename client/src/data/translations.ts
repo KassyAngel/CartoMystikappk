@@ -386,8 +386,8 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.daily.Equilibre.meaning":"Aujourd’hui, trouve l’équilibre entre ce que tu donnes aux autres et ce dont tu as besoin pour toi-même. Il est important de ne pas t’oublier au nom de tes responsabilités. Prendre soin de toi, c’est aussi prendre soin de ton énergie et de ton bien-être intérieur. En cultivant cette harmonie, tu avanceras plus aligné{genderSuffix} et plus serein{genderSuffix} sur ton chemin !",
     "cards.daily.Confiance.name":"Confiance",
     "cards.daily.Confiance.meaning":"Aujourd’hui, crois pleinement en tes capacités et avance avec une énergie assurée ! La confiance en toi est une force intérieure précieuse qui te rend plus fort{genderSuffix}, plus clair{genderSuffix} dans tes choix, et plus aligné{genderSuffix} avec ta vérité. Même si le doute surgit, souviens-toi que chaque pas fait avec foi te rapproche de tes véritables réussites.",
-    "cards.daily.Lacher-prise.name":"Lâcher-prise",
-    "cards.daily.Lacher-prise.meaning":"Aujourd’hui, libère-toi des poids du passé et des préoccupations qui n’ont plus lieu d’être. Ce que tu ne peux pas contrôler ne mérite pas de drainer ton énergie. En acceptant de lâcher prise, tu ouvres la voie à plus de paix intérieure et de clarté. Tu te sentiras plus léger{genderSuffix}, plus centré{genderSuffix}, et prêt{genderSuffix} à accueillir ce qui vient avec confiance !",
+    "cards.daily.Lacherprise.name":"Lâcher-prise",
+    "cards.daily.Lacherprise.meaning":"Aujourd’hui, libère-toi des poids du passé et des préoccupations qui n’ont plus lieu d’être. Ce que tu ne peux pas contrôler ne mérite pas de drainer ton énergie. En acceptant de lâcher prise, tu ouvres la voie à plus de paix intérieure et de clarté. Tu te sentiras plus léger{genderSuffix}, plus centré{genderSuffix}, et prêt{genderSuffix} à accueillir ce qui vient avec confiance !",
     "cards.daily.Joie.name":"Joie",
     "cards.daily.Joie.meaning":"Aujourd’hui, ouvre ton cœur à la joie simple des petits instants : un sourire, un geste sincère, une pensée lumineuse. Même au milieu des obligations, cette énergie positive peut transformer ton état d’esprit. En cultivant la joie, tu deviens plus rayonnant{genderSuffix}, plus présent{genderSuffix}, et tu attires naturellement des expériences qui nourrissent ton bien-être !",
     "cards.daily.Sagesse.name":"Sagesse",
@@ -2139,8 +2139,8 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.daily.Confiance.name": "Confidence",
     "cards.daily.Confiance.meaning":
       "Believe fully in your abilities today and move forward with assured energy. Self-confidence is a precious inner strength that makes you stronger, clearer in your choices, and more aligned with your truth. Even if doubt arises, remember that every step taken in faith brings you closer to your true successes.",
-    "cards.daily.Lacher-prise.name": "Letting Go",
-    "cards.daily.Lacher-prise.meaning":
+    "cards.daily.Lacherprise.name": "Letting Go",
+    "cards.daily.Lacherprise.meaning":
       "Today, release yourself from the burdens of the past and worries that no longer serve you. What you cannot control does not deserve to drain your energy. By choosing to let go, you open the way to greater inner peace and clarity. You will feel lighter, more centered, and ready to welcome what comes with confidence.",
     "cards.daily.Joie.name": "Joy",
     "cards.daily.Joie.meaning":
@@ -3835,8 +3835,8 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.daily.Confiance.name": "Confianza",
     "cards.daily.Confiance.meaning":
       "Hoy cree plenamente en tus capacidades y avanza con una energía segura. La confianza en ti mismo es una fuerza interior valiosa que te hace más fuerte, más claro en tus decisiones y más alineado con tu verdad. Aunque surjan dudas, recuerda que cada paso dado con fe te acerca a tus verdaderos éxitos.",
-    "cards.daily.Lacher-prise.name": "Soltar",
-    "cards.daily.Lacher-prise.meaning":
+    "cards.daily.Lacherprise.name": "Dejar ir",
+    "cards.daily.Lacherprise.meaning":
       "Hoy libérate de los pesos del pasado y de preocupaciones que ya no tienen lugar. Lo que no puedes controlar no merece drenar tu energía. Al aceptar soltar, abres el camino a más paz interior y claridad. Te sentirás más ligero, más centrado y listo para recibir lo que venga con confianza.",
     "cards.daily.Joie.name": "Alegría",
     "cards.daily.Joie.meaning":
@@ -5579,8 +5579,8 @@ const translations: Record<Language, Record<string, string>> = {
     "cards.daily.Confiance.name": "Vertrauen",
     "cards.daily.Confiance.meaning":
       "Glaube heute voll und ganz an deine Fähigkeiten und gehe mit sicherer Energie voran. Selbstvertrauen ist eine wertvolle innere Kraft, die dich stärker, klarer in deinen Entscheidungen und mehr in Einklang mit deiner Wahrheit macht. Auch wenn Zweifel aufkommen, erinnere dich daran, dass jeder Schritt im Glauben dich deinen wahren Erfolgen näherbringt.",
-    "cards.daily.Lacher-prise.name": "Loslassen",
-    "cards.daily.Lacher-prise.meaning":
+    "cards.daily.Lacherprise.name": "Loslassen",
+    "cards.daily.Lacherprise.meaning":
       "Befreie dich heute von der Last der Vergangenheit und von Sorgen, die keinen Platz mehr verdienen. Was du nicht kontrollieren kannst, sollte nicht deine Energie rauben. Indem du loslässt, öffnest du den Weg zu mehr innerem Frieden und Klarheit. Du wirst dich leichter, zentrierter und bereit fühlen, das, was kommt, mit Vertrauen zu empfangen.",
     "cards.daily.Joie.name": "Freude",
     "cards.daily.Joie.meaning":
@@ -7341,8 +7341,8 @@ const translations: Record<Language, Record<string, string>> = {
         "cards.daily.Equilibre.meaning": "Oggi cerca equilibrio tra ciò che offri agli altri e ciò di cui hai bisogno per te stesso. È importante non dimenticarti in nome delle responsabilità. Prendersi cura di sé significa anche custodire la tua energia e il tuo benessere interiore. Coltivando questa armonia, avanzerai più allineato e sereno nel tuo cammino.",
         "cards.daily.Confiance.name": "Fiducia",
         "cards.daily.Confiance.meaning": "Oggi, credi pienamente nelle tue capacità e avanza con un’energia sicura. La fiducia in te stessə è una forza interiore preziosa che ti rende più forte, più chiaro nelle scelte e più allineato con la tua verità. Anche se il dubbio si presenta, ricorda che ogni passo fatto con fede ti avvicina ai tuoi veri successi.",
-        "cards.daily.Lacher-prise.name": "Lasciare Andare",
-        "cards.daily.Lacher-prise.meaning": "Oggi, liberati dei pesi del passato e delle preoccupazioni che non ti appartengono più. Ciò che non puoi controllare non merita di prosciugare la tua energia. Accettando di lasciar andare, apri la strada a una maggiore pace interiore e chiarezza. Ti sentirai più leggerə, più centrato e prontə ad accogliere ciò che arriva con fiducia.",
+        "cards.daily.Lacherprise.name": "Lasciare Andare",
+        "cards.daily.Lacherprise.meaning": "Oggi, liberati dei pesi del passato e delle preoccupazioni che non ti appartengono più. Ciò che non puoi controllare non merita di prosciugare la tua energia. Accettando di lasciar andare, apri la strada a una maggiore pace interiore e chiarezza. Ti sentirai più leggerə, più centrato e prontə ad accogliere ciò che arriva con fiducia.",
         "cards.daily.Joie.name": "Gioia",
         "cards.daily.Joie.meaning": "Oggi, apri il cuore alla gioia semplice dei piccoli momenti: un sorriso, un gesto sincero, un pensiero luminoso. Anche in mezzo agli impegni, questa energia positiva può trasformare il tuo stato d’animo. Coltivando la gioia, diventi più radioso, più presente e attiri naturalmente esperienze che nutrono il tuo benessere.",
         "cards.daily.Sagesse.name": "Saggezza",

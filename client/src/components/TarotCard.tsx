@@ -3,62 +3,62 @@ import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { OracleType } from '@shared/schema';
 
-  interface TarotCardProps {
-    number: number;
-    isSelected?: boolean;
-    isSelectable?: boolean;
-    onClick?: () => void;
-    className?: string;
-    cardName?: string;
-    oracleType?: 'tarot' | 'angels' | 'runes' | 'oracle' | 'daily'; // ✅ Ajoute 'daily'
-  }
+interface TarotCardProps {
+  number: number;
+  isSelected?: boolean;
+  isSelectable?: boolean;
+  onClick?: () => void;
+  className?: string;
+  cardName?: string;
+  oracleType?: 'tarot' | 'angels' | 'runes' | 'oracle' | 'daily';
+}
 
-  export default function TarotCard({ 
-    number, 
-    isSelected, 
-    isSelectable = true,
-    onClick, 
-    className,
-    cardName,
-    oracleType = 'tarot'
-  }: TarotCardProps) {
-    const [isHovered, setIsHovered] = useState(false);
-    const { t, language } = useLanguage();
+export default function TarotCard({ 
+  number, 
+  isSelected, 
+  isSelectable = true,
+  onClick, 
+  className,
+  cardName,
+  oracleType = 'tarot'
+}: TarotCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  const { t, language } = useLanguage();
 
-    const handleClick = () => {
-      if (isSelectable) {
-        console.log(`Card ${number} selected`);
-        onClick?.();
-      }
-    };
+  const handleClick = () => {
+    if (isSelectable) {
+      console.log(`Card ${number} selected`);
+      onClick?.();
+    }
+  };
 
-    const isBack = number === 0;
+  const isBack = number === 0;
 
-    const normalizeCardName = (name: string): string => {
-      return name
-        .trim()
-        .replace(/[''\s-]/g, '')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '');
-    };
+  const normalizeCardName = (name: string): string => {
+    return name
+      .trim()
+      .replace(/[''\s-]/g, '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+  };
 
-    const getTranslatedCardName = (): string => {
-      if (!cardName) return '';
+  const getTranslatedCardName = (): string => {
+    if (!cardName) return '';
 
-      const normalized = normalizeCardName(cardName);
-      const translationKey = `cards.${oracleType}.${normalized}.name`;
+    const normalized = normalizeCardName(cardName);
+    const translationKey = `cards.${oracleType}.${normalized}.name`;
 
-      console.log(`🔍 TarotCard [${language}]: "${cardName}" → key: "${translationKey}"`);
+    console.log(`🔍 TarotCard [${language}]: "${cardName}" → key: "${translationKey}"`);
 
-      const translated = t(translationKey);
-      if (translated !== translationKey) {
-        console.log(`   ✅ Trouvé: "${translated}"`);
-        return translated;
-      }
+    const translated = t(translationKey);
+    if (translated !== translationKey) {
+      console.log(`   ✅ Trouvé: "${translated}"`);
+      return translated;
+    }
 
-      console.log(`   ⚠️ Pas de traduction`);
-      return cardName;
-    };
+    console.log(`   ⚠️ Pas de traduction`);
+    return cardName;
+  };
 
   return (
     <div
@@ -78,42 +78,39 @@ import { OracleType } from '@shared/schema';
       data-testid={`card-${number}`}
     >
       {isBack ? (
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-violet-900">
-          <div className="absolute inset-0 opacity-40">
-            <div className="absolute top-[20%] left-[30%] w-16 h-16 bg-blue-500/30 rounded-full blur-2xl"></div>
-            <div className="absolute bottom-[30%] right-[25%] w-20 h-20 bg-purple-500/20 rounded-full blur-3xl"></div>
-          </div>
+        /* ✅ DOS DE LA CARTE AVEC IMAGE PERSONNALISÉE */
+        <div className="absolute inset-0 rounded-xl overflow-hidden">
+          {/* Image de fond haute résolution */}
+          <img 
+            src="/Image/Dos-carte.jpg" 
+            srcSet="/Image/Dos-carte.jpg 1x, /Image/Dos-carte@2x.jpg 2x"
+            alt="Dos de carte"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ 
+              filter: 'contrast(1.05) saturate(1.1)'
+            } as React.CSSProperties}
+            loading="lazy"
+          />
 
-          <div className="absolute inset-0">
-            <div className="absolute top-[15%] left-[20%] w-1 h-1 bg-yellow-200 rounded-full animate-pulse"></div>
-            <div className="absolute top-[40%] right-[15%] w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
-            <div className="absolute bottom-[25%] left-[15%] w-1 h-1 bg-yellow-100 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
-            <div className="absolute top-[60%] left-[70%] w-0.5 h-0.5 bg-white/80 rounded-full animate-pulse" style={{animationDelay: '1.5s'}}></div>
-            <div className="absolute top-[80%] right-[40%] w-0.5 h-0.5 bg-yellow-200/80 rounded-full animate-pulse" style={{animationDelay: '0.8s'}}></div>
-            <div className="absolute top-[30%] left-[50%] w-0.5 h-0.5 bg-white/60 rounded-full animate-pulse" style={{animationDelay: '1.2s'}}></div>
-          </div>
+          {/* Overlay léger pour uniformiser */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-indigo-900/20"></div>
 
-          <div className="absolute inset-2 rounded-lg border-2 border-[#ffd700]/30"></div>
+          {/* Bordure dorée */}
+          <div className="absolute inset-2 rounded-lg border-2 border-[#ffd700]/40 pointer-events-none"></div>
 
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative">
-              <div className="absolute inset-0 blur-xl bg-[#ffd700]/20 scale-150"></div>
-              <div className="relative text-4xl sm:text-5xl text-[#ffd700] drop-shadow-[0_0_10px_rgba(255,215,0,0.8)] font-serif">
-                ☽
-              </div>
-            </div>
-          </div>
+          {/* Coins décoratifs */}
+          <div className="absolute top-3 left-3 text-[#ffd700]/60 text-xs">✦</div>
+          <div className="absolute top-3 right-3 text-[#ffd700]/60 text-xs">✦</div>
+          <div className="absolute bottom-3 left-3 text-[#ffd700]/60 text-xs">✦</div>
+          <div className="absolute bottom-3 right-3 text-[#ffd700]/60 text-xs">✦</div>
 
-          <div className="absolute top-3 left-3 text-[#ffd700]/40 text-xs">✦</div>
-          <div className="absolute top-3 right-3 text-[#ffd700]/40 text-xs">✦</div>
-          <div className="absolute bottom-3 left-3 text-[#ffd700]/40 text-xs">✦</div>
-          <div className="absolute bottom-3 right-3 text-[#ffd700]/40 text-xs">✦</div>
-
+          {/* Effet de brillance au survol */}
           {isHovered && (
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent animate-shimmer"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent animate-shimmer"></div>
           )}
         </div>
       ) : (
+        /* FACE DE LA CARTE (nom de la carte révélée) */
         cardName ? (
           <div className="text-center px-2">
             <span className="text-[#ffd700] font-bold text-xs sm:text-sm md:text-base leading-tight block">
