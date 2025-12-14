@@ -3,13 +3,12 @@ import MysticalButton from '@/components/MysticalButton';
 import BonusRoll from '@/components/BonusRoll';
 import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { showRewardedAd } from '@/admobService';
 
 interface BonusRollPageProps {
   user: UserSession;
   onBack: () => void;
   onSaveReading?: (reading: any) => void;
-  isPremium?: boolean; // ✅ AJOUT
+  isPremium?: boolean;
 }
 
 const getRandomVariation = () => {
@@ -92,61 +91,13 @@ export default function BonusRollPage({
   user, 
   onBack, 
   onSaveReading,
-  isPremium = false // ✅ AJOUT
+  isPremium = false
 }: BonusRollPageProps) {
   const { t } = useLanguage();
   const [isComplete, setIsComplete] = useState(false);
-  const [showDice, setShowDice] = useState(false);
-  const [isLoadingAd, setIsLoadingAd] = useState(false);
-  const [showLongAdMessage, setShowLongAdMessage] = useState(false);
-  const [variation, setVariation] = useState<string | null>(null);
 
-  // ✅ NOUVELLE FONCTION : Avec check Premium
-  const handleStartRoll = async () => {
-    const chosenVariation = getRandomVariation();
-    setVariation(chosenVariation);
-    console.log('🎯 [BONUS ROLL] Démarrage - Variation:', chosenVariation);
-
-    // 👑 PREMIUM : Déblocage immédiat sans pub
-    if (isPremium) {
-      console.log('👑 [BONUS ROLL] Premium actif → Déblocage instantané sans pub');
-      setShowDice(true);
-      return;
-    }
-
-    // 📺 GRATUIT : Pub récompensée obligatoire
-    setIsLoadingAd(true);
-    setShowLongAdMessage(false);
-
-    const messageTimeoutId = setTimeout(() => {
-      console.log('💬 [BONUS ROLL] Affichage message "pub longue"');
-      setShowLongAdMessage(true);
-    }, 45000);
-
-    try {
-      const rewardGranted = await showRewardedAd('bonus_roll_start');
-
-      clearTimeout(messageTimeoutId);
-      setIsLoadingAd(false);
-      setShowLongAdMessage(false);
-
-      console.log(`🎁 [BONUS ROLL] Résultat: ${rewardGranted ? '✅ DÉBLOQUÉ' : '❌ BLOQUÉ'}`);
-
-      if (rewardGranted) {
-        console.log('✅ [BONUS ROLL] Pub complétée → Déblocage');
-        setShowDice(true);
-      } else {
-        console.log('❌ [BONUS ROLL] Pub non complétée');
-        alert(t('oracle.bonusRoll.adNotCompleted') || 'Veuillez regarder la publicité jusqu\'à la fin.');
-      }
-    } catch (error) {
-      console.error('❌ [BONUS ROLL] Erreur:', error);
-      clearTimeout(messageTimeoutId);
-      setIsLoadingAd(false);
-      setShowLongAdMessage(false);
-      alert(t('oracle.bonusRoll.adError') || 'Une erreur est survenue. Réessayez.');
-    }
-  };
+  // ✅ CONFORME ADMOB : Variation choisie immédiatement, pas d'écran de déblocage
+  const [variation] = useState<string>(getRandomVariation());
 
   const handleComplete = (result: { total: number; dice: [number, number]; interpretation: string }) => {
     setIsComplete(true);
@@ -155,163 +106,7 @@ export default function BonusRollPage({
 
   const styles = getVariationStyles(variation, t);
 
-  if (!showDice && !isLoadingAd) {
-    return (
-      <div className="main-content w-full min-h-screen flex flex-col items-center justify-center p-4 pb-24 relative overflow-x-hidden overflow-y-auto">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033]">
-          <div className="absolute inset-0 opacity-20">
-            {[...Array(30)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute bg-amber-400 rounded-full animate-pulse"
-                style={{
-                  width: Math.random() * 4 + 2 + 'px',
-                  height: Math.random() * 4 + 2 + 'px',
-                  top: Math.random() * 100 + '%',
-                  left: Math.random() * 100 + '%',
-                  animationDelay: Math.random() * 2 + 's',
-                  animationDuration: Math.random() * 3 + 2 + 's'
-                }}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="text-center relative z-10 px-3 w-full max-w-md">
-          {/* ✅ Badge Premium si applicable */}
-          {isPremium && (
-            <div className="inline-block mb-3">
-              <div className="bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-400 text-purple-900 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-lg">
-                <span className="flex items-center gap-1">
-                  👑 {t('premium.badge') || 'Premium'}
-                </span>
-              </div>
-            </div>
-          )}
-
-          <div className="inline-block mb-4 sm:mb-6">
-            <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-wide shadow-lg animate-pulse max-w-[90vw]">
-              <span className="whitespace-nowrap overflow-hidden text-ellipsis block">
-                🎁 {t('oracle.bonusRoll.exclusiveBadge') || 'BONUS EXCLUSIF'}
-              </span>
-            </div>
-          </div>
-
-          <div className="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-4 sm:mb-6">
-            <div className="absolute inset-0 bg-amber-500/30 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500 via-yellow-400 to-orange-500 rounded-full flex items-center justify-center border-3 sm:border-4 border-yellow-300 shadow-[0_0_40px_rgba(251,191,36,0.7)]">
-              <span className="text-5xl sm:text-6xl animate-bounce">🎲</span>
-            </div>
-          </div>
-
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif mb-3 sm:mb-4 leading-tight bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-300 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(251,191,36,0.5)] px-2 break-words">
-            {t('oracle.bonusRoll.title')}
-          </h1>
-
-          <div className="text-amber-50 text-xs sm:text-sm mb-4 sm:mb-6 leading-snug sm:leading-relaxed bg-purple-900/60 py-2.5 sm:py-3 px-2.5 sm:px-3 rounded-lg sm:rounded-xl border border-amber-400/50 shadow-[0_0_15px_rgba(255,215,0,0.3)] min-h-[60px] sm:min-h-[70px] flex items-center justify-center">
-            <p className="text-center break-words">
-              ✨ <span className="font-semibold text-amber-300">{t('oracle.bonusRoll.description')}</span>
-            </p>
-          </div>
-
-          {/* ✅ Message différent selon Premium ou Gratuit */}
-          {!isPremium && (
-            <div className="mb-4 p-3 bg-amber-500/20 border border-amber-400/50 rounded-lg">
-              <p className="text-amber-200 text-xs sm:text-sm leading-snug">
-                📺 {t('oracle.bonusRoll.adRequired') || 'Une publicité vous sera présentée'}
-              </p>
-            </div>
-          )}
-
-          {isPremium && (
-            <div className="mb-4 p-3 bg-yellow-500/20 border border-yellow-400/50 rounded-lg">
-              <p className="text-yellow-200 text-xs sm:text-sm leading-snug">
-                👑 {t('oracle.bonusRoll.premiumAccess') || 'Accès instantané sans publicité'}
-              </p>
-            </div>
-          )}
-
-          <MysticalButton 
-            onClick={handleStartRoll}
-            className="w-full py-2.5 sm:py-3 px-2 sm:px-3 text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 shadow-[0_0_30px_rgba(251,191,36,0.6)] transform hover:scale-105 transition-all min-h-[48px] sm:min-h-[52px] flex items-center justify-center"
-          >
-            <span className="text-center leading-tight break-words block max-w-full">
-              {isPremium 
-                ? (t('oracle.bonusRoll.startButtonPremium') || '🎲 Lancer les Dés')
-                : (t('oracle.bonusRoll.startButton') || 'Débloquer le Tirage Bonus')
-              }
-            </span>
-          </MysticalButton>
-
-          <button
-            onClick={onBack}
-            className="mt-3 sm:mt-4 text-purple-300 hover:text-purple-100 text-xs sm:text-sm transition-colors"
-          >
-            ← {t('common.back')}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (isLoadingAd) {
-    return (
-      <div className="main-content w-full min-h-screen flex flex-col items-center justify-center p-5 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033]">
-          <div className="absolute inset-0 opacity-20">
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute bg-amber-400 rounded-full animate-pulse"
-                style={{
-                  width: Math.random() * 4 + 2 + 'px',
-                  height: Math.random() * 4 + 2 + 'px',
-                  top: Math.random() * 100 + '%',
-                  left: Math.random() * 100 + '%',
-                  animationDelay: Math.random() * 2 + 's',
-                  animationDuration: Math.random() * 3 + 2 + 's'
-                }}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="text-center relative z-10 max-w-md px-4">
-          <div className="relative w-24 h-24 mx-auto mb-6">
-            <div className="absolute inset-0 bg-amber-500/30 rounded-full blur-2xl animate-pulse"></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-6xl animate-bounce">🎁</div>
-            </div>
-          </div>
-
-          <p className="text-amber-300 text-xl font-bold font-serif mb-2 animate-pulse">
-            {t('oracle.bonusRoll.loadingAd') || 'Chargement...'}
-          </p>
-          <p className="text-amber-200 text-sm mt-3">
-            ⏳ {t('oracle.bonusRoll.pleaseWait') || 'Un instant'}
-          </p>
-
-          {showLongAdMessage && (
-            <div className="mt-6 p-4 bg-amber-500/20 border-2 border-amber-400/50 rounded-xl">
-              <p className="text-amber-200 text-base font-semibold mb-2">
-                ⏳ {t('oracle.bonusRoll.adLongWarning') || 'Publicité en cours...'}
-              </p>
-              <p className="text-amber-300 text-sm">
-                {t('oracle.bonusRoll.pleaseWaitUntilEnd') || 'Merci de patienter'}
-              </p>
-            </div>
-          )}
-
-          <div className="flex justify-center gap-2 mt-4">
-            <span className="w-3 h-3 bg-amber-400 rounded-full animate-bounce"></span>
-            <span className="w-3 h-3 bg-yellow-400 rounded-full animate-bounce" style={{animationDelay: '0.15s'}}></span>
-            <span className="w-3 h-3 bg-orange-400 rounded-full animate-bounce" style={{animationDelay: '0.3s'}}></span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+  // ✅ CONFORME ADMOB : Affichage direct du composant BonusRoll, pas d'écran de déblocage
   return (
     <div className="main-content w-full min-h-screen flex flex-col p-2 sm:p-4 pt-14 sm:pt-16 pb-[140px] relative overflow-x-hidden overflow-y-auto">
       <div className="fixed inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033] -z-10">
@@ -334,6 +129,17 @@ export default function BonusRollPage({
       </div>
 
       <div className="text-center mb-2 sm:mb-3 relative flex-shrink-0 px-2">
+        {/* Badge Premium si applicable */}
+        {isPremium && (
+          <div className="inline-block mb-2">
+            <div className="bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-400 text-purple-900 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-lg">
+              <span className="flex items-center gap-1">
+                👑 {t('premium.badge') || 'Premium'}
+              </span>
+            </div>
+          </div>
+        )}
+
         <div className="inline-block mb-1.5 sm:mb-2">
           <div className={`bg-gradient-to-r ${styles.badge} ${styles.badgeText} px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[8px] sm:text-[9px] font-bold uppercase tracking-wide shadow-lg animate-pulse max-w-[85vw]`}>
             <span className="whitespace-nowrap overflow-hidden text-ellipsis block">
@@ -376,13 +182,13 @@ export default function BonusRollPage({
               />
             </div>
 
+            {/* ✅ CONFORME ADMOB : Accès direct au composant BonusRoll */}
             <BonusRoll 
               onComplete={handleComplete}
               variation={variation}
               isPremium={isPremium}
               onReset={() => {
                 const newVariation = getRandomVariation();
-                setVariation(newVariation);
                 console.log('🔄 Nouvelle variation:', newVariation);
               }}
             />

@@ -7,10 +7,9 @@ interface BonusRollProps {
   onComplete?: (result: { total: number; dice: [number, number]; interpretation: string }) => void;
   variation: string | null;
   onReset?: () => void;
-  isPremium?: boolean; // ✅ AJOUT
+  isPremium?: boolean;
 }
 
-// 🎨 STYLES DES DÉS SELON LA VARIATION
 const getDiceStyles = (variation: string | null) => {
   switch (variation) {
     case '1':
@@ -23,7 +22,6 @@ const getDiceStyles = (variation: string | null) => {
         totalBorder: 'border-white',
         totalShadow: 'shadow-[0_8px_32px_rgba(255,215,0,0.8),inset_0_2px_6px_rgba(255,255,255,0.5)]'
       };
-
     case '2':
       return {
         gradient: 'from-[#22d3ee] via-[#67e8f9] to-[#a5f3fc]',
@@ -34,7 +32,6 @@ const getDiceStyles = (variation: string | null) => {
         totalBorder: 'border-cyan-100',
         totalShadow: 'shadow-[0_8px_32px_rgba(34,211,238,0.8),inset_0_2px_6px_rgba(255,255,255,0.5)]'
       };
-
     case '3':
       return {
         gradient: 'from-[#a855f7] via-[#c084fc] to-[#e879f9]',
@@ -45,7 +42,6 @@ const getDiceStyles = (variation: string | null) => {
         totalBorder: 'border-fuchsia-200',
         totalShadow: 'shadow-[0_8px_32px_rgba(168,85,247,0.8),inset_0_2px_6px_rgba(255,255,255,0.5)]'
       };
-
     default:
       return {
         gradient: 'from-[#fbbf24] via-[#fcd34d] to-[#fde68a]',
@@ -59,7 +55,6 @@ const getDiceStyles = (variation: string | null) => {
   }
 };
 
-// ✅ AJOUT isPremium dans les props
 export default function BonusRoll({ onComplete, variation, onReset, isPremium = false }: BonusRollProps) {
   const { t } = useLanguage();
 
@@ -79,8 +74,8 @@ export default function BonusRoll({ onComplete, variation, onReset, isPremium = 
     const newRollCount = rollCount + 1;
     setRollCount(newRollCount);
 
-    // ✅ MODIFIÉ : Pub interstitielle tous les 3 lancers SAUF si Premium
-    const shouldShowAd = newRollCount % 3 === 0 && !isPremium;
+    // ✅ CONFORME ADMOB : Pub interstitielle tous les 2 lancers (au lieu de 3) SAUF si Premium
+    const shouldShowAd = newRollCount % 2 === 0 && !isPremium;
 
     console.log(`🎲 Bonus Roll - Lancer n°${newRollCount} → Pub: ${shouldShowAd ? 'OUI ✅' : isPremium ? 'NON (Premium 👑)' : 'NON ❌'}`);
 
@@ -89,7 +84,7 @@ export default function BonusRoll({ onComplete, variation, onReset, isPremium = 
       setMessage(t('oracle.bonusRoll.loadingAd'));
       try {
         await showInterstitialAd('bonus_roll_dice');
-        console.log('✅ Pub Bonus Roll (lancer) affichée');
+        console.log('✅ Pub Bonus Roll (tous les 2 lancers) affichée');
       } catch (error) {
         console.log("❌ Pub non disponible, on continue quand même");
       }
@@ -173,7 +168,6 @@ export default function BonusRoll({ onComplete, variation, onReset, isPremium = 
 
   return (
     <div className="bonus-roll-container w-full h-full flex flex-col p-2 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-2 border-[#ffd700] shadow-2xl overflow-hidden">
-      {/* Header compact */}
       <div className="text-center mb-2 sm:mb-3 flex-shrink-0">
         <h3 className="text-base sm:text-xl md:text-2xl font-bold text-[#ffd700] font-serif mb-1 flex items-center justify-center gap-1 sm:gap-1.5">
           🎁 {t('oracle.bonusRoll.title')}
@@ -183,9 +177,7 @@ export default function BonusRoll({ onComplete, variation, onReset, isPremium = 
         </p>
       </div>
 
-      {/* Dés - Section scrollable si nécessaire */}
       <div className="flex-1 flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden min-h-0">
-        {/* Dés avec styles dynamiques */}
         <div className="flex items-center justify-center gap-1 sm:gap-2 md:gap-3 mb-2 sm:mb-3 flex-shrink-0">
           <div
             className={`dice-3d w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg sm:rounded-xl
@@ -242,7 +234,6 @@ export default function BonusRoll({ onComplete, variation, onReset, isPremium = 
           )}
         </div>
 
-        {/* Message et interprétation */}
         <div className="text-center px-2 sm:px-3 w-full max-w-lg flex-shrink-0">
           <p className="text-[#ffd700] font-semibold text-xs sm:text-sm md:text-base mb-1 sm:mb-2 break-words leading-tight">
             {message}
@@ -267,7 +258,6 @@ export default function BonusRoll({ onComplete, variation, onReset, isPremium = 
         </div>
       </div>
 
-      {/* Boutons - Fixés en bas */}
       <div className="flex-shrink-0 pt-2 sm:pt-3">
         {!hasRolled && !rolling && !isLoadingAd && (
           <div className="text-center px-2">
