@@ -128,11 +128,11 @@ export default function OracleMystiqueApp({
 
   const oracle = selectedOracle ? oracleData[selectedOracle] : null;
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      <StarsBackground />
+        return (
+          <div className="min-h-screen flex flex-col">
+            <StarsBackground />
+            <main className="flex-grow flex flex-col justify-center items-center max-w-6xl mx-auto p-5 pb-safe">
 
-      <main className="flex-grow flex flex-col justify-center items-center max-w-6xl mx-auto p-5">
         {currentStep === 'responsiveTest' && <ResponsiveTest />}
 
         {currentStep === 'landing' && <LandingPage onEnter={handleEnter} />}

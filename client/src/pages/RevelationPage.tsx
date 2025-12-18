@@ -31,7 +31,7 @@ export default function RevelationPage({
   }, [onRevealInterpretation]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-b from-[#1a0933] via-[#2d1b4e] to-[#1a0933]">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 pb-safe bg-gradient-to-b from-[#1a0933] via-[#2d1b4e] to-[#1a0933]">
 
       {/* Animation de loading mystique */}
       <div className="relative mb-8">

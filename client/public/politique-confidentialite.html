@@ -97,6 +97,20 @@
             margin-bottom: 10px;
         }
 
+        .entertainment-disclaimer {
+            background: rgba(255, 193, 7, 0.15);
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .entertainment-disclaimer h2 {
+            color: #ffd700;
+            margin-top: 0;
+        }
+
         strong {
             color: #fde68a;
         }
@@ -121,24 +135,6 @@
             color: #e9d5ff;
         }
 
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 30px;
-            padding: 10px 20px;
-            background: rgba(168, 85, 247, 0.3);
-            color: #fde68a;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: 1px solid rgba(252, 211, 77, 0.3);
-        }
-
-        .back-btn:hover {
-            background: rgba(168, 85, 247, 0.5);
-            transform: translateX(-5px);
-            text-decoration: none;
-        }
-
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -159,6 +155,25 @@
         
         <h1>Politique de Confidentialité</h1>
         <p class="date">Dernière mise à jour : Janvier 2025</p>
+
+        <!-- ⚠️ NOUVEAU : Disclaimer divertissement TRÈS visible -->
+        <div class="entertainment-disclaimer">
+            <h2>⚠️ AVERTISSEMENT IMPORTANT</h2>
+            <p><strong>CartoMystik est une application de DIVERTISSEMENT uniquement.</strong></p>
+            <p>Cette application propose des tirages de cartes (tarot, oracles, anges), des horoscopes et des interprétations à but <strong>récréatif et ludique</strong>.</p>
+            
+            <p><strong>Aucune prétention de prédiction de l'avenir, de voyance, ou de conseils personnels :</strong></p>
+            <ul>
+                <li>Les tirages et interprétations sont générés de manière <strong>aléatoire et automatique</strong></li>
+                <li>Ils ne constituent <strong>en aucun cas des conseils professionnels</strong> (médicaux, financiers, juridiques, ou psychologiques)</li>
+                <li>Ils ne doivent <strong>pas être utilisés pour prendre des décisions importantes</strong> dans votre vie</li>
+                <li>Cette application ne remplace <strong>pas une consultation avec un professionnel qualifié</strong></li>
+            </ul>
+
+            <p><strong>Pour toute question sérieuse concernant votre santé, vos finances, votre vie personnelle ou professionnelle, consultez un professionnel compétent (médecin, psychologue, conseiller financier, avocat, etc.).</strong></p>
+            
+            <p>En utilisant cette application, vous reconnaissez et acceptez que CartoMystik est un jeu de divertissement et que vous ne devez pas baser des décisions importantes sur les résultats obtenus.</p>
+        </div>
 
         <section>
             <h2>Introduction</h2>
@@ -190,8 +205,7 @@
                 </ul>
             </div>
             <p><strong>Protection des enfants de moins de 13 ans :</strong></p>
-            <p>En aucun cas des données relatives à la situation professionnelle, économique ou à la vie privée ne seront collectées auprès des mineurs sans le consentement de leurs parents ou tuteurs.</p>
-            <p>Si vous avez moins de 13 ans et que vous avez accédé à cette application sans en informer vos parents, vous ne devez pas l'utiliser ni fournir de données personnelles.</p>
+            <p>Nous ne collectons <strong>jamais sciemment</strong> de données personnelles auprès d'enfants de moins de 13 ans. Si vous êtes parent ou tuteur et que vous découvrez que votre enfant nous a fourni des données personnelles sans votre consentement, contactez-nous immédiatement à <a href="mailto:cartomystik@gmail.com">cartomystik@gmail.com</a> pour que nous puissions supprimer ces informations.</p>
         </section>
 
         <section>
@@ -209,50 +223,63 @@
             <h2>4. Données collectées</h2>
             
             <h3>4.1 Données stockées localement (dans votre appareil)</h3>
-            <p>Les données suivantes sont stockées <strong>uniquement dans votre appareil</strong> via le stockage local du navigateur (localStorage) et <strong>ne sont jamais envoyées à nos serveurs</strong> :</p>
+            <p>Les données suivantes sont stockées <strong>uniquement dans votre appareil</strong> et <strong>ne sont jamais envoyées à nos serveurs ni partagées avec des tiers</strong> :</p>
             <ul>
-                <li>Votre prénom</li>
-                <li>Votre date de naissance et signe astrologique</li>
-                <li>Votre genre</li>
+                <li>Votre prénom (optionnel)</li>
+                <li>Votre date de naissance et signe astrologique (optionnel)</li>
+                <li>Votre genre (optionnel)</li>
                 <li>Votre langue préférée</li>
                 <li>L'historique de vos tirages de cartes</li>
                 <li>Vos notes personnelles sur les tirages</li>
                 <li>Vos tirages favoris</li>
             </ul>
             <div class="info-box">
-                <p><strong>✨ Important :</strong> Ces données restent uniquement sur votre appareil. Si vous désinstallez l'application ou supprimez les données de votre navigateur, ces informations seront perdues (sauf pour les utilisateurs Premium qui peuvent les restaurer via leur email).</p>
+                <p><strong>✨ Important :</strong> Ces données restent uniquement sur votre appareil et sont sous votre contrôle. Si vous désinstallez l'application ou supprimez les données de votre navigateur, ces informations seront définitivement perdues (sauf pour les utilisateurs Premium qui peuvent les sauvegarder via leur email).</p>
             </div>
 
             <h3>4.2 Données collectées sur nos serveurs</h3>
             <p>Les données suivantes sont collectées et stockées sur nos serveurs <strong>uniquement si vous souscrivez à la version Premium</strong> :</p>
             <ul>
-                <li><strong>Adresse email :</strong> Pour associer votre abonnement Premium à votre compte</li>
+                <li><strong>Adresse email :</strong> Pour associer votre abonnement Premium à votre compte et restaurer vos données</li>
                 <li><strong>Date de souscription et d'expiration :</strong> Pour gérer la durée de validité de votre accès Premium</li>
-                <li><strong>Statut de paiement :</strong> Confirmation du paiement via Stripe (Web) ou Google Play Billing (Android)</li>
-                <li><strong>Identifiant utilisateur RevenueCat :</strong> Utilisé uniquement sur Android pour la gestion des achats via Google Play</li>
+                <li><strong>Statut de paiement :</strong> Confirmation du paiement via nos partenaires de paiement (Stripe sur Web, Google Play Billing sur Android)</li>
+                <li><strong>Identifiant utilisateur anonyme :</strong> Un identifiant technique unique pour associer vos données (ne contient aucune information personnelle identifiable)</li>
             </ul>
 
             <h3>4.3 Données techniques collectées automatiquement</h3>
-            <p>Les données techniques suivantes peuvent être collectées automatiquement :</p>
+            <p>Les données techniques suivantes <strong>peuvent</strong> être collectées automatiquement pour le bon fonctionnement de l'application et l'affichage de publicités (utilisateurs gratuits uniquement) :</p>
             <ul>
-                <li>Adresse IP</li>
-                <li>Type d'appareil et système d'exploitation</li>
-                <li>Navigateur utilisé</li>
-                <li>Données d'utilisation de l'application (pages visitées, durée de visite)</li>
-                <li>Identifiant publicitaire (pour Google AdMob)</li>
+                <li><strong>Adresse IP :</strong> Utilisée temporairement pour la géolocalisation et la sécurité (non stockée)</li>
+                <li><strong>Type d'appareil et système d'exploitation :</strong> Pour optimiser l'affichage de l'application</li>
+                <li><strong>Navigateur utilisé :</strong> Pour assurer la compatibilité</li>
+                <li><strong>Données d'utilisation anonymisées :</strong> Pages visitées, durée de visite (sans identification personnelle)</li>
+                <li><strong>Identifiant publicitaire (IDFA/AAID) :</strong> Uniquement pour les utilisateurs gratuits, géré par Google AdMob pour l'affichage de publicités personnalisées</li>
             </ul>
+
+            <h3>4.4 Collecte de données publicitaires (Google AdMob)</h3>
+            <p><strong>Pour les utilisateurs de la version gratuite uniquement :</strong></p>
+            <p>Google AdMob (notre partenaire publicitaire) peut collecter et utiliser les données suivantes pour afficher des publicités pertinentes :</p>
+            <ul>
+                <li>Identifiant publicitaire mobile (IDFA sur iOS, AAID sur Android)</li>
+                <li>Adresse IP (temporaire, pour la géolocalisation approximative)</li>
+                <li>Informations sur l'appareil (modèle, système d'exploitation, langue)</li>
+                <li>Données de navigation et d'interaction avec les publicités</li>
+                <li>Préférences publicitaires (selon vos paramètres système)</li>
+            </ul>
+            <p><strong>Ces données sont collectées et traitées par Google AdMob conformément à leur politique de confidentialité.</strong> Consultez la <a href="https://policies.google.com/privacy" target="_blank">politique de confidentialité de Google</a> pour plus d'informations.</p>
+            <p><strong>Les utilisateurs Premium ne voient aucune publicité et ne sont donc pas concernés par cette collecte de données publicitaires.</strong></p>
         </section>
 
         <section>
             <h2>5. Finalités du traitement</h2>
-            <p>Nous utilisons vos données pour les finalités suivantes :</p>
+            <p>Nous utilisons vos données <strong>uniquement</strong> pour les finalités suivantes :</p>
 
             <h3>5.1 Fonctionnement de l'application</h3>
             <ul>
-                <li>Personnaliser votre expérience (prénom, signe astrologique)</li>
-                <li>Sauvegarder vos tirages et interprétations</li>
-                <li>Permettre la consultation de votre historique</li>
-                <li>Afficher l'interface dans votre langue préférée</li>
+                <li>Personnaliser votre expérience (prénom, signe astrologique) - <strong>données locales uniquement</strong></li>
+                <li>Sauvegarder vos tirages et interprétations - <strong>données locales ou serveur selon version</strong></li>
+                <li>Permettre la consultation de votre historique - <strong>données locales uniquement</strong></li>
+                <li>Afficher l'interface dans votre langue préférée - <strong>données locales uniquement</strong></li>
             </ul>
 
             <h3>5.2 Gestion de l'abonnement Premium</h3>
@@ -265,27 +292,32 @@
             </ul>
 
             <h3>5.3 Publicité (utilisateurs gratuits uniquement)</h3>
+            <p><strong>Utilisateurs gratuits :</strong> Nous utilisons Google AdMob pour afficher des publicités. AdMob peut utiliser vos données pour :</p>
             <ul>
-                <li>Afficher des publicités pertinentes via Google AdMob</li>
+                <li>Afficher des publicités adaptées à vos centres d'intérêt</li>
                 <li>Mesurer l'efficacité des publicités</li>
+                <li>Prévenir la fraude publicitaire</li>
             </ul>
+            <p><strong>Utilisateurs Premium :</strong> Aucune publicité n'est affichée et aucune donnée n'est partagée avec des réseaux publicitaires.</p>
 
             <h3>5.4 Amélioration de l'application</h3>
             <ul>
-                <li>Analyser l'utilisation de l'application</li>
+                <li>Analyser l'utilisation de l'application de manière <strong>anonymisée</strong></li>
                 <li>Corriger les bugs et améliorer les performances</li>
                 <li>Développer de nouvelles fonctionnalités</li>
             </ul>
+
+            <p><strong>Nous ne vendons jamais vos données personnelles à des tiers.</strong></p>
         </section>
 
         <section>
             <h2>6. Base juridique du traitement</h2>
-            <p>Nous traitons vos données sur les bases juridiques suivantes :</p>
+            <p>Nous traitons vos données sur les bases juridiques suivantes conformément au RGPD :</p>
             <ul>
-                <li><strong>Consentement :</strong> Pour l'utilisation de l'application et l'affichage de publicités personnalisées</li>
-                <li><strong>Exécution du contrat :</strong> Pour la gestion de votre abonnement Premium</li>
-                <li><strong>Intérêt légitime :</strong> Pour l'amélioration de l'application et la prévention de la fraude</li>
-                <li><strong>Obligations légales :</strong> Pour le respect de la législation en vigueur (comptabilité, facturation)</li>
+                <li><strong>Consentement (Article 6(1)(a) RGPD) :</strong> Pour l'utilisation de l'application et l'affichage de publicités personnalisées (que vous pouvez retirer à tout moment)</li>
+                <li><strong>Exécution du contrat (Article 6(1)(b) RGPD) :</strong> Pour la gestion de votre abonnement Premium</li>
+                <li><strong>Intérêt légitime (Article 6(1)(f) RGPD) :</strong> Pour l'amélioration de l'application, la sécurité et la prévention de la fraude</li>
+                <li><strong>Obligations légales (Article 6(1)(c) RGPD) :</strong> Pour le respect de la législation en vigueur (comptabilité, facturation, obligations fiscales)</li>
             </ul>
         </section>
 
@@ -294,41 +326,56 @@
             <p>Nous conservons vos données selon les durées suivantes :</p>
 
             <h3>7.1 Données stockées localement</h3>
-            <p>Les données stockées dans votre appareil (prénom, historique, etc.) sont conservées <strong>jusqu'à ce que vous les supprimiez</strong> en :</p>
+            <p>Les données stockées dans votre appareil sont conservées <strong>jusqu'à ce que vous les supprimiez</strong> en :</p>
             <ul>
-                <li>Supprimant les données de l'application</li>
+                <li>Supprimant les données de l'application dans les paramètres</li>
                 <li>Désinstallant l'application</li>
                 <li>Effaçant le cache de votre navigateur</li>
             </ul>
 
-            <h3>7.2 Données sur nos serveurs (Premium)</h3>
+            <h3>7.2 Données sur nos serveurs (Premium uniquement)</h3>
             <ul>
-                <li><strong>Email et données d'abonnement :</strong> Conservés pendant la durée de votre abonnement + 3 ans (obligations comptables et fiscales)</li>
-                <li><strong>Données de paiement Stripe (Web) :</strong> Gérées par Stripe selon leur propre politique de conservation</li>
-                <li><strong>Données de paiement Google Play (Android) :</strong> Gérées par Google Play et RevenueCat selon leurs propres politiques de conservation</li>
+                <li><strong>Email et données d'abonnement :</strong> Conservés pendant la durée de votre abonnement + 3 ans (pour obligations comptables et fiscales légales)</li>
+                <li><strong>Après expiration de l'abonnement sans renouvellement :</strong> Suppression automatique après 3 ans</li>
+                <li><strong>Données de paiement :</strong> Jamais stockées par nous - gérées uniquement par Stripe (Web) ou Google Play (Android) selon leurs propres politiques</li>
             </ul>
 
-            <h3>7.3 Suppression des données</h3>
-            <p>Vous pouvez demander la suppression de vos données à tout moment en nous contactant à <a href="mailto:cartomystik@gmail.com">cartomystik@gmail.com</a>. Nous procéderons à la suppression dans un délai maximum de 30 jours.</p>
+            <h3>7.3 Données publicitaires (Google AdMob)</h3>
+            <p>Les données collectées par Google AdMob pour l'affichage de publicités sont conservées selon la <a href="https://policies.google.com/privacy" target="_blank">politique de confidentialité de Google</a>. Nous n'avons pas accès à ces données et ne les contrôlons pas.</p>
+
+            <h3>7.4 Suppression de vos données</h3>
+            <p>Vous pouvez demander la suppression complète de vos données à tout moment :</p>
+            <ul>
+                <li><strong>Données locales :</strong> Suppression immédiate en désinstallant l'application ou en effaçant le cache du navigateur</li>
+                <li><strong>Données serveur (Premium) :</strong> Contactez-nous à <a href="mailto:cartomystik@gmail.com">cartomystik@gmail.com</a> - suppression dans un délai maximum de 30 jours</li>
+                <li><strong>Données Google AdMob :</strong> Utilisez les <a href="https://myadcenter.google.com/" target="_blank">paramètres de confidentialité Google</a> ou désactivez les annonces personnalisées dans les paramètres de votre appareil</li>
+            </ul>
         </section>
 
         <section>
             <h2>8. Partage des données avec des tiers</h2>
-            <p>Nous ne vendons, ne louons ni ne transférons vos données personnelles à des tiers, sauf dans les cas suivants :</p>
+            <p><strong>Principe général : Nous ne vendons, ne louons ni ne transférons vos données personnelles à des tiers à des fins commerciales.</strong></p>
+            
+            <p>Nous partageons uniquement vos données avec les partenaires techniques suivants, <strong>strictement nécessaires</strong> au fonctionnement de l'application :</p>
 
             <h3>8.1 Services essentiels</h3>
+            
             <div class="info-box">
                 <p><strong>Render Services, Inc. (Hébergement)</strong></p>
                 <p>Localisation : États-Unis<br>
-                Finalité : Hébergement de nos serveurs<br>
-                Site web : <a href="https://render.com" target="_blank">https://render.com</a></p>
+                Finalité : Hébergement sécurisé de nos serveurs<br>
+                Données partagées : Email et données d'abonnement (Premium uniquement)<br>
+                Conformité RGPD : Oui (clauses contractuelles types)<br>
+                Site web : <a href="https://render.com/privacy" target="_blank">https://render.com/privacy</a></p>
             </div>
 
             <div class="info-box">
                 <p><strong>Stripe, Inc. (Paiements Web)</strong></p>
                 <p>Localisation : États-Unis<br>
                 Finalité : Traitement sécurisé des paiements Premium sur la version Web<br>
-                Conformité RGPD : Oui<br>
+                Données partagées : Email, montant de l'achat, date de transaction<br>
+                <strong>Vos informations de carte bancaire ne transitent JAMAIS par nos serveurs - elles sont traitées directement par Stripe de manière sécurisée.</strong><br>
+                Conformité RGPD : Oui (certifié PCI-DSS)<br>
                 Site web : <a href="https://stripe.com/fr/privacy" target="_blank">https://stripe.com/fr/privacy</a></p>
             </div>
 
@@ -336,203 +383,367 @@
                 <p><strong>Google Play Billing (Paiements Android)</strong></p>
                 <p>Localisation : États-Unis<br>
                 Finalité : Traitement des paiements Premium sur l'application Android<br>
+                Données partagées : Email Google Play, identifiant de transaction<br>
+                <strong>Les paiements sont effectués directement via Google Play. Nous ne collectons ni ne stockons vos informations de paiement.</strong><br>
                 Conformité RGPD : Oui<br>
                 Site web : <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
-                <p><strong>Note :</strong> Les paiements sur Android sont effectués directement via Google Play. Nous ne collectons ni ne stockons vos informations de paiement.</p>
             </div>
 
             <div class="info-box">
-                <p><strong>RevenueCat, Inc. (Gestion des abonnements Android)</strong></p>
+                <p><strong>RevenueCat, Inc. (Gestion des abonnements Android uniquement)</strong></p>
                 <p>Localisation : États-Unis<br>
                 Finalité : Gestion et synchronisation des achats via Google Play sur Android<br>
-                Conformité RGPD : Oui<br>
+                Données partagées : Identifiant utilisateur anonyme, statut d'abonnement, dates d'expiration<br>
+                Conformité RGPD : Oui (clauses contractuelles types)<br>
                 Site web : <a href="https://www.revenuecat.com/privacy" target="_blank">https://www.revenuecat.com/privacy</a></p>
-                <p><strong>Données partagées :</strong> Identifiant utilisateur (email), statut d'abonnement, dates d'expiration</p>
             </div>
 
+            <h3>8.2 Partenaire publicitaire (utilisateurs gratuits uniquement)</h3>
+            
             <div class="info-box">
                 <p><strong>Google AdMob (Publicité)</strong></p>
                 <p>Localisation : États-Unis<br>
                 Finalité : Affichage de publicités pour les utilisateurs gratuits<br>
+                Données partagées : Identifiant publicitaire (IDFA/AAID), adresse IP, informations sur l'appareil, données de navigation<br>
+                <strong>Ces données sont collectées directement par Google AdMob et ne transitent pas par nos serveurs.</strong><br>
+                Conformité RGPD : Oui<br>
                 Site web : <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+                
+                <p><strong>Comment contrôler les publicités personnalisées :</strong></p>
+                <ul>
+                    <li><strong>Sur Android :</strong> Paramètres → Google → Annonces → Désactiver la personnalisation des annonces</li>
+                    <li><strong>Sur iOS :</strong> Réglages → Confidentialité et sécurité → Suivi → Désactiver "Autoriser le suivi"</li>
+                    <li><strong>En ligne :</strong> <a href="https://myadcenter.google.com/" target="_blank">Centre de confidentialité Google</a></li>
+                    <li><strong>Solution définitive :</strong> Souscrire à la version Premium (aucune publicité)</li>
+                </ul>
             </div>
 
-            <h3>8.2 Transferts internationaux de données</h3>
-            <p>Certains de nos prestataires (Render, Stripe, Google, RevenueCat) sont situés aux États-Unis. Ces transferts sont encadrés par :</p>
+            <h3>8.3 Transferts internationaux de données</h3>
+            <p>Certains de nos prestataires sont situés aux États-Unis. Ces transferts sont encadrés par :</p>
             <ul>
-                <li>Les clauses contractuelles types de la Commission européenne</li>
-                <li>Le Data Privacy Framework (DPF) pour les entreprises américaines certifiées</li>
-                <li>Des garanties appropriées conformes au RGPD</li>
+                <li>Les <strong>clauses contractuelles types (CCT)</strong> de la Commission européenne</li>
+                <li>Le <strong>Data Privacy Framework (DPF)</strong> pour les entreprises américaines certifiées</li>
+                <li>Des garanties appropriées conformes au RGPD (Article 46)</li>
             </ul>
+            <p>Ces mécanismes garantissent que vos données bénéficient d'un niveau de protection équivalent à celui de l'Union européenne.</p>
 
-            <h3>8.3 Obligations légales</h3>
-            <p>Nous pouvons être amenés à divulguer vos données si la loi l'exige (décision de justice, autorités compétentes).</p>
+            <h3>8.4 Obligations légales</h3>
+            <p>Nous pouvons être amenés à divulguer vos données si la loi l'exige :</p>
+            <ul>
+                <li>Sur décision de justice ou réquisition judiciaire</li>
+                <li>Pour se conformer à une obligation légale (par exemple : réponse à une demande des autorités fiscales)</li>
+                <li>Pour protéger nos droits légaux ou la sécurité de nos utilisateurs</li>
+            </ul>
         </section>
 
         <section>
             <h2>9. Cookies et technologies de suivi</h2>
             
-            <h3>9.1 Utilisation des cookies</h3>
+            <h3>9.1 Utilisation des technologies de stockage</h3>
             <p>CartoMystik utilise les technologies suivantes :</p>
 
-            <h4>Cookies strictement nécessaires</h4>
+            <h4>Technologies strictement nécessaires</h4>
             <ul>
-                <li><strong>localStorage :</strong> Sauvegarde de vos préférences et historique (côté client uniquement)</li>
-                <li><strong>Session utilisateur :</strong> Authentification pour les utilisateurs Premium</li>
+                <li><strong>localStorage (stockage local du navigateur) :</strong> Sauvegarde de vos préférences, langue, et historique des tirages (côté client uniquement, jamais envoyé à nos serveurs)</li>
+                <li><strong>Session utilisateur :</strong> Authentification temporaire pour les utilisateurs Premium (cookies de session supprimés à la fermeture du navigateur)</li>
             </ul>
 
-            <h4>Cookies publicitaires (utilisateurs gratuits)</h4>
+            <h4>Cookies publicitaires (utilisateurs gratuits uniquement)</h4>
             <ul>
                 <li><strong>Google AdMob :</strong> Affichage et personnalisation des publicités</li>
-                <li><strong>Identifiant publicitaire mobile (IDFA/AAID) :</strong> Suivi publicitaire anonymisé</li>
+                <li><strong>Identifiant publicitaire mobile (IDFA/AAID) :</strong> Suivi publicitaire anonymisé géré par votre système d'exploitation</li>
             </ul>
+            <p><strong>Ces cookies sont gérés par Google AdMob selon leur propre politique de confidentialité.</strong></p>
 
-            <h4>Technologies de gestion des achats (Android)</h4>
+            <h4>Technologies de gestion des achats (Android uniquement)</h4>
             <ul>
                 <li><strong>RevenueCat SDK :</strong> Gestion des achats et synchronisation du statut Premium</li>
                 <li><strong>Google Play Billing :</strong> Traitement des paiements in-app</li>
             </ul>
 
-            <h3>9.2 Désactivation des cookies publicitaires</h3>
-            <p>Vous pouvez désactiver la personnalisation des annonces :</p>
+            <h3>9.2 Contrôler les cookies publicitaires</h3>
+            <p>Vous pouvez gérer ou désactiver les cookies publicitaires :</p>
             <ul>
-                <li><strong>Sur Android :</strong> Paramètres → Google → Annonces → Désactiver la personnalisation des annonces</li>
+                <li><strong>Dans votre navigateur :</strong> Paramètres → Confidentialité → Cookies et données de site</li>
+                <li><strong>Sur Android :</strong> Paramètres → Google → Annonces → Désactiver la personnalisation des annonces ou Réinitialiser l'identifiant publicitaire</li>
                 <li><strong>Sur iOS :</strong> Réglages → Confidentialité → Suivi → Désactiver "Autoriser le suivi"</li>
-                <li><strong>Solution définitive :</strong> Souscrire à la version Premium sans publicité</li>
+                <li><strong>En ligne :</strong> <a href="https://myadcenter.google.com/" target="_blank">Centre de confidentialité Google AdMob</a></li>
+                <li><strong>Solution définitive :</strong> Souscrire à la version Premium (aucune publicité, aucun cookie publicitaire)</li>
             </ul>
+
+            <h3>9.3 Consentement aux cookies (RGPD et ePrivacy)</h3>
+            <p>Conformément au RGPD et à la directive ePrivacy, nous vous demandons votre consentement avant d'utiliser des cookies non essentiels (publicité). Vous pouvez retirer votre consentement à tout moment dans les paramètres de l'application ou de votre appareil.</p>
         </section>
 
         <section>
             <h2>10. Vos droits (RGPD)</h2>
             <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :</p>
 
-            <h3>10.1 Droit d'accès</h3>
-            <p>Vous pouvez demander à accéder à toutes les données personnelles que nous détenons sur vous.</p>
+            <h3>10.1 Droit d'accès (Article 15 RGPD)</h3>
+            <p>Vous pouvez demander à accéder à toutes les données personnelles que nous détenons sur vous et obtenir une copie de ces données.</p>
 
-            <h3>10.2 Droit de rectification</h3>
-            <p>Vous pouvez demander la correction de données inexactes ou incomplètes.</p>
+            <h3>10.2 Droit de rectification (Article 16 RGPD)</h3>
+            <p>Vous pouvez demander la correction de données inexactes ou incomplètes vous concernant.</p>
 
-            <h3>10.3 Droit à l'effacement ("droit à l'oubli")</h3>
+            <h3>10.3 Droit à l'effacement - "droit à l'oubli" (Article 17 RGPD)</h3>
             <p>Vous pouvez demander la suppression de vos données personnelles lorsque :</p>
             <ul>
                 <li>Elles ne sont plus nécessaires aux finalités pour lesquelles elles ont été collectées</li>
-                <li>Vous retirez votre consentement</li>
-                <li>Vous vous opposez au traitement</li>
+                <li>Vous retirez votre consentement et il n'existe pas d'autre fondement juridique au traitement</li>
+                <li>Vous vous opposez au traitement et il n'existe pas de motif légitime impérieux</li>
                 <li>Vos données ont été traitées de manière illicite</li>
+                <li>Vos données doivent être effacées pour respecter une obligation légale</li>
             </ul>
 
-            <h3>10.4 Droit à la limitation du traitement</h3>
-            <p>Vous pouvez demander la limitation du traitement de vos données dans certaines circonstances (contestation de l'exactitude, traitement illicite, etc.).</p>
-
-            <h3>10.5 Droit d'opposition</h3>
-            <p>Vous pouvez vous opposer au traitement de vos données pour des raisons tenant à votre situation particulière, notamment concernant :</p>
+            <h3>10.4 Droit à la limitation du traitement (Article 18 RGPD)</h3>
+            <p>Vous pouvez demander la limitation du traitement de vos données dans les cas suivants :</p>
             <ul>
-                <li>Les publicités personnalisées</li>
-                <li>Les analyses statistiques</li>
+                <li>Vous contestez l'exactitude de vos données (pendant la durée de vérification)</li>
+                <li>Le traitement est illicite mais vous ne souhaitez pas l'effacement des données</li>
+                <li>Nous n'avons plus besoin des données mais vous en avez besoin pour exercer un droit en justice</li>
+                <li>Vous vous êtes opposé au traitement (pendant la vérification de nos motifs légitimes)</li>
             </ul>
 
-            <h3>10.6 Droit à la portabilité des données</h3>
-            <p>Vous pouvez recevoir vos données personnelles dans un format structuré, couramment utilisé et lisible par machine, et les transmettre à un autre responsable de traitement.</p>
+            <h3>10.5 Droit d'opposition (Article 21 RGPD)</h3>
+            <p>Vous pouvez vous opposer à tout moment au traitement de vos données pour des raisons tenant à votre situation particulière, notamment concernant :</p>
+            <ul>
+                <li>Les publicités personnalisées (via Google AdMob)</li>
+                <li>Les analyses statistiques basées sur un intérêt légitime</li>
+                <li>Le profilage éventuel</li>
+            </ul>
+            <p><strong>Pour vous opposer immédiatement aux publicités personnalisées :</strong> Désactivez les annonces personnalisées dans les paramètres de votre appareil ou souscrivez à la version Premium.</p>
 
-            <h3>10.7 Droit de retirer son consentement</h3>
+            <h3>10.6 Droit à la portabilité des données (Article 20 RGPD)</h3>
+            <p>Vous pouvez recevoir vos données personnelles dans un format structuré, couramment utilisé et lisible par machine (par exemple : fichier JSON ou CSV), et les transmettre à un autre responsable de traitement.</p>
+            <p>Ce droit s'applique aux données que vous nous avez fournies et qui sont traitées de manière automatisée sur la base de votre consentement ou d'un contrat.</p>
+
+            <h3>10.7 Droit de retirer son consentement (Article 7 RGPD)</h3>
             <p>Lorsque le traitement est fondé sur votre consentement, vous pouvez le retirer à tout moment. Ce retrait ne remet pas en cause la licéité du traitement effectué avant le retrait.</p>
+            <p><strong>Comment retirer votre consentement :</strong></p>
+            <ul>
+                <li>Pour les publicités : Désactivez les annonces personnalisées dans les paramètres de votre appareil</li>
+                <li>Pour l'utilisation de l'application : Désinstallez l'application et supprimez vos données</li>
+                <li>Contactez-nous à <a href="mailto:cartomystik@gmail.com">cartomystik@gmail.com</a></li>
+            </ul>
 
-            <h3>10.8 Comment exercer vos droits</h3>
+            <h3>10.8 Droit de définir des directives post-mortem (Article 85 Loi Informatique et Libertés)</h3>
+            <p>Vous pouvez définir des directives relatives à la conservation, à l'effacement et à la communication de vos données après votre décès. Contactez-nous pour exercer ce droit.</p>
+
+            <h3>10.9 Comment exercer vos droits</h3>
             <div class="info-box">
-                <p>Pour exercer l'un de ces droits, contactez-nous :</p>
+                <p><strong>Pour exercer l'un de ces droits, contactez-nous :</strong></p>
                 <p><strong>Email :</strong> <a href="mailto:cartomystik@gmail.com">cartomystik@gmail.com</a></p>
-                <p>Nous répondrons à votre demande dans un délai maximum de <strong>1 mois</strong> (prolongeable à 3 mois en cas de complexité).</p>
-                <p>Vous devrez fournir une preuve d'identité pour des raisons de sécurité.</p>
+                <p><strong>Objet de l'email :</strong> "Exercice de mes droits RGPD - [précisez votre demande]"</p>
+                <p><strong>Informations à fournir :</strong></p>
+                <ul>
+                    <li>Votre nom complet</li>
+                    <li>Votre adresse email utilisée dans l'application (si Premium)</li>
+                    <li>Une preuve d'identité (carte d'identité, passeport) pour des raisons de sécurité</li>
+                    <li>Une description précise de votre demande</li>
+                </ul>
+                <p><strong>Délai de réponse :</strong> Nous répondrons à votre demande dans un délai maximum de <strong>1 mois</strong> à compter de la réception de votre demande (ce délai peut être prolongé de 2 mois en cas de complexité ou de volume élevé de demandes - nous vous en informerons).</p>
+                <p><strong>Gratuité :</strong> L'exercice de vos droits est <strong>entièrement gratuit</strong>. Nous ne facturerons des frais que si votre demande est manifestement infondée ou excessive.</p>
             </div>
 
-            <h3>10.9 Droit de déposer une plainte</h3>
-            <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez déposer une plainte auprès de l'autorité de contrôle compétente :</p>
+            <h3>10.10 Droit de déposer une plainte auprès de l'autorité de contrôle</h3>
+            <p>Si vous estimez que vos droits ne sont pas respectés ou que nous ne traitons pas vos données conformément au RGPD, vous avez le droit de déposer une plainte auprès de l'autorité de contrôle compétente :</p>
             <div class="info-box">
                 <p><strong>CNIL (Commission Nationale de l'Informatique et des Libertés)</strong></p>
                 <p>3 Place de Fontenoy<br>
                 TSA 80715<br>
                 75334 Paris Cedex 07<br>
                 France</p>
-                <p>Téléphone : 01 53 73 22 22<br>
-                Site web : <a href="https://www.cnil.fr" target="_blank">https://www.cnil.fr</a></p>
+                <p>Téléphone : +33 (0)1 53 73 22 22<br>
+                Site web : <a href="https://www.cnil.fr" target="_blank">https://www.cnil.fr</a><br>
+                Formulaire de plainte en ligne : <a href="https://www.cnil.fr/fr/plaintes" target="_blank">https://www.cnil.fr/fr/plaintes</a></p>
             </div>
+            <p><strong>Important :</strong> Ce droit de réclamation ne porte pas atteinte à votre droit d'introduire un recours devant une juridiction civile ou administrative.</p>
         </section>
 
         <section>
             <h2>11. Sécurité des données</h2>
-            <p>Nous mettons en œuvre toutes les mesures techniques et organisationnelles appropriées pour protéger vos données personnelles :</p>
-
-            <h3>11.1 Mesures techniques</h3>
+            <p>Nous mettons en œuvre toutes les mesures techniques et organisationnelles appropriées pour protéger vos données personnelles contre :</p>
             <ul>
-                <li><strong>Certificat SSL/TLS :</strong> Toutes les communications entre l'application et nos serveurs sont chiffrées</li>
-                <li><strong>Stockage sécurisé :</strong> Les données sont stockées sur des serveurs sécurisés (Render)</li>
-                <li><strong>Paiements sécurisés :</strong> Aucune donnée de carte bancaire n'est stockée par nous (gérée par Stripe sur Web et Google Play sur Android)</li>
-                <li><strong>Sauvegarde régulière :</strong> Les données sont sauvegardées régulièrement pour éviter toute perte</li>
+                <li>La destruction accidentelle ou illicite</li>
+                <li>La perte accidentelle</li>
+                <li>L'altération</li>
+                <li>La diffusion ou l'accès non autorisés</li>
+                <li>Toute autre forme de traitement illicite</li>
             </ul>
 
-            <h3>11.2 Mesures organisationnelles</h3>
+            <h3>11.1 Mesures techniques de sécurité</h3>
             <ul>
-                <li>Accès aux données limité aux personnes autorisées uniquement</li>
-                <li>Obligation de confidentialité pour tous nos prestataires</li>
-                <li>Procédures de gestion des incidents de sécurité</li>
+                <li><strong>Chiffrement SSL/TLS :</strong> Toutes les communications entre l'application et nos serveurs sont chiffrées avec un certificat SSL/TLS valide</li>
+                <li><strong>Stockage sécurisé :</strong> Les données sont stockées sur des serveurs sécurisés (Render) avec contrôle d'accès strict</li>
+                <li><strong>Paiements sécurisés :</strong> Aucune donnée de carte bancaire n'est stockée par nous - le traitement est délégué à des prestataires certifiés PCI-DSS (Stripe) ou gérés par Google Play</li>
+                <li><strong>Authentification sécurisée :</strong> Les comptes Premium sont protégés par des mécanismes d'authentification robustes</li>
+                <li><strong>Sauvegardes régulières :</strong> Les données serveur sont sauvegardées régulièrement pour éviter toute perte</li>
+                <li><strong>Pare-feu et protection DDoS :</strong> Nos serveurs sont protégés contre les attaques et intrusions</li>
             </ul>
 
-            <h3>11.3 Notification en cas de violation de données</h3>
-            <p>En cas de violation de données personnelles susceptible d'engendrer un risque élevé pour vos droits et libertés, nous vous en informerons dans les <strong>72 heures</strong> suivant la découverte de l'incident, conformément au RGPD.</p>
+            <h3>11.2 Mesures organisationnelles de sécurité</h3>
+            <ul>
+                <li>Accès aux données limité aux personnes strictement autorisées (principe du "besoin d'en connaître")</li>
+                <li>Obligation de confidentialité contractuelle pour tous nos employés et prestataires</li>
+                <li>Procédures de gestion des incidents de sécurité conformes au RGPD</li>
+                <li>Surveillance et journalisation des accès aux systèmes</li>
+                <li>Formation régulière sur la protection des données</li>
+                <li>Audits de sécurité périodiques</li>
+            </ul>
+
+            <h3>11.3 Notification en cas de violation de données (Article 33-34 RGPD)</h3>
+            <p>En cas de violation de données personnelles susceptible d'engendrer un risque pour vos droits et libertés, nous nous engageons à :</p>
+            <ul>
+                <li><strong>Notifier la CNIL dans les 72 heures</strong> suivant la découverte de l'incident (Article 33 RGPD)</li>
+                <li><strong>Vous informer directement</strong> si la violation présente un risque élevé pour vos droits et libertés (Article 34 RGPD)</li>
+                <li>Prendre toutes les mesures nécessaires pour limiter les conséquences de l'incident</li>
+                <li>Documenter l'incident et les mesures prises</li>
+            </ul>
 
             <div class="warning-box" style="border-color: #ef4444;">
-                <p style="color: #ef4444;">⚠️ Aucun système n'est totalement sûr</p>
-                <p>Bien que nous mettions en œuvre toutes les mesures de sécurité possibles, aucune transmission de données sur Internet ou système de stockage ne peut garantir une sécurité absolue à 100%.</p>
+                <p style="color: #ef4444;">⚠️ Limitations de la sécurité</p>
+                <p>Bien que nous mettions en œuvre toutes les mesures de sécurité appropriées, aucune transmission de données sur Internet ou système de stockage ne peut garantir une sécurité absolue à 100%.</p>
+                <p><strong>Recommandations de sécurité pour vous :</strong></p>
+                <ul>
+                    <li>Ne partagez jamais vos identifiants de connexion (email/mot de passe Premium)</li>
+                    <li>Utilisez un mot de passe fort et unique</li>
+                    <li>Déconnectez-vous des appareils partagés</li>
+                    <li>Maintenez votre système d'exploitation et votre navigateur à jour</li>
+                    <li>Signalez-nous immédiatement toute activité suspecte</li>
+                </ul>
             </div>
         </section>
 
         <section>
             <h2>12. Exactitude et véracité des données</h2>
             <p>En tant qu'utilisateur, vous êtes responsable de la véracité et de l'exactitude des données que vous nous fournissez.</p>
-            <p>Vous vous engagez à :</p>
+            <p><strong>Vous vous engagez à :</strong></p>
             <ul>
                 <li>Fournir des informations exactes, à jour et complètes</li>
-                <li>Maintenir à jour vos données personnelles</li>
-                <li>Informer KcDev de toute modification de vos données</li>
+                <li>Maintenir à jour vos données personnelles (notamment votre adresse email Premium)</li>
+                <li>Informer KcDev sans délai de toute modification de vos données</li>
+                <li>Ne pas fournir de fausses informations ou usurper l'identité d'autrui</li>
             </ul>
-            <p>KcDev ne peut être tenu responsable des conséquences résultant de la fourniture de données inexactes, incomplètes ou non actualisées.</p>
+            <p><strong>Conséquences en cas de données inexactes :</strong></p>
+            <p>KcDev ne peut être tenu responsable des conséquences résultant de la fourniture de données inexactes, incomplètes ou non actualisées, notamment :</p>
+            <ul>
+                <li>Impossibilité de vous contacter concernant votre abonnement Premium</li>
+                <li>Perte d'accès à votre compte Premium</li>
+                <li>Impossibilité de restaurer vos données</li>
+            </ul>
         </section>
 
         <section>
             <h2>13. Modifications de la politique de confidentialité</h2>
             <p>Nous nous réservons le droit de modifier la présente politique de confidentialité à tout moment pour :</p>
             <ul>
-                <li>Nous conformer à l'évolution de la législation</li>
-                <li>Refléter des changements dans nos pratiques</li>
-                <li>Améliorer la clarté des informations</li>
+                <li>Nous conformer à l'évolution de la législation (RGPD, ePrivacy, etc.)</li>
+                <li>Refléter des changements dans nos pratiques de traitement de données</li>
+                <li>Améliorer la clarté et la transparence des informations</li>
+                <li>Intégrer de nouvelles fonctionnalités ou services</li>
             </ul>
+
             <div class="info-box">
-                <p><strong>Notification des modifications</strong></p>
-                <p>En cas de modification substantielle, nous vous informerons :</p>
+                <p><strong>Comment serez-vous informé des modifications ?</strong></p>
+                <p>En cas de modification <strong>substantielle</strong> (changement de finalité, nouveaux destinataires, etc.), nous vous informerons de manière claire et visible :</p>
                 <ul>
-                    <li>Via une notification dans l'application</li>
-                    <li>Par email (pour les utilisateurs Premium)</li>
-                    <li>En affichant un avis visible lors de votre prochaine connexion</li>
+                    <li><strong>Via une notification</strong> dans l'application lors de votre prochaine connexion</li>
+                    <li><strong>Par email</strong> (pour les utilisateurs Premium)</li>
+                    <li><strong>Par un bandeau d'information</strong> sur la page d'accueil</li>
                 </ul>
-                <p>Date de dernière modification : <strong>Janvier 2025</strong></p>
+                <p><strong>Votre consentement sera à nouveau requis</strong> si les modifications affectent le traitement de vos données de manière significative.</p>
+                <p><strong>Date de dernière modification :</strong> Janvier 2025</p>
+                <p><strong>Historique des versions :</strong> Vous pouvez demander les versions antérieures de cette politique en nous contactant.</p>
             </div>
-            <p>Nous vous encourageons à consulter régulièrement cette politique pour rester informé de nos pratiques en matière de protection des données.</p>
+
+            <p>Nous vous encourageons à consulter régulièrement cette politique de confidentialité pour rester informé de nos pratiques en matière de protection des données.</p>
         </section>
 
         <section>
-            <h2>14. Contact</h2>
+            <h2>14. Utilisateurs hors Union Européenne</h2>
+            <p>Si vous utilisez CartoMystik depuis un pays situé en dehors de l'Union européenne, veuillez noter que :</p>
+            <ul>
+                <li>Vos données peuvent être transférées vers et stockées dans l'Union européenne ou aux États-Unis</li>
+                <li>Ces transferts sont effectués conformément aux lois applicables en matière de protection des données</li>
+                <li>Vous bénéficiez des mêmes droits que les utilisateurs de l'UE concernant vos données personnelles</li>
+                <li>Les lois sur la protection des données de votre pays peuvent différer de celles de l'Union européenne</li>
+            </ul>
+            <p><strong>En utilisant CartoMystik, vous consentez à ces transferts de données.</strong></p>
+        </section>
+
+        <section>
+            <h2>15. Liens vers des sites tiers</h2>
+            <p>L'application CartoMystik peut contenir des liens vers des sites web ou services tiers (par exemple : politiques de confidentialité de Google, Stripe, etc.).</p>
+            <p><strong>Important :</strong></p>
+            <ul>
+                <li>Nous ne sommes pas responsables des pratiques de confidentialité de ces sites tiers</li>
+                <li>Ces sites ont leurs propres politiques de confidentialité que nous vous encourageons à lire</li>
+                <li>Cette politique de confidentialité s'applique uniquement à CartoMystik</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>16. Conservation des données après suppression du compte</h2>
+            <p><strong>Utilisateurs gratuits :</strong> Aucune donnée n'est stockée sur nos serveurs. La suppression de l'application efface toutes vos données locales.</p>
+            
+            <p><strong>Utilisateurs Premium :</strong></p>
+            <ul>
+                <li><strong>Suppression à votre demande :</strong> Vos données sont supprimées dans les 30 jours suivant votre demande</li>
+                <li><strong>Expiration sans renouvellement :</strong> Conservation pendant 3 ans (obligations légales comptables), puis suppression automatique</li>
+                <li><strong>Données de facturation :</strong> Conservées 10 ans pour obligations fiscales et comptables (Article L123-22 du Code de commerce)</li>
+            </ul>
+
+            <p><strong>Exception :</strong> Nous pouvons conserver certaines informations anonymisées à des fins statistiques (sans aucune possibilité de vous identifier).</p>
+        </section>
+
+        <section>
+            <h2>17. Contact et Délégué à la Protection des Données (DPO)</h2>
             <div class="info-box">
-                <p>Pour toute question concernant cette politique de confidentialité ou pour exercer vos droits :</p>
+                <p><strong>Pour toute question concernant cette politique de confidentialité, vos données personnelles, ou pour exercer vos droits :</strong></p>
+                
+                <p><strong>Responsable du traitement :</strong> KcDev (SIRET : 992 482 745 00013)</p>
+                
                 <p><strong>Email :</strong> <a href="mailto:cartomystik@gmail.com">cartomystik@gmail.com</a></p>
-                <p><strong>Délai de réponse :</strong> Nous nous engageons à répondre dans un délai maximum de 1 mois.</p>
+                
+                <p><strong>Objet recommandé :</strong> "Protection des données - [votre demande]"</p>
+                
+                <p><strong>Délai de réponse :</strong> Nous nous engageons à répondre dans un délai maximum de 1 mois (conformément à l'Article 12.3 du RGPD).</p>
+                
+                <p><strong>Note :</strong> En raison de la petite taille de notre structure, nous n'avons pas désigné de Délégué à la Protection des Données (DPO) dédié, mais le responsable du traitement assure personnellement le respect du RGPD.</p>
             </div>
         </section>
 
-        <footer style="margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(168, 85, 247, 0.3); text-align: center;">
-            <p style="color: rgba(233, 213, 255, 0.6); font-size: 0.875rem;">
-                Politique de confidentialité créée en janvier 2025 pour CartoMystik par KcDev<br>
-                Conforme au RGPD (Règlement UE 2016/679)
-            </p>
+        <section>
+            <h2>18. Conformité légale</h2>
+            <p>Cette politique de confidentialité est conforme aux législations suivantes :</p>
+            <ul>
+                <li><strong>RGPD</strong> (Règlement UE 2016/679) - Protection des données dans l'Union européenne</li>
+                <li><strong>Loi Informatique et Libertés</strong> (Loi n°78-17 du 6 janvier 1978 modifiée) - France</li>
+                <li><strong>Directive ePrivacy</strong> (Directive 2002/58/CE) - Cookies et communications électroniques</li>
+                <li><strong>Code de commerce français</strong> (Articles L123-22 et suivants) - Conservation des données comptables</li>
+                <li><strong>COPPA</strong> (Children's Online Privacy Protection Act) - Protection des enfants de moins de 13 ans</li>
+            </ul>
+        </section>
+
+        <footer style="margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(168, 85, 247, 0.3);">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <p style="color: #fde68a; font-size: 1.1rem; font-weight: bold;">Merci de votre confiance ! 🌟</p>
+                <p style="color: rgba(233, 213, 255, 0.8); font-size: 0.95rem;">
+                    CartoMystik s'engage à respecter votre vie privée et à protéger vos données personnelles.<br>
+                    Pour toute question : <a href="mailto:cartomystik@gmail.com">cartomystik@gmail.com</a>
+                </p>
+            </div>
+            
+            <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(168, 85, 247, 0.2);">
+                <p style="color: rgba(233, 213, 255, 0.6); font-size: 0.875rem;">
+                    Politique de confidentialité créée en janvier 2025 pour CartoMystik par KcDev<br>
+                    Conforme au RGPD (Règlement UE 2016/679), Loi Informatique et Libertés, et Directive ePrivacy<br>
+                    Auto-entrepreneur - SIRET : 992 482 745 00013<br>
+                    <br>
+                    <strong style="color: #fde68a;">⚠️ RAPPEL : CartoMystik est une application de divertissement uniquement.</strong><br>
+                    Ne prenez pas de décisions importantes basées sur les tirages. Consultez un professionnel qualifié pour toute question sérieuse.
+                </p>
+            </div>
         </footer>
     </div>
 </body>

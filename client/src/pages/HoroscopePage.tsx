@@ -422,7 +422,7 @@ export default function HoroscopePage({
   const { sections, greeting, finalMessage } = horoscopeSections;
 
   return (
-    <div className="horoscope-page p-3 sm:p-4 pt-16 sm:pt-20 min-h-screen flex flex-col pb-6">
+      <div className="horoscope-page p-3 sm:p-4 pt-16 sm:pt-20 min-h-screen flex flex-col pb-safe">
       <div className="horoscope-header text-center mb-4 sm:mb-6">
         <h1 className="mystical-title text-xl sm:text-2xl md:text-3xl font-bold font-serif mb-3">
           {t("horoscope.title")}

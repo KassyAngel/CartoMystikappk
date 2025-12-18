@@ -421,7 +421,7 @@ export default function CardGame({
 
   return (
     <>
-      <div className="game-area w-full text-center min-h-screen flex flex-col justify-between p-2 sm:p-4 pt-20 sm:pt-24">
+        <div className="game-area w-full text-center min-h-screen flex flex-col justify-between p-2 sm:p-4 pt-20 sm:pt-24 pb-safe">
         <div className="flex-1 flex flex-col justify-center space-y-3 sm:space-y-4">
           <div className="reading-type">
             <h2 className="text-[#ffd700] text-xl sm:text-2xl md:text-3xl font-bold font-serif text-shadow-glow leading-tight">

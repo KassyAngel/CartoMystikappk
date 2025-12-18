@@ -91,7 +91,7 @@ export default function OracleSelection({
   };
 
   return (
-    <div className="main-content w-full min-h-screen flex flex-col p-2 sm:p-3 pt-14 sm:pt-16 pb-3">
+      <div className="main-content w-full min-h-screen flex flex-col p-2 sm:p-3 pt-14 sm:pt-16 pb-safe">
       {/* Header ultra-compact */}
       <div className="text-center mb-3 sm:mb-4">
         <div className="flex justify-center mb-1.5 sm:mb-2">
@@ -136,7 +136,7 @@ export default function OracleSelection({
           {/* ✅ BONUS ROLL - Carte spéciale mise en évidence */}
           <div className="relative mt-6">
             {/* Badge BONUS flottant */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
               <div className="bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-purple-900 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg animate-pulse">
                 🎁 BONUS
               </div>

@@ -19,6 +19,7 @@ import { initializeRevenueCat } from './services/revenueCatService';
 import { config } from '@/config';
 import { getUserEmail } from '@/lib/userStorage';
 import { getDeviceId } from '@/lib/deviceId';
+import BannerDebugHelper from '@/components/BannerDebugHelper'
 
 export interface Reading {
   id: string;
@@ -426,13 +427,32 @@ function App() {
             <div className="dark relative w-screen h-screen overflow-hidden">
               {!isPremium && bannerShown && (
                 <style>{`
+                  /* ✅ Espace sécurisé pour la bannière AdMob (60px) + marge (50px) */
                   .main-content {
                     padding-bottom: 110px !important;
                   }
+
+                  /* ✅ Classe pour boutons/contenu qui doit rester visible */
+                  .pb-safe {
+                    padding-bottom: 110px !important;
+                  }
+
+                  /* ✅ Responsive desktop */
                   @media (min-width: 640px) {
-                    .main-content {
+                    .main-content, .pb-safe {
                       padding-bottom: 120px !important;
                     }
+                  }
+
+                  /* ⚠️ CRITIQUE : Empêcher absolument l'overlap des boutons */
+                  button, a, input, textarea {
+                    position: relative;
+                    z-index: 10;
+                  }
+
+                  /* ⚠️ S'assurer que la bannière reste au-dessus du fond mais sous les overlays */
+                  #admob-banner {
+                    z-index: 5 !important;
                   }
                 `}</style>
               )}
@@ -472,10 +492,11 @@ function App() {
                   }}
                 />
               )}
+              <BannerDebugHelper />
 
               <Toaster />
 
-              <div className="w-full h-full overflow-y-auto">
+              <div className={`w-full h-full overflow-y-auto ${!isPremium && bannerShown ? 'main-content' : ''}`}>
                 <Router
                   onSaveReading={addReading}
                   onStepChange={setCurrentStep}

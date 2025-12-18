@@ -315,7 +315,7 @@ export default function InterpretationPage({
   const { sections, finalMessage, greeting } = generateInterpretationSections();
 
   return (
-    <div className="interpretation-page min-h-screen flex flex-col justify-between p-2 sm:p-3 pb-20 sm:pb-24">
+      <div className="interpretation-page min-h-screen flex flex-col justify-between p-2 sm:p-3 pb-safe">
       <div className="interpretation-header text-center pt-20 sm:pt-24">
         <h1 className="mystical-title text-lg sm:text-xl md:text-2xl font-bold font-serif mb-1 sm:mb-2 leading-tight">
           {isDailyReading 

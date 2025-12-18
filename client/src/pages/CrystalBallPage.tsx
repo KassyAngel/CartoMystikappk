@@ -72,7 +72,7 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
   };
 
   return (
-    <div className="crystal-ball-page min-h-screen w-full flex justify-center items-start px-4 pt-12 sm:pt-16 pb-8 overflow-y-auto relative">
+      <div className="crystal-ball-page min-h-screen w-full flex justify-center items-start px-4 pt-12 sm:pt-16 pb-safe overflow-y-auto relative">
       {/* ✨ FOND AMÉLIORÉ AVEC ÉTOILES DORÉES */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#0a001a]"></div>
