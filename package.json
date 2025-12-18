@@ -18,7 +18,7 @@
     "@capacitor/core": "^7.4.3",
     "@capacitor/device": "^7.0.2",
     "@capacitor/local-notifications": "^7.0.3",
-    "@capacitor/preferences": "^7.0.2",
+    "@capacitor/preferences": "^7.0.3",
     "@hookform/resolvers": "^3.10.0",
     "@jridgewell/trace-mapping": "^0.3.25",
     "@neondatabase/serverless": "^0.10.4",

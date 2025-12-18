@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Preferences } from '@capacitor/preferences';
 import MysticalButton from '@/components/MysticalButton';
 import LanguageSelector from '@/components/LanguageSelector';
 import DisclaimerModal from '@/components/DisclaimerModal';
@@ -13,23 +14,49 @@ export default function LandingPage({ onEnter }: LandingPageProps) {
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [disclaimerChecked, setDisclaimerChecked] = useState(false);
 
-  // ✅ Vérifier si le disclaimer a déjà été accepté
+  // ✅ Vérifier si le disclaimer a déjà été accepté (avec Capacitor Preferences)
   useEffect(() => {
-    const disclaimerAccepted = localStorage.getItem('disclaimerAccepted');
+    const checkDisclaimer = async () => {
+      try {
+        const { value } = await Preferences.get({ key: 'disclaimerAccepted' });
 
-    if (!disclaimerAccepted) {
-      // 🔴 IMPORTANT : Attendre que la langue soit chargée avant d'afficher le disclaimer
-      if (isLanguageLoaded) {
-        setTimeout(() => setShowDisclaimer(true), 300);
+        if (!value) {
+          // 🔴 IMPORTANT : Attendre que la langue soit chargée avant d'afficher le disclaimer
+          if (isLanguageLoaded) {
+            setTimeout(() => setShowDisclaimer(true), 300);
+          }
+        } else {
+          setDisclaimerChecked(true);
+        }
+      } catch (error) {
+        console.error('❌ Erreur lecture disclaimer:', error);
+        // En cas d'erreur, afficher le disclaimer par sécurité
+        if (isLanguageLoaded) {
+          setTimeout(() => setShowDisclaimer(true), 300);
+        }
       }
-    } else {
-      setDisclaimerChecked(true);
-    }
+    };
+
+    checkDisclaimer();
   }, [isLanguageLoaded]);
 
-  const handleDisclaimerAccept = () => {
-    setShowDisclaimer(false);
-    setDisclaimerChecked(true);
+  const handleDisclaimerAccept = async () => {
+    try {
+      // ✅ Sauvegarder avec Capacitor Preferences au lieu de localStorage
+      await Preferences.set({
+        key: 'disclaimerAccepted',
+        value: 'true'
+      });
+
+      setShowDisclaimer(false);
+      setDisclaimerChecked(true);
+      console.log('✅ Disclaimer accepté et sauvegardé');
+    } catch (error) {
+      console.error('❌ Erreur sauvegarde disclaimer:', error);
+      // Continuer quand même
+      setShowDisclaimer(false);
+      setDisclaimerChecked(true);
+    }
   };
 
   return (
