@@ -29,7 +29,7 @@ const config: CapacitorConfig = {
       launchAutoHide: true,               // Cache automatiquement
       backgroundColor: "#0f0f1e",         // Fond violet foncé (adapte à ton design)
       androidSplashResourceName: "splash", // Nom du fichier (sans .png)
-      androidScaleType: "CENTER_CROP",    // Mode d'affichage centré
+      androidScaleType: "FIT_CENTER",    // Mode d'affichage centré
       showSpinner: false                  // Pas de spinner de chargement
     }
   }
