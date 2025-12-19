@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.cartomystik.app',
   appName: 'CartoMystik',
-  webDir: 'dist/public',
+  webDir: 'public',  // Répertoire contenant les fichiers HTML, CSS, JS générés par ton app web
 
   server: {
     cleartext: false,
@@ -23,14 +23,12 @@ const config: CapacitorConfig = {
       enabled: true
     },
 
-    // ✅ AJOUTER CETTE SECTION
     SplashScreen: {
-      launchShowDuration: 2000,           // Durée d'affichage (2 secondes)
-      launchAutoHide: true,               // Cache automatiquement
-      backgroundColor: "#0f0f1e",         // Fond violet foncé (adapte à ton design)
-      androidSplashResourceName: "splash", // Nom du fichier (sans .png)
-      androidScaleType: "CENTER_CROP",    // Mode d'affichage centré
-      showSpinner: false                  // Pas de spinner de chargement
+      launchShowDuration: 2000,  // Durée de l'écran de splash (2 secondes)
+      launchAutoHide: true,      // Cache l'écran de splash après la durée
+      backgroundColor: "#4b0082", // Fond violet mystique
+      androidSplashResourceName: "splash",  // Le nom de l'image de splash si tu veux utiliser une image
+      showSpinner: false,        // Désactive le spinner de chargement
     }
   }
 };
