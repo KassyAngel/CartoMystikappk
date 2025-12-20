@@ -2,12 +2,10 @@ package com.cartomystik.app;
 
 import android.os.Bundle;
 import com.getcapacitor.BridgeActivity;
-import com.getcapacitor.Plugin;
 import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentRequestParameters;
 import com.google.android.ump.UserMessagingPlatform;
 import android.util.Log;
-import java.util.ArrayList;
 
 public class MainActivity extends BridgeActivity {
     private static final String TAG = "UMP_CONSENT";
@@ -15,17 +13,9 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // ✅ GARDER le splash visible au démarrage
-        setTheme(R.style.AppTheme_NoActionBarLaunch);
-
         super.onCreate(savedInstanceState);
-
-        // ✅ Demander le consentement UMP au démarrage de l'app
         requestConsent();
     }
-
-    // ✅ Le splash se cachera automatiquement quand votre app web appellera SplashScreen.hide()
-    // Pas besoin de Handler ici
 
     private void requestConsent() {
         Log.d(TAG, "📋 Demande de consentement UMP...");
