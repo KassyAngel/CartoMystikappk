@@ -7,10 +7,15 @@
         </shape>
     </item>
 
-    <!-- Image centrée SANS étirement -->
-    <item>
+    <!-- Image STRICTEMENT centrée sans aucune transformation -->
+    <item
+        android:top="100dp"
+        android:bottom="100dp"
+        android:left="60dp"
+        android:right="60dp">
         <bitmap
             android:src="@drawable/splash"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:tileMode="disabled"/>
     </item>
 </layer-list>
