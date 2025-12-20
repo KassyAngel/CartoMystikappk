@@ -1,7 +1,6 @@
 package com.cartomystik.app;
 
 import android.os.Bundle;
-import android.os.Handler;
 import com.getcapacitor.BridgeActivity;
 import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentRequestParameters;
@@ -16,52 +15,32 @@ public class MainActivity extends BridgeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // ✅ Cacher le splash screen après 2 secondes
-        hideSplashScreenAfterDelay();
-
-        // ✅ Demander le consentement UMP au démarrage de l'app
+        // ✅ Seulement le consentement UMP
         requestConsent();
-    }
-
-    /**
-     * Cache le splash screen après 2 secondes
-     */
-    private void hideSplashScreenAfterDelay() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Capacitor gère automatiquement le splash screen
-                // Cette méthode assure qu'il se cache après le délai
-                Log.d(TAG, "🎨 Splash screen caché");
-            }
-        }, 2000); // 2000ms = 2 secondes
     }
 
     private void requestConsent() {
         Log.d(TAG, "📋 Demande de consentement UMP...");
 
-        // Configuration pour la production (pas de debug)
         ConsentRequestParameters params = new ConsentRequestParameters.Builder()
                 .setTagForUnderAgeOfConsent(false)
                 .build();
 
         consentInformation = UserMessagingPlatform.getConsentInformation(this);
 
-        // Demander les infos de consentement
         consentInformation.requestConsentInfoUpdate(
             this,
             params,
             () -> {
                 Log.d(TAG, "✅ Infos de consentement chargées");
-                // Si un formulaire est disponible, le charger
                 if (consentInformation.isConsentFormAvailable()) {
                     loadConsentForm();
                 } else {
-                    Log.d(TAG, "⏭️ Pas de formulaire à afficher (déjà accepté ou région hors EEE)");
+                    Log.d(TAG, "⏭️ Pas de formulaire à afficher");
                 }
             },
             error -> {
-                Log.e(TAG, "❌ Erreur lors de la demande de consentement: " + error.getMessage());
+                Log.e(TAG, "❌ Erreur: " + error.getMessage());
             }
         );
     }
@@ -70,27 +49,25 @@ public class MainActivity extends BridgeActivity {
         UserMessagingPlatform.loadConsentForm(
             this,
             consentForm -> {
-                Log.d(TAG, "📄 Formulaire de consentement chargé");
-                // Afficher le formulaire si le consentement est requis
+                Log.d(TAG, "📄 Formulaire chargé");
                 if (consentInformation.getConsentStatus() == ConsentInformation.ConsentStatus.REQUIRED) {
                     consentForm.show(
                         MainActivity.this,
                         formError -> {
                             if (formError != null) {
-                                Log.e(TAG, "❌ Erreur lors de l'affichage du formulaire: " + formError.getMessage());
+                                Log.e(TAG, "❌ Erreur: " + formError.getMessage());
                             } else {
-                                Log.d(TAG, "✅ Formulaire fermé par l'utilisateur");
+                                Log.d(TAG, "✅ Formulaire fermé");
                             }
-                            // Après le formulaire, afficher le statut
-                            Log.d(TAG, "🎯 Statut de consentement: " + consentInformation.getConsentStatus());
+                            Log.d(TAG, "🎯 Statut: " + consentInformation.getConsentStatus());
                         }
                     );
                 } else {
-                    Log.d(TAG, "⏭️ Consentement déjà donné, pas besoin d'afficher le formulaire");
+                    Log.d(TAG, "⏭️ Consentement déjà donné");
                 }
             },
             error -> {
-                Log.e(TAG, "❌ Erreur lors du chargement du formulaire: " + error.getMessage());
+                Log.e(TAG, "❌ Erreur chargement: " + error.getMessage());
             }
         );
     }

@@ -4,7 +4,6 @@ const config: CapacitorConfig = {
   appId: 'com.cartomystik.app',
   appName: 'CartoMystik',
   webDir: 'dist/public',
-
   server: {
     cleartext: false,
     allowNavigation: [
@@ -13,15 +12,22 @@ const config: CapacitorConfig = {
       'checkout.stripe.com'
     ]
   },
-
   android: {
     allowMixedContent: false
   },
-
   plugins: {
     CapacitorHttp: {
       enabled: true
-    },
+    }
+    // ❌ SUPPRIMEZ COMPLÈTEMENT CETTE SECTION
+    // SplashScreen: {
+    //   launchShowDuration: 2000,
+    //   launchAutoHide: true,
+    //   backgroundColor: "#0f0f1e",
+    //   androidSplashResourceName: "splash",
+    //   androidScaleType: "FIT_CENTER",
+    //   showSpinner: false
+    // }
   }
 };
 
