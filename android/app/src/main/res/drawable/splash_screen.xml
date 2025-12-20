@@ -7,15 +7,14 @@
         </shape>
     </item>
 
-    <!-- Image STRICTEMENT centrée sans aucune transformation -->
+    <!-- Image centrée avec padding pour garder les proportions -->
     <item
-        android:top="100dp"
-        android:bottom="100dp"
-        android:left="60dp"
-        android:right="60dp">
+        android:top="80dp"
+        android:bottom="80dp"
+        android:left="40dp"
+        android:right="40dp">
         <bitmap
             android:src="@drawable/splash"
-            android:gravity="center"
-            android:tileMode="disabled"/>
+            android:gravity="fill"/>
     </item>
 </layer-list>
