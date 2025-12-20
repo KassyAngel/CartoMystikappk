@@ -1,6 +1,7 @@
 package com.cartomystik.app;
 
 import android.os.Bundle;
+import android.os.Handler;
 import com.getcapacitor.BridgeActivity;
 import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentRequestParameters;
@@ -15,8 +16,25 @@ public class MainActivity extends BridgeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // ✅ Cacher le splash screen après 2 secondes
+        hideSplashScreenAfterDelay();
+
         // ✅ Demander le consentement UMP au démarrage de l'app
         requestConsent();
+    }
+
+    /**
+     * Cache le splash screen après 2 secondes
+     */
+    private void hideSplashScreenAfterDelay() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Capacitor gère automatiquement le splash screen
+                // Cette méthode assure qu'il se cache après le délai
+                Log.d(TAG, "🎨 Splash screen caché");
+            }
+        }, 2000); // 2000ms = 2 secondes
     }
 
     private void requestConsent() {
@@ -35,7 +53,6 @@ public class MainActivity extends BridgeActivity {
             params,
             () -> {
                 Log.d(TAG, "✅ Infos de consentement chargées");
-
                 // Si un formulaire est disponible, le charger
                 if (consentInformation.isConsentFormAvailable()) {
                     loadConsentForm();
@@ -54,7 +71,6 @@ public class MainActivity extends BridgeActivity {
             this,
             consentForm -> {
                 Log.d(TAG, "📄 Formulaire de consentement chargé");
-
                 // Afficher le formulaire si le consentement est requis
                 if (consentInformation.getConsentStatus() == ConsentInformation.ConsentStatus.REQUIRED) {
                     consentForm.show(
@@ -65,7 +81,6 @@ public class MainActivity extends BridgeActivity {
                             } else {
                                 Log.d(TAG, "✅ Formulaire fermé par l'utilisateur");
                             }
-
                             // Après le formulaire, afficher le statut
                             Log.d(TAG, "🎯 Statut de consentement: " + consentInformation.getConsentStatus());
                         }

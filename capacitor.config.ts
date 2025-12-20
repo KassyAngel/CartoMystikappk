@@ -22,18 +22,6 @@ const config: CapacitorConfig = {
     CapacitorHttp: {
       enabled: true
     },
-
-    // ✅ AJOUTER CETTE SECTION
-    SplashScreen: {
-      launchShowDuration: 2000,
-      launchAutoHide: true,
-      backgroundColor: "#0f0f1e",
-      androidSplashResourceName: "splash",
-      androidScaleType: "FIT_CENTER",        // Garde les proportions
-      showSpinner: false,
-      iosSpinnerStyle: "small",
-      spinnerColor: "#999999"
-    }
   }
 };
 
