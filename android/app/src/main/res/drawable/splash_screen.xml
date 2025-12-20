@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Fond -->
+    <!-- Fond de couleur -->
     <item>
         <shape android:shape="rectangle">
             <solid android:color="#0f0f1e"/>
         </shape>
     </item>
 
-    <!-- Image dans un conteneur avec ratio 832:1248 (2:3) -->
+    <!-- Image avec marges en dp -->
     <item
-        android:top="10%"
-        android:bottom="10%"
-        android:left="15%"
-        android:right="15%">
+        android:top="150dp"
+        android:bottom="150dp"
+        android:left="100dp"
+        android:right="100dp">
         <bitmap
             android:src="@drawable/splash"
             android:gravity="center"/>
