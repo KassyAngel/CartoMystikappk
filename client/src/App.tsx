@@ -19,7 +19,8 @@ import { initializeRevenueCat } from './services/revenueCatService';
 import { config } from '@/config';
 import { getUserEmail } from '@/lib/userStorage';
 import { getDeviceId } from '@/lib/deviceId';
-import BannerDebugHelper from '@/components/BannerDebugHelper'
+import BannerDebugHelper from '@/components/BannerDebugHelper';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 export interface Reading {
   id: string;
@@ -124,6 +125,25 @@ function App() {
     };
     initServices();
   }, []);
+
+  // ✅ NOUVEAU : Cacher le splash quand l'app est prête
+  useEffect(() => {
+    const hideSplashWhenReady = async () => {
+      if (!isLoading && deviceId) {
+        console.log('✅ App prête, cache le splash screen');
+        try {
+          await SplashScreen.hide({
+            fadeOutDuration: 500 // Transition douce de 500ms
+          });
+          console.log('🎨 Splash screen caché avec succès');
+        } catch (error) {
+          console.log('ℹ️ Splash déjà caché ou non disponible');
+        }
+      }
+    };
+
+    hideSplashWhenReady();
+  }, [isLoading, deviceId]);
 
   useEffect(() => {
     if (isPremium) {
@@ -492,6 +512,7 @@ function App() {
                   }}
                 />
               )}
+
               <BannerDebugHelper />
 
               <Toaster />
