@@ -25,12 +25,14 @@ const config: CapacitorConfig = {
 
     // ✅ AJOUTER CETTE SECTION
     SplashScreen: {
-      launchShowDuration: 2000,           // Durée d'affichage (2 secondes)
-      launchAutoHide: true,               // Cache automatiquement
-      backgroundColor: "#0f0f1e",         // Fond violet foncé (adapte à ton design)
-      androidSplashResourceName: "splash", // Nom du fichier (sans .png)
-      androidScaleType: "CENTER_CROP",    // Mode d'affichage centré
-      showSpinner: false                  // Pas de spinner de chargement
+      launchShowDuration: 2000,
+      launchAutoHide: true,
+      backgroundColor: "#0f0f1e",
+      androidSplashResourceName: "splash",
+      androidScaleType: "FIT_CENTER",        // Garde les proportions
+      showSpinner: false,
+      iosSpinnerStyle: "small",
+      spinnerColor: "#999999"
     }
   }
 };
