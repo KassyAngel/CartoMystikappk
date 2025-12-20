@@ -13,7 +13,14 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // ✅ AVANT super.onCreate() : garder le splash
+        // Le splash s'affiche grâce à AppTheme.NoActionBarLaunch
+
         super.onCreate(savedInstanceState);
+
+        // ✅ APRÈS le chargement : changer le thème pour retirer le splash
+        setTheme(R.style.AppTheme_NoActionBar);
+
         requestConsent();
     }
 

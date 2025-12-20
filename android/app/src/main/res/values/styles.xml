@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Style de base sans ActionBar -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -10,10 +9,13 @@
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
-    <!-- Style avec splash screen -->
+    <!-- Style UNIQUEMENT pour le splash au démarrage -->
     <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
         <item name="android:background">@drawable/splash_screen</item>
+        <!-- ✅ AJOUTEZ CETTE LIGNE pour éviter que le splash reste visible -->
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 </resources>

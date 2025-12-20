@@ -18,16 +18,18 @@ const config: CapacitorConfig = {
   plugins: {
     CapacitorHttp: {
       enabled: true
+    },
+    // ✅ AJOUTEZ CETTE CONFIGURATION
+    SplashScreen: {
+      launchShowDuration: 0,           // Ne pas montrer automatiquement
+      launchAutoHide: true,            // Cacher automatiquement
+      backgroundColor: "#0f0f1e",
+      androidScaleType: "CENTER",
+      showSpinner: false,
+      androidSpinnerStyle: "small",
+      splashFullScreen: false,
+      splashImmersive: false
     }
-    // ❌ SUPPRIMEZ COMPLÈTEMENT CETTE SECTION
-    // SplashScreen: {
-    //   launchShowDuration: 2000,
-    //   launchAutoHide: true,
-    //   backgroundColor: "#0f0f1e",
-    //   androidSplashResourceName: "splash",
-    //   androidScaleType: "FIT_CENTER",
-    //   showSpinner: false
-    // }
   }
 };
 
