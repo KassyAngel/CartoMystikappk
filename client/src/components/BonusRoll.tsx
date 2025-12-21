@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { showInterstitialAd } from '@/admobService';
 import MysticalButton from './MysticalButton';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BonusRollProps {
   onComplete?: (result: { total: number; dice: [number, number]; interpretation: string }) => void;
   variation: string | null;
-  onReset?: () => void;
+  onReset?: () => void; // ⚠️ Utilisé uniquement pour le bouton "Retour" (reset complet)
   isPremium?: boolean;
+  onBeforeRoll?: () => Promise<boolean>; // ✅ Callback AVANT le lancer (gestion des pubs)
+  onAfterRoll?: () => void; // ✅ Callback pour "Nouveau lancer" (changement de couleur)
 }
 
 const getDiceStyles = (variation: string | null) => {
@@ -55,7 +56,14 @@ const getDiceStyles = (variation: string | null) => {
   }
 };
 
-export default function BonusRoll({ onComplete, variation, onReset, isPremium = false }: BonusRollProps) {
+export default function BonusRoll({ 
+  onComplete, 
+  variation, 
+  onReset, 
+  isPremium = false,
+  onBeforeRoll,
+  onAfterRoll
+}: BonusRollProps) {
   const { t } = useLanguage();
 
   const [dice, setDice] = useState<[number, number]>([1, 1]);
@@ -64,33 +72,32 @@ export default function BonusRoll({ onComplete, variation, onReset, isPremium = 
   const [message, setMessage] = useState(t('oracle.bonusRoll.ready'));
   const [interpretation, setInterpretation] = useState<{ title: string; message: string } | null>(null);
   const [isLoadingAd, setIsLoadingAd] = useState(false);
-  const [rollCount, setRollCount] = useState(0);
 
   const diceStyles = getDiceStyles(variation);
 
   async function rollDice() {
-    if (rolling || isLoadingAd) return;
-
-    const newRollCount = rollCount + 1;
-    setRollCount(newRollCount);
-
-    // ✅ CONFORME ADMOB : Pub interstitielle tous les 2 lancers (au lieu de 3) SAUF si Premium
-    const shouldShowAd = newRollCount % 2 === 0 && !isPremium;
-
-    console.log(`🎲 Bonus Roll - Lancer n°${newRollCount} → Pub: ${shouldShowAd ? 'OUI ✅' : isPremium ? 'NON (Premium 👑)' : 'NON ❌'}`);
-
-    if (shouldShowAd) {
-      setIsLoadingAd(true);
-      setMessage(t('oracle.bonusRoll.loadingAd'));
-      try {
-        await showInterstitialAd('bonus_roll_dice');
-        console.log('✅ Pub Bonus Roll (tous les 2 lancers) affichée');
-      } catch (error) {
-        console.log("❌ Pub non disponible, on continue quand même");
-      }
-      setIsLoadingAd(false);
+    if (rolling || isLoadingAd) {
+      console.log('⏳ [BONUS ROLL] Lancer en cours ou pub active, ignoré');
+      return;
     }
 
+    // 🎁 ÉTAPE 1 : Appeler le callback AVANT le lancer (gestion des pubs)
+    if (onBeforeRoll) {
+      setIsLoadingAd(true);
+      setMessage(t('oracle.bonusRoll.loadingAd') || '⏳ Chargement...');
+
+      const canRoll = await onBeforeRoll();
+
+      setIsLoadingAd(false);
+
+      if (!canRoll) {
+        console.log('❌ [BONUS ROLL] Lancer bloqué par onBeforeRoll');
+        setMessage(t('oracle.bonusRoll.ready'));
+        return; // ❌ Bloquer le lancer si la pub a échoué
+      }
+    }
+
+    // 🎲 ÉTAPE 2 : Lancer les dés
     setRolling(true);
     setMessage(t('oracle.bonusRoll.rolling'));
 
@@ -108,7 +115,7 @@ export default function BonusRoll({ onComplete, variation, onReset, isPremium = 
         const sum = d1 + d2;
 
         const currentVariation = variation || '1';
-        console.log(`🎲 Utilisation variation: ${currentVariation} pour le total: ${sum}`);
+        console.log(`🎲 [BONUS ROLL] Résultat: ${sum} (variation: ${currentVariation})`);
 
         const title = t(`oracle.bonusRoll.${sum}.title.${currentVariation}`) || '✨ Mystère Cosmique';
         const interpretationMessage = t(`oracle.bonusRoll.${sum}.message.${currentVariation}`) || 'Les étoiles vous réservent une surprise...';
@@ -127,6 +134,8 @@ export default function BonusRoll({ onComplete, variation, onReset, isPremium = 
             interpretation: `${result.title}\n\n${result.message}`,
           });
         }
+
+        // ✅ NE PAS changer la couleur ici, on attend le clic sur "Nouveau lancer"
       }
     }, 80);
   }
@@ -280,9 +289,12 @@ export default function BonusRoll({ onComplete, variation, onReset, isPremium = 
                 setDice([1, 1]);
                 setMessage(t('oracle.bonusRoll.ready'));
 
-                if (onReset) {
-                  onReset();
+                // 🎨 Changer la couleur au moment du "Nouveau lancer"
+                if (onAfterRoll) {
+                  onAfterRoll();
                 }
+
+                // ⚠️ NE PAS appeler onReset() ici (il reset le compteur de pubs)
               }}
               className="w-full text-xs sm:text-sm md:text-base min-h-[40px] sm:min-h-[44px]"
             >
@@ -294,6 +306,9 @@ export default function BonusRoll({ onComplete, variation, onReset, isPremium = 
         {isLoadingAd && (
           <div className="text-center py-2">
             <div className="inline-block animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-[#ffd700]"></div>
+            <p className="text-[#ffd700] text-xs mt-2">
+              {isPremium ? 'Préparation...' : 'Chargement de la publicité...'}
+            </p>
           </div>
         )}
       </div>

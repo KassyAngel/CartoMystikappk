@@ -3,6 +3,7 @@ import MysticalButton from '@/components/MysticalButton';
 import BonusRoll from '@/components/BonusRoll';
 import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { showRewardedAd, showInterstitialAd } from '@/admobService';
 
 interface BonusRollPageProps {
   user: UserSession;
@@ -11,11 +12,10 @@ interface BonusRollPageProps {
   isPremium?: boolean;
 }
 
+// ✅ Fonction helper pour générer une variation aléatoire
 const getRandomVariation = () => {
   const variations = ['1', '2', '3'];
-  const choice = variations[Math.floor(Math.random() * variations.length)];
-  console.log(`🎲 Variation choisie: ${choice}`);
-  return choice;
+  return variations[Math.floor(Math.random() * variations.length)];
 };
 
 const getVariationStyles = (variation: string | null, t: any) => {
@@ -96,17 +96,96 @@ export default function BonusRollPage({
   const { t } = useLanguage();
   const [isComplete, setIsComplete] = useState(false);
 
-  // ✅ CONFORME ADMOB : Variation choisie immédiatement, pas d'écran de déblocage
-  const [variation] = useState<string>(getRandomVariation());
+  // 🎨 État pour gérer le changement de variation (couleur des dés)
+  const [variation, setVariation] = useState<string>(() => {
+    const initial = getRandomVariation();
+    console.log(`🎨 [BONUS ROLL] Variation initiale: ${initial}`);
+    return initial;
+  });
+
+  // 🎯 Compteur de lancers pour les pubs (indépendant du système global)
+  const [rollCount, setRollCount] = useState(0);
+
+  // 🎁 Flag pour la pub récompensée (1er lancer uniquement)
+  const [hasShownRewardedAd, setHasShownRewardedAd] = useState(false);
 
   const handleComplete = (result: { total: number; dice: [number, number]; interpretation: string }) => {
     setIsComplete(true);
     console.log('✅ Tirage bonus complété:', result);
   };
 
+  // 🎲 FONCTION APPELÉE AVANT CHAQUE LANCER DE DÉS
+  const handleBeforeRoll = async (): Promise<boolean> => {
+    if (isPremium) {
+      console.log('👑 [BONUS ROLL] Premium actif : pas de pub');
+      return true; // ✅ Autoriser le lancer
+    }
+
+    const nextCount = rollCount + 1;
+    console.log(`🎲 [BONUS ROLL] Lancer #${nextCount}`);
+
+    // 🎁 1ER LANCER = PUB RÉCOMPENSÉE
+    if (nextCount === 1 && !hasShownRewardedAd) {
+      console.log('🎁 [BONUS ROLL] 1er lancer → Affichage pub récompensée obligatoire...');
+
+      try {
+        const success = await showRewardedAd('bonus_roll_first');
+
+        if (!success) {
+          console.log('❌ [BONUS ROLL] Pub récompensée échouée → Lancer bloqué');
+          alert('⚠️ Veuillez regarder la publicité pour débloquer le premier lancer.');
+          return false; // ❌ Bloquer le lancer
+        }
+
+        console.log('✅ [BONUS ROLL] Pub récompensée visionnée → Lancer autorisé');
+        setHasShownRewardedAd(true);
+      } catch (error) {
+        console.error('❌ [BONUS ROLL] Erreur pub récompensée:', error);
+        return false;
+      }
+    }
+
+    // 🎬 TOUS LES 3 LANCERS (après le 1er) = PUB INTERSTITIELLE
+    // Formule: (nextCount - 1) % 3 === 0 et nextCount > 1
+    // Lancer 4, 7, 10, 13...
+    if (nextCount > 1 && (nextCount - 1) % 3 === 0) {
+      console.log(`🎬 [BONUS ROLL] Lancer #${nextCount} → Pub interstitielle (tous les 3 lancers après le 1er)`);
+
+      // Attendre un peu pour que l'utilisateur voie le résultat
+      setTimeout(async () => {
+        try {
+          await showInterstitialAd(`bonus_roll_${nextCount}`);
+          console.log('✅ [BONUS ROLL] Pub interstitielle affichée');
+        } catch (error) {
+          console.error('❌ [BONUS ROLL] Erreur pub interstitielle:', error);
+        }
+      }, 500);
+    }
+
+    // 📊 Incrémenter le compteur
+    setRollCount(nextCount);
+
+    return true; // ✅ Autoriser le lancer
+  };
+
+  // 🎨 FONCTION APPELÉE QUAND L'UTILISATEUR CLIQUE SUR "NOUVEAU LANCER"
+  const handleAfterRoll = () => {
+    const newVariation = getRandomVariation();
+    setVariation(newVariation);
+    console.log(`🎨 [BONUS ROLL] Nouvelle variation: ${newVariation}`);
+  };
+
+  // 🔄 FONCTION POUR RESET COMPLET (retour à l'écran Oracle)
+  const handleBackToOracle = () => {
+    setRollCount(0);
+    setHasShownRewardedAd(false);
+    const newVariation = getRandomVariation();
+    setVariation(newVariation);
+    console.log(`🔄 [BONUS ROLL] Reset complet → Variation: ${newVariation}, Compteur: 0`);
+  };
+
   const styles = getVariationStyles(variation, t);
 
-  // ✅ CONFORME ADMOB : Affichage direct du composant BonusRoll, pas d'écran de déblocage
   return (
     <div className="main-content w-full min-h-screen flex flex-col p-2 sm:p-4 pt-14 sm:pt-16 pb-[140px] relative overflow-x-hidden overflow-y-auto">
       <div className="fixed inset-0 bg-gradient-to-br from-[#1a0033] via-[#2d1b69] to-[#1a0033] -z-10">
@@ -171,6 +250,8 @@ export default function BonusRollPage({
             ✨ {t('oracle.bonusRoll.description')}
           </span>
         </div>
+
+
       </div>
 
       <div className="flex-1 flex items-center justify-center py-2 sm:py-3 min-h-0">
@@ -182,15 +263,14 @@ export default function BonusRollPage({
               />
             </div>
 
-            {/* ✅ CONFORME ADMOB : Accès direct au composant BonusRoll */}
+            {/* 🎲 Composant BonusRoll avec callbacks */}
             <BonusRoll 
               onComplete={handleComplete}
               variation={variation}
               isPremium={isPremium}
-              onReset={() => {
-                const newVariation = getRandomVariation();
-                console.log('🔄 Nouvelle variation:', newVariation);
-              }}
+              onBeforeRoll={handleBeforeRoll}
+              onAfterRoll={handleAfterRoll}
+              onReset={handleBackToOracle}
             />
           </div>
         </div>
@@ -200,7 +280,10 @@ export default function BonusRollPage({
         <div className="flex gap-1.5 sm:gap-2 justify-center max-w-md mx-auto px-2">
           <MysticalButton 
             variant="secondary" 
-            onClick={onBack}
+            onClick={() => {
+              handleBackToOracle(); // Reset complet
+              onBack(); // Retour à l'écran Oracle
+            }}
             className="flex-1 min-h-[40px] sm:min-h-[44px] text-[11px] sm:text-sm font-semibold px-2"
           >
             <span className="break-words block leading-tight">← {t('common.back')}</span>
@@ -208,7 +291,10 @@ export default function BonusRollPage({
 
           {isComplete && (
             <MysticalButton 
-              onClick={onBack}
+              onClick={() => {
+                handleBackToOracle(); // Reset complet
+                onBack(); // Retour à l'écran Oracle
+              }}
               className={`flex-1 min-h-[40px] sm:min-h-[44px] text-[11px] sm:text-sm font-semibold px-2
                 bg-gradient-to-r ${styles.button} ${styles.buttonShadow}`}
             >

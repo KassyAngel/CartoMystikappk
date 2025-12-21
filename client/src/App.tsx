@@ -19,8 +19,6 @@ import { initializeRevenueCat } from './services/revenueCatService';
 import { config } from '@/config';
 import { getUserEmail } from '@/lib/userStorage';
 import { getDeviceId } from '@/lib/deviceId';
-import BannerDebugHelper from '@/components/BannerDebugHelper'
-
 
 export interface Reading {
   id: string;
@@ -113,6 +111,7 @@ function App() {
     migrateData();
   }, [deviceId]);
 
+  // ✅ Initialisation AdMob + RevenueCat
   useEffect(() => {
     const initServices = async () => {
       try {
@@ -126,6 +125,7 @@ function App() {
     initServices();
   }, []);
 
+  // ✅ GESTION BANNIÈRE : Afficher sur la page Oracle si non-Premium
   useEffect(() => {
     if (isPremium) {
       console.log('👑 Premium actif : bannière cachée');
@@ -136,6 +136,7 @@ function App() {
       return;
     }
 
+    // Afficher la bannière uniquement sur la page Oracle
     if (currentStep === 'oracle' && !bannerShown) {
       console.log('🎯 Page Oracle atteinte → Affichage de la bannière');
       const timer = setTimeout(() => {
@@ -145,6 +146,13 @@ function App() {
       }, 500);
 
       return () => clearTimeout(timer);
+    }
+
+    // Cacher la bannière si on quitte la page Oracle
+    if (currentStep !== 'oracle' && bannerShown) {
+      console.log('👋 Sortie de la page Oracle → Masquer la bannière');
+      hideBanner();
+      setBannerShown(false);
     }
   }, [currentStep, isPremium, bannerShown]);
 
@@ -321,6 +329,7 @@ function App() {
     }
   };
 
+  // ✅ SYSTÈME DE PUB AVANT TIRAGE (pour les tirages globaux uniquement)
   const shouldShowAdBeforeReading = async (oracleType: string): Promise<boolean> => {
     console.log(`🎯 [PUB CHECK] Oracle sélectionné: "${oracleType}"`);
 
@@ -329,6 +338,7 @@ function App() {
       return false;
     }
 
+    // ✅ Horoscope et BonusRoll ont leur propre système de pub
     if (oracleType === 'horoscope' || oracleType === 'bonusRoll') {
       console.log(`⏭️ "${oracleType}" exclu : pas de pub interstitielle (système propre)`);
       return false;
@@ -349,6 +359,7 @@ function App() {
       }
     }
 
+    // Pré-charger la prochaine pub
     if ((nextCount + 1) % 3 === 0) {
       console.log(`🔄 Pré-chargement pub pour le tirage #${nextCount + 1}`);
       setTimeout(() => preloadInterstitial(), 1000);
@@ -360,9 +371,11 @@ function App() {
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
     if (!deviceId) return;
 
+    // ✅ Types NON sauvegardés dans le Grimoire
     const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
     const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
 
+    // ✅ Types comptabilisés pour le système de pub global
     const typesCountedForAds = ['tarot', 'oracle', 'angels', 'runes', 'crystalBall', 'crystal'];
     const shouldIncrementCounter = typesCountedForAds.includes(reading.type);
 
@@ -403,7 +416,7 @@ function App() {
           return newCount;
         });
       } else {
-        console.log(`📊 ⏭️ Type "${reading.type}" NON comptabilisé (système pub propre)`);
+        console.log(`📊 ⏭️ Type "${reading.type}" NON comptabilisé (système pub indépendant)`);
       }
 
     } catch (error) {
@@ -426,14 +439,15 @@ function App() {
         <UserProvider>
           <TooltipProvider>
             <div className="dark relative w-screen h-screen overflow-hidden">
+              {/* ✅ CSS pour éviter que la bannière cache les boutons */}
               {!isPremium && bannerShown && (
                 <style>{`
-                  /* ✅ Espace sécurisé pour la bannière AdMob (60px) + marge (50px) */
+                  /* ✅ Espace réservé pour la bannière AdMob (60px) + marge de sécurité (50px) */
                   .main-content {
                     padding-bottom: 110px !important;
                   }
 
-                  /* ✅ Classe pour boutons/contenu qui doit rester visible */
+                  /* ✅ Classe pour les éléments qui doivent rester visibles */
                   .pb-safe {
                     padding-bottom: 110px !important;
                   }
@@ -445,13 +459,13 @@ function App() {
                     }
                   }
 
-                  /* ⚠️ CRITIQUE : Empêcher absolument l'overlap des boutons */
+                  /* ⚠️ CRITIQUE : Empêcher l'overlap des boutons avec la bannière */
                   button, a, input, textarea {
                     position: relative;
                     z-index: 10;
                   }
 
-                  /* ⚠️ S'assurer que la bannière reste au-dessus du fond mais sous les overlays */
+                  /* ⚠️ Bannière au-dessus du fond mais sous les overlays */
                   #admob-banner {
                     z-index: 5 !important;
                   }
@@ -493,7 +507,6 @@ function App() {
                   }}
                 />
               )}
-              <BannerDebugHelper />
 
               <Toaster />
 
