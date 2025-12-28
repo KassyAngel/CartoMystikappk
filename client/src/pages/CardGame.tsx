@@ -9,9 +9,10 @@ import { saveDailyReading } from '@/lib/dailyLimit';
 import { 
   selectRandomCardsWithoutRepeat, 
   saveTirageToHistory,
-  getRecentCards,
   getSecureRandomInt
 } from '@/lib/utils';
+import { getFrenchKeyFromTranslatedName, getTarotFrenchKey, getAngelsFrenchKey } from '@/lib/cardNameMapping';
+import { useCardImagePreloader } from '@/hooks/useCardImagePreloader';
 
 interface CardGameProps {
   user: UserSession;
@@ -37,6 +38,9 @@ export default function CardGame({
   const [revealedCard, setRevealedCard] = useState<{ card: any; index: number } | null>(null);
   const { t, language } = useLanguage();
 
+  // ✅ Précharger les images du dos AVANT l'affichage
+  const { isLoaded: imagesLoaded, progress } = useCardImagePreloader(oracleType);
+
   const playFlip = useSound('Flip-card.wav');
   const playReveal = useSound('Bouton-reveal.wav');
 
@@ -44,47 +48,69 @@ export default function CardGame({
   const displayCards = isDailyReading ? 3 : 6;
   const maxSelection = isDailyReading ? 1 : 3;
 
-  // ✅ NORMALISATION CORRIGÉE : Supprime tirets + garde majuscules
   const normalizeCardName = (name: string): string => {
     return name
       .trim()
-      .replace(/[''\s-]/g, '')  // ✅ Supprime apostrophes, espaces ET tirets
-      .normalize('NFD')         // Décompose les accents
-      .replace(/[\u0300-\u036f]/g, '');  // Supprime les diacritiques
+      .replace(/[''\s-]/g, '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   };
 
   const getCardOracleType = (): 'tarot' | 'angels' | 'runes' | 'oracle' | 'daily' => {
-    if (oracleType === 'daily') return 'daily'; // ✅ Garde 'daily'
+    if (oracleType === 'daily') return 'daily';
     if (oracleType === 'tarot') return 'tarot';
     if (oracleType === 'angels') return 'angels';
     if (oracleType === 'runes') return 'runes';
     return 'oracle';
   };
 
-  // ✅ TRADUCTION CORRIGÉE
   const translateCardName = (cardName: string | undefined): string | undefined => {
     if (!cardName) return undefined;
 
     const oracleTypeKey = getCardOracleType();
-    const normalizedName = normalizeCardName(cardName);
-    const translationKey = `cards.${oracleTypeKey}.${normalizedName}.name`;
+    const sourceLanguage = 'fr';
 
-    console.log(`🔍 [${language}] "${cardName}" → normalized: "${normalizedName}" → key: "${translationKey}"`);
-
-    const translated = t(translationKey);
-
-    if (translated !== translationKey) {
-      console.log(`   ✅ Trouvé: "${translated}"`);
-      return translated;
+    if (oracleTypeKey === 'daily') {
+      const frenchKey = getFrenchKeyFromTranslatedName(cardName, sourceLanguage);
+      const translationKey = `cards.daily.${frenchKey}.name`;
+      const translated = t(translationKey);
+      if (translated !== translationKey) return translated;
+      return cardName;
     }
 
-    console.log(`   ⚠️ Pas de traduction, original: "${cardName}"`);
+    if (oracleTypeKey === 'tarot') {
+      const frenchKey = getTarotFrenchKey(cardName, sourceLanguage);
+      const translationKey = `cards.tarot.${frenchKey}.name`;
+      const translated = t(translationKey);
+      if (translated !== translationKey) return translated;
+      return cardName;
+    }
+
+    if (oracleTypeKey === 'angels') {
+      const frenchKey = getAngelsFrenchKey(cardName, sourceLanguage);
+      const translationKey = `cards.angels.${frenchKey}.name`;
+      const translated = t(translationKey);
+      if (translated !== translationKey) return translated;
+      return cardName;
+    }
+
+    const normalizedCardName = normalizeCardName(cardName);
+    const translationKey = `cards.${oracleTypeKey}.${normalizedCardName}.name`;
+    const translated = t(translationKey);
+    if (translated !== translationKey) return translated;
     return cardName;
   };
 
   useEffect(() => {
     const generateCards = async () => {
       setIsLoading(true);
+
+      // ✅ Attendre que les images soient préchargées
+      if (!imagesLoaded) {
+        console.log(`⏳ Préchargement des images... ${Math.round(progress)}%`);
+        return;
+      }
+
       try {
         const selectedCards = selectRandomCardsWithoutRepeat(
           oracle.cards.length,
@@ -105,7 +131,7 @@ export default function CardGame({
       }
     };
     generateCards();
-  }, [oracle.cards.length, displayCards, oracleType]);
+  }, [oracle.cards.length, displayCards, oracleType, imagesLoaded, progress]);
 
   const handleCardClick = (cardIndex: number) => {
     if (flippedCards[cardIndex]) return;
@@ -120,16 +146,7 @@ export default function CardGame({
     const actualIndex = randomCards[cardIndex];
     const cardData = oracle.cards[actualIndex];
 
-    const displayName = translateCardName(cardData.name) || cardData.name;
-
-    console.log(`🃏 Carte révélée: "${cardData.name}" → "${displayName}"`);
-
-    const translatedCardData = {
-      ...cardData,
-      name: displayName
-    };
-
-    setRevealedCard({ card: translatedCardData, index: cardIndex });
+    setRevealedCard({ card: cardData, index: cardIndex });
 
     const newSelected = [...selectedCardsIndices, cardIndex];
     setSelectedCardsIndices(newSelected);
@@ -154,13 +171,21 @@ export default function CardGame({
     const zodiacName = getTranslatedZodiacName();
 
     const getRandomCardMeaning = (cardName: string, oType: 'tarot' | 'angels' | 'runes' | 'oracle' | 'daily'): string => {
-      const normalizedName = normalizeCardName(cardName);
+      const sourceLanguage = 'fr';
+      let normalizedName: string;
 
-      // ✅ Pour le tirage du jour, utilise 'daily' au lieu de 'oracle'
+      if (oType === 'daily') {
+        normalizedName = getFrenchKeyFromTranslatedName(cardName, sourceLanguage);
+      } else if (oType === 'tarot') {
+        normalizedName = getTarotFrenchKey(cardName, sourceLanguage);
+      } else if (oType === 'angels') {
+        normalizedName = getAngelsFrenchKey(cardName, sourceLanguage);
+      } else {
+        normalizedName = normalizeCardName(cardName);
+      }
+
       const meaningKey = oType === 'oracle' ? 'daily' : oType;
       const baseMeaningKey = `cards.${meaningKey}.${normalizedName}.meaning`;
-
-      console.log(`🔍 Meaning key: ${baseMeaningKey}`);
 
       const var1 = t(`${baseMeaningKey}.var1`, { genderSuffix });
       const var2 = t(`${baseMeaningKey}.var2`, { genderSuffix });
@@ -235,8 +260,8 @@ export default function CardGame({
     if (isDailyReading) {
       const dailyCard = selectedCards[0];
       const dailyCardName = translateCardName(dailyCard.name) || dailyCard.name;
-      const dailyCardMeaning = getRandomCardMeaning(dailyCard.name, 'daily'); // ✅ Utilise 'daily' au lieu de 'oracle'
-      
+      const dailyCardMeaning = getRandomCardMeaning(dailyCard.name, 'daily');
+
       sections.push({
         icon: '☀️',
         title: dailyCardName,
@@ -244,41 +269,33 @@ export default function CardGame({
       });
 
       const getRandomWisdom = (zodiacSign: string): string => {
-        const variationCount = 15; // var0 à var14 = 15 variations
-        const randomIndex = getSecureRandomInt(0, variationCount - 1); // 0 à 14
-
-        // ✅ CORRECTION : Utiliser var0, var1, var2... var14
+        const variationCount = 15;
+        const randomIndex = getSecureRandomInt(0, variationCount - 1);
         const key = `interpretation.daily.wisdom.var${randomIndex}`;
-
-        console.log(`🔮 Wisdom: index=${randomIndex}, key="${key}"`);
-
         const translated = t(key, { zodiacSign });
-
-        // ✅ Fallback si traduction manquante
         return translated.includes('interpretation.daily') 
-          ? t('interpretation.daily.wisdom.var0', { zodiacSign }) // Fallback sur var0
+          ? t('interpretation.daily.wisdom.var0', { zodiacSign })
           : translated;
       };
 
       finalMessage = getRandomWisdom(fallbackZodiac);
       greeting = getRandomGreeting('daily');
 
-      } else if (oracle.title === 'Tarot de Marseille') {
-        const card1 = selectedCards[0];
-        const card2 = selectedCards[1];
-        const card3 = selectedCards[2];
+    } else if (oracle.title === 'Tarot de Marseille') {
+      const card1 = selectedCards[0];
+      const card2 = selectedCards[1];
+      const card3 = selectedCards[2];
 
-        const card1Name = translateCardName(card1.name) || card1.name;
-        const card2Name = translateCardName(card2.name) || card2.name;
-        const card3Name = translateCardName(card3.name) || card3.name;
+      const card1Name = translateCardName(card1.name) || card1.name;
+      const card2Name = translateCardName(card2.name) || card2.name;
+      const card3Name = translateCardName(card3.name) || card3.name;
 
-        sections.push(
-          { icon: '✨', title: card1Name, content: getRandomCardMeaning(card1.name, 'tarot') },
-          { icon: '🌙', title: card2Name, content: getRandomCardMeaning(card2.name, 'tarot') },
-          { icon: '⭐', title: card3Name, content: getRandomCardMeaning(card3.name, 'tarot') }
-        );
+      sections.push(
+        { icon: '✨', title: card1Name, content: getRandomCardMeaning(card1.name, 'tarot') },
+        { icon: '🌙', title: card2Name, content: getRandomCardMeaning(card2.name, 'tarot') },
+        { icon: '⭐', title: card3Name, content: getRandomCardMeaning(card3.name, 'tarot') }
+      );
 
-      // ✅ NOUVEAU : Conseils Tarot spécifiques
       const tarotTemplates = [
         t('interpretation.tarot.template.advice.var1', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
         t('interpretation.tarot.template.advice.var2', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
@@ -293,7 +310,6 @@ export default function CardGame({
       ];
       const selectedTemplate = tarotTemplates[getSecureRandomInt(0, tarotTemplates.length - 1)];
 
-      // ✅ Conseils Tarot finaux séparés
       const tarotAdvices = [
         t('interpretation.tarot.advice.var1', { genderSuffix }),
         t('interpretation.tarot.advice.var2', { genderSuffix }),
@@ -310,7 +326,6 @@ export default function CardGame({
 
       finalMessage = selectedTemplate + ' ' + selectedAdvice;
       greeting = getRandomGreeting('tarot');
-
 
     } else if (oracle.title === 'Oracle des Anges') {
       const card1 = selectedCards[0];
@@ -402,7 +417,8 @@ export default function CardGame({
     }
   };
 
-  if (isLoading) {
+  // ✅ Écran de chargement avec progression
+  if (isLoading || !imagesLoaded) {
     return (
       <div className="game-area w-full text-center min-h-screen flex flex-col justify-center p-4">
         <div className="flex flex-col items-center space-y-4">
@@ -411,8 +427,21 @@ export default function CardGame({
               {t(`oracle.${oracleType}.title`)}
             </h2>
             <p className="text-[#b19cd9] text-sm">
-              {t('cardgame.loading')}
+              {!imagesLoaded 
+                ? `${t('cardgame.loading')}... ${Math.round(progress)}%`
+                : t('cardgame.loading')
+              }
             </p>
+            {!imagesLoaded && progress > 0 && (
+              <div className="mt-4 w-full max-w-xs mx-auto">
+                <div className="h-2 bg-purple-900/30 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-[#ffd700] to-[#b19cd9] transition-all duration-300"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -421,7 +450,7 @@ export default function CardGame({
 
   return (
     <>
-        <div className="game-area w-full text-center min-h-screen flex flex-col justify-between p-2 sm:p-4 pt-20 sm:pt-24 pb-safe">
+      <div className="game-area w-full text-center min-h-screen flex flex-col justify-between p-2 sm:p-4 pt-20 sm:pt-24 pb-safe">
         <div className="flex-1 flex flex-col justify-center space-y-3 sm:space-y-4">
           <div className="reading-type">
             <h2 className="text-[#ffd700] text-xl sm:text-2xl md:text-3xl font-bold font-serif text-shadow-glow leading-tight">
@@ -454,7 +483,7 @@ export default function CardGame({
                       isSelected={false}
                       isSelectable={canClick}
                       onClick={() => handleCardClick(cardIndex)}
-                      cardName={isCardFlipped ? translateCardName(cardData?.name) : undefined}
+                      cardName={isCardFlipped ? cardData?.name : undefined}
                       oracleType={getCardOracleType()}
                     />
                   );
@@ -477,7 +506,7 @@ export default function CardGame({
                         isSelected={isSelected}
                         isSelectable={canClick}
                         onClick={() => handleCardClick(cardIndex)}
-                        cardName={isCardFlipped ? translateCardName(cardData?.name) : undefined}
+                        cardName={isCardFlipped ? cardData?.name : undefined}
                         oracleType={getCardOracleType()}
                       />
                     );
@@ -500,7 +529,7 @@ export default function CardGame({
                         isSelected={isSelected}
                         isSelectable={canClick}
                         onClick={() => handleCardClick(cardIndex)}
-                        cardName={isCardFlipped ? translateCardName(cardData?.name) : undefined}
+                        cardName={isCardFlipped ? cardData?.name : undefined}
                         oracleType={getCardOracleType()}
                       />
                     );
@@ -534,12 +563,7 @@ export default function CardGame({
       {revealedCard && (
         <CardRevealModal
           card={revealedCard.card}
-          oracleType={
-            (() => {
-              const type = getCardOracleType();
-              return type === 'daily' ? 'oracle' : type;
-            })()
-          }
+          oracleType={oracleType === 'daily' ? 'oracle' : oracleType}
           onClose={handleCloseModal}
           cardNumber={selectedCardsIndices.length}
           totalCards={maxSelection}

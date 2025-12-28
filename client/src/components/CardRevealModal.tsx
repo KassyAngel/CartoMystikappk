@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import MysticalButton from './MysticalButton';
+import { getCardImagePath } from './TarotCard';
+import { getFrenchKeyFromTranslatedName, getTarotFrenchKey, getAngelsFrenchKey } from '@/lib/cardNameMapping';
 
 interface CardRevealModalProps {
   card: any;
-  oracleType: 'tarot' | 'angels' | 'runes' | 'oracle';
+  oracleType: 'tarot' | 'angels' | 'runes' | 'oracle' | 'daily' | 'horoscope';
   onClose: () => void;
   cardNumber?: number;
   totalCards?: number;
@@ -17,25 +19,93 @@ export default function CardRevealModal({
   cardNumber = 1, 
   totalCards = 1
 }: CardRevealModalProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const isDailyOracle = oracleType === 'oracle' || oracleType === 'daily';
+  const isTarot = oracleType === 'tarot';
+  const isAngels = oracleType === 'angels';
+
+  // ✅ Récupérer l'image AVANT d'afficher avec le mapping
+  const cardImagePath = (isDailyOracle || isTarot || isAngels) 
+    ? getCardImagePath(card?.name, oracleType, language) 
+    : null;
 
   useEffect(() => {
-    setTimeout(() => setIsVisible(true), 50);
-  }, []);
+    // Si pas d'image, afficher direct
+    if (!cardImagePath) {
+      setTimeout(() => setIsVisible(true), 50);
+      return;
+    }
 
-  // ✅ FONCTION AMÉLIORÉE : Plusieurs variantes pour trouver la traduction
+    // Précharger l'image AVANT d'afficher le modal
+    const img = new Image();
+    img.src = cardImagePath;
+    img.onload = () => {
+      setImageLoaded(true);
+      setTimeout(() => setIsVisible(true), 50);
+    };
+    img.onerror = () => {
+      setImageError(true);
+      setTimeout(() => setIsVisible(true), 50);
+    };
+  }, [cardImagePath]);
+
   const getTranslatedCardName = () => {
     if (!card?.name) return '';
 
     const originalName = card.name;
 
-    // Variante 1 : Nom original exact
-    const key1 = `cards.${oracleType}.${originalName}.name`;
-    const translation1 = t(key1);
-    if (translation1 !== key1) return translation1;
+    // ✅ Pour oracle ou daily, utiliser le mapping daily
+    if (isDailyOracle) {
+      const frenchKey = getFrenchKeyFromTranslatedName(originalName, language);
+      const translationKey = `cards.daily.${frenchKey}.name`;
 
-    // Variante 2 : Sans accents ni tirets (pour "Lache-prise")
+      const translated = t(translationKey);
+
+      if (translated !== translationKey) {
+        return translated;
+      }
+
+      return originalName;
+    }
+
+    // ✅ Pour tarot, utiliser le mapping tarot
+    if (isTarot) {
+      const frenchKey = getTarotFrenchKey(originalName, language);
+      const translationKey = `cards.tarot.${frenchKey}.name`;
+
+      const translated = t(translationKey);
+
+      if (translated !== translationKey) {
+        return translated;
+      }
+
+      return originalName;
+    }
+
+    // ✅ Pour angels, utiliser le mapping angels
+    if (isAngels) {
+      const frenchKey = getAngelsFrenchKey(originalName, language);
+      const translationKey = `cards.angels.${frenchKey}.name`;
+
+      const translated = t(translationKey);
+
+      if (translated !== translationKey) {
+        return translated;
+      }
+
+      return originalName;
+    }
+
+    // ✅ Pour horoscope, retourner tel quel (pas de traduction spéciale)
+    if (oracleType === 'horoscope') {
+      return originalName;
+    }
+
+    // Pour les autres types (runes), essayer plusieurs variantes
     const normalizedName = originalName
       .trim()
       .replace(/[''\s-]/g, '')
@@ -46,24 +116,6 @@ export default function CardRevealModal({
     const translation2 = t(key2);
     if (translation2 !== key2) return translation2;
 
-    // Variante 3 : Avec tiret mais sans accent (pour "Lache-prise")
-    const withHyphen = originalName
-      .trim()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-
-    const key3 = `cards.${oracleType}.${withHyphen}.name`;
-    const translation3 = t(key3);
-    if (translation3 !== key3) return translation3;
-
-    // Variante 4 : Lowercase (au cas où)
-    const lowercase = originalName.toLowerCase().replace(/\s+/g, '');
-    const key4 = `cards.${oracleType}.${lowercase}.name`;
-    const translation4 = t(key4);
-    if (translation4 !== key4) return translation4;
-
-    // Si aucune traduction trouvée, retourner le nom original
-    console.warn(`⚠️ Traduction non trouvée pour: "${originalName}" (oracleType: ${oracleType})`);
     return originalName;
   };
 
@@ -80,60 +132,81 @@ export default function CardRevealModal({
       >
         {/* Carte révélée en grand */}
         <div className="relative aspect-[2/3] w-full max-w-[280px] mx-auto">
-          {/* Cadre de la carte */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#4a3470] via-[#2d1b4e] to-[#1a0f3a] rounded-2xl shadow-2xl overflow-hidden">
 
-            {/* Bordure dorée */}
-            <div className="absolute inset-4 rounded-xl border-[3px] border-amber-400/60 pointer-events-none">
-              {/* Coins décoratifs */}
-              <div className="absolute -top-0.5 -left-0.5 w-6 h-6">
-                <div className="absolute top-0 left-0 w-5 h-0.5 bg-gradient-to-r from-amber-300 to-transparent"></div>
-                <div className="absolute top-0 left-0 w-0.5 h-5 bg-gradient-to-b from-amber-300 to-transparent"></div>
-                <div className="absolute top-0 left-0 w-1.5 h-1.5 bg-amber-300 rounded-full shadow-lg shadow-amber-400/50"></div>
-              </div>
-              <div className="absolute -top-0.5 -right-0.5 w-6 h-6">
-                <div className="absolute top-0 right-0 w-5 h-0.5 bg-gradient-to-l from-amber-300 to-transparent"></div>
-                <div className="absolute top-0 right-0 w-0.5 h-5 bg-gradient-to-b from-amber-300 to-transparent"></div>
-                <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-amber-300 rounded-full shadow-lg shadow-amber-400/50"></div>
-              </div>
-              <div className="absolute -bottom-0.5 -left-0.5 w-6 h-6">
-                <div className="absolute bottom-0 left-0 w-5 h-0.5 bg-gradient-to-r from-amber-300 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 w-0.5 h-5 bg-gradient-to-t from-amber-300 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-amber-300 rounded-full shadow-lg shadow-amber-400/50"></div>
-              </div>
-              <div className="absolute -bottom-0.5 -right-0.5 w-6 h-6">
-                <div className="absolute bottom-0 right-0 w-5 h-0.5 bg-gradient-to-l from-amber-300 to-transparent"></div>
-                <div className="absolute bottom-0 right-0 w-0.5 h-5 bg-gradient-to-t from-amber-300 to-transparent"></div>
-                <div className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-amber-300 rounded-full shadow-lg shadow-amber-400/50"></div>
-              </div>
+          {/* ✅ VERSION DAILY / TAROT / ANGELS - IMAGE PLEIN ÉCRAN SANS CADRE */}
+          {(isDailyOracle || isTarot || isAngels) && cardImagePath && !imageError ? (
+            <div className="absolute inset-0 rounded-2xl shadow-2xl overflow-hidden">
+              <img 
+                src={cardImagePath}
+                alt={card.name}
+                className={`absolute inset-0 w-full h-full object-cover rounded-2xl transition-opacity duration-300 ${
+                  imageLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                loading="eager"
+                onLoad={() => setImageLoaded(true)}
+                onError={() => {
+                  console.error(`❌ Image manquante: ${cardImagePath}`);
+                  setImageError(true);
+                }}
+              />
+              {/* Overlay léger pour le texte */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
 
-              {/* Étoiles */}
-              <div className="absolute top-2.5 left-2.5 text-amber-300/40 text-xs">✦</div>
-              <div className="absolute top-2.5 right-2.5 text-amber-300/40 text-xs">✦</div>
-              <div className="absolute bottom-2.5 left-2.5 text-amber-300/40 text-xs">✦</div>
-              <div className="absolute bottom-2.5 right-2.5 text-amber-300/40 text-xs">✦</div>
-
-              {/* Motif central */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-amber-400/5 text-7xl">✦</div>
+              {/* Lueur externe dorée */}
+              <div className="absolute -inset-4 bg-amber-400/20 blur-2xl rounded-full opacity-60 animate-pulse"></div>
             </div>
+          ) : (
+            //* ✅ VERSION RUNES - AVEC CADRE DORÉ */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#4a3470] via-[#2d1b4e] to-[#1a0f3a] rounded-2xl shadow-2xl overflow-hidden">
+              {/* Bordure dorée */}
+              <div className="absolute inset-4 rounded-xl border-[3px] border-amber-400/60 pointer-events-none">
+                {/* Coins décoratifs */}
+                <div className="absolute -top-0.5 -left-0.5 w-6 h-6">
+                  <div className="absolute top-0 left-0 w-5 h-0.5 bg-gradient-to-r from-amber-300 to-transparent"></div>
+                  <div className="absolute top-0 left-0 w-0.5 h-5 bg-gradient-to-b from-amber-300 to-transparent"></div>
+                  <div className="absolute top-0 left-0 w-1.5 h-1.5 bg-amber-300 rounded-full shadow-lg shadow-amber-400/50"></div>
+                </div>
+                <div className="absolute -top-0.5 -right-0.5 w-6 h-6">
+                  <div className="absolute top-0 right-0 w-5 h-0.5 bg-gradient-to-l from-amber-300 to-transparent"></div>
+                  <div className="absolute top-0 right-0 w-0.5 h-5 bg-gradient-to-b from-amber-300 to-transparent"></div>
+                  <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-amber-300 rounded-full shadow-lg shadow-amber-400/50"></div>
+                </div>
+                <div className="absolute -bottom-0.5 -left-0.5 w-6 h-6">
+                  <div className="absolute bottom-0 left-0 w-5 h-0.5 bg-gradient-to-r from-amber-300 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 w-0.5 h-5 bg-gradient-to-t from-amber-300 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-amber-300 rounded-full shadow-lg shadow-amber-400/50"></div>
+                </div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-6 h-6">
+                  <div className="absolute bottom-0 right-0 w-5 h-0.5 bg-gradient-to-l from-amber-300 to-transparent"></div>
+                  <div className="absolute bottom-0 right-0 w-0.5 h-5 bg-gradient-to-t from-amber-300 to-transparent"></div>
+                  <div className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-amber-300 rounded-full shadow-lg shadow-amber-400/50"></div>
+                </div>
 
-            {/* Nom de la carte */}
-            <div className="absolute inset-0 flex items-center justify-center px-8">
-              <h2 className="text-amber-50 text-2xl font-serif leading-tight text-center break-words drop-shadow-[0_2px_8px_rgba(255,215,0,0.3)]">
-                {getTranslatedCardName()}
-              </h2>
+                {/* Étoiles */}
+                <div className="absolute top-2.5 left-2.5 text-amber-300/40 text-xs">✦</div>
+                <div className="absolute top-2.5 right-2.5 text-amber-300/40 text-xs">✦</div>
+                <div className="absolute bottom-2.5 left-2.5 text-amber-300/40 text-xs">✦</div>
+                <div className="absolute bottom-2.5 right-2.5 text-amber-300/40 text-xs">✦</div>
+              </div>
+
+              {/* Gradient lumineux */}
+              <div className="absolute inset-0 bg-gradient-radial from-amber-400/10 via-transparent to-transparent pointer-events-none"></div>
+
+              {/* Lueur externe */}
+              <div className="absolute -inset-4 bg-amber-400/20 blur-2xl rounded-full opacity-60 animate-pulse"></div>
             </div>
+          )}
+        </div>
 
-            {/* Gradient lumineux */}
-            <div className="absolute inset-0 bg-gradient-radial from-amber-400/10 via-transparent to-transparent pointer-events-none"></div>
-          </div>
-
-          {/* Lueur externe */}
-          <div className="absolute -inset-4 bg-amber-400/20 blur-2xl rounded-full opacity-60 animate-pulse"></div>
+        {/* ✅ NOM DE LA CARTE - EN DESSOUS */}
+        <div className="mt-6 text-center">
+          <h2 className="text-amber-50 text-2xl font-serif leading-tight break-words drop-shadow-lg">
+            {getTranslatedCardName()}
+          </h2>
         </div>
 
         {/* Indicateur de progression */}
-        <div className="mt-8 text-center">
+        <div className="mt-6 text-center">
           <p className="text-amber-200/80 text-sm font-medium mb-3">
             {t('cardgame.cardRevealed')} {cardNumber} / {totalCards}
           </p>

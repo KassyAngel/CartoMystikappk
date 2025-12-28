@@ -546,13 +546,13 @@ const translations: Record<Language, Record<string, string>> = {
       "Avec L’Hermite, tu entres dans une phase de réflexion et de guidance intérieure. Tu es prêt{genderSuffix} à écouter ta voix intérieure, même si elle te mène sur des chemins moins fréquentés. Cette carte t’encourage à faire preuve de patience et de discernement.",
     "cards.tarot.LHermite.meaning.var3":
       "L’Hermite te guide vers l’introspection et la lumière intérieure. Tu es prêt{genderSuffix} à te détacher des influences extérieures pour mieux entendre ta sagesse profonde. Cette carte te pousse à avancer avec prudence, mais avec une certitude intérieure renforcée.",
-    "cards.tarot.LaRouedeFortune.name": "La Roue de Fortune",
-    "cards.tarot.LaRouedeFortune.meaning": "Changement, cycles, destinée",
-    "cards.tarot.LaRouedeFortune.meaning.var1":
+    "cards.tarot.LaRouedeLaFortune.name": "La Roue de la Fortune",
+    "cards.tarot.LaRouedeLaFortune.meaning": "Changement, cycles, destinée",
+    "cards.tarot.LaRouedeLaFortune.meaning.var1":
       "La Roue de Fortune t’invite à accepter le changement comme une force naturelle. Tu es prêt{genderSuffix} à suivre les cycles de la vie, même quand ils te mènent vers l’inconnu. Cette carte te rappelle que la destinée est en mouvement, et qu’il faut savoir s’adapter pour avancer.",
-    "cards.tarot.LaRouedeFortune.meaning.var2":
+    "cards.tarot.LaRouedeLaFortune.meaning.var2":
       "Avec La Roue de Fortune, une nouvelle phase débute. Tu es prêt{genderSuffix} à tourner la page, à accueillir les retournements de situation et à apprendre des expériences passées. Cette carte symbolise la transformation et l’évolution constante.",
-    "cards.tarot.LaRouedeFortune.meaning.var3":
+    "cards.tarot.LaRouedeLaFortune.meaning.var3":
       "La Roue de Fortune te guide à naviguer entre hauts et bas avec sagesse. Tu es prêt{genderSuffix} à comprendre que tout cycle a une fin et un commencement. Cette carte t’encourage à rester ouvert{genderSuffix} au flux de la vie, en confiance et en harmonie avec ton destin.",
     "cards.tarot.LaForce.name": "La Force",
     "cards.tarot.LaForce.meaning": "Courage, patience, maîtrise intérieure",
@@ -571,14 +571,14 @@ const translations: Record<Language, Record<string, string>> = {
       "Avec Le Pendu, tu entres dans une phase de pause nécessaire. Tu es prêt{genderSuffix} à suspendre l’action pour mieux comprendre ce qui se joue en profondeur. Ce moment d’attente n’est pas une faiblesse, mais une transition vers plus de clarté. Accueille cette immobilité comme un espace fertile de transformation.",
     "cards.tarot.LePendu.meaning.var3":
       "Le Pendu symbolise une période où le lâcher-prise devient essentiel. Tu es prêt{genderSuffix} à renoncer à ce qui ne sert plus ton évolution, même si cela demande courage et humilité. Cette carte te guide vers un éveil par le dépouillement. Laisse tomber les résistances : ce vide ouvre la voie au renouveau.",
-    "cards.tarot.LArcanesansnom.name": "La Mort",
-    "cards.tarot.LArcanesansnom.meaning":
+    "cards.tarot.LArcaneSansNom.name": "La Mort",
+    "cards.tarot.LArcaneSansNom.meaning":
       "Transformation profonde, fin de cycle",
-    "cards.tarot.LArcanesansnom.meaning.var1":
+    "cards.tarot.LArcaneSansNom.meaning.var1":
       "Ne te laisse pas impressionner par le nom de cette carte : La Mort symbolise une transformation profonde, pas une fin tragique. Tu es prêt{genderSuffix} à laisser derrière toi une phase révolue de ta vie pour ouvrir la voie à un renouveau plus aligné avec qui tu es devenu{genderSuffix}. L’Arcane sans nom te libère de ce qui t’alourdissait, afin que tu puisses avancer plus léger dans ta métamorphose.",
-    "cards.tarot.LArcanesansnom.meaning.var2":
+    "cards.tarot.LArcaneSansNom.meaning.var2":
       "La Mort n’est pas une carte négative, mais une invitation au changement radical. Tu es prêt{genderSuffix} à tourner une page importante, à clore un chapitre qui ne résonne plus avec ton présent. Ce passage peut sembler inconfortable, mais il est porteur de renaissance et d’opportunités nouvelles. Accepte de lâcher ce qui t’attache au passé pour mieux accueillir ce qui s’annonce.",
-    "cards.tarot.LArcanesansnom.meaning.var3":
+    "cards.tarot.LArcaneSansNom.meaning.var3":
       "L’Arcane sans nom marque une fin nécessaire pour une transformation durable. Contrairement aux apparences, cette carte parle de vie plus que de mort : elle évoque un grand nettoyage intérieur. Tu es prêt{genderSuffix} à te délester de ce qui n’a plus lieu d’être, à faire le deuil de certaines illusions ou habitudes obsolètes. Ce que tu abandonnes aujourd’hui prépare la croissance de demain.",
     "cards.tarot.Temperance.name": "Tempérance",
     "cards.tarot.Temperance.meaning": "Modération, guérison, équilibre",
@@ -2333,13 +2333,13 @@ const translations: Record<Language, Record<string, string>> = {
       "With The Hermit, you enter a phase of reflection and inner guidance. You are ready to listen to your inner voice, even if it leads you down less traveled paths. This card encourages patience and discernment.",
     "cards.tarot.LHermite.meaning.var3":
       "The Hermit guides you toward introspection and inner light. You are ready to detach from outside influences to better hear your deep wisdom. This card urges you to move forward cautiously but with strengthened inner certainty.",
-    "cards.tarot.LaRouedeFortune.name": "The Wheel of Fortune",
-    "cards.tarot.LaRouedeFortune.meaning": "Change, cycles, destiny",
-    "cards.tarot.LaRouedeFortune.meaning.var1":
+    "cards.tarot.LaRouedeLaFortune.name": "The Wheel of Fortune",
+    "cards.tarot.LaRouedeLaFortune.meaning": "Change, cycles, destiny",
+    "cards.tarot.LaRouedeLaFortune.meaning.var1":
       "The Wheel of Fortune invites you to embrace change as a natural force. You are ready to follow the cycles of life, even when they lead you into the unknown. This card reminds you that destiny is in motion, and adaptability is key to moving forward.",
-    "cards.tarot.LaRouedeFortune.meaning.var2":
+    "cards.tarot.LaRouedeLaFortune.meaning.var2":
       "With the Wheel of Fortune, a new chapter begins. You are ready to turn the page, welcome twists of fate, and learn from past experiences. This card symbolizes transformation and ongoing evolution.",
-    "cards.tarot.LaRouedeFortune.meaning.var3":
+    "cards.tarot.LaRouedeLaFortune.meaning.var3":
       "The Wheel of Fortune guides you through life’s ups and downs with wisdom. You are ready to understand that every cycle has an end and a beginning. This card encourages you to stay open to life’s flow, with trust and harmony in your path.",
     "cards.tarot.LaForce.name": "Strength",
     "cards.tarot.LaForce.meaning": "Courage, patience, inner mastery",
@@ -2357,13 +2357,13 @@ const translations: Record<Language, Record<string, string>> = {
       "With the Hanged Man, you enter a phase of necessary pause. You are ready to suspend action in order to better understand what lies beneath. This moment of stillness is not weakness, but a transition toward greater clarity. Embrace this stillness as fertile ground for transformation.",
     "cards.tarot.LePendu.meaning.var3":
       "The Hanged Man symbolizes a time when surrender becomes essential. You are ready to release what no longer serves your growth, even if it requires courage and humility. This card guides you toward awakening through simplicity. Drop your resistance — emptiness can be the doorway to renewal.",
-    "cards.tarot.LArcanesansnom.name": "Death",
-    "cards.tarot.LArcanesansnom.meaning": "Transformation, endings, renewal",
-    "cards.tarot.LArcanesansnom.meaning.var1":
+    "cards.tarot.LArcaneSansNom.name": "Death",
+    "cards.tarot.LArcaneSansNom.meaning": "Transformation, endings, renewal",
+    "cards.tarot.LArcaneSansNom.meaning.var1":
       "Don’t be misled by its name: Death symbolizes deep transformation, not a tragic end. You are ready to leave behind an old phase of your life to open the way to a renewal more aligned with who you have become. This Arcana without a name frees you from what weighed you down so you can move lighter in your metamorphosis.",
-    "cards.tarot.LArcanesansnom.meaning.var2":
+    "cards.tarot.LArcaneSansNom.meaning.var2":
       "Death is not a negative card, but an invitation to radical change. You are readyto turn an important page, to close a chapter that no longer resonates with your present. This passage may feel uncomfortable, but it carries rebirth and new opportunities. Embrace letting go of what clings to the past to better welcome what is coming.",
-    "cards.tarot.LArcanesansnom.meaning.var3":
+    "cards.tarot.LArcaneSansNom.meaning.var3":
       "This Arcana without a name marks a necessary ending for sustainable transformation. Contrary to appearances, this card speaks more of life than death: it evokes an inner cleansing. You are ready to shed what no longer serves, to mourn illusions or obsolete habits. What you release today lays the groundwork for tomorrow’s growth.",
     "cards.tarot.Temperance.name": "Temperance",
     "cards.tarot.Temperance.meaning": "Moderation, harmony, healing",
@@ -4031,13 +4031,13 @@ const translations: Record<Language, Record<string, string>> = {
       "Con El Ermitaño entras en una fase de reflexión y guía interior. Estás list{genderSuffix} para escuchar tu voz interior, incluso si te lleva por caminos menos transitados. Esta carta te anima a tener paciencia y discernimiento.",
     "cards.tarot.LHermite.meaning.var3":
       "El Ermitaño te guía hacia la introspección y la luz interior. Estás list{genderSuffix} para alejarte de las influencias externas y así escuchar mejor tu profunda sabiduría. Esta carta te insta a avanzar con cautela pero con una certeza interior fortalecida.",
-    "cards.tarot.LaRouedeFortune.name": "La Rueda de la Fortuna",
-    "cards.tarot.LaRouedeFortune.meaning": "Cambio, ciclos, destino",
-    "cards.tarot.LaRouedeFortune.meaning.var1":
+    "cards.tarot.LaRouedeLaFortune.name": "La Rueda de la Fortuna",
+    "cards.tarot.LaRouedeLaFortune.meaning": "Cambio, ciclos, destino",
+    "cards.tarot.LaRouedeLaFortune.meaning.var1":
       "La Rueda de la Fortuna te invita a aceptar el cambio como una fuerza natural. Estás list{genderSuffix} para seguir los ciclos de la vida, incluso cuando te llevan hacia lo desconocido. Esta carta te recuerda que el destino está en movimiento y que adaptarte es clave para avanzar.",
-    "cards.tarot.LaRouedeFortune.meaning.var2":
+    "cards.tarot.LaRouedeLaFortune.meaning.var2":
       "Con la Rueda de la Fortuna, comienza una nueva etapa. Estás preparad{genderSuffix} para pasar página, acoger los giros del destino y aprender de las experiencias pasadas. Esta carta simboliza la transformación y la evolución constante.",
-    "cards.tarot.LaRouedeFortune.meaning.var3":
+    "cards.tarot.LaRouedeLaFortune.meaning.var3":
       "La Rueda de la Fortuna te guía a través de los altibajos de la vida con sabiduría. Estás list{genderSuffix} para comprender que todo ciclo tiene un fin y un comienzo. Esta carta te anima a mantenerte abiert{genderSuffix} al flujo de la vida, con confianza y armonía en tu camino.",
     "cards.tarot.LaForce.name": "La Fuerza",
     "cards.tarot.LaForce.meaning": "Valor, paciencia, dominio interior",
@@ -4055,14 +4055,14 @@ const translations: Record<Language, Record<string, string>> = {
       "Con El Colgado, entras en una fase de pausa necesaria. Estás list{genderSuffix} para detener la acción y comprender mejor lo que ocurre en lo profundo. Este momento de espera no es debilidad, sino una transición hacia más claridad. Recibe esta pausa como un espacio fértil para tu transformación.",
     "cards.tarot.LePendu.meaning.var3":
       "El Colgado simboliza un momento en el que soltar se vuelve esencial. Estás list{genderSuffix} para dejar atrás lo que ya no favorece tu crecimiento, aunque requiera coraje y humildad. Esta carta te guía hacia un despertar a través del desapego. Abandona la resistencia: el vacío puede abrir paso a algo nuevo.",
-    "cards.tarot.LArcanesansnom.name": "La Muerte",
-    "cards.tarot.LArcanesansnom.meaning":
+    "cards.tarot.LArcaneSansNom.name": "La Muerte",
+    "cards.tarot.LArcaneSansNom.meaning":
       "Transformación, finales, renacimiento",
-    "cards.tarot.LArcanesansnom.meaning.var1":
+    "cards.tarot.LArcaneSansNom.meaning.var1":
       "No te dejes engañar por su nombre: La Muerte simboliza transformación profunda, no un final trágico. Estás list{genderSuffix} para dejar atrás una fase antigua de tu vida y abrir paso a un renacer más alineado con quién has llegado a ser{genderSuffix}. Este Arcano sin nombre te libera de lo que te pesaba para que puedas avanzar más ligero en tu metamorfosis.",
-    "cards.tarot.LArcanesansnom.meaning.var2":
+    "cards.tarot.LArcaneSansNom.meaning.var2":
       "La Muerte no es una carta negativa, sino una invitación al cambio radical. Estás list{genderSuffix} para pasar una página importante, cerrar un capítulo que ya no resuena con tu presente. Este tránsito puede sentirse incómodo, pero porta renacimiento y nuevas oportunidades. Acepta dejar ir lo que se aferra al pasado para recibir mejor lo que está por venir.",
-    "cards.tarot.LArcanesansnom.meaning.var3":
+    "cards.tarot.LArcaneSansNom.meaning.var3":
       "Este Arcano sin nombre marca un final necesario para una transformación duradera. Lejos de lo que parece, esta carta habla más de vida que de muerte: evoca una limpieza interior. Estás list{genderSuffix} para desprenderte de lo que ya no sirve, hacer el duelo de ilusiones o hábitos obsoletos. Lo que liberas hoy prepara el crecimiento de mañana.",
     "cards.tarot.Temperance.name": "La Templanza",
     "cards.tarot.Temperance.meaning": "Moderación, equilibrio, sanación",
@@ -5774,13 +5774,13 @@ const translations: Record<Language, Record<string, string>> = {
       "Mit dem Eremiten beginnst du eine Phase der Reflexion und inneren Führung. Du bist bereit{genderSuffix}, deiner inneren Stimme zuzuhören, auch wenn sie dich auf weniger begangene Pfade führt. Diese Karte ermutigt zu Geduld und Unterscheidungsvermögen.",
     "cards.tarot.LHermite.meaning.var3":
       "Der Eremit führt dich zur Introspektion und inneren Licht. Du bist bereit{genderSuffix}, dich von äußeren Einflüssen zu lösen, um deine tiefe Weisheit besser zu hören. Diese Karte fordert dich auf, vorsichtig voranzuschreiten, aber mit gestärkter innerer Gewissheit.",
-    "cards.tarot.LaRouedeFortune.name": "Das Rad des Schicksals",
-    "cards.tarot.LaRouedeFortune.meaning": "Veränderung, Zyklen, Schicksal",
-    "cards.tarot.LaRouedeFortune.meaning.var1":
+    "cards.tarot.LaRouedeLaFortune.name": "Das Rad des Schicksals",
+    "cards.tarot.LaRouedeLaFortune.meaning": "Veränderung, Zyklen, Schicksal",
+    "cards.tarot.LaRouedeLaFortune.meaning.var1":
       "Das Rad des Schicksals fordert dich auf, den Wandel als natürliche Kraft zu akzeptieren. Du bist bereit{genderSuffix}, den Zyklen des Lebens zu folgen – auch wenn sie dich ins Unbekannte führen. Diese Karte erinnert dich daran, dass das Schicksal in Bewegung ist und Anpassungsfähigkeit der Schlüssel zum Vorankommen ist.",
-    "cards.tarot.LaRouedeFortune.meaning.var2":
+    "cards.tarot.LaRouedeLaFortune.meaning.var2":
       "Mit dem Rad des Schicksals beginnt eine neue Phase. Du bist bereit{genderSuffix}, ein neues Kapitel aufzuschlagen, Wendungen des Lebens zu akzeptieren und aus vergangenen Erfahrungen zu lernen. Diese Karte steht für Transformation und ständige Weiterentwicklung.",
-    "cards.tarot.LaRouedeFortune.meaning.var3":
+    "cards.tarot.LaRouedeLaFortune.meaning.var3":
       "Das Rad des Schicksals hilft dir, mit Weisheit durch Höhen und Tiefen zu gehen. Du bist bereit{genderSuffix}, zu erkennen, dass jeder Zyklus ein Ende und einen Anfang hat. Diese Karte ermutigt dich, offen{genderSuffix} für den Fluss des Lebens zu bleiben – im Vertrauen und in Harmonie mit deinem Weg.",
     "cards.tarot.LaForce.name": "Die Stärke",
     "cards.tarot.LaForce.meaning": "Mut, Geduld, innere Meisterschaft",
@@ -5798,13 +5798,13 @@ const translations: Record<Language, Record<string, string>> = {
       "Mit dem Gehängten begibst du dich in eine Phase der notwendigen Pause. Du bist bereit{genderSuffix}, innezuhalten, um tiefer zu verstehen, was in dir vorgeht. Dieser Moment der Ruhe ist keine Schwäche, sondern ein Übergang zu mehr Klarheit. Nimm diese Stille als fruchtbaren Boden für deine Entwicklung an.",
     "cards.tarot.LePendu.meaning.var3":
       "Der Gehängte symbolisiert eine Zeit, in der Loslassen essenziell wird. Du bist bereit{genderSuffix}, das hinter dir zu lassen, was deinem Wachstum nicht mehr dient – auch wenn es Mut und Demut verlangt. Diese Karte führt dich durch Reduktion zur Erkenntnis. Gib den Widerstand auf – in der Leere liegt der Neuanfang.",
-    "cards.tarot.LArcanesansnom.name": "Der Tod",
-    "cards.tarot.LArcanesansnom.meaning": "Transformation, Ende, Neubeginn",
-    "cards.tarot.LArcanesansnom.meaning.var1":
+    "cards.tarot.LArcaneSansNom.name": "Der Tod",
+    "cards.tarot.LArcaneSansNom.meaning": "Transformation, Ende, Neubeginn",
+    "cards.tarot.LArcaneSansNom.meaning.var1":
       "Lass dich nicht vom Namen täuschen: Der Tod symbolisiert tiefe Transformation, nicht ein tragisches Ende. Du bist bereit{genderSuffix}, eine alte Lebensphase hinter dir zu lassen und den Weg zu einem Neubeginn zu öffnen, der besser mit deinem Selbst im Einklang ist{genderSuffix}. Dieses namenlose Arkana befreit dich von dem, was dich belastete – damit du leichter in deine Metamorphose gehst.",
-    "cards.tarot.LArcanesansnom.meaning.var2":
+    "cards.tarot.LArcaneSansNom.meaning.var2":
       "Der Tod ist keine negative Karte, sondern eine Einladung zu radikalem Wandel. Du bist bereit{genderSuffix}, eine bedeutende Seite umzuschlagen, ein Kapitel zu schließen, das nicht mehr mit deinem Jetzt in Resonanz ist. Dieser Übergang mag unbequem sein, doch er bringt Wiedergeburt und neue Chancen. Lass los, was an der Vergangenheit haftet, um besser zu empfangen, was kommt.",
-    "cards.tarot.LArcanesansnom.meaning.var3":
+    "cards.tarot.LArcaneSansNom.meaning.var3":
       "Dieses namenlose Arkana kennzeichnet ein notwendiges Ende für eine nachhaltige Transformation. Im Gegensatz zum Anschein spricht diese Karte eher von Leben als von Tod: sie ruft eine innere Reinigung hervor. Du bist bereit{genderSuffix}, loszulassen, was dir nicht mehr dient, Illusionen oder veraltete Gewohnheiten zu verabschieden. Was du heute loslässt, bereitet das Wachstum von morgen vor.",
     "cards.tarot.Temperance.name": "Die Mäßigkeit",
     "cards.tarot.Temperance.meaning": "Ausgleich, Heilung, Harmonie",
@@ -7508,13 +7508,13 @@ const translations: Record<Language, Record<string, string>> = {
       "Con L’Eremita entri in una fase di riflessione e guida interiore. Sei pront{genderSuffix} ad ascoltare la tua voce interiore, anche se ti conduce su strade meno battute. Questa carta ti incoraggia a mostrare pazienza e discernimento.",
     "cards.tarot.LHermite.meaning.var3":
       "L’Eremita ti guida verso l’introspezione e la luce interiore. Sei pront{genderSuffix} a distaccarti dalle influenze esterne per ascoltare meglio la tua saggezza profonda. Questa carta ti spinge ad andare avanti con cautela, ma con una certezza interiore rafforzata.",
-    "cards.tarot.LaRouedeFortune.name": "La Ruota della Fortuna",
-    "cards.tarot.LaRouedeFortune.meaning": "Cambiamento, cicli, destino",
-    "cards.tarot.LaRouedeFortune.meaning.var1":
+    "cards.tarot.LaRouedeLaFortune.name": "La Ruota della Fortuna",
+    "cards.tarot.LaRouedeLaFortune.meaning": "Cambiamento, cicli, destino",
+    "cards.tarot.LaRouedeLaFortune.meaning.var1":
       "La Ruota della Fortuna ti invita ad accettare il cambiamento come una forza naturale. Sei pront{genderSuffix} a seguire i cicli della vita, anche quando ti conducono verso l’ignoto. Questa carta ti ricorda che il destino è in movimento e che l’adattabilità è la chiave per progredire.",
-    "cards.tarot.LaRouedeFortune.meaning.var2":
+    "cards.tarot.LaRouedeLaFortune.meaning.var2":
       "Con la Ruota della Fortuna inizia una nuova fase. Sei pront{genderSuffix} a voltare pagina, ad accogliere i colpi di scena e a imparare dalle esperienze passate. Questa carta simboleggia la trasformazione e l’evoluzione continua.",
-    "cards.tarot.LaRouedeFortune.meaning.var3":
+    "cards.tarot.LaRouedeLaFortune.meaning.var3":
       "La Ruota della Fortuna ti guida attraverso gli alti e bassi della vita con saggezza. Sei pront{genderSuffix} a comprendere che ogni ciclo ha una fine e un inizio. Questa carta ti incoraggia a rimanere apert{genderSuffix} al flusso della vita, con fiducia e armonia lungo il tuo cammino.",
     "cards.tarot.LaForce.name": "La Forza",
     "cards.tarot.LaForce.meaning": "Coraggio, pazienza, padronanza interiore",
@@ -7533,13 +7533,13 @@ const translations: Record<Language, Record<string, string>> = {
       "Con l’Appeso entri in una fase di pausa necessaria. Sei pront{genderSuffix} a sospendere l’azione per comprendere meglio ciò che accade dentro di te. Questo momento di attesa non è debolezza, ma un passaggio verso maggiore chiarezza. Accogli questo silenzio come terreno fertile per la trasformazione.",
     "cards.tarot.LePendu.meaning.var3":
       "L’Appeso simboleggia un periodo in cui il lasciar andare diventa essenziale. Sei pront{genderSuffix} a rinunciare a ciò che non serve più alla tua crescita, anche se richiede coraggio e umiltà. Questa carta ti guida verso un risveglio nella semplicità. Abbandona la resistenza: il vuoto apre la strada al rinnovamento.",
-    "cards.tarot.LArcanesansnom.name": "La Morte",
-    "cards.tarot.LArcanesansnom.meaning": "Trasformazione, fine, rinascita",
-    "cards.tarot.LArcanesansnom.meaning.var1":
+    "cards.tarot.LArcaneSansNom.name": "La Morte",
+    "cards.tarot.LArcaneSansNom.meaning": "Trasformazione, fine, rinascita",
+    "cards.tarot.LArcaneSansNom.meaning.var1":
       "Non lasciarti ingannare dal suo nome: La Morte simboleggia trasformazione profonda, non una fine tragica. Sei pront{genderSuffix} a lasciare alle spalle una fase passata della tua vita per aprire la strada a una rinascita più in linea con chi sei diventat{genderSuffix}. Questo Arcano senza nome ti libera da ciò che ti gravava, affinché tu possa avanzare più leggero nella tua metamorfosi.",
-    "cards.tarot.LArcanesansnom.meaning.var2":
+    "cards.tarot.LArcaneSansNom.meaning.var2":
       "La Morte non è una carta negativa, bensì un invito al cambiamento radicale. Sei pront{genderSuffix} a voltare pagina, chiudere un capitolo che non risuona più con il tuo presente. Questo passaggio può apparire scomodo, ma porta rinascita e nuove opportunità. Accogli il lasciare andare ciò che ti lega al passato per accogliere meglio ciò che sta arrivando.",
-    "cards.tarot.LArcanesansnom.meaning.var3":
+    "cards.tarot.LArcaneSansNom.meaning.var3":
       "Questo Arcano senza nome segna una fine necessaria per una trasformazione duratura. Contrariamente alle apparenze, questa carta parla più di vita che di morte: evoca una purificazione interiore. Sei pront{genderSuffix} a liberarti da ciò che non serve più, a fare il lutto delle illusioni o delle abitudini obsolete. Ciò che lasci andare oggi prepara la crescita di domani.",
     "cards.tarot.Temperance.name": "La Temperanza",
     "cards.tarot.Temperance.meaning": "Moderazione, armonia, guarigione",
