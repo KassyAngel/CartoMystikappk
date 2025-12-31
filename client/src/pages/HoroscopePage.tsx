@@ -57,9 +57,15 @@ const generatePersonalLuckyNumber = (userName: string, date: string, sign: strin
   return String(Math.abs(hash % 50) + 1);
 };
 
-// ✅ CORRIGÉ : Fonction stable qui génère une SEULE FOIS par signe/catégorie/date
-const getStableVariation = (sign: string, category: 'love' | 'work' | 'finances' | 'health' | 'advice', date: string, t: (key: string) => string): string => {
-  const variationCounts = {
+// ✅ NOUVELLE FONCTION : Gère TOUTES les variations (descriptions, love, work, etc.)
+const getStableVariation = (
+  sign: string, 
+  category: 'descriptions' | 'love' | 'work' | 'finances' | 'health' | 'advice', 
+  date: string, 
+  t: (key: string) => string
+): string => {
+  const variationCounts: Record<string, number> = {
+    descriptions: 15,
     love: 8,
     work: 8,
     finances: 8,
@@ -69,7 +75,7 @@ const getStableVariation = (sign: string, category: 'love' | 'work' | 'finances'
 
   const maxVariations = variationCounts[category];
 
-  // ✅ Utiliser la date pour avoir une variation stable pendant la journée
+  // Hash basé sur signe + catégorie + date pour stabilité quotidienne
   const seed = `${sign}-${category}-${date}`;
   let hash = 0;
   for (let i = 0; i < seed.length; i++) {
@@ -78,22 +84,12 @@ const getStableVariation = (sign: string, category: 'love' | 'work' | 'finances'
   }
 
   const randomIndex = Math.abs(hash) % maxVariations;
-
   const key = `horoscope.data.${category}.${sign}.${randomIndex}`;
   const translation = t(key);
 
   console.log(`🔮 ${category} - Sign: ${sign} - Date: ${date} - Index: ${randomIndex} - Key: ${key}`);
 
-  return translation !== key ? translation : t(`horoscope.data.${category}.fallback`);
-};
-
-const createHoroscopeDataMapping = () => {
-  const descriptions: Record<string, string[]> = {
-    aries: [
-      "Votre énergie débordante attire toutes les bonnes opportunités aujourd'hui.",
-    ],
-  };
-  return { descriptions };
+  return translation !== key ? translation : t(`horoscope.data.${category}.fallback`) || `Contenu non disponible`;
 };
 
 const translateHoroscopeData = (
@@ -101,27 +97,6 @@ const translateHoroscopeData = (
   sign: string,
   t: (key: string) => string,
 ) => {
-  const { descriptions } = createHoroscopeDataMapping();
-
-  const findDescriptionIndex = (frenchText: string, sign: string): number => {
-    if (descriptions[sign]) {
-      return descriptions[sign].findIndex((desc) => desc === frenchText);
-    }
-    return -1;
-  };
-
-  const translateDescription = (frenchDescription: string): string => {
-    if (!frenchDescription) return t('horoscope.data.descriptions.fallback') || 'Description non disponible';
-
-    const descIndex = findDescriptionIndex(frenchDescription, sign);
-    if (descIndex !== -1) {
-      const key = `horoscope.data.descriptions.${sign}.${descIndex}`;
-      const translation = t(key);
-      return translation;
-    }
-    return frenchDescription;
-  };
-
   const translateMood = (frenchMood: string): string => {
     if (!frenchMood) return t('horoscope.data.moods.fallback') || 'Non disponible';
     const key = `horoscope.data.moods.${frenchMood}`;
@@ -147,28 +122,12 @@ const translateHoroscopeData = (
 
   return {
     ...horoscope,
-    description: translateDescription(horoscope?.description),
     mood: translateMood(horoscope?.mood),
     luckyColor: translateColor(horoscope?.luckyColor),
     compatibility: translateCompatibility(horoscope?.compatibility),
     date: translateDate(sign),
     luckyNumber: horoscope?.luckyNumber || '0',
   };
-};
-
-const getRandomFinalMessage = (
-  t: (key: string) => string,
-  user: UserSession,
-  zodiacSign: string
-): string => {
-  const genderText = t(`interpretation.gender.${user.gender || "autre"}`);
-  const randomVariant = Math.floor(Math.random() * 5) + 1;
-  const messageKey = `horoscope.message.var${randomVariant}`;
-
-  return t(messageKey)
-    .replace('{genderText}', genderText)
-    .replace('{name}', user.name)
-    .replace('{zodiacSign}', zodiacSign);
 };
 
 export default function HoroscopePage({
@@ -304,13 +263,11 @@ export default function HoroscopePage({
     }
   };
 
-  // ✅ CORRIGÉ : Variations stables basées sur la date
   const getStableCompatibilityMessage = (
     t: (key: string, vars?: Record<string, any>) => string,
     compatibility: string,
     date: string
   ): string => {
-    // Hash basé sur la date pour avoir une variation stable pendant la journée
     const seed = `compatibility-${date}`;
     let hash = 0;
     for (let i = 0; i < seed.length; i++) {
@@ -328,7 +285,6 @@ export default function HoroscopePage({
     mood: string,
     date: string
   ): string => {
-    // Hash basé sur la date pour avoir une variation stable pendant la journée
     const seed = `mood-${date}`;
     let hash = 0;
     for (let i = 0; i < seed.length; i++) {
@@ -341,9 +297,9 @@ export default function HoroscopePage({
     return t(moodKey, { mood: mood });
   };
 
-  // ✅ CORRIGÉ : useMemo pour générer les sections UNE SEULE FOIS
+  // ✅ useMemo pour générer les sections UNE SEULE FOIS
   const horoscopeSections = useMemo(() => {
-    if (!horoscope || !user.zodiacSign) return { sections: [], greeting: "", finalMessage: "" };
+    if (!horoscope || !user.zodiacSign) return { sections: [], greeting: "" };
 
     const translatedHoroscope = translateHoroscopeData(horoscope, englishSign, t);
     const translatedZodiacSign = t(`zodiac.${englishSign}`);
@@ -360,12 +316,11 @@ export default function HoroscopePage({
       zodiacSymbol: user.zodiacSign.symbol,
     });
 
-    // ✅ Les variations sont générées UNE SEULE FOIS grâce à useMemo
     const sections = [
       {
         icon: "🔮",
         title: t("horoscope.predictions.title"),
-        content: t(`horoscope.data.descriptions.${englishSign}.0`),
+        content: getStableVariation(englishSign, 'descriptions', horoscope.currentDate, t),
       },
       {
         icon: "💕",
@@ -404,8 +359,8 @@ export default function HoroscopePage({
       },
     ];
 
-    return { sections, greeting, finalMessage: "" };
-  }, [horoscope, user.zodiacSign, user.name, englishSign, t]); // ✅ Dépendances correctes
+    return { sections, greeting };
+  }, [horoscope, user.zodiacSign, user.name, englishSign, t]);
 
   if (!user.zodiacSign) {
     return (
@@ -419,10 +374,10 @@ export default function HoroscopePage({
     );
   }
 
-  const { sections, greeting, finalMessage } = horoscopeSections;
+  const { sections, greeting } = horoscopeSections;
 
   return (
-      <div className="horoscope-page p-3 sm:p-4 pt-16 sm:pt-20 min-h-screen flex flex-col pb-safe">
+    <div className="horoscope-page p-3 sm:p-4 pt-16 sm:pt-20 min-h-screen flex flex-col pb-safe">
       <div className="horoscope-header text-center mb-4 sm:mb-6">
         <h1 className="mystical-title text-xl sm:text-2xl md:text-3xl font-bold font-serif mb-3">
           {t("horoscope.title")}
