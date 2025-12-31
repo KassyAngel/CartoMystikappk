@@ -7359,6 +7359,8 @@ const translations: Record<Language, Record<string, string>> = {
         "cards.daily.Pardon.meaning": "Offri il perdono, a te stessə e agli altri. Questo gesto potente libera il tuo cuore dai pesi del passato e apre la strada a una vera guarigione interiore, permettendoti di andare avanti più leggerə e in pace.",
         "cards.daily.Espoir.name": "Speranza",
         "cards.daily.Espoir.meaning": "Mantieni la speranza, anche nei momenti difficili. La luce torna sempre, proprio come il sole dopo la notte più buia. Questo messaggio ti invita a coltivare la pazienza e la fiducia in un futuro migliore, perché ogni prova prepara un rinnovamento promettente che fiorirà al momento giusto.",
+    "cards.daily.Action.name": "Azione",
+    "cards.daily.Action.meaning": "È arrivato il momento di passare all’azione! Non lasciare più i tuoi progetti in sospeso: è oggi che le cose iniziano a muoversi. Osa fare il primo passo con fiducia, perché ogni iniziativa che intraprenderai ti avvicinerà ai tuoi obiettivi e aprirà nuove porte nella tua vita.",
         "cards.daily.Compassion.name": "Compassione",
         "cards.daily.Compassion.meaning": "Abbi compassione per te stessə e per gli altri. La gentilezza addolcisce i cuori e rafforza i legami. Coltivando questa dolcezza, crei uno spazio di guarigione e comprensione, essenziale tanto per te quanto per chi ti circonda. Questo messaggio ti invita ad aprire pienamente il cuore oggi, ad ascoltare senza giudicare e a offrire il tuo sostegno con empatia. Agendo così, contribuisci a un clima armonioso e fai crescere la tua pace interiore.",
         "cards.daily.Inspiration.name": "Ispirazione",
