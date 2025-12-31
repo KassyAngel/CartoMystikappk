@@ -125,7 +125,7 @@ function App() {
     initServices();
   }, []);
 
-  // ✅ GESTION BANNIÈRE : Afficher sur la page Oracle si non-Premium
+  // ✅ GESTION BANNIÈRE : Permanente à partir de la page Oracle (sauf Premium)
   useEffect(() => {
     if (isPremium) {
       console.log('👑 Premium actif : bannière cachée');
@@ -136,21 +136,25 @@ function App() {
       return;
     }
 
-    // Afficher la bannière uniquement sur la page Oracle
-    if (currentStep === 'oracle' && !bannerShown) {
-      console.log('🎯 Page Oracle atteinte → Affichage de la bannière');
+    // Pages où la bannière NE doit PAS s'afficher (onboarding uniquement)
+    const noBannerPages = ['landing', 'name', 'date', 'gender'];
+    const shouldShowBanner = !noBannerPages.includes(currentStep);
+
+    // Afficher la bannière sur toutes les pages après l'onboarding
+    if (shouldShowBanner && !bannerShown) {
+      console.log(`🎯 Page "${currentStep}" atteinte → Affichage de la bannière permanente`);
       const timer = setTimeout(() => {
         showBanner();
         setBannerShown(true);
-        console.log('📺 Bannière affichée (utilisateur gratuit)');
+        console.log('📺 Bannière affichée en permanence (utilisateur gratuit)');
       }, 500);
 
       return () => clearTimeout(timer);
     }
 
-    // Cacher la bannière si on quitte la page Oracle
-    if (currentStep !== 'oracle' && bannerShown) {
-      console.log('👋 Sortie de la page Oracle → Masquer la bannière');
+    // Cacher la bannière uniquement si on retourne sur les pages d'onboarding
+    if (!shouldShowBanner && bannerShown) {
+      console.log('👋 Retour à l\'onboarding → Masquer la bannière');
       hideBanner();
       setBannerShown(false);
     }
