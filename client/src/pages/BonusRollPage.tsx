@@ -70,7 +70,8 @@ export default function BonusRollPage({
     setRollCount(0);
     const newVariation = getRandomVariation();
     setVariation(newVariation);
-    console.log(`🔄 [BONUS ROLL] Reset complet`);
+    console.log(`🔄 [BONUS ROLL] Reset complet - Retour à la sélection`);
+    onBack(); // ✅ FIX: Retourne maintenant à la sélection des oracles
   };
 
   const getVariationGlow = () => {
@@ -123,7 +124,6 @@ export default function BonusRollPage({
           variant="secondary" 
           onClick={() => {
             handleBackToOracle();
-            onBack();
           }}
           className="nav-btn-cosmic"
         >
@@ -135,7 +135,6 @@ export default function BonusRollPage({
           <MysticalButton 
             onClick={() => {
               handleBackToOracle();
-              onBack();
             }}
             className="nav-btn-cosmic primary"
           >

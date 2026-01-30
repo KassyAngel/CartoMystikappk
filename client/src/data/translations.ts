@@ -1651,6 +1651,10 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.adLongWarning": "Cette publicité est un peu longue…",
     "oracle.bonusRoll.pleaseWaitUntilEnd": "Merci de patienter jusqu'à la fin",
     "oracle.bonusRoll.doNotCloseApp": "Ne fermez pas l'application",
+    "oracle.bonusRoll.mysticalQuote": "L'univers a un message pour vous",
+    "oracle.bonusRoll.subtitle": "Lancez les dés pour révéler votre destinée",
+    "oracle.bonusRoll.loading": "Préparation en cours...",
+    "oracle.bonusRoll.backToSelection": "Retour à la sélection",
     
     // Interprétations Bonus Roll - 3 variations par nombre (VERSION ENRICHIE)
     "oracle.bonusRoll.2.title.1": "🌅 Nouveau Départ",
@@ -3335,6 +3339,10 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.adLongWarning": "This ad is a bit long…",  
     "oracle.bonusRoll.pleaseWaitUntilEnd": "Please wait until the end",  
     "oracle.bonusRoll.doNotCloseApp": "Do not close the app", 
+    "oracle.bonusRoll.mysticalQuote": "The universe has a message for you",
+    "oracle.bonusRoll.subtitle": "Roll the dice to reveal your destiny",
+    "oracle.bonusRoll.loading": "Preparing...",
+    "oracle.bonusRoll.backToSelection": "Back to selection",
 
     // Interprétations Bonus Roll - English Version
     "oracle.bonusRoll.2.title.1": "🌅 New Beginning",
@@ -5088,6 +5096,10 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.adLongWarning": "Este anuncio es un poco largo…",  
     "oracle.bonusRoll.pleaseWaitUntilEnd": "Por favor, espera hasta el final",  
     "oracle.bonusRoll.doNotCloseApp": "No cierres la aplicación", 
+    "oracle.bonusRoll.mysticalQuote": "El universo tiene un mensaje para ti",
+    "oracle.bonusRoll.subtitle": "Lanza los dados para revelar tu destino",
+    "oracle.bonusRoll.loading": "Preparando...",
+    "oracle.bonusRoll.backToSelection": "Volver a la selección",
 
     // Interpretaciones Bonus Roll - Versión en Español
     "oracle.bonusRoll.2.title.1": "🌅 Nuevo Comienzo",
@@ -6843,6 +6855,10 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.adLongWarning": "Diese Werbung ist ein bisschen lang…",  
     "oracle.bonusRoll.pleaseWaitUntilEnd": "Bitte warte bis zum Ende",  
     "oracle.bonusRoll.doNotCloseApp": "Schließe die App nicht",  
+    "oracle.bonusRoll.mysticalQuote": "El universo tiene un mensaje para ti",
+    "oracle.bonusRoll.subtitle": "Lanza los dados para revelar tu destino",
+    "oracle.bonusRoll.loading": "Preparando...",
+    "oracle.bonusRoll.backToSelection": "Volver a la selección",
 
     // Bonus Roll Interpretationen - Deutsche Version
     "oracle.bonusRoll.2.title.1": "🌅 Neuer Anfang",
@@ -8566,7 +8582,11 @@ const translations: Record<Language, Record<string, string>> = {
     "oracle.bonusRoll.adError": "Si è verificato un errore. Per favore riprova.",
     "oracle.bonusRoll.adLongWarning": "Questa pubblicità è un po’ lunga…",  
     "oracle.bonusRoll.pleaseWaitUntilEnd": "Per favore attendi fino alla fine",  
-    "oracle.bonusRoll.doNotCloseApp": "Non chiudere l’applicazione",  
+    "oracle.bonusRoll.doNotCloseApp": "Non chiudere l’applicazione",
+    "oracle.bonusRoll.mysticalQuote": "L'universo ha un messaggio per te",
+    "oracle.bonusRoll.subtitle": "Lancia i dadi per rivelare il tuo destino",
+    "oracle.bonusRoll.loading": "Preparazione in corso...",
+    "oracle.bonusRoll.backToSelection": "Torna alla selezione",
 
     // Interpretazioni Bonus Roll - Versione Italiana
     "oracle.bonusRoll.2.title.1": "🌅 Nuovo Inizio",

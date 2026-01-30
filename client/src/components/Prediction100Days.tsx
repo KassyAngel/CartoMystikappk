@@ -29,13 +29,13 @@ const getPredictionContent = (sign: string, variation: number, t: (key: string) 
   const prediction = t(key);
 
   if (prediction === key) {
-    console.warn(`⚠️ Traduction manquante pour: ${key}`);
-    return t('prediction100.fallback') || 'Les astres te réservent une période de transformation profonde. Sois attentif aux opportunités qui se présenteront à toi.';
+    return t('prediction100.fallback') || 'Les astres te réservent une période de transformation profonde.';
   }
 
   return prediction;
 };
 
+// 🌍 Fonction pour formater les dates selon la langue
 const formatDate = (date: Date, locale: string): string => {
   const localeMap: Record<string, string> = {
     'fr': 'fr-FR',
@@ -80,7 +80,7 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
         <div className="text-center">
           <div className="text-6xl mb-6 animate-pulse">🔮</div>
           <p className="text-purple-300 text-lg mb-6">
-            {t('prediction100.loading') || 'Préparation de ta prédiction...'}
+            {t('prediction100.loading') || 'Préparation...'}
           </p>
           <button
             onClick={onBack}
@@ -164,7 +164,7 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
             </div>
           </div>
 
-          {/* Dates */}
+          {/* Dates - TRADUITES AUTOMATIQUEMENT */}
           <div className={`max-w-md mx-auto transform transition-all duration-1000 delay-200 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'} px-4`}>
             <div className="bg-gradient-to-r from-amber-900/40 via-yellow-900/50 to-amber-900/40 backdrop-blur-xl rounded-2xl p-3 sm:p-4 border-2 border-amber-400/40 shadow-2xl">
               <div className="flex items-center justify-between gap-2">
@@ -234,7 +234,7 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
                       </h3>
                       <p className="text-purple-100/90 text-xs leading-relaxed">
                         {t("prediction100.advice.content") ||
-                        "Consulte ton horoscope quotidien pour affiner cette prédiction et débloquer de nouvelles récompenses."}
+                        "Consulte ton horoscope quotidien pour affiner cette prédiction."}
                       </p>
                     </div>
                   </div>

@@ -22,6 +22,8 @@ const getDiceStyles = (variation: string | null) => {
         particleColor: '#FFD700',
         gradientStart: '#FFD700',
         gradientEnd: '#FF8C00',
+        nebulaColor1: 'rgba(255, 215, 0, 0.4)',
+        nebulaColor2: 'rgba(255, 140, 0, 0.35)',
       };
     case '2': // Silver Mystic
       return {
@@ -32,6 +34,8 @@ const getDiceStyles = (variation: string | null) => {
         particleColor: '#00D9FF',
         gradientStart: '#00D9FF',
         gradientEnd: '#0066CC',
+        nebulaColor1: 'rgba(0, 217, 255, 0.4)',
+        nebulaColor2: 'rgba(0, 102, 204, 0.35)',
       };
     case '3': // Purple Cosmic
       return {
@@ -42,6 +46,8 @@ const getDiceStyles = (variation: string | null) => {
         particleColor: '#FF00FF',
         gradientStart: '#FF00FF',
         gradientEnd: '#9900FF',
+        nebulaColor1: 'rgba(255, 0, 255, 0.4)',
+        nebulaColor2: 'rgba(153, 0, 255, 0.35)',
       };
     default:
       return {
@@ -52,6 +58,8 @@ const getDiceStyles = (variation: string | null) => {
         particleColor: '#FFD700',
         gradientStart: '#FFD700',
         gradientEnd: '#FF8C00',
+        nebulaColor1: 'rgba(255, 215, 0, 0.4)',
+        nebulaColor2: 'rgba(255, 140, 0, 0.35)',
       };
   }
 };
@@ -101,7 +109,6 @@ export default function BonusRoll({
         clearInterval(interval);
         const sum = d1 + d2;
 
-        // Explosion de particules
         setShowExplosion(true);
         setTimeout(() => setShowExplosion(false), 1000);
 
@@ -214,7 +221,42 @@ export default function BonusRoll({
       {!hasRolled ? (
         // INITIAL STATE - Ready to Roll
         <div className="initial-state">
-          {/* Constellation décorative en haut */}
+          {/* Nébuleuse cosmique en arrière-plan */}
+          <div className="nebula-background">
+            <div 
+              className="nebula-cloud nebula-1"
+              style={{
+                background: `radial-gradient(ellipse at 30% 40%, ${styles.nebulaColor1}, transparent 60%)`,
+              }}
+            />
+            <div 
+              className="nebula-cloud nebula-2"
+              style={{
+                background: `radial-gradient(ellipse at 70% 30%, ${styles.nebulaColor2}, transparent 50%)`,
+              }}
+            />
+            <div 
+              className="nebula-cloud nebula-3"
+              style={{
+                background: `radial-gradient(ellipse at 50% 20%, ${styles.nebulaColor1}, transparent 70%)`,
+              }}
+            />
+          </div>
+
+          {/* Phrase mystique - ✅ CORRIGÉE: Plus grosse + couleur atténuée */}
+          <div className="mystical-quote">
+            <p 
+              className="quote-text"
+              style={{
+                color: styles.primary,
+                textShadow: `0 0 12px ${styles.glow}25`, // ✅ Glow encore plus réduit: 8px→12px et 40%→25%
+              }}
+            >
+              {t('oracle.bonusRoll.mysticalQuote') || 'Les astres vous observent'}
+            </p>
+          </div>
+
+          {/* Constellation décorative */}
           <div className="constellation-header">
             <div className="constellation-line" style={{ background: styles.primary }} />
             <div className="constellation-dots">
@@ -237,12 +279,12 @@ export default function BonusRoll({
               background: `linear-gradient(135deg, ${styles.gradientStart}, ${styles.gradientEnd})`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              textShadow: `0 0 30px ${styles.shadowColor}`,
+              textShadow: 'none', /* ✅ Supprimé le textShadow inline */
             }}>
               {t('oracle.bonusRoll.title')}
             </h2>
             <p className="mystical-subtitle">
-              {isLoadingAd ? 'Préparation en cours...' : 'Lancez les dés cosmiques pour révéler votre destinée'}
+              {isLoadingAd ? t('oracle.bonusRoll.loading') || 'Préparation en cours...' : t('oracle.bonusRoll.subtitle')}
             </p>
           </div>
 
@@ -367,7 +409,7 @@ export default function BonusRoll({
               className="revelation-card"
               style={{
                 borderColor: styles.primary,
-                boxShadow: `0 0 30px ${styles.shadowColor}, 0 10px 40px rgba(0,0,0,0.7)`,
+                boxShadow: `0 0 15px ${styles.shadowColor}, 0 5px 20px rgba(0,0,0,0.7)`,
               }}
             >
               <div className="card-header-line" style={{ background: `linear-gradient(90deg, transparent, ${styles.primary}, transparent)` }} />
@@ -398,10 +440,28 @@ export default function BonusRoll({
             style={{
               borderColor: styles.primary,
               color: styles.primary,
+              background: 'rgba(15, 5, 40, 0.8)',
             }}
           >
             {t('oracle.bonusRoll.newRoll')}
           </MysticalButton>
+
+          {/* Bouton retour en bas - ✅ FIX: Retourne maintenant à la sélection */}
+          {onReset && (
+            <MysticalButton
+              variant="secondary"
+              onClick={onReset}
+              className="back-button-bottom"
+              style={{
+                borderColor: styles.primary,
+                color: styles.primary,
+                background: 'rgba(15, 5, 40, 0.6)',
+              }}
+            >
+              <span className="back-arrow">←</span>
+              <span className="back-text">{t('oracle.bonusRoll.backToSelection') || 'Retour à la sélection'}</span>
+            </MysticalButton>
+          )}
         </div>
       )}
 
@@ -415,6 +475,35 @@ export default function BonusRoll({
           justify-content: center;
           padding: 2rem 1.5rem;
           overflow: hidden;
+        }
+
+        /* Back Button Bottom */
+        .back-button-bottom {
+          position: relative !important;
+          z-index: 10;
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          font-family: 'Rajdhani', sans-serif !important;
+          font-size: 0.9rem !important;
+          font-weight: 600 !important;
+          margin-top: 1rem;
+          animation: buttonAppear 0.6s ease-out 1.2s both;
+          backdrop-filter: blur(10px);
+        }
+
+        .back-button-bottom:hover {
+          transform: translateY(-2px) !important;
+        }
+
+        .back-arrow {
+          font-size: 1.125rem;
+          font-weight: bold;
+        }
+
+        .back-text {
+          letter-spacing: 0.05em;
         }
 
         /* Cosmic Portal */
@@ -460,6 +549,84 @@ export default function BonusRoll({
         @keyframes glowPulse {
           0%, 100% { opacity: 0.2; transform: scale(1); }
           50% { opacity: 0.4; transform: scale(1.1); }
+        }
+
+        /* Nébuleuse cosmique */
+        .nebula-background {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 250px;
+          pointer-events: none;
+          overflow: hidden;
+          z-index: 1;
+        }
+
+        .nebula-cloud {
+          position: absolute;
+          width: 500px;
+          height: 500px;
+          border-radius: 50%;
+          filter: blur(80px);
+        }
+
+        .nebula-1 {
+          top: -100px;
+          left: -50px;
+          animation: nebulaFloat1 12s ease-in-out infinite;
+        }
+
+        .nebula-2 {
+          top: -150px;
+          right: -50px;
+          animation: nebulaFloat2 15s ease-in-out infinite;
+        }
+
+        .nebula-3 {
+          top: -120px;
+          left: 50%;
+          transform: translateX(-50%);
+          animation: nebulaFloat3 18s ease-in-out infinite;
+        }
+
+        @keyframes nebulaFloat1 {
+          0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+          50% { transform: translate(30px, 20px) scale(1.2); opacity: 0.8; }
+        }
+
+        @keyframes nebulaFloat2 {
+          0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+          50% { transform: translate(-30px, 25px) scale(1.25); opacity: 0.75; }
+        }
+
+        @keyframes nebulaFloat3 {
+          0%, 100% { transform: translate(-50%, 0) scale(1); opacity: 0.4; }
+          50% { transform: translate(-50%, 30px) scale(1.15); opacity: 0.7; }
+        }
+
+        /* Phrase mystique - ✅ CORRIGÉE */
+        .mystical-quote {
+          position: relative;
+          z-index: 10;
+          text-align: center;
+          margin-bottom: 1rem;
+          padding: 0.75rem 1.5rem;
+          animation: fadeInDown 0.8s ease-out;
+        }
+
+        .quote-text {
+          font-family: 'Rajdhani', sans-serif;
+          font-size: 1.4rem; /* ✅ Augmenté de 1.25rem à 1.4rem */
+          font-weight: 700;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          animation: textGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+          0%, 100% { opacity: 0.9; } /* ✅ Augmenté pour meilleure visibilité */
+          50% { opacity: 1; }
         }
 
         /* Floating Particles */
@@ -530,7 +697,7 @@ export default function BonusRoll({
           width: 100%;
           max-width: 300px;
           height: 40px;
-          animation: fadeInDown 0.6s ease-out;
+          animation: fadeInDown 0.6s ease-out 0.2s both;
         }
 
         .constellation-line {
@@ -572,7 +739,7 @@ export default function BonusRoll({
 
         .title-section {
           text-align: center;
-          animation: fadeInDown 0.6s ease-out 0.2s both;
+          animation: fadeInDown 0.6s ease-out 0.4s both;
           margin-top: 0;
         }
 
@@ -582,6 +749,7 @@ export default function BonusRoll({
           font-weight: 900;
           letter-spacing: 0.05em;
           margin: 0 0 1rem 0;
+          filter: drop-shadow(0 0 8px ${styles.shadowColor}15); /* ✅ Réduit: 30px→8px et ajout opacity 15% */
         }
 
         .mystical-subtitle {
@@ -596,7 +764,7 @@ export default function BonusRoll({
         /* Dice Stage with Orbit */
         .dice-stage-wrapper {
           position: relative;
-          animation: fadeInUp 0.8s ease-out 0.4s both;
+          animation: fadeInUp 0.8s ease-out 0.6s both;
         }
 
         .cosmic-orbit {
@@ -706,7 +874,7 @@ export default function BonusRoll({
         .mystic-symbols {
           display: flex;
           gap: 2rem;
-          animation: fadeIn 0.8s ease-out 0.6s both;
+          animation: fadeIn 0.8s ease-out 0.8s both;
         }
 
         .symbol-rune {
@@ -773,7 +941,7 @@ export default function BonusRoll({
         /* Revelation Card */
         .revelation-card {
           background: rgba(15, 5, 40, 0.95);
-          border: 2px solid;
+          border: 1.5px solid;
           border-radius: 20px;
           padding: 2rem;
           backdrop-filter: blur(10px);
@@ -838,7 +1006,7 @@ export default function BonusRoll({
           display: flex;
           align-items: center;
           justify-content: center;
-          animation: buttonAppear 0.6s ease-out 0.8s both;
+          animation: buttonAppear 0.6s ease-out 1s both;
           min-width: 200px;
         }
 
@@ -887,6 +1055,11 @@ export default function BonusRoll({
             padding: 1.5rem 1rem;
           }
 
+          .nebula-cloud {
+            width: 300px;
+            height: 300px;
+          }
+
           .cosmic-dice {
             width: 60px;
             height: 60px;
@@ -907,6 +1080,10 @@ export default function BonusRoll({
 
           .mystical-subtitle {
             font-size: 0.9rem;
+          }
+
+          .quote-text {
+            font-size: 1.1rem; /* ✅ Ajusté pour mobile: 1rem → 1.1rem */
           }
 
           .roll-cta,

@@ -187,8 +187,19 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
     console.log('🛠️ DEBUG: Simulation streak 100 jours');
     localStorage.setItem('horoscope_streak', '100');
     localStorage.setItem('horoscope_last_visit', new Date().toDateString());
+    // Retirer reward_100_shown pour réafficher
     localStorage.removeItem('reward_100_shown');
     setStreak(100);
+    setShowDebugMenu(false);
+    window.location.reload();
+  };
+
+  const simulateStreak200 = () => {
+    console.log('🛠️ DEBUG: Simulation streak 200 jours');
+    localStorage.setItem('horoscope_streak', '200');
+    localStorage.setItem('horoscope_last_visit', new Date().toDateString());
+    localStorage.removeItem('reward_200_shown');
+    setStreak(200);
     setShowDebugMenu(false);
     window.location.reload();
   };
@@ -199,9 +210,11 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
       localStorage.removeItem('horoscope_streak');
       localStorage.removeItem('horoscope_last_visit');
       localStorage.removeItem('horoscope_xp');
-      localStorage.removeItem('reward_100_shown');
+      // Retirer TOUTES les clés reward_*_shown
       Object.keys(localStorage).forEach(key => {
-        if (key.startsWith('horoscope_consulted_') || key.startsWith('horoscope_explored_')) {
+        if (key.startsWith('horoscope_consulted_') || 
+            key.startsWith('horoscope_explored_') ||
+            key.startsWith('reward_')) {
           localStorage.removeItem(key);
         }
       });
@@ -233,12 +246,18 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
     console.log('Streak:', currentStreak);
     console.log('XP:', currentXP);
 
-    if (currentStreak === 100 && !localStorage.getItem('reward_100_shown')) {
-      console.log('🎊 Déclenchement récompense 100 jours');
-      setTimeout(() => {
-        setShow100Reward(true);
-        localStorage.setItem('reward_100_shown', 'true');
-      }, 1000);
+    // 🎊 Système tous les 100 jours (100, 200, 300, etc.)
+    if (currentStreak > 0 && currentStreak % 100 === 0) {
+      const rewardKey = `reward_${currentStreak}_shown`;
+      console.log(`Vérification récompense ${currentStreak}j:`, localStorage.getItem(rewardKey));
+
+      if (!localStorage.getItem(rewardKey)) {
+        console.log(`🎊 Déclenchement récompense ${currentStreak} jours`);
+        setTimeout(() => {
+          setShow100Reward(true);
+          localStorage.setItem(rewardKey, 'true');
+        }, 1000);
+      }
     }
   }, []);
 
@@ -490,7 +509,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
       });
     } else {
       navigator.clipboard.writeText(shareText).then(() => {
-        alert(t('horoscope.share.copied') || 'Horoscope copié dans le presse-papier !');
+        alert(t('horoscope.share.copied') || 'Horoscope copié !');
       });
     }
   };
@@ -530,21 +549,28 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
             <div className="space-y-2">
               <button
                 onClick={simulateStreak100}
-                className="w-full px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-lg text-white font-semibold transition-all"
+                className="w-full px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-lg text-white font-semibold transition-all text-sm"
               >
                 🎯 Simuler 100 jours
               </button>
 
               <button
+                onClick={simulateStreak200}
+                className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-lg text-white font-semibold transition-all text-sm"
+              >
+                🎯 Simuler 200 jours
+              </button>
+
+              <button
                 onClick={resetAllProgress}
-                className="w-full px-4 py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 rounded-lg text-white font-semibold transition-all"
+                className="w-full px-4 py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 rounded-lg text-white font-semibold transition-all text-sm"
               >
                 🔄 Reset complet
               </button>
 
               <button
                 onClick={() => setShowDebugMenu(false)}
-                className="w-full px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-semibold transition-all"
+                className="w-full px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-semibold transition-all text-sm"
               >
                 ❌ Fermer
               </button>
@@ -570,7 +596,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
         ))}
       </div>
 
-      {/* 🎉 RÉCOMPENSE 100 JOURS - ULTRA SPECTACULAIRE */}
+      {/* 🎉 RÉCOMPENSE 100 JOURS - CONFETTIS PROLONGÉS (5s au lieu de 2.5s) */}
       {show100Reward && (
         <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex items-center justify-center p-4">
           <div className="relative max-w-md w-full">
@@ -578,9 +604,9 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
             {/* ✨ EFFET LUMINEUX CENTRAL */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500 rounded-full blur-[120px] opacity-60 animate-pulse pointer-events-none"></div>
 
-            {/* 🎊 CONFETTIS ULTRA-AMÉLIORES */}
+            {/* 🎊 CONFETTIS ULTRA-PROLONGÉS (5s) */}
             <div className="absolute inset-0 overflow-visible pointer-events-none">
-              {/* Vague 1 - Confettis rapides colorés */}
+              {/* Vague 1 - Confettis rapides */}
               {[...Array(50)].map((_, i) => {
                 const angle = (i / 50) * 360;
                 const distance = 200 + Math.random() * 150;
@@ -593,7 +619,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                     style={{
                       backgroundColor: color,
                       boxShadow: `0 0 15px ${color}, 0 0 30px ${color}`,
-                      animation: `confettiExplode 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${Math.random() * 0.3}s forwards`,
+                      animation: `confettiExplode 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${Math.random() * 0.3}s forwards`,
                       '--angle': `${angle}deg`,
                       '--distance': `${distance}px`,
                       '--rotation': `${Math.random() * 1080}deg`,
@@ -615,7 +641,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                     style={{
                       backgroundColor: color,
                       boxShadow: `0 0 20px ${color}`,
-                      animation: `confettiExplode 3.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${0.4 + Math.random() * 0.4}s forwards`,
+                      animation: `confettiExplode 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${0.4 + Math.random() * 0.4}s forwards`,
                       '--angle': `${angle}deg`,
                       '--distance': `${distance}px`,
                       '--rotation': `${Math.random() * 1080}deg`,
@@ -624,7 +650,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                 );
               })}
 
-              {/* Étoiles scintillantes dorées */}
+              {/* Étoiles scintillantes */}
               {[...Array(20)].map((_, i) => {
                 const angle = Math.random() * 360;
                 const distance = 120 + Math.random() * 200;
@@ -633,7 +659,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                     key={`star-${i}`}
                     className="absolute top-1/2 left-1/2 text-2xl filter drop-shadow-[0_0_10px_rgba(251,191,36,1)]"
                     style={{
-                      animation: `confettiExplode 2.2s ease-out ${0.5 + Math.random() * 0.5}s forwards, twinkleStar 1.2s ease-in-out infinite`,
+                      animation: `confettiExplode 4.5s ease-out ${0.5 + Math.random() * 0.5}s forwards, twinkleStar 1.2s ease-in-out infinite`,
                       '--angle': `${angle}deg`,
                       '--distance': `${distance}px`,
                       '--rotation': '0deg',
@@ -652,7 +678,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                     key={`crown-${i}`}
                     className="absolute top-1/2 left-1/2 text-3xl"
                     style={{
-                      animation: `orbitRotate 4s linear ${i * 0.1}s infinite`,
+                      animation: `orbitRotate 6s linear ${i * 0.1}s infinite`,
                       '--orbit-angle': `${angle}deg`,
                       '--orbit-radius': '180px',
                     } as any}
@@ -672,9 +698,9 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
               }}
             >
               <div className="relative text-center">
-                {/* Badge 100 jours animé */}
+                {/* Badge animé */}
                 <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-amber-500 to-yellow-500 border-4 border-amber-300 shadow-2xl shadow-amber-500/50 mb-4 animate-bounce">
-                  <span className="text-4xl font-black text-purple-900">100</span>
+                  <span className="text-4xl font-black text-purple-900">{streak >= 200 ? '200' : '100'}</span>
                 </div>
 
                 <h2 className="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-purple-200 via-fuchsia-200 to-purple-200 bg-clip-text text-transparent leading-tight"
@@ -683,7 +709,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                 </h2>
 
                 <p className="text-xl text-purple-300 font-bold mb-6">
-                  {t('horoscope.reward100.subtitle') || '100 days in a row!'}
+                  {streak >= 200 ? `${streak} ${t('horoscope.reward100.subtitle') || 'days in a row!'}` : t('horoscope.reward100.subtitle') || '100 days in a row!'}
                 </p>
 
                 <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-5 mb-6 border-2 border-purple-400/40">
@@ -693,7 +719,6 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                   </p>
                 </div>
 
-                {/* BOUTON CENTRÉ SANS EMOJI */}
                 <button
                   onClick={handleDiscoverPrediction}
                   className="relative group w-full px-8 py-4 bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-600 hover:from-purple-500 hover:via-fuchsia-500 hover:to-purple-500 rounded-full font-bold text-lg shadow-2xl shadow-purple-500/60 transition-all duration-300 hover:scale-105 border-2 border-purple-400 overflow-hidden"
@@ -709,6 +734,9 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
           </div>
         </div>
       )}
+
+      {/* Reste du code identique... */}
+      {/* Je continue dans le prochain message car limite de caractères */}
 
       {/* 🎊 LEVEL UP */}
       {showLevelUp && (
@@ -744,7 +772,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                 {t('horoscope.levelUp.newLevel', { level: newLevel }) || `Niveau ${newLevel}`}
               </p>
               <p className="text-purple-100 text-sm">
-                {t('horoscope.levelUp.message') || 'Continue ainsi !'}
+                {t('horoscope.levelUp.message') || 'Continue !'}
               </p>
             </div>
           </div>
@@ -958,7 +986,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                       {t('horoscope.tomorrow.title') || 'Reviens demain'}
                     </div>
                     <div className="text-purple-200/80 text-xs leading-relaxed">
-                      {t('horoscope.tomorrow.description') || 'Ton horoscope quotidien t\'attend chaque jour.'}
+                      {t('horoscope.tomorrow.description') || 'Ton horoscope quotidien t\'attend.'}
                     </div>
                   </div>
                 </div>
@@ -1012,7 +1040,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
             transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(1);
             opacity: 1;
           }
-          70% {
+          80% {
             opacity: 1;
           }
           100% {
