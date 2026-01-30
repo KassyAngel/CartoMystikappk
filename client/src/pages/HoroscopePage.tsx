@@ -161,38 +161,6 @@ const translateHoroscopeData = (horoscope: HoroscopeData, sign: string, t: (key:
   };
 };
 
-// 📋 FONCTION DE COPIE FORCÉE (plus compatible)
-const forceCopyToClipboard = (text: string): boolean => {
-  try {
-    // Méthode 1 : Textarea temporaire (la plus compatible)
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.top = '0';
-    textarea.style.left = '0';
-    textarea.style.width = '1px';
-    textarea.style.height = '1px';
-    textarea.style.padding = '0';
-    textarea.style.border = 'none';
-    textarea.style.outline = 'none';
-    textarea.style.boxShadow = 'none';
-    textarea.style.background = 'transparent';
-    document.body.appendChild(textarea);
-
-    textarea.focus();
-    textarea.select();
-    textarea.setSelectionRange(0, 99999); // Pour mobile
-
-    const successful = document.execCommand('copy');
-    document.body.removeChild(textarea);
-
-    return successful;
-  } catch (err) {
-    console.error('Erreur copie forcée:', err);
-    return false;
-  }
-};
-
 export default function HoroscopePage({ user, onBack, onSaveReading, isPremium = false }: HoroscopePageProps) {
   const { t } = useLanguage();
 
@@ -492,8 +460,8 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
     handleSectionOpen(sections[index].title, index);
   };
 
-  // 📤 PARTAGE QUI MARCHE VRAIMENT (copie forcée)
-  const handleShare = () => {
+  // 📤 PARTAGE NATIF (Web Share API + fallback copie)
+  const handleShare = async () => {
     if (!horoscope) return;
 
     const signName = t(`zodiac.signs.${englishSign}`) || englishSign;
@@ -519,12 +487,64 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
 
 🌟 ${t('horoscope.share.footer')}`.trim();
 
-    // COPIE FORCÉE
-    const success = forceCopyToClipboard(shareText);
+    // 📱 Essayer l'API de partage natif (disponible sur mobile et certains navigateurs modernes)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: t('horoscope.share.header', { sign: signName }),
+          text: shareText,
+        });
+        console.log('✅ Partage réussi via Web Share API');
+        return;
+      } catch (error: any) {
+        // Si l'utilisateur annule le partage, ne rien faire
+        if (error.name === 'AbortError') {
+          console.log('ℹ️ Partage annulé par l\'utilisateur');
+          return;
+        }
+        // Si erreur, fallback vers la copie
+        console.log('ℹ️ Web Share API non disponible, utilisation du presse-papier');
+      }
+    }
 
-    if (success) {
-      alert(t('horoscope.share.copied') || '✅ Horoscope copié dans le presse-papier !');
-    } else {
+    // 📋 Fallback : copie dans le presse-papier
+    try {
+      // Méthode moderne (Clipboard API)
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(shareText);
+        alert(t('horoscope.share.copied') || '✅ Horoscope copié dans le presse-papier !');
+        return;
+      }
+
+      // Méthode compatible (textarea temporaire)
+      const textarea = document.createElement('textarea');
+      textarea.value = shareText;
+      textarea.style.position = 'fixed';
+      textarea.style.top = '0';
+      textarea.style.left = '0';
+      textarea.style.width = '1px';
+      textarea.style.height = '1px';
+      textarea.style.padding = '0';
+      textarea.style.border = 'none';
+      textarea.style.outline = 'none';
+      textarea.style.boxShadow = 'none';
+      textarea.style.background = 'transparent';
+      document.body.appendChild(textarea);
+
+      textarea.focus();
+      textarea.select();
+      textarea.setSelectionRange(0, 99999);
+
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textarea);
+
+      if (successful) {
+        alert(t('horoscope.share.copied') || '✅ Horoscope copié dans le presse-papier !');
+      } else {
+        alert('❌ Impossible de copier');
+      }
+    } catch (err) {
+      console.error('❌ Erreur lors de la copie:', err);
       alert('❌ Impossible de copier');
     }
   };
@@ -597,78 +617,79 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
         ))}
       </div>
 
-      {/* 🎉 RÉCOMPENSE - EFFET LUMINEUX PRO (pas d'emojis) */}
+      {/* 🎉 RÉCOMPENSE - CONFETTI EN ARRIÈRE-PLAN (z-index: 40) */}
       {show100Reward && (
         <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex items-center justify-center p-4">
-          <div className="relative max-w-md w-full">
+          {/* ✨ CONFETTI - z-index inférieur à la carte */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none z-40">
+            {/* Halos lumineux */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500 rounded-full blur-[120px] opacity-60 animate-pulse"></div>
+
+            {/* Confettis - première vague */}
+            {[...Array(50)].map((_, i) => {
+              const angle = (i / 50) * 360;
+              const distance = 200 + Math.random() * 150;
+              const colors = ['#fbbf24', '#f59e0b', '#f97316', '#ec4899', '#a855f7', '#6366f1', '#10b981'];
+              const color = colors[Math.floor(Math.random() * colors.length)];
+              return (
+                <div
+                  key={`wave1-${i}`}
+                  className="absolute top-1/2 left-1/2 w-2 h-3 rounded-sm"
+                  style={{
+                    backgroundColor: color,
+                    boxShadow: `0 0 15px ${color}, 0 0 30px ${color}`,
+                    animation: `confettiExplode 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${Math.random() * 0.3}s forwards`,
+                    '--angle': `${angle}deg`,
+                    '--distance': `${distance}px`,
+                    '--rotation': `${Math.random() * 1080}deg`,
+                  } as any}
+                />
+              );
+            })}
+
+            {/* Confettis - deuxième vague */}
+            {[...Array(35)].map((_, i) => {
+              const angle = (i / 35) * 360 + 10;
+              const distance = 150 + Math.random() * 120;
+              const colors = ['#fbbf24', '#f59e0b', '#ec4899', '#a855f7'];
+              const color = colors[Math.floor(Math.random() * colors.length)];
+              return (
+                <div
+                  key={`wave2-${i}`}
+                  className="absolute top-1/2 left-1/2 w-4 h-5 rounded"
+                  style={{
+                    backgroundColor: color,
+                    boxShadow: `0 0 20px ${color}`,
+                    animation: `confettiExplode 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${0.4 + Math.random() * 0.4}s forwards`,
+                    '--angle': `${angle}deg`,
+                    '--distance': `${distance}px`,
+                    '--rotation': `${Math.random() * 1080}deg`,
+                  } as any}
+                />
+              );
+            })}
 
             {/* Halos lumineux pulsants */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500 rounded-full blur-[120px] opacity-60 animate-pulse pointer-events-none"></div>
+            {[...Array(8)].map((_, i) => {
+              const angle = (i / 8) * 360;
+              return (
+                <div
+                  key={`light-${i}`}
+                  className="absolute top-1/2 left-1/2"
+                  style={{
+                    animation: `lightPulse 3s ease-in-out ${i * 0.2}s infinite`,
+                    '--orbit-angle': `${angle}deg`,
+                    '--orbit-radius': '180px',
+                  } as any}
+                >
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-amber-400 to-yellow-300 opacity-60 blur-xl"></div>
+                </div>
+              );
+            })}
+          </div>
 
-            <div className="absolute inset-0 overflow-visible pointer-events-none">
-              {/* Confettis géométriques */}
-              {[...Array(50)].map((_, i) => {
-                const angle = (i / 50) * 360;
-                const distance = 200 + Math.random() * 150;
-                const colors = ['#fbbf24', '#f59e0b', '#f97316', '#ec4899', '#a855f7', '#6366f1', '#10b981'];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                return (
-                  <div
-                    key={`wave1-${i}`}
-                    className="absolute top-1/2 left-1/2 w-2 h-3 rounded-sm"
-                    style={{
-                      backgroundColor: color,
-                      boxShadow: `0 0 15px ${color}, 0 0 30px ${color}`,
-                      animation: `confettiExplode 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${Math.random() * 0.3}s forwards`,
-                      '--angle': `${angle}deg`,
-                      '--distance': `${distance}px`,
-                      '--rotation': `${Math.random() * 1080}deg`,
-                    } as any}
-                  />
-                );
-              })}
-
-              {[...Array(35)].map((_, i) => {
-                const angle = (i / 35) * 360 + 10;
-                const distance = 150 + Math.random() * 120;
-                const colors = ['#fbbf24', '#f59e0b', '#ec4899', '#a855f7'];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                return (
-                  <div
-                    key={`wave2-${i}`}
-                    className="absolute top-1/2 left-1/2 w-4 h-5 rounded"
-                    style={{
-                      backgroundColor: color,
-                      boxShadow: `0 0 20px ${color}`,
-                      animation: `confettiExplode 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${0.4 + Math.random() * 0.4}s forwards`,
-                      '--angle': `${angle}deg`,
-                      '--distance': `${distance}px`,
-                      '--rotation': `${Math.random() * 1080}deg`,
-                    } as any}
-                  />
-                );
-              })}
-
-              {/* ✨ HALOS LUMINEUX PRO (au lieu d'emojis) */}
-              {[...Array(8)].map((_, i) => {
-                const angle = (i / 8) * 360;
-                return (
-                  <div
-                    key={`light-${i}`}
-                    className="absolute top-1/2 left-1/2"
-                    style={{
-                      animation: `lightPulse 3s ease-in-out ${i * 0.2}s infinite`,
-                      '--orbit-angle': `${angle}deg`,
-                      '--orbit-radius': '180px',
-                    } as any}
-                  >
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-amber-400 to-yellow-300 opacity-60 blur-xl"></div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Carte */}
+          {/* 🎴 CARTE - z-index supérieur aux confettis (z-50) */}
+          <div className="relative max-w-md w-full z-50">
             <div
               className="relative bg-gradient-to-br from-purple-900/95 via-indigo-900/95 to-purple-900/95 rounded-3xl p-6 sm:p-8 border-4 border-purple-400/60 shadow-2xl"
               style={{
