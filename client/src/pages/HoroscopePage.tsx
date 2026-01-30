@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import MysticalButton from "@/components/MysticalButton";
 import { UserSession } from "@shared/schema";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { config } from '@/config';
 import { showInterstitialAd } from '@/admobService';
+import Prediction100Days from '@/components/Prediction100Days';
 
 interface HoroscopePageProps {
   user: UserSession;
@@ -37,44 +37,46 @@ const signMapping: Record<string, string> = {
   'Capricorne': 'capricorn', 'Verseau': 'aquarius', 'Poissons': 'pisces'
 };
 
-// 🔥 Gestion du Streak
 const getStreak = (): number => {
   const lastVisit = localStorage.getItem('horoscope_last_visit');
   const streak = parseInt(localStorage.getItem('horoscope_streak') || '0');
-
   if (!lastVisit) return 0;
 
-  const today = new Date().toDateString();
-  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  const today = new Date();
+  const lastVisitDate = new Date(lastVisit);
+  const daysDiff = Math.floor((today.getTime() - lastVisitDate.getTime()) / 86400000);
 
-  if (lastVisit === today) return streak;
-  if (lastVisit === yesterday) return streak;
+  if (daysDiff === 0) return streak;
+  if (daysDiff <= 2) return streak;
   return 0;
 };
 
 const updateStreak = (): number => {
   const lastVisit = localStorage.getItem('horoscope_last_visit');
-  const today = new Date().toDateString();
-  const yesterday = new Date(Date.now() - 86400000).toDateString();
-
+  const today = new Date();
+  const todayString = today.toDateString();
   let newStreak = 1;
 
-  if (lastVisit === yesterday) {
-    const currentStreak = parseInt(localStorage.getItem('horoscope_streak') || '0');
-    newStreak = currentStreak + 1;
-  } else if (lastVisit !== today) {
-    newStreak = 1;
-  } else {
-    newStreak = parseInt(localStorage.getItem('horoscope_streak') || '1');
+  if (lastVisit) {
+    const lastVisitDate = new Date(lastVisit);
+    const daysDiff = Math.floor((today.getTime() - lastVisitDate.getTime()) / 86400000);
+
+    if (daysDiff === 0) {
+      newStreak = parseInt(localStorage.getItem('horoscope_streak') || '1');
+    } else if (daysDiff === 1) {
+      newStreak = parseInt(localStorage.getItem('horoscope_streak') || '0') + 1;
+    } else if (daysDiff === 2) {
+      newStreak = parseInt(localStorage.getItem('horoscope_streak') || '0') + 1;
+    } else {
+      newStreak = 1;
+    }
   }
 
-  localStorage.setItem('horoscope_last_visit', today);
+  localStorage.setItem('horoscope_last_visit', todayString);
   localStorage.setItem('horoscope_streak', newStreak.toString());
-
   return newStreak;
 };
 
-// ⭐ Gestion XP
 const getXP = (): number => parseInt(localStorage.getItem('horoscope_xp') || '0');
 const addXP = (points: number): number => {
   const currentXP = getXP();
@@ -84,7 +86,6 @@ const addXP = (points: number): number => {
 };
 const getLevel = (xp: number): number => Math.floor(xp / 100) + 1;
 
-// 🏆 Badges
 const getBadges = (streak: number, t: (key: string) => string) => [
   { id: 1, icon: '🔥', label: t('horoscope.badges.days7'), unlocked: streak >= 7 },
   { id: 2, icon: '⭐', label: t('horoscope.badges.days15'), unlocked: streak >= 15 },
@@ -103,9 +104,9 @@ const generatePersonalLuckyNumber = (userName: string, date: string, sign: strin
 };
 
 const getStableVariation = (
-  sign: string, 
-  category: 'descriptions' | 'love' | 'work' | 'finances' | 'health' | 'advice', 
-  date: string, 
+  sign: string,
+  category: 'descriptions' | 'love' | 'work' | 'finances' | 'health' | 'advice',
+  date: string,
   t: (key: string) => string
 ): string => {
   const variationCounts: Record<string, number> = {
@@ -123,7 +124,6 @@ const getStableVariation = (
   const randomIndex = Math.abs(hash) % maxVariations;
   const key = `horoscope.data.${category}.${sign}.${randomIndex}`;
   const translation = t(key);
-
   return translation !== key ? translation : t(`horoscope.data.${category}.fallback`) || `Contenu non disponible`;
 };
 
@@ -161,12 +161,9 @@ const translateHoroscopeData = (horoscope: HoroscopeData, sign: string, t: (key:
   };
 };
 
-export default function HoroscopePage({
-  user,
-  onBack,
-  onSaveReading,
-  isPremium = false
-}: HoroscopePageProps) {
+export default function HoroscopePage({ user, onBack, onSaveReading, isPremium = false }: HoroscopePageProps) {
+  const { t } = useLanguage();
+
   const [openSections, setOpenSections] = useState<number[]>([0]);
   const [showInterpretation, setShowInterpretation] = useState(false);
   const [hasSavedReading, setHasSavedReading] = useState(false);
@@ -175,19 +172,69 @@ export default function HoroscopePage({
   const [streak, setStreak] = useState(0);
   const [xp, setXP] = useState(0);
   const [showXPGain, setShowXPGain] = useState(false);
+  const [xpGainAmount, setXPGainAmount] = useState(0);
   const [show100Reward, setShow100Reward] = useState(false);
-  const { t } = useLanguage();
+  const [showLevelUp, setShowLevelUp] = useState(false);
+  const [newLevel, setNewLevel] = useState(1);
+  const [showPrediction100, setShowPrediction100] = useState(false);
+
+  const [debugTapCount, setDebugTapCount] = useState(0);
+  const [showDebugMenu, setShowDebugMenu] = useState(false);
 
   const englishSign = user.zodiacSign ? signMapping[user.zodiacSign.name] : "aries";
 
-  // 🔥 Init Streak & XP
+  const simulateStreak100 = () => {
+    console.log('🛠️ DEBUG: Simulation streak 100 jours');
+    localStorage.setItem('horoscope_streak', '100');
+    localStorage.setItem('horoscope_last_visit', new Date().toDateString());
+    localStorage.removeItem('reward_100_shown');
+    setStreak(100);
+    setShowDebugMenu(false);
+    window.location.reload();
+  };
+
+  const resetAllProgress = () => {
+    if (confirm('⚠️ Êtes-vous sûr de vouloir réinitialiser toute votre progression ?')) {
+      console.log('🛠️ DEBUG: Reset complet');
+      localStorage.removeItem('horoscope_streak');
+      localStorage.removeItem('horoscope_last_visit');
+      localStorage.removeItem('horoscope_xp');
+      localStorage.removeItem('reward_100_shown');
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('horoscope_consulted_') || key.startsWith('horoscope_explored_')) {
+          localStorage.removeItem(key);
+        }
+      });
+      setShowDebugMenu(false);
+      window.location.reload();
+    }
+  };
+
+  const handleLogoTap = () => {
+    setDebugTapCount(prev => prev + 1);
+    setTimeout(() => setDebugTapCount(0), 2000);
+  };
+
   useEffect(() => {
+    if (debugTapCount === 3) {
+      setShowDebugMenu(true);
+      setDebugTapCount(0);
+    }
+  }, [debugTapCount]);
+
+  useEffect(() => {
+    console.log('🔥 Init Horoscope Page');
+
     const currentStreak = updateStreak();
     setStreak(currentStreak);
-    setXP(getXP());
+    const currentXP = getXP();
+    setXP(currentXP);
 
-    // 🎉 Récompense 100 jours
+    console.log('Streak:', currentStreak);
+    console.log('XP:', currentXP);
+
     if (currentStreak === 100 && !localStorage.getItem('reward_100_shown')) {
+      console.log('🎊 Déclenchement récompense 100 jours');
       setTimeout(() => {
         setShow100Reward(true);
         localStorage.setItem('reward_100_shown', 'true');
@@ -195,17 +242,10 @@ export default function HoroscopePage({
     }
   }, []);
 
-  const {
-    data: horoscope,
-    isLoading,
-    isFetching,
-    error,
-    refetch,
-  } = useQuery<HoroscopeData>({
+  const { data: horoscope, isLoading, isFetching, error, refetch } = useQuery<HoroscopeData>({
     queryKey: ['horoscope', englishSign],
     queryFn: async () => {
       setErrorMessage(null);
-
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 60000);
 
@@ -218,17 +258,27 @@ export default function HoroscopePage({
         });
 
         if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
-
         const data = await response.json();
 
-        // ⭐ Ajouter XP pour consultation
         const dailyConsultKey = `horoscope_consulted_${new Date().toDateString()}`;
         if (!localStorage.getItem(dailyConsultKey)) {
+          const oldLevel = getLevel(getXP());
           const newXP = addXP(10);
+          const newLvl = getLevel(newXP);
+
           setXP(newXP);
+          setXPGainAmount(10);
           setShowXPGain(true);
           localStorage.setItem(dailyConsultKey, 'true');
           setTimeout(() => setShowXPGain(false), 2000);
+
+          if (newLvl > oldLevel) {
+            setTimeout(() => {
+              setNewLevel(newLvl);
+              setShowLevelUp(true);
+              setTimeout(() => setShowLevelUp(false), 3000);
+            }, 2500);
+          }
         }
 
         return data;
@@ -290,15 +340,26 @@ export default function HoroscopePage({
     const newCount = sectionOpenCount + 1;
     setSectionOpenCount(newCount);
 
-    // ⭐ XP pour exploration complète
-    if (openSections.length === 7) {
+    if (openSections.length + 1 === 8) {
       const explorationKey = `horoscope_explored_${new Date().toDateString()}`;
       if (!localStorage.getItem(explorationKey)) {
+        const oldLevel = getLevel(getXP());
         const newXP = addXP(5);
+        const newLvl = getLevel(newXP);
+
         setXP(newXP);
+        setXPGainAmount(5);
         setShowXPGain(true);
         localStorage.setItem(explorationKey, 'true');
         setTimeout(() => setShowXPGain(false), 2000);
+
+        if (newLvl > oldLevel) {
+          setTimeout(() => {
+            setNewLevel(newLvl);
+            setShowLevelUp(true);
+            setTimeout(() => setShowLevelUp(false), 3000);
+          }, 2500);
+        }
       }
     }
 
@@ -355,21 +416,28 @@ export default function HoroscopePage({
     return { sections, personalLuckyNumber };
   }, [horoscope, user.zodiacSign, user.name, englishSign, t]);
 
+  const handleDiscoverPrediction = () => {
+    console.log('🎁 Clic sur Découvrir ma prédiction');
+
+    if (!user || !user.zodiacSign) {
+      console.error('❌ Impossible d\'afficher la prédiction');
+      return;
+    }
+
+    setShow100Reward(false);
+    setTimeout(() => {
+      setShowPrediction100(true);
+    }, 300);
+  };
+
   if (!user || !user.zodiacSign) {
     return (
       <div className="horoscope-page min-h-screen flex flex-col items-center justify-center p-5 bg-gradient-to-b from-[#0a0515] via-[#1a0f2e] to-[#0a0515]">
         <div className="text-center max-w-md">
           <div className="text-6xl mb-6">🔮</div>
-          <h1 className="text-3xl font-bold mb-4 text-purple-200">
-            {t("horoscope.title") || "Horoscope"}
-          </h1>
-          <p className="text-purple-300 text-lg mb-8">
-            {t("horoscope.noSign") || "Aucun signe zodiacal trouvé. Veuillez configurer votre profil."}
-          </p>
-          <button 
-            onClick={onBack}
-            className="px-8 py-3 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 rounded-full text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105"
-          >
+          <h1 className="text-3xl font-bold mb-4 text-purple-200">{t("horoscope.title") || "Horoscope"}</h1>
+          <p className="text-purple-300 text-lg mb-8">{t("horoscope.noSign") || "Aucun signe zodiacal trouvé."}</p>
+          <button onClick={onBack} className="px-8 py-3 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 rounded-full text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105">
             {t("common.back") || "Retour"}
           </button>
         </div>
@@ -382,30 +450,26 @@ export default function HoroscopePage({
   const badges = getBadges(streak, t);
 
   const toggleSection = (index: number) => {
-    setOpenSections(prev => 
+    setOpenSections(prev =>
       prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
     );
     handleSectionOpen(sections[index].title, index);
   };
 
-  // 🆕 PARTAGE COMPLET DE L'HOROSCOPE
   const handleShare = () => {
     if (!horoscope) return;
-
     const signName = t(`zodiac.signs.${englishSign}`) || englishSign;
     const translatedHoroscope = translateHoroscopeData(horoscope, englishSign, t);
-
-    // Construction du message complet avec traduction
     const shareTitle = t('horoscope.share.fullTitle', { sign: signName }) || `${signName} - Horoscope du jour`;
 
     const shareText = `
 🔮 ${t('horoscope.share.header', { sign: signName })} 🔮
 
-📅 ${new Date().toLocaleDateString(t('common.locale') || 'fr-FR', { 
-  weekday: 'long', 
-  year: 'numeric', 
-  month: 'long', 
-  day: 'numeric' 
+📅 ${new Date().toLocaleDateString(t('common.locale') || 'fr-FR', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
 })}
 
 ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descriptions', horoscope.currentDate, t).substring(0, 150)}...
@@ -421,22 +485,73 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
 `.trim();
 
     if (navigator.share) {
-      navigator.share({
-        title: shareTitle,
-        text: shareText,
-      }).catch((error) => {
+      navigator.share({ title: shareTitle, text: shareText }).catch((error) => {
         console.log('Partage annulé ou erreur:', error);
       });
     } else {
-      // Fallback: copier dans le presse-papier
       navigator.clipboard.writeText(shareText).then(() => {
         alert(t('horoscope.share.copied') || 'Horoscope copié dans le presse-papier !');
       });
     }
   };
 
+  if (showPrediction100) {
+    return (
+      <Prediction100Days
+        user={user}
+        onBack={() => {
+          console.log('🔙 Retour depuis Prédiction 100j');
+          setShowPrediction100(false);
+        }}
+      />
+    );
+  }
+
   return (
     <div className="horoscope-page min-h-screen relative overflow-hidden bg-gradient-to-b from-[#0a0515] via-[#1a0f2e] to-[#0a0515]">
+      {/* 🛠️ DEBUG MENU */}
+      {showDebugMenu && (
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-[60] flex items-center justify-center p-4">
+          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 max-w-sm w-full border-2 border-yellow-500">
+            <h3 className="text-yellow-400 font-bold text-xl mb-4 text-center">🛠️ Debug Menu</h3>
+
+            <div className="space-y-3 mb-4">
+              <div className="bg-gray-800/50 rounded-lg p-3 border border-gray-700">
+                <div className="text-gray-400 text-xs mb-1">Streak actuel</div>
+                <div className="text-white font-bold text-lg">{streak} jours 🔥</div>
+              </div>
+
+              <div className="bg-gray-800/50 rounded-lg p-3 border border-gray-700">
+                <div className="text-gray-400 text-xs mb-1">XP actuel</div>
+                <div className="text-white font-bold text-lg">{xp} XP ⭐</div>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <button
+                onClick={simulateStreak100}
+                className="w-full px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-lg text-white font-semibold transition-all"
+              >
+                🎯 Simuler 100 jours
+              </button>
+
+              <button
+                onClick={resetAllProgress}
+                className="w-full px-4 py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 rounded-lg text-white font-semibold transition-all"
+              >
+                🔄 Reset complet
+              </button>
+
+              <button
+                onClick={() => setShowDebugMenu(false)}
+                className="w-full px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-semibold transition-all"
+              >
+                ❌ Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ✨ Particules */}
       <div className="absolute inset-0 pointer-events-none">
@@ -455,74 +570,139 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
         ))}
       </div>
 
-      {/* 🎉 RÉCOMPENSE 100 JOURS */}
+      {/* 🎉 RÉCOMPENSE 100 JOURS - ULTRA SPECTACULAIRE */}
       {show100Reward && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
+        <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex items-center justify-center p-4">
           <div className="relative max-w-md w-full">
-            {/* Effet de lumière */}
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 rounded-3xl blur-2xl opacity-50 animate-pulse"></div>
 
-            <div className="relative bg-gradient-to-br from-purple-900 via-fuchsia-900 to-purple-900 rounded-3xl p-8 border-4 border-amber-400 shadow-2xl">
-              {/* Confettis */}
-              <div className="absolute inset-0 overflow-hidden rounded-3xl">
-                {[...Array(20)].map((_, i) => (
+            {/* ✨ EFFET LUMINEUX CENTRAL */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500 rounded-full blur-[120px] opacity-60 animate-pulse pointer-events-none"></div>
+
+            {/* 🎊 CONFETTIS ULTRA-AMÉLIORES */}
+            <div className="absolute inset-0 overflow-visible pointer-events-none">
+              {/* Vague 1 - Confettis rapides colorés */}
+              {[...Array(50)].map((_, i) => {
+                const angle = (i / 50) * 360;
+                const distance = 200 + Math.random() * 150;
+                const colors = ['#fbbf24', '#f59e0b', '#f97316', '#ec4899', '#a855f7', '#6366f1', '#10b981'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                return (
                   <div
-                    key={i}
-                    className="absolute text-2xl animate-fall"
+                    key={`wave1-${i}`}
+                    className="absolute top-1/2 left-1/2 w-2 h-3 rounded-sm"
                     style={{
-                      left: `${Math.random() * 100}%`,
-                      animationDelay: `${Math.random() * 2}s`,
-                      animationDuration: `${2 + Math.random() * 2}s`
-                    }}
-                  >
-                    {['🎉', '⭐', '🌟', '✨', '💫'][Math.floor(Math.random() * 5)]}
-                  </div>
-                ))}
-              </div>
+                      backgroundColor: color,
+                      boxShadow: `0 0 15px ${color}, 0 0 30px ${color}`,
+                      animation: `confettiExplode 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${Math.random() * 0.3}s forwards`,
+                      '--angle': `${angle}deg`,
+                      '--distance': `${distance}px`,
+                      '--rotation': `${Math.random() * 1080}deg`,
+                    } as any}
+                  />
+                );
+              })}
 
+              {/* Vague 2 - Gros confettis lents */}
+              {[...Array(35)].map((_, i) => {
+                const angle = (i / 35) * 360 + 10;
+                const distance = 150 + Math.random() * 120;
+                const colors = ['#fbbf24', '#f59e0b', '#ec4899', '#a855f7'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                return (
+                  <div
+                    key={`wave2-${i}`}
+                    className="absolute top-1/2 left-1/2 w-4 h-5 rounded"
+                    style={{
+                      backgroundColor: color,
+                      boxShadow: `0 0 20px ${color}`,
+                      animation: `confettiExplode 3.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${0.4 + Math.random() * 0.4}s forwards`,
+                      '--angle': `${angle}deg`,
+                      '--distance': `${distance}px`,
+                      '--rotation': `${Math.random() * 1080}deg`,
+                    } as any}
+                  />
+                );
+              })}
+
+              {/* Étoiles scintillantes dorées */}
+              {[...Array(20)].map((_, i) => {
+                const angle = Math.random() * 360;
+                const distance = 120 + Math.random() * 200;
+                return (
+                  <div
+                    key={`star-${i}`}
+                    className="absolute top-1/2 left-1/2 text-2xl filter drop-shadow-[0_0_10px_rgba(251,191,36,1)]"
+                    style={{
+                      animation: `confettiExplode 2.2s ease-out ${0.5 + Math.random() * 0.5}s forwards, twinkleStar 1.2s ease-in-out infinite`,
+                      '--angle': `${angle}deg`,
+                      '--distance': `${distance}px`,
+                      '--rotation': '0deg',
+                    } as any}
+                  >
+                    ✨
+                  </div>
+                );
+              })}
+
+              {/* Couronne rotative */}
+              {[...Array(12)].map((_, i) => {
+                const angle = (i / 12) * 360;
+                return (
+                  <div
+                    key={`crown-${i}`}
+                    className="absolute top-1/2 left-1/2 text-3xl"
+                    style={{
+                      animation: `orbitRotate 4s linear ${i * 0.1}s infinite`,
+                      '--orbit-angle': `${angle}deg`,
+                      '--orbit-radius': '180px',
+                    } as any}
+                  >
+                    👑
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Carte principale */}
+            <div
+              className="relative bg-gradient-to-br from-purple-900/95 via-indigo-900/95 to-purple-900/95 rounded-3xl p-6 sm:p-8 border-4 border-purple-400/60 shadow-2xl"
+              style={{
+                opacity: 0,
+                animation: 'fadeInUp 0.8s ease-out 1s forwards'
+              }}
+            >
               <div className="relative text-center">
-                <div className="text-8xl mb-4 animate-bounce">👑</div>
-                <h2 className="text-3xl font-bold text-amber-300 mb-2">
-                  {t('horoscope.reward100.title') || 'LÉGENDE ACCOMPLIE !'}
+                {/* Badge 100 jours animé */}
+                <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-amber-500 to-yellow-500 border-4 border-amber-300 shadow-2xl shadow-amber-500/50 mb-4 animate-bounce">
+                  <span className="text-4xl font-black text-purple-900">100</span>
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-purple-200 via-fuchsia-200 to-purple-200 bg-clip-text text-transparent leading-tight"
+                    style={{ backgroundSize: '200% auto', animation: 'gradient 3s ease infinite' }}>
+                  {t('horoscope.reward100.title') || 'LEGEND ACHIEVED!'}
                 </h2>
-                <p className="text-xl text-purple-200 mb-4">
-                  {t('horoscope.reward100.subtitle') || '100 jours de suite !'}
+
+                <p className="text-xl text-purple-300 font-bold mb-6">
+                  {t('horoscope.reward100.subtitle') || '100 days in a row!'}
                 </p>
-                <div className="bg-black/30 rounded-xl p-4 mb-6">
-                  <p className="text-purple-100 text-sm leading-relaxed">
-                    {t('horoscope.reward100.message') || 
-                    'Félicitations ! Tu as atteint un niveau de dévotion cosmique exceptionnel. Les astres te récompensent avec un titre exclusif et des prédictions encore plus précises !'}
+
+                <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-5 mb-6 border-2 border-purple-400/40">
+                  <p className="text-purple-100 text-base leading-relaxed">
+                    {t('horoscope.reward100.message') ||
+                    "Congratulations! You've reached an exceptional level of cosmic devotion..."}
                   </p>
                 </div>
-                <div className="space-y-3 mb-6">
-                  <div className="bg-gradient-to-r from-amber-600 to-yellow-600 rounded-lg p-3 flex items-center gap-3">
-                    <span className="text-2xl">🏆</span>
-                    <span className="text-white font-semibold">
-                      {t('horoscope.reward100.badge') || 'Badge "Maître des Étoiles"'}
-                    </span>
-                  </div>
-                  <div className="bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-lg p-3 flex items-center gap-3">
-                    <span className="text-2xl">⚡</span>
-                    <span className="text-white font-semibold">
-                      {t('horoscope.reward100.bonus') || '+50 XP Bonus'}
-                    </span>
-                  </div>
-                  <div className="bg-gradient-to-r from-cyan-600 to-blue-600 rounded-lg p-3 flex items-center gap-3">
-                    <span className="text-2xl">🎁</span>
-                    <span className="text-white font-semibold">
-                      {t('horoscope.reward100.gift') || 'Horoscope hebdomadaire débloqué'}
-                    </span>
-                  </div>
-                </div>
+
+                {/* BOUTON CENTRÉ SANS EMOJI */}
                 <button
-                  onClick={() => {
-                    setShow100Reward(false);
-                    addXP(50); // Bonus XP
-                    setXP(getXP());
-                  }}
-                  className="w-full px-6 py-4 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 rounded-full text-purple-900 font-bold text-lg shadow-xl transition-all duration-300 hover:scale-105"
+                  onClick={handleDiscoverPrediction}
+                  className="relative group w-full px-8 py-4 bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-600 hover:from-purple-500 hover:via-fuchsia-500 hover:to-purple-500 rounded-full font-bold text-lg shadow-2xl shadow-purple-500/60 transition-all duration-300 hover:scale-105 border-2 border-purple-400 overflow-hidden"
                 >
-                  {t('horoscope.reward100.continue') || '✨ Continuer l\'aventure'}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+
+                  <span className="relative text-white">
+                    {t('horoscope.reward100.discover') || 'Discover my prediction'}
+                  </span>
                 </button>
               </div>
             </div>
@@ -530,11 +710,61 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
         </div>
       )}
 
+      {/* 🎊 LEVEL UP */}
+      {showLevelUp && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
+          <div className="relative">
+            <div className="absolute inset-0">
+              {[...Array(30)].map((_, i) => {
+                const angle = (i / 30) * 360;
+                return (
+                  <div
+                    key={i}
+                    className="absolute top-1/2 left-1/2"
+                    style={{
+                      fontSize: `${20 + Math.random() * 15}px`,
+                      animation: `explode 2s ease-out ${Math.random() * 0.2}s forwards`,
+                      '--angle': `${angle}deg`,
+                      '--distance': `${100 + Math.random() * 50}px`,
+                    } as any}
+                  >
+                    {['⭐', '✨', '💫', '🌟'][Math.floor(Math.random() * 4)]}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="relative bg-gradient-to-br from-purple-900 via-fuchsia-900 to-purple-900 rounded-3xl p-8 border-4 border-amber-400 shadow-2xl text-center"
+                 style={{ animation: 'scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
+              <div className="text-7xl mb-4 animate-bounce">🎉</div>
+              <h2 className="text-4xl font-bold text-amber-300 mb-2">
+                {t('horoscope.levelUp.title') || 'Niveau Supérieur !'}
+              </h2>
+              <p className="text-purple-200 text-2xl font-bold mb-4">
+                {t('horoscope.levelUp.newLevel', { level: newLevel }) || `Niveau ${newLevel}`}
+              </p>
+              <p className="text-purple-100 text-sm">
+                {t('horoscope.levelUp.message') || 'Continue ainsi !'}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ⭐ XP Gain */}
+      {showXPGain && (
+        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 animate-bounce">
+          <div className="bg-gradient-to-r from-amber-500 to-yellow-500 text-purple-900 px-6 py-3 rounded-full font-bold text-lg shadow-2xl border-2 border-amber-300">
+            {xpGainAmount === 10 ? '+10 XP ⭐' : xpGainAmount === 5 ? '+5 XP ✨' : `+${xpGainAmount} XP`}
+          </div>
+        </div>
+      )}
+
       {/* 🔥 Streak Counter */}
       <div className="absolute top-16 left-4 z-10">
-        <div className="relative">
+        <div className="relative" onClick={handleLogoTap}>
           <div className="absolute inset-0 bg-orange-500/40 rounded-lg blur-lg animate-pulse"></div>
-          <div className="relative bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 rounded-lg px-3 py-1.5 border-2 border-orange-400/60 shadow-2xl flex items-center gap-2">
+          <div className="relative bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 rounded-lg px-3 py-1.5 border-2 border-orange-400/60 shadow-2xl flex items-center gap-2 cursor-pointer hover:scale-105 transition-transform">
             <div className="text-2xl drop-shadow-lg">🔥</div>
             <div className="text-white">
               <div className="text-sm font-bold leading-none">{streak}</div>
@@ -558,18 +788,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
         </div>
       </div>
 
-      {/* ⭐ XP Gain Animation */}
-      {showXPGain && (
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 animate-bounce">
-          <div className="bg-amber-500 text-white px-6 py-3 rounded-full font-bold text-lg shadow-2xl">
-            {t('horoscope.xpGain') || '+10 XP ⭐'}
-          </div>
-        </div>
-      )}
-
       <div className="relative z-10 p-4 pt-16 pb-safe">
-
-        {/* Loading */}
         {(isLoading || isFetching) && (
           <div className="text-center py-8">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
@@ -577,7 +796,6 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
           </div>
         )}
 
-        {/* Error */}
         {error && errorMessage && (
           <div className="bg-red-500/20 border border-red-500 rounded-lg p-4 mb-4 max-w-md mx-auto">
             <p className="text-red-300">{errorMessage}</p>
@@ -587,16 +805,17 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
           </div>
         )}
 
-        {/* Content */}
         {horoscope && (
           <>
-            {/* Header */}
             <div className="text-center mb-6">
               <div className="relative inline-block mb-4">
                 <div className="absolute inset-0 bg-amber-400/20 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute inset-0 bg-purple-500/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }}></div>
 
-                <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-purple-900/50 via-fuchsia-900/50 to-purple-900/50 backdrop-blur-md border-2 border-amber-400/30 flex items-center justify-center hover:scale-110 transition-transform duration-500">
+                <div 
+                  className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-purple-900/50 via-fuchsia-900/50 to-purple-900/50 backdrop-blur-md border-2 border-amber-400/30 flex items-center justify-center hover:scale-110 transition-transform duration-500 cursor-pointer"
+                  onClick={handleLogoTap}
+                >
                   <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent rounded-full" style={{ animation: 'spin-slow 8s linear infinite' }}></div>
                   <div className="relative text-6xl sm:text-7xl drop-shadow-[0_0_30px_rgba(251,191,36,0.8)]">
                     {user.zodiacSign.symbol}
@@ -615,69 +834,62 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
               </p>
             </div>
 
-            {/* ⭐ Stats XP/Niveau */}
-            <div className="flex justify-center gap-3 mb-4">
-              <div className="relative w-[88px]">
-                <div className="absolute inset-0 bg-amber-400/20 rounded-lg blur-md"></div>
-                <div className="relative bg-gradient-to-br from-amber-900/60 to-yellow-900/60 backdrop-blur-md rounded-lg h-[36px] border border-amber-400/30 flex items-center justify-center gap-1.5">
-                  <span className="text-amber-300 text-sm">⭐</span>
-                  <span className="text-amber-100 text-xs font-bold">
-                    {t('horoscope.level', { level }) || `Niv. ${level}`}
-                  </span>
+            <div className="max-w-md mx-auto mb-4">
+              <div className="relative bg-gradient-to-br from-amber-900/40 via-purple-900/40 to-amber-900/40 backdrop-blur-xl rounded-xl p-4 border border-amber-400/30">
+                <div className="flex justify-between items-center mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">⭐</span>
+                    <div>
+                      <div className="text-amber-200 font-bold text-sm">
+                        {t('horoscope.level', { level }) || `Niveau ${level}`}
+                      </div>
+                      <div className="text-purple-300 text-[10px]">
+                        {xp} / {level * 100} XP
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-fuchsia-200 text-xs font-semibold">
+                      +{Math.min(xp % 100, 15)} XP
+                    </div>
+                    <div className="text-purple-300 text-[9px]">
+                      {t('horoscope.xpToday') || 'Aujourd\'hui'}
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              <div className="relative w-[88px]">
-                <div className="absolute inset-0 bg-purple-400/20 rounded-lg blur-md"></div>
-                <div className="relative bg-gradient-to-br from-purple-900/60 to-fuchsia-900/60 backdrop-blur-md rounded-lg h-[36px] border border-purple-400/30 flex items-center justify-center">
-                  <span className="text-purple-100 text-xs font-bold">{xp} XP</span>
+                <div className="relative">
+                  <div className="w-full bg-purple-900/50 rounded-full h-3 overflow-hidden border border-purple-400/20">
+                    <div
+                      className="h-full bg-gradient-to-r from-amber-500 via-fuchsia-500 to-amber-500 rounded-full transition-all duration-1000 relative"
+                      style={{
+                        width: `${((xp % 100) / 100) * 100}%`,
+                        backgroundSize: '200% 100%',
+                        animation: 'gradient 3s ease infinite'
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
+                    </div>
+                  </div>
+
+                  <div className="mt-2 text-center">
+                    <span className="text-purple-200 text-[10px]">
+                      {100 - (xp % 100)} XP {t('horoscope.xpUntilNextLevel') || 'avant le niveau'} {level + 1} 🎯
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* 📊 Progress Bar */}
-            <div className="mb-4 mx-auto max-w-md">
-              <div className="relative bg-gradient-to-br from-indigo-900/40 to-purple-900/40 backdrop-blur-xl rounded-xl p-3 border border-indigo-400/20">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-purple-200 text-xs font-semibold">
-                    {t('horoscope.progress.label') || 'Exploration'}
-                  </span>
-                  <span className="text-amber-300 text-xs font-bold">{openSections.length}/8</span>
-                </div>
-
-                <div className="w-full bg-purple-900/50 rounded-full h-2 overflow-hidden mb-2">
-                  <div 
-                    className="h-full bg-gradient-to-r from-fuchsia-500 to-amber-400 rounded-full transition-all duration-500"
-                    style={{ width: `${(openSections.length / 8) * 100}%` }}
-                  ></div>
-                </div>
-
-                {openSections.length === 8 ? (
-                  <div className="text-center">
-                    <span className="text-amber-300 text-xs">
-                      {t('horoscope.progress.completed') || '🎉 +5 XP débloqué !'}
-                    </span>
-                  </div>
-                ) : (
-                  <div className="text-center">
-                    <span className="text-purple-300 text-xs">
-                      {t('horoscope.progress.openAll') || 'Ouvre toutes les sections pour +5 XP'}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* 🏆 Badges */}
             <div className="mb-4">
               <h3 className="text-center text-purple-200 text-xs font-semibold mb-2">
                 {t('horoscope.badges.title') || '🏆 Accomplissements'}
               </h3>
               <div className="flex justify-center gap-2">
                 {badges.map(badge => (
-                  <div key={badge.id} className={`relative ${badge.unlocked ? '' : 'opacity-30'}`}>
+                  <div key={badge.id} className={`relative transition-all duration-500 ${badge.unlocked ? 'scale-100 opacity-100' : 'scale-90 opacity-30'}`}>
                     {badge.unlocked && (
-                      <div className="absolute inset-0 bg-amber-400/20 rounded-lg blur-md"></div>
+                      <div className="absolute inset-0 bg-amber-400/20 rounded-lg blur-md animate-pulse"></div>
                     )}
                     <div className={`relative rounded-lg p-2 border ${badge.unlocked ? 'bg-gradient-to-br from-amber-900/50 to-yellow-900/50 border-amber-400/30' : 'bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border-purple-400/20'}`}>
                       <div className="text-xl">{badge.icon}</div>
@@ -690,7 +902,6 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
               </div>
             </div>
 
-            {/* Sections */}
             <div className="max-w-2xl mx-auto space-y-2 mb-4">
               {sections.map((section, index) => (
                 <div
@@ -704,7 +915,6 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                   <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-600 rounded-xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500"></div>
 
                   <div className="relative bg-gradient-to-br from-purple-900/40 to-indigo-900/40 backdrop-blur-xl rounded-xl border border-purple-400/30 overflow-hidden transform group-hover:scale-[1.01] transition-all duration-300">
-
                     <button
                       onClick={() => toggleSection(index)}
                       className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition-colors"
@@ -713,17 +923,17 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                         <span className="text-xl">{section.icon}</span>
                         <h3 className="text-amber-200 font-semibold text-left text-sm">{section.title}</h3>
                       </div>
-                      <svg 
+                      <svg
                         className={`w-4 h-4 text-purple-300 transition-transform duration-300 ${openSections.includes(index) ? 'rotate-180' : ''}`}
-                        fill="none" 
-                        viewBox="0 0 24 24" 
+                        fill="none"
+                        viewBox="0 0 24 24"
                         stroke="currentColor"
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </button>
 
-                    <div 
+                    <div
                       className={`overflow-hidden transition-all duration-500 ease-in-out ${
                         openSections.includes(index) ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                       }`}
@@ -739,7 +949,6 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
               ))}
             </div>
 
-            {/* 👀 Teaser Demain */}
             <div className="max-w-md mx-auto mb-4">
               <div className="relative bg-gradient-to-br from-indigo-900/40 to-purple-900/40 backdrop-blur-md rounded-xl p-4 border border-indigo-400/30">
                 <div className="flex items-start gap-3">
@@ -749,40 +958,33 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                       {t('horoscope.tomorrow.title') || 'Reviens demain'}
                     </div>
                     <div className="text-purple-200/80 text-xs leading-relaxed">
-                      {t('horoscope.tomorrow.description') || 'Ton horoscope quotidien t\'attend chaque jour. Ne manque aucune prédiction des astres !'}
+                      {t('horoscope.tomorrow.description') || 'Ton horoscope quotidien t\'attend chaque jour.'}
                     </div>
                   </div>
-                </div>
-                <div className="mt-3 flex items-center gap-2 text-[10px] text-purple-300/60">
-                  <span>🌟</span>
-                  <span>{t('horoscope.tomorrow.hint') || 'Consulte tous les jours pour maintenir ta série'}</span>
                 </div>
               </div>
             </div>
 
-            {/* 📤 Partage */}
-            <button 
+            <button
               onClick={handleShare}
               className="w-full max-w-md mx-auto mb-4 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-full text-white text-sm font-semibold shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
             >
               <span>📤</span>
-              <span>{t('horoscope.share.button') || 'Partager mon horoscope'}</span>
+              <span>{t('horoscope.share.button') || 'Partager'}</span>
             </button>
 
-            {/* Bouton retour */}
             <div className="text-center">
               <button
                 onClick={onBack}
                 className="px-8 py-3 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 rounded-full text-white font-semibold shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300 hover:scale-105"
               >
-                {t('horoscope.backButton') || '✨ Retour au sommaire'}
+                {t('horoscope.backButton') || '✨ Retour'}
               </button>
             </div>
           </>
         )}
       </div>
 
-      {/* Animations CSS */}
       <style>{`
         @keyframes slideUp {
           from { opacity: 0; transform: translateY(20px); }
@@ -805,9 +1007,74 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
           from { opacity: 0; }
           to { opacity: 1; }
         }
-        @keyframes fall {
-          0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-          100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        @keyframes confettiExplode {
+          0% {
+            transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(1);
+            opacity: 1;
+          }
+          70% {
+            opacity: 1;
+          }
+          100% {
+            transform:
+              translate(-50%, -50%)
+              translate(
+                calc(cos(var(--angle)) * var(--distance)),
+                calc(sin(var(--angle)) * var(--distance))
+              )
+              rotate(var(--rotation))
+              scale(0);
+            opacity: 0;
+          }
+        }
+        @keyframes twinkleStar {
+          0%, 100% { opacity: 0.6; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.3); }
+        }
+        @keyframes orbitRotate {
+          from {
+            transform: translate(-50%, -50%) rotate(var(--orbit-angle)) translateX(var(--orbit-radius)) rotate(calc(-1 * var(--orbit-angle)));
+          }
+          to {
+            transform: translate(-50%, -50%) rotate(calc(var(--orbit-angle) + 360deg)) translateX(var(--orbit-radius)) rotate(calc(-1 * (var(--orbit-angle) + 360deg)));
+          }
+        }
+        @keyframes explode {
+          0% {
+            transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform:
+              translate(-50%, -50%)
+              translate(
+                calc(cos(var(--angle)) * var(--distance)),
+                calc(sin(var(--angle)) * var(--distance))
+              )
+              rotate(720deg)
+              scale(0);
+            opacity: 0;
+          }
+        }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes scaleIn {
+          from {
+            transform: scale(0.5);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
         }
       `}</style>
     </div>
