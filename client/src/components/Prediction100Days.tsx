@@ -35,7 +35,6 @@ const getPredictionContent = (sign: string, variation: number, t: (key: string) 
   return prediction;
 };
 
-// 🌍 Fonction pour formater les dates selon la langue
 const formatDate = (date: Date, locale: string): string => {
   const localeMap: Record<string, string> = {
     'fr': 'fr-FR',
@@ -96,7 +95,7 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-b from-[#0a0515] via-[#1a0f2e] to-[#0a0515]">
 
-      {/* ✨ Particules dorées */}
+      {/* ✨ Particules */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[...Array(80)].map((_, i) => (
           <div
@@ -141,7 +140,6 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
             <div className="absolute inset-0 bg-amber-400/40 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute inset-0 bg-yellow-300/30 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }}></div>
 
-            {/* Symbole du signe */}
             <div className="relative w-40 h-40 rounded-full bg-gradient-to-br from-amber-900/60 via-yellow-900/60 to-amber-900/60 backdrop-blur-xl border-4 border-amber-400/60 flex items-center justify-center shadow-2xl">
               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-amber-200/20 to-transparent rounded-full"
                    style={{ animation: 'spin-slow 12s linear infinite' }}></div>
@@ -151,7 +149,6 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
             </div>
           </div>
 
-          {/* Titre */}
           <div className={`transform transition-all duration-1000 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <h1 className="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-200 bg-clip-text text-transparent leading-tight px-4"
                 style={{ backgroundSize: '200% auto', animation: 'gradient 4s ease infinite' }}>
@@ -164,7 +161,7 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
             </div>
           </div>
 
-          {/* Dates - TRADUITES AUTOMATIQUEMENT */}
+          {/* Dates */}
           <div className={`max-w-md mx-auto transform transition-all duration-1000 delay-200 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'} px-4`}>
             <div className="bg-gradient-to-r from-amber-900/40 via-yellow-900/50 to-amber-900/40 backdrop-blur-xl rounded-2xl p-3 sm:p-4 border-2 border-amber-400/40 shadow-2xl">
               <div className="flex items-center justify-between gap-2">
@@ -194,22 +191,17 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
           </div>
         </div>
 
-        {/* 🔮 Prédiction principale */}
+        {/* 🔮 Prédiction principale - TEXTE AMÉLIORÉ */}
         <div className={`transform transition-all duration-1000 delay-400 ${showContent ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} px-4`}>
           <div className="relative group mb-8">
-            {/* Halo externe */}
             <div className="absolute -inset-2 bg-gradient-to-r from-amber-600/30 via-yellow-500/30 to-amber-600/30 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
 
-            {/* Carte principale */}
             <div className="relative bg-gradient-to-br from-purple-900/50 via-fuchsia-900/40 to-amber-900/50 backdrop-blur-2xl rounded-3xl border-2 border-amber-400/50 shadow-2xl overflow-hidden">
 
-              {/* Effet de lumière supérieur */}
               <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-amber-400/20 to-transparent pointer-events-none"></div>
 
-              {/* Contenu */}
               <div className="relative p-6 sm:p-8">
 
-                {/* En-tête élégant */}
                 <div className="text-center mb-6">
                   <h2 className="text-xl sm:text-2xl font-bold text-amber-200 mb-3">
                     {t("prediction100.header") || "Ce que les astres révèlent"}
@@ -217,22 +209,28 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
                   <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto rounded-full"></div>
                 </div>
 
-                {/* Texte de prédiction */}
-                <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-amber-400/20 mb-6">
-                  <p className="text-purple-100 text-base sm:text-lg leading-relaxed text-center" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                {/* 📝 TEXTE JUSTIFIÉ + LARGEUR OPTIMALE */}
+                <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-amber-400/20 mb-6 max-w-3xl mx-auto">
+                  <p className="text-purple-100 text-sm sm:text-base leading-relaxed" 
+                     style={{ 
+                       textAlign: 'justify', 
+                       textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+                       hyphens: 'auto',
+                       wordSpacing: '0.05em'
+                     }}>
                     {prediction}
                   </p>
                 </div>
 
                 {/* Message de conseil */}
-                <div className="bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 rounded-xl p-4 border border-amber-400/40">
+                <div className="bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 rounded-xl p-4 border border-amber-400/40 max-w-2xl mx-auto">
                   <div className="flex items-start gap-3">
                     <div className="text-2xl mt-0.5 flex-shrink-0">💡</div>
                     <div className="flex-1 min-w-0">
                       <h3 className="text-amber-200 font-bold text-sm mb-1">
                         {t("prediction100.advice.title") || "Conseil des Astres"}
                       </h3>
-                      <p className="text-purple-100/90 text-xs leading-relaxed">
+                      <p className="text-purple-100/90 text-xs leading-relaxed" style={{ textAlign: 'justify' }}>
                         {t("prediction100.advice.content") ||
                         "Consulte ton horoscope quotidien pour affiner cette prédiction."}
                       </p>
@@ -258,7 +256,6 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
         </div>
       </div>
 
-      {/* Animations CSS */}
       <style>{`
         @keyframes twinkle {
           0%, 100% { opacity: 0.3; transform: scale(1); }
