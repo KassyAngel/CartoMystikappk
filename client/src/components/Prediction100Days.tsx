@@ -191,7 +191,7 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
           </div>
         </div>
 
-        {/* 🔮 Prédiction principale - TEXTE AMÉLIORÉ */}
+        {/* 🔮 Prédiction - TEXTE LEFT ALIGNED (pas de justification) */}
         <div className={`transform transition-all duration-1000 delay-400 ${showContent ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} px-4`}>
           <div className="relative group mb-8">
             <div className="absolute -inset-2 bg-gradient-to-r from-amber-600/30 via-yellow-500/30 to-amber-600/30 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
@@ -209,20 +209,20 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
                   <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto rounded-full"></div>
                 </div>
 
-                {/* 📝 TEXTE JUSTIFIÉ + LARGEUR OPTIMALE */}
+                {/* 📝 TEXTE AMÉLIORÉ - LEFT ALIGNED + LINE-HEIGHT OPTIMAL */}
                 <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-amber-400/20 mb-6 max-w-3xl mx-auto">
                   <p className="text-purple-100 text-sm sm:text-base leading-relaxed" 
                      style={{ 
-                       textAlign: 'justify', 
+                       textAlign: 'left',  // LEFT au lieu de justify !
                        textShadow: '0 2px 10px rgba(0,0,0,0.5)',
-                       hyphens: 'auto',
-                       wordSpacing: '0.05em'
+                       lineHeight: '1.75',  // Meilleur espacement
+                       letterSpacing: '0.01em'  // Légère amélioration
                      }}>
                     {prediction}
                   </p>
                 </div>
 
-                {/* Message de conseil */}
+                {/* Conseil */}
                 <div className="bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 rounded-xl p-4 border border-amber-400/40 max-w-2xl mx-auto">
                   <div className="flex items-start gap-3">
                     <div className="text-2xl mt-0.5 flex-shrink-0">💡</div>
@@ -230,7 +230,7 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
                       <h3 className="text-amber-200 font-bold text-sm mb-1">
                         {t("prediction100.advice.title") || "Conseil des Astres"}
                       </h3>
-                      <p className="text-purple-100/90 text-xs leading-relaxed" style={{ textAlign: 'justify' }}>
+                      <p className="text-purple-100/90 text-xs leading-relaxed">
                         {t("prediction100.advice.content") ||
                         "Consulte ton horoscope quotidien pour affiner cette prédiction."}
                       </p>
