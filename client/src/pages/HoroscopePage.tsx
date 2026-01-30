@@ -460,7 +460,7 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
     handleSectionOpen(sections[index].title, index);
   };
 
-  // 📤 PARTAGE NATIF (Web Share API + fallback copie)
+  // 📤 PARTAGE NATIF CORRIGÉ
   const handleShare = async () => {
     if (!horoscope) return;
 
@@ -487,65 +487,53 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
 
 🌟 ${t('horoscope.share.footer')}`.trim();
 
-    // 📱 Essayer l'API de partage natif (disponible sur mobile et certains navigateurs modernes)
-    if (navigator.share) {
+    // 📱 Web Share API - Fix pour mobile
+    if (typeof navigator !== 'undefined' && navigator.share) {
       try {
         await navigator.share({
-          title: t('horoscope.share.header', { sign: signName }),
           text: shareText,
         });
-        console.log('✅ Partage réussi via Web Share API');
+        console.log('✅ Partage réussi');
         return;
       } catch (error: any) {
-        // Si l'utilisateur annule le partage, ne rien faire
         if (error.name === 'AbortError') {
-          console.log('ℹ️ Partage annulé par l\'utilisateur');
+          console.log('ℹ️ Partage annulé');
           return;
         }
-        // Si erreur, fallback vers la copie
-        console.log('ℹ️ Web Share API non disponible, utilisation du presse-papier');
+        console.log('⚠️ Web Share API échoué, fallback copie');
       }
     }
 
-    // 📋 Fallback : copie dans le presse-papier
+    // 📋 Fallback : Copie dans le presse-papier
     try {
-      // Méthode moderne (Clipboard API)
-      if (navigator.clipboard && navigator.clipboard.writeText) {
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
         await navigator.clipboard.writeText(shareText);
-        alert(t('horoscope.share.copied') || '✅ Horoscope copié dans le presse-papier !');
+        alert(t('horoscope.share.copied') || '✅ Copié !');
         return;
       }
 
-      // Méthode compatible (textarea temporaire)
+      // Fallback compatible
       const textarea = document.createElement('textarea');
       textarea.value = shareText;
       textarea.style.position = 'fixed';
       textarea.style.top = '0';
       textarea.style.left = '0';
-      textarea.style.width = '1px';
-      textarea.style.height = '1px';
-      textarea.style.padding = '0';
-      textarea.style.border = 'none';
-      textarea.style.outline = 'none';
-      textarea.style.boxShadow = 'none';
-      textarea.style.background = 'transparent';
+      textarea.style.opacity = '0';
       document.body.appendChild(textarea);
-
       textarea.focus();
       textarea.select();
-      textarea.setSelectionRange(0, 99999);
 
       const successful = document.execCommand('copy');
       document.body.removeChild(textarea);
 
       if (successful) {
-        alert(t('horoscope.share.copied') || '✅ Horoscope copié dans le presse-papier !');
+        alert(t('horoscope.share.copied') || '✅ Copié !');
       } else {
-        alert('❌ Impossible de copier');
+        alert('❌ Erreur de copie');
       }
     } catch (err) {
-      console.error('❌ Erreur lors de la copie:', err);
-      alert('❌ Impossible de copier');
+      console.error('❌ Erreur:', err);
+      alert('❌ Erreur de copie');
     }
   };
 
@@ -617,13 +605,24 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
         ))}
       </div>
 
-      {/* 🎉 RÉCOMPENSE - CONFETTI EN ARRIÈRE-PLAN (z-index: 40) */}
+      {/* 🎉 RÉCOMPENSE - CONFETTI ISOLÉS */}
       {show100Reward && (
-        <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex items-center justify-center p-4">
-          {/* ✨ CONFETTI - z-index inférieur à la carte */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none z-40">
-            {/* Halos lumineux */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500 rounded-full blur-[120px] opacity-60 animate-pulse"></div>
+        <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-[9999] flex items-center justify-center p-4">
+          {/* ✨ CONFETTI - Couche isolée avec will-change */}
+          <div 
+            className="absolute inset-0 overflow-hidden pointer-events-none" 
+            style={{ 
+              isolation: 'isolate',
+              willChange: 'transform',
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden'
+            }}
+          >
+            {/* Halo lumineux */}
+            <div 
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500 rounded-full blur-[120px] opacity-60 animate-pulse"
+              style={{ willChange: 'opacity' }}
+            ></div>
 
             {/* Confettis - première vague */}
             {[...Array(50)].map((_, i) => {
@@ -642,6 +641,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                     '--angle': `${angle}deg`,
                     '--distance': `${distance}px`,
                     '--rotation': `${Math.random() * 1080}deg`,
+                    willChange: 'transform, opacity'
                   } as any}
                 />
               );
@@ -664,12 +664,13 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                     '--angle': `${angle}deg`,
                     '--distance': `${distance}px`,
                     '--rotation': `${Math.random() * 1080}deg`,
+                    willChange: 'transform, opacity'
                   } as any}
                 />
               );
             })}
 
-            {/* Halos lumineux pulsants */}
+            {/* Halos pulsants */}
             {[...Array(8)].map((_, i) => {
               const angle = (i / 8) * 360;
               return (
@@ -680,6 +681,7 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                     animation: `lightPulse 3s ease-in-out ${i * 0.2}s infinite`,
                     '--orbit-angle': `${angle}deg`,
                     '--orbit-radius': '180px',
+                    willChange: 'transform, opacity'
                   } as any}
                 >
                   <div className="w-16 h-16 rounded-full bg-gradient-to-r from-amber-400 to-yellow-300 opacity-60 blur-xl"></div>
@@ -688,8 +690,16 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
             })}
           </div>
 
-          {/* 🎴 CARTE - z-index supérieur aux confettis (z-50) */}
-          <div className="relative max-w-md w-full z-50">
+          {/* 🎴 CARTE - Au-dessus avec z-index élevé */}
+          <div 
+            className="relative max-w-md w-full"
+            style={{ 
+              zIndex: 10000,
+              isolation: 'isolate',
+              willChange: 'transform',
+              transform: 'translateZ(0)'
+            }}
+          >
             <div
               className="relative bg-gradient-to-br from-purple-900/95 via-indigo-900/95 to-purple-900/95 rounded-3xl p-6 sm:p-8 border-4 border-purple-400/60 shadow-2xl"
               style={{
@@ -711,11 +721,24 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
                   {streak} {t('horoscope.reward100.daysLabel') || 'jours consécutifs !'}
                 </p>
 
-                <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-5 mb-6 border-2 border-purple-400/40">
-                  <p className="text-purple-100 text-base leading-relaxed">
-                    {t('horoscope.reward100.message') ||
-                    "Bravo ! Niveau exceptionnel..."}
-                  </p>
+                {/* 📜 TEXTE AVEC SCROLL + FADE */}
+                <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl mb-6 border-2 border-purple-400/40 max-h-[40vh] overflow-hidden">
+                  {/* Fade top */}
+                  <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-black/60 to-transparent pointer-events-none z-10"></div>
+
+                  {/* Scrollable content */}
+                  <div className="overflow-y-auto max-h-[40vh] p-5 scroll-smooth" style={{ 
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: '#a855f7 transparent'
+                  }}>
+                    <p className="text-purple-100 text-base leading-relaxed">
+                      {t('horoscope.reward100.message') ||
+                      "Bravo ! Niveau exceptionnel..."}
+                    </p>
+                  </div>
+
+                  {/* Fade bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-black/60 to-transparent pointer-events-none z-10"></div>
                 </div>
 
                 <button
@@ -1090,6 +1113,21 @@ ${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descript
             transform: scale(1);
             opacity: 1;
           }
+        }
+
+        /* Custom scrollbar pour le texte */
+        .overflow-y-auto::-webkit-scrollbar {
+          width: 6px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+          background: #a855f7;
+          border-radius: 3px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+          background: #c084fc;
         }
       `}</style>
     </div>
