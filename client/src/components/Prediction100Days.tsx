@@ -4,6 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Prediction100Props {
   user: UserSession;
+  streak: number; // 🔥 IMPORTANT : recevoir le streak pour varier les prédictions
   onBack: () => void;
 }
 
@@ -14,14 +15,16 @@ const signMapping: Record<string, string> = {
   'Capricorne': 'capricorn', 'Verseau': 'aquarius', 'Poissons': 'pisces'
 };
 
-const getPredictionVariation = (sign: string, userName: string): number => {
-  const seed = `${sign}-${userName}-${new Date().getFullYear()}`;
+// 🔮 Génération de prédiction UNIQUE selon le signe ET le streak
+const getPredictionVariation = (sign: string, userName: string, streak: number): number => {
+  // 🔥 AJOUT DU STREAK dans le seed pour varier les prédictions !
+  const seed = `${sign}-${userName}-${streak}-${new Date().getFullYear()}`;
   let hash = 0;
   for (let i = 0; i < seed.length; i++) {
     hash = ((hash << 5) - hash) + seed.charCodeAt(i);
     hash = hash & hash;
   }
-  return Math.abs(hash % 6);
+  return Math.abs(hash % 6); // 6 variations possibles
 };
 
 const getPredictionContent = (sign: string, variation: number, t: (key: string) => string) => {
@@ -54,7 +57,7 @@ const formatDate = (date: Date, locale: string): string => {
   });
 };
 
-export default function Prediction100Days({ user, onBack }: Prediction100Props) {
+export default function Prediction100Days({ user, streak, onBack }: Prediction100Props) {
   const { t, language } = useLanguage();
   const [showContent, setShowContent] = useState(false);
 
@@ -66,8 +69,12 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
   const englishSign = user?.zodiacSign ? signMapping[user.zodiacSign.name] || "aries" : "aries";
   const userName = user?.name || 'Anonymous';
   const zodiacSymbol = user?.zodiacSign?.symbol || "🔮";
-  const variation = getPredictionVariation(englishSign, userName);
+
+  // 🔥 UTILISER LE STREAK pour varier les prédictions !
+  const variation = getPredictionVariation(englishSign, userName, streak);
   const prediction = getPredictionContent(englishSign, variation, t);
+
+  console.log(`🔮 Prediction100Days - Streak: ${streak}, Variation: ${variation}`);
 
   const startDate = new Date();
   const endDate = new Date();
@@ -191,7 +198,7 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
           </div>
         </div>
 
-        {/* 🔮 Prédiction - TEXTE LEFT ALIGNED (pas de justification) */}
+        {/* 🔮 Prédiction - TEXTE PLUS GROS */}
         <div className={`transform transition-all duration-1000 delay-400 ${showContent ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} px-4`}>
           <div className="relative group mb-8">
             <div className="absolute -inset-2 bg-gradient-to-r from-amber-600/30 via-yellow-500/30 to-amber-600/30 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
@@ -209,15 +216,23 @@ export default function Prediction100Days({ user, onBack }: Prediction100Props) 
                   <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto rounded-full"></div>
                 </div>
 
-                {/* 📝 TEXTE AMÉLIORÉ - LEFT ALIGNED + LINE-HEIGHT OPTIMAL */}
+                {/* 📝 TEXTE PLUS GROS : base → 16px, sm → 18px */}
                 <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-amber-400/20 mb-6 max-w-3xl mx-auto">
-                  <p className="text-purple-100 text-sm sm:text-base leading-relaxed" 
+                  <p className="text-purple-100 leading-relaxed" 
                      style={{ 
-                       textAlign: 'left',  // LEFT au lieu de justify !
+                       fontSize: '16px',  // Mobile
+                       textAlign: 'left',
                        textShadow: '0 2px 10px rgba(0,0,0,0.5)',
-                       lineHeight: '1.75',  // Meilleur espacement
-                       letterSpacing: '0.01em'  // Légère amélioration
+                       lineHeight: '1.75',
+                       letterSpacing: '0.01em'
                      }}>
+                    <style>{`
+                      @media (min-width: 640px) {
+                        p {
+                          font-size: 18px !important;  // Desktop
+                        }
+                      }
+                    `}</style>
                     {prediction}
                   </p>
                 </div>
