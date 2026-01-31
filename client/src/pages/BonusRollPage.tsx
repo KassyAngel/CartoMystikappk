@@ -46,7 +46,8 @@ export default function BonusRollPage({
     const nextCount = rollCount + 1;
     console.log(`🎲 [BONUS ROLL] Lancer #${nextCount}`);
 
-    if (nextCount % 3 === 0) {
+    // ✅ CORRECTION: Pub au 1er lancer, puis tous les 3 lancers (1, 4, 7, 10...)
+    if (nextCount === 1 || (nextCount - 1) % 3 === 0) {
       console.log(`🎬 [BONUS ROLL] Lancer #${nextCount} → Pub interstitielle`);
       try {
         await showInterstitialAd(`bonus_roll_${nextCount}`);
@@ -54,6 +55,8 @@ export default function BonusRollPage({
       } catch (error) {
         console.error('❌ [BONUS ROLL] Erreur pub interstitielle:', error);
       }
+    } else {
+      console.log(`⏭️ [BONUS ROLL] Lancer #${nextCount} → Pas de pub (prochain: ${nextCount + (3 - ((nextCount - 1) % 3))})`);
     }
 
     setRollCount(nextCount);
