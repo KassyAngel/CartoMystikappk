@@ -49,6 +49,13 @@ const translations: Record<Language, Record<string, string>> = {
     "date.months.11": "Novembre",
     "date.months.12": "Décembre",
 
+    //Avis Google
+    "ratingModal.title": "Vous aimez CartoMystik ?",
+      "ratingModal.description": "Votre avis nous aide à améliorer l'expérience pour tous ✨",
+      "ratingModal.rateButton": "Donner mon avis",
+      "ratingModal.laterButton": "Plus tard",
+      "ratingModal.close": "Fermer",
+
     // Gender Page
     "gender.title": "Genre",
     "gender.subtitle":
@@ -1790,6 +1797,13 @@ const translations: Record<Language, Record<string, string>> = {
     "date.months.11": "November",
     "date.months.12": "December",
 
+    // Avis google
+     "ratingModal.title": "Do you like CartoMystik?",
+      "ratingModal.description": "Your feedback helps us improve the experience for everyone ✨",
+      "ratingModal.rateButton": "Rate the app",
+      "ratingModal.laterButton": "Later",
+      "ratingModal.close": "Close",
+
     // Gender Page
     "gender.title": "Gender",
     "gender.subtitle": "Enter your gender to provide context to the AI",
@@ -3478,6 +3492,13 @@ const translations: Record<Language, Record<string, string>> = {
     "date.months.10": "Octubre",
     "date.months.11": "Noviembre",
     "date.months.12": "Diciembre",
+
+    // Avis google play
+    "ratingModal.title": "¿Te gusta CartoMystik?",
+      "ratingModal.description": "Tu opinión nos ayuda a mejorar la experiencia para todos ✨",
+      "ratingModal.rateButton": "Calificar la app",
+      "ratingModal.laterButton": "Más tarde",
+      "ratingModal.close": "Cerrar",
 
     // Gender Page
     "gender.title": "Género",
@@ -5233,6 +5254,13 @@ const translations: Record<Language, Record<string, string>> = {
     "date.months.10": "Oktober",
     "date.months.11": "November",
     "date.months.12": "Dezember",
+
+    // Avis Google Play
+    "ratingModal.title": "Gefällt dir CartoMystik?",
+      "ratingModal.description": "Deine Meinung hilft uns, die Erfahrung für alle zu verbessern ✨",
+      "ratingModal.rateButton": "App bewerten",
+      "ratingModal.laterButton": "Später",
+      "ratingModal.close": "Schließen",
 
     // Gender Page
     "gender.title": "Geschlecht",
@@ -6993,6 +7021,13 @@ const translations: Record<Language, Record<string, string>> = {
     "date.months.10": "Ottobre",
     "date.months.11": "Novembre",
     "date.months.12": "Dicembre",
+
+    // Avis Google Play
+    "ratingModal.title": "Ti piace CartoMystik?",
+      "ratingModal.description": "Il tuo parere ci aiuta a migliorare l'esperienza per tutti ✨",
+      "ratingModal.rateButton": "Valuta l'app",
+      "ratingModal.laterButton": "Più tardi",
+      "ratingModal.close": "Chiudi",
 
     // Gender Page
     "gender.title": "Genere",

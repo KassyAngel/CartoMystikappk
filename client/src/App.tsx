@@ -4,6 +4,7 @@ import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentCancelPage from './pages/PaymentCancelPage';
 import PremiumModal from './components/PremiumModal';
 import NotificationPermissionModal from './components/NotificationPermissionModal';
+import RatingModal from './components/RatingModal';
 import TopBar from './components/TopBar';
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
@@ -69,6 +70,7 @@ function App() {
   const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState<AppStep>('landing');
   const [showNotificationModal, setShowNotificationModal] = useState(false);
+  const [showRatingModal, setShowRatingModal] = useState(false);
   const [readingCount, setReadingCount] = useState(0);
   const [bannerShown, setBannerShown] = useState(false);
   const [deviceId, setDeviceId] = useState<string>('');
@@ -372,6 +374,61 @@ function App() {
     return shouldShow;
   };
 
+  // ✅ SYSTÈME D'ÉVALUATION GOOGLE PLAY
+  const checkAndShowRating = () => {
+    // Récupérer les données de rating
+    const hasRated = localStorage.getItem('hasRatedApp');
+    const readingCountStr = localStorage.getItem('ratingReadingCount');
+    const currentCount = parseInt(readingCountStr || '0', 10);
+
+    // Si déjà noté, ne rien faire
+    if (hasRated === 'true') {
+      console.log('⭐ Utilisateur a déjà noté l\'app');
+      return;
+    }
+
+    // Incrémenter le compteur
+    const newCount = currentCount + 1;
+    localStorage.setItem('ratingReadingCount', newCount.toString());
+
+    console.log(`⭐ Compteur rating: ${currentCount} → ${newCount}`);
+
+    // Afficher le modal après 5 tirages
+    if (newCount === 5) {
+      console.log('🎯 5 tirages atteints → Affichage du modal de rating');
+      setTimeout(() => {
+        setShowRatingModal(true);
+      }, 2000); // 2 secondes après le tirage pour ne pas être intrusif
+    }
+  };
+
+  const handleRateApp = () => {
+    console.log('⭐ Utilisateur a accepté de noter l\'app');
+
+    // Marquer comme noté pour ne plus redemander
+    localStorage.setItem('hasRatedApp', 'true');
+    setShowRatingModal(false);
+
+    // ✅ Redirection vers Google Play Store avec votre URL
+    const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.cartomystik.app&pli=1';
+
+    // Ouvrir dans un nouvel onglet (pour le web) ou dans l'app Play Store (pour mobile)
+    window.open(playStoreUrl, '_blank');
+
+    console.log('📱 Redirection vers Google Play Store');
+  };
+
+  const handleCloseRating = () => {
+    console.log('⭐ Utilisateur a choisi "Plus tard"');
+    setShowRatingModal(false);
+
+    // Redemander dans 5 tirages (réinitialiser le compteur à 0)
+    const currentCount = parseInt(localStorage.getItem('ratingReadingCount') || '0', 10);
+    localStorage.setItem('ratingReadingCount', (currentCount - 5).toString());
+
+    console.log('⏭️ Modal de rating redemandera dans 5 tirages');
+  };
+
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
     if (!deviceId) return;
 
@@ -419,6 +476,9 @@ function App() {
           console.log(`📊 ✅ Compteur mis à jour: ${prev} → ${newCount} (type: ${reading.type})`);
           return newCount;
         });
+
+        // ✅ Vérifier si on doit montrer le modal de rating
+        checkAndShowRating();
       } else {
         console.log(`📊 ⏭️ Type "${reading.type}" NON comptabilisé (système pub indépendant)`);
       }
@@ -509,6 +569,14 @@ function App() {
                     setIsPremiumModalOpen(false);
                     window.location.reload();
                   }}
+                />
+              )}
+
+              {/* ✅ MODAL DE RATING GOOGLE PLAY */}
+              {showRatingModal && (
+                <RatingModal
+                  onClose={handleCloseRating}
+                  onRate={handleRateApp}
                 />
               )}
 
