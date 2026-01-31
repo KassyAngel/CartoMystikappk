@@ -172,7 +172,7 @@ export default function BonusRoll({
   };
 
   return (
-    <div className="mystical-dice-container">
+    <div className={`mystical-dice-container ${hasRolled ? 'result-mode' : 'initial-mode'}`}>
       {/* Cosmic Portal Background */}
       <div className="cosmic-portal">
         <div className="portal-ring" style={{ borderColor: styles.primary }}>
@@ -218,311 +218,290 @@ export default function BonusRoll({
         </div>
       )}
 
-      {/* ✅ Contenu centré verticalement avec espace pour la pub en bas */}
-      <div className="content-wrapper">
-        {!hasRolled ? (
-          // INITIAL STATE - Ready to Roll
-          <div className="initial-state">
-            {/* Nébuleuse cosmique en arrière-plan */}
-            <div className="nebula-background">
-              <div 
-                className="nebula-cloud nebula-1"
-                style={{
-                  background: `radial-gradient(ellipse at 30% 40%, ${styles.nebulaColor1}, transparent 60%)`,
-                }}
-              />
-              <div 
-                className="nebula-cloud nebula-2"
-                style={{
-                  background: `radial-gradient(ellipse at 70% 30%, ${styles.nebulaColor2}, transparent 50%)`,
-                }}
-              />
-              <div 
-                className="nebula-cloud nebula-3"
-                style={{
-                  background: `radial-gradient(ellipse at 50% 20%, ${styles.nebulaColor1}, transparent 70%)`,
-                }}
-              />
-            </div>
-
-            {/* Phrase mystique */}
-            <div className="mystical-quote">
-              <p 
-                className="quote-text"
-                style={{
-                  color: styles.primary,
-                  textShadow: `0 0 12px ${styles.glow}25`,
-                }}
-              >
-                {t('oracle.bonusRoll.mysticalQuote') || 'Les astres vous observent'}
-              </p>
-            </div>
-
-            {/* Constellation décorative */}
-            <div className="constellation-header">
-              <div className="constellation-line" style={{ background: styles.primary }} />
-              <div className="constellation-dots">
-                {[...Array(5)].map((_, i) => (
-                  <div 
-                    key={i}
-                    className="constellation-dot"
-                    style={{ 
-                      background: styles.primary,
-                      boxShadow: `0 0 10px ${styles.glow}`,
-                      animationDelay: `${i * 0.2}s`
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="title-section">
-              <h2 className="mystical-title" style={{
-                background: `linear-gradient(135deg, ${styles.gradientStart}, ${styles.gradientEnd})`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: 'none',
-              }}>
-                {t('oracle.bonusRoll.title')}
-              </h2>
-              <p className="mystical-subtitle">
-                {isLoadingAd ? t('oracle.bonusRoll.loading') || 'Préparation en cours...' : t('oracle.bonusRoll.subtitle')}
-              </p>
-            </div>
-
-            {/* Orbites cosmiques autour des dés */}
-            <div className="dice-stage-wrapper">
-              <div className="cosmic-orbit" style={{ borderColor: `${styles.primary}30` }}>
-                <div className="orbit-particle" style={{ background: styles.primary }} />
-              </div>
-
-              <div className="dice-stage">
-                <div 
-                  className={`cosmic-dice ${rolling ? 'spinning' : 'idle'}`}
-                  onClick={!rolling && !isLoadingAd ? rollDice : undefined}
-                  style={{
-                    boxShadow: rolling 
-                      ? `0 0 40px ${styles.shadowColor}, 0 10px 30px rgba(0,0,0,0.5)`
-                      : `0 0 30px ${styles.shadowColor}, 0 5px 20px rgba(0,0,0,0.5)`,
-                    borderColor: styles.primary,
-                  }}
-                >
-                  <div className="dice-glow" style={{ background: styles.glow }} />
-                  {renderDiceDots(dice[0], rolling)}
-                </div>
-
-                <div 
-                  className="plus-icon"
-                  style={{ 
-                    color: styles.primary,
-                    textShadow: `0 0 20px ${styles.glow}`
-                  }}
-                >
-                  +
-                </div>
-
-                <div 
-                  className={`cosmic-dice ${rolling ? 'spinning' : 'idle'}`}
-                  onClick={!rolling && !isLoadingAd ? rollDice : undefined}
-                  style={{
-                    boxShadow: rolling 
-                      ? `0 0 40px ${styles.shadowColor}, 0 10px 30px rgba(0,0,0,0.5)`
-                      : `0 0 30px ${styles.shadowColor}, 0 5px 20px rgba(0,0,0,0.5)`,
-                    borderColor: styles.primary,
-                  }}
-                >
-                  <div className="dice-glow" style={{ background: styles.glow }} />
-                  {renderDiceDots(dice[1], rolling)}
-                </div>
-              </div>
-            </div>
-
-            {/* Éléments décoratifs mystiques */}
-            <div className="mystic-symbols">
-              <div className="symbol-rune" style={{ color: styles.primary }}>⟡</div>
-              <div className="symbol-rune" style={{ color: styles.primary }}>◆</div>
-              <div className="symbol-rune" style={{ color: styles.primary }}>⟡</div>
-            </div>
-
-            {!rolling && !isLoadingAd && (
-              <MysticalButton
-                onClick={rollDice}
-                className="roll-cta"
-                style={{
-                  background: `linear-gradient(135deg, ${styles.gradientStart}, ${styles.gradientEnd})`,
-                  boxShadow: `0 0 30px ${styles.shadowColor}, 0 5px 20px rgba(0,0,0,0.5)`,
-                }}
-              >
-                <span className="cta-text">{t('oracle.bonusRoll.rollButton')}</span>
-              </MysticalButton>
-            )}
-
-            {isLoadingAd && (
-              <div className="loading-state">
-                <div className="cosmic-spinner" style={{ borderTopColor: styles.primary }} />
-              </div>
-            )}
+      {!hasRolled ? (
+        // INITIAL STATE - Ready to Roll (CENTRÉ, PAS DE SCROLL)
+        <div className="initial-state">
+          {/* Nébuleuse cosmique en arrière-plan */}
+          <div className="nebula-background">
+            <div 
+              className="nebula-cloud nebula-1"
+              style={{
+                background: `radial-gradient(ellipse at 30% 40%, ${styles.nebulaColor1}, transparent 60%)`,
+              }}
+            />
+            <div 
+              className="nebula-cloud nebula-2"
+              style={{
+                background: `radial-gradient(ellipse at 70% 30%, ${styles.nebulaColor2}, transparent 50%)`,
+              }}
+            />
+            <div 
+              className="nebula-cloud nebula-3"
+              style={{
+                background: `radial-gradient(ellipse at 50% 20%, ${styles.nebulaColor1}, transparent 70%)`,
+              }}
+            />
           </div>
-        ) : (
-          // RESULT STATE - Revelation
-          <div className="result-state">
-            <div className="result-dice-group">
-              <div 
-                className="cosmic-dice result-dice"
-                style={{
-                  boxShadow: `0 0 40px ${styles.shadowColor}, 0 10px 30px rgba(0,0,0,0.5)`,
-                  borderColor: styles.primary,
-                }}
-              >
-                <div className="dice-glow pulse" style={{ background: styles.glow }} />
-                {renderDiceDots(dice[0], false)}
-              </div>
 
-              <div className="result-operator" style={{ color: styles.primary }}>+</div>
+          {/* Phrase mystique */}
+          <div className="mystical-quote">
+            <p 
+              className="quote-text"
+              style={{
+                color: styles.primary,
+                textShadow: `0 0 12px ${styles.glow}25`,
+              }}
+            >
+              {t('oracle.bonusRoll.mysticalQuote') || 'Les astres vous observent'}
+            </p>
+          </div>
 
-              <div 
-                className="cosmic-dice result-dice"
-                style={{
-                  boxShadow: `0 0 40px ${styles.shadowColor}, 0 10px 30px rgba(0,0,0,0.5)`,
-                  borderColor: styles.primary,
-                }}
-              >
-                <div className="dice-glow pulse" style={{ background: styles.glow }} />
-                {renderDiceDots(dice[1], false)}
-              </div>
+          {/* Constellation décorative */}
+          <div className="constellation-header">
+            <div className="constellation-line" style={{ background: styles.primary }} />
+            <div className="constellation-dots">
+              {[...Array(5)].map((_, i) => (
+                <div 
+                  key={i}
+                  className="constellation-dot"
+                  style={{ 
+                    background: styles.primary,
+                    boxShadow: `0 0 10px ${styles.glow}`,
+                    animationDelay: `${i * 0.2}s`
+                  }}
+                />
+              ))}
+            </div>
+          </div>
 
-              <div className="result-operator" style={{ color: styles.primary }}>=</div>
+          <div className="title-section">
+            <h2 className="mystical-title" style={{
+              background: `linear-gradient(135deg, ${styles.gradientStart}, ${styles.gradientEnd})`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: 'none',
+            }}>
+              {t('oracle.bonusRoll.title')}
+            </h2>
+            <p className="mystical-subtitle">
+              {isLoadingAd ? t('oracle.bonusRoll.loading') || 'Préparation en cours...' : t('oracle.bonusRoll.subtitle')}
+            </p>
+          </div>
 
-              <div 
-                className="result-total"
-                style={{
-                  background: `linear-gradient(135deg, ${styles.gradientStart}, ${styles.gradientEnd})`,
-                  boxShadow: `0 0 50px ${styles.shadowColor}, 0 10px 40px rgba(0,0,0,0.6)`,
-                  borderColor: styles.primary,
-                }}
-              >
-                <div className="total-glow pulse" style={{ background: styles.glow }} />
-                <span className="total-number">{dice[0] + dice[1]}</span>
-              </div>
+          {/* Orbites cosmiques autour des dés */}
+          <div className="dice-stage-wrapper">
+            <div className="cosmic-orbit" style={{ borderColor: `${styles.primary}30` }}>
+              <div className="orbit-particle" style={{ background: styles.primary }} />
             </div>
 
-            {interpretation && (
+            <div className="dice-stage">
               <div 
-                className="revelation-card"
+                className={`cosmic-dice ${rolling ? 'spinning' : 'idle'}`}
+                onClick={!rolling && !isLoadingAd ? rollDice : undefined}
                 style={{
+                  boxShadow: rolling 
+                    ? `0 0 40px ${styles.shadowColor}, 0 10px 30px rgba(0,0,0,0.5)`
+                    : `0 0 30px ${styles.shadowColor}, 0 5px 20px rgba(0,0,0,0.5)`,
                   borderColor: styles.primary,
-                  boxShadow: `0 0 15px ${styles.shadowColor}, 0 5px 20px rgba(0,0,0,0.7)`,
                 }}
               >
-                <div className="card-header-line" style={{ background: `linear-gradient(90deg, transparent, ${styles.primary}, transparent)` }} />
-                <h3 
-                  className="revelation-title"
-                  style={{
-                    background: `linear-gradient(135deg, ${styles.gradientStart}, ${styles.gradientEnd})`,
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                  }}
-                >
-                  {interpretation.title}
-                </h3>
-                <div className="divider" style={{ background: `linear-gradient(90deg, transparent, ${styles.primary}, transparent)` }} />
-                <p className="revelation-message">{interpretation.message}</p>
+                <div className="dice-glow" style={{ background: styles.glow }} />
+                {renderDiceDots(dice[0], rolling)}
               </div>
-            )}
 
+              <div 
+                className="plus-icon"
+                style={{ 
+                  color: styles.primary,
+                  textShadow: `0 0 20px ${styles.glow}`
+                }}
+              >
+                +
+              </div>
+
+              <div 
+                className={`cosmic-dice ${rolling ? 'spinning' : 'idle'}`}
+                onClick={!rolling && !isLoadingAd ? rollDice : undefined}
+                style={{
+                  boxShadow: rolling 
+                    ? `0 0 40px ${styles.shadowColor}, 0 10px 30px rgba(0,0,0,0.5)`
+                    : `0 0 30px ${styles.shadowColor}, 0 5px 20px rgba(0,0,0,0.5)`,
+                  borderColor: styles.primary,
+                }}
+              >
+                <div className="dice-glow" style={{ background: styles.glow }} />
+                {renderDiceDots(dice[1], rolling)}
+              </div>
+            </div>
+          </div>
+
+          {/* Éléments décoratifs mystiques */}
+          <div className="mystic-symbols">
+            <div className="symbol-rune" style={{ color: styles.primary }}>⟡</div>
+            <div className="symbol-rune" style={{ color: styles.primary }}>◆</div>
+            <div className="symbol-rune" style={{ color: styles.primary }}>⟡</div>
+          </div>
+
+          {!rolling && !isLoadingAd && (
+            <MysticalButton
+              onClick={rollDice}
+              className="roll-cta"
+              style={{
+                background: `linear-gradient(135deg, ${styles.gradientStart}, ${styles.gradientEnd})`,
+                boxShadow: `0 0 30px ${styles.shadowColor}, 0 5px 20px rgba(0,0,0,0.5)`,
+              }}
+            >
+              <span className="cta-text">{t('oracle.bonusRoll.rollButton')}</span>
+            </MysticalButton>
+          )}
+
+          {isLoadingAd && (
+            <div className="loading-state">
+              <div className="cosmic-spinner" style={{ borderTopColor: styles.primary }} />
+            </div>
+          )}
+        </div>
+      ) : (
+        // RESULT STATE - Revelation (AVEC SCROLL GARANTI)
+        <div className="result-state">
+          <div className="result-dice-group">
+            <div 
+              className="cosmic-dice result-dice"
+              style={{
+                boxShadow: `0 0 40px ${styles.shadowColor}, 0 10px 30px rgba(0,0,0,0.5)`,
+                borderColor: styles.primary,
+              }}
+            >
+              <div className="dice-glow pulse" style={{ background: styles.glow }} />
+              {renderDiceDots(dice[0], false)}
+            </div>
+
+            <div className="result-operator" style={{ color: styles.primary }}>+</div>
+
+            <div 
+              className="cosmic-dice result-dice"
+              style={{
+                boxShadow: `0 0 40px ${styles.shadowColor}, 0 10px 30px rgba(0,0,0,0.5)`,
+                borderColor: styles.primary,
+              }}
+            >
+              <div className="dice-glow pulse" style={{ background: styles.glow }} />
+              {renderDiceDots(dice[1], false)}
+            </div>
+
+            <div className="result-operator" style={{ color: styles.primary }}>=</div>
+
+            <div 
+              className="result-total"
+              style={{
+                background: `linear-gradient(135deg, ${styles.gradientStart}, ${styles.gradientEnd})`,
+                boxShadow: `0 0 50px ${styles.shadowColor}, 0 10px 40px rgba(0,0,0,0.6)`,
+                borderColor: styles.primary,
+              }}
+            >
+              <div className="total-glow pulse" style={{ background: styles.glow }} />
+              <span className="total-number">{dice[0] + dice[1]}</span>
+            </div>
+          </div>
+
+          {interpretation && (
+            <div 
+              className="revelation-card"
+              style={{
+                borderColor: styles.primary,
+                boxShadow: `0 0 15px ${styles.shadowColor}, 0 5px 20px rgba(0,0,0,0.7)`,
+              }}
+            >
+              <div className="card-header-line" style={{ background: `linear-gradient(90deg, transparent, ${styles.primary}, transparent)` }} />
+              <h3 
+                className="revelation-title"
+                style={{
+                  background: `linear-gradient(135deg, ${styles.gradientStart}, ${styles.gradientEnd})`,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                {interpretation.title}
+              </h3>
+              <div className="divider" style={{ background: `linear-gradient(90deg, transparent, ${styles.primary}, transparent)` }} />
+              <p className="revelation-message">{interpretation.message}</p>
+            </div>
+          )}
+
+          <MysticalButton
+            variant="secondary"
+            onClick={() => {
+              setHasRolled(false);
+              setInterpretation(null);
+              setDice([1, 1]);
+              if (onAfterRoll) onAfterRoll();
+            }}
+            className="new-roll-btn"
+            style={{
+              borderColor: styles.primary,
+              color: styles.primary,
+              background: 'rgba(15, 5, 40, 0.8)',
+            }}
+          >
+            {t('oracle.bonusRoll.newRoll')}
+          </MysticalButton>
+
+          {/* ✅ Bouton retour - TOUJOURS VISIBLE avec marge suffisante */}
+          {onReset && (
             <MysticalButton
               variant="secondary"
-              onClick={() => {
-                setHasRolled(false);
-                setInterpretation(null);
-                setDice([1, 1]);
-                if (onAfterRoll) onAfterRoll();
-              }}
-              className="new-roll-btn"
+              onClick={onReset}
+              className="back-button-bottom"
               style={{
                 borderColor: styles.primary,
                 color: styles.primary,
-                background: 'rgba(15, 5, 40, 0.8)',
+                background: 'rgba(15, 5, 40, 0.6)',
               }}
             >
-              {t('oracle.bonusRoll.newRoll')}
+              <span className="back-arrow">←</span>
+              <span className="back-text">{t('oracle.bonusRoll.backToSelection') || 'Retour à la sélection'}</span>
             </MysticalButton>
-
-            {/* ✅ Bouton retour - TOUJOURS VISIBLE */}
-            {onReset && (
-              <MysticalButton
-                variant="secondary"
-                onClick={onReset}
-                className="back-button-bottom"
-                style={{
-                  borderColor: styles.primary,
-                  color: styles.primary,
-                  background: 'rgba(15, 5, 40, 0.6)',
-                }}
-              >
-                <span className="back-arrow">←</span>
-                <span className="back-text">{t('oracle.bonusRoll.backToSelection') || 'Retour à la sélection'}</span>
-              </MysticalButton>
-            )}
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
 
       <style>{`
         .mystical-dice-container {
           position: relative;
           width: 100%;
-          min-height: 100%;
+          height: 100%;
+        }
+
+        /* ✅ MODE INITIAL : Centré, pas de scroll */
+        .mystical-dice-container.initial-mode {
           display: flex;
           align-items: center;
           justify-content: center;
-          overflow: hidden; /* ✅ Pas de scroll sur le container principal */
+          overflow: hidden;
+          padding: 2rem 1.5rem;
         }
 
-        /* ✅ SOLUTION: Wrapper qui centre le contenu et laisse de l'espace pour la pub */
-        .content-wrapper {
-          position: relative;
-          z-index: 10;
-          width: 100%;
-          max-width: 500px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          min-height: calc(100vh - 180px); /* ✅ Hauteur minimale moins espace pour nav (80px) et pub (100px) */
-          padding: 1rem 1.5rem;
-          padding-bottom: 6rem; /* ✅ Espace pour la bannière pub (60px) + marge de sécurité */
+        /* ✅ MODE RÉSULTAT : TOUJOURS scrollable pour garantir la visibilité du bouton */
+        .mystical-dice-container.result-mode {
+          overflow-y: scroll; /* ✅ IMPORTANT: scroll TOUJOURS actif */
+          overflow-x: hidden;
+          -webkit-overflow-scrolling: touch;
+          padding: 1.5rem 1.5rem;
+          padding-bottom: 10rem; /* ✅ CRITIQUE: Espace GARANTI pour la bannière pub (60px) + le bouton (44px) + sécurité */
         }
 
-        /* Back Button Bottom - ✅ TOUJOURS VISIBLE */
-        .back-button-bottom {
-          position: relative !important;
-          z-index: 10;
-          display: flex !important;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          font-family: 'Rajdhani', sans-serif !important;
-          font-size: 0.9rem !important;
-          font-weight: 600 !important;
-          margin-top: 1.5rem;
-          margin-bottom: 0.5rem;
-          animation: buttonAppear 0.6s ease-out 1.2s both;
-          backdrop-filter: blur(10px);
-          min-height: 44px;
+        /* Scrollbar styling */
+        .mystical-dice-container.result-mode::-webkit-scrollbar {
+          width: 6px;
         }
 
-        .back-button-bottom:hover {
-          transform: translateY(-2px) !important;
+        .mystical-dice-container.result-mode::-webkit-scrollbar-track {
+          background: rgba(15, 5, 40, 0.3);
         }
 
-        .back-arrow {
-          font-size: 1.125rem;
-          font-weight: bold;
-        }
-
-        .back-text {
-          letter-spacing: 0.05em;
+        .mystical-dice-container.result-mode::-webkit-scrollbar-thumb {
+          background: rgba(139, 92, 246, 0.5);
+          border-radius: 3px;
         }
 
         /* Cosmic Portal */
@@ -533,6 +512,7 @@ export default function BonusRoll({
           align-items: center;
           justify-content: center;
           pointer-events: none;
+          z-index: 0;
         }
 
         .portal-ring {
@@ -573,10 +553,10 @@ export default function BonusRoll({
         /* Nébuleuse cosmique */
         .nebula-background {
           position: absolute;
-          top: -50px;
+          top: 0;
           left: 0;
           right: 0;
-          height: 200px;
+          height: 250px;
           pointer-events: none;
           overflow: hidden;
           z-index: 1;
@@ -584,26 +564,26 @@ export default function BonusRoll({
 
         .nebula-cloud {
           position: absolute;
-          width: 400px;
-          height: 400px;
+          width: 500px;
+          height: 500px;
           border-radius: 50%;
-          filter: blur(60px);
+          filter: blur(80px);
         }
 
         .nebula-1 {
-          top: -80px;
-          left: -40px;
+          top: -100px;
+          left: -50px;
           animation: nebulaFloat1 12s ease-in-out infinite;
         }
 
         .nebula-2 {
-          top: -100px;
-          right: -40px;
+          top: -150px;
+          right: -50px;
           animation: nebulaFloat2 15s ease-in-out infinite;
         }
 
         .nebula-3 {
-          top: -90px;
+          top: -120px;
           left: 50%;
           transform: translateX(-50%);
           animation: nebulaFloat3 18s ease-in-out infinite;
@@ -629,14 +609,14 @@ export default function BonusRoll({
           position: relative;
           z-index: 10;
           text-align: center;
-          margin-bottom: 0.5rem;
-          padding: 0.5rem 1rem;
+          margin-bottom: 1rem;
+          padding: 0.75rem 1.5rem;
           animation: fadeInDown 0.8s ease-out;
         }
 
         .quote-text {
           font-family: 'Rajdhani', sans-serif;
-          font-size: 1.2rem;
+          font-size: 1.4rem;
           font-weight: 700;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -653,6 +633,7 @@ export default function BonusRoll({
           position: absolute;
           inset: 0;
           pointer-events: none;
+          z-index: 1;
         }
 
         .particle-float {
@@ -676,6 +657,7 @@ export default function BonusRoll({
           position: absolute;
           inset: 0;
           pointer-events: none;
+          z-index: 5;
         }
 
         .explosion-particle {
@@ -705,16 +687,24 @@ export default function BonusRoll({
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 1.5rem;
+          gap: 2rem;
           width: 100%;
+          max-width: 500px;
+        }
+
+        /* ✅ Result State - S'assure qu'il y a toujours du contenu à scroller */
+        .result-state {
+          margin: 0 auto;
+          padding-top: 1rem;
+          min-height: calc(100vh + 1px); /* ✅ IMPORTANT: Force toujours le scroll */
         }
 
         /* Constellation Header */
         .constellation-header {
           position: relative;
           width: 100%;
-          max-width: 250px;
-          height: 30px;
+          max-width: 300px;
+          height: 40px;
           animation: fadeInDown 0.6s ease-out 0.2s both;
         }
 
@@ -739,8 +729,8 @@ export default function BonusRoll({
         }
 
         .constellation-dot {
-          width: 5px;
-          height: 5px;
+          width: 6px;
+          height: 6px;
           border-radius: 50%;
           animation: twinkle 2s ease-in-out infinite;
         }
@@ -763,16 +753,16 @@ export default function BonusRoll({
 
         .mystical-title {
           font-family: 'Orbitron', sans-serif;
-          font-size: clamp(1.3rem, 5vw, 1.75rem);
+          font-size: clamp(1.5rem, 5vw, 2rem);
           font-weight: 900;
           letter-spacing: 0.05em;
-          margin: 0 0 0.75rem 0;
+          margin: 0 0 1rem 0;
           filter: drop-shadow(0 0 8px ${styles.shadowColor}15);
         }
 
         .mystical-subtitle {
           font-family: 'Rajdhani', sans-serif;
-          font-size: 0.95rem;
+          font-size: 1rem;
           color: #a78bfa;
           font-weight: 600;
           max-width: 350px;
@@ -787,7 +777,7 @@ export default function BonusRoll({
 
         .cosmic-orbit {
           position: absolute;
-          inset: -35px;
+          inset: -40px;
           border: 1px solid;
           border-radius: 50%;
           animation: orbitRotate 10s linear infinite;
@@ -797,8 +787,8 @@ export default function BonusRoll({
           position: absolute;
           top: 0;
           left: 50%;
-          width: 6px;
-          height: 6px;
+          width: 8px;
+          height: 8px;
           border-radius: 50%;
           transform: translateX(-50%);
         }
@@ -817,15 +807,15 @@ export default function BonusRoll({
         .result-dice-group {
           display: flex;
           align-items: center;
-          gap: 0.875rem;
+          gap: 1rem;
           position: relative;
           z-index: 2;
         }
 
         .cosmic-dice {
           position: relative;
-          width: 65px;
-          height: 65px;
+          width: 70px;
+          height: 70px;
           background: rgba(15, 5, 40, 0.95);
           border: 2px solid;
           border-radius: 16px;
@@ -878,7 +868,7 @@ export default function BonusRoll({
         .plus-icon,
         .result-operator {
           font-family: 'Orbitron', sans-serif;
-          font-size: 1.75rem;
+          font-size: 2rem;
           font-weight: 900;
           animation: operatorPulse 2s ease-in-out infinite;
         }
@@ -891,12 +881,12 @@ export default function BonusRoll({
         /* Mystic Symbols */
         .mystic-symbols {
           display: flex;
-          gap: 1.5rem;
+          gap: 2rem;
           animation: fadeIn 0.8s ease-out 0.8s both;
         }
 
         .symbol-rune {
-          font-size: 1.25rem;
+          font-size: 1.5rem;
           opacity: 0.5;
           animation: symbolFloat 3s ease-in-out infinite;
         }
@@ -922,8 +912,8 @@ export default function BonusRoll({
         /* Result Total */
         .result-total {
           position: relative;
-          width: 75px;
-          height: 75px;
+          width: 80px;
+          height: 80px;
           border: 3px solid;
           border-radius: 16px;
           display: flex;
@@ -950,7 +940,7 @@ export default function BonusRoll({
           position: relative;
           z-index: 10;
           font-family: 'Orbitron', sans-serif;
-          font-size: 2.75rem;
+          font-size: 3rem;
           font-weight: 900;
           color: #0f0528;
           text-shadow: 0 2px 8px rgba(0,0,0,0.5);
@@ -961,10 +951,10 @@ export default function BonusRoll({
           background: rgba(15, 5, 40, 0.95);
           border: 1.5px solid;
           border-radius: 20px;
-          padding: 1.5rem;
+          padding: 2rem;
           backdrop-filter: blur(10px);
           animation: cardReveal 0.8s ease-out 0.6s both;
-          max-width: 420px;
+          max-width: 450px;
           width: 100%;
           position: relative;
           overflow: hidden;
@@ -986,23 +976,23 @@ export default function BonusRoll({
 
         .revelation-title {
           font-family: 'Orbitron', sans-serif;
-          font-size: 1.35rem;
+          font-size: 1.5rem;
           font-weight: 700;
           text-align: center;
-          margin: 0 0 0.875rem 0;
+          margin: 0 0 1rem 0;
         }
 
         .divider {
           height: 1px;
           width: 100%;
-          margin: 0.875rem 0;
+          margin: 1rem 0;
           opacity: 0.3;
         }
 
         .revelation-message {
           font-family: 'Rajdhani', sans-serif;
-          font-size: 1.05rem;
-          line-height: 1.7;
+          font-size: 1.125rem;
+          line-height: 1.8;
           color: #c4b5fd;
           text-align: center;
           margin: 0;
@@ -1013,10 +1003,10 @@ export default function BonusRoll({
         .roll-cta,
         .new-roll-btn {
           font-family: 'Orbitron', sans-serif;
-          font-size: 1.05rem;
+          font-size: 1.125rem;
           font-weight: 700;
           letter-spacing: 0.05em;
-          padding: 0.875rem 2rem;
+          padding: 1rem 2.5rem;
           border-radius: 12px;
           border: none;
           cursor: pointer;
@@ -1025,7 +1015,7 @@ export default function BonusRoll({
           align-items: center;
           justify-content: center;
           animation: buttonAppear 0.6s ease-out 1s both;
-          min-width: 180px;
+          min-width: 200px;
         }
 
         @keyframes buttonAppear {
@@ -1042,20 +1032,56 @@ export default function BonusRoll({
         .new-roll-btn {
           background: rgba(15, 5, 40, 0.8);
           border: 2px solid;
-          padding: 0.75rem 1.75rem;
-          font-size: 0.95rem;
+          padding: 0.875rem 2rem;
+          font-size: 1rem;
+        }
+
+        /* ✅ Back Button - GARANTI visible au-dessus de la pub */
+        .back-button-bottom {
+          position: relative;
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          font-family: 'Rajdhani', sans-serif;
+          font-size: 0.9rem;
+          font-weight: 600;
+          margin-top: 1.5rem;
+          margin-bottom: 4rem; /* ✅ CRITIQUE: Grande marge pour garantir qu'il est au-dessus de la pub */
+          animation: buttonAppear 0.6s ease-out 1.2s both;
+          backdrop-filter: blur(10px);
+          min-height: 44px;
+          padding: 0.75rem 1.5rem;
+          border-radius: 12px;
+          border: 2px solid;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .back-button-bottom:hover {
+          transform: translateY(-2px);
+        }
+
+        .back-arrow {
+          font-size: 1.125rem;
+          font-weight: bold;
+        }
+
+        .back-text {
+          letter-spacing: 0.05em;
         }
 
         /* Loading */
         .loading-state {
           display: flex;
           justify-content: center;
-          padding: 1.5rem;
+          padding: 2rem;
         }
 
         .cosmic-spinner {
-          width: 45px;
-          height: 45px;
+          width: 50px;
+          height: 50px;
           border: 3px solid rgba(255, 255, 255, 0.1);
           border-radius: 50%;
           border-top-color: #FFD700;
@@ -1068,71 +1094,75 @@ export default function BonusRoll({
 
         /* Responsive */
         @media (max-width: 480px) {
-          .content-wrapper {
-            min-height: calc(100vh - 200px); /* ✅ Plus d'espace sur mobile */
-            padding: 1rem;
-            padding-bottom: 7rem; /* ✅ Plus d'espace pour la pub sur mobile */
+          .mystical-dice-container.initial-mode {
+            padding: 1.5rem 1rem;
+          }
+
+          .mystical-dice-container.result-mode {
+            padding: 1.5rem 1rem;
+            padding-bottom: 12rem; /* ✅ Encore plus d'espace sur mobile */
+          }
+
+          .result-state {
+            min-height: calc(100vh + 50px); /* ✅ Force encore plus le scroll sur mobile */
           }
 
           .nebula-cloud {
-            width: 250px;
-            height: 250px;
-          }
-
-          .cosmic-dice {
-            width: 55px;
-            height: 55px;
-          }
-
-          .result-total {
-            width: 65px;
-            height: 65px;
-          }
-
-          .total-number {
-            font-size: 2.25rem;
-          }
-
-          .mystical-title {
-            font-size: 1.15rem;
-          }
-
-          .mystical-subtitle {
-            font-size: 0.85rem;
-          }
-
-          .quote-text {
-            font-size: 1rem;
-          }
-
-          .roll-cta,
-          .new-roll-btn {
-            padding: 0.75rem 1.5rem;
-            font-size: 0.95rem;
-            min-width: 160px;
-          }
-
-          .revelation-card {
-            padding: 1.25rem;
-          }
-
-          .portal-ring {
             width: 300px;
             height: 300px;
           }
 
-          .portal-glow {
-            width: 200px;
-            height: 200px;
+          .cosmic-dice {
+            width: 60px;
+            height: 60px;
+          }
+
+          .result-total {
+            width: 70px;
+            height: 70px;
+          }
+
+          .total-number {
+            font-size: 2.5rem;
+          }
+
+          .mystical-title {
+            font-size: 1.25rem;
+          }
+
+          .mystical-subtitle {
+            font-size: 0.9rem;
+          }
+
+          .quote-text {
+            font-size: 1.1rem;
+          }
+
+          .roll-cta,
+          .new-roll-btn {
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+            min-width: 180px;
           }
 
           .back-button-bottom {
-            margin-bottom: 0.5rem;
+            margin-bottom: 5rem; /* ✅ Marge encore plus grande sur mobile */
+            font-size: 0.85rem;
+            padding: 0.65rem 1.25rem;
           }
 
-          .initial-state,
-          .result-state {
-            gap: 1.25rem;
+          .revelation-card {
+            padding: 1.5rem;
+          }
+
+          .portal-ring {
+            width: 350px;
+            height: 350px;
+          }
+
+          .portal-glow {
+            width: 250px;
+            height: 250px;
           }
         }
       `}</style>
