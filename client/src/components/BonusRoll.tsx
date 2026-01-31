@@ -243,13 +243,13 @@ export default function BonusRoll({
             />
           </div>
 
-          {/* Phrase mystique - ✅ CORRIGÉE: Plus grosse + couleur atténuée */}
+          {/* Phrase mystique */}
           <div className="mystical-quote">
             <p 
               className="quote-text"
               style={{
                 color: styles.primary,
-                textShadow: `0 0 12px ${styles.glow}25`, // ✅ Glow encore plus réduit: 8px→12px et 40%→25%
+                textShadow: `0 0 12px ${styles.glow}25`,
               }}
             >
               {t('oracle.bonusRoll.mysticalQuote') || 'Les astres vous observent'}
@@ -279,7 +279,7 @@ export default function BonusRoll({
               background: `linear-gradient(135deg, ${styles.gradientStart}, ${styles.gradientEnd})`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              textShadow: 'none', /* ✅ Supprimé le textShadow inline */
+              textShadow: 'none',
             }}>
               {t('oracle.bonusRoll.title')}
             </h2>
@@ -446,7 +446,7 @@ export default function BonusRoll({
             {t('oracle.bonusRoll.newRoll')}
           </MysticalButton>
 
-          {/* Bouton retour en bas - ✅ FIX: Retourne maintenant à la sélection */}
+          {/* ✅ Bouton retour - TOUJOURS VISIBLE avec margin bottom pour éviter la pub */}
           {onReset && (
             <MysticalButton
               variant="secondary"
@@ -469,15 +469,16 @@ export default function BonusRoll({
         .mystical-dice-container {
           position: relative;
           width: 100%;
-          min-height: 600px;
+          min-height: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 2rem 1.5rem;
-          overflow: hidden;
+          padding-bottom: 8rem; /* ✅ CRITQUE: Espace pour la bannière pub (60px) + bouton (40px) + sécurité */
+          overflow: visible; /* ✅ Permet le scroll si nécessaire */
         }
 
-        /* Back Button Bottom */
+        /* Back Button Bottom - ✅ TOUJOURS VISIBLE */
         .back-button-bottom {
           position: relative !important;
           z-index: 10;
@@ -488,9 +489,11 @@ export default function BonusRoll({
           font-family: 'Rajdhani', sans-serif !important;
           font-size: 0.9rem !important;
           font-weight: 600 !important;
-          margin-top: 1rem;
+          margin-top: 1.5rem;
+          margin-bottom: 2rem; /* ✅ CRITIQUE: Marge bottom pour éviter la pub */
           animation: buttonAppear 0.6s ease-out 1.2s both;
           backdrop-filter: blur(10px);
+          min-height: 44px; /* ✅ Taille minimale pour faciliter le tap */
         }
 
         .back-button-bottom:hover {
@@ -605,7 +608,7 @@ export default function BonusRoll({
           50% { transform: translate(-50%, 30px) scale(1.15); opacity: 0.7; }
         }
 
-        /* Phrase mystique - ✅ CORRIGÉE */
+        /* Phrase mystique */
         .mystical-quote {
           position: relative;
           z-index: 10;
@@ -617,7 +620,7 @@ export default function BonusRoll({
 
         .quote-text {
           font-family: 'Rajdhani', sans-serif;
-          font-size: 1.4rem; /* ✅ Augmenté de 1.25rem à 1.4rem */
+          font-size: 1.4rem;
           font-weight: 700;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -625,7 +628,7 @@ export default function BonusRoll({
         }
 
         @keyframes textGlow {
-          0%, 100% { opacity: 0.9; } /* ✅ Augmenté pour meilleure visibilité */
+          0%, 100% { opacity: 0.9; }
           50% { opacity: 1; }
         }
 
@@ -749,7 +752,7 @@ export default function BonusRoll({
           font-weight: 900;
           letter-spacing: 0.05em;
           margin: 0 0 1rem 0;
-          filter: drop-shadow(0 0 8px ${styles.shadowColor}15); /* ✅ Réduit: 30px→8px et ajout opacity 15% */
+          filter: drop-shadow(0 0 8px ${styles.shadowColor}15);
         }
 
         .mystical-subtitle {
@@ -1051,8 +1054,9 @@ export default function BonusRoll({
         /* Responsive */
         @media (max-width: 480px) {
           .mystical-dice-container {
-            min-height: 550px;
+            min-height: 100%;
             padding: 1.5rem 1rem;
+            padding-bottom: 10rem; /* ✅ Plus d'espace sur mobile pour la pub */
           }
 
           .nebula-cloud {
@@ -1083,7 +1087,7 @@ export default function BonusRoll({
           }
 
           .quote-text {
-            font-size: 1.1rem; /* ✅ Ajusté pour mobile: 1rem → 1.1rem */
+            font-size: 1.1rem;
           }
 
           .roll-cta,
@@ -1105,6 +1109,10 @@ export default function BonusRoll({
           .portal-glow {
             width: 250px;
             height: 250px;
+          }
+
+          .back-button-bottom {
+            margin-bottom: 3rem; /* ✅ Plus de marge sur mobile */
           }
         }
       `}</style>

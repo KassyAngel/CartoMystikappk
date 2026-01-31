@@ -71,7 +71,7 @@ export default function BonusRollPage({
     const newVariation = getRandomVariation();
     setVariation(newVariation);
     console.log(`🔄 [BONUS ROLL] Reset complet - Retour à la sélection`);
-    onBack(); // ✅ FIX: Retourne maintenant à la sélection des oracles
+    onBack();
   };
 
   const getVariationGlow = () => {
@@ -144,7 +144,7 @@ export default function BonusRollPage({
         )}
       </div>
 
-      {/* Main Cosmic Area */}
+      {/* ✅ Main Cosmic Area - SCROLLABLE */}
       <div className="cosmic-main">
         <BonusRoll 
           onComplete={handleComplete}
@@ -250,6 +250,7 @@ export default function BonusRollPage({
             transparent 100%
           );
           backdrop-filter: blur(10px);
+          flex-shrink: 0; /* ✅ Empêche la nav de rétrécir */
         }
 
         .premium-badge-mini {
@@ -310,16 +311,36 @@ export default function BonusRollPage({
           letter-spacing: 0.05em;
         }
 
-        /* Main Cosmic Area */
+        /* ✅ Main Cosmic Area - SCROLLABLE */
         .cosmic-main {
           position: relative;
           z-index: 10;
           flex: 1;
-          overflow: hidden;
+          overflow-y: auto; /* ✅ CRITIQUE: Permet le scroll vertical */
+          overflow-x: hidden;
           display: flex;
-          align-items: center;
+          align-items: flex-start; /* ✅ Alignement en haut pour le scroll */
           justify-content: center;
-          padding: 0 1rem;
+          padding: 0;
+          -webkit-overflow-scrolling: touch; /* ✅ Smooth scroll sur iOS */
+        }
+
+        /* ✅ Style de la scrollbar (optionnel, pour webkit) */
+        .cosmic-main::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        .cosmic-main::-webkit-scrollbar-track {
+          background: rgba(15, 5, 40, 0.3);
+        }
+
+        .cosmic-main::-webkit-scrollbar-thumb {
+          background: rgba(139, 92, 246, 0.5);
+          border-radius: 4px;
+        }
+
+        .cosmic-main::-webkit-scrollbar-thumb:hover {
+          background: rgba(139, 92, 246, 0.7);
         }
 
         /* Responsive */
@@ -347,6 +368,11 @@ export default function BonusRollPage({
 
           .premium-badge-mini {
             font-size: 1.25rem;
+          }
+
+          /* ✅ Assure que le scroll fonctionne bien sur mobile */
+          .cosmic-main {
+            align-items: center; /* ✅ Centré sur mobile si pas de scroll nécessaire */
           }
         }
       `}</style>
