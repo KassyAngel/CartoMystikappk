@@ -165,6 +165,7 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
   const { t } = useLanguage();
 
   const [openSections, setOpenSections] = useState<number[]>([0]);
+  const [openedSectionsHistory, setOpenedSectionsHistory] = useState<Set<number>>(new Set([0])); // ✅ AJOUTE CETTE LIGNE
   const [showInterpretation, setShowInterpretation] = useState(false);
   const [hasSavedReading, setHasSavedReading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -343,31 +344,38 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
   const handleSectionOpen = async (sectionTitle: string, index: number) => {
     if (isPremium) return;
 
-    const newCount = sectionOpenCount + 1;
-    setSectionOpenCount(newCount);
+    setOpenedSectionsHistory(prev => {
+      const newSet = new Set(prev);
+      newSet.add(index);
 
-    if (openSections.length + 1 === 8) {
-      const explorationKey = `horoscope_explored_${new Date().toDateString()}`;
-      if (!localStorage.getItem(explorationKey)) {
-        const oldLevel = getLevel(getXP());
-        const newXP = addXP(5);
-        const newLvl = getLevel(newXP);
+      if (newSet.size === 8) {
+        const explorationKey = `horoscope_explored_${new Date().toDateString()}`;
+        if (!localStorage.getItem(explorationKey)) {
+          const oldLevel = getLevel(getXP());
+          const newXP = addXP(5);
+          const newLvl = getLevel(newXP);
 
-        setXP(newXP);
-        setXPGainAmount(5);
-        setShowXPGain(true);
-        localStorage.setItem(explorationKey, 'true');
-        setTimeout(() => setShowXPGain(false), 2000);
+          setXP(newXP);
+          setXPGainAmount(5);
+          setShowXPGain(true);
+          localStorage.setItem(explorationKey, 'true');
+          setTimeout(() => setShowXPGain(false), 2000);
 
-        if (newLvl > oldLevel) {
-          setTimeout(() => {
-            setNewLevel(newLvl);
-            setShowLevelUp(true);
-            setTimeout(() => setShowLevelUp(false), 3000);
-          }, 2500);
+          if (newLvl > oldLevel) {
+            setTimeout(() => {
+              setNewLevel(newLvl);
+              setShowLevelUp(true);
+              setTimeout(() => setShowLevelUp(false), 3000);
+            }, 2500);
+          }
         }
       }
-    }
+
+      return newSet;
+    });
+
+    const newCount = sectionOpenCount + 1;
+    setSectionOpenCount(newCount);
 
     if (newCount === 2) {
       setTimeout(async () => {

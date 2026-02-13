@@ -71,7 +71,9 @@ export const translations: Record<Language, Record<string, string>> = {
       "prediction100.element3": "Évolution",
     "prediction100.back": "✨ Retour à l'horoscope",
     "horoscope.reward100.daysLabel": "jours consécutifs !",
-
+    "horoscope.levelUp.title": "Niveau supérieur !",
+      "horoscope.levelUp.newLevel": "Niveau {level}",
+     
       // Bélier - 6 variations inclusives et concrètes
       "prediction100.aries.var0": "Pendant les 100 prochains jours, ton énergie et ton courage seront tes alliés. Au travail, tu pourrais être appelé à initier quelque chose de nouveau, comme proposer une idée originale ou prendre la tête d’un mini-projet, ce qui stimulera ton sens de l’action. En amour, si tu es célibataire, une sortie ou un hobby pourrait te permettre de rencontrer quelqu’un qui partage ton enthousiasme, peut-être le début d'une histoire d'amour. Si tu es en couple, vivre une petite aventure à deux, une escapade, un cours, une activité partagée, renforcera votre complicité. Côté quotidien, pense à alterner effort et repos pour éviter de t’épuiser.",
       "prediction100.aries.var1": "Ces semaines seront une excellente période pour tracer des objectifs personnels. Au travail, tu pourrais te surprendre à avancer plus vite que prévu sur des tâches que tu pensais longues ou pénibles, ce qui te donnera un vrai sentiment d’accomplissement. En amour, si tu es célibataire, même sans rencontre immédiate, apprendre à te connaître davantage te donnera une clarté précieuse pour la suite ; si tu es en couple, partager vos projets futurs (vacances, objectifs perso) vous rapprochera et fera naître de belles conversations. Côté santé, veille à bien dormir les jours où la fatigue se fait sentir.",
@@ -946,7 +948,9 @@ export const translations: Record<Language, Record<string, string>> = {
     "common.locale": "en-US",
     "prediction100.title": "Your Exclusive Prediction",
     "horoscope.reward100.daysLabel": "consecutive days!",
-
+    "horoscope.levelUp.title": "Level Up!",
+      "horoscope.levelUp.newLevel": "Level {level}",
+      
     // Aries - 6 inclusive and concrete variations
     "prediction100.aries.var0": "Over the next 100 days, your energy and courage will be your allies. At work, you may be called to initiate something new, like proposing an original idea or leading a small project, which will stimulate your sense of action. In love, if you are single, an outing or hobby could help you meet someone who shares your enthusiasm, perhaps the start of a romance. If you are in a relationship, enjoying a small adventure together, a getaway, a class, or a shared activity will strengthen your bond. In daily life, remember to balance effort with rest to avoid burnout.",
     "prediction100.aries.var1": "These weeks will be an excellent time to set personal goals. At work, you might surprise yourself by progressing faster than expected on tasks you thought would be long or tedious, giving you a real sense of accomplishment. In love, if you are single, even without an immediate encounter, getting to know yourself better will provide valuable clarity for the future; if you are in a relationship, sharing your future plans (vacations, personal goals) will bring you closer and spark meaningful conversations. Regarding health, make sure to get good sleep on days when you feel tired.",
@@ -1819,7 +1823,9 @@ export const translations: Record<Language, Record<string, string>> = {
     "horoscope.reward100.discover": "Descubrir mi predicción",
     "prediction100.title": "Tu Predicción Exclusiva",
     "horoscope.reward100.daysLabel": "¡días consecutivos!",
-
+    "horoscope.levelUp.title": "¡Subiste de nivel!",
+      "horoscope.levelUp.newLevel": "Nivel {level}",
+    
     // Aries - 6 variaciones inclusivas y concretas
     "prediction100.aries.var0": "Durante los próximos 100 días, tu energía y valentía serán tus aliados. En el trabajo, podrías tener que iniciar algo nuevo, como proponer una idea original o liderar un pequeño proyecto, lo que estimulará tu sentido de acción. En el amor, si estás solx, una salida o un hobby podría permitirte conocer a alguien que comparta tu entusiasmo, tal vez el comienzo de una historia de amor. Si estás en pareja, vivir una pequeña aventura juntos, una escapada, un curso o una actividad compartida fortalecerá vuestra complicidad. En la vida diaria, piensa en alternar esfuerzo y descanso para evitar agotarte.",
     "prediction100.aries.var1": "Estas semanas serán un excelente momento para establecer objetivos personales. En el trabajo, podrías sorprenderte avanzando más rápido de lo previsto en tareas que pensabas largas o pesadas, lo que te dará una gran sensación de logro. En el amor, si estás solx, aunque no haya un encuentro inmediato, aprender a conocerte mejor te dará claridad para el futuro; si estás en pareja, compartir vuestros proyectos futuros (vacaciones, objetivos personales) os acercará y generará conversaciones enriquecedoras. En cuanto a la salud, asegúrate de dormir bien los días que sientas cansancio.",
@@ -2692,7 +2698,9 @@ export const translations: Record<Language, Record<string, string>> = {
     "horoscope.reward100.discover": "Meine Vorhersage entdecken",
     "prediction100.title": "Deine Exklusive Vorhersage",
     "horoscope.reward100.daysLabel": "aufeinanderfolgende Tage!",
-
+    "horoscope.levelUp.title": "Level aufgestiegen!",
+      "horoscope.levelUp.newLevel": "Level {level}",
+    
     // Widder - 6 inklusive und konkrete Variationen
     "prediction100.aries.var0": "In den nächsten 100 Tagen werden Energie und Mut deine Verbündeten sein. Bei der Arbeit könntest du aufgefordert werden, etwas Neues zu initiieren, wie eine originelle Idee vorzuschlagen oder die Leitung eines kleinen Projekts zu übernehmen, was deinen Tatendrang stärkt. In der Liebe: Wenn du Single bist, könnte ein Ausflug oder Hobby dir ermöglichen, jemanden zu treffen, der deine Begeisterung teilt – vielleicht der Beginn einer Liebesgeschichte. Wenn du in einer Beziehung bist, wird ein kleines gemeinsames Abenteuer, ein Ausflug, ein Kurs oder eine gemeinsame Aktivität eure Bindung stärken. Im Alltag achte darauf, Anstrengung und Erholung abzuwechseln, um Erschöpfung zu vermeiden.",
     "prediction100.aries.var1": "Diese Wochen sind ideal, um persönliche Ziele zu setzen. Bei der Arbeit könntest du überrascht sein, schneller voranzukommen als erwartet bei Aufgaben, die du als langwierig oder mühsam eingeschätzt hast – ein echtes Erfolgserlebnis. In der Liebe: Als Single wirst du vielleicht auch ohne sofortiges Treffen dich selbst besser kennenlernen, was wertvolle Klarheit bringt; in einer Beziehung stärkt das Teilen gemeinsamer Zukunftspläne (Urlaub, persönliche Ziele) eure Verbindung und führt zu bereichernden Gesprächen. Gesundheitlich: Achte darauf, an müden Tagen ausreichend zu schlafen.",
@@ -3565,7 +3573,9 @@ export const translations: Record<Language, Record<string, string>> = {
     "horoscope.reward100.discover": "Scopri la mia previsione",
     "prediction100.title": "La Tua Predizione Esclusiva",
     "horoscope.reward100.daysLabel": "giorni consecutivi!",
-
+    "horoscope.levelUp.title": "Livello superiore!",
+      "horoscope.levelUp.newLevel": "Livello {level}",
+    
     // Ariete - 6 variazioni inclusive e concrete
     "prediction100.aries.var0": "Durante i prossimi 100 giorni, la tua energia e il tuo coraggio saranno tuoi alleati. Sul lavoro, potresti essere chiamato a iniziare qualcosa di nuovo, come proporre un’idea originale o guidare un mini-progetto, stimolando il tuo senso dell’azione. In amore, se sei single, un’uscita o un hobby potrebbe permetterti di incontrare qualcuno che condivide il tuo entusiasmo, forse l’inizio di una storia d’amore. Se sei in coppia, vivere una piccola avventura a due, una gita, un corso o un’attività condivisa rafforzerà la vostra complicità. Nella vita quotidiana, pensa ad alternare impegno e riposo per evitare di esaurirti.",
     "prediction100.aries.var1": "Queste settimane saranno un ottimo periodo per fissare obiettivi personali. Sul lavoro, potresti sorprenderti a progredire più velocemente del previsto in compiti che pensavi lunghi o faticosi, dando una vera sensazione di realizzazione. In amore, se sei single, anche senza incontri immediati, imparare a conoscerti meglio ti darà chiarezza preziosa per il futuro; se sei in coppia, condividere i vostri progetti futuri (vacanze, obiettivi personali) vi avvicinerà e darà vita a belle conversazioni. Per la salute, assicurati di dormire bene nei giorni in cui senti stanchezza.",
