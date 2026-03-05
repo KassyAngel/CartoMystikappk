@@ -11,238 +11,247 @@ interface UserProfileModalProps {
 export default function UserProfileModal({ isOpen, onClose }: UserProfileModalProps) {
   const { user } = useUser();
   const { t } = useLanguage();
-  const [showEditModal, setShowEditModal] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  // Fermer avec Escape
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !showEditModal) {
+    if (isOpen) { setTimeout(() => setMounted(true), 40); }
+    else { setMounted(false); setShowEdit(false); }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (showEdit) { setShowEdit(false); return; }
         onClose();
       }
     };
-
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      // Empêcher le scroll du body
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.removeEventListener('keydown', handleEscape);
-        document.body.style.overflow = 'unset';
-      };
-    }
-  }, [isOpen, onClose, showEditModal]);
+    if (isOpen) { document.addEventListener('keydown', handleEsc); document.body.style.overflow = 'hidden'; }
+    return () => { document.removeEventListener('keydown', handleEsc); document.body.style.overflow = ''; };
+  }, [isOpen, showEdit, onClose]);
 
   if (!isOpen || !user) return null;
 
-  // Formater la date de naissance
-  const formatBirthDate = (dateStr: string) => {
-    if (!dateStr) return '';
-    try {
-      const date = new Date(dateStr);
-      return date.toLocaleDateString('fr-FR', { 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
-      });
-    } catch (error) {
-      console.error('Error formatting date:', error);
-      return dateStr;
-    }
+  const formatDate = (d: string) => {
+    if (!d) return '';
+    try { return new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }); }
+    catch { return d; }
   };
 
-  // Traduire le genre
-  const getGenderLabel = (gender: string) => {
-    if (!gender) return '';
-    const genderMap: Record<string, string> = {
-      'homme': t('gender.male') || 'Homme',
-      'femme': t('gender.female') || 'Femme',
-      'autre': t('gender.other') || 'Autre'
+  const genderLabel = (g: string) => {
+    const map: Record<string, string> = {
+      homme: t('gender.male') || 'Homme',
+      femme: t('gender.female') || 'Féminin',
+      autre: t('gender.other') || 'Autre',
     };
-    return genderMap[gender] || gender;
+    return map[g] || g;
   };
 
-  // Convertir le nom du signe en clé de traduction
-  const getZodiacKey = (signName: string) => {
-    if (!signName) return 'aries';
-
-    const zodiacMap: Record<string, string> = {
-      'Aries': 'aries',
-      'Taurus': 'taurus',
-      'Gemini': 'gemini',
-      'Cancer': 'cancer',
-      'Leo': 'leo',
-      'Virgo': 'virgo',
-      'Libra': 'libra',
-      'Scorpio': 'scorpio',
-      'Sagittarius': 'sagittarius',
-      'Capricorn': 'capricorn',
-      'Aquarius': 'aquarius',
-      'Pisces': 'pisces',
-      'Bélier': 'aries',
-      'Taureau': 'taurus',
-      'Gémeaux': 'gemini',
-      'Lion': 'leo',
-      'Vierge': 'virgo',
-      'Balance': 'libra',
-      'Scorpion': 'scorpio',
-      'Sagittaire': 'sagittarius',
-      'Capricorne': 'capricorn',
-      'Verseau': 'aquarius',
-      'Poissons': 'pisces'
-    };
-
-    return zodiacMap[signName] || signName.toLowerCase();
+  const zodiacMap: Record<string, string> = {
+    'Bélier': 'aries', 'Taureau': 'taurus', 'Gémeaux': 'gemini', 'Cancer': 'cancer',
+    'Lion': 'leo', 'Vierge': 'virgo', 'Balance': 'libra', 'Scorpion': 'scorpio',
+    'Sagittaire': 'sagittarius', 'Capricorne': 'capricorn', 'Verseau': 'aquarius', 'Poissons': 'pisces',
+    'Aries': 'aries', 'Taurus': 'taurus', 'Gemini': 'gemini', 'Leo': 'leo', 'Virgo': 'virgo',
+    'Libra': 'libra', 'Scorpio': 'scorpio', 'Sagittarius': 'sagittarius', 'Capricorn': 'capricorn',
+    'Aquarius': 'aquarius', 'Pisces': 'pisces',
   };
 
-  // Formater les dates du signe astrologique
-  const getZodiacDates = () => {
-    if (!user.zodiacSign) return '';
-
-    try {
-      if (typeof user.zodiacSign.dates === 'string') {
-        return user.zodiacSign.dates;
-      }
-
-      if (user.zodiacSign.dates && typeof user.zodiacSign.dates === 'object') {
-        const dates = user.zodiacSign.dates as any;
-        if (dates.start && dates.end) {
-          return `${dates.start.day}/${dates.start.month} - ${dates.end.day}/${dates.end.month}`;
-        }
-      }
-    } catch (error) {
-      console.error('Error formatting zodiac dates:', error);
-    }
-
-    return '';
-  };
-
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.target === e.currentTarget && !showEditModal) {
-      onClose();
-    }
-  };
-
-  const handleEditClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setShowEditModal(true);
-  };
+  const zodiacKey = user.zodiacSign?.name ? (zodiacMap[user.zodiacSign.name] || user.zodiacSign.name.toLowerCase()) : '';
+  const zodiacName = zodiacKey ? (t(`zodiac.signs.${zodiacKey}`) || user.zodiacSign?.name || '') : '';
+  const genderSymbol = user.gender === 'homme' ? '♂' : user.gender === 'femme' ? '♀' : '⚥';
 
   return (
     <>
-      <div 
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-        onClick={handleOverlayClick}
-      >
-        <div className="bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-900 rounded-2xl shadow-2xl max-w-md w-full border-2 border-purple-500/30 animate-scale-in">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 
-          {/* Header avec symbole zodiacal */}
-          <div className="relative p-6 text-center border-b border-purple-500/30">
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 p-2 rounded-lg hover:bg-purple-700/50 transition-colors z-10"
-              aria-label={t('common.close') || 'Fermer'}
-            >
-              <svg className="w-5 h-5 text-purple-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+        .up-overlay {
+          position: fixed; inset: 0;
+          z-index: 300;
+          background: rgba(4,0,16,0.88);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          display: flex; align-items: center; justify-content: center;
+          padding: 24px;
+          animation: up-in 0.22s ease;
+          font-family: 'Jost', sans-serif;
+        }
+        @keyframes up-in { from{opacity:0} to{opacity:1} }
 
-            <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-5xl shadow-lg">
-              {user.zodiacSign?.symbol || '✨'}
-            </div>
+        .up-card {
+          width: 100%; max-width: 320px;
+          background: #07040f;
+          border: 1px solid rgba(201,168,76,0.2);
+          border-radius: 3px;
+          position: relative;
+          transform: translateY(16px); opacity: 0;
+          transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.38s ease;
+        }
+        .up-card.vis { transform: translateY(0); opacity: 1; }
 
-            <h2 className="text-2xl font-bold text-yellow-300 mb-1 font-serif">
-              {user.name || 'Utilisateur'}
-            </h2>
+        .up-c { position:absolute; width:8px; height:8px; border-color:rgba(201,168,76,0.35); border-style:solid; }
+        .up-tl{top:0;left:0;border-width:1px 0 0 1px}
+        .up-tr{top:0;right:0;border-width:1px 1px 0 0}
+        .up-bl{bottom:0;left:0;border-width:0 0 1px 1px}
+        .up-br{bottom:0;right:0;border-width:0 1px 1px 0}
 
-            {user.zodiacSign && (
-              <p className="text-purple-200 text-sm">
-                {t(`zodiac.signs.${getZodiacKey(user.zodiacSign.name)}`)}
-                {getZodiacDates() && ` • ${getZodiacDates()}`}
-              </p>
-            )}
+        .up-close {
+          position:absolute; top:12px; right:12px;
+          width:26px; height:26px; border-radius:5px;
+          background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+          display:flex; align-items:center; justify-content:center;
+          cursor:pointer; color:rgba(247,242,234,0.35); transition:all 0.2s;
+        }
+        .up-close:hover { color:rgba(247,242,234,0.75); background:rgba(255,255,255,0.07); }
+
+        /* Top section */
+        .up-top {
+          display:flex; flex-direction:column; align-items:center;
+          padding:40px 28px 28px; text-align:center;
+          background:radial-gradient(ellipse 130% 90% at 50% 0%, rgba(70,30,160,0.12) 0%, transparent 65%);
+        }
+        .up-avatar {
+          width:68px; height:68px; border-radius:50%;
+          border:1px solid rgba(201,168,76,0.28);
+          background:radial-gradient(ellipse, rgba(90,50,200,0.18) 0%, rgba(5,3,14,1) 75%);
+          display:flex; align-items:center; justify-content:center;
+          font-size:26px; margin-bottom:14px;
+          box-shadow:0 0 0 5px rgba(201,168,76,0.05), 0 0 30px rgba(70,30,180,0.18);
+        }
+        .up-name {
+          font-family:'Playfair Display',serif;
+          font-size:23px; font-weight:300; font-style:italic;
+          color:#E8D080; margin-bottom:5px;
+        }
+        .up-zodiac {
+          font-size:10px; font-weight:300; letter-spacing:4px; text-transform:uppercase;
+          color:rgba(247,242,234,0.72);
+        }
+
+        .up-divider {
+          height:1px; margin:0 28px;
+          background:linear-gradient(to right, transparent, rgba(201,168,76,0.14), transparent);
+        }
+
+        /* Info rows */
+        .up-infos { padding:18px 18px 14px; display:flex; flex-direction:column; gap:8px; }
+        .up-row {
+          display:flex; align-items:center; gap:12px;
+          padding:11px 13px; border-radius:8px;
+          background:rgba(255,255,255,0.02);
+          border:1px solid rgba(255,255,255,0.045);
+          transition:border-color 0.2s;
+        }
+        .up-row:hover { border-color:rgba(201,168,76,0.1); }
+        .up-row-icon {
+          width:30px; height:30px; border-radius:7px; flex-shrink:0;
+          background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.1);
+          display:flex; align-items:center; justify-content:center;
+          font-size:13px; color:rgba(201,168,76,0.65);
+        }
+        .up-row-label {
+          font-size:9px; font-weight:300; letter-spacing:2.5px; text-transform:uppercase;
+          color:rgba(247,242,234,0.65); margin-bottom:3px;
+        }
+        .up-row-value {
+          font-size:14px; font-weight:300; color:#F7F2EA; letter-spacing:0.2px;
+        }
+
+        /* Bouton modifier */
+        .up-edit {
+          display:block; width:calc(100% - 36px);
+          margin:6px 18px 24px;
+          padding:13px 20px;
+          background:rgba(201,168,76,0.04);
+          border:1px solid rgba(201,168,76,0.25);
+          border-radius:3px;
+          font-family:'Jost',sans-serif;
+          font-size:10px; font-weight:300;
+          letter-spacing:3.5px; text-transform:uppercase;
+          color:rgba(201,168,76,0.95); border-color:rgba(201,168,76,0.45);
+          cursor:pointer; transition:all 0.25s; text-align:center;
+        }
+        .up-edit:hover {
+          background:rgba(201,168,76,0.09);
+          border-color:rgba(201,168,76,0.5);
+          color:#C9A84C;
+        }
+        .up-edit:active { transform:scale(0.98); }
+
+        /* EditProfileModal wrapper — z-index 400, au-dessus du profil (300) */
+        .up-edit-wrapper {
+          position:fixed; inset:0; z-index:400;
+        }
+      `}</style>
+
+      {/* Overlay profil (z-300) */}
+      <div className="up-overlay" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+        <div className={`up-card ${mounted ? 'vis' : ''}`}>
+          <div className="up-c up-tl"/><div className="up-c up-tr"/>
+          <div className="up-c up-bl"/><div className="up-c up-br"/>
+
+          <button className="up-close" onClick={onClose}>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+
+          <div className="up-top">
+            <div className="up-avatar">{user.zodiacSign?.symbol || '✦'}</div>
+            <div className="up-name">{user.name}</div>
+            {zodiacName && <div className="up-zodiac">{zodiacName}</div>}
           </div>
 
-          {/* Informations */}
-          <div className="p-6 space-y-4">
+          <div className="up-divider"/>
 
-            {/* Date de naissance */}
+          <div className="up-infos">
             {user.birthDate && (
-              <div className="bg-purple-800/30 rounded-lg p-4 border border-purple-500/20">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🎂</span>
-                  <div className="flex-1">
-                    <div className="text-purple-300 text-xs">{t('profile.birthdate') || 'Date de naissance'}</div>
-                    <div className="text-purple-100 font-semibold">{formatBirthDate(user.birthDate)}</div>
-                  </div>
+              <div className="up-row">
+                <div className="up-row-icon">☽</div>
+                <div>
+                  <div className="up-row-label">{t('profile.birthdate') || 'Date de naissance'}</div>
+                  <div className="up-row-value">{formatDate(user.birthDate)}</div>
                 </div>
               </div>
             )}
-
-            {/* Genre */}
             {user.gender && (
-              <div className="bg-purple-800/30 rounded-lg p-4 border border-purple-500/20">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">
-                    {user.gender === 'homme' ? '♂' : user.gender === 'femme' ? '♀' : '⚥'}
-                  </span>
-                  <div className="flex-1">
-                    <div className="text-purple-300 text-xs">{t('profile.gender') || 'Genre'}</div>
-                    <div className="text-purple-100 font-semibold">{getGenderLabel(user.gender)}</div>
-                  </div>
+              <div className="up-row">
+                <div className="up-row-icon">{genderSymbol}</div>
+                <div>
+                  <div className="up-row-label">{t('profile.gender') || 'Genre'}</div>
+                  <div className="up-row-value">{genderLabel(user.gender)}</div>
                 </div>
               </div>
             )}
-
-            {/* Signe astrologique détaillé */}
             {user.zodiacSign && (
-              <div className="bg-purple-800/30 rounded-lg p-4 border border-purple-500/20">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{user.zodiacSign.symbol}</span>
-                  <div className="flex-1">
-                    <div className="text-purple-300 text-xs">{t('profile.zodiac') || 'Signe astrologique'}</div>
-                    <div className="text-purple-100 font-semibold">
-                      {t(`zodiac.signs.${getZodiacKey(user.zodiacSign.name)}`)}
-                    </div>
-                    {getZodiacDates() && (
-                      <div className="text-purple-400 text-xs mt-1">
-                        {getZodiacDates()}
-                      </div>
-                    )}
-                  </div>
+              <div className="up-row">
+                <div className="up-row-icon">{user.zodiacSign.symbol}</div>
+                <div>
+                  <div className="up-row-label">{t('profile.zodiac') || 'Signe astrologique'}</div>
+                  <div className="up-row-value">{zodiacName}</div>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Bouton modifier */}
-          <div className="p-6 pt-0">
-            <button
-              onClick={() => setShowEditModal(true)}
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-              </svg>
-              {t('profile.edit') || 'Modifier'}
-            </button>
-          </div>
+          <button
+            className="up-edit"
+            onClick={e => { e.preventDefault(); e.stopPropagation(); setShowEdit(true); }}
+          >
+            {t('profile.edit') || 'Modifier mon profil'}
+          </button>
         </div>
       </div>
 
-      {/* Modal de modification */}
-      {showEditModal && (
-        <EditProfileModal
-          isOpen={showEditModal}
-          onClose={() => setShowEditModal(false)}
-          onSaved={() => {
-            setShowEditModal(false);
-            onClose();
-          }}
-        />
+      {/* EditProfileModal monté EN DEHORS de la card, z-400 */}
+      {showEdit && (
+        <div className="up-edit-wrapper">
+          <EditProfileModal
+            isOpen={showEdit}
+            onClose={() => setShowEdit(false)}
+            onSaved={() => { setShowEdit(false); onClose(); }}
+          />
+        </div>
       )}
     </>
   );

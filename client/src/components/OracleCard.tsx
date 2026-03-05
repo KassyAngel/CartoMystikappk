@@ -1,186 +1,186 @@
-import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface OracleCardProps {
   title: string;
   description: string;
   icon?: string;
-  useImage?: boolean;  // ✅ NOUVEAU
-  imageSrc?: string;   // ✅ NOUVEAU
+  useImage?: boolean;
+  imageSrc?: string;
   isSelected?: boolean;
   onClick?: () => void;
   className?: string;
 }
 
+// Couleurs d'accent par type d'oracle — toutes dans la palette dark luxury
+const ORACLE_ACCENTS: Record<string, { hue: string; rgb: string }> = {
+  jour:      { hue: '#C9A84C', rgb: '201,168,76' },   // or
+  tarot:     { hue: '#A87FC9', rgb: '168,127,201' },   // améthyste douce
+  anges:     { hue: '#7FA8C9', rgb: '127,168,201' },   // bleu ciel pâle
+  horoscope: { hue: '#C97FA8', rgb: '201,127,168' },   // rose poudré
+  cristal:   { hue: '#7FC9A8', rgb: '127,201,168' },   // jade doux
+  default:   { hue: '#C9A84C', rgb: '201,168,76' },
+};
+
+function getAccent(title: string) {
+  const t = title.toLowerCase();
+  if (t.includes('jour') || t.includes('daily')) return ORACLE_ACCENTS.jour;
+  if (t.includes('tarot')) return ORACLE_ACCENTS.tarot;
+  if (t.includes('ange')) return ORACLE_ACCENTS.anges;
+  if (t.includes('horoscope') || t.includes('zodiaque')) return ORACLE_ACCENTS.horoscope;
+  if (t.includes('cristal') || t.includes('rune')) return ORACLE_ACCENTS.cristal;
+  return ORACLE_ACCENTS.default;
+}
+
 export default function OracleCard({ 
-  title, 
-  description, 
-  icon, 
-  useImage,      // ✅ NOUVEAU
-  imageSrc,      // ✅ NOUVEAU
-  isSelected, 
-  onClick, 
-  className 
+  title, description, icon, useImage, imageSrc,
+  isSelected, onClick, className
 }: OracleCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  // Thèmes uniques pour chaque type d'oracle
-  const getOracleTheme = () => {
-    if (title.includes('Jour') || icon === '☀️') {
-      return {
-        gradient: 'from-amber-500/20 via-yellow-500/20 to-orange-500/20',
-        border: 'border-amber-400/50',
-        glow: 'shadow-[0_0_30px_rgba(251,191,36,0.3)]',
-        hoverGlow: 'hover:shadow-[0_0_40px_rgba(251,191,36,0.5)]',
-        iconBg: 'bg-gradient-to-br from-amber-500 to-yellow-600',
-        accent: 'text-amber-300'
-      };
-    }
-    if (title.includes('Tarot') || icon === '🌟') {
-      return {
-        gradient: 'from-purple-600/20 via-violet-600/20 to-fuchsia-600/20',
-        border: 'border-purple-400/50',
-        glow: 'shadow-[0_0_30px_rgba(168,85,247,0.3)]',
-        hoverGlow: 'hover:shadow-[0_0_40px_rgba(168,85,247,0.5)]',
-        iconBg: 'bg-gradient-to-br from-purple-600 to-fuchsia-600',
-        accent: 'text-purple-300'
-      };
-    }
-    if (title.includes('Anges') || icon === '👼') {
-      return {
-        gradient: 'from-blue-500/20 via-cyan-500/20 to-sky-500/20',
-        border: 'border-blue-400/50',
-        glow: 'shadow-[0_0_30px_rgba(59,130,246,0.3)]',
-        hoverGlow: 'hover:shadow-[0_0_40px_rgba(59,130,246,0.5)]',
-        iconBg: 'bg-gradient-to-br from-blue-500 to-cyan-600',
-        accent: 'text-blue-300'
-      };
-    }
-    if (title.includes('Horoscope') || icon === '♈') {
-      return {
-        gradient: 'from-indigo-500/20 via-purple-500/20 to-pink-500/20',
-        border: 'border-indigo-400/50',
-        glow: 'shadow-[0_0_30px_rgba(99,102,241,0.3)]',
-        hoverGlow: 'hover:shadow-[0_0_40px_rgba(99,102,241,0.5)]',
-        iconBg: 'bg-gradient-to-br from-indigo-600 to-pink-600',
-        accent: 'text-indigo-300'
-      };
-    }
-    // Boule de Cristal
-    return {
-      gradient: 'from-emerald-500/20 via-teal-500/20 to-cyan-500/20',
-      border: 'border-emerald-400/50',
-      glow: 'shadow-[0_0_30px_rgba(16,185,129,0.3)]',
-      hoverGlow: 'hover:shadow-[0_0_40px_rgba(16,185,129,0.5)]',
-      iconBg: 'bg-gradient-to-br from-emerald-600 to-teal-600',
-      accent: 'text-emerald-300'
-    };
-  };
-
-  const theme = getOracleTheme();
+  const [hovered, setHovered] = useState(false);
+  const accent = getAccent(title);
 
   return (
     <div
-      className={cn(
-        'group relative overflow-hidden rounded-2xl cursor-pointer w-full',
-        'backdrop-blur-md bg-black/40',
-        'border-2 transition-all duration-500',
-        theme.border,
-        theme.glow,
-        theme.hoverGlow,
-        'hover:scale-[1.02] hover:-translate-y-1',
-        'active:scale-[0.98]',
-        isSelected && 'scale-[1.05] border-[#ffd700] shadow-[0_0_50px_rgba(255,215,0,0.6)]',
-        className
-      )}
+      className={cn('oc-card', isSelected && 'oc-selected', className)}
       onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      data-testid={`oracle-${title.toLowerCase().replace(/\s+/g, '-')}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        '--accent': accent.hue,
+        '--accent-rgb': accent.rgb,
+      } as any}
+      data-testid={`oracle-${title.toLowerCase().replace(/\s+/g,'-')}`}
     >
-      {/* Gradient de fond animé */}
-      <div className={cn(
-        'absolute inset-0 bg-gradient-to-br transition-opacity duration-500',
-        theme.gradient,
-        isHovered ? 'opacity-100' : 'opacity-60'
-      )} />
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300&family=Jost:wght@200;300;400&display=swap');
 
-      {/* Effet de brillance au hover */}
-      <div className={cn(
-        'absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent',
-        'translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000'
-      )} />
+        .oc-card {
+          position: relative;
+          width: 100%;
+          background: rgba(255,255,255,0.025);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 12px;
+          cursor: pointer;
+          overflow: hidden;
+          transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+          -webkit-tap-highlight-color: transparent;
+          font-family: 'Jost', sans-serif;
+        }
+        .oc-card:hover {
+          border-color: rgba(var(--accent-rgb), 0.3);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 24px rgba(var(--accent-rgb),0.08);
+        }
+        .oc-card:active { transform: translateY(0) scale(0.99); }
+        .oc-selected {
+          border-color: rgba(var(--accent-rgb), 0.55) !important;
+          background: rgba(var(--accent-rgb), 0.06) !important;
+          box-shadow: 0 0 32px rgba(var(--accent-rgb),0.12) !important;
+        }
 
-      {/* Particules scintillantes */}
-      {isHovered && (
-        <>
-          <div className="absolute top-4 right-4 w-1 h-1 bg-white rounded-full animate-ping" />
-          <div 
-            className="absolute top-8 right-8 w-1 h-1 bg-white rounded-full animate-ping" 
-            style={{ animationDelay: '0.2s' }} 
-          />
-          <div 
-            className="absolute bottom-6 left-6 w-1 h-1 bg-white rounded-full animate-ping" 
-            style={{ animationDelay: '0.4s' }} 
-          />
-        </>
-      )}
+        /* Shimmer au hover */
+        .oc-shimmer {
+          position: absolute; inset: 0; pointer-events: none;
+          background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.04) 50%, transparent 70%);
+          transform: translateX(-100%);
+          transition: transform 0s;
+        }
+        .oc-card:hover .oc-shimmer {
+          transform: translateX(100%);
+          transition: transform 0.7s ease;
+        }
 
-      {/* Contenu de la carte */}
-      <div className="relative p-5 sm:p-6 text-center min-h-[160px] sm:min-h-[180px] flex flex-col justify-between">
-        {/* Icône OU Image avec cercle de fond */}
-        <div className="flex justify-center mb-3">
-          <div className={cn(
-            'w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center',
-            'transform transition-transform duration-300',
-            theme.iconBg,
-            'shadow-lg overflow-hidden',
-            isHovered && 'scale-110 rotate-12'
-          )}>
-            {useImage && imageSrc ? (
-              // ✅ AFFICHAGE DE L'IMAGE
-              <img 
-                src={imageSrc}
-                alt={title}
-                className="w-full h-full object-cover"
-                style={{
-                  filter: 'brightness(1.1) contrast(1.1) drop-shadow(0 2px 8px rgba(0,0,0,0.4))'
-                }}
-              />
-            ) : (
-              // ✅ AFFICHAGE DE L'ICÔNE (fallback)
-              <span className="text-3xl sm:text-4xl filter drop-shadow-lg">
-                {icon || '✨'}
-              </span>
-            )}
-          </div>
+        /* Indicateur latéral actif */
+        .oc-indicator {
+          position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+          width: 2px; height: 0; background: var(--accent);
+          border-radius: 0 2px 2px 0;
+          transition: height 0.35s cubic-bezier(0.16,1,0.3,1);
+        }
+        .oc-selected .oc-indicator { height: 55%; }
+
+        /* Corps */
+        .oc-body {
+          display: flex; align-items: center;
+          padding: 18px 18px 18px 20px; gap: 16px;
+          min-height: 88px;
+        }
+
+        /* Icône */
+        .oc-icon-wrap {
+          width: 48px; height: 48px; border-radius: 10px; flex-shrink: 0;
+          background: rgba(var(--accent-rgb),0.08);
+          border: 1px solid rgba(var(--accent-rgb),0.15);
+          display: flex; align-items: center; justify-content: center;
+          overflow: hidden;
+          transition: background 0.3s, border-color 0.3s, transform 0.3s;
+        }
+        .oc-card:hover .oc-icon-wrap {
+          background: rgba(var(--accent-rgb),0.13);
+          border-color: rgba(var(--accent-rgb),0.3);
+          transform: scale(1.05);
+        }
+        .oc-icon-text { font-size: 22px; line-height: 1; }
+        .oc-icon-img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Textes */
+        .oc-texts { flex: 1; min-width: 0; }
+        .oc-title {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: 16px; font-weight: 400; letter-spacing: 0.2px;
+          color: #F7F2EA; margin-bottom: 4px; line-height: 1.2;
+          transition: color 0.3s;
+        }
+        .oc-selected .oc-title { color: var(--accent); }
+        .oc-desc {
+          font-size: 12px; font-weight: 200; letter-spacing: 0.3px;
+          color: rgba(247,242,234,0.48); line-height: 1.55;
+          transition: color 0.3s;
+        }
+        .oc-card:hover .oc-desc { color: rgba(247,242,234,0.65); }
+
+        /* Check sélection */
+        .oc-check {
+          width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+          border: 1px solid rgba(var(--accent-rgb),0.4);
+          display: flex; align-items: center; justify-content: center;
+          opacity: 0; transform: scale(0.6);
+          transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .oc-selected .oc-check {
+          opacity: 1; transform: scale(1);
+          border-color: var(--accent);
+          background: rgba(var(--accent-rgb),0.1);
+          box-shadow: 0 0 8px rgba(var(--accent-rgb),0.3);
+        }
+        .oc-check-dot {
+          width: 7px; height: 7px; border-radius: 50%;
+          background: var(--accent);
+        }
+      `}</style>
+
+      <div className="oc-indicator"/>
+      <div className="oc-shimmer"/>
+
+      <div className="oc-body">
+        <div className="oc-icon-wrap">
+          {useImage && imageSrc ? (
+            <img src={imageSrc} alt={title} className="oc-icon-img"
+              style={{ filter: 'brightness(1.05) contrast(1.05)' }}
+            />
+          ) : (
+            <span className="oc-icon-text">{icon || '✦'}</span>
+          )}
         </div>
 
-        {/* Titre */}
-        <h3 className={cn(
-          'text-[#ffd700] text-base sm:text-lg font-bold mb-2 font-serif leading-tight',
-          'transition-all duration-300'
-        )}>
-          {title}
-        </h3>
+        <div className="oc-texts">
+          <div className="oc-title">{title}</div>
+          <div className="oc-desc">{description}</div>
+        </div>
 
-        {/* Description */}
-        <p className={cn(
-          'text-[#c9a9dd] text-xs sm:text-sm leading-relaxed',
-          'transition-colors duration-300',
-          isHovered && theme.accent
-        )}>
-          {description}
-        </p>
-
-        {/* Indicateur de sélection */}
-        {isSelected && (
-          <div className="absolute top-3 right-3">
-            <div className="w-6 h-6 bg-[#ffd700] rounded-full flex items-center justify-center animate-bounce">
-              <span className="text-purple-900 text-xs font-bold">✓</span>
-            </div>
-          </div>
-        )}
+        <div className="oc-check">
+          <div className="oc-check-dot"/>
+        </div>
       </div>
     </div>
   );

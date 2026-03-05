@@ -1,5 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
 
 interface LegalModalProps {
@@ -12,70 +12,74 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
   const { language } = useLanguage();
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // 🖼️ Nettoyage de l'iframe pour éviter les fuites mémoire
   useEffect(() => {
     return () => {
-      if (iframeRef.current) {
-        iframeRef.current.src = 'about:blank';
-      }
+      if (iframeRef.current) iframeRef.current.src = 'about:blank';
     };
   }, []);
 
   if (!isOpen || !type) return null;
 
   const getFileName = () => {
-    const fileName = type === 'legal' 
+    const fileName = type === 'legal'
       ? (language === 'fr' ? 'mentions-legales.html' : 'mentions-legales-en.html')
       : (language === 'fr' ? 'politique-confidentialite.html' : 'politique-confidentialite-en.html');
-
     const isNative = Capacitor.isNativePlatform();
-    const platform = Capacitor.getPlatform();
-
-    // Sur mobile natif, utiliser un chemin relatif simple
-    const fullPath = isNative ? `./${fileName}` : `/${fileName}`;
-
-    console.log('📄 Chargement page légale:', fullPath, 'isNative:', isNative, 'platform:', platform);
-
-    return fullPath;
+    return isNative ? `./${fileName}` : `/${fileName}`;
   };
+
+  const title = type === 'legal'
+    ? (language === 'fr' ? 'Mentions Légales' : 'Legal Notice')
+    : (language === 'fr' ? 'Politique de Confidentialité' : 'Privacy Policy');
 
   return (
     <>
-      {/* Overlay */}
-      <div 
-        className="fixed inset-0 bg-black/80 z-[100] animate-fade-in"
+      {/* z-[500] — au-dessus du drawer (z-201) et de RestorePremiumModal (z-500 même niveau) */}
+      <div
+        className="fixed inset-0 bg-black/80 z-[500]"
+        style={{backdropFilter:'blur(8px)'}}
         onClick={onClose}
       />
+      <div className="fixed inset-4 md:inset-10 z-[501] rounded-sm overflow-hidden shadow-2xl"
+        style={{border:'1px solid rgba(201,168,76,0.2)', background:'#080514'}}>
 
-      {/* Modal */}
-      <div className="fixed inset-4 md:inset-10 z-[101] bg-gradient-to-b from-purple-900 via-indigo-900 to-purple-900 rounded-2xl shadow-2xl overflow-hidden border-2 border-purple-500/30">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-purple-500/30 bg-purple-900/50">
-          <h2 className="text-yellow-300 font-serif font-bold text-xl">
-            {type === 'legal' ? (
-              language === 'fr' ? 'Mentions Légales' : 'Legal Notice'
-            ) : (
-              language === 'fr' ? 'Politique de Confidentialité' : 'Privacy Policy'
-            )}
-          </h2>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-lg hover:bg-purple-700/50 transition-colors"
-            aria-label="Fermer"
+        {/* Header dark luxury */}
+        <div style={{
+          display:'flex', alignItems:'center', justifyContent:'space-between',
+          padding:'14px 18px',
+          borderBottom:'1px solid rgba(255,255,255,0.06)',
+          background:'rgba(5,3,14,0.95)',
+        }}>
+          <span style={{
+            fontFamily:"'Playfair Display', Georgia, serif",
+            fontSize:'15px', fontWeight:300, fontStyle:'italic',
+            color:'#E8D080', letterSpacing:'0.3px',
+          }}>{title}</span>
+
+          <button onClick={onClose} style={{
+            width:28, height:28, borderRadius:6,
+            background:'rgba(255,255,255,0.04)',
+            border:'1px solid rgba(255,255,255,0.07)',
+            display:'flex', alignItems:'center', justifyContent:'center',
+            cursor:'pointer', color:'rgba(247,242,234,0.5)',
+            transition:'all 0.2s',
+          }}
+            onMouseEnter={e=>(e.currentTarget.style.color='rgba(247,242,234,0.9)')}
+            onMouseLeave={e=>(e.currentTarget.style.color='rgba(247,242,234,0.5)')}
           >
-            <svg className="w-6 h-6 text-purple-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M18 6L6 18M6 6l12 12"/>
             </svg>
           </button>
         </div>
 
-        {/* Content */}
-        <div className="h-[calc(100%-64px)] bg-white">
+        {/* Iframe */}
+        <div style={{height:'calc(100% - 57px)', background:'#fff'}}>
           <iframe
             ref={iframeRef}
             src={getFileName()}
-            className="w-full h-full border-0"
-            title={type === 'legal' ? 'Mentions Légales' : 'Politique de Confidentialité'}
+            style={{width:'100%', height:'100%', border:'none'}}
+            title={title}
             sandbox="allow-same-origin allow-scripts"
             loading="lazy"
           />

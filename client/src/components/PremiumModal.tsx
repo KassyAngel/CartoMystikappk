@@ -1,460 +1,436 @@
 import { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
 import { Capacitor } from '@capacitor/core';
 import { useLanguage } from '@/contexts/LanguageContext';
-import MysticalButton from './MysticalButton';
 import { config } from '@/config';
 import { getDeviceId, saveUserEmail } from '@/lib/userStorage';
-import { 
-  initializeRevenueCat, 
-  getOfferings, 
-  purchasePackage, 
-  restorePurchases
+import {
+  initializeRevenueCat, getOfferings, purchasePackage, restorePurchases
 } from '@/services/revenueCatService';
 import type { PurchasesOfferings, PurchasesPackage } from '@revenuecat/purchases-capacitor';
 
 interface PremiumModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onPurchase: () => void;
+  onPurchase: (planId?: string) => void;
 }
 
 export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumModalProps) {
   const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [showRestoreForm, setShowRestoreForm] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showRestore, setShowRestore] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<'premium_1month' | 'premium_3months' | null>(null);
-
-  // Pour RevenueCat (mobile natif)
   const [offerings, setOfferings] = useState<PurchasesOfferings | null>(null);
   const [error, setError] = useState('');
+  const [mounted, setMounted] = useState(false);
 
   const isNative = Capacitor.isNativePlatform();
-  const platform = Capacitor.getPlatform();
 
-  console.log('💳 PremiumModal - Plateforme:', { isNative, platform });
-
-  // Charger les offres RevenueCat si on est sur mobile natif
   useEffect(() => {
-    if (isOpen && isNative) {
-      loadRevenueCatOfferings();
-    }
-  }, [isOpen, isNative]);
-
-  // Gestion de la touche Escape
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !isLoading) {
-        onClose();
-      }
-    };
-
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.removeEventListener('keydown', handleEscape);
-        document.body.style.overflow = 'unset';
-      };
+      setTimeout(() => setMounted(true), 40);
+      if (isNative) loadOfferings();
+    } else {
+      setMounted(false);
+      setError(''); setEmailError(''); setEmail('');
     }
-  }, [isOpen, onClose, isLoading]);
+  }, [isOpen]);
 
-  // ==================== REVENUECAT (Mobile Natif) ====================
-  const loadRevenueCatOfferings = async () => {
-    try {
-      console.log('📦 Chargement offres RevenueCat...');
-      await initializeRevenueCat();
-      const availableOfferings = await getOfferings();
-      setOfferings(availableOfferings);
-      console.log('✅ Offres RevenueCat chargées:', availableOfferings);
-    } catch (error) {
-      console.error('❌ Erreur chargement offres RevenueCat:', error);
-      setError(t('premium.error.loadFailed') || 'Impossible de charger les offres');
-    }
+  useEffect(() => {
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape' && !loading) onClose(); };
+    if (isOpen) { document.addEventListener('keydown', esc); document.body.style.overflow = 'hidden'; }
+    return () => { document.removeEventListener('keydown', esc); document.body.style.overflow = ''; };
+  }, [isOpen, loading, onClose]);
+
+  const loadOfferings = async () => {
+    try { await initializeRevenueCat(); setOfferings(await getOfferings()); }
+    catch (e) { setError(t('premium.error.loadFailed') || 'Impossible de charger les offres'); }
   };
 
   const handleRevenueCatPurchase = async (pkg: PurchasesPackage) => {
-    if (!email || !email.includes('@')) {
-      setEmailError(t('premium.error.invalidEmail') || "L'email n'est pas valide.");
-      return;
-    }
-
-    setIsLoading(true);
-    setError('');
-
+    if (!email.includes('@')) { setEmailError(t('premium.error.invalidEmail') || 'Email invalide'); return; }
+    setLoading(true); setError('');
     try {
-      console.log('🛒 Achat RevenueCat du package:', pkg.identifier);
-
       const result = await purchasePackage(pkg, email);
-
-      if (result.success) {
-        await saveUserEmail(email);
-        console.log('✅ Premium activé via RevenueCat !');
-        onPurchase();
-      } else {
-        setError(t('premium.error.purchaseFailed') || 'Erreur lors de l\'achat');
-      }
-    } catch (error: any) {
-      console.error('❌ Erreur achat RevenueCat:', error);
-      setError(error.message || t('premium.error.unknown') || 'Erreur inconnue');
-    } finally {
-      setIsLoading(false);
-    }
+      if (result.success) { await saveUserEmail(email); onPurchase(pkg.identifier); }
+      else setError(t('premium.error.purchaseFailed') || 'Erreur achat');
+    } catch (e: any) { setError(e.message || 'Erreur'); }
+    finally { setLoading(false); }
   };
 
   const handleRevenueCatRestore = async () => {
-    if (!email || !email.includes('@')) {
-      setEmailError(t('premium.error.invalidEmail') || "L'email n'est pas valide.");
-      return;
-    }
-
-    setIsLoading(true);
-    setError('');
-
+    if (!email.includes('@')) { setEmailError(t('premium.error.invalidEmail') || 'Email invalide'); return; }
+    setLoading(true); setError('');
     try {
-      console.log('♻️ Restauration achats RevenueCat...');
-
       const result = await restorePurchases(email);
-
-      if (result.success) {
-        await saveUserEmail(email);
-        console.log('✅ Premium restauré via RevenueCat !');
-        onPurchase();
-      } else {
-        setError(t('premium.error.noActivePremium') || 'Aucun abonnement actif trouvé');
-      }
-    } catch (error: any) {
-      console.error('❌ Erreur restauration RevenueCat:', error);
-      setError(error.message || t('premium.error.unknown') || 'Erreur inconnue');
-    } finally {
-      setIsLoading(false);
-    }
+      if (result.success) { await saveUserEmail(email); onPurchase(); }
+      else setError(t('premium.error.noActivePremium') || 'Aucun abonnement trouvé');
+    } catch (e: any) { setError(e.message || 'Erreur'); }
+    finally { setLoading(false); }
   };
 
-  // ==================== STRIPE (Web) ====================
-  const handleStripeSubscribe = async () => {
+  const handleStripe = async () => {
     if (!selectedPlan) return;
-
-    // Validation email
-    if (!email) {
-      setEmailError(t('premium.error.emailRequired') || "L'email est requis.");
-      return;
-    }
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setEmailError(t('premium.error.emailInvalid') || "L'email n'est pas valide.");
-      return;
-    }
-    setEmailError('');
-
-    setIsLoading(true);
-
+    if (!email || !email.includes('@')) { setEmailError(t('premium.error.emailInvalid') || 'Email invalide'); return; }
+    setEmailError(''); setLoading(true);
     try {
-      console.log('🛒 Création session Stripe pour plan:', selectedPlan);
-
       const deviceId = await getDeviceId();
-      const response = await fetch(`${config.apiBaseUrl}/api/create-checkout-session`, {
-        method: 'POST',
+      const res = await fetch(`${config.apiBaseUrl}/api/create-checkout-session`, {
+        method: 'POST', credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ planId: selectedPlan, deviceId, email })
+        body: JSON.stringify({ planId: selectedPlan, deviceId, email }),
       });
-
-      if (!response.ok) {
-        throw new Error(`Erreur HTTP: ${response.status}`);
-      }
-
-      const data = await response.json();
-
+      const data = await res.json();
       if (data.success && data.url) {
-        console.log('✅ Session Stripe créée, redirection vers:', data.url);
-
-        const stripeWindow = window.open(data.url, '_blank');
-
-        if (!stripeWindow) {
-          alert('⚠️ Veuillez autoriser les popups pour accéder au paiement Stripe');
-        } else {
-          onClose();
-        }
-      } else {
-        throw new Error(data.error || 'Erreur création session');
-      }
-
-    } catch (error: any) {
-      console.error('❌ Erreur paiement Stripe:', error);
-      alert(`❌ ${t('premium.error.payment') || 'Erreur lors du paiement. Réessayez.'}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // ==================== HANDLERS ====================
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget && !isLoading) {
-      onClose();
-    }
-  };
-
-  const handleCloseClick = () => {
-    if (!isLoading) {
-      onClose();
-    }
+        const w = window.open(data.url, '_blank');
+        if (!w) alert('Autorisez les popups pour accéder au paiement');
+        else onClose();
+      } else throw new Error(data.error || 'Erreur');
+    } catch (e: any) { alert(e.message || 'Erreur paiement'); }
+    finally { setLoading(false); }
   };
 
   if (!isOpen) return null;
 
-  // ==================== RENDER ====================
-  const currentOffering = offerings?.current;
-  const availablePackages = currentOffering?.availablePackages || [];
+  const packages = offerings?.current?.availablePackages || [];
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={handleOverlayClick}
-      />
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300&family=Jost:wght@200;300;400;500&display=swap');
 
-      <div className="relative bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-800 rounded-2xl shadow-2xl max-w-md w-full p-6 border-2 border-yellow-500/30 max-h-[90vh] overflow-y-auto">
+        .pm-overlay {
+          position: fixed; inset: 0; z-index: 200;
+          background: rgba(4,0,16,0.85); backdrop-filter: blur(12px);
+          display: flex; align-items: center; justify-content: center; padding: 20px;
+          animation: pm-fade 0.25s ease;
+        }
+        @keyframes pm-fade { from{opacity:0} to{opacity:1} }
 
-        {/* Bouton fermeture */}
-        <button
-          onClick={handleCloseClick}
-          disabled={isLoading}
-          className="absolute top-4 right-4 p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors disabled:opacity-50"
-        >
-          <X className="w-6 h-6 text-white" />
-        </button>
+        .pm-card {
+          width: 100%; max-width: 380px; max-height: 88vh; overflow-y: auto;
+          background: linear-gradient(160deg, #10081e 0%, #080514 70%);
+          border: 1px solid rgba(201,168,76,0.2);
+          border-radius: 4px; position: relative;
+          font-family: 'Jost', sans-serif;
+          transform: translateY(14px); opacity: 0;
+          transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;
+        }
+        .pm-card.vis { transform: translateY(0); opacity: 1; }
+        .pm-card::-webkit-scrollbar { width: 3px; }
+        .pm-card::-webkit-scrollbar-track { background: transparent; }
+        .pm-card::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.2); border-radius: 2px; }
 
-        {/* Header */}
-        <div className="text-center mb-6">
-          <div className="text-4xl mb-2">✨</div>
-          <h2 className="text-2xl font-bold text-yellow-400 mb-2">
-            {t('premium.title') || 'Premium'}
-          </h2>
-          <p className="text-purple-200 text-sm">
-            {t('premium.subtitle') || 'Débloquez toutes les fonctionnalités'}
-          </p>
-          <p className="text-purple-300 text-xs mt-2">
-            {isNative ? `📱 ${t('premium.payment.googlePlay')}` : `🌐 ${t('premium.payment.stripe')}`}
-          </p>
-        </div>
+        .pm-corner { position:absolute; width:8px; height:8px; border-color:rgba(201,168,76,0.3); border-style:solid; }
+        .pm-tl{top:0;left:0;border-width:1px 0 0 1px}
+        .pm-tr{top:0;right:0;border-width:1px 1px 0 0}
+        .pm-bl{bottom:0;left:0;border-width:0 0 1px 1px}
+        .pm-br{bottom:0;right:0;border-width:0 1px 1px 0}
 
-        {/* Champ Email */}
-        {!showRestoreForm && (
-          <div className="mb-6">
-            <label className="block text-purple-200 text-sm mb-2">
-              📧 {t('premium.emailLabel') || 'Votre email'}
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
-              placeholder="exemple@email.com"
-              disabled={isLoading}
-              className="w-full px-4 py-3 rounded-lg bg-purple-800/50 border border-purple-500/30 text-white placeholder-purple-300/50 focus:outline-none focus:border-yellow-400/50 disabled:opacity-50"
-            />
-            {emailError && (
-              <p className="text-red-400 text-sm mt-1">{emailError}</p>
-            )}
-            <p className="text-purple-300 text-xs mt-2">
-              {t('premium.emailHelp') || 'Pour récupérer votre abonnement'}
-            </p>
+        .pm-close {
+          position: absolute; top: 14px; right: 14px;
+          width: 28px; height: 28px; border-radius: 6px;
+          background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+          display: flex; align-items: center; justify-content: center;
+          cursor: pointer; color: rgba(247,242,234,0.72); transition: all 0.2s;
+        }
+        .pm-close:hover { background: rgba(255,255,255,0.08); color: #F7F2EA; }
+
+        /* Header */
+        .pm-head {
+          padding: 36px 28px 20px; text-align: center;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .pm-star {
+          font-size: 28px; margin-bottom: 12px; display: block;
+          filter: drop-shadow(0 0 10px rgba(201,168,76,0.5));
+        }
+        .pm-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 22px; font-weight: 300; font-style: italic;
+          color: #E8D080; margin-bottom: 6px;
+        }
+        .pm-sub {
+          font-size: 13px; font-weight: 200; letter-spacing: 0.3px;
+          color: rgba(247,242,234,0.88); line-height: 1.55;
+        }
+
+        /* Body */
+        .pm-body { padding: 20px 24px 24px; }
+
+        /* Email input */
+        .pm-label {
+          font-size: 9px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase;
+          color: rgba(201,168,76,0.9); margin-bottom: 8px; display: block;
+        }
+        .pm-input {
+          width: 100%; padding: 11px 14px; margin-bottom: 4px;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.1); border-bottom-color: rgba(201,168,76,0.3);
+          border-radius: 3px;
+          font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300;
+          color: #F7F2EA; outline: none; transition: border-color 0.2s;
+        }
+        .pm-input:focus { border-color: rgba(201,168,76,0.5); }
+        .pm-input::placeholder { color: rgba(247,242,234,0.45); }
+        .pm-email-hint {
+          font-size: 10px; font-weight: 200; color: rgba(247,242,234,0.75);
+          margin-bottom: 18px; display: block;
+        }
+        .pm-err { font-size: 11px; color: rgba(220,80,80,0.9); margin-bottom: 10px; display: block; }
+
+        /* Plan cards */
+        .pm-plans { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+        .pm-plan {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 14px 16px; border-radius: 8px; cursor: pointer;
+          background: rgba(255,255,255,0.025);
+          border: 1px solid rgba(255,255,255,0.07);
+          transition: all 0.22s; position: relative; overflow: hidden;
+        }
+        .pm-plan:hover { border-color: rgba(201,168,76,0.25); background: rgba(201,168,76,0.04); }
+        .pm-plan.selected { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.07); }
+        .pm-plan-left {}
+        .pm-plan-name { font-size: 15px; font-weight: 300; color: #F7F2EA; margin-bottom: 2px; }
+        .pm-plan.selected .pm-plan-name { color: #E8D080; }
+        .pm-plan-note { font-size: 11px; font-weight: 200; color: rgba(247,242,234,0.75); }
+        .pm-plan-right { text-align: right; }
+        .pm-plan-old { font-size: 11px; color: rgba(247,242,234,0.6); text-decoration: line-through; }
+        .pm-plan-price { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 400; color: #C9A84C; }
+        .pm-plan-badge {
+          position: absolute; top: 6px; right: 6px;
+          font-size: 9px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(201,168,76,0.9); background: rgba(201,168,76,0.1);
+          border: 1px solid rgba(201,168,76,0.2); border-radius: 20px; padding: 2px 8px;
+        }
+        .pm-plan-radio {
+          width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+          border: 1px solid rgba(255,255,255,0.15); margin-right: 12px;
+          display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+        }
+        .pm-plan.selected .pm-plan-radio { border-color: rgba(201,168,76,0.7); background: rgba(201,168,76,0.15); }
+        .pm-plan-radio-dot {
+          width: 7px; height: 7px; border-radius: 50%; background: #C9A84C;
+          opacity: 0; transition: opacity 0.2s;
+        }
+        .pm-plan.selected .pm-plan-radio-dot { opacity: 1; }
+
+        /* CTA button */
+        .pm-cta {
+          width: 100%; padding: 14px;
+          background: transparent;
+          border: 1px solid rgba(201,168,76,0.35);
+          border-radius: 3px;
+          font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 300;
+          letter-spacing: 3px; text-transform: uppercase;
+          color: rgba(201,168,76,0.85); cursor: pointer; transition: all 0.25s;
+          margin-bottom: 12px;
+        }
+        .pm-cta:hover:not(:disabled) {
+          background: rgba(201,168,76,0.07); border-color: rgba(201,168,76,0.6); color: #C9A84C;
+        }
+        .pm-cta:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* Benefits */
+        .pm-benefits {
+          margin-top: 16px; padding-top: 16px;
+          border-top: 1px solid rgba(255,255,255,0.05);
+          display: flex; flex-direction: column; gap: 8px;
+        }
+        .pm-benefit {
+          display: flex; align-items: center; gap: 10px;
+          font-size: 12px; font-weight: 200; color: rgba(247,242,234,0.88);
+        }
+        .pm-benefit-dot {
+          width: 4px; height: 4px; border-radius: 50%; background: rgba(201,168,76,0.5); flex-shrink: 0;
+        }
+
+        /* Restore link */
+        .pm-restore-link {
+          width: 100%; padding: 8px; background: none; border: none; cursor: pointer;
+          font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 200;
+          color: rgba(247,242,234,0.28); letter-spacing: 0.5px; transition: color 0.2s;
+          text-align: center;
+        }
+        .pm-restore-link:hover { color: rgba(247,242,234,0.88); }
+
+        /* Error */
+        .pm-error-box {
+          padding: 10px 14px; border-radius: 6px; margin-bottom: 12px;
+          background: rgba(200,60,60,0.08); border: 1px solid rgba(200,60,60,0.2);
+          font-size: 12px; color: rgba(220,100,100,0.9);
+        }
+
+        /* RevenueCat package */
+        .pm-pkg { margin-bottom: 10px; }
+        .pm-pkg-info { margin-bottom: 8px; }
+        .pm-pkg-title { font-size: 15px; font-weight: 300; color: #E8D080; }
+        .pm-pkg-desc { font-size: 12px; font-weight: 200; color: rgba(247,242,234,0.82); }
+        .pm-pkg-price { font-family: 'Playfair Display', serif; font-size: 22px; color: #C9A84C; }
+        .pm-pkg-btn {
+          width: 100%; padding: 13px; background: transparent;
+          border: 1px solid rgba(201,168,76,0.35); border-radius: 3px;
+          font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 300;
+          letter-spacing: 3px; text-transform: uppercase;
+          color: rgba(201,168,76,0.85); cursor: pointer; transition: all 0.25s;
+        }
+        .pm-pkg-btn:hover:not(:disabled) { background: rgba(201,168,76,0.07); border-color: rgba(201,168,76,0.6); }
+        .pm-pkg-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .pm-conditions {
+          margin-top: 14px; font-size: 10px; font-weight: 200; letter-spacing: 0.3px;
+          color: rgba(247,242,234,0.65); text-align: center; line-height: 1.8;
+        }
+        .pm-conditions span { color: rgba(201,168,76,0.5); }
+      `}</style>
+
+      <div className="pm-overlay" onClick={e => { if (e.target === e.currentTarget && !loading) onClose(); }}>
+        <div className={`pm-card ${mounted ? 'vis' : ''}`}>
+          <div className="pm-corner pm-tl"/><div className="pm-corner pm-tr"/>
+          <div className="pm-corner pm-bl"/><div className="pm-corner pm-br"/>
+
+          <button className="pm-close" onClick={() => !loading && onClose()}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+
+          {/* Header */}
+          <div className="pm-head">
+            <span className="pm-star">✦</span>
+            <div className="pm-title">{t('premium.title') || 'Premium'}</div>
+            <p className="pm-sub">{t('premium.subtitle') || 'Débloquez toutes les fonctionnalités'}</p>
           </div>
-        )}
 
-        {/* ==================== MODE NATIVE (RevenueCat) ==================== */}
-        {isNative && !showRestoreForm && (
-          <>
-            {availablePackages.length > 0 ? (
-              <div className="space-y-4 mb-6">
-                {availablePackages.map((pkg) => (
-                  <div
-                    key={pkg.identifier}
-                    className="bg-purple-800/30 rounded-xl p-4 border-2 border-purple-500/30 hover:border-yellow-400/50 transition-all"
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <h3 className="text-yellow-300 font-semibold">
-                          {pkg.product.title}
-                        </h3>
-                        <p className="text-purple-200 text-sm">
-                          {pkg.product.description}
-                        </p>
+          <div className="pm-body">
+
+            {/* Email */}
+            {!showRestore && (
+              <>
+                <label className="pm-label">{t('premium.emailLabel') || 'Votre email'}</label>
+                <input
+                  type="email" className="pm-input" placeholder="exemple@email.com"
+                  value={email} disabled={loading}
+                  onChange={e => { setEmail(e.target.value); setEmailError(''); }}
+                />
+                {emailError && <span className="pm-err">{emailError}</span>}
+                <span className="pm-email-hint">{t('premium.emailHelp') || 'Pour récupérer votre abonnement'}</span>
+              </>
+            )}
+
+            {/* RevenueCat (natif) */}
+            {isNative && !showRestore && (
+              packages.length > 0 ? packages.map(pkg => (
+                <div key={pkg.identifier} className="pm-pkg">
+                  <div className="pm-pkg-info">
+                    <div className="pm-pkg-title">{pkg.product.title}</div>
+                    <div className="pm-pkg-desc">{pkg.product.description}</div>
+                    <div className="pm-pkg-price">{pkg.product.priceString}</div>
+                  </div>
+                  <button className="pm-pkg-btn" disabled={loading} onClick={() => handleRevenueCatPurchase(pkg)}>
+                    {loading ? '···' : (t('premium.buy') || 'Acheter')}
+                  </button>
+                </div>
+              )) : !error && (
+                <div style={{textAlign:'center',padding:'24px 0',color:'rgba(247,242,234,0.4)',fontSize:'13px'}}>
+                  Chargement des offres…
+                </div>
+              )
+            )}
+
+            {/* Stripe (web) */}
+            {!isNative && !showRestore && (
+              <>
+                <div className="pm-plans">
+                  {/* Plan 1 mois */}
+                  <div className={`pm-plan ${selectedPlan === 'premium_1month' ? 'selected' : ''}`}
+                    onClick={() => { setSelectedPlan('premium_1month'); setEmailError(''); }}>
+                    <div className="pm-plan-radio"><div className="pm-plan-radio-dot"/></div>
+                    <div className="pm-plan-left">
+                      <div className="pm-plan-name">{t('premium.plan.1month') || '1 mois'}</div>
+                      <div className="pm-plan-note">{t('premium.plan.1month.subtitle') || 'Abonnement mensuel'}</div>
+                    </div>
+                    <div className="pm-plan-right">
+                      <div className="pm-plan-price">3,99€</div>
+                    </div>
+                  </div>
+
+                  {/* Plan 3 mois */}
+                  <div className={`pm-plan ${selectedPlan === 'premium_3months' ? 'selected' : ''}`}
+                    onClick={() => { setSelectedPlan('premium_3months'); setEmailError(''); }}>
+                    <span className="pm-plan-badge">-25%</span>
+                    <div className="pm-plan-radio"><div className="pm-plan-radio-dot"/></div>
+                    <div className="pm-plan-left">
+                      <div className="pm-plan-name">{t('premium.plan.3months') || '3 mois'}</div>
+                      <div className="pm-plan-note" style={{color:'rgba(127,201,168,0.7)'}}>
+                        {t('premium.plan.3months.subtitle') || 'Meilleure offre'}
                       </div>
-                      <div className="text-2xl font-bold text-yellow-300">
-                        {pkg.product.priceString}
-                      </div>
                     </div>
-                    <MysticalButton
-                      onClick={() => handleRevenueCatPurchase(pkg)}
-                      disabled={isLoading}
-                      className="w-full"
-                    >
-                      {isLoading ? `⏳ ${t('premium.button.loading') || 'Chargement...'}` : `🛒 ${t('premium.buy') || 'Acheter'}`}
-                    </MysticalButton>
+                    <div className="pm-plan-right">
+                      <div className="pm-plan-old">11,97€</div>
+                      <div className="pm-plan-price">8,98€</div>
+                    </div>
                   </div>
-                ))}
-              </div>
-            ) : !error ? (
-              <div className="text-center py-8">
-                <div className="animate-spin text-4xl mb-4">⏳</div>
-                <p className="text-purple-200">{t('premium.loading.offers') || 'Chargement des offres...'}</p>
-              </div>
-            ) : null}
-          </>
-        )}
+                </div>
 
-        {/* ==================== MODE WEB (Stripe) ==================== */}
-        {!isNative && !showRestoreForm && (
-          <>
-            <div className="space-y-4 mb-6">
-              {/* Plan 1 mois */}
-              <button
-                onClick={() => { setSelectedPlan('premium_1month'); setEmailError(''); }}
-                disabled={isLoading}
-                className={`w-full p-4 rounded-xl border-2 transition-all disabled:opacity-50 ${
-                  selectedPlan === 'premium_1month'
-                    ? 'border-yellow-400 bg-yellow-400/20 shadow-lg scale-105'
-                    : 'border-purple-400/30 bg-purple-800/30 hover:border-yellow-400/50'
-                }`}
-              >
-                <div className="flex justify-between items-center">
-                  <div className="text-left">
-                    <div className="text-white font-semibold">
-                      {t('premium.plan.1month') || '1 mois'}
-                    </div>
-                    <div className="text-purple-200 text-xs">
-                      {t('premium.plan.1month.subtitle') || 'Abonnement mensuel'}
-                    </div>
-                  </div>
-                  <div className="text-yellow-400 font-bold text-xl">3,99€</div>
-                </div>
-              </button>
+                <button className="pm-cta" disabled={!selectedPlan || loading || !email} onClick={handleStripe}>
+                  {loading ? '···' : (t('premium.button.subscribe') || 'Continuer vers le paiement')}
+                </button>
+              </>
+            )}
 
-              {/* Plan 3 mois */}
-              <button
-                onClick={() => { setSelectedPlan('premium_3months'); setEmailError(''); }}
-                disabled={isLoading}
-                className={`w-full p-4 rounded-xl border-2 transition-all relative disabled:opacity-50 ${
-                  selectedPlan === 'premium_3months'
-                    ? 'border-yellow-400 bg-yellow-400/20 shadow-lg scale-105'
-                    : 'border-purple-400/30 bg-purple-800/30 hover:border-yellow-400/50'
-                }`}
-              >
-                <div className="absolute -top-2 right-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                  {t('premium.plan.discount') || '-25%'}
-                </div>
-                <div className="flex justify-between items-center">
-                  <div className="text-left">
-                    <div className="text-white font-semibold">
-                      {t('premium.plan.3months') || '3 mois'}
-                    </div>
-                    <div className="text-green-400 text-xs font-semibold">
-                      {t('premium.plan.3months.subtitle') || 'Meilleure offre !'}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-gray-400 text-sm line-through">11,97€</div>
-                    <div className="text-yellow-400 font-bold text-xl">8,98€</div>
-                  </div>
-                </div>
+            {/* Restauration (natif) */}
+            {showRestore && isNative && (
+              <>
+                <label className="pm-label">{t('premium.restoreEmailLabel') || 'Votre email'}</label>
+                <input type="email" className="pm-input" placeholder="exemple@email.com"
+                  value={email} disabled={loading}
+                  onChange={e => { setEmail(e.target.value); setEmailError(''); }}/>
+                {emailError && <span className="pm-err">{emailError}</span>}
+                <button className="pm-cta" style={{marginTop:12}} disabled={loading} onClick={handleRevenueCatRestore}>
+                  {loading ? '···' : (t('premium.restore') || 'Restaurer')}
+                </button>
+                <button className="pm-restore-link" onClick={() => setShowRestore(false)}>
+                  ← {t('premium.backToPurchase') || 'Retour aux offres'}
+                </button>
+              </>
+            )}
+
+            {/* Error */}
+            {error && <div className="pm-error-box">{error}</div>}
+
+            {/* Toggle restaurer */}
+            {isNative && !showRestore && (
+              <button className="pm-restore-link" onClick={() => setShowRestore(true)}>
+                {t('premium.restoreSubscription') || 'Restaurer un abonnement existant'}
               </button>
+            )}
+
+            {/* Avantages */}
+            <div className="pm-benefits">
+              {[
+                t('premium.benefits.ads') || 'Sans publicité',
+                t('premium.benefits.grimoire') || 'Grimoire illimité',
+                t('premium.benefits.notes') || 'Notes personnalisées',
+                t('premium.benefits.history') || 'Historique complet',
+              ].map((b, i) => (
+                <div key={i} className="pm-benefit">
+                  <div className="pm-benefit-dot"/>
+                  <span>{b}</span>
+                </div>
+              ))}
             </div>
 
-            {/* Bouton Stripe */}
-            <MysticalButton
-              onClick={handleStripeSubscribe}
-              disabled={!selectedPlan || isLoading || !email}
-              className="w-full mb-4"
-            >
-              {isLoading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <span className="animate-spin">⏳</span>
-                  {t('premium.button.processing') || 'Redirection...'}
-                </span>
-              ) : selectedPlan ? (
-                `💳 ${t('premium.button.subscribe') || 'Payer avec Stripe'}`
-              ) : (
-                t('premium.button.select') || 'Sélectionner un plan'
-              )}
-            </MysticalButton>
-          </>
-        )}
+            <div className="pm-conditions">
+              <div>{t('premium.conditions.line1')}</div>
+              <div><span>{t('premium.conditions.line2')}</span></div>
+              <div style={{fontSize:9}}>{t('premium.conditions.line3')}</div>
+            </div>
 
-        {/* ==================== FORMULAIRE RESTAURATION ==================== */}
-        {showRestoreForm && isNative && (
-          <div className="mb-6">
-            <label className="block text-purple-200 text-sm mb-2">
-              📧 {t('premium.restoreEmailLabel') || 'Votre email'}
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="exemple@email.com"
-              disabled={isLoading}
-              className="w-full px-4 py-3 rounded-lg bg-purple-800/50 border border-purple-500/30 text-white placeholder-purple-300/50 focus:outline-none focus:border-yellow-400/50 disabled:opacity-50"
-            />
-            <MysticalButton
-              onClick={handleRevenueCatRestore}
-              disabled={isLoading}
-              className="w-full mt-4"
-            >
-              {isLoading ? `⏳ ${t('premium.button.restoring') || 'Restauration...'}` : `♻️ ${t('premium.restore') || 'Restaurer'}`}
-            </MysticalButton>
           </div>
-        )}
-
-        {/* Message d'erreur */}
-        {error && (
-          <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-3 mb-4">
-            <p className="text-red-200 text-sm">❌ {error}</p>
-          </div>
-        )}
-
-        {/* Toggle Restauration (uniquement mobile) */}
-        {isNative && (
-          <button
-            onClick={() => setShowRestoreForm(!showRestoreForm)}
-            className="text-purple-300 hover:text-purple-100 text-sm transition-colors w-full text-center mb-4"
-          >
-            {showRestoreForm 
-              ? `← ${t('premium.backToPurchase') || 'Retour aux achats'}` 
-              : `♻️ ${t('premium.restoreSubscription') || 'Restaurer un abonnement'}`
-            }
-          </button>
-        )}
-
-        {/* Conditions */}
-        <div className="mt-4 text-xs text-purple-200 text-center space-y-1">
-          <p>{t('premium.conditions.line1')}</p>
-          <p className="text-green-400 font-semibold">{t('premium.conditions.line2')}</p>
-          <p className="text-purple-300 text-[10px]">{t('premium.conditions.line3')}</p>
-        </div>
-
-        {/* Avantages */}
-        <div className="mt-4 pt-4 border-t border-purple-500/30">
-          <div className="text-center text-sm text-purple-200 space-y-1">
-            <div>✓ {t('premium.benefits.ads') || 'Sans publicité'}</div>
-            <div>✓ {t('premium.benefits.grimoire') || 'Grimoire illimité'}</div>
-            <div>✓ {t('premium.benefits.notes') || 'Notes personnalisées'}</div>
-            <div>✓ {t('premium.benefits.history') || 'Historique complet'}</div>
-          </div>
-        </div>
-
-        {/* Logo */}
-        <div className="mt-3 flex items-center justify-center gap-2 text-purple-300 text-xs">
-          <span>{t('premium.poweredBy') || 'Powered by'}</span>
-          {isNative ? (
-            <span className="font-semibold">Google Play</span>
-          ) : (
-            <svg className="h-4" viewBox="0 0 60 25" fill="currentColor">
-              <path d="M59.64 14.28h-8.06c.19 1.93 1.6 2.55 3.2 2.55 1.64 0 2.96-.37 4.05-.95v3.32a8.33 8.33 0 0 1-4.56 1.1c-4.01 0-6.83-2.5-6.83-7.48 0-4.19 2.39-7.52 6.3-7.52 3.92 0 5.96 3.28 5.96 7.5 0 .4-.04 1.26-.06 1.48zm-5.92-5.62c-1.03 0-2.17.73-2.17 2.58h4.25c0-1.85-1.07-2.58-2.08-2.58zM40.95 20.3c-1.44 0-2.32-.6-2.9-1.04l-.02 4.63-4.12.87V5.57h3.76l.08 1.02a4.7 4.7 0 0 1 3.23-1.29c2.9 0 5.62 2.6 5.62 7.4 0 5.23-2.7 7.6-5.65 7.6zM40 8.95c-.95 0-1.54.34-1.97.81l.02 6.12c.4.44.98.78 1.95.78 1.52 0 2.54-1.65 2.54-3.87 0-2.15-1.04-3.84-2.54-3.84zM28.24 5.57h4.13v14.44h-4.13V5.57zm0-4.7L32.37 0v3.36l-4.13.88V.88zm-4.32 9.35v9.79H19.8V5.57h3.7l.12 1.22c1-1.77 3.07-1.41 3.62-1.22v3.79c-.52-.17-2.29-.43-3.32.86zm-8.55 4.72c0 2.43 2.6 1.68 3.12 1.46v3.36c-.55.3-1.54.54-2.89.54a4.15 4.15 0 0 1-4.27-4.24l.01-13.17 4.02-.86v3.54h3.14V9.1h-3.13v5.85zm-4.91.70c0 2.97-2.31 4.66-5.73 4.66a11.2 11.2 0 0 1-4.46-.93v-3.93c1.38.75 3.10 1.31 4.46 1.31.92 0 1.53-.24 1.53-1C6.26 13.77 0 14.51 0 9.95 0 7.04 2.28 5.3 5.62 5.3c1.36 0 2.72.2 4.09.75v3.88a9.23 9.23 0 0 0-4.1-1.06c-.86 0-1.44.25-1.44.9 0 1.85 6.29.97 6.29 5.88z"/>
-            </svg>
-          )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

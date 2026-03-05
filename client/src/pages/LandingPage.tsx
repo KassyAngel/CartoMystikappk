@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Preferences } from '@capacitor/preferences';
-import MysticalButton from '@/components/MysticalButton';
-import LanguageSelector from '@/components/LanguageSelector';
-import DisclaimerModal from '@/components/DisclaimerModal';
 import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSelector from '@/components/LanguageSelector';
 
 interface LandingPageProps {
   onEnter: () => void;
@@ -11,232 +9,539 @@ interface LandingPageProps {
 
 export default function LandingPage({ onEnter }: LandingPageProps) {
   const { t, isLanguageLoaded } = useLanguage();
+  const [disclaimerOk, setDisclaimerOk] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
-  const [disclaimerChecked, setDisclaimerChecked] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  // ✅ Vérifier si le disclaimer a déjà été accepté (avec Capacitor Preferences)
   useEffect(() => {
-    const checkDisclaimer = async () => {
+    const timer = setTimeout(() => setMounted(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const check = async () => {
       try {
         const { value } = await Preferences.get({ key: 'disclaimerAccepted' });
-
-        if (!value) {
-          // 🔴 IMPORTANT : Attendre que la langue soit chargée avant d'afficher le disclaimer
-          if (isLanguageLoaded) {
-            setTimeout(() => setShowDisclaimer(true), 300);
-          }
-        } else {
-          setDisclaimerChecked(true);
-        }
-      } catch (error) {
-        console.error('❌ Erreur lecture disclaimer:', error);
-        // En cas d'erreur, afficher le disclaimer par sécurité
-        if (isLanguageLoaded) {
-          setTimeout(() => setShowDisclaimer(true), 300);
-        }
+        if (value) { setDisclaimerOk(true); }
+        else if (isLanguageLoaded) { setTimeout(() => setShowDisclaimer(true), 600); }
+      } catch {
+        if (isLanguageLoaded) setTimeout(() => setShowDisclaimer(true), 600);
       }
     };
-
-    checkDisclaimer();
+    check();
   }, [isLanguageLoaded]);
 
-  const handleDisclaimerAccept = async () => {
-    try {
-      // ✅ Sauvegarder avec Capacitor Preferences au lieu de localStorage
-      await Preferences.set({
-        key: 'disclaimerAccepted',
-        value: 'true'
-      });
-
-      setShowDisclaimer(false);
-      setDisclaimerChecked(true);
-      console.log('✅ Disclaimer accepté et sauvegardé');
-    } catch (error) {
-      console.error('❌ Erreur sauvegarde disclaimer:', error);
-      // Continuer quand même
-      setShowDisclaimer(false);
-      setDisclaimerChecked(true);
-    }
+  const acceptDisclaimer = async () => {
+    try { await Preferences.set({ key: 'disclaimerAccepted', value: 'true' }); } catch {}
+    setShowDisclaimer(false);
+    setDisclaimerOk(true);
   };
 
   return (
-    <div className="landing-page min-h-screen flex flex-col justify-between items-center text-center p-4 sm:p-6 relative overflow-hidden bg-gradient-to-b from-[#0a0118] via-[#1a0933] to-[#0a0118]">
+    <div className={`landing-root ${mounted ? 'is-mounted' : ''}`}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 
-      {/* ✅ Modal Disclaimer - PRIORITAIRE */}
-      {showDisclaimer && <DisclaimerModal onAccept={handleDisclaimerAccept} />}
+        :root {
+          --gold: #C9A84C;
+          --gold-light: #E8D080;
+          --gold-dim: rgba(201,168,76,0.35);
+          --white: #F7F2EA;
+          --white-dim: rgba(247,242,234,0.75);
+          --bg-deep: #05030E;
+          --bg-mid: #0B0618;
+          --purple-dim: rgba(120,80,200,0.12);
+          --glass: rgba(255,255,255,0.03);
+          --glass-border: rgba(255,255,255,0.07);
+        }
 
-      {/* 🌍 Sélecteur de langue en haut à droite - masqué si disclaimer affiché */}
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        .landing-root {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          background: var(--bg-deep);
+          font-family: 'Jost', sans-serif;
+          color: var(--white);
+          padding: 0;
+          position: relative;
+          overflow: hidden;
+        }
+
+        /* Fond dégradé */
+        .bg-gradient {
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(ellipse 80% 60% at 50% -5%, rgba(80,40,160,0.25) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 40% at 80% 80%, rgba(40,20,90,0.15) 0%, transparent 50%),
+            radial-gradient(ellipse 50% 30% at 20% 60%, rgba(60,30,120,0.1) 0%, transparent 50%);
+          pointer-events: none;
+        }
+
+        /* Grain texture */
+        .bg-noise {
+          position: absolute;
+          inset: 0;
+          opacity: 0.025;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+          background-size: 200px 200px;
+          pointer-events: none;
+        }
+
+        /* Lignes de grille horizontales subtiles */
+        .bg-lines {
+          position: absolute;
+          inset: 0;
+          background-image: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 79px,
+            rgba(255,255,255,0.012) 80px
+          );
+          pointer-events: none;
+        }
+
+        /* Orbe central */
+        .orb-container {
+          position: relative;
+          width: 180px;
+          height: 180px;
+          margin: 0 auto;
+          opacity: 0;
+          transform: translateY(16px) scale(0.95);
+          transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+        .is-mounted .orb-container { opacity: 1; transform: translateY(0) scale(1); transition-delay: 0.1s; }
+
+        .orb-glow {
+          position: absolute;
+          inset: -40px;
+          border-radius: 50%;
+          background: radial-gradient(ellipse, rgba(201,168,76,0.15) 0%, rgba(100,60,200,0.08) 40%, transparent 70%);
+          animation: glow-pulse 5s ease-in-out infinite;
+        }
+        @keyframes glow-pulse {
+          0%, 100% { transform: scale(0.9); opacity: 0.7; }
+          50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .orb-ring {
+          position: absolute;
+          border-radius: 50%;
+          border: 1px solid transparent;
+        }
+        .ring-1 {
+          inset: 20px;
+          border-color: rgba(201,168,76,0.18) transparent rgba(201,168,76,0.06) transparent;
+          animation: spin 35s linear infinite;
+        }
+        .ring-2 {
+          inset: 35px;
+          border-color: transparent rgba(180,140,255,0.15) transparent rgba(180,140,255,0.08);
+          animation: spin 22s linear infinite reverse;
+        }
+        .ring-3 {
+          inset: 50px;
+          border-color: rgba(201,168,76,0.1) transparent rgba(201,168,76,0.04) transparent;
+          animation: spin 48s linear infinite;
+        }
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
+        .orb-dot {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .orb-dot-inner {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background: radial-gradient(ellipse, rgba(240,208,128,0.9) 0%, rgba(201,168,76,0.6) 40%, rgba(140,90,200,0.2) 100%);
+          box-shadow:
+            0 0 20px rgba(201,168,76,0.6),
+            0 0 60px rgba(201,168,76,0.2),
+            0 0 120px rgba(201,168,76,0.08);
+          animation: orb-breathe 5s ease-in-out infinite;
+        }
+        @keyframes orb-breathe {
+          0%, 100% { transform: scale(0.92); box-shadow: 0 0 15px rgba(201,168,76,0.5), 0 0 50px rgba(201,168,76,0.15); }
+          50% { transform: scale(1.08); box-shadow: 0 0 30px rgba(201,168,76,0.8), 0 0 80px rgba(201,168,76,0.25), 0 0 160px rgba(201,168,76,0.1); }
+        }
+
+        /* Header */
+        .header-bar {
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+          padding: 20px 24px;
+          position: relative;
+          z-index: 20;
+          opacity: 0;
+          transition: opacity 0.6s ease;
+        }
+        .is-mounted .header-bar { opacity: 1; transition-delay: 0.8s; }
+
+        .lang-btn {
+          background: var(--glass);
+          border: 1px solid var(--glass-border);
+          border-radius: 6px;
+          font-family: 'Jost', sans-serif;
+          font-size: 11px;
+          font-weight: 300;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: rgba(247,242,234,0.4);
+          padding: 8px 14px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(8px);
+        }
+        .lang-btn:hover {
+          background: rgba(255,255,255,0.06);
+          color: rgba(247,242,234,0.75);
+          border-color: rgba(255,255,255,0.12);
+        }
+
+        /* Contenu central */
+        .main-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 0 32px;
+          position: relative;
+          z-index: 10;
+          width: 100%;
+          gap: 0;
+        }
+
+        /* Texte badge */
+        .badge {
+          font-size: 9px;
+          font-weight: 300;
+          letter-spacing: 4px;
+          text-transform: uppercase;
+          color: var(--gold);
+          opacity: 0.6;
+          margin-bottom: 32px;
+          opacity: 0;
+          transition: opacity 0.7s ease;
+        }
+        .is-mounted .badge { opacity: 0.6; transition-delay: 0.3s; }
+
+        /* Titre */
+        .main-title {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: clamp(42px, 11vw, 64px);
+          font-weight: 300;
+          letter-spacing: -1px;
+          line-height: 1;
+          color: var(--white);
+          text-align: center;
+          margin-bottom: 8px;
+          opacity: 0;
+          transform: translateY(10px);
+          transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .is-mounted .main-title { opacity: 1; transform: translateY(0); transition-delay: 0.35s; }
+
+        .title-accent {
+          font-style: italic;
+          background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 60%, #a07830 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .main-tagline {
+          font-size: 11px;
+          font-weight: 200;
+          letter-spacing: 5px;
+          text-transform: uppercase;
+          color: rgba(247,242,234,0.55);
+          margin-bottom: 36px;
+          opacity: 0;
+          transition: opacity 0.7s ease;
+        }
+        .is-mounted .main-tagline { opacity: 1; transition-delay: 0.5s; }
+
+        /* Description */
+        .main-desc {
+          font-family: 'Playfair Display', serif;
+          font-size: 15px;
+          font-style: italic;
+          font-weight: 300;
+          color: rgba(247,242,234,0.82);
+          text-align: center;
+          line-height: 1.75;
+          max-width: 260px;
+          margin-bottom: 48px;
+          opacity: 0;
+          transition: opacity 0.7s ease;
+        }
+        .is-mounted .main-desc { opacity: 1; transition-delay: 0.6s; }
+
+        /* Ligne séparatrice fine */
+        .sep {
+          width: 1px;
+          height: 40px;
+          background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+          margin-bottom: 48px;
+          opacity: 0;
+          transition: opacity 0.7s ease;
+        }
+        .is-mounted .sep { opacity: 1; transition-delay: 0.7s; }
+
+        /* Bouton principal */
+        .cta-wrap {
+          opacity: 0;
+          transform: translateY(8px);
+          transition: opacity 0.7s ease, transform 0.7s ease;
+          margin-bottom: 24px;
+        }
+        .is-mounted .cta-wrap { opacity: 1; transform: translateY(0); transition-delay: 0.85s; }
+
+        .cta-btn {
+          position: relative;
+          padding: 17px 56px;
+          background: linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.06) 100%);
+          border: 1px solid rgba(201,168,76,0.7);
+          border-radius: 3px;
+          font-family: 'Jost', sans-serif;
+          font-size: 11px;
+          font-weight: 400;
+          letter-spacing: 4px;
+          text-transform: uppercase;
+          color: #E8D080;
+          cursor: pointer;
+          transition: all 0.4s ease;
+          overflow: hidden;
+        }
+        .cta-btn::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%);
+          opacity: 0;
+          transition: opacity 0.4s;
+        }
+        .cta-btn:hover:not(:disabled) {
+          border-color: rgba(201,168,76,0.75);
+          color: var(--gold-light);
+          box-shadow: 0 0 30px rgba(201,168,76,0.15), 0 8px 32px rgba(0,0,0,0.4);
+          transform: translateY(-1px);
+        }
+        .cta-btn:hover:not(:disabled)::after { opacity: 1; }
+        .cta-btn:active:not(:disabled) { transform: translateY(0); }
+        .cta-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+
+        /* Note footer */
+        .footer-note {
+          font-size: 11px;
+          font-weight: 300;
+          color: #F7F2EA;
+          text-align: center;
+          letter-spacing: 0.5px;
+          opacity: 0;
+          transition: opacity 0.7s ease;
+        }
+        .is-mounted .footer-note { opacity: 1; transition-delay: 0.6s; }
+
+        /* Footer */
+        .footer-bar {
+          width: 100%;
+          padding: 24px 32px;
+          display: flex;
+          justify-content: center;
+          position: relative;
+          z-index: 10;
+        }
+
+        /* Particules légères */
+        .particles {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          overflow: hidden;
+        }
+        .particle {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          background: white;
+          border-radius: 50%;
+          animation: particle-fade var(--dur, 4s) ease-in-out infinite var(--del, 0s);
+        }
+        @keyframes particle-fade {
+          0%, 100% { opacity: 0; transform: translateY(0); }
+          20% { opacity: var(--max-op, 0.5); }
+          80% { opacity: var(--max-op, 0.5); transform: translateY(-3px); }
+        }
+
+        /* Disclaimer */
+        .overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 200;
+          background: rgba(5,3,14,0.9);
+          backdrop-filter: blur(12px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 28px;
+          animation: fade-in 0.4s ease;
+        }
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+        .disc-card {
+          width: 100%;
+          max-width: 340px;
+          background: linear-gradient(160deg, rgba(20,10,40,0.95) 0%, rgba(10,5,25,0.98) 100%);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 12px;
+          padding: 40px 28px;
+          text-align: center;
+          box-shadow: 0 40px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+          animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slide-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+        .disc-label {
+          font-size: 9px;
+          font-weight: 400;
+          letter-spacing: 4px;
+          text-transform: uppercase;
+          color: var(--gold);
+          opacity: 0.65;
+          margin-bottom: 20px;
+        }
+        .disc-text {
+          font-family: 'Playfair Display', serif;
+          font-size: 14px;
+          font-style: italic;
+          font-weight: 300;
+          color: rgba(247,242,234,0.75);
+          line-height: 1.8;
+          margin-bottom: 32px;
+        }
+        .disc-accept {
+          width: 100%;
+          padding: 14px 24px;
+          background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.08) 100%);
+          border: 1px solid rgba(201,168,76,0.4);
+          border-radius: 6px;
+          font-family: 'Jost', sans-serif;
+          font-size: 11px;
+          font-weight: 400;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--gold);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        .disc-accept:hover {
+          background: linear-gradient(135deg, rgba(201,168,76,0.22) 0%, rgba(201,168,76,0.12) 100%);
+          border-color: rgba(201,168,76,0.7);
+          color: var(--gold-light);
+        }
+      `}</style>
+
+      {/* Disclaimer */}
+      {false && (
+        <div className="overlay">
+          <div className="disc-card">
+            <div className="disc-label">Avertissement</div>
+            <p className="disc-text">
+              {t('disclaimer.text') || "Cet oracle est destiné au divertissement et à la réflexion personnelle. Les lectures ne constituent pas des conseils professionnels."}
+            </p>
+            <button className="disc-accept" onClick={acceptDisclaimer}>
+              {t('disclaimer.accept') || "J'accepte"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Arrière-plans */}
+      <div className="bg-gradient" />
+      <div className="bg-noise" />
+      <div className="bg-lines" />
+
+      {/* Particules */}
+      <div className="particles">
+        {Array.from({ length: 50 }).map((_, i) => (
+          <div key={i} className="particle" style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            width: `${Math.random() < 0.2 ? 2 : 1}px`,
+            height: `${Math.random() < 0.2 ? 2 : 1}px`,
+            '--dur': `${3 + Math.random() * 6}s`,
+            '--del': `${Math.random() * 6}s`,
+            '--max-op': 0.15 + Math.random() * 0.5,
+          } as any} />
+        ))}
+      </div>
+
+      {/* Header */}
       {!showDisclaimer && (
-        <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-20">
+        <div className="header-bar">
           <LanguageSelector />
         </div>
       )}
 
-      {/* Effets de fond mystiques améliorés */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Gradient radial animé */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[100px] animate-pulse-slow"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-blue-600/15 rounded-full blur-[100px] animate-pulse-slower"></div>
-        <div className="absolute top-1/2 right-1/4 w-[450px] h-[450px] bg-amber-600/15 rounded-full blur-[100px] animate-pulse-slow"></div>
+      {/* Contenu */}
+      <div className="main-content">
 
-        {/* Grille mystique subtile */}
-        <div className="absolute inset-0 opacity-[0.03]" 
-          style={{
-            backgroundImage: `radial-gradient(circle, #fff 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
-          }}
-        ></div>
-
-        {/* Étoiles scintillantes */}
-        <div className="absolute top-20 left-[10%] text-amber-300/30 text-xl animate-twinkle">✦</div>
-        <div className="absolute top-[30%] right-[15%] text-purple-300/25 text-lg animate-twinkle-delayed">✦</div>
-        <div className="absolute bottom-[25%] left-[20%] text-blue-300/20 text-base animate-twinkle">✦</div>
-        <div className="absolute bottom-[15%] right-[20%] text-amber-300/25 text-xl animate-twinkle-delayed">✦</div>
-        <div className="absolute top-[40%] left-[8%] text-purple-300/20 text-sm animate-twinkle">✦</div>
-        <div className="absolute top-[60%] right-[12%] text-blue-300/20 text-sm animate-twinkle-delayed">✦</div>
-      </div>
-
-      {/* Contenu principal */}
-      <div className="relative z-10 flex-1 flex flex-col justify-center items-center w-full max-w-3xl px-4">
-
-        {/* Symbole mystique élégant */}
-        <div className="mb-8 sm:mb-10">
-          <div className="relative w-32 h-32 sm:w-40 sm:h-40 mx-auto">
-            {/* Cercles concentriques animés */}
-            <div className="absolute inset-0 border-2 border-amber-400/20 rounded-full animate-spin-slow"></div>
-            <div className="absolute inset-4 border border-purple-400/30 rounded-full animate-spin-reverse"></div>
-            <div className="absolute inset-8 border border-blue-400/20 rounded-full animate-spin-slow"></div>
-
-            {/* Symbole central */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-5xl sm:text-6xl text-amber-300/90 font-serif">✦</div>
-            </div>
-
-            {/* Lueur ambiante */}
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 via-purple-400/10 to-blue-400/10 rounded-full blur-2xl animate-pulse-slow"></div>
+        {/* Orbe */}
+        <div className="orb-container" style={{ marginBottom: 48 }}>
+          <div className="orb-glow" />
+          <div className="orb-ring ring-1" />
+          <div className="orb-ring ring-2" />
+          <div className="orb-ring ring-3" />
+          <div className="orb-dot">
+            <div className="orb-dot-inner" />
           </div>
         </div>
 
-        {/* Titre principal avec effet gradient */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif mb-6 sm:mb-8 leading-tight tracking-wide">
-          <span className="bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 bg-clip-text text-transparent animate-gradient">
-            {t('landing.title')}
-          </span>
+        {/* Titre */}
+        <h1 className="main-title">
+          <span className="title-accent">{t('landing.title') || 'CartoMystik'}</span>
         </h1>
 
-        {/* Sous-titre raffiné */}
-        <p className="text-purple-100 text-base sm:text-lg md:text-xl mb-10 sm:mb-12 leading-relaxed max-w-2xl mx-auto font-light tracking-wide">
-          {t('landing.subtitle')}
+        <div className="main-tagline">{t('landing.tagline') || 'Divination & Révélation'}</div>
+
+        <p className="main-desc">
+          {t('landing.subtitle') || 'Découvrez les mystères de votre destinée à travers les cartes et les astres'}
         </p>
 
-        {/* Séparateur décoratif */}
-        <div className="flex items-center gap-4 mb-10 sm:mb-12">
-          <div className="h-px w-16 sm:w-24 bg-gradient-to-r from-transparent via-amber-400/40 to-amber-400/70"></div>
-          <span className="text-amber-300/70 text-2xl animate-pulse-slow">✦</span>
-          <div className="h-px w-16 sm:w-24 bg-gradient-to-l from-transparent via-amber-400/40 to-amber-400/70"></div>
-        </div>
+        <div className="sep" />
 
-        {/* Bouton principal avec effet premium */}
-        <div className="relative group">
-          {/* Aura externe */}
-          <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/0 via-amber-400/20 to-amber-500/0 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-
-          {/* Bouton */}
-          <MysticalButton 
+        {/* CTA */}
+        <div className="cta-wrap">
+          <button
+            className="cta-btn"
             onClick={onEnter}
-            disabled={!disclaimerChecked}
-            className="relative group text-sm sm:text-base py-3 px-10 sm:px-12 min-h-[48px] rounded-full font-serif uppercase tracking-widest text-amber-100 
-                       bg-gradient-to-br from-[#4b2c7a] via-[#5c2a7e] to-[#b07cff] 
-                       border border-amber-300/40 
-                       shadow-[0_0_15px_rgba(255,215,0,0.15)] 
-                       hover:shadow-[0_0_25px_rgba(255,215,0,0.4)] 
-                       transition-all duration-500 ease-out backdrop-blur-sm overflow-hidden
-                       disabled:opacity-50 disabled:cursor-not-allowed"
-            data-testid="button-enter"
           >
-            {/* Effet lumineux interne */}
-            <span className="absolute inset-0 rounded-full bg-amber-300/10 blur-md opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none"></span>
-
-            {/* Contenu du bouton */}
-            <span className="relative z-10 flex items-center gap-2">
-              <span>{t('landing.enter')}</span>
-              <span className="text-amber-200 text-xl transform group-hover:translate-x-1 transition-transform duration-300">→</span>
-            </span>
-          </MysticalButton>
+            {t('landing.enter') || 'Commencer'}
+          </button>
         </div>
 
-        {/* Message discret */}
-        <p className="mt-8 text-purple-200 text-xs sm:text-sm font-light max-w-md mx-auto leading-relaxed" data-testid="text-ads-support">
-          {t('landing.ads.support')}
+        <p className="footer-note">
+          {t('landing.ads.support') || 'Application gratuite · financée par la publicité'}
         </p>
       </div>
 
-      {/* Footer avec copyright (optionnel) */}
-      <div className="relative z-10 pb-4 text-purple-300/30 text-xs">
-        <div className="animate-float">✦</div>
-      </div>
-
-      {/* Styles d'animations */}
-      <style>{`
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.6; }
-        }
-        @keyframes pulse-slower {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 0.5; }
-        }
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes spin-reverse {
-          from { transform: rotate(360deg); }
-          to { transform: rotate(0deg); }
-        }
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.2); }
-        }
-        @keyframes twinkle-delayed {
-          0%, 100% { opacity: 0.2; transform: scale(1); }
-          50% { opacity: 0.8; transform: scale(1.15); }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-15px); }
-        }
-        @keyframes gradient {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-
-        .animate-pulse-slow {
-          animation: pulse-slow 4s ease-in-out infinite;
-        }
-        .animate-pulse-slower {
-          animation: pulse-slower 6s ease-in-out infinite;
-        }
-        .animate-spin-slow {
-          animation: spin-slow 30s linear infinite;
-        }
-        .animate-spin-reverse {
-          animation: spin-reverse 20s linear infinite;
-        }
-        .animate-twinkle {
-          animation: twinkle 3s ease-in-out infinite;
-        }
-        .animate-twinkle-delayed {
-          animation: twinkle-delayed 4s ease-in-out infinite 1s;
-        }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-        .animate-gradient {
-          background-size: 200% auto;
-          animation: gradient 8s ease infinite;
-        }
-      `}</style>
+      {/* Footer spacer */}
+      <div className="footer-bar" />
     </div>
   );
 }

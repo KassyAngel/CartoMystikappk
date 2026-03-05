@@ -1,134 +1,375 @@
-import { useState } from 'react';
-import ProgressBar from '@/components/ProgressBar';
-import MysticalInput from '@/components/MysticalInput';
-import MysticalButton from '@/components/MysticalButton';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface NamePageProps {
   onNext: (name: string) => void;
+  onBack?: () => void;
 }
 
-export default function NamePage({ onNext }: NamePageProps) {
+export default function NamePage({ onNext, onBack }: NamePageProps) {
   const [name, setName] = useState('');
+  const [focused, setFocused] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { t } = useLanguage();
 
-  const handleNext = () => {
-    if (name.trim()) onNext(name.trim());
-  };
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 50);
+    return () => clearTimeout(t);
+  }, []);
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleNext = () => { if (name.trim()) onNext(name.trim()); };
+  const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && name.trim()) handleNext();
   };
 
   return (
-    <>
-      <div className="intro-page active flex flex-col min-h-screen justify-center items-center bg-gradient-to-b from-[#0e0020] via-[#1b0338] to-[#0a0017] text-white px-6 relative overflow-hidden pt-16 sm:pt-20">
+    <div className={`page-root ${mounted ? 'is-mounted' : ''}`}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 
-        {/* Effet d'étoiles de fond */}
-        <div className="absolute inset-0 bg-[url('/stars-bg.svg')] bg-cover opacity-20 pointer-events-none"></div>
+        :root {
+          --gold: #C9A84C;
+          --gold-light: #E8D080;
+          --gold-dim: rgba(201,168,76,0.35);
+          --white: #F7F2EA;
+          --white-dim: rgba(247,242,234,0.75);
+          --bg-deep: #05030E;
+          --glass: rgba(255,255,255,0.03);
+          --glass-border: rgba(255,255,255,0.07);
+        }
 
-        {/* Halo central */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[450px] h-[450px] rounded-full bg-gradient-to-br from-amber-400/10 via-purple-500/10 to-transparent blur-3xl"></div>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        {/* Barre de progression */}
-        <div className="absolute top-0 left-0 w-full">
-          <div className="mb-4">
-            <ProgressBar progress={33} />
-          </div>
-        </div>
+        .page-root {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          background: var(--bg-deep);
+          font-family: 'Jost', sans-serif;
+          color: var(--white);
+          position: relative;
+          overflow: hidden;
+        }
 
-        {/* Contenu principal */}
-        <div className="z-10 flex flex-col items-center justify-center space-y-6 sm:space-y-7 w-full max-w-md">
+        .bg-gradient {
+          position: absolute; inset: 0;
+          background:
+            radial-gradient(ellipse 80% 50% at 50% -10%, rgba(80,40,160,0.22) 0%, transparent 60%),
+            radial-gradient(ellipse 40% 40% at 15% 70%, rgba(60,30,120,0.1) 0%, transparent 50%);
+          pointer-events: none;
+        }
+        .bg-noise {
+          position: absolute; inset: 0;
+          opacity: 0.025;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+          background-size: 200px 200px;
+          pointer-events: none;
+        }
+        .particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+        .particle {
+          position: absolute; border-radius: 50%; background: white;
+          animation: pfade var(--dur,4s) ease-in-out infinite var(--del,0s);
+        }
+        @keyframes pfade {
+          0%,100% { opacity: 0; } 40%,60% { opacity: var(--op,0.3); }
+        }
 
-          {/* Symbole mystique ✦ - COMME LA LANDING PAGE */}
-          <div className="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-2">
-            {/* Cercles concentriques animés */}
-            <div className="absolute inset-0 border-2 border-amber-400/20 rounded-full animate-spin-slow"></div>
-            <div className="absolute inset-3 border border-purple-400/30 rounded-full animate-spin-reverse"></div>
-            <div className="absolute inset-6 border border-blue-400/20 rounded-full animate-spin-slow"></div>
+        /* Barre progression */
+        .progress-track {
+          position: fixed; top: 0; left: 0; right: 0; height: 1px; z-index: 100;
+          background: rgba(255,255,255,0.05);
+        }
+        .progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, transparent 0%, var(--gold) 50%, transparent 100%);
+          animation: shimmer-prog 2.5s ease-in-out infinite;
+        }
+        @keyframes shimmer-prog { 0%,100%{opacity:0.5} 50%{opacity:1} }
 
-            {/* Symbole central ✦ */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-5xl sm:text-6xl text-amber-300/90 font-serif animate-pulse-slow">✦</div>
-            </div>
+        /* Header nav */
+        .nav-bar {
+          display: flex;
+          align-items: center;
+          padding: 20px 24px;
+          position: relative;
+          z-index: 20;
+          opacity: 0;
+          transition: opacity 0.5s ease;
+        }
+        .is-mounted .nav-bar { opacity: 1; transition-delay: 0.1s; }
 
-            {/* Lueur ambiante */}
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-400/10 via-purple-400/10 to-blue-400/10 rounded-full blur-2xl animate-pulse-slow"></div>
-          </div>
+        .nav-back {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: none;
+          border: none;
+          font-family: 'Jost', sans-serif;
+          font-size: 11px;
+          font-weight: 300;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: rgba(247,242,234,0.55);
+          cursor: pointer;
+          transition: color 0.3s;
+          padding: 0;
+        }
+        .nav-back:hover { color: rgba(247,242,234,0.85); }
+        .nav-back-arrow {
+          width: 20px;
+          height: 1px;
+          background: currentColor;
+          position: relative;
+        }
+        .nav-back-arrow::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: -3px;
+          width: 6px;
+          height: 6px;
+          border-left: 1px solid currentColor;
+          border-bottom: 1px solid currentColor;
+          transform: rotate(45deg);
+        }
 
-          {/* Titre avec dégradé */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-200 bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(251,191,36,0.3)]">
-            {t('name.title') || 'Prénom'}
-          </h1>
+        /* Contenu */
+        .page-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 0 32px 60px;
+          position: relative;
+          z-index: 10;
+        }
 
-          {/* Sous-texte */}
-          <p className="text-purple-100 text-sm sm:text-base font-light leading-relaxed max-w-sm text-center">
-            {t('name.subtitle') || 'Comment préférez-vous être appelé ? Entrez votre nom ou votre surnom.'}
-          </p>
+        /* Step indicator */
+        .step-indicator {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 48px;
+          opacity: 0;
+          transition: opacity 0.6s ease;
+        }
+        .is-mounted .step-indicator { opacity: 1; transition-delay: 0.2s; }
 
-          {/* Ligne décorative */}
-          <div className="flex items-center justify-center gap-3 pt-1">
-            <div className="w-10 h-px bg-gradient-to-r from-transparent to-amber-400/40"></div>
-            <span className="text-amber-400/70 text-xl">✦</span>
-            <div className="w-10 h-px bg-gradient-to-l from-transparent to-amber-400/40"></div>
-          </div>
+        .step-dot {
+          width: 24px;
+          height: 1px;
+          background: var(--gold-dim);
+          transition: all 0.4s ease;
+        }
+        .step-dot.active {
+          background: var(--gold);
+          width: 32px;
+        }
+        .step-dot.inactive { background: rgba(255,255,255,0.08); }
 
-          {/* Input prénom */}
-          <div className="w-full space-y-4 pt-4">
-            <MysticalInput
-              type="text"
-              placeholder={t('name.placeholder') || 'Entrez votre prénom'}
-              value={name}
-              onChange={(value: string) => setName(value)}
-              onKeyPress={handleKeyPress}
-              className="text-center text-lg sm:text-xl font-serif bg-transparent border-b border-amber-300/40 focus:border-amber-300/80 transition-all duration-300 focus:scale-[1.02]"
-            />
+        /* Titre */
+        .page-title {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: clamp(36px, 9vw, 52px);
+          font-weight: 300;
+          letter-spacing: -0.5px;
+          line-height: 1.05;
+          text-align: center;
+          margin-bottom: 12px;
+          opacity: 0;
+          transform: translateY(12px);
+          transition: opacity 0.7s ease, transform 0.7s ease;
+          color: var(--white);
+        }
+        .is-mounted .page-title { opacity: 1; transform: translateY(0); transition-delay: 0.25s; }
 
-            {/* Bouton */}
-            <div className="pt-4 flex justify-center">
-              <MysticalButton 
-                onClick={handleNext} 
-                disabled={!name.trim()}
-                className="px-8 py-2.5 text-sm sm:text-base rounded-full font-medium tracking-wide 
-                           shadow-md hover:shadow-lg hover:shadow-amber-400/20 transition-all duration-300
-                           disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <span className="flex items-center justify-center gap-2">
-                  <span>{t('name.next') || 'Suivant'}</span>
-                  <span className="text-amber-300">→</span>
-                </span>
-              </MysticalButton>
-            </div>
-          </div>
-        </div>
+        .page-title em {
+          font-style: italic;
+          background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 60%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
 
-        {/* Spacer bas */}
-        <div className="pb-4 sm:pb-6"></div>
+        .page-sub {
+          font-family: 'Playfair Display', serif;
+          font-size: 14px;
+          font-style: italic;
+          font-weight: 300;
+          color: rgba(247,242,234,0.85);
+          text-align: center;
+          line-height: 1.7;
+          max-width: 240px;
+          margin-bottom: 52px;
+          opacity: 0;
+          transition: opacity 0.7s ease;
+        }
+        .is-mounted .page-sub { opacity: 1; transition-delay: 0.4s; }
+
+        /* Input zone */
+        .input-zone {
+          width: 100%;
+          max-width: 280px;
+          margin-bottom: 40px;
+          position: relative;
+          opacity: 0;
+          transition: opacity 0.7s ease;
+        }
+        .is-mounted .input-zone { opacity: 1; transition-delay: 0.55s; }
+
+        .mystic-input {
+          width: 100%;
+          background: none;
+          border: none;
+          border-bottom: 1px solid rgba(255,255,255,0.1);
+          outline: none;
+          font-family: 'Playfair Display', serif;
+          font-size: 22px;
+          font-weight: 300;
+          letter-spacing: 3px;
+          color: var(--white);
+          text-align: center;
+          padding: 14px 4px 14px;
+          transition: border-color 0.4s ease;
+          caret-color: var(--gold);
+        }
+        .mystic-input::placeholder {
+          color: rgba(247,242,234,0.2);
+          font-style: italic;
+          letter-spacing: 2px;
+        }
+        .mystic-input:focus {
+          border-bottom-color: rgba(201,168,76,0.5);
+        }
+
+        .input-line-active {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          height: 1px;
+          background: linear-gradient(90deg, transparent, var(--gold), transparent);
+          transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          width: 0;
+        }
+        .input-line-active.show { width: 100%; }
+
+        /* Bouton */
+        .btn-wrap {
+          opacity: 0;
+          transform: translateY(8px);
+          transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .is-mounted .btn-wrap { opacity: 1; transform: translateY(0); transition-delay: 0.7s; }
+
+        .primary-btn {
+          position: relative;
+          padding: 16px 52px;
+          background: linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.06) 100%);
+          border: 1px solid rgba(201,168,76,0.4);
+          border-radius: 3px;
+          font-family: 'Jost', sans-serif;
+          font-size: 11px;
+          font-weight: 400;
+          letter-spacing: 4px;
+          text-transform: uppercase;
+          color: #E8D080;
+          border-color: rgba(201,168,76,0.65);
+          cursor: pointer;
+          transition: all 0.35s ease;
+          overflow: hidden;
+        }
+        .primary-btn::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: rgba(201,168,76,0.08);
+          opacity: 0;
+          transition: opacity 0.35s;
+        }
+        .primary-btn:hover:not(:disabled) {
+          border-color: rgba(201,168,76,0.75);
+          color: var(--gold-light);
+          transform: translateY(-1px);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 24px rgba(201,168,76,0.1);
+        }
+        .primary-btn:hover:not(:disabled)::after { opacity: 1; }
+        .primary-btn:active:not(:disabled) { transform: translateY(0); }
+        .primary-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+      `}</style>
+
+      {/* Arrière-plan */}
+      <div className="bg-gradient" />
+      <div className="bg-noise" />
+      <div className="particles">
+        {Array.from({ length: 40 }).map((_, i) => (
+          <div key={i} className="particle" style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            width: `${Math.random() < 0.2 ? 2 : 1}px`,
+            height: `${Math.random() < 0.2 ? 2 : 1}px`,
+            '--dur': `${3 + Math.random() * 5}s`,
+            '--del': `${Math.random() * 5}s`,
+            '--op': 0.15 + Math.random() * 0.45,
+          } as any} />
+        ))}
       </div>
 
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.5; }
-          50% { opacity: 1; }
-        }
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes spin-reverse {
-          from { transform: rotate(360deg); }
-          to { transform: rotate(0deg); }
-        }
-        .animate-pulse-slow {
-          animation: pulse-slow 3s ease-in-out infinite;
-        }
-        .animate-spin-slow {
-          animation: spin-slow 30s linear infinite;
-        }
-        .animate-spin-reverse {
-          animation: spin-reverse 20s linear infinite;
-        }
-      `}} />
-    </>
+      {/* Progression */}
+      <div className="progress-track">
+        <div className="progress-fill" style={{ width: '33%' }} />
+      </div>
+
+      {/* Nav */}
+      <div className="nav-bar">
+        {onBack && (
+          <button className="nav-back" onClick={onBack}>
+            <span className="nav-back-arrow" />
+            {t('common.home') || 'Accueil'}
+          </button>
+        )}
+      </div>
+
+      {/* Contenu */}
+      <div className="page-content">
+
+        {/* Indicateur d'étapes */}
+        <div className="step-indicator">
+          <div className="step-dot active" />
+          <div className="step-dot inactive" />
+          <div className="step-dot inactive" />
+        </div>
+
+        <h1 className="page-title">
+          <em>{t('name.title') || 'Prénom'}</em>
+        </h1>
+
+        <p className="page-sub">
+          {t('name.subtitle') || 'Comment préférez-vous être appelé ?'}
+        </p>
+
+        <div className="input-zone">
+          <input
+            className="mystic-input"
+            type="text"
+            placeholder={t('name.placeholder') || 'Votre prénom'}
+            value={name}
+            onChange={e => setName(e.target.value)}
+            onKeyPress={handleKey}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            autoFocus
+          />
+          <div className={`input-line-active ${focused || name ? 'show' : ''}`} />
+        </div>
+
+        <div className="btn-wrap">
+          <button className="primary-btn" onClick={handleNext} disabled={!name.trim()}>
+            {t('name.next') || 'Suivant'}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -26,358 +26,519 @@ const GrimoireModal = ({
   // 🔧 Dédupliquer les lectures
   const uniqueReadings = useMemo(() => {
     const seen = new Map<string, Reading>();
-
     readings.forEach(reading => {
       const dateKey = new Date(reading.date).toISOString().split('T')[0];
       const cardsKey = reading.cards ? reading.cards.sort().join(',') : '';
       const key = `${dateKey}-${reading.type}-${cardsKey}`;
-
-      if (!seen.has(key)) {
-        seen.set(key, reading);
-      }
+      if (!seen.has(key)) seen.set(key, reading);
     });
-
-    return Array.from(seen.values()).sort((a, b) => 
+    return Array.from(seen.values()).sort((a, b) =>
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
   }, [readings]);
 
-  // 📊 Compteur de tirages
   const totalReadings = uniqueReadings.length;
   const readingsThisMonth = useMemo(() => {
     const now = new Date();
-    const currentMonth = now.getMonth();
-    const currentYear = now.getFullYear();
-
-    return uniqueReadings.filter(reading => {
-      const readingDate = new Date(reading.date);
-      return readingDate.getMonth() === currentMonth && 
-             readingDate.getFullYear() === currentYear;
+    return uniqueReadings.filter(r => {
+      const d = new Date(r.date);
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
     }).length;
   }, [uniqueReadings]);
 
-  // 🗑️ Fonction pour effacer tout le grimoire
   const handleClearAll = async () => {
     if (!onClearAll) return;
-
     try {
       await onClearAll();
       setShowConfirmDelete(false);
-      console.log('🔥 Grimoire vidé !');
-    } catch (error) {
-      console.error('❌ Erreur lors du vidage du grimoire:', error);
+    } catch (e) {
+      console.error(e);
     }
   };
 
-  const toggleExpand = (readingId: string) => {
+  // ✅ Toggle identique à l'original — crée un nouveau Set à chaque fois
+  const toggleExpand = (id: string) => {
     setExpandedReadings(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(readingId)) {
-        newSet.delete(readingId);
-      } else {
-        newSet.add(readingId);
-      }
-      return newSet;
+      const s = new Set(prev);
+      s.has(id) ? s.delete(id) : s.add(id);
+      return s;
     });
   };
 
   const displayedReadings = isPremium ? uniqueReadings : uniqueReadings.slice(0, 3);
 
   const getOracleBadge = (type: string) => {
-    const badges = {
-      tarot: { emoji: '🔮', label: t("grimoire.oracle.tarot"), color: 'bg-purple-600' },
-      angels: { emoji: '👼', label: t("grimoire.oracle.angels"), color: 'bg-blue-500' },
-      runes: { emoji: 'ᚱ', label: t("grimoire.oracle.runes"), color: 'bg-amber-600' },
-      oracle: { emoji: '☀️', label: t("grimoire.oracle.daily"), color: 'bg-yellow-500' },
-      crystalBall: { emoji: '🔮', label: t("grimoire.oracle.crystalBall"), color: 'bg-indigo-600' },
-      horoscope: { emoji: '♈', label: t("grimoire.oracle.horoscope"), color: 'bg-pink-600' },
-      daily: { emoji: '☀️', label: t("grimoire.oracle.daily"), color: 'bg-yellow-500' },
+    const badges: Record<string, { label: string; color: string }> = {
+      tarot:       { label: t("grimoire.oracle.tarot"),       color: '#A87FC9' },
+      angels:      { label: t("grimoire.oracle.angels"),      color: '#7FA8C9' },
+      runes:       { label: t("grimoire.oracle.runes"),       color: '#C9A84C' },
+      oracle:      { label: t("grimoire.oracle.daily"),       color: '#C9A84C' },
+      crystalBall: { label: t("grimoire.oracle.crystalBall"), color: '#7FC9A8' },
+      horoscope:   { label: t("grimoire.oracle.horoscope"),   color: '#C97FA8' },
+      daily:       { label: t("grimoire.oracle.daily"),       color: '#C9A84C' },
     };
-    return badges[type as keyof typeof badges] || badges.oracle;
+    return badges[type] || badges.oracle;
   };
 
   const normalizeCardName = (cardName: string | undefined | null): string => {
-    if (!cardName || typeof cardName !== 'string') {
-      console.warn('⚠️ cardName invalide:', cardName);
-      return '';
-    }
-
-    return cardName
-      .trim()
-      .replace(/[''\s-]/g, '')  // ✅ Supprime apostrophes, espaces ET tirets
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
+    if (!cardName || typeof cardName !== 'string') return '';
+    return cardName.trim().replace(/[''\s-]/g, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   };
 
-    const translateCardName = (cardName: string | undefined, readingType: string): string => {
-      if (!cardName || typeof cardName !== 'string') {
-        console.warn('⚠️ translateCardName - cardName invalide:', cardName);
-        return '';
-      }
-
-      let oracleKey = 'daily'; // ✅ Par défaut 'daily'
-      if (readingType === 'tarot') oracleKey = 'tarot';
-      else if (readingType === 'angels') oracleKey = 'angels';
-      else if (readingType === 'runes') oracleKey = 'runes';
-      else if (readingType === 'oracle') oracleKey = 'daily'; // ✅ oracle → daily
-      else if (readingType === 'daily') oracleKey = 'daily';
-
+  const translateCardName = (cardName: string | undefined, readingType: string): string => {
+    if (!cardName || typeof cardName !== 'string') return '';
+    const oracleKeyMap: Record<string, string> = { tarot: 'tarot', angels: 'angels', runes: 'runes', oracle: 'daily', daily: 'daily' };
+    const oracleKey = oracleKeyMap[readingType] || 'daily';
     const normalizedName = normalizeCardName(cardName);
-
-      // ✅ Si normalisation échoue, retourne l'original
-      if (!normalizedName) return cardName;
-
-    console.log('🔍 Traduction carte:', {
-      original: cardName,
-      normalized: normalizedName,
-      oracleKey,
-      key: `cards.${oracleKey}.${normalizedName}.name`
-    });
-
-    const possibleKeys = [
+    if (!normalizedName) return cardName;
+    const keys = [
       `cards.${oracleKey}.${normalizedName}.name`,
       `cards.${oracleKey}.${normalizedName}`,
       `${oracleKey}.cards.${normalizedName}.name`,
-      `${oracleKey}.cards.${normalizedName}`,
     ];
-
-    for (const key of possibleKeys) {
+    for (const key of keys) {
       const translated = t(key);
-      if (translated && translated !== key && translated !== cardName) {
-        console.log('✅ Traduction trouvée:', translated);
-        return translated;
-      }
+      if (translated && translated !== key && translated !== cardName) return translated;
     }
-
-    console.warn('⚠️ Aucune traduction trouvée, retour original:', cardName);
     return cardName;
   };
 
   const formatDateTime = (date: Date) => {
     const d = new Date(date);
-    const localeMap: Record<string, string> = {
-      fr: 'fr-FR',
-      en: 'en-US',
-      es: 'es-ES',
-      de: 'de-DE',
-      it: 'it-IT'
-    };
+    const localeMap: Record<string, string> = { fr: 'fr-FR', en: 'en-US', es: 'es-ES', de: 'de-DE', it: 'it-IT' };
     const locale = localeMap[language] || 'en-US';
-
-    const dateStr = d.toLocaleDateString(locale, { 
-      day: '2-digit', 
-      month: '2-digit', 
-      year: 'numeric' 
-    });
-    const timeStr = d.toLocaleTimeString(locale, { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
-    return { date: dateStr, time: timeStr };
+    return {
+      date: d.toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }),
+      time: d.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' }),
+    };
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-3 sm:p-4">
-      <div className="bg-gradient-to-br from-purple-900 to-indigo-900 rounded-2xl p-4 sm:p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative shadow-2xl border border-purple-500/30">
-        {/* Bouton fermer */}
-        <button 
-          onClick={onClose}
-          className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-red-500/20 hover:bg-red-500/40 text-white text-xl transition-colors z-10"
-          aria-label={t("common.close")}
-        >
-          ✕
-        </button>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 
-        <h2 className="text-xl sm:text-2xl font-bold mb-3 text-yellow-300 pr-8">
-          📜 {t("grimoire.title")}
-        </h2>
+        .gm-overlay {
+          position: fixed; inset: 0; z-index: 300;
+          background: rgba(4,0,16,0.88);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          display: flex; align-items: center; justify-content: center;
+          padding: 16px;
+          font-family: 'Jost', sans-serif;
+        }
 
-        {/* 📊 Statistiques des tirages */}
-        <div className="bg-purple-800/40 border border-purple-500/30 rounded-lg p-3 mb-3">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <div className="flex items-center gap-3">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-yellow-300">{totalReadings}</div>
-                <div className="text-xs text-purple-300">{t("grimoire.stats.total") || "Total"}</div>
-              </div>
-              <div className="w-px h-10 bg-purple-500/30"></div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-300">{readingsThisMonth}</div>
-                <div className="text-xs text-purple-300">{t("grimoire.stats.thisMonth") || "Ce mois"}</div>
-              </div>
+        .gm-modal {
+          background: #07040f;
+          border: 1px solid rgba(201,168,76,0.18);
+          border-radius: 4px;
+          width: 100%; max-width: 520px;
+          max-height: 88vh;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+        }
+
+        .gm-c { position:absolute; width:8px; height:8px; border-color:rgba(201,168,76,0.3); border-style:solid; z-index:2; pointer-events:none; }
+        .gm-tl{top:0;left:0;border-width:1px 0 0 1px}
+        .gm-tr{top:0;right:0;border-width:1px 1px 0 0}
+        .gm-bl{bottom:0;left:0;border-width:0 0 1px 1px}
+        .gm-br{bottom:0;right:0;border-width:0 1px 1px 0}
+
+        /* Header */
+        .gm-head {
+          padding: 22px 22px 16px;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+          display: flex; align-items: center; justify-content: space-between;
+          flex-shrink: 0;
+          background: radial-gradient(ellipse 120% 100% at 50% -20%, rgba(70,30,160,0.1) 0%, transparent 65%);
+        }
+        .gm-head-left { display: flex; flex-direction: column; gap: 2px; }
+        .gm-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 20px; font-weight: 300; font-style: italic;
+          color: #E8D080; letter-spacing: 0.3px; margin: 0;
+        }
+        .gm-subtitle {
+          font-size: 10px; font-weight: 200; letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(247,242,234,0.65);
+        }
+        .gm-close {
+          width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0;
+          background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+          display: flex; align-items: center; justify-content: center;
+          cursor: pointer; color: rgba(247,242,234,0.6); transition: all 0.2s;
+        }
+        .gm-close:hover { color: #F7F2EA; background: rgba(255,255,255,0.1); }
+
+        /* Stats */
+        .gm-stats {
+          display: flex; align-items: center;
+          padding: 14px 22px;
+          border-bottom: 1px solid rgba(255,255,255,0.04);
+          flex-shrink: 0;
+        }
+        .gm-stat { flex: 1; text-align: center; padding: 8px 0; }
+        .gm-stat-num {
+          font-family: 'Playfair Display', serif;
+          font-size: 24px; font-weight: 300; color: #E8D080; line-height: 1;
+        }
+        .gm-stat-label {
+          font-size: 9px; font-weight: 200; letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(247,242,234,0.72); margin-top: 4px;
+        }
+        .gm-stat-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.06); }
+        .gm-clear-btn {
+          margin-left: 16px; padding: 8px 14px; flex-shrink: 0;
+          background: rgba(200,60,60,0.07);
+          border: 1px solid rgba(200,60,60,0.2); border-radius: 3px;
+          font-family: 'Jost', sans-serif; font-size: 9px; font-weight: 300;
+          letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(220,100,100,0.85); cursor: pointer; transition: all 0.22s;
+        }
+        .gm-clear-btn:hover { background: rgba(200,60,60,0.12); border-color: rgba(200,60,60,0.4); color: rgba(220,100,100,1); }
+
+        /* Banners */
+        .gm-banner {
+          margin: 12px 22px 0; padding: 10px 14px; border-radius: 6px;
+          font-size: 12px; font-weight: 300; line-height: 1.5;
+          flex-shrink: 0;
+        }
+        .gm-banner-free { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15); color: rgba(201,168,76,0.92); }
+        .gm-banner-premium { background: rgba(127,201,168,0.05); border: 1px solid rgba(127,201,168,0.15); color: rgba(127,201,168,0.88); }
+
+        /* Confirm delete */
+        .gm-confirm {
+          margin: 12px 22px 0; padding: 16px 18px; border-radius: 6px;
+          background: rgba(180,40,40,0.08); border: 1px solid rgba(180,40,40,0.2);
+          text-align: center; flex-shrink: 0;
+        }
+        .gm-confirm-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 15px; font-weight: 300; color: rgba(230,120,120,0.95); margin-bottom: 6px;
+        }
+        .gm-confirm-sub { font-size: 12px; font-weight: 200; color: rgba(247,242,234,0.72); margin-bottom: 14px; }
+        .gm-confirm-btns { display: flex; gap: 8px; justify-content: center; }
+        .gm-confirm-cancel {
+          padding: 9px 20px; background: transparent;
+          border: 1px solid rgba(255,255,255,0.15); border-radius: 3px;
+          font-family: 'Jost', sans-serif; font-size: 9px; font-weight: 300;
+          letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(247,242,234,0.72); cursor: pointer; transition: all 0.2s;
+        }
+        .gm-confirm-cancel:hover { border-color: rgba(255,255,255,0.3); color: #F7F2EA; }
+        .gm-confirm-delete {
+          padding: 9px 20px; background: rgba(180,40,40,0.15);
+          border: 1px solid rgba(180,40,40,0.35); border-radius: 3px;
+          font-family: 'Jost', sans-serif; font-size: 9px; font-weight: 300;
+          letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(220,100,100,0.95); cursor: pointer; transition: all 0.2s;
+        }
+        .gm-confirm-delete:hover { background: rgba(180,40,40,0.25); border-color: rgba(180,40,40,0.55); }
+
+        /* Zone scrollable */
+        .gm-list {
+          flex: 1;
+          overflow-y: auto;
+          padding: 14px 22px 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          min-height: 0;
+        }
+        .gm-list::-webkit-scrollbar { width: 3px; }
+        .gm-list::-webkit-scrollbar-track { background: transparent; }
+        .gm-list::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.2); border-radius: 2px; }
+
+        /* Empty */
+        .gm-empty {
+          text-align: center; padding: 48px 24px;
+          font-family: 'Playfair Display', serif;
+          font-size: 16px; font-style: italic; font-weight: 300;
+          color: rgba(247,242,234,0.6);
+        }
+        .gm-empty-sub { font-size: 13px; margin-top: 8px; opacity: 0.8; }
+
+        /* Reading card */
+        .gm-card {
+          background: rgba(255,255,255,0.02);
+          border: 1px solid rgba(255,255,255,0.06);
+          border-radius: 10px;
+          transition: border-color 0.22s;
+        }
+        .gm-card:hover { border-color: rgba(255,255,255,0.12); }
+
+        .gm-card-head {
+          padding: 12px 14px 10px;
+          display: flex; align-items: center; justify-content: space-between; gap: 8px;
+          border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .gm-badge {
+          display: inline-flex; align-items: center; gap: 6px;
+          padding: 4px 10px; border-radius: 20px;
+          font-size: 10px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase;
+          border: 1px solid; flex-shrink: 0;
+        }
+        .gm-badge-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+        .gm-fav-star { font-size: 13px; color: #C9A84C; flex-shrink: 0; }
+        .gm-date { text-align: right; font-size: 11px; font-weight: 200; color: rgba(247,242,234,0.65); line-height: 1.6; flex-shrink: 0; }
+
+        /* Cards */
+        .gm-cards-section { padding: 10px 14px 0; }
+        .gm-cards-label {
+          font-size: 9px; font-weight: 300; letter-spacing: 2.5px; text-transform: uppercase;
+          color: rgba(247,242,234,0.65); margin-bottom: 8px;
+        }
+        .gm-cards-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+        .gm-chip {
+          padding: 4px 10px; border-radius: 4px;
+          background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+          font-size: 11px; font-weight: 200; color: rgba(247,242,234,0.88);
+        }
+
+        /* Expand button */
+        .gm-expand-btn {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 10px 14px; cursor: pointer; width: 100%;
+          background: transparent; border: none;
+          border-top: 1px solid rgba(255,255,255,0.04);
+          font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 300;
+          letter-spacing: 1px; color: rgba(247,242,234,0.72); transition: color 0.2s;
+          text-align: left;
+        }
+        .gm-expand-btn:hover { color: #F7F2EA; }
+        .gm-expand-chevron { font-size: 10px; transition: transform 0.25s; display: inline-block; }
+        .gm-expand-chevron.open { transform: rotate(180deg); }
+
+        /* Interprétation */
+        .gm-interp {
+          padding: 14px 16px;
+          margin: 0 14px 10px;
+          border-radius: 8px;
+          background: rgba(70,30,160,0.08);
+          border: 1px solid rgba(201,168,76,0.1);
+          font-family: 'Playfair Display', serif;
+          font-size: 13px; font-style: italic; font-weight: 300;
+          color: rgba(247,242,234,0.92);
+          line-height: 1.9;
+          white-space: pre-wrap;
+          word-break: break-word;
+        }
+
+        /* Notes */
+        .gm-notes { padding: 0 14px 10px; }
+        .gm-notes-label {
+          font-size: 9px; font-weight: 300; letter-spacing: 2.5px; text-transform: uppercase;
+          color: rgba(247,242,234,0.65); margin-bottom: 6px; display: block;
+        }
+        .gm-notes-input {
+          width: 100%; box-sizing: border-box;
+          padding: 9px 0;
+          background: transparent;
+          border: none; border-bottom: 1px solid rgba(255,255,255,0.1);
+          font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 200;
+          color: rgba(247,242,234,0.88); outline: none; transition: border-color 0.2s;
+        }
+        .gm-notes-input:focus { border-bottom-color: rgba(201,168,76,0.45); }
+        .gm-notes-input::placeholder { color: rgba(247,242,234,0.35); }
+
+        /* Actions */
+        .gm-actions { padding: 8px 14px 12px; display: flex; gap: 8px; }
+        .gm-fav-btn {
+          padding: 8px 16px; border-radius: 4px; cursor: pointer;
+          font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 300;
+          letter-spacing: 2px; text-transform: uppercase; transition: all 0.22s;
+        }
+        .gm-fav-btn-off {
+          background: transparent; border: 1px solid rgba(255,255,255,0.12);
+          color: rgba(247,242,234,0.65);
+        }
+        .gm-fav-btn-off:hover { border-color: rgba(201,168,76,0.4); color: rgba(201,168,76,0.9); }
+        .gm-fav-btn-on {
+          background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.35);
+          color: rgba(201,168,76,0.95);
+        }
+        .gm-fav-btn-on:hover { background: rgba(201,168,76,0.18); }
+      `}</style>
+
+      <div className="gm-overlay" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+        <div className="gm-modal">
+          {/* Coins déco */}
+          <div className="gm-c gm-tl"/><div className="gm-c gm-tr"/>
+          <div className="gm-c gm-bl"/><div className="gm-c gm-br"/>
+
+          {/* Header */}
+          <div className="gm-head">
+            <div className="gm-head-left">
+              <div className="gm-title">{t("grimoire.title") || 'Grimoire'}</div>
+              <div className="gm-subtitle">{t("grimoire.subtitle") || 'Vos tirages sauvegardés'}</div>
             </div>
+            <button className="gm-close" onClick={onClose} aria-label="Fermer">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
 
-            {/* 🗑️ Bouton Effacer tout */}
+          {/* Stats */}
+          <div className="gm-stats">
+            <div className="gm-stat">
+              <div className="gm-stat-num">{totalReadings}</div>
+              <div className="gm-stat-label">{t("grimoire.stats.total") || "Total"}</div>
+            </div>
+            <div className="gm-stat-divider"/>
+            <div className="gm-stat">
+              <div className="gm-stat-num">{readingsThisMonth}</div>
+              <div className="gm-stat-label">{t("grimoire.stats.thisMonth") || "Ce mois"}</div>
+            </div>
             {onClearAll && totalReadings > 0 && (
-              <button
-                onClick={() => setShowConfirmDelete(true)}
-                className="bg-red-600/30 hover:bg-red-600/50 text-red-200 px-3 py-1.5 rounded-lg transition-all text-sm border border-red-500/30 flex items-center gap-1.5"
-              >
-                <span>🗑️</span>
-                <span>{t("grimoire.clearAll.button") || "Tout effacer"}</span>
+              <button className="gm-clear-btn" onClick={() => setShowConfirmDelete(true)}>
+                {t("grimoire.clearAll.button") || "Effacer"}
               </button>
             )}
           </div>
-        </div>
 
-        {/* ⚠️ Modal de confirmation de suppression */}
-        {showConfirmDelete && (
-          <div className="bg-red-900/40 border-2 border-red-500 rounded-lg p-4 mb-3">
-            <div className="text-center mb-3">
-              <div className="text-3xl mb-2">⚠️</div>
-              <p className="text-red-200 font-bold mb-1">
-                {t("grimoire.clearAll.confirm.title") || "Êtes-vous sûr ?"}
-              </p>
-              <p className="text-red-300 text-sm">
-                {t("grimoire.clearAll.confirm.message") || "Cette action est irréversible."}
-              </p>
+          {/* Confirm delete */}
+          {showConfirmDelete && (
+            <div className="gm-confirm">
+              <div className="gm-confirm-title">{t("grimoire.clearAll.confirm.title") || "Confirmer la suppression"}</div>
+              <div className="gm-confirm-sub">{t("grimoire.clearAll.confirm.message") || "Cette action est irréversible."}</div>
+              <div className="gm-confirm-btns">
+                <button className="gm-confirm-cancel" onClick={() => setShowConfirmDelete(false)}>
+                  {t("common.cancel") || "Annuler"}
+                </button>
+                <button className="gm-confirm-delete" onClick={handleClearAll}>
+                  {t("grimoire.clearAll.confirm.button") || "Supprimer"}
+                </button>
+              </div>
             </div>
-            <div className="flex gap-2 justify-center">
-              <button
-                onClick={() => setShowConfirmDelete(false)}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-all"
-              >
-                {t("common.cancel") || "Annuler"}
-              </button>
-              <button
-                onClick={handleClearAll}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-all font-bold"
-              >
-                {t("grimoire.clearAll.confirm.button") || "Oui, tout effacer"}
-              </button>
+          )}
+
+          {/* Banners */}
+          {!isPremium && (
+            <div className="gm-banner gm-banner-free">
+              <div style={{fontWeight:400, marginBottom:2}}>✦ {t("grimoire.free.title")}</div>
+              <div style={{fontSize:11, opacity:.9}}>{t("grimoire.free.subtitle")}</div>
             </div>
-          </div>
-        )}
+          )}
+          {isPremium && (
+            <div className="gm-banner gm-banner-premium">
+              ✦ {t("grimoire.premium.active")}
+            </div>
+          )}
 
-        {!isPremium && (
-          <div className="bg-yellow-600/20 border border-yellow-600 rounded-lg p-2.5 mb-3 text-sm">
-            <p className="text-yellow-200 font-semibold">
-              ⭐ {t("grimoire.free.title")}
-            </p>
-            <p className="text-yellow-100 text-xs mt-0.5">
-              {t("grimoire.free.subtitle")}
-            </p>
-          </div>
-        )}
+          {/* Liste scrollable */}
+          <div className="gm-list">
+            {displayedReadings.length === 0 ? (
+              <div className="gm-empty">
+                <div>{t("grimoire.empty.title") || "Aucun tirage sauvegardé"}</div>
+                <div className="gm-empty-sub">{t("grimoire.empty.subtitle")}</div>
+              </div>
+            ) : (
+              displayedReadings.map(reading => {
+                const badge = getOracleBadge(reading.type);
+                const { date, time } = formatDateTime(reading.date);
+                const isExpanded = expandedReadings.has(reading.id);
 
-        {isPremium && (
-          <div className="bg-green-600/20 border border-green-500 rounded-lg p-2.5 mb-3">
-            <p className="text-green-300 text-sm">✨ {t("grimoire.premium.active")}</p>
-          </div>
-        )}
+                return (
+                  <div key={reading.id} className="gm-card">
 
-        {displayedReadings.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-purple-300 text-lg mb-2">🌙 {t("grimoire.empty.title")}</p>
-            <p className="text-purple-400 text-sm">{t("grimoire.empty.subtitle")}</p>
-          </div>
-        ) : (
-          <ul className="space-y-4">
-            {displayedReadings.map((reading) => {
-              const badge = getOracleBadge(reading.type);
-              const { date, time } = formatDateTime(reading.date);
-              const isExpanded = expandedReadings.has(reading.id);
-
-              return (
-                <li 
-                  key={reading.id} 
-                  className="bg-black/40 rounded-lg p-4 border border-purple-500/30 hover:border-purple-400/50 transition-all"
-                >
-                  {/* En-tête */}
-                  <div className="flex justify-between items-start mb-3">
-                    <div className="flex items-center gap-2">
-                      <span className={`${badge.color} text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1.5`}>
-                        <span>{badge.emoji}</span>
-                        <span>{badge.label}</span>
-                      </span>
-                      {reading.isFavorite && (
-                        <span className="text-yellow-400 text-lg">★</span>
-                      )}
-                    </div>
-                    <div className="text-right">
-                      <div className="text-purple-300 text-sm">📅 {date}</div>
-                      <div className="text-purple-400 text-xs">🕐 {time}</div>
-                    </div>
-                  </div>
-
-                  {/* Cartes tirées - TRADUITES */}
-                  {reading.cards && Array.isArray(reading.cards) && reading.cards.length > 0 && (
-                    <div className="mb-3 bg-purple-900/30 rounded-lg p-3 border border-purple-500/20">
-                      <div className="text-purple-300 text-sm font-semibold mb-2">
-                        🎴 {t("grimoire.cards.title")}
+                    {/* Card header */}
+                    <div className="gm-card-head">
+                      <div style={{display:'flex', alignItems:'center', gap:8, flex:1, minWidth:0}}>
+                        <div
+                          className="gm-badge"
+                          style={{
+                            color: badge.color,
+                            borderColor: `${badge.color}30`,
+                            background: `${badge.color}10`,
+                          }}
+                        >
+                          <div className="gm-badge-dot" style={{background: badge.color}}/>
+                          {badge.label}
+                        </div>
+                        {reading.isFavorite && <span className="gm-fav-star">★</span>}
                       </div>
-                      <div className="flex flex-wrap gap-2">
-                        {reading.cards
-                          .filter(card => card && typeof card === 'string') // ✅ Filtre les valeurs invalides
-                          .map((card, idx) => {
-                            const translatedCard = translateCardName(card, reading.type);
-                            return (
-                              <span 
-                                key={idx}
-                                className="bg-purple-700/50 text-purple-100 px-2.5 py-1 rounded text-xs border border-purple-500/30"
-                              >
-                                • {translatedCard || card}
+                      <div className="gm-date">
+                        <div>{date}</div>
+                        <div>{time}</div>
+                      </div>
+                    </div>
+
+                    {/* Cartes tirées */}
+                    {reading.cards && Array.isArray(reading.cards) && reading.cards.length > 0 && (
+                      <div className="gm-cards-section">
+                        <div className="gm-cards-label">{t("grimoire.cards.title") || "Cartes tirées"}</div>
+                        <div className="gm-cards-list">
+                          {reading.cards
+                            .filter(c => c && typeof c === 'string')
+                            .map((card, idx) => (
+                              <span key={idx} className="gm-chip">
+                                {translateCardName(card, reading.type) || card}
                               </span>
-                            );
-                          })}
+                            ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {/* Bouton déplier */}
-                  {reading.answer && (
-                    <button
-                      onClick={() => toggleExpand(reading.id)}
-                      className="w-full bg-purple-600/50 hover:bg-purple-600/70 text-white px-4 py-2 rounded-lg transition-all mb-3 flex items-center justify-center gap-2 border border-purple-500/30"
-                    >
-                      <span>📖 {isExpanded ? t("grimoire.interpretation.hide") : t("grimoire.interpretation.show")}</span>
-                      <span className="text-sm">{isExpanded ? '▲' : '▼'}</span>
-                    </button>
-                  )}
+                    {/* Bouton expand */}
+                    {reading.answer && (
+                      <button
+                        className="gm-expand-btn"
+                        onClick={() => toggleExpand(reading.id)}
+                        type="button"
+                      >
+                        <span>
+                          {isExpanded
+                            ? t("grimoire.interpretation.hide") || "Masquer l'interprétation"
+                            : t("grimoire.interpretation.show") || "Afficher l'interprétation"
+                          }
+                        </span>
+                        <span className={`gm-expand-chevron${isExpanded ? ' open' : ''}`}>▾</span>
+                      </button>
+                    )}
 
-                  {/* Interprétation */}
-                  {isExpanded && reading.answer && (
-                    <div className="bg-indigo-900/40 rounded-lg p-4 mb-3 border border-indigo-500/30">
-                      <div className="text-purple-200 text-sm whitespace-pre-wrap leading-relaxed">
+                    {/* Interprétation complète */}
+                    {isExpanded && reading.answer && (
+                      <div className="gm-interp">
                         {reading.answer}
                       </div>
+                    )}
+
+                    {/* Notes */}
+                    <div className="gm-notes" style={{marginTop: reading.answer ? 0 : 8}}>
+                      <label className="gm-notes-label">{t("grimoire.notes.title") || "Notes"}</label>
+                      <input
+                        type="text"
+                        className="gm-notes-input"
+                        defaultValue={reading.notes}
+                        onBlur={e => onSaveNote(reading.id, e.target.value)}
+                        placeholder={t("grimoire.notes.placeholder") || "Ajoutez vos réflexions…"}
+                      />
                     </div>
-                  )}
 
-                  {/* Notes */}
-                  <div className="mt-3">
-                    <label className="text-purple-300 text-sm font-semibold block mb-2">
-                      📝 {t("grimoire.notes.title")}
-                    </label>
-                    <input
-                      type="text"
-                      defaultValue={reading.notes}
-                      onBlur={(e) => onSaveNote(reading.id, e.target.value)}
-                      placeholder={t("grimoire.notes.placeholder")}
-                      className="bg-gray-900/80 border border-purple-500/50 focus:border-purple-400 px-3 py-2 rounded-lg text-white w-full transition-colors text-sm"
-                    />
-                  </div>
+                    {/* Actions */}
+                    <div className="gm-actions">
+                      <button
+                        className={`gm-fav-btn ${reading.isFavorite ? 'gm-fav-btn-on' : 'gm-fav-btn-off'}`}
+                        onClick={() => onToggleFavorite(reading.id)}
+                        type="button"
+                      >
+                        {reading.isFavorite
+                          ? `★ ${t("grimoire.favorite.remove")}`
+                          : `☆ ${t("grimoire.favorite.add")}`}
+                      </button>
+                    </div>
 
-                  {/* Favori */}
-                  <div className="mt-3 flex gap-2">
-                    <button
-                      onClick={() => onToggleFavorite(reading.id)}
-                      className={`text-sm px-4 py-2 rounded-lg transition-all font-semibold ${
-                        reading.isFavorite 
-                          ? 'bg-yellow-600 hover:bg-yellow-700 text-white' 
-                          : 'bg-purple-600/50 hover:bg-purple-600 text-purple-100 border border-purple-500/30'
-                      }`}
-                    >
-                      {reading.isFavorite ? `★ ${t("grimoire.favorite.remove")}` : `☆ ${t("grimoire.favorite.add")}`}
-                    </button>
                   </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
+                );
+              })
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

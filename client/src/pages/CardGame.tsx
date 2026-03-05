@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import TarotCard from '@/components/TarotCard';
-import MysticalButton from '@/components/MysticalButton';
 import CardRevealModal from '@/components/CardRevealModal';
 import { OracleData, UserSession, OracleType, OracleCard } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -24,21 +23,16 @@ interface CardGameProps {
 }
 
 export default function CardGame({ 
-  user,
-  oracle, 
-  oracleType, 
-  onCardsSelected, 
-  onSaveReading,
-  onBack 
+  user, oracle, oracleType, onCardsSelected, onSaveReading, onBack 
 }: CardGameProps) {
   const [randomCards, setRandomCards] = useState<number[]>([]);
   const [flippedCards, setFlippedCards] = useState<boolean[]>([]);
   const [selectedCardsIndices, setSelectedCardsIndices] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [revealedCard, setRevealedCard] = useState<{ card: any; index: number } | null>(null);
+  const [mounted, setMounted] = useState(false);
   const { t, language } = useLanguage();
 
-  // ✅ Précharger les images du dos AVANT l'affichage
   const { isLoaded: imagesLoaded, progress } = useCardImagePreloader(oracleType);
 
   const playFlip = useSound('Flip-card.wav');
@@ -48,13 +42,13 @@ export default function CardGame({
   const displayCards = isDailyReading ? 3 : 6;
   const maxSelection = isDailyReading ? 1 : 3;
 
-  const normalizeCardName = (name: string): string => {
-    return name
-      .trim()
-      .replace(/[''\s-]/g, '')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 60);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const normalizeCardName = (name: string): string =>
+    name.trim().replace(/[''\s-]/g, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
   const getCardOracleType = (): 'tarot' | 'angels' | 'runes' | 'oracle' | 'daily' => {
     if (oracleType === 'daily') return 'daily';
@@ -66,65 +60,40 @@ export default function CardGame({
 
   const translateCardName = (cardName: string | undefined): string | undefined => {
     if (!cardName) return undefined;
-
     const oracleTypeKey = getCardOracleType();
     const sourceLanguage = 'fr';
-
     if (oracleTypeKey === 'daily') {
       const frenchKey = getFrenchKeyFromTranslatedName(cardName, sourceLanguage);
-      const translationKey = `cards.daily.${frenchKey}.name`;
-      const translated = t(translationKey);
-      if (translated !== translationKey) return translated;
-      return cardName;
+      const translated = t(`cards.daily.${frenchKey}.name`);
+      return translated !== `cards.daily.${frenchKey}.name` ? translated : cardName;
     }
-
     if (oracleTypeKey === 'tarot') {
       const frenchKey = getTarotFrenchKey(cardName, sourceLanguage);
-      const translationKey = `cards.tarot.${frenchKey}.name`;
-      const translated = t(translationKey);
-      if (translated !== translationKey) return translated;
-      return cardName;
+      const translated = t(`cards.tarot.${frenchKey}.name`);
+      return translated !== `cards.tarot.${frenchKey}.name` ? translated : cardName;
     }
-
     if (oracleTypeKey === 'angels') {
       const frenchKey = getAngelsFrenchKey(cardName, sourceLanguage);
-      const translationKey = `cards.angels.${frenchKey}.name`;
-      const translated = t(translationKey);
-      if (translated !== translationKey) return translated;
-      return cardName;
+      const translated = t(`cards.angels.${frenchKey}.name`);
+      return translated !== `cards.angels.${frenchKey}.name` ? translated : cardName;
     }
-
-    const normalizedCardName = normalizeCardName(cardName);
-    const translationKey = `cards.${oracleTypeKey}.${normalizedCardName}.name`;
-    const translated = t(translationKey);
-    if (translated !== translationKey) return translated;
-    return cardName;
+    const norm = normalizeCardName(cardName);
+    const translated = t(`cards.${oracleTypeKey}.${norm}.name`);
+    return translated !== `cards.${oracleTypeKey}.${norm}.name` ? translated : cardName;
   };
 
   useEffect(() => {
     const generateCards = async () => {
       setIsLoading(true);
-
-      // ✅ Attendre que les images soient préchargées
-      if (!imagesLoaded) {
-        console.log(`⏳ Préchargement des images... ${Math.round(progress)}%`);
-        return;
-      }
-
+      if (!imagesLoaded) return;
       try {
-        const selectedCards = selectRandomCardsWithoutRepeat(
-          oracle.cards.length,
-          displayCards,
-          oracleType
-        );
+        const selectedCards = selectRandomCardsWithoutRepeat(oracle.cards.length, displayCards, oracleType);
         setRandomCards(selectedCards);
         setFlippedCards(new Array(displayCards).fill(false));
-      } catch (error) {
-        console.error('Erreur génération cartes:', error);
-        const fallbackCards = Array.from({length: oracle.cards.length}, (_, i) => i)
-          .sort(() => Math.random() - 0.5)
-          .slice(0, displayCards);
-        setRandomCards(fallbackCards);
+      } catch {
+        const fallback = Array.from({length: oracle.cards.length}, (_, i) => i)
+          .sort(() => Math.random() - 0.5).slice(0, displayCards);
+        setRandomCards(fallback);
         setFlippedCards(new Array(displayCards).fill(false));
       } finally {
         setIsLoading(false);
@@ -136,427 +105,378 @@ export default function CardGame({
   const handleCardClick = (cardIndex: number) => {
     if (flippedCards[cardIndex]) return;
     if (selectedCardsIndices.length >= maxSelection) return;
-
     playFlip();
-
     const newFlippedCards = [...flippedCards];
     newFlippedCards[cardIndex] = true;
     setFlippedCards(newFlippedCards);
-
     const actualIndex = randomCards[cardIndex];
-    const cardData = oracle.cards[actualIndex];
-
-    setRevealedCard({ card: cardData, index: cardIndex });
-
-    const newSelected = [...selectedCardsIndices, cardIndex];
-    setSelectedCardsIndices(newSelected);
+    setRevealedCard({ card: oracle.cards[actualIndex], index: cardIndex });
+    setSelectedCardsIndices([...selectedCardsIndices, cardIndex]);
   };
 
   const generateFullInterpretation = (selectedCards: OracleCard[]): string => {
-    const genderText = t(`interpretation.gender.${user.gender || 'autre'}`);
     const genderSuffix = user.gender === 'femme' ? 'e' : '';
-
-    const getTranslatedZodiacName = (): string => {
+    const genderText = t(`interpretation.gender.${user.gender || 'autre'}`);
+    const getZodiac = () => {
       if (!user.zodiacSign?.name) return '';
-      const signMapping: Record<string, string> = {
-        'Bélier': 'aries', 'Taureau': 'taurus', 'Gémeaux': 'gemini',
-        'Cancer': 'cancer', 'Lion': 'leo', 'Vierge': 'virgo',
-        'Balance': 'libra', 'Scorpion': 'scorpio', 'Sagittaire': 'sagittarius',
-        'Capricorne': 'capricorn', 'Verseau': 'aquarius', 'Poissons': 'pisces'
-      };
-      const englishKey = signMapping[user.zodiacSign.name];
-      return englishKey ? t(`zodiac.signs.${englishKey}`) : user.zodiacSign.name;
+      const map: Record<string,string> = {'Bélier':'aries','Taureau':'taurus','Gémeaux':'gemini','Cancer':'cancer','Lion':'leo','Vierge':'virgo','Balance':'libra','Scorpion':'scorpio','Sagittaire':'sagittarius','Capricorne':'capricorn','Verseau':'aquarius','Poissons':'pisces'};
+      const key = map[user.zodiacSign.name];
+      return key ? t(`zodiac.signs.${key}`) : user.zodiacSign.name;
+    };
+    const zodiac = getZodiac() || t('interpretation.fallback.zodiac');
+
+    const getMeaning = (cardName: string, oType: 'tarot'|'angels'|'runes'|'oracle'|'daily') => {
+      let key = cardName;
+      if (oType === 'daily') key = getFrenchKeyFromTranslatedName(cardName, 'fr');
+      else if (oType === 'tarot') key = getTarotFrenchKey(cardName, 'fr');
+      else if (oType === 'angels') key = getAngelsFrenchKey(cardName, 'fr');
+      else key = normalizeCardName(cardName);
+      const mKey = oType === 'oracle' ? 'daily' : oType;
+      const base = `cards.${mKey}.${key}.meaning`;
+      const vars = [t(`${base}.var1`,{genderSuffix}),t(`${base}.var2`,{genderSuffix}),t(`${base}.var3`,{genderSuffix})].filter(v=>!v.includes('cards.'));
+      return vars.length ? vars[getSecureRandomInt(0,vars.length-1)] : t(base,{genderSuffix});
     };
 
-    const zodiacName = getTranslatedZodiacName();
-
-    const getRandomCardMeaning = (cardName: string, oType: 'tarot' | 'angels' | 'runes' | 'oracle' | 'daily'): string => {
-      const sourceLanguage = 'fr';
-      let normalizedName: string;
-
-      if (oType === 'daily') {
-        normalizedName = getFrenchKeyFromTranslatedName(cardName, sourceLanguage);
-      } else if (oType === 'tarot') {
-        normalizedName = getTarotFrenchKey(cardName, sourceLanguage);
-      } else if (oType === 'angels') {
-        normalizedName = getAngelsFrenchKey(cardName, sourceLanguage);
-      } else {
-        normalizedName = normalizeCardName(cardName);
-      }
-
-      const meaningKey = oType === 'oracle' ? 'daily' : oType;
-      const baseMeaningKey = `cards.${meaningKey}.${normalizedName}.meaning`;
-
-      const var1 = t(`${baseMeaningKey}.var1`, { genderSuffix });
-      const var2 = t(`${baseMeaningKey}.var2`, { genderSuffix });
-      const var3 = t(`${baseMeaningKey}.var3`, { genderSuffix });
-
-      const variations = [var1, var2, var3].filter(v => !v.includes('cards.'));
-
-      if (variations.length > 0) {
-        return variations[getSecureRandomInt(0, variations.length - 1)];
-      }
-
-      return t(baseMeaningKey, { genderSuffix });
-    };
-
-    const getRandomGreeting = (oType: string): string => {
-      const variations = {
-        daily: [
-          t('interpretation.daily.greeting', { name: user.name }),
-          t('interpretation.daily.greeting.var1', { name: user.name }),
-          t('interpretation.daily.greeting.var2', { name: user.name }),
-          t('interpretation.daily.greeting.var3', { name: user.name }),
-          t('interpretation.daily.greeting.var4', { name: user.name })
-        ],
-        tarot: [
-          t('interpretation.tarot.greeting', { name: user.name }),
-          t('interpretation.tarot.greeting.var1', { name: user.name }),
-          t('interpretation.tarot.greeting.var2', { name: user.name }),
-          t('interpretation.tarot.greeting.var3', { name: user.name }),
-          t('interpretation.tarot.greeting.var4', { name: user.name })
-        ],
-        angels: [
-          t('interpretation.angels.greeting', { name: user.name }),
-          t('interpretation.angels.greeting.var1', { name: user.name }),
-          t('interpretation.angels.greeting.var2', { name: user.name }),
-          t('interpretation.angels.greeting.var3', { name: user.name }),
-          t('interpretation.angels.greeting.var4', { name: user.name })
-        ],
-        runes: [
-          t('interpretation.runes.greeting', { name: user.name, genderSuffix }),
-          t('interpretation.runes.greeting.var1', { name: user.name }),
-          t('interpretation.runes.greeting.var2', { name: user.name }),
-          t('interpretation.runes.greeting.var3', { name: user.name }),
-          t('interpretation.runes.greeting.var4', { name: user.name })
-        ]
-      };
-      const oracleVariations = variations[oType as keyof typeof variations] || variations.tarot;
-      return oracleVariations[getSecureRandomInt(0, oracleVariations.length - 1)];
-    };
-
-    const getRandomAdvice = (): string => {
-      const adviceVariations = [
-        t('interpretation.advice.var1', { genderSuffix }),
-        t('interpretation.advice.var2'),
-        t('interpretation.advice.var3'),
-        t('interpretation.advice.var4', { genderSuffix }),
-        t('interpretation.advice.var5', { genderSuffix }),
-        t('interpretation.advice.var6', { genderSuffix }),
-        t('interpretation.advice.var7'),
-        t('interpretation.advice.var8'),
-        t('interpretation.advice.var9'),
-        t('interpretation.advice.var10')
-      ];
-      return adviceVariations[getSecureRandomInt(0, adviceVariations.length - 1)];
-    };
-
-    const sections: Array<{icon: string; title: string; content: string}> = [];
-    let finalMessage = '';
-    let greeting = '';
-
-    const fallbackZodiac = zodiacName || t('interpretation.fallback.zodiac');
-
-    if (isDailyReading) {
-      const dailyCard = selectedCards[0];
-      const dailyCardName = translateCardName(dailyCard.name) || dailyCard.name;
-      const dailyCardMeaning = getRandomCardMeaning(dailyCard.name, 'daily');
-
-      sections.push({
-        icon: '☀️',
-        title: dailyCardName,
-        content: dailyCardMeaning
-      });
-
-      const getRandomWisdom = (zodiacSign: string): string => {
-        const variationCount = 15;
-        const randomIndex = getSecureRandomInt(0, variationCount - 1);
-        const key = `interpretation.daily.wisdom.var${randomIndex}`;
-        const translated = t(key, { zodiacSign });
-        return translated.includes('interpretation.daily') 
-          ? t('interpretation.daily.wisdom.var0', { zodiacSign })
-          : translated;
-      };
-
-      finalMessage = getRandomWisdom(fallbackZodiac);
-      greeting = getRandomGreeting('daily');
-
-    } else if (oracle.title === 'Tarot de Marseille') {
-      const card1 = selectedCards[0];
-      const card2 = selectedCards[1];
-      const card3 = selectedCards[2];
-
-      const card1Name = translateCardName(card1.name) || card1.name;
-      const card2Name = translateCardName(card2.name) || card2.name;
-      const card3Name = translateCardName(card3.name) || card3.name;
-
-      sections.push(
-        { icon: '✨', title: card1Name, content: getRandomCardMeaning(card1.name, 'tarot') },
-        { icon: '🌙', title: card2Name, content: getRandomCardMeaning(card2.name, 'tarot') },
-        { icon: '⭐', title: card3Name, content: getRandomCardMeaning(card3.name, 'tarot') }
-      );
-
-      const tarotTemplates = [
-        t('interpretation.tarot.template.advice.var1', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.tarot.template.advice.var2', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.tarot.template.advice.var3', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.tarot.template.advice.var4', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.tarot.template.advice.var5', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.tarot.template.advice.var6', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.tarot.template.advice.var7', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.tarot.template.advice.var8', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.tarot.template.advice.var9', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.tarot.template.advice.var10', { name: user.name, zodiacSign: fallbackZodiac, genderText })
-      ];
-      const selectedTemplate = tarotTemplates[getSecureRandomInt(0, tarotTemplates.length - 1)];
-
-      const tarotAdvices = [
-        t('interpretation.tarot.advice.var1', { genderSuffix }),
-        t('interpretation.tarot.advice.var2', { genderSuffix }),
-        t('interpretation.tarot.advice.var3', { genderSuffix }),
-        t('interpretation.tarot.advice.var4', { genderSuffix }),
-        t('interpretation.tarot.advice.var5', { genderSuffix }),
-        t('interpretation.tarot.advice.var6', { genderSuffix }),
-        t('interpretation.tarot.advice.var7', { genderSuffix }),
-        t('interpretation.tarot.advice.var8', { genderSuffix }),
-        t('interpretation.tarot.advice.var9', { genderSuffix }),
-        t('interpretation.tarot.advice.var10', { genderSuffix })  
-      ];
-      const selectedAdvice = tarotAdvices[getSecureRandomInt(0, tarotAdvices.length - 1)];
-
-      finalMessage = selectedTemplate + ' ' + selectedAdvice;
-      greeting = getRandomGreeting('tarot');
-
-    } else if (oracle.title === 'Oracle des Anges') {
-      const card1 = selectedCards[0];
-      const card2 = selectedCards[1];
-      const card3 = selectedCards[2];
-
-      const card1Name = translateCardName(card1.name) || card1.name;
-      const card2Name = translateCardName(card2.name) || card2.name;
-      const card3Name = translateCardName(card3.name) || card3.name;
-
-      sections.push(
-        { icon: '👼', title: card1Name, content: getRandomCardMeaning(card1.name, 'angels') },
-        { icon: '✨', title: card2Name, content: getRandomCardMeaning(card2.name, 'angels') },
-        { icon: '🌟', title: card3Name, content: getRandomCardMeaning(card3.name, 'angels') }
-      );
-
-      const templates = [
-        t('interpretation.angels.template.message.var1', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.angels.template.message.var2', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.angels.template.message.var3', { name: user.name, zodiacSign: fallbackZodiac, genderText }),
-        t('interpretation.angels.template.message.var4', { name: user.name, zodiacSign: fallbackZodiac, genderText })
-      ];
-      finalMessage = templates[getSecureRandomInt(0, templates.length - 1)].replace('{genderSuffix}', genderSuffix) + ' ' + getRandomAdvice();
-      greeting = getRandomGreeting('angels');
-
-    } else {
-      const card1 = selectedCards[0];
-      const card2 = selectedCards[1];
-      const card3 = selectedCards[2];
-
-      const card1Name = translateCardName(card1.name) || card1.name;
-      const card2Name = translateCardName(card2.name) || card2.name;
-      const card3Name = translateCardName(card3.name) || card3.name;
-
-      sections.push(
-        { icon: 'ᚱ', title: card1Name, content: getRandomCardMeaning(card1.name, 'runes') },
-        { icon: 'ᚢ', title: card2Name, content: getRandomCardMeaning(card2.name, 'runes') },
-        { icon: 'ᚦ', title: card3Name, content: getRandomCardMeaning(card3.name, 'runes') }
-      );
-
-      finalMessage = t('interpretation.runes.advice', { genderText, name: user.name, zodiacSign: fallbackZodiac }).replace('{genderSuffix}', genderSuffix) + ' ' + getRandomAdvice();
-      greeting = getRandomGreeting('runes');
-    }
-
-    const fullText = [
-      greeting,
-      '',
-      ...sections.map(section => `${section.icon} ${section.title}\n${section.content}`),
-      '',
-      finalMessage
-    ].join('\n\n');
-
-    return fullText;
+    const sections = selectedCards.map(c => `${translateCardName(c.name)||c.name}\n${getMeaning(c.name, getCardOracleType())}`);
+    return sections.join('\n\n');
   };
 
   const handleCloseModal = async () => {
     setRevealedCard(null);
-
     if (selectedCardsIndices.length === maxSelection) {
       playReveal();
-
-      const selectedCards = selectedCardsIndices.map(idx => randomCards[idx]);
-      const selectedCardsData = selectedCards.map(idx => oracle.cards[idx]);
-
-      const fullInterpretation = generateFullInterpretation(selectedCardsData);
-
+      const cards = selectedCardsIndices.map(idx => randomCards[idx]);
+      const cardsData = cards.map(idx => oracle.cards[idx]);
+      const interp = generateFullInterpretation(cardsData);
       if (onSaveReading) {
         try {
-          await onSaveReading({
-            type: oracleType === 'daily' ? 'oracle' : oracleType,
-            cards: selectedCardsData.map(card => card.name),
-            date: new Date(),
-            answer: fullInterpretation
-          });
-          console.log(`✅ ${oracleType} saved`);
-        } catch (error) {
-          console.error('❌ Erreur sauvegarde:', error);
-        }
+          await onSaveReading({ type: oracleType === 'daily' ? 'oracle' : oracleType, cards: cardsData.map(c=>c.name), date: new Date(), answer: interp });
+        } catch {}
       }
-
-      if (isDailyReading) {
-        saveDailyReading(selectedCards);
-      }
-      saveTirageToHistory(oracleType, selectedCards);
-
-      setTimeout(() => {
-        onCardsSelected(selectedCards);
-      }, 300);
+      if (isDailyReading) saveDailyReading(cards);
+      saveTirageToHistory(oracleType, cards);
+      setTimeout(() => onCardsSelected(cards), 300);
     }
   };
 
-  // ✅ Écran de chargement avec progression
   if (isLoading || !imagesLoaded) {
     return (
-      <div className="game-area w-full text-center min-h-screen flex flex-col justify-center p-4">
-        <div className="flex flex-col items-center space-y-4">
-          <div className="mystical-card rounded-xl p-6 animate-pulse">
-            <h2 className="text-[#ffd700] text-xl font-bold font-serif mb-2">
-              {t(`oracle.${oracleType}.title`)}
-            </h2>
-            <p className="text-[#b19cd9] text-sm">
-              {!imagesLoaded 
-                ? `${t('cardgame.loading')}... ${Math.round(progress)}%`
-                : t('cardgame.loading')
-              }
-            </p>
-            {!imagesLoaded && progress > 0 && (
-              <div className="mt-4 w-full max-w-xs mx-auto">
-                <div className="h-2 bg-purple-900/30 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-[#ffd700] to-[#b19cd9] transition-all duration-300"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-              </div>
-            )}
-          </div>
+      <div style={{
+        minHeight: '100vh', display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        background: '#05030E', fontFamily: "'Jost', sans-serif", padding: '24px',
+      }}>
+        <style>{`@import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&display=swap');`}</style>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            width: 48, height: 48, borderRadius: '50%',
+            background: 'radial-gradient(ellipse, rgba(240,208,128,0.7) 0%, rgba(201,168,76,0.3) 60%, transparent 100%)',
+            margin: '0 auto 24px',
+            animation: 'pulse-load 2s ease-in-out infinite',
+          }}/>
+          <p style={{ fontSize: 12, letterSpacing: 3, color: '#DDB95A', textTransform: 'uppercase', marginBottom: 16 }}>
+            {!imagesLoaded ? `Chargement ${Math.round(progress)}%` : 'Préparation...'}
+          </p>
+          {!imagesLoaded && progress > 0 && (
+            <div style={{ width: 200, height: 1, background: 'rgba(255,255,255,0.12)', borderRadius: 1, overflow: 'hidden', margin: '0 auto' }}>
+              <div style={{ height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg, transparent, #C9A84C, transparent)', transition: 'width 0.3s ease' }}/>
+            </div>
+          )}
         </div>
+        <style>{`@keyframes pulse-load { 0%,100%{transform:scale(0.9);opacity:.7} 50%{transform:scale(1.1);opacity:1} }`}</style>
       </div>
     );
   }
 
+  const selectionCount = selectedCardsIndices.length;
+  const oracleLabels: Record<string,string> = { daily: 'Tirage du Jour', tarot: 'Tarot de Marseille', angels: "Oracle des Anges", runes: 'Runes Ancestrales' };
+  const oracleLabel = oracleLabels[oracleType] || oracle.title;
+
   return (
     <>
-      <div className="game-area w-full text-center min-h-screen flex flex-col justify-between p-2 sm:p-4 pt-20 sm:pt-24 pb-safe">
-        <div className="flex-1 flex flex-col justify-center space-y-3 sm:space-y-4">
-          <div className="reading-type">
-            <h2 className="text-[#ffd700] text-xl sm:text-2xl md:text-3xl font-bold font-serif text-shadow-glow leading-tight">
-              {t(`oracle.${oracleType}.title`)}
-            </h2>
-            <p className="text-[#b19cd9] text-sm sm:text-base max-w-2xl mx-auto">
-              {t(`oracle.${oracleType}.description`)}
-            </p>
-            <p className="text-[#c9a9dd] text-xs sm:text-sm mt-2 sm:mt-3">
-              {isDailyReading 
-                ? t('cardgame.daily.instruction')
-                : t('cardgame.reading.instruction')
-              }
-            </p>
-          </div>
+      <div className={`cg-root ${mounted ? 'cg-mounted' : ''}`}>
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 
-          <div className={`cards-container flex flex-col items-center gap-4 ${isDailyReading ? '' : 'max-w-5xl mx-auto'}`}>
-            {isDailyReading ? (
-              <div className="cards-grid flex justify-center gap-4 sm:gap-6 lg:gap-8">
-                {Array.from({length: displayCards}, (_, cardIndex) => {
-                  const actualIndex = randomCards[cardIndex];
-                  const isCardFlipped = flippedCards[cardIndex];
-                  const canClick = !isCardFlipped && selectedCardsIndices.length < maxSelection;
-                  const cardData = oracle.cards[actualIndex];
+          :root {
+            --gold: #DDB95A;
+            --gold-light: #F0DC88;
+            --gold-dim: rgba(201,168,76,0.3);
+            --white: #F7F2EA;
+            --bg: #05030E;
+          }
+          * { box-sizing: border-box; }
 
+          .cg-root {
+            min-height: 100vh; display: flex; flex-direction: column;
+            background: var(--bg); font-family: 'Jost', sans-serif; color: var(--white);
+            position: relative; overflow: hidden;
+            padding-top: env(safe-area-inset-top, 0px);
+          }
+
+          .cg-bg {
+            position: absolute; inset: 0; pointer-events: none;
+            background:
+              radial-gradient(ellipse 80% 50% at 50% -5%, rgba(80,40,160,0.2) 0%, transparent 60%),
+              radial-gradient(ellipse 40% 30% at 85% 80%, rgba(40,20,90,0.1) 0%, transparent 50%);
+          }
+          .cg-noise {
+            position: absolute; inset: 0; pointer-events: none; opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+          }
+          .cg-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+          .cg-particle {
+            position: absolute; border-radius: 50%; background: white;
+            animation: cgpf var(--dur,4s) ease-in-out infinite var(--del,0s);
+          }
+          @keyframes cgpf { 0%,100%{opacity:0} 40%,60%{opacity:var(--op,.2)} }
+
+          /* Header */
+          .cg-header {
+            position: relative; z-index: 20;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 24px 0;
+            opacity: 0; transition: opacity 0.6s ease;
+          }
+          .cg-mounted .cg-header { opacity: 1; transition-delay: 0.1s; }
+
+          .cg-back {
+            display: flex; align-items: center; gap: 8px;
+            background: none; border: none; cursor: pointer; padding: 0;
+            font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 300;
+            letter-spacing: 2px; text-transform: uppercase;
+            /* ✅ +lisibilité : 0.45 → 0.80 */
+            color: rgba(247,242,234,0.80); transition: color 0.3s;
+          }
+          .cg-back:hover { color: rgba(247,242,234,1); }
+          .cg-back-arr { width: 18px; height: 1px; background: currentColor; position: relative; }
+          .cg-back-arr::before {
+            content: ''; position: absolute; left: 0; top: -3px;
+            width: 6px; height: 6px;
+            border-left: 1px solid currentColor; border-bottom: 1px solid currentColor;
+            transform: rotate(45deg);
+          }
+
+          .cg-progress-dots { display: flex; align-items: center; gap: 6px; }
+          .cg-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            /* ✅ +lisibilité : 0.1 → 0.30 */
+            background: rgba(255,255,255,0.30); transition: all 0.4s ease;
+          }
+          .cg-dot.filled {
+            background: var(--gold);
+            box-shadow: 0 0 6px rgba(201,168,76,0.6);
+          }
+
+          /* Titre */
+          .cg-title-block {
+            position: relative; z-index: 10; text-align: center;
+            padding: 32px 24px 24px;
+            opacity: 0; transform: translateY(10px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+          }
+          .cg-mounted .cg-title-block { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+
+          .cg-oracle-badge {
+            display: inline-block;
+            font-size: 9px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase;
+            /* ✅ +lisibilité : 0.6 → 0.90, border 0.2 → 0.45 */
+            color: rgba(220,185,90,1.0);
+            border: 1px solid rgba(201,168,76,0.45);
+            border-radius: 20px; padding: 5px 14px; margin-bottom: 14px;
+          }
+
+          .cg-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(26px, 7vw, 38px); font-weight: 300;
+            color: var(--white); margin: 0 0 8px; line-height: 1.1;
+          }
+          .cg-title em { font-style: italic; color: #F0DC88; }
+
+          .cg-desc {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px; font-style: italic; font-weight: 300;
+            /* ✅ +lisibilité : 0.55 → 0.85 */
+            color: rgba(247,242,234,0.85); line-height: 1.65;
+          }
+
+          .cg-cards-area {
+            position: relative; z-index: 10;
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 8px 16px; gap: 16px;
+            opacity: 0; transition: opacity 0.8s ease;
+          }
+          .cg-mounted .cg-cards-area { opacity: 1; transition-delay: 0.4s; }
+
+          .cg-cards-row {
+            display: flex; justify-content: center; align-items: center; gap: 14px;
+          }
+
+          /* Instruction */
+          .cg-instruction {
+            position: relative; z-index: 10;
+            text-align: center; padding: 0 24px 12px;
+            opacity: 0; transition: opacity 0.7s ease;
+          }
+          .cg-mounted .cg-instruction { opacity: 1; transition-delay: 0.6s; }
+
+          .cg-instruction-text {
+            font-size: 13px; font-weight: 400; letter-spacing: 0.3px;
+            /* ✅ +lisibilité : 0.5 → 0.88 */
+            color: rgba(247,242,234,0.88); margin-bottom: 4px;
+          }
+          .cg-counter {
+            font-family: 'Playfair Display', serif;
+            font-size: 12px; font-style: italic;
+            /* ✅ +lisibilité : 0.55 → 0.85 */
+            color: rgba(220,185,90,1.0);
+          }
+
+          /* Footer */
+          .cg-footer {
+            position: relative; z-index: 10;
+            padding: 16px 24px 32px; display: flex; justify-content: center;
+            opacity: 0; transition: opacity 0.7s ease;
+          }
+          .cg-mounted .cg-footer { opacity: 1; transition-delay: 0.7s; }
+
+          .cg-back-btn {
+            padding: 13px 36px;
+            background: none;
+            /* ✅ +lisibilité : border 0.07 → 0.22 */
+            border: 1px solid rgba(255,255,255,0.22); border-radius: 3px;
+            font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 300;
+            letter-spacing: 3px; text-transform: uppercase;
+            /* ✅ +lisibilité : 0.4 → 0.78 */
+            color: rgba(247,242,234,0.78); cursor: pointer; transition: all 0.3s;
+          }
+          .cg-back-btn:hover { border-color: rgba(255,255,255,0.45); color: rgba(247,242,234,1); }
+
+          .cg-line {
+            width: 1px; height: 32px;
+            background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.3), transparent);
+            margin: 0 auto;
+          }
+        `}</style>
+
+        <div className="cg-bg" />
+        <div className="cg-noise" />
+        <div className="cg-particles">
+          {Array.from({length: 30}).map((_,i) => (
+            <div key={i} className="cg-particle" style={{
+              left: `${Math.random()*100}%`, top: `${Math.random()*100}%`,
+              width: `${Math.random()<.2?2:1}px`, height: `${Math.random()<.2?2:1}px`,
+              '--dur': `${3+Math.random()*5}s`, '--del': `${Math.random()*5}s`,
+              '--op': 0.1+Math.random()*0.35,
+            } as any}/>
+          ))}
+        </div>
+
+        <div className="cg-header">
+          <button className="cg-back" onClick={onBack}>
+            <span className="cg-back-arr"/>
+            {t('cardgame.back') || 'Retour'}
+          </button>
+          {!isDailyReading && (
+            <div className="cg-progress-dots">
+              {Array.from({length: maxSelection}).map((_,i) => (
+                <div key={i} className={`cg-dot ${i < selectionCount ? 'filled' : ''}`}/>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="cg-title-block">
+          <div className="cg-oracle-badge">{oracleLabel}</div>
+          <h1 className="cg-title">
+            <em>{t(`oracle.${oracleType}.title`) || oracleLabel}</em>
+          </h1>
+          <p className="cg-desc">{t(`oracle.${oracleType}.description`)}</p>
+        </div>
+
+        <div className="cg-line"/>
+
+        <div className="cg-cards-area">
+          {isDailyReading ? (
+            <div className="cg-cards-row">
+              {Array.from({length: displayCards}, (_, cardIndex) => {
+                const actualIndex = randomCards[cardIndex];
+                const isFlipped = flippedCards[cardIndex];
+                const canClick = !isFlipped && selectionCount < maxSelection;
+                return (
+                  <TarotCard
+                    key={`${oracleType}-${cardIndex}-${actualIndex}`}
+                    number={isFlipped ? actualIndex + 1 : 0}
+                    isSelected={false}
+                    isSelectable={canClick}
+                    onClick={() => handleCardClick(cardIndex)}
+                    cardName={isFlipped ? oracle.cards[actualIndex]?.name : undefined}
+                    oracleType={getCardOracleType()}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <>
+              <div className="cg-cards-row">
+                {Array.from({length: 3}, (_, i) => {
+                  const isFlipped = flippedCards[i];
+                  const canClick = !isFlipped && selectionCount < maxSelection;
                   return (
                     <TarotCard
-                      key={`${oracleType}-${cardIndex}-${actualIndex}`}
-                      number={isCardFlipped ? actualIndex + 1 : 0}
-                      isSelected={false}
+                      key={`${oracleType}-${i}-${randomCards[i]}`}
+                      number={isFlipped ? randomCards[i]+1 : 0}
+                      isSelected={selectedCardsIndices.includes(i)}
                       isSelectable={canClick}
-                      onClick={() => handleCardClick(cardIndex)}
-                      cardName={isCardFlipped ? cardData?.name : undefined}
+                      onClick={() => handleCardClick(i)}
+                      cardName={isFlipped ? oracle.cards[randomCards[i]]?.name : undefined}
                       oracleType={getCardOracleType()}
                     />
                   );
                 })}
               </div>
-            ) : (
-              <>
-                <div className="cards-grid flex justify-center gap-3 sm:gap-4 md:gap-6">
-                  {Array.from({length: 3}, (_, cardIndex) => {
-                    const actualIndex = randomCards[cardIndex];
-                    const isCardFlipped = flippedCards[cardIndex];
-                    const isSelected = selectedCardsIndices.includes(cardIndex);
-                    const canClick = !isCardFlipped && selectedCardsIndices.length < maxSelection;
-                    const cardData = oracle.cards[actualIndex];
+              <div className="cg-cards-row">
+                {Array.from({length: 3}, (_, i) => {
+                  const ci = i + 3;
+                  const isFlipped = flippedCards[ci];
+                  const canClick = !isFlipped && selectionCount < maxSelection;
+                  return (
+                    <TarotCard
+                      key={`${oracleType}-${ci}-${randomCards[ci]}`}
+                      number={isFlipped ? randomCards[ci]+1 : 0}
+                      isSelected={selectedCardsIndices.includes(ci)}
+                      isSelectable={canClick}
+                      onClick={() => handleCardClick(ci)}
+                      cardName={isFlipped ? oracle.cards[randomCards[ci]]?.name : undefined}
+                      oracleType={getCardOracleType()}
+                    />
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </div>
 
-                    return (
-                      <TarotCard
-                        key={`${oracleType}-${cardIndex}-${actualIndex}`}
-                        number={isCardFlipped ? actualIndex + 1 : 0}
-                        isSelected={isSelected}
-                        isSelectable={canClick}
-                        onClick={() => handleCardClick(cardIndex)}
-                        cardName={isCardFlipped ? cardData?.name : undefined}
-                        oracleType={getCardOracleType()}
-                      />
-                    );
-                  })}
-                </div>
-
-                <div className="cards-grid flex justify-center gap-3 sm:gap-4 md:gap-6">
-                  {Array.from({length: 3}, (_, i) => {
-                    const cardIndex = i + 3;
-                    const actualIndex = randomCards[cardIndex];
-                    const isCardFlipped = flippedCards[cardIndex];
-                    const isSelected = selectedCardsIndices.includes(cardIndex);
-                    const canClick = !isCardFlipped && selectedCardsIndices.length < maxSelection;
-                    const cardData = oracle.cards[actualIndex];
-
-                    return (
-                      <TarotCard
-                        key={`${oracleType}-${cardIndex}-${actualIndex}`}
-                        number={isCardFlipped ? actualIndex + 1 : 0}
-                        isSelected={isSelected}
-                        isSelectable={canClick}
-                        onClick={() => handleCardClick(cardIndex)}
-                        cardName={isCardFlipped ? cardData?.name : undefined}
-                        oracleType={getCardOracleType()}
-                      />
-                    );
-                  })}
-                </div>
-              </>
-            )}
-          </div>
-
-          <div className="controls">
-            <p className="text-[#b19cd9] text-xs sm:text-sm mb-3">
-              {isDailyReading 
-                ? t('cardgame.daily.choose')
-                : t('cardgame.selected')
-                    .replace('{current}', selectedCardsIndices.length.toString())
-                    .replace('{max}', maxSelection.toString())
-              }
+        <div className="cg-instruction">
+          <p className="cg-instruction-text">
+            {isDailyReading
+              ? t('cardgame.daily.choose') || 'Choisissez la carte qui vous appelle'
+              : t('cardgame.selected')?.replace('{current}', selectionCount.toString()).replace('{max}', maxSelection.toString()) || `${selectionCount} / ${maxSelection} cartes choisies`
+            }
+          </p>
+          {!isDailyReading && (
+            <p className="cg-counter">
+              {t('cardgame.reading.instruction') || 'Laissez votre intuition vous guider'}
             </p>
+          )}
+        </div>
 
-            <MysticalButton 
-              variant="secondary" 
-              onClick={onBack} 
-              className="px-4 py-2 text-sm min-h-[44px]"
-            >
-              ← {t('cardgame.back')}
-            </MysticalButton>
-          </div>
+        <div className="cg-footer">
+          <button className="cg-back-btn" onClick={onBack}>
+            {t('cardgame.back') || 'Retour'}
+          </button>
         </div>
       </div>
 

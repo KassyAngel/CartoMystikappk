@@ -8,6 +8,7 @@ const translations: Record<Language, Record<string, string>> = {
       "Découvrez les mystères de votre destinée à travers les cartes, les astres et la sagesse ancienne",
     "landing.enter": "ENTRER",
     "landing.ads.support": "Les publicités nous aident à garder l'application gratuite",
+    "landing.tagline": "Divination & Révélation",
 
     // 🆕 Disclaimer - AJOUTER ICI
     "disclaimer.title": "Avertissement Important",
@@ -82,6 +83,8 @@ const translations: Record<Language, Record<string, string>> = {
     "common.cancel": "Annuler",
     "common.save": "Sauvegarder",
     "name.label": "Nom",
+    "oracle.choose": "Choisissez votre oracle", 
+    "oracle.bonus": "Bonus",
 
     // FR Notifications  
     "notification.channel.name": "Tirage Quotidien",
@@ -149,6 +152,8 @@ const translations: Record<Language, Record<string, string>> = {
     "revelation.loading.daily": "Les astres dévoilent ton oracle du jour, {name}",
     "revelation.loading.reading": "Les cartes révèlent leurs secrets mystiques, {name}",
     "revelation.loading.mysticMessage": "Les étoiles s'alignent pour toi...",
+    "interpretation.label.reading": "Votre lecture",     // Français
+    "revelation.summary.eyebrow": "Votre lecture",       // Français
 
     // Revelation Page
     "revelation.positions.daily": "Conseil du Jour",
@@ -1725,7 +1730,8 @@ const translations: Record<Language, Record<string, string>> = {
       "Discover the mysteries of your destiny through cards, stars and ancient wisdom",
     "landing.enter": "ENTER",
     "landing.ads.support": "Ads help us keep the app free",
-
+    "landing.tagline": "Divination & Revelation",     // English
+   
     // 🆕 Disclaimer - ADD HERE
     "disclaimer.title": "Important Disclaimer",
       "disclaimer.text": "CartoMystik is an entertainment and personal development application. Consult qualified experts for any important decisions.",
@@ -1798,6 +1804,8 @@ const translations: Record<Language, Record<string, string>> = {
       "common.cancel": "Cancel",
       "common.save": "Save",
       "name.label": "Name",
+     "oracle.choose": "Choose your oracle",
+      "oracle.bonus": "Bonus",
 
     // EN Notifications  
     "notification.channel.name": "Daily Reading",
@@ -1884,7 +1892,9 @@ const translations: Record<Language, Record<string, string>> = {
     "revelation.backToSelection": "Back to Selection",
     "interpretation.advice.title": "Your personal advice",
     "revelation.subtitle.revealed": "Contemplate your revealed cards",
-
+    "interpretation.label.reading": "Your reading",      // English
+    "revelation.summary.eyebrow": "Your reading",        // English
+    
     // Interpretation Templates
     "interpretation.gender.femme": "My dear",
     "interpretation.gender.homme": "My dear",
@@ -3390,7 +3400,8 @@ const translations: Record<Language, Record<string, string>> = {
       "Descubre los misterios de tu destino a través de las cartas, las estrellas y la sabiduría ancestral",
     "landing.enter": "ENTRAR",
     "landing.ads.support": "Los anuncios nos ayudan a mantener la aplicación gratuita",
-
+    "landing.tagline": "Adivinación y Revelación",    // Español
+     
     // 🆕 Disclaimer - AGREGAR AQUÍ
      "disclaimer.title": "Aviso Importante",
       "disclaimer.text": "CartoMystik es una aplicación de entretenimiento y desarrollo personal. Consulte a expertos cualificados para cualquier decisión importante.",
@@ -3463,6 +3474,8 @@ const translations: Record<Language, Record<string, string>> = {
       "common.cancel": "Cancelar",
       "common.save": "Guardar",
       "name.label": "Nombre",
+      "oracle.choose": "Elige tu oráculo",
+      "oracle.bonus": "Bono",
 
     // ES Notificaciones  
     "notification.channel.name": "Lectura Diaria",
@@ -3547,6 +3560,8 @@ const translations: Record<Language, Record<string, string>> = {
     "revelation.backToSelection": "Volver a la selección",
     "interpretation.advice.title": "Tu consejo personal",
     "revelation.subtitle.revealed": "Contempla tus cartas reveladas",
+    "interpretation.label.reading": "Tu lectura",        // Español
+    "revelation.summary.eyebrow": "Tu lectura",          // Español
 
     // Interpretation Templates
     "interpretation.gender.femme": "Mi querida",
@@ -5121,7 +5136,8 @@ const translations: Record<Language, Record<string, string>> = {
       "Entdecken Sie die Geheimnisse Ihres Schicksals durch Karten, Sterne und alte Weisheit",
     "landing.enter": "EINTRETEN",
     "landing.ads.support": "Werbung hilft uns, die App kostenlos zu halten",
-
+    "landing.tagline": "Wahrsagung & Offenbarung",    // Deutsch
+     
     // 🆕 Disclaimer - HIER HINZUFÜGEN
     "disclaimer.title": "Wichtiger Haftungsausschluss",
       "disclaimer.text": "CartoMystik ist eine App für Unterhaltung und persönliche Entwicklung. Konsultieren Sie qualifizierte Experten für jede wichtige Entscheidung.",
@@ -5195,6 +5211,8 @@ const translations: Record<Language, Record<string, string>> = {
       "common.cancel": "Abbrechen",
       "common.save": "Speichern",
       "name.label": "Name",
+      "oracle.choose": "Wähle dein Orakel",
+      "oracle.bonus": "Bonus",
 
     // DE Benachrichtigungen  
     "notification.channel.name": "Tägliche Ziehung",
@@ -5282,6 +5300,8 @@ const translations: Record<Language, Record<string, string>> = {
     "revelation.backToSelection": "Zurück zur Auswahl",
     "interpretation.advice.title": "Dein persönlicher Rat",
     "revelation.subtitle.revealed": "Betrachte deine aufgedeckten Karten",
+    "interpretation.label.reading": "Deine Deutung",     // Deutsch
+    "revelation.summary.eyebrow": "Deine Deutung",       // Deutsch
 
     // Interpretation Templates
     "interpretation.gender.femme": "Meine Liebe",
@@ -6857,6 +6877,7 @@ const translations: Record<Language, Record<string, string>> = {
       "Scopri i misteri del tuo destino attraverso le carte, le stelle e la saggezza antica",
     "landing.enter": "ENTRARE",
     "landing.ads.support": "Gli annunci ci aiutano a mantenere l'app gratuita",
+     "landing.tagline": "Divinazione & Rivelazione",    // Italiano
 
     // 🆕 Disclaimer - AGGIUNGI QUI
     "disclaimer.title": "Avviso Importante",
@@ -6930,6 +6951,8 @@ const translations: Record<Language, Record<string, string>> = {
       "common.cancel": "Annulla",
       "common.save": "Salva",
       "name.label": "Nome",
+      "oracle.choose": "Scegli il tuo oracolo",
+      "oracle.bonus": "Bonus",
 
     // IT Notifiche  
     "notification.channel.name": "Estratto quotidiano",
@@ -7017,6 +7040,8 @@ const translations: Record<Language, Record<string, string>> = {
     "revelation.backToSelection": "Torna alla selezione",
     "interpretation.advice.title": "Il tuo consiglio personale",
     "revelation.subtitle.revealed": "Contempla le tue carte rivelate",
+    "interpretation.label.reading": "La tua lettura",    // Italiano
+    "revelation.summary.eyebrow": "La tua lettura",       // Italiano
 
     // Interpretation Templates
     "interpretation.gender.femme": "Mia cara",

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface CardSection {
@@ -17,133 +16,242 @@ interface SummaryCardProps {
   isVisible?: boolean;
   className?: string;
   openFirst?: boolean;
-  onSectionOpen?: (sectionTitle: string) => void | Promise<void>; // ✅ NOUVEAU
+  onSectionOpen?: (sectionTitle: string) => void | Promise<void>;
 }
 
 export default function SummaryCard({ 
-  title, 
-  sections,
-  content,
-  finalMessage,
-  isVisible = false, 
-  className,
-  openFirst = false,
-  onSectionOpen // ✅ NOUVEAU
+  title, sections, content, finalMessage,
+  isVisible = false, className, openFirst = false, onSectionOpen
 }: SummaryCardProps) {
   const [openSections, setOpenSections] = useState<number[]>(openFirst ? [0] : []);
   const { t } = useLanguage();
 
   if (!isVisible) return null;
 
-  // ========== ANCIEN FORMAT (pour l'horoscope) ==========
+  const toggleSection = async (index: number) => {
+    const isOpening = !openSections.includes(index);
+    setOpenSections(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]);
+    if (isOpening && onSectionOpen && sections?.[index]) {
+      const result = onSectionOpen(sections[index].title);
+      if (result instanceof Promise) result.catch(() => {});
+    }
+  };
+
+  // Format ancien (horoscope)
   if (content && !sections) {
     return (
-      <div className={cn(
-        'shimmer bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-4 border-[#ffd700] rounded-3xl p-4 sm:p-6 relative overflow-hidden max-w-4xl mx-auto',
-        'shadow-[0_12px_35px_rgba(255,215,0,0.2)]',
-        className
-      )}>
-        <h3 className="text-[#ffd700] text-xl sm:text-2xl font-bold text-center mb-4 sm:mb-6 font-serif relative z-10 text-shadow-glow">
-          {title}
-        </h3>
-
-        <div className="text-[#e6d7ff] leading-7 text-base sm:text-lg whitespace-pre-line relative z-10 max-h-[60vh] overflow-y-auto">
-          {content}
-        </div>
+      <div style={{
+        background: 'rgba(255,255,255,0.025)',
+        border: '1px solid rgba(201,168,76,0.2)',
+        borderRadius: 12,
+        padding: '28px 24px',
+        maxWidth: 480,
+        margin: '0 auto',
+      }}>
+        <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap');`}</style>
+        <h3 style={{
+          fontFamily: "'Playfair Display', Georgia, serif",
+          fontSize: 20, fontWeight: 300,
+          color: '#E8D080', textAlign: 'center',
+          marginBottom: 20, letterSpacing: 0.5,
+        }}>{title}</h3>
+        <div style={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: 15, fontStyle: 'italic', fontWeight: 300,
+          color: 'rgba(247,242,234,0.88)', lineHeight: 1.85,
+          whiteSpace: 'pre-line', maxHeight: '60vh', overflowY: 'auto',
+        }}>{content}</div>
       </div>
     );
   }
 
-  // ========== NOUVEAU FORMAT (avec accordéons pour les tirages) ==========
-  if (!sections || sections.length === 0) {
-    return null;
-  }
-
-  // ✅ MODIFIÉ : Gestion de l'ouverture avec callback
-  const toggleSection = async (index: number) => {
-    const isOpening = !openSections.includes(index);
-
-    // Mettre à jour l'état d'abord
-    setOpenSections(prev => 
-      prev.includes(index) 
-        ? prev.filter(i => i !== index)
-        : [...prev, index]
-    );
-
-    // ✅ Appeler le callback si on OUVRE une section
-    if (isOpening && onSectionOpen && sections[index]) {
-      console.log(`📂 Section ouverte: "${sections[index].title}"`);
-
-      // Supporter les callbacks async et sync
-      const result = onSectionOpen(sections[index].title);
-      if (result instanceof Promise) {
-        result.catch(err => console.error('Erreur callback onSectionOpen:', err));
-      }
-    }
-  };
+  if (!sections || sections.length === 0) return null;
 
   return (
-    <div className={cn(
-      'shimmer bg-gradient-to-br from-[#1a0033] to-[#2d1b69] border-4 border-[#ffd700] rounded-3xl p-4 sm:p-6 relative overflow-hidden max-w-4xl mx-auto',
-      'shadow-[0_12px_35px_rgba(255,215,0,0.2)]',
-      className
-    )}>
-      <h3 className="text-[#ffd700] text-xl sm:text-2xl font-bold text-center mb-4 sm:mb-6 font-serif relative z-10 text-shadow-glow">
-        {title}
-      </h3>
+    <div style={{
+      width: '100%', maxWidth: 480, margin: '0 auto',
+      fontFamily: "'Jost', sans-serif",
+    }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 
-      <div className="space-y-3 relative z-10">
-        {sections.map((section, index) => (
-          <div 
-            key={index}
-            className="border border-[#ffd700]/30 rounded-xl overflow-hidden bg-black/20 backdrop-blur-sm"
-          >
-            {/* En-tête cliquable */}
-            <button
-              onClick={() => toggleSection(index)}
-              className="w-full flex items-center justify-between p-4 hover:bg-[#ffd700]/10 transition-colors text-left"
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">{section.icon}</span>
-                <span className="text-[#ffd700] font-semibold text-base sm:text-lg">
-                  {section.title}
-                </span>
-              </div>
-              {openSections.includes(index) ? (
-                <ChevronUp className="w-5 h-5 text-[#ffd700] flex-shrink-0" />
-              ) : (
-                <ChevronDown className="w-5 h-5 text-[#ffd700] flex-shrink-0" />
-              )}
-            </button>
+        .sc-container { position: relative; }
 
-            {/* Contenu accordéon */}
-            <div 
-              className={cn(
-                "transition-all duration-300 ease-in-out overflow-hidden",
-                openSections.includes(index)
-                  ? "max-h-[90vh] overflow-y-auto opacity-100"
-                  : "max-h-0 opacity-0"
-              )}
-            >
-              <div className="p-4 pt-0 text-[#e6d7ff] leading-7 text-base whitespace-pre-line">
-                {section.content}
-              </div>
-            </div>
+        .sc-header {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+
+        /* ✅ FIX lisibilité : 0.7 → 0.95 */
+        .sc-eyebrow {
+          font-size: 9px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase;
+          color: rgba(220,185,90,1.0); margin-bottom: 8px;
+        }
+        .sc-title {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: clamp(20px, 5vw, 26px); font-weight: 300;
+          color: #F7F2EA; letter-spacing: 0.5px; margin: 0;
+        }
+        .sc-title em { font-style: italic; color: #F0DC88; }
+
+        .sc-divider {
+          display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+        }
+        .sc-divider-line {
+          flex: 1; height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3));
+        }
+        .sc-divider-line.right {
+          background: linear-gradient(90deg, rgba(201,168,76,0.3), transparent);
+        }
+        .sc-divider-dot {
+          width: 3px; height: 3px; border-radius: 50%;
+          background: rgba(201,168,76,0.65);
+        }
+
+        .sc-sections { display: flex; flex-direction: column; gap: 8px; }
+
+        .sc-section {
+          background: rgba(255,255,255,0.025);
+          border: 1px solid rgba(255,255,255,0.09);
+          border-radius: 10px;
+          overflow: hidden;
+          transition: border-color 0.3s ease;
+        }
+        .sc-section.open { border-color: rgba(201,168,76,0.30); }
+
+        .sc-section-btn {
+          width: 100%; display: flex; align-items: center;
+          padding: 16px 18px; gap: 14px;
+          background: none; border: none; cursor: pointer;
+          text-align: left; transition: background 0.25s;
+        }
+        .sc-section-btn:hover { background: rgba(201,168,76,0.05); }
+
+        .sc-section-icon {
+          width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+          background: rgba(201,168,76,0.08);
+          border: 1px solid rgba(201,168,76,0.18);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 16px;
+          transition: background 0.3s, border-color 0.3s;
+        }
+        .sc-section.open .sc-section-icon {
+          background: rgba(201,168,76,0.14);
+          border-color: rgba(201,168,76,0.38);
+        }
+
+        /* ✅ FIX lisibilité titre carte : blanc pur */
+        .sc-section-label {
+          flex: 1;
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: 16px; font-weight: 400; letter-spacing: 0.3px;
+          color: #F7F2EA;
+        }
+        /* ✅ FIX lisibilité titre ouvert : or vif */
+        .sc-section.open .sc-section-label { color: #F0DC88; }
+
+        /* ✅ FIX lisibilité chevron : 0.4 → 0.70 */
+        .sc-chevron {
+          width: 16px; height: 16px; flex-shrink: 0;
+          display: flex; align-items: center; justify-content: center;
+          color: rgba(220,185,90,1.0);
+          transition: transform 0.3s ease, color 0.3s;
+        }
+        .sc-section.open .sc-chevron { transform: rotate(180deg); color: rgba(220,185,90,1.0); }
+        .sc-chevron svg { width: 14px; height: 14px; }
+
+        .sc-section-body {
+          overflow: hidden;
+          transition: max-height 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
+          max-height: 0; opacity: 0;
+        }
+        .sc-section-body.open { max-height: 800px; opacity: 1; }
+
+        /* ✅ FIX lisibilité contenu : 0.85 → 0.92 */
+        .sc-section-content {
+          padding: 0 18px 18px 68px;
+          font-family: 'Playfair Display', serif;
+          font-size: 15px; font-style: italic; font-weight: 300;
+          color: rgba(247,242,234,0.92); line-height: 1.9;
+          white-space: pre-line;
+        }
+
+        .sc-final {
+          margin-top: 12px;
+          background: rgba(201,168,76,0.05);
+          border: 1px solid rgba(201,168,76,0.2);
+          border-radius: 10px;
+          padding: 20px;
+        }
+        .sc-final-header {
+          display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+        }
+        .sc-final-line {
+          flex: 1; height: 1px;
+          background: linear-gradient(90deg, rgba(201,168,76,0.25), transparent);
+        }
+        /* ✅ FIX lisibilité label conseil : 0.7 → 0.95 */
+        .sc-final-label {
+          font-size: 9px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase;
+          color: rgba(220,185,90,1.0);
+        }
+        /* ✅ FIX lisibilité texte conseil : 0.82 → 0.92 */
+        .sc-final-text {
+          font-family: 'Playfair Display', serif;
+          font-size: 15px; font-style: italic; font-weight: 300;
+          color: rgba(247,242,234,0.92); line-height: 1.9;
+          white-space: pre-line;
+        }
+      `}</style>
+
+      <div className="sc-container">
+
+        {/* ✅ FIX : "Votre lecture" hardcodé → clé de traduction */}
+        <div className="sc-header">
+          <div className="sc-eyebrow">
+            {t('revelation.summary.eyebrow') || t('interpretation.label.reading') || 'Your reading'}
           </div>
-        ))}
+          <h3 className="sc-title"><em>{title}</em></h3>
+        </div>
 
-        {/* Message final toujours visible */}
+        <div className="sc-divider">
+          <div className="sc-divider-line"/>
+          <div className="sc-divider-dot"/>
+          <div className="sc-divider-line right"/>
+        </div>
+
+        <div className="sc-sections">
+          {sections.map((section, index) => {
+            const isOpen = openSections.includes(index);
+            return (
+              <div key={index} className={`sc-section ${isOpen ? 'open' : ''}`}>
+                <button className="sc-section-btn" onClick={() => toggleSection(index)}>
+                  <div className="sc-section-icon">{section.icon}</div>
+                  <span className="sc-section-label">{section.title}</span>
+                  <div className="sc-chevron">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                  </div>
+                </button>
+                <div className={`sc-section-body ${isOpen ? 'open' : ''}`}>
+                  <div className="sc-section-content">{section.content}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
         {finalMessage && (
-          <div className="mt-6 p-4 bg-gradient-to-r from-[#ffd700]/10 to-[#ffd700]/5 rounded-xl border border-[#ffd700]/40">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-2xl">💫</span>
-              <span className="text-[#ffd700] font-semibold text-lg">
-                {t('interpretation.advice.title')}
-              </span>
+          <div className="sc-final">
+            <div className="sc-final-header">
+              <div className="sc-final-label">
+                {t('interpretation.advice.title') || 'Your personal advice'}
+              </div>
+              <div className="sc-final-line"/>
             </div>
-            <p className="text-[#e6d7ff] leading-7 text-base whitespace-pre-line">
-              {finalMessage}
-            </p>
+            <p className="sc-final-text">{finalMessage}</p>
           </div>
         )}
       </div>
