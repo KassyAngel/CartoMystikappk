@@ -37,136 +37,103 @@ const signMapping: Record<string, string> = {
   'Capricorne': 'capricorn', 'Verseau': 'aquarius', 'Poissons': 'pisces'
 };
 
-const getStreak = (): number => {
-  const lastVisit = localStorage.getItem('horoscope_last_visit');
-  const streak = parseInt(localStorage.getItem('horoscope_streak') || '0');
-  if (!lastVisit) return 0;
-
-  const today = new Date();
-  const lastVisitDate = new Date(lastVisit);
-  const daysDiff = Math.floor((today.getTime() - lastVisitDate.getTime()) / 86400000);
-
-  if (daysDiff === 0) return streak;
-  if (daysDiff <= 2) return streak;
-  return 0;
-};
-
+// ✅ Streak conservé indéfiniment
 const updateStreak = (): number => {
   const lastVisit = localStorage.getItem('horoscope_last_visit');
   const today = new Date();
   const todayString = today.toDateString();
-  let newStreak = 1;
-
-  if (lastVisit) {
-    const lastVisitDate = new Date(lastVisit);
-    const daysDiff = Math.floor((today.getTime() - lastVisitDate.getTime()) / 86400000);
-
-    if (daysDiff === 0) {
-      newStreak = parseInt(localStorage.getItem('horoscope_streak') || '1');
-    } else if (daysDiff === 1) {
-      newStreak = parseInt(localStorage.getItem('horoscope_streak') || '0') + 1;
-    } else if (daysDiff === 2) {
-      newStreak = parseInt(localStorage.getItem('horoscope_streak') || '0') + 1;
-    } else {
-      newStreak = 1;
-    }
+  const currentStreak = parseInt(localStorage.getItem('horoscope_streak') || '0');
+  if (!lastVisit) {
+    localStorage.setItem('horoscope_last_visit', todayString);
+    localStorage.setItem('horoscope_streak', '1');
+    return 1;
   }
-
+  const daysDiff = Math.floor((today.getTime() - new Date(lastVisit).getTime()) / 86400000);
+  if (daysDiff === 0) return currentStreak;
+  if (daysDiff === 1) {
+    const n = currentStreak + 1;
+    localStorage.setItem('horoscope_last_visit', todayString);
+    localStorage.setItem('horoscope_streak', n.toString());
+    return n;
+  }
+  // Absence > 1j : on conserve, on remet juste la date
   localStorage.setItem('horoscope_last_visit', todayString);
-  localStorage.setItem('horoscope_streak', newStreak.toString());
-  return newStreak;
+  return currentStreak;
 };
 
 const getXP = (): number => parseInt(localStorage.getItem('horoscope_xp') || '0');
-const addXP = (points: number): number => {
-  const currentXP = getXP();
-  const newXP = currentXP + points;
-  localStorage.setItem('horoscope_xp', newXP.toString());
-  return newXP;
-};
+const addXP = (pts: number): number => { const n = getXP() + pts; localStorage.setItem('horoscope_xp', n.toString()); return n; };
 const getLevel = (xp: number): number => Math.floor(xp / 100) + 1;
 
-const getBadges = (streak: number, t: (key: string) => string) => [
-  { id: 1, icon: '🔥', label: t('horoscope.badges.days7'), unlocked: streak >= 7 },
-  { id: 2, icon: '⭐', label: t('horoscope.badges.days15'), unlocked: streak >= 15 },
-  { id: 3, icon: '💎', label: t('horoscope.badges.days30'), unlocked: streak >= 30 },
-  { id: 4, icon: '👑', label: t('horoscope.badges.days100'), unlocked: streak >= 100 },
+const getBadges = (streak: number, t: (k: string) => string) => [
+  { id:1, icon:'🔥', label:t('horoscope.badges.days7'),   unlocked: streak >= 7   },
+  { id:2, icon:'⭐', label:t('horoscope.badges.days15'),  unlocked: streak >= 15  },
+  { id:3, icon:'💎', label:t('horoscope.badges.days30'),  unlocked: streak >= 30  },
+  { id:4, icon:'👑', label:t('horoscope.badges.days100'), unlocked: streak >= 100 },
 ];
 
-const generatePersonalLuckyNumber = (userName: string, date: string, sign: string): string => {
-  const seed = `${userName}-${date}-${sign}`;
-  let hash = 0;
-  for (let i = 0; i < seed.length; i++) {
-    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
-    hash = hash & hash;
-  }
-  return String(Math.abs(hash % 50) + 1);
+const genLucky = (name: string, date: string, sign: string): string => {
+  const seed = `${name}-${date}-${sign}`; let h = 0;
+  for (let i = 0; i < seed.length; i++) { h = ((h << 5) - h) + seed.charCodeAt(i); h = h & h; }
+  return String(Math.abs(h % 50) + 1);
 };
 
-const getStableVariation = (
-  sign: string,
-  category: 'descriptions' | 'love' | 'work' | 'finances' | 'health' | 'advice',
-  date: string,
-  t: (key: string) => string
-): string => {
-  const variationCounts: Record<string, number> = {
-    descriptions: 15, love: 8, work: 8, finances: 8, health: 8, advice: 5
-  };
-
-  const maxVariations = variationCounts[category];
-  const seed = `${sign}-${category}-${date}`;
-  let hash = 0;
-  for (let i = 0; i < seed.length; i++) {
-    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
-    hash = hash & hash;
-  }
-
-  const randomIndex = Math.abs(hash) % maxVariations;
-  const key = `horoscope.data.${category}.${sign}.${randomIndex}`;
-  const translation = t(key);
-  return translation !== key ? translation : t(`horoscope.data.${category}.fallback`) || `Contenu non disponible`;
+const stableVar = (sign: string, cat: 'descriptions'|'love'|'work'|'finances'|'health'|'advice', date: string, t: (k: string) => string): string => {
+  const counts: Record<string,number> = { descriptions:15, love:8, work:8, finances:8, health:8, advice:5 };
+  const seed = `${sign}-${cat}-${date}`; let h = 0;
+  for (let i = 0; i < seed.length; i++) { h = ((h << 5) - h) + seed.charCodeAt(i); h = h & h; }
+  const k = `horoscope.data.${cat}.${sign}.${Math.abs(h) % counts[cat]}`;
+  const v = t(k); return v !== k ? v : t(`horoscope.data.${cat}.fallback`) || 'Contenu non disponible';
 };
 
-const translateHoroscopeData = (horoscope: HoroscopeData, sign: string, t: (key: string) => string) => {
-  const translateMood = (frenchMood: string): string => {
-    if (!frenchMood) return t('horoscope.data.moods.fallback') || 'Non disponible';
-    const key = `horoscope.data.moods.${frenchMood}`;
-    return t(key) !== key ? t(key) : frenchMood;
-  };
+// ✅ FIX dates multilingues : on génère la date via Intl selon la langue active
+const SIGN_DATE_RANGES: Record<string, { startMonth: number; startDay: number; endMonth: number; endDay: number }> = {
+  aries:       { startMonth:3,  startDay:21, endMonth:4,  endDay:19 },
+  taurus:      { startMonth:4,  startDay:20, endMonth:5,  endDay:20 },
+  gemini:      { startMonth:5,  startDay:21, endMonth:6,  endDay:20 },
+  cancer:      { startMonth:6,  startDay:21, endMonth:7,  endDay:22 },
+  leo:         { startMonth:7,  startDay:23, endMonth:8,  endDay:22 },
+  virgo:       { startMonth:8,  startDay:23, endMonth:9,  endDay:22 },
+  libra:       { startMonth:9,  startDay:23, endMonth:10, endDay:22 },
+  scorpio:     { startMonth:10, startDay:23, endMonth:11, endDay:21 },
+  sagittarius: { startMonth:11, startDay:22, endMonth:12, endDay:21 },
+  capricorn:   { startMonth:12, startDay:22, endMonth:1,  endDay:19 },
+  aquarius:    { startMonth:1,  startDay:20, endMonth:2,  endDay:18 },
+  pisces:      { startMonth:2,  startDay:19, endMonth:3,  endDay:20 },
+};
 
-  const translateColor = (frenchColor: string): string => {
-    if (!frenchColor) return t('horoscope.data.colors.fallback') || 'Non disponible';
-    const key = `horoscope.data.colors.${frenchColor}`;
-    return t(key) !== key ? t(key) : frenchColor;
-  };
+const LANG_LOCALE: Record<string, string> = {
+  fr:'fr-FR', en:'en-US', es:'es-ES', de:'de-DE', it:'it-IT',
+};
 
-  const translateCompatibility = (frenchCompatibility: string): string => {
-    if (!frenchCompatibility) return t('horoscope.data.compatibility.fallback') || 'Non disponible';
-    const key = `horoscope.data.compatibility.${frenchCompatibility}`;
-    return t(key) !== key ? t(key) : frenchCompatibility;
-  };
+const getLocalizedDateRange = (sign: string, lang: string): string => {
+  const range = SIGN_DATE_RANGES[sign];
+  if (!range) return '';
+  const locale = LANG_LOCALE[lang] || 'fr-FR';
+  const year = 2000; // année fictive, seuls mois+jour comptent
+  const fmt = (m: number, d: number) => new Date(year, m-1, d).toLocaleDateString(locale, { day:'numeric', month:'long' });
+  return `${fmt(range.startMonth, range.startDay)} – ${fmt(range.endMonth, range.endDay)}`;
+};
 
-  const translateDate = (sign: string): string => {
-    const key = `horoscope.data.dates.${sign}`;
-    return t(key) !== key ? t(key) : horoscope?.date || '';
-  };
+const trHoro = (h: HoroscopeData, sign: string, t: (k: string) => string, lang?: string) => {
+  const tr = (p: string, v: string) => { const k = `horoscope.data.${p}.${v}`; return t(k) !== k ? t(k) : v; };
+  const localizedDate = lang ? getLocalizedDateRange(sign, lang) : '';
+  const dk = `horoscope.data.dates.${sign}`;
+  const fallbackDate = t(dk) !== dk ? t(dk) : h?.date||'';
+  return { ...h, mood: tr('moods',h?.mood), luckyColor: tr('colors',h?.luckyColor), compatibility: tr('compatibility',h?.compatibility), date: localizedDate || fallbackDate };
+};
 
-  return {
-    ...horoscope,
-    mood: translateMood(horoscope?.mood),
-    luckyColor: translateColor(horoscope?.luckyColor),
-    compatibility: translateCompatibility(horoscope?.compatibility),
-    date: translateDate(sign),
-    luckyNumber: horoscope?.luckyNumber || '0',
-  };
+const stableMsg = (prefix: string, val: string, date: string, count: number, t: (k: string, v?: any) => string): string => {
+  const seed = `${prefix}-${date}`; let h = 0;
+  for (let i = 0; i < seed.length; i++) { h = ((h << 5) - h) + seed.charCodeAt(i); h = h & h; }
+  return t(`horoscope.${prefix}.var${(Math.abs(h) % count) + 1}`, { [prefix]: val });
 };
 
 export default function HoroscopePage({ user, onBack, onSaveReading, isPremium = false }: HoroscopePageProps) {
-  const { t } = useLanguage();
-
+  const { t, language } = useLanguage();
+  const [mounted, setMounted] = useState(false);
   const [openSections, setOpenSections] = useState<number[]>([0]);
-  const [openedSectionsHistory, setOpenedSectionsHistory] = useState<Set<number>>(new Set([0])); // ✅ AJOUTE CETTE LIGNE
-  const [showInterpretation, setShowInterpretation] = useState(false);
+  const [_openedSectionsHistory, setOpenedSectionsHistory] = useState<Set<number>>(new Set([0]));
   const [hasSavedReading, setHasSavedReading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [sectionOpenCount, setSectionOpenCount] = useState(0);
@@ -178,966 +145,485 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [newLevel, setNewLevel] = useState(1);
   const [showPrediction100, setShowPrediction100] = useState(false);
-
   const [debugTapCount, setDebugTapCount] = useState(0);
   const [showDebugMenu, setShowDebugMenu] = useState(false);
 
-  const englishSign = user.zodiacSign ? signMapping[user.zodiacSign.name] : "aries";
+  const englishSign = user.zodiacSign ? signMapping[user.zodiacSign.name] : 'aries';
 
-  const simulateStreak100 = () => {
-    localStorage.setItem('horoscope_streak', '100');
-    localStorage.setItem('horoscope_last_visit', new Date().toDateString());
-    localStorage.removeItem('reward_100_shown');
-    setStreak(100);
-    setShowDebugMenu(false);
-    window.location.reload();
-  };
-
-  const simulateStreak200 = () => {
-    localStorage.setItem('horoscope_streak', '200');
-    localStorage.setItem('horoscope_last_visit', new Date().toDateString());
-    localStorage.removeItem('reward_200_shown');
-    setStreak(200);
-    setShowDebugMenu(false);
-    window.location.reload();
-  };
-
-  const resetAllProgress = () => {
-    if (confirm('⚠️ Réinitialiser ?')) {
-      localStorage.removeItem('horoscope_streak');
-      localStorage.removeItem('horoscope_last_visit');
-      localStorage.removeItem('horoscope_xp');
-      Object.keys(localStorage).forEach(key => {
-        if (key.startsWith('horoscope_consulted_') || 
-            key.startsWith('horoscope_explored_') ||
-            key.startsWith('reward_')) {
-          localStorage.removeItem(key);
-        }
-      });
-      setShowDebugMenu(false);
-      window.location.reload();
-    }
-  };
-
-  const handleLogoTap = () => {
-    setDebugTapCount(prev => prev + 1);
-    setTimeout(() => setDebugTapCount(0), 2000);
-  };
-
+  useEffect(() => { setTimeout(() => setMounted(true), 60); }, []);
+  useEffect(() => { if (debugTapCount === 3) { setShowDebugMenu(true); setDebugTapCount(0); } }, [debugTapCount]);
   useEffect(() => {
-    if (debugTapCount === 3) {
-      setShowDebugMenu(true);
-      setDebugTapCount(0);
-    }
-  }, [debugTapCount]);
-
-  useEffect(() => {
-    const currentStreak = updateStreak();
-    setStreak(currentStreak);
-    const currentXP = getXP();
-    setXP(currentXP);
-
-    if (currentStreak > 0 && currentStreak % 100 === 0) {
-      const rewardKey = `reward_${currentStreak}_shown`;
-
-      if (!localStorage.getItem(rewardKey)) {
-        setTimeout(() => {
-          setShow100Reward(true);
-          localStorage.setItem(rewardKey, 'true');
-        }, 2000);
-      }
-    }
+    const s = updateStreak(); setStreak(s); setXP(getXP());
+    if (s > 0 && s % 100 === 0) { const k = `reward_${s}_shown`; if (!localStorage.getItem(k)) setTimeout(() => { setShow100Reward(true); localStorage.setItem(k,'true'); }, 2000); }
   }, []);
+
+  const handleLogoTap = () => { setDebugTapCount(p => p + 1); setTimeout(() => setDebugTapCount(0), 2000); };
+
+  const dbgReset = () => { if(confirm('Réinitialiser ?')){ ['horoscope_streak','horoscope_last_visit','horoscope_xp'].forEach(k=>localStorage.removeItem(k)); Object.keys(localStorage).forEach(k=>{ if(k.startsWith('horoscope_consulted_')||k.startsWith('horoscope_explored_')||k.startsWith('reward_')) localStorage.removeItem(k); }); setShowDebugMenu(false); window.location.reload(); }};
 
   const { data: horoscope, isLoading, isFetching, error, refetch } = useQuery<HoroscopeData>({
     queryKey: ['horoscope', englishSign],
     queryFn: async () => {
       setErrorMessage(null);
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 60000);
-
+      const ctrl = new AbortController(); const tid = setTimeout(() => ctrl.abort(), 60000);
       try {
-        const response = await fetch(`${config.apiBaseUrl}/api/horoscope/${englishSign}`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          signal: controller.signal,
-        });
-
-        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
-        const data = await response.json();
-
-        const dailyConsultKey = `horoscope_consulted_${new Date().toDateString()}`;
-        if (!localStorage.getItem(dailyConsultKey)) {
-          const oldLevel = getLevel(getXP());
-          const newXP = addXP(10);
-          const newLvl = getLevel(newXP);
-
-          setXP(newXP);
-          setXPGainAmount(10);
-          setShowXPGain(true);
-          localStorage.setItem(dailyConsultKey, 'true');
+        const res = await fetch(`${config.apiBaseUrl}/api/horoscope/${englishSign}`, { method:'GET', headers:{'Content-Type':'application/json'}, credentials:'include', signal:ctrl.signal });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const dk = `horoscope_consulted_${new Date().toDateString()}`;
+        if (!localStorage.getItem(dk)) {
+          const ol = getLevel(getXP()); const nx = addXP(10); const nl = getLevel(nx);
+          setXP(nx); setXPGainAmount(10); setShowXPGain(true); localStorage.setItem(dk,'true');
           setTimeout(() => setShowXPGain(false), 2000);
-
-          if (newLvl > oldLevel) {
-            setTimeout(() => {
-              setNewLevel(newLvl);
-              setShowLevelUp(true);
-              setTimeout(() => setShowLevelUp(false), 3000);
-            }, 2500);
-          }
+          if (nl > ol) setTimeout(() => { setNewLevel(nl); setShowLevelUp(true); setTimeout(() => setShowLevelUp(false), 3000); }, 2500);
         }
-
         return data;
-      } catch (error: any) {
-        if (error.name === 'AbortError') {
-          setErrorMessage(t('horoscope.errors.timeout'));
-        } else {
-          setErrorMessage(t('horoscope.errors.fetchFailed'));
-        }
-        throw error;
-      } finally {
-        clearTimeout(timeoutId);
-      }
+      } catch(e: any) {
+        setErrorMessage(e.name === 'AbortError' ? t('horoscope.errors.timeout') : t('horoscope.errors.fetchFailed'));
+        throw e;
+      } finally { clearTimeout(tid); }
     },
     enabled: !!user.zodiacSign,
   });
 
   useEffect(() => {
     if (horoscope && !hasSavedReading && onSaveReading) {
-      const saveHoroscope = async () => {
-        try {
-          const personalLuckyNumber = generatePersonalLuckyNumber(user.name, horoscope.currentDate, englishSign);
-          await onSaveReading({
-            type: 'horoscope',
-            answer: JSON.stringify({
-              sign: englishSign,
-              description: horoscope.description,
-              mood: horoscope.mood,
-              luckyNumber: personalLuckyNumber,
-              luckyColor: horoscope.luckyColor,
-              compatibility: horoscope.compatibility,
-              love: horoscope.love,
-              work: horoscope.work,
-              finances: horoscope.finances,
-              health: horoscope.health,
-              advice: horoscope.advice
-            }),
-            date: new Date()
-          });
-          setHasSavedReading(true);
-        } catch (error) {
-          console.error('❌ Erreur sauvegarde horoscope:', error);
-        }
-      };
-      saveHoroscope();
+      (async () => { try { const {sign:_s, ...horoscopeRest} = horoscope; await onSaveReading({ type:'horoscope', answer:JSON.stringify({sign:englishSign,...horoscopeRest,luckyNumber:genLucky(user.name,horoscope.currentDate,englishSign)}), date:new Date() }); setHasSavedReading(true); } catch(e){} })();
     }
-  }, [horoscope, hasSavedReading, onSaveReading, englishSign, user.name]);
+  }, [horoscope,hasSavedReading,onSaveReading,englishSign,user.name]);
 
-  useEffect(() => {
-    if (horoscope) {
-      const timer = setTimeout(() => setShowInterpretation(true), 0);
-      return () => clearTimeout(timer);
-    }
-  }, [horoscope]);
-
-  const handleSectionOpen = async (sectionTitle: string, index: number) => {
+  const handleSectionOpen = async (title: string, index: number) => {
     if (isPremium) return;
-
     setOpenedSectionsHistory(prev => {
-      const newSet = new Set(prev);
-      newSet.add(index);
-
-      if (newSet.size === 8) {
-        const explorationKey = `horoscope_explored_${new Date().toDateString()}`;
-        if (!localStorage.getItem(explorationKey)) {
-          const oldLevel = getLevel(getXP());
-          const newXP = addXP(5);
-          const newLvl = getLevel(newXP);
-
-          setXP(newXP);
-          setXPGainAmount(5);
-          setShowXPGain(true);
-          localStorage.setItem(explorationKey, 'true');
-          setTimeout(() => setShowXPGain(false), 2000);
-
-          if (newLvl > oldLevel) {
-            setTimeout(() => {
-              setNewLevel(newLvl);
-              setShowLevelUp(true);
-              setTimeout(() => setShowLevelUp(false), 3000);
-            }, 2500);
-          }
-        }
-      }
-
-      return newSet;
+      const s = new Set(prev); s.add(index);
+      if (s.size === 8) { const k = `horoscope_explored_${new Date().toDateString()}`; if (!localStorage.getItem(k)) { const ol=getLevel(getXP()); const nx=addXP(5); const nl=getLevel(nx); setXP(nx); setXPGainAmount(5); setShowXPGain(true); localStorage.setItem(k,'true'); setTimeout(()=>setShowXPGain(false),2000); if(nl>ol) setTimeout(()=>{ setNewLevel(nl); setShowLevelUp(true); setTimeout(()=>setShowLevelUp(false),3000); },2500); }}
+      return s;
     });
-
-    const newCount = sectionOpenCount + 1;
-    setSectionOpenCount(newCount);
-
-    if (newCount === 2) {
-      setTimeout(async () => {
-        try {
-          await showInterstitialAd(`horoscope_section_${sectionTitle}`);
-        } catch (error) {
-          console.error('❌ Erreur pub section:', error);
-        }
-      }, 300);
-    }
-  };
-
-  const getStableCompatibilityMessage = (t: (key: string, vars?: Record<string, any>) => string, compatibility: string, date: string): string => {
-    const seed = `compatibility-${date}`;
-    let hash = 0;
-    for (let i = 0; i < seed.length; i++) {
-      hash = ((hash << 5) - hash) + seed.charCodeAt(i);
-      hash = hash & hash;
-    }
-    const randomVariant = (Math.abs(hash) % 8) + 1;
-    return t(`horoscope.compatibility.var${randomVariant}`, { compatibility });
-  };
-
-  const getStableMoodMessage = (t: (key: string, vars?: Record<string, any>) => string, mood: string, date: string): string => {
-    const seed = `mood-${date}`;
-    let hash = 0;
-    for (let i = 0; i < seed.length; i++) {
-      hash = ((hash << 5) - hash) + seed.charCodeAt(i);
-      hash = hash & hash;
-    }
-    const randomVariant = (Math.abs(hash) % 6) + 1;
-    return t(`horoscope.mood.var${randomVariant}`, { mood });
+    const nc = sectionOpenCount + 1; setSectionOpenCount(nc);
+    if (nc === 2) setTimeout(async () => { try { await showInterstitialAd(`horoscope_section_${title}`); } catch(e){} }, 300);
   };
 
   const horoscopeSections = useMemo(() => {
-    if (!horoscope || !user.zodiacSign) return { sections: [], personalLuckyNumber: "" };
+    if (!horoscope || !user.zodiacSign) return { sections:[], personalLuckyNumber:'' };
+    const th = trHoro(horoscope, englishSign, t, language);
+    const ln = genLucky(user.name, horoscope.currentDate, englishSign);
+    return {
+      personalLuckyNumber: ln,
+      sections: [
+        { icon:'🔮', title:t('horoscope.predictions.title'), content:stableVar(englishSign,'descriptions',horoscope.currentDate,t) },
+        { icon:'💕', title:t('horoscope.love.title'),        content:stableVar(englishSign,'love',horoscope.currentDate,t) },
+        { icon:'💼', title:t('horoscope.work.title'),        content:stableVar(englishSign,'work',horoscope.currentDate,t) },
+        { icon:'💰', title:t('horoscope.finances.title'),    content:stableVar(englishSign,'finances',horoscope.currentDate,t) },
+        { icon:'😊', title:t('horoscope.mood.title'),        content:stableMsg('mood',th.mood,horoscope.currentDate,6,t) },
+        { icon:'✨', title:t('horoscope.assets.title'),      content:`🎲 ${t('horoscope.assets.luckyNumber',{luckyNumber:ln})}\n\n🎨 ${t('horoscope.assets.luckyColor',{luckyColor:th.luckyColor})}` },
+        { icon:'💞', title:t('horoscope.compatibility.title'), content:stableMsg('compatibility',th.compatibility,horoscope.currentDate,8,t) },
+        { icon:'🌟', title:t('horoscope.advice.title'),      content:stableVar(englishSign,'advice',horoscope.currentDate,t) },
+      ]
+    };
+  }, [horoscope,user.zodiacSign,user.name,englishSign,t,language]);
 
-    const translatedHoroscope = translateHoroscopeData(horoscope, englishSign, t);
-    const personalLuckyNumber = generatePersonalLuckyNumber(user.name, horoscope.currentDate, englishSign);
+  const handleDiscoverPrediction = () => { if (!user?.zodiacSign) return; setShow100Reward(false); setTimeout(() => setShowPrediction100(true), 300); };
 
-    const sections = [
-      { icon: "🔮", title: t("horoscope.predictions.title"), content: getStableVariation(englishSign, 'descriptions', horoscope.currentDate, t) },
-      { icon: "💕", title: t("horoscope.love.title"), content: getStableVariation(englishSign, 'love', horoscope.currentDate, t) },
-      { icon: "💼", title: t("horoscope.work.title"), content: getStableVariation(englishSign, 'work', horoscope.currentDate, t) },
-      { icon: "💰", title: t("horoscope.finances.title"), content: getStableVariation(englishSign, 'finances', horoscope.currentDate, t) },
-      { icon: "😊", title: t("horoscope.mood.title"), content: getStableMoodMessage(t, translatedHoroscope.mood, horoscope.currentDate) },
-      { icon: "✨", title: t("horoscope.assets.title"), content: `🎲 ${t("horoscope.assets.luckyNumber", { luckyNumber: personalLuckyNumber })}\n\n🎨 ${t("horoscope.assets.luckyColor", { luckyColor: translatedHoroscope.luckyColor })}` },
-      { icon: "💞", title: t("horoscope.compatibility.title"), content: getStableCompatibilityMessage(t, translatedHoroscope.compatibility, horoscope.currentDate) },
-      { icon: "🌟", title: t("horoscope.advice.title"), content: getStableVariation(englishSign, 'advice', horoscope.currentDate, t) },
-    ];
-
-    return { sections, personalLuckyNumber };
-  }, [horoscope, user.zodiacSign, user.name, englishSign, t]);
-
-  const handleDiscoverPrediction = () => {
-    if (!user || !user.zodiacSign) {
-      console.error('❌ Impossible d\'afficher la prédiction');
-      return;
-    }
-
-    setShow100Reward(false);
-    setTimeout(() => {
-      setShowPrediction100(true);
-    }, 300);
+  const handleShare = async () => {
+    if (!horoscope) return;
+    const { personalLuckyNumber:ln } = horoscopeSections;
+    const th = trHoro(horoscope,englishSign,t,language);
+    const text = `${t(`zodiac.signs.${englishSign}`)}\n\n${stableVar(englishSign,'descriptions',horoscope.currentDate,t).substring(0,150)}...\n\n${t('horoscope.assets.luckyNumber',{luckyNumber:ln})}\n${t('horoscope.assets.luckyColor',{luckyColor:th.luckyColor})}\n\n${t('horoscope.share.footer')}`.trim();
+    if (navigator?.share) { try { await navigator.share({text}); return; } catch(e:any) { if(e.name==='AbortError') return; } }
+    try { await navigator.clipboard.writeText(text); alert(t('horoscope.share.copied')||'✅ Copié !'); } catch(e){}
   };
 
-  if (!user || !user.zodiacSign) {
-    return (
-      <div className="horoscope-page min-h-screen flex flex-col items-center justify-center p-5 bg-gradient-to-b from-[#0a0515] via-[#1a0f2e] to-[#0a0515]">
-        <div className="text-center max-w-md">
-          <div className="text-6xl mb-6">🔮</div>
-          <h1 className="text-3xl font-bold mb-4 text-purple-200">{t("horoscope.title") || "Horoscope"}</h1>
-          <p className="text-purple-300 text-lg mb-8">{t("horoscope.noSign") || "Aucun signe zodiacal trouvé."}</p>
-          <button onClick={onBack} className="px-8 py-3 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 rounded-full text-white font-semibold shadow-lg transition-all duration-300 hover:scale-105">
-            {t("common.back") || "Retour"}
-          </button>
-        </div>
+  if (!user?.zodiacSign) return (
+    <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'#05030E',fontFamily:"'Jost',sans-serif",color:'#F7F2EA',padding:20}}>
+      <div style={{textAlign:'center'}}>
+        <p style={{color:'rgba(247,242,234,0.65)',marginBottom:24,fontSize:14}}>{t('horoscope.noSign')||'Aucun signe trouvé.'}</p>
+        <button onClick={onBack} style={{padding:'12px 32px',background:'none',border:'1px solid rgba(201,168,76,0.5)',borderRadius:3,color:'#F0D98A',fontFamily:"'Jost',sans-serif",fontSize:11,letterSpacing:4,textTransform:'uppercase',cursor:'pointer'}}>{t('common.back')||'Retour'}</button>
       </div>
-    );
-  }
+    </div>
+  );
 
-  const { sections, personalLuckyNumber } = horoscopeSections;
+  if (showPrediction100) return <Prediction100Days user={user} streak={streak} onBack={() => setShowPrediction100(false)}/>;
+
+  const { sections, personalLuckyNumber: _pln } = horoscopeSections;
   const level = getLevel(xp);
   const badges = getBadges(streak, t);
 
   const toggleSection = (index: number) => {
-    setOpenSections(prev =>
-      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
-    );
-    handleSectionOpen(sections[index].title, index);
+    setOpenSections(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev,index]);
+    handleSectionOpen(sections[index]?.title||'', index);
   };
-
-  // 📤 PARTAGE NATIF CORRIGÉ
-  const handleShare = async () => {
-    if (!horoscope) return;
-
-    const signName = t(`zodiac.signs.${englishSign}`) || englishSign;
-    const translatedHoroscope = translateHoroscopeData(horoscope, englishSign, t);
-
-    const shareText = `🔮 ${t('horoscope.share.header', { sign: signName })} 🔮
-
-📅 ${new Date().toLocaleDateString(t('common.locale') || 'fr-FR', {
-  weekday: 'long',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric'
-})}
-
-${t('horoscope.predictions.title')}: ${getStableVariation(englishSign, 'descriptions', horoscope.currentDate, t).substring(0, 150)}...
-
-💕 ${t('horoscope.love.title')}: ${getStableVariation(englishSign, 'love', horoscope.currentDate, t).substring(0, 100)}...
-
-💼 ${t('horoscope.work.title')}: ${getStableVariation(englishSign, 'work', horoscope.currentDate, t).substring(0, 100)}...
-
-✨ ${t('horoscope.assets.luckyNumber', { luckyNumber: personalLuckyNumber })}
-🎨 ${t('horoscope.assets.luckyColor', { luckyColor: translatedHoroscope.luckyColor })}
-
-🌟 ${t('horoscope.share.footer')}`.trim();
-
-    // 📱 Web Share API - Fix pour mobile
-    if (typeof navigator !== 'undefined' && navigator.share) {
-      try {
-        await navigator.share({
-          text: shareText,
-        });
-        console.log('✅ Partage réussi');
-        return;
-      } catch (error: any) {
-        if (error.name === 'AbortError') {
-          console.log('ℹ️ Partage annulé');
-          return;
-        }
-        console.log('⚠️ Web Share API échoué, fallback copie');
-      }
-    }
-
-    // 📋 Fallback : Copie dans le presse-papier
-    try {
-      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-        await navigator.clipboard.writeText(shareText);
-        alert(t('horoscope.share.copied') || '✅ Copié !');
-        return;
-      }
-
-      // Fallback compatible
-      const textarea = document.createElement('textarea');
-      textarea.value = shareText;
-      textarea.style.position = 'fixed';
-      textarea.style.top = '0';
-      textarea.style.left = '0';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
-
-      const successful = document.execCommand('copy');
-      document.body.removeChild(textarea);
-
-      if (successful) {
-        alert(t('horoscope.share.copied') || '✅ Copié !');
-      } else {
-        alert('❌ Erreur de copie');
-      }
-    } catch (err) {
-      console.error('❌ Erreur:', err);
-      alert('❌ Erreur de copie');
-    }
-  };
-
-  if (showPrediction100) {
-    return (
-      <Prediction100Days
-        user={user}
-        streak={streak}
-        onBack={() => {
-          setShowPrediction100(false);
-        }}
-      />
-    );
-  }
 
   return (
-    <div className="horoscope-page min-h-screen relative overflow-hidden bg-gradient-to-b from-[#0a0515] via-[#1a0f2e] to-[#0a0515]">
-      {showDebugMenu && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-[60] flex items-center justify-center p-4">
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 max-w-sm w-full border-2 border-yellow-500">
-            <h3 className="text-yellow-400 font-bold text-xl mb-4 text-center">🛠️ Debug</h3>
+    <div className={`hp-root ${mounted ? 'hp-mounted' : ''}`}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
+        :root { --gold:#C9A84C; --gold-l:#F0D98A; --white:#F7F2EA; --bg:#05030E; }
+        *{box-sizing:border-box;margin:0;padding:0;}
 
-            <div className="space-y-3 mb-4">
-              <div className="bg-gray-800/50 rounded-lg p-3 border border-gray-700">
-                <div className="text-gray-400 text-xs mb-1">Streak</div>
-                <div className="text-white font-bold text-lg">{streak} 🔥</div>
-              </div>
+        .hp-root {
+          min-height:100vh; display:flex; flex-direction:column;
+          background:var(--bg); font-family:'Jost',sans-serif; color:var(--white);
+          position:relative; overflow:hidden; padding-top:56px;
+        }
+        .hp-bg { position:absolute; inset:0; pointer-events:none;
+          background: radial-gradient(ellipse 80% 45% at 50% -5%, rgba(80,40,160,0.22) 0%, transparent 60%),
+                      radial-gradient(ellipse 40% 30% at 85% 75%, rgba(40,20,90,0.12) 0%, transparent 50%); }
+        .hp-noise { position:absolute; inset:0; pointer-events:none; opacity:0.028;
+          background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+          background-size:200px; }
+        .hp-particles { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+        .hp-particle { position:absolute; border-radius:50%; background:white; animation:hppf var(--d,4s) ease-in-out infinite var(--dl,0s); }
+        @keyframes hppf { 0%,100%{opacity:0} 40%,60%{opacity:var(--op,.15)} }
 
-              <div className="bg-gray-800/50 rounded-lg p-3 border border-gray-700">
-                <div className="text-gray-400 text-xs mb-1">XP</div>
-                <div className="text-white font-bold text-lg">{xp} ⭐</div>
-              </div>
-            </div>
+        /* Badges streak/date */
+        .hp-streak {
+          position:absolute; top:66px; left:16px; z-index:20;
+          display:flex; align-items:center; gap:8px;
+          background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.22);
+          border-radius:8px; padding:7px 12px; cursor:pointer;
+          backdrop-filter:blur(4px);
+        }
+        .hp-streak-num { font-size:14px; font-weight:500; color:#F0D98A; line-height:1.1; }
+        .hp-streak-lbl { font-size:9px; font-weight:300; letter-spacing:1px; color:rgba(247,242,234,0.5); }
+        .hp-date-badge {
+          position:absolute; top:68px; right:16px; z-index:20;
+          background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.09);
+          border-radius:20px; padding:5px 12px; backdrop-filter:blur(4px);
+        }
+        .hp-date-badge span { font-size:10px; font-weight:300; letter-spacing:1.5px; color:rgba(247,242,234,0.85); }
 
-            <div className="space-y-2">
-              <button onClick={simulateStreak100} className="w-full px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-lg text-white font-semibold transition-all text-sm">
-                🎯 100j
-              </button>
+        /* Scroll */
+        .hp-scroll {
+          position:relative; z-index:10; flex:1; padding:0 16px 40px;
+          overflow-y:auto; -webkit-overflow-scrolling:touch;
+          opacity:0; transition:opacity 0.7s ease;
+        }
+        .hp-mounted .hp-scroll { opacity:1; transition-delay:0.2s; }
 
-              <button onClick={simulateStreak200} className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-lg text-white font-semibold transition-all text-sm">
-                🎯 200j
-              </button>
+        /* Sign header */
+        .hp-sign-block { text-align:center; padding:24px 24px 16px; }
+        .hp-sign-symbol {
+          display:inline-flex; align-items:center; justify-content:center;
+          width:84px; height:84px; border-radius:50%;
+          background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.35);
+          margin-bottom:14px; cursor:pointer;
+          box-shadow:0 0 32px rgba(201,168,76,0.1), inset 0 1px 0 rgba(255,255,255,0.06);
+          transition:transform 0.4s ease;
+        }
+        .hp-sign-symbol:hover { transform:scale(1.06); }
+        .hp-sign-emoji { font-size:44px; line-height:1; }
+        .hp-sign-name {
+          font-family:'Playfair Display',Georgia,serif;
+          font-size:clamp(22px,6vw,30px); font-weight:300;
+          color:#FDFAF4; margin-bottom:6px; letter-spacing:0.5px;
+        }
+        .hp-sign-dates { font-size:12px; font-weight:300; letter-spacing:2px; color:rgba(247,242,234,0.82); }
 
-              <button onClick={resetAllProgress} className="w-full px-4 py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 rounded-lg text-white font-semibold transition-all text-sm">
-                🔄 Reset
-              </button>
+        .hp-line {
+          width:1px; height:20px; margin:0 auto 18px;
+          background:linear-gradient(to bottom, transparent, rgba(201,168,76,0.3), transparent);
+        }
 
-              <button onClick={() => setShowDebugMenu(false)} className="w-full px-4 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-semibold transition-all text-sm">
-                ❌ Fermer
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+        /* XP card */
+        .hp-xp-card {
+          background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.22);
+          border-radius:10px; padding:16px 18px; margin-bottom:12px;
+          box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+        .hp-xp-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+        .hp-xp-left { display:flex; align-items:center; gap:10px; }
+        .hp-xp-icon { font-size:16px; color:#C9A84C; }
+        .hp-xp-level { font-family:'Playfair Display',serif; font-size:15px; font-weight:400; color:#F0D98A; }
+        .hp-xp-sub { font-size:11px; font-weight:300; color:rgba(247,242,234,0.78); margin-top:1px; }
+        .hp-xp-today { font-size:11px; font-weight:300; letter-spacing:0.5px; color:#C9A84C; }
+        .hp-xp-track { width:100%; height:2px; border-radius:1px; background:rgba(255,255,255,0.1); margin-bottom:6px; }
+        .hp-xp-fill { height:100%; border-radius:1px; background:linear-gradient(90deg, #C9A84C, #F0D98A, #C9A84C); transition:width 1s ease; }
+        .hp-xp-next { font-size:10px; font-weight:300; letter-spacing:1px; color:rgba(247,242,234,0.65); text-align:center; }
 
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(30)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute bg-purple-300/30 rounded-full"
-            style={{
-              width: Math.random() > 0.5 ? '2px' : '3px',
-              height: Math.random() > 0.5 ? '2px' : '3px',
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animation: `twinkle ${3 + Math.random() * 2}s ease-in-out ${Math.random() * 3}s infinite`
-            }}
-          />
+        /* Badges */
+        .hp-badges-eyebrow {
+          font-size:9px; font-weight:400; letter-spacing:3px; text-transform:uppercase;
+          color:rgba(201,168,76,0.9); text-align:center; margin-bottom:10px;
+        }
+        .hp-badges-row { display:flex; justify-content:center; gap:10px; margin-bottom:18px; }
+        .hp-badge {
+          display:flex; flex-direction:column; align-items:center; gap:4px;
+          padding:10px 12px; border-radius:8px;
+          border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.03);
+          opacity:0.35; transition:all 0.4s ease;
+        }
+        .hp-badge.on { opacity:1; border-color:rgba(201,168,76,0.35); background:rgba(201,168,76,0.07); box-shadow:0 0 14px rgba(201,168,76,0.08); }
+        .hp-badge-icon { font-size:18px; line-height:1; }
+        .hp-badge-lbl { font-size:9px; font-weight:300; letter-spacing:0.5px; color:rgba(247,242,234,0.7); }
+        .hp-badge.on .hp-badge-lbl { color:#F0D98A; }
+
+        /* Sections */
+        .hp-section {
+          background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+          border-radius:10px; overflow:hidden; margin-bottom:8px;
+          transition:border-color 0.3s, box-shadow 0.3s;
+        }
+        .hp-section.open { border-color:rgba(201,168,76,0.3); box-shadow:0 0 18px rgba(201,168,76,0.06); }
+        .hp-section-btn {
+          width:100%; display:flex; align-items:center; justify-content:space-between;
+          padding:15px 16px; gap:12px; background:none; border:none; cursor:pointer;
+          text-align:left; transition:background 0.25s;
+        }
+        .hp-section-btn:hover { background:rgba(201,168,76,0.04); }
+        .hp-section-left { display:flex; align-items:center; gap:10px; }
+        .hp-section-icon { font-size:17px; line-height:1; }
+        .hp-section-title {
+          font-family:'Playfair Display',Georgia,serif; font-size:16px; font-weight:400;
+          color:#FDFAF4; letter-spacing:0.2px; transition:color 0.3s;
+        }
+        .hp-section.open .hp-section-title { color:#F0D98A; }
+
+        /* Chevron blanc visible */
+        .hp-chevron {
+          width:26px; height:26px; flex-shrink:0; border-radius:50%;
+          display:flex; align-items:center; justify-content:center;
+          background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.3);
+          color:rgba(255,255,255,0.95);
+          transition:transform 0.3s, background 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .hp-section:hover .hp-chevron { background:rgba(255,255,255,0.18); border-color:rgba(255,255,255,0.45); }
+        .hp-section.open .hp-chevron { transform:rotate(180deg); background:rgba(201,168,76,0.18); border-color:rgba(201,168,76,0.55); color:#F0D98A; }
+        .hp-chevron svg { width:13px; height:13px; stroke-width:2.5; }
+
+        .hp-section-body { overflow:hidden; max-height:0; opacity:0; transition:max-height 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.3s; }
+        .hp-section-body.open { max-height:600px; opacity:1; }
+        .hp-section-content {
+          padding:2px 16px 16px 43px;
+          font-family:'Playfair Display',serif; font-size:14px; font-style:italic; font-weight:300;
+          color:rgba(247,242,234,0.92); line-height:1.9; white-space:pre-line;
+        }
+
+        /* Demain */
+        .hp-tomorrow {
+          background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09);
+          border-radius:10px; padding:16px 18px; display:flex; align-items:flex-start; gap:14px;
+          margin-bottom:18px;
+        }
+        .hp-tomorrow-sym { font-size:20px; color:#C9A84C; flex-shrink:0; margin-top:2px; line-height:1; }
+        .hp-tomorrow-title { font-family:'Playfair Display',serif; font-size:15px; font-weight:400; color:#F0D98A; margin-bottom:4px; }
+        .hp-tomorrow-desc { font-size:13px; font-weight:300; color:rgba(247,242,234,0.82); line-height:1.6; }
+
+        /* Boutons */
+        .hp-btn-gold {
+          width:100%; padding:15px 24px;
+          background:linear-gradient(135deg, rgba(201,168,76,0.14) 0%, rgba(201,168,76,0.07) 100%);
+          border:1px solid rgba(201,168,76,0.55); border-radius:3px;
+          font-family:'Jost',sans-serif; font-size:11px; font-weight:400;
+          letter-spacing:4px; text-transform:uppercase;
+          color:#F0D98A; cursor:pointer; transition:all 0.35s; display:block; text-align:center; margin-bottom:10px;
+        }
+        .hp-btn-gold:hover { border-color:#C9A84C; color:#fff8d0; box-shadow:0 0 24px rgba(201,168,76,0.16); }
+        .hp-btn-ghost {
+          width:100%; padding:14px 24px; background:none;
+          border:1px solid rgba(255,255,255,0.22); border-radius:3px;
+          font-family:'Jost',sans-serif; font-size:11px; font-weight:300;
+          letter-spacing:3px; text-transform:uppercase;
+          color:rgba(247,242,234,0.88); cursor:pointer; transition:all 0.3s; display:block; text-align:center;
+        }
+        .hp-btn-ghost:hover { border-color:rgba(255,255,255,0.45); color:#F7F2EA; }
+
+        /* XP popup */
+        .hp-xp-pop {
+          position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:50;
+          background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.45);
+          border-radius:3px; padding:10px 24px;
+          font-family:'Jost',sans-serif; font-size:11px; font-weight:400;
+          letter-spacing:3px; text-transform:uppercase; color:#F0D98A;
+          animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes popIn { from{transform:translate(-50%,-50%) scale(0.8);opacity:0} to{transform:translate(-50%,-50%) scale(1);opacity:1} }
+
+        @keyframes slideUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes hpSpin { to{transform:rotate(360deg)} }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes scaleIn { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+        @keyframes confettiExplode {
+          0%{transform:translate(-50%,-50%) translate(0,0) rotate(0deg) scale(1);opacity:1}
+          85%{opacity:1}
+          100%{transform:translate(-50%,-50%) translate(calc(cos(var(--angle))*var(--distance)),calc(sin(var(--angle))*var(--distance))) rotate(var(--rotation)) scale(0);opacity:0}
+        }
+      `}</style>
+
+      <div className="hp-bg"/><div className="hp-noise"/>
+      <div className="hp-particles">
+        {Array.from({length:28}).map((_,i) => (
+          <div key={i} className="hp-particle" style={{ left:`${Math.random()*100}%`, top:`${Math.random()*100}%`, width:`${Math.random()<.2?2:1}px`, height:`${Math.random()<.2?2:1}px`, '--d':`${3+Math.random()*5}s`, '--dl':`${Math.random()*5}s`, '--op':0.06+Math.random()*0.18 } as any}/>
         ))}
       </div>
 
-      {/* 🎉 RÉCOMPENSE - CONFETTI ISOLÉS */}
+      {/* Streak */}
+      <div className="hp-streak" onClick={handleLogoTap}>
+        <span style={{fontSize:18}}>🔥</span>
+        <div><div className="hp-streak-num">{streak}</div><div className="hp-streak-lbl">{t('horoscope.streak.label')||'jours'}</div></div>
+      </div>
+
+      {/* Date */}
+      <div className="hp-date-badge">
+        <span>{new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</span>
+      </div>
+
+      {/* Debug */}
+      {showDebugMenu && (
+        <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.92)',backdropFilter:'blur(8px)',zIndex:60,display:'flex',alignItems:'center',justifyContent:'center',padding:16}}>
+          <div style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(201,168,76,0.28)',borderRadius:12,padding:24,maxWidth:300,width:'100%'}}>
+            <div style={{fontFamily:"'Playfair Display',serif",fontSize:15,color:'#F0D98A',textAlign:'center',marginBottom:18,letterSpacing:1}}>Debug</div>
+            <div style={{display:'flex',gap:8,marginBottom:14}}>
+              {[['STREAK',streak],['XP',xp]].map(([l,v]:any)=>(
+                <div key={l} style={{flex:1,padding:10,background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:6}}>
+                  <div style={{fontSize:8,letterSpacing:2,color:'rgba(247,242,234,0.45)',marginBottom:4}}>{l}</div>
+                  <div style={{fontSize:16,color:'#F0D98A',fontWeight:500}}>{v}</div>
+                </div>
+              ))}
+            </div>
+            {[['100j',()=>{localStorage.setItem('horoscope_streak','100');localStorage.setItem('horoscope_last_visit',new Date().toDateString());localStorage.removeItem('reward_100_shown');setShowDebugMenu(false);window.location.reload();}],
+              ['200j',()=>{localStorage.setItem('horoscope_streak','200');localStorage.setItem('horoscope_last_visit',new Date().toDateString());localStorage.removeItem('reward_200_shown');setShowDebugMenu(false);window.location.reload();}],
+              ['Reset',dbgReset],['Fermer',()=>setShowDebugMenu(false)]
+            ].map(([l,fn]:any)=>(
+              <button key={l} onClick={fn} style={{width:'100%',padding:'10px',background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.09)',borderRadius:3,color:'rgba(247,242,234,0.75)',fontFamily:"'Jost',sans-serif",fontSize:10,letterSpacing:2,textTransform:'uppercase',cursor:'pointer',marginBottom:6}}>{l}</button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 100-day reward */}
       {show100Reward && (
-        <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-[9999] flex items-center justify-center p-4">
-          {/* ✨ CONFETTI - Couche isolée avec will-change */}
-          <div 
-            className="absolute inset-0 overflow-hidden pointer-events-none" 
-            style={{ 
-              isolation: 'isolate',
-              willChange: 'transform',
-              transform: 'translateZ(0)',
-              backfaceVisibility: 'hidden'
-            }}
-          >
-            {/* Halo lumineux */}
-            <div 
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500 rounded-full blur-[120px] opacity-60 animate-pulse"
-              style={{ willChange: 'opacity' }}
-            ></div>
-
-            {/* Confettis - première vague */}
-            {[...Array(50)].map((_, i) => {
-              const angle = (i / 50) * 360;
-              const distance = 200 + Math.random() * 150;
-              const colors = ['#fbbf24', '#f59e0b', '#f97316', '#ec4899', '#a855f7', '#6366f1', '#10b981'];
-              const color = colors[Math.floor(Math.random() * colors.length)];
-              return (
-                <div
-                  key={`wave1-${i}`}
-                  className="absolute top-1/2 left-1/2 w-2 h-3 rounded-sm"
-                  style={{
-                    backgroundColor: color,
-                    boxShadow: `0 0 15px ${color}, 0 0 30px ${color}`,
-                    animation: `confettiExplode 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${Math.random() * 0.3}s forwards`,
-                    '--angle': `${angle}deg`,
-                    '--distance': `${distance}px`,
-                    '--rotation': `${Math.random() * 1080}deg`,
-                    willChange: 'transform, opacity'
-                  } as any}
-                />
-              );
-            })}
-
-            {/* Confettis - deuxième vague */}
-            {[...Array(35)].map((_, i) => {
-              const angle = (i / 35) * 360 + 10;
-              const distance = 150 + Math.random() * 120;
-              const colors = ['#fbbf24', '#f59e0b', '#ec4899', '#a855f7'];
-              const color = colors[Math.floor(Math.random() * colors.length)];
-              return (
-                <div
-                  key={`wave2-${i}`}
-                  className="absolute top-1/2 left-1/2 w-4 h-5 rounded"
-                  style={{
-                    backgroundColor: color,
-                    boxShadow: `0 0 20px ${color}`,
-                    animation: `confettiExplode 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${0.4 + Math.random() * 0.4}s forwards`,
-                    '--angle': `${angle}deg`,
-                    '--distance': `${distance}px`,
-                    '--rotation': `${Math.random() * 1080}deg`,
-                    willChange: 'transform, opacity'
-                  } as any}
-                />
-              );
-            })}
-
-            {/* Halos pulsants */}
-            {[...Array(8)].map((_, i) => {
-              const angle = (i / 8) * 360;
-              return (
-                <div
-                  key={`light-${i}`}
-                  className="absolute top-1/2 left-1/2"
-                  style={{
-                    animation: `lightPulse 3s ease-in-out ${i * 0.2}s infinite`,
-                    '--orbit-angle': `${angle}deg`,
-                    '--orbit-radius': '180px',
-                    willChange: 'transform, opacity'
-                  } as any}
-                >
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-amber-400 to-yellow-300 opacity-60 blur-xl"></div>
-                </div>
-              );
+        <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.96)',backdropFilter:'blur(12px)',zIndex:9999,display:'flex',alignItems:'center',justifyContent:'center',padding:16}}>
+          <div style={{position:'absolute',inset:0,overflow:'hidden',pointerEvents:'none'}}>
+            <div style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:360,height:360,background:'radial-gradient(circle, rgba(201,168,76,0.12), transparent 70%)',borderRadius:'50%'}}/>
+            {Array.from({length:50}).map((_,i) => {
+              const colors=['#C9A84C','#F0D98A','#E8C86A','#DDB95A'];
+              const color=colors[Math.floor(Math.random()*colors.length)];
+              return <div key={i} style={{position:'absolute',top:'50%',left:'50%',width:5,height:9,borderRadius:2,background:color,animation:`confettiExplode 5s ease-out ${Math.random()*0.4}s forwards`,'--angle':`${(i/50)*360}deg`,'--distance':`${160+Math.random()*120}px`,'--rotation':`${Math.random()*1080}deg`} as any}/>;
             })}
           </div>
-
-          {/* 🎴 CARTE - Au-dessus avec z-index élevé */}
-          <div 
-            className="relative max-w-md w-full"
-            style={{ 
-              zIndex: 10000,
-              isolation: 'isolate',
-              willChange: 'transform',
-              transform: 'translateZ(0)'
-            }}
-          >
-            <div
-              className="relative bg-gradient-to-br from-purple-900/95 via-indigo-900/95 to-purple-900/95 rounded-3xl p-6 sm:p-8 border-4 border-purple-400/60 shadow-2xl"
-              style={{
-                opacity: 0,
-                animation: 'fadeInUp 0.8s ease-out 1.5s forwards'
-              }}
-            >
-              <div className="relative text-center">
-                <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-amber-500 to-yellow-500 border-4 border-amber-300 shadow-2xl shadow-amber-500/50 mb-4 animate-bounce">
-                  <span className="text-4xl font-black text-purple-900">{streak}</span>
-                </div>
-
-                <h2 className="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-purple-200 via-fuchsia-200 to-purple-200 bg-clip-text text-transparent leading-tight"
-                    style={{ backgroundSize: '200% auto', animation: 'gradient 3s ease infinite' }}>
-                  {t('horoscope.reward100.title') || 'LÉGENDE !'}
-                </h2>
-
-                <p className="text-xl text-purple-300 font-bold mb-6">
-                  {streak} {t('horoscope.reward100.daysLabel') || 'jours consécutifs !'}
-                </p>
-
-                {/* 📜 TEXTE AVEC SCROLL + FADE */}
-                <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl mb-6 border-2 border-purple-400/40 max-h-[40vh] overflow-hidden">
-                  {/* Fade top */}
-                  <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-black/60 to-transparent pointer-events-none z-10"></div>
-
-                  {/* Scrollable content */}
-                  <div className="overflow-y-auto max-h-[40vh] p-5 scroll-smooth" style={{ 
-                    scrollbarWidth: 'thin',
-                    scrollbarColor: '#a855f7 transparent'
-                  }}>
-                    <p className="text-purple-100 text-base leading-relaxed">
-                      {t('horoscope.reward100.message') ||
-                      "Bravo ! Niveau exceptionnel..."}
-                    </p>
-                  </div>
-
-                  {/* Fade bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-black/60 to-transparent pointer-events-none z-10"></div>
-                </div>
-
-                <button
-                  onClick={handleDiscoverPrediction}
-                  className="relative group w-full px-8 py-4 bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-600 hover:from-purple-500 hover:via-fuchsia-500 hover:to-purple-500 rounded-full font-bold text-lg shadow-2xl shadow-purple-500/60 transition-all duration-300 hover:scale-105 border-2 border-purple-400 overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-
-                  <span className="relative text-white">
-                    {t('horoscope.reward100.discover') || 'Découvrir ma prédiction'}
-                  </span>
-                </button>
+          <div style={{position:'relative',maxWidth:380,width:'100%',zIndex:1}}>
+            <div style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(201,168,76,0.32)',borderRadius:14,padding:28,opacity:0,animation:'fadeInUp 0.8s ease-out 1.2s forwards',textAlign:'center'}}>
+              <div style={{display:'inline-flex',alignItems:'center',justifyContent:'center',width:72,height:72,borderRadius:'50%',background:'rgba(201,168,76,0.1)',border:'1px solid rgba(201,168,76,0.38)',marginBottom:18}}>
+                <span style={{fontFamily:"'Playfair Display',serif",fontSize:26,color:'#F0D98A',fontWeight:300}}>{streak}</span>
               </div>
+              <div style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:300,color:'#FDFAF4',marginBottom:5}}>{t('horoscope.reward100.title')||'Légende'}</div>
+              <div style={{fontSize:12,fontWeight:300,letterSpacing:1,color:'rgba(247,242,234,0.6)',marginBottom:18}}>{streak} {t('horoscope.reward100.daysLabel')||'jours'}</div>
+              <div style={{background:'rgba(0,0,0,0.25)',border:'1px solid rgba(255,255,255,0.05)',borderRadius:8,padding:14,marginBottom:18,maxHeight:'32vh',overflowY:'auto'}}>
+                <p style={{fontFamily:"'Playfair Display',serif",fontSize:13,fontStyle:'italic',fontWeight:300,color:'rgba(247,242,234,0.82)',lineHeight:1.9}}>{t('horoscope.reward100.message')||'Bravo !'}</p>
+              </div>
+              <button className="hp-btn-gold" onClick={handleDiscoverPrediction}>{t('horoscope.reward100.discover')||'Découvrir ma prédiction'}</button>
             </div>
           </div>
         </div>
       )}
 
+      {/* Level up */}
       {showLevelUp && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
-          <div className="relative">
-            <div className="absolute inset-0">
-              {[...Array(30)].map((_, i) => {
-                const angle = (i / 30) * 360;
-                return (
-                  <div
-                    key={i}
-                    className="absolute top-1/2 left-1/2"
-                    style={{
-                      fontSize: `${20 + Math.random() * 15}px`,
-                      animation: `explode 2s ease-out ${Math.random() * 0.2}s forwards`,
-                      '--angle': `${angle}deg`,
-                      '--distance': `${100 + Math.random() * 50}px`,
-                    } as any}
-                  >
-                    {['⭐', '✨', '💫', '🌟'][Math.floor(Math.random() * 4)]}
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="relative bg-gradient-to-br from-purple-900 via-fuchsia-900 to-purple-900 rounded-3xl p-8 border-4 border-amber-400 shadow-2xl text-center"
-                 style={{ animation: 'scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
-              <div className="text-7xl mb-4 animate-bounce">🎉</div>
-              <h2 className="text-4xl font-bold text-amber-300 mb-2">
-                {t('horoscope.levelUp.title') || 'Niveau !'}
-              </h2>
-              <p className="text-purple-200 text-2xl font-bold mb-4">
-                {t('horoscope.levelUp.newLevel', { level: newLevel }) || `Niveau ${newLevel}`}
-              </p>
-            </div>
+        <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.75)',backdropFilter:'blur(6px)',zIndex:50,display:'flex',alignItems:'center',justifyContent:'center',padding:16}}>
+          <div style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(201,168,76,0.32)',borderRadius:14,padding:32,textAlign:'center',animation:'scaleIn 0.5s cubic-bezier(0.34,1.56,0.64,1)'}}>
+            <div style={{fontFamily:"'Playfair Display',serif",fontSize:36,fontWeight:300,color:'#F0D98A',marginBottom:6}}>{t('horoscope.levelUp.title')||'Niveau supérieur'}</div>
+            <div style={{fontFamily:"'Playfair Display',serif",fontSize:18,fontStyle:'italic',color:'rgba(247,242,234,0.75)'}}>{t('horoscope.levelUp.newLevel',{level:newLevel})||`Niveau ${newLevel}`}</div>
           </div>
         </div>
       )}
 
-      {showXPGain && (
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 animate-bounce">
-          <div className="bg-gradient-to-r from-amber-500 to-yellow-500 text-purple-900 px-6 py-3 rounded-full font-bold text-lg shadow-2xl border-2 border-amber-300">
-            {xpGainAmount === 10 ? '+10 XP ⭐' : xpGainAmount === 5 ? '+5 XP ✨' : `+${xpGainAmount} XP`}
-          </div>
-        </div>
-      )}
+      {/* XP gain */}
+      {showXPGain && <div className="hp-xp-pop">+{xpGainAmount} XP</div>}
 
-      <div className="absolute top-16 left-4 z-10">
-        <div className="relative" onClick={handleLogoTap}>
-          <div className="absolute inset-0 bg-orange-500/40 rounded-lg blur-lg animate-pulse"></div>
-          <div className="relative bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 rounded-lg px-3 py-1.5 border-2 border-orange-400/60 shadow-2xl flex items-center gap-2 cursor-pointer hover:scale-105 transition-transform">
-            <div className="text-2xl drop-shadow-lg">🔥</div>
-            <div className="text-white">
-              <div className="text-sm font-bold leading-none">{streak}</div>
-              <div className="text-[9px] opacity-90 leading-none mt-0.5">
-                {t('horoscope.streak.label') || 'jours'}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div className="hp-scroll">
 
-      <div className="absolute top-16 right-4 z-10">
-        <div className="relative">
-          <div className="absolute inset-0 bg-fuchsia-500/30 rounded-full blur-md animate-pulse"></div>
-          <div className="relative bg-gradient-to-r from-fuchsia-600 to-purple-600 rounded-full px-3 py-1 border border-fuchsia-400/50 shadow-lg">
-            <span className="text-xs font-bold text-white">
-              ✨ {new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div className="relative z-10 p-4 pt-16 pb-safe">
-        {(isLoading || isFetching) && (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-            <p className="text-purple-300 text-lg">{t('horoscope.loading') || '✨...'}</p>
+        {(isLoading||isFetching) && (
+          <div style={{textAlign:'center',padding:'60px 0'}}>
+            <div style={{width:32,height:32,border:'1px solid rgba(201,168,76,0.35)',borderTopColor:'#C9A84C',borderRadius:'50%',margin:'0 auto 16px',animation:'hpSpin 1s linear infinite'}}/>
+            <p style={{fontSize:11,letterSpacing:2,color:'rgba(247,242,234,0.5)',textTransform:'uppercase'}}>{t('horoscope.loading')||'Chargement'}</p>
           </div>
         )}
 
         {error && errorMessage && (
-          <div className="bg-red-500/20 border border-red-500 rounded-lg p-4 mb-4 max-w-md mx-auto">
-            <p className="text-red-300">{errorMessage}</p>
-            <button onClick={() => refetch()} className="mt-3 px-4 py-2 bg-red-500 rounded-lg text-white">
-              {t('horoscope.retry')}
-            </button>
+          <div style={{background:'rgba(255,80,80,0.06)',border:'1px solid rgba(255,80,80,0.2)',borderRadius:8,padding:16,marginBottom:16}}>
+            <p style={{color:'rgba(255,150,150,0.85)',fontSize:13,marginBottom:10}}>{errorMessage}</p>
+            <button onClick={()=>refetch()} style={{padding:'8px 20px',background:'none',border:'1px solid rgba(255,80,80,0.35)',borderRadius:3,color:'rgba(255,150,150,0.85)',fontFamily:"'Jost',sans-serif",fontSize:10,letterSpacing:2,cursor:'pointer'}}>{t('horoscope.retry')||'Réessayer'}</button>
           </div>
         )}
 
         {horoscope && (
           <>
-            <div className="text-center mb-6">
-              <div className="relative inline-block mb-4">
-                <div className="absolute inset-0 bg-amber-400/20 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute inset-0 bg-purple-500/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-
-                <div 
-                  className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-purple-900/50 via-fuchsia-900/50 to-purple-900/50 backdrop-blur-md border-2 border-amber-400/30 flex items-center justify-center hover:scale-110 transition-transform duration-500 cursor-pointer"
-                  onClick={handleLogoTap}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent rounded-full" style={{ animation: 'spin-slow 8s linear infinite' }}></div>
-                  <div className="relative text-6xl sm:text-7xl drop-shadow-[0_0_30px_rgba(251,191,36,0.8)]">
-                    {user.zodiacSign.symbol}
-                  </div>
-                </div>
+            {/* Sign header */}
+            <div className="hp-sign-block">
+              <div className="hp-sign-symbol" onClick={handleLogoTap}>
+                <span className="hp-sign-emoji">{user.zodiacSign.symbol}</span>
               </div>
-
-              <div className="relative mb-2">
-                <h2 className="text-2xl sm:text-3xl font-bold mb-1 bg-gradient-to-r from-amber-200 via-yellow-300 via-fuchsia-300 to-amber-200 bg-clip-text text-transparent" style={{ backgroundSize: '200% auto', animation: 'gradient 3s ease infinite' }}>
-                  {t(`zodiac.signs.${englishSign}`)}
-                </h2>
-              </div>
-
-              <p className="text-purple-300/70 text-xs sm:text-sm">
-                {translateHoroscopeData(horoscope, englishSign, t).date}
-              </p>
+              <div className="hp-sign-name">{t(`zodiac.signs.${englishSign}`)}</div>
+              <div className="hp-sign-dates">{trHoro(horoscope,englishSign,t,language).date}</div>
             </div>
 
-            <div className="max-w-md mx-auto mb-4">
-              <div className="relative bg-gradient-to-br from-amber-900/40 via-purple-900/40 to-amber-900/40 backdrop-blur-xl rounded-xl p-4 border border-amber-400/30">
-                <div className="flex justify-between items-center mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl">⭐</span>
-                    <div>
-                      <div className="text-amber-200 font-bold text-sm">
-                        {t('horoscope.level', { level }) || `Niveau ${level}`}
-                      </div>
-                      <div className="text-purple-300 text-[10px]">
-                        {xp} / {level * 100} XP
-                      </div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-fuchsia-200 text-xs font-semibold">
-                      +{Math.min(xp % 100, 15)} XP
-                    </div>
-                    <div className="text-purple-300 text-[9px]">
-                      {t('horoscope.xpToday') || 'Aujourd\'hui'}
-                    </div>
+            <div className="hp-line"/>
+
+            {/* XP card */}
+            <div className="hp-xp-card">
+              <div className="hp-xp-top">
+                <div className="hp-xp-left">
+                  <span className="hp-xp-icon">✦</span>
+                  <div>
+                    <div className="hp-xp-level">{t('horoscope.level',{level})||`Niveau ${level}`}</div>
+                    <div className="hp-xp-sub">{xp} / {level*100} XP</div>
                   </div>
                 </div>
-
-                <div className="relative">
-                  <div className="w-full bg-purple-900/50 rounded-full h-3 overflow-hidden border border-purple-400/20">
-                    <div
-                      className="h-full bg-gradient-to-r from-amber-500 via-fuchsia-500 to-amber-500 rounded-full transition-all duration-1000 relative"
-                      style={{
-                        width: `${((xp % 100) / 100) * 100}%`,
-                        backgroundSize: '200% 100%',
-                        animation: 'gradient 3s ease infinite'
-                      }}
-                    >
-                      <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
-                    </div>
-                  </div>
-
-                  <div className="mt-2 text-center">
-                    <span className="text-purple-200 text-[10px]">
-                      {100 - (xp % 100)} XP avant {level + 1} 🎯
-                    </span>
-                  </div>
-                </div>
+                <div className="hp-xp-today">+{Math.min(xp%100,15)} XP {t('horoscope.xpToday')||"aujourd'hui"}</div>
               </div>
+              <div className="hp-xp-track"><div className="hp-xp-fill" style={{width:`${((xp%100)/100)*100}%`}}/></div>
+              <div className="hp-xp-next">{100-(xp%100)} XP avant niveau {level+1}</div>
             </div>
 
-            <div className="mb-4">
-              <h3 className="text-center text-purple-200 text-xs font-semibold mb-2">
-                {t('horoscope.badges.title') || '🏆 Accomplissements'}
-              </h3>
-              <div className="flex justify-center gap-2">
-                {badges.map(badge => (
-                  <div key={badge.id} className={`relative transition-all duration-500 ${badge.unlocked ? 'scale-100 opacity-100' : 'scale-90 opacity-30'}`}>
-                    {badge.unlocked && (
-                      <div className="absolute inset-0 bg-amber-400/20 rounded-lg blur-md animate-pulse"></div>
-                    )}
-                    <div className={`relative rounded-lg p-2 border ${badge.unlocked ? 'bg-gradient-to-br from-amber-900/50 to-yellow-900/50 border-amber-400/30' : 'bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border-purple-400/20'}`}>
-                      <div className="text-xl flex items-center justify-center h-7">{badge.icon}</div>
-                      <div className={`text-[9px] mt-1 text-center ${badge.unlocked ? 'text-amber-200' : 'text-purple-300'}`}>
-                        {badge.label}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="max-w-2xl mx-auto space-y-2 mb-4">
-              {sections.map((section, index) => (
-                <div
-                  key={index}
-                  className="group relative"
-                  style={{
-                    opacity: 0,
-                    animation: `slideUp 0.5s ease-out ${index * 0.05}s forwards`
-                  }}
-                >
-                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-600 rounded-xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500"></div>
-
-                  <div className="relative bg-gradient-to-br from-purple-900/40 to-indigo-900/40 backdrop-blur-xl rounded-xl border border-purple-400/30 overflow-hidden transform group-hover:scale-[1.01] transition-all duration-300">
-                    <button
-                      onClick={() => toggleSection(index)}
-                      className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-xl">{section.icon}</span>
-                        <h3 className="text-amber-200 font-semibold text-left text-sm">{section.title}</h3>
-                      </div>
-                      <svg
-                        className={`w-4 h-4 text-purple-300 transition-transform duration-300 ${openSections.includes(index) ? 'rotate-180' : ''}`}
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-
-                    <div
-                      className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                        openSections.includes(index) ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                      }`}
-                    >
-                      <div className="px-3 pb-3 pt-1">
-                        <p className="text-purple-100/90 text-xs leading-relaxed whitespace-pre-line">
-                          {section.content}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+            {/* Badges */}
+            <div className="hp-badges-eyebrow">{t('horoscope.badges.title')||'Accomplissements'}</div>
+            <div className="hp-badges-row">
+              {badges.map(b => (
+                <div key={b.id} className={`hp-badge ${b.unlocked?'on':''}`}>
+                  <span className="hp-badge-icon">{b.icon}</span>
+                  <span className="hp-badge-lbl">{b.label}</span>
                 </div>
               ))}
             </div>
 
-            <div className="max-w-md mx-auto mb-4">
-              <div className="relative bg-gradient-to-br from-indigo-900/40 to-purple-900/40 backdrop-blur-md rounded-xl p-4 border border-indigo-400/30">
-                <div className="flex items-start gap-3">
-                  <div className="text-3xl mt-0.5">🔮</div>
-                  <div className="flex-1">
-                    <div className="text-indigo-200 font-bold text-sm mb-1.5">
-                      {t('horoscope.tomorrow.title') || 'Reviens demain'}
-                    </div>
-                    <div className="text-purple-200/80 text-xs leading-relaxed">
-                      {t('horoscope.tomorrow.description') || 'Horoscope quotidien.'}
+            {/* Sections */}
+            <div style={{marginBottom:16}}>
+              {sections.map((section,index) => {
+                const isOpen = openSections.includes(index);
+                return (
+                  <div key={index} className={`hp-section ${isOpen?'open':''}`} style={{opacity:0,animation:`slideUp 0.45s ease-out ${index*0.05}s forwards`}}>
+                    <button className="hp-section-btn" onClick={()=>toggleSection(index)}>
+                      <div className="hp-section-left">
+                        <span className="hp-section-icon">{section.icon}</span>
+                        <span className="hp-section-title">{section.title}</span>
+                      </div>
+                      <div className="hp-chevron">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6"/></svg>
+                      </div>
+                    </button>
+                    <div className={`hp-section-body ${isOpen?'open':''}`}>
+                      <div className="hp-section-content">{section.content}</div>
                     </div>
                   </div>
-                </div>
+                );
+              })}
+            </div>
+
+            {/* Demain */}
+            <div className="hp-tomorrow">
+              <span className="hp-tomorrow-sym">◈</span>
+              <div>
+                <div className="hp-tomorrow-title">{t('horoscope.tomorrow.title')||'Reviens demain'}</div>
+                <div className="hp-tomorrow-desc">{t('horoscope.tomorrow.description')||'Votre horoscope vous attend chaque jour.'}</div>
               </div>
             </div>
 
-            <button
-              onClick={handleShare}
-              className="w-full max-w-md mx-auto mb-4 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-full text-white text-sm font-semibold shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
-            >
-              <span>📤</span>
-              <span>{t('horoscope.share.button') || 'Partager'}</span>
-            </button>
-
-            <div className="text-center">
-              <button
-                onClick={onBack}
-                className="px-8 py-3 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 rounded-full text-white font-semibold shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300 hover:scale-105"
-              >
-                {t('horoscope.backButton') || '✨ Retour'}
-              </button>
-            </div>
+            {/* Boutons */}
+            <button className="hp-btn-gold" onClick={handleShare}>{t('horoscope.share.button')||'Partager mon horoscope'}</button>
+            <button className="hp-btn-ghost" onClick={onBack}>{t('horoscope.backButton')||'Retour'}</button>
           </>
         )}
       </div>
-
-      <style>{`
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.2; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.5); }
-        }
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes confettiExplode {
-          0% {
-            transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(1);
-            opacity: 1;
-          }
-          85% {
-            opacity: 1;
-          }
-          100% {
-            transform:
-              translate(-50%, -50%)
-              translate(
-                calc(cos(var(--angle)) * var(--distance)),
-                calc(sin(var(--angle)) * var(--distance))
-              )
-              rotate(var(--rotation))
-              scale(0);
-            opacity: 0;
-          }
-        }
-        @keyframes lightPulse {
-          0%, 100% {
-            transform: translate(-50%, -50%) rotate(var(--orbit-angle)) translateX(var(--orbit-radius)) scale(1);
-            opacity: 0.4;
-          }
-          50% {
-            transform: translate(-50%, -50%) rotate(var(--orbit-angle)) translateX(var(--orbit-radius)) scale(1.5);
-            opacity: 0.8;
-          }
-        }
-        @keyframes explode {
-          0% {
-            transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(1);
-            opacity: 1;
-          }
-          100% {
-            transform:
-              translate(-50%, -50%)
-              translate(
-                calc(cos(var(--angle)) * var(--distance)),
-                calc(sin(var(--angle)) * var(--distance))
-              )
-              rotate(720deg)
-              scale(0);
-            opacity: 0;
-          }
-        }
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes scaleIn {
-          from {
-            transform: scale(0.5);
-            opacity: 0;
-          }
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-
-        /* Custom scrollbar pour le texte */
-        .overflow-y-auto::-webkit-scrollbar {
-          width: 6px;
-        }
-        .overflow-y-auto::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .overflow-y-auto::-webkit-scrollbar-thumb {
-          background: #a855f7;
-          border-radius: 3px;
-        }
-        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-          background: #c084fc;
-        }
-      `}</style>
     </div>
   );
 }
