@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import MysticalButton from '@/components/MysticalButton';
-import MysticalInput from '@/components/MysticalInput';
 import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getSecureRandomInt } from '@/lib/utils';
@@ -21,27 +19,25 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
   const { t } = useLanguage();
 
   const mysticalAnswers = [
-    { key: 'yes', icon: '✦', color: '#7dffb3' },
-    { key: 'no', icon: '✕', color: '#ff7d7d' },
-    { key: 'maybe', icon: '◈', color: '#c4a8ff' },
-    { key: 'veryLikely', icon: '✧', color: '#ffe57d' },
-    { key: 'unlikely', icon: '◇', color: '#7dc8ff' },
-    { key: 'certain', icon: '✦', color: '#7dffcf' },
-    { key: 'noChance', icon: '✕', color: '#ff9d7d' },
-    { key: 'askLater', icon: '◎', color: '#b0b8d0' },
-    { key: 'dontCount', icon: '✕', color: '#ffb87d' },
-    { key: 'yesDefinitely', icon: '✦', color: '#7dff9d' },
-    { key: 'signsYes', icon: '✧', color: '#fffb7d' },
-    { key: 'signsNo', icon: '◇', color: '#9d7dff' },
-    { key: 'unclear', icon: '◌', color: '#c0c8d8' },
+    { key: 'yes',            icon: '✦', color: '#7dffb3' },
+    { key: 'no',             icon: '✕', color: '#ff7d7d' },
+    { key: 'maybe',          icon: '◈', color: '#c4a8ff' },
+    { key: 'veryLikely',     icon: '✧', color: '#ffe57d' },
+    { key: 'unlikely',       icon: '◇', color: '#7dc8ff' },
+    { key: 'certain',        icon: '✦', color: '#7dffcf' },
+    { key: 'noChance',       icon: '✕', color: '#ff9d7d' },
+    { key: 'askLater',       icon: '◎', color: '#b0b8d0' },
+    { key: 'dontCount',      icon: '✕', color: '#ffb87d' },
+    { key: 'yesDefinitely',  icon: '✦', color: '#7dff9d' },
+    { key: 'signsYes',       icon: '✧', color: '#fffb7d' },
+    { key: 'signsNo',        icon: '◇', color: '#9d7dff' },
+    { key: 'unclear',        icon: '◌', color: '#c0c8d8' },
     { key: 'trustIntuition', icon: '◈', color: '#ffb8e8' },
   ];
 
   const saveReading = async (answerKey: string) => {
     if (onSaveReading) {
-      try {
-        await onSaveReading({ type: 'crystalBall', question, answer: answerKey, date: new Date() });
-      } catch {}
+      try { await onSaveReading({ type: 'crystalBall', question, answer: answerKey, date: new Date() }); } catch {}
     }
   };
 
@@ -56,11 +52,7 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
     }, 2800);
   };
 
-  const handleNewQuestion = () => {
-    setQuestion('');
-    setCurrentAnswer(null);
-    setPhase('question');
-  };
+  const handleNewQuestion = () => { setQuestion(''); setCurrentAnswer(null); setPhase('question'); };
 
   return (
     <div className={`cb-root ${mounted ? 'cb-mounted' : ''}`}>
@@ -68,24 +60,15 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 
         :root {
-          --gold: #DDB95A;
-          --gold-light: #F0DC88;
-          --gold-dim: rgba(221,185,90,0.3);
-          --white: #F7F2EA;
-          --bg: #05030E;
+          --gold: #DDB95A; --gold-light: #F0DC88;
+          --gold-dim: rgba(221,185,90,0.3); --white: #F7F2EA; --bg: #05030E;
         }
-
         * { box-sizing: border-box; }
 
         .cb-root {
-          min-height: 100vh;
-          display: flex; flex-direction: column;
-          align-items: center;
-          background: var(--bg);
-          font-family: 'Jost', sans-serif;
-          color: var(--white);
-          position: relative; overflow-x: hidden;
-          padding: 0 0 48px;
+          min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+          background: var(--bg); font-family: 'Jost', sans-serif; color: var(--white);
+          position: relative; overflow-x: hidden; padding: 0 0 48px;
         }
 
         /* ── Arrière-plans ── */
@@ -93,8 +76,7 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           position: fixed; inset: 0; pointer-events: none; z-index: 0;
           background:
             radial-gradient(ellipse 80% 60% at 50% 0%, rgba(80,40,180,0.22) 0%, transparent 60%),
-            radial-gradient(ellipse 50% 40% at 20% 80%, rgba(40,20,100,0.12) 0%, transparent 55%),
-            radial-gradient(ellipse 40% 30% at 80% 60%, rgba(60,20,120,0.08) 0%, transparent 50%);
+            radial-gradient(ellipse 50% 40% at 20% 80%, rgba(40,20,100,0.12) 0%, transparent 55%);
         }
         .cb-noise {
           position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.022;
@@ -102,21 +84,17 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           background-size: 200px;
         }
         .cb-particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-        .cb-particle {
-          position: absolute; border-radius: 50%; background: white;
-          animation: cbpf var(--d,5s) ease-in-out infinite var(--dl,0s);
-        }
+        .cb-particle { position: absolute; border-radius: 50%; background: white; animation: cbpf var(--d,5s) ease-in-out infinite var(--dl,0s); }
         @keyframes cbpf { 0%,100%{opacity:0} 40%,60%{opacity:var(--op,.15)} }
 
         /* ── Header ── */
         .cb-header {
-          position: relative; z-index: 10;
-          width: 100%; display: flex; align-items: center; justify-content: space-between;
+          position: relative; z-index: 10; width: 100%;
+          display: flex; align-items: center; justify-content: space-between;
           padding: 20px 24px 0;
           opacity: 0; transition: opacity 0.6s ease;
         }
         .cb-mounted .cb-header { opacity: 1; transition-delay: 0.1s; }
-
         .cb-back-btn {
           display: flex; align-items: center; gap: 8px;
           background: none; border: none; cursor: pointer; padding: 0;
@@ -135,13 +113,11 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
 
         /* ── Titre ── */
         .cb-title-block {
-          position: relative; z-index: 10;
-          text-align: center; padding: 32px 24px 8px;
+          position: relative; z-index: 10; text-align: center; padding: 32px 24px 8px;
           opacity: 0; transform: translateY(10px);
           transition: opacity 0.8s ease, transform 0.8s ease;
         }
         .cb-mounted .cb-title-block { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
-
         .cb-badge {
           display: inline-block; font-size: 9px; font-weight: 300;
           letter-spacing: 4px; text-transform: uppercase;
@@ -155,149 +131,237 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
         }
         .cb-title em { font-style: italic; color: var(--gold-light); }
         .cb-subtitle {
-          font-family: 'Playfair Display', serif;
-          font-size: 14px; font-style: italic; font-weight: 300;
+          font-family: 'Playfair Display', serif; font-size: 14px; font-style: italic; font-weight: 300;
           color: rgba(247,242,234,0.82); line-height: 1.65; max-width: 280px; margin: 0 auto;
         }
 
-        /* ── Orbe ── */
+        /* ══════════════════════════════════
+           ── BOULE DE CRISTAL ──
+           ══════════════════════════════════ */
+
         .cb-orb-wrap {
           position: relative; z-index: 10;
-          width: 200px; height: 200px; margin: 32px auto 40px;
+          width: 220px; height: 220px; margin: 36px auto 44px;
           opacity: 0; transform: scale(0.9);
           transition: opacity 0.9s ease, transform 0.9s ease;
         }
         .cb-mounted .cb-orb-wrap { opacity: 1; transform: scale(1); transition-delay: 0.35s; }
 
-        /* Halo externe */
-        .cb-orb-halo {
-          position: absolute; inset: -24px; border-radius: 50%;
-          background: radial-gradient(ellipse, rgba(120,60,220,0.18) 0%, rgba(221,185,90,0.06) 50%, transparent 70%);
-          animation: cb-breathe 4s ease-in-out infinite;
+        .cb-orb-glow {
+          position: absolute;
+          inset: -40px;
+          border-radius: 50%;
+          background: radial-gradient(ellipse at 50% 50%,
+            rgba(140,80,255,0.18) 0%,
+            rgba(100,50,200,0.08) 45%,
+            transparent 70%);
+          filter: blur(12px);
+          animation: cb-glow-pulse 5s ease-in-out infinite;
+          pointer-events: none;
+        }
+        @keyframes cb-glow-pulse {
+          0%,100% { opacity: 0.6; transform: scale(0.95); }
+          50%      { opacity: 1.0; transform: scale(1.05); }
         }
 
-        /* Anneaux */
-        .cb-ring { position: absolute; border-radius: 50%; border: 1px solid transparent; }
-        .cb-ring-1 {
-          inset: 8px;
-          border-color: rgba(221,185,90,0.30) transparent rgba(221,185,90,0.08) transparent;
-          animation: cb-spin 18s linear infinite;
+        .cb-orb-shadow {
+          position: absolute; bottom: -14px; left: 50%;
+          transform: translateX(-50%);
+          width: 110px; height: 20px; border-radius: 50%;
+          background: radial-gradient(ellipse, rgba(60,20,140,0.55) 0%, transparent 70%);
+          filter: blur(8px);
+          animation: cb-shadow-anim 5s ease-in-out infinite;
         }
-        .cb-ring-2 {
-          inset: 22px;
-          border-color: transparent rgba(160,100,255,0.22) transparent rgba(160,100,255,0.08);
-          animation: cb-spin 28s linear infinite reverse;
+        @keyframes cb-shadow-anim {
+          0%,100% { transform: translateX(-50%) scaleX(0.88); opacity: 0.55; }
+          50%      { transform: translateX(-50%) scaleX(1.08); opacity: 0.8; }
         }
-        .cb-ring-3 {
-          inset: 36px;
-          border-color: rgba(221,185,90,0.12) transparent rgba(221,185,90,0.04) transparent;
-          animation: cb-spin 40s linear infinite;
-        }
-        @keyframes cb-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
-        /* Sphère en verre — look cristal clair */
+        .cb-orb-base {
+          position: absolute; bottom: -18px; left: 50%;
+          transform: translateX(-50%);
+          width: 88px; height: 14px;
+          background: linear-gradient(180deg,
+            rgba(201,168,76,0.25) 0%,
+            rgba(201,168,76,0.06) 100%);
+          border: 1px solid rgba(201,168,76,0.30);
+          border-radius: 50%;
+          box-shadow: 0 2px 10px rgba(201,168,76,0.08);
+        }
+
         .cb-sphere {
-          position: absolute; inset: 44px; border-radius: 50%;
-          background:
-            radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55) 0%, rgba(220,210,255,0.25) 25%, transparent 55%),
-            radial-gradient(circle at 70% 75%, rgba(160,100,255,0.30) 0%, transparent 45%),
-            radial-gradient(circle at 50% 50%, rgba(180,140,255,0.50) 0%, rgba(100,60,200,0.65) 50%, rgba(40,15,90,0.75) 100%);
-          box-shadow:
-            0 0 50px rgba(140,80,255,0.55),
-            0 0 100px rgba(140,80,255,0.20),
-            inset 0 0 40px rgba(200,160,255,0.25),
-            inset 0 8px 24px rgba(255,255,255,0.14),
-            inset 0 -12px 24px rgba(80,20,160,0.35);
-          border: 1px solid rgba(220,200,255,0.28);
-          animation: cb-breathe 4s ease-in-out infinite;
+          position: absolute;
+          inset: 10px;
+          border-radius: 50%;
           overflow: hidden;
+          cursor: default;
+          background:
+            radial-gradient(ellipse 65% 55% at 35% 40%, rgba(130,80,255,0.50) 0%, transparent 60%),
+            radial-gradient(ellipse 50% 45% at 68% 65%, rgba(80,35,200,0.38) 0%, transparent 55%),
+            radial-gradient(circle at 50% 50%,
+              rgba(25,10,75,0.97) 0%,
+              rgba(12,4,45,0.99) 55%,
+              rgba(5,2,20,1) 100%);
+          box-shadow:
+            0 0 30px rgba(120,65,255,0.50),
+            0 0 65px rgba(100,45,220,0.22),
+            0 0 120px rgba(80,30,180,0.10),
+            inset 0 0 28px rgba(150,90,255,0.22),
+            inset 0 -18px 36px rgba(15,4,60,0.65),
+            inset 0 0 0 1px rgba(190,155,255,0.20);
+          border: 1px solid rgba(175,140,255,0.25);
+          animation: cb-breathe 5s ease-in-out infinite;
         }
 
-        /* Grand reflet principal haut-gauche */
-        .cb-sphere-reflex {
-          position: absolute; top: 8%; left: 12%; width: 42%; height: 30%;
-          background: radial-gradient(ellipse, rgba(255,255,255,0.60) 0%, rgba(255,255,255,0.18) 40%, transparent 100%);
-          border-radius: 50%; transform: rotate(-25deg);
+        .cb-nebula {
+          position: absolute; inset: -25%;
+          border-radius: 50%;
+          background: conic-gradient(from 0deg at 42% 38%,
+            rgba(110,55,255,0.00)  0deg,
+            rgba(110,55,255,0.28) 55deg,
+            rgba(190,90,255,0.18) 110deg,
+            rgba(75,35,200,0.22)  175deg,
+            rgba(130,70,255,0.12) 240deg,
+            rgba(110,55,255,0.00) 360deg);
+          animation: cb-nebula-spin 22s linear infinite;
+          mix-blend-mode: screen;
+          opacity: 0.75;
+        }
+        @keyframes cb-nebula-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+        .cb-stardust {
+          position: absolute; inset: 0; pointer-events: none;
+          background:
+            radial-gradient(circle 2px at 28% 32%, rgba(255,255,255,0.80) 0%, transparent 100%),
+            radial-gradient(circle 1px at 62% 25%, rgba(210,185,255,0.70) 0%, transparent 100%),
+            radial-gradient(circle 1px at 74% 58%, rgba(255,255,255,0.50) 0%, transparent 100%),
+            radial-gradient(circle 2px at 42% 72%, rgba(180,145,255,0.55) 0%, transparent 100%),
+            radial-gradient(circle 1px at 18% 64%, rgba(255,255,255,0.40) 0%, transparent 100%),
+            radial-gradient(circle 1px at 82% 80%, rgba(200,165,255,0.50) 0%, transparent 100%),
+            radial-gradient(circle 1px at 55% 48%, rgba(255,255,255,0.30) 0%, transparent 100%);
+          animation: cb-dust-drift 9s ease-in-out infinite alternate;
+        }
+        @keyframes cb-dust-drift {
+          from { transform: translate(0, 0) rotate(0deg); }
+          to   { transform: translate(4px, -5px) rotate(10deg); }
+        }
+
+        .cb-reflex-main {
+          position: absolute;
+          top: 5%; left: 6%;
+          width: 52%; height: 38%;
+          background: radial-gradient(ellipse,
+            rgba(255,255,255,0.68) 0%,
+            rgba(255,255,255,0.28) 28%,
+            rgba(255,255,255,0.06) 58%,
+            transparent 100%);
+          border-radius: 50%;
+          transform: rotate(-32deg);
+          pointer-events: none;
+          filter: blur(1.5px);
+        }
+
+        .cb-reflex-sparkle {
+          position: absolute;
+          top: 9%; left: 14%;
+          width: 13%; height: 9%;
+          background: radial-gradient(ellipse,
+            rgba(255,255,255,0.98) 0%,
+            rgba(255,255,255,0.45) 40%,
+            transparent 100%);
+          border-radius: 50%;
           pointer-events: none;
         }
 
-        /* Petit reflet secondaire bas-droit */
-        .cb-sphere-reflex2 {
-          position: absolute; bottom: 14%; right: 12%; width: 20%; height: 14%;
-          background: radial-gradient(ellipse, rgba(200,180,255,0.35) 0%, transparent 100%);
-          border-radius: 50%; pointer-events: none;
+        .cb-reflex-low {
+          position: absolute;
+          bottom: 8%; right: 8%;
+          width: 30%; height: 22%;
+          background: radial-gradient(ellipse,
+            rgba(175,140,255,0.42) 0%,
+            rgba(150,110,255,0.18) 45%,
+            transparent 100%);
+          border-radius: 50%;
+          transform: rotate(18deg);
+          pointer-events: none;
+          filter: blur(2.5px);
         }
 
-        /* Contenu centre orbe */
+        .cb-reflex-rim {
+          position: absolute; inset: 0; border-radius: 50%;
+          background: radial-gradient(ellipse 100% 100% at 50% 50%,
+            transparent 60%,
+            rgba(165,135,255,0.10) 72%,
+            rgba(210,190,255,0.20) 82%,
+            rgba(255,255,255,0.07) 90%,
+            transparent 100%);
+          pointer-events: none;
+        }
+
+        /* ── Contenu central : answer only, no idle symbol ── */
         .cb-sphere-center {
-          position: absolute; inset: 0;
+          position: absolute; inset: 0; z-index: 2;
           display: flex; align-items: center; justify-content: center;
         }
 
-        /* ✅ Symbole central bien visible */
-        .cb-sphere-icon {
-          font-size: 34px; font-weight: 300;
-          color: rgba(255,255,255,1);
-          text-shadow:
-            0 0 10px rgba(255,255,255,1),
-            0 0 28px rgba(220,180,255,0.9),
-            0 0 56px rgba(180,120,255,0.6);
-          animation: cb-breathe 4s ease-in-out infinite;
-        }
-
-        /* ✅ Texte réponse opaque + glow fort */
         .cb-sphere-answer {
           font-family: 'Playfair Display', serif;
           font-size: 24px; font-weight: 400; font-style: italic;
-          text-align: center; padding: 0 8px;
-          animation: cb-reveal 0.6s cubic-bezier(0.16,1,0.3,1);
-          text-shadow: 0 0 14px currentColor, 0 0 36px currentColor, 0 2px 8px rgba(0,0,0,0.7);
-          -webkit-text-stroke: 0.3px rgba(255,255,255,0.25);
+          text-align: center; padding: 0 8px; line-height: 1.25;
+          animation: cb-reveal 0.7s cubic-bezier(0.16,1,0.3,1);
+          text-shadow: 0 0 14px currentColor, 0 0 36px currentColor, 0 0 70px currentColor;
+          z-index: 2;
         }
 
-        @keyframes cb-reveal { from{opacity:0;transform:scale(0.7)} to{opacity:1;transform:scale(1)} }
-        @keyframes cb-breathe {
-          0%,100% { transform: scale(0.97); }
-          50% { transform: scale(1.03); }
-        }
-
-        /* Loader orbe */
+        /* Loader doré animé */
         .cb-orb-loader {
-          position: absolute; inset: 0; border-radius: 50%;
-          background: conic-gradient(from 0deg, transparent 0%, rgba(221,185,90,0.3) 30%, transparent 60%);
-          animation: cb-spin 1.5s linear infinite;
+          position: absolute; inset: -1px; border-radius: 50%; z-index: 3; pointer-events: none;
+          background: conic-gradient(from 0deg,
+            transparent 0%,
+            rgba(201,168,76,0.55) 18%,
+            rgba(240,220,136,0.85) 32%,
+            rgba(201,168,76,0.55) 48%,
+            transparent 65%);
+          animation: cb-spin-loader 1.8s linear infinite;
+          mix-blend-mode: screen;
         }
+        @keyframes cb-spin-loader { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
-        /* Socle */
-        .cb-orb-base {
-          position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
-          width: 80px; height: 14px;
-          background: linear-gradient(135deg, rgba(221,185,90,0.15) 0%, rgba(221,185,90,0.08) 100%);
-          border: 1px solid rgba(221,185,90,0.2);
-          border-radius: 50%;
+        /* ── Animations globales ── */
+        @keyframes cb-breathe {
+          0%,100% { box-shadow:
+            0 0 28px rgba(120,65,255,0.45),
+            0 0 60px rgba(100,45,220,0.18),
+            inset 0 0 25px rgba(150,90,255,0.18),
+            inset 0 -18px 36px rgba(15,4,60,0.65),
+            inset 0 0 0 1px rgba(190,155,255,0.18); }
+          50% { box-shadow:
+            0 0 42px rgba(130,75,255,0.60),
+            0 0 85px rgba(110,55,230,0.25),
+            inset 0 0 35px rgba(165,105,255,0.28),
+            inset 0 -18px 36px rgba(15,4,60,0.65),
+            inset 0 0 0 1px rgba(200,165,255,0.28); }
         }
-
+        @keyframes cb-reveal { from{opacity:0;transform:scale(0.6)} to{opacity:1;transform:scale(1)} }
         @keyframes cb-float {
-          0%,100% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
+          0%,100% { transform: translateY(0px); }
+          50%      { transform: translateY(-9px); }
         }
 
-        /* ── Contenu ── */
+        /* ══════════════════════════════════
+           ── UI CONTENU ──
+           ══════════════════════════════════ */
+
         .cb-content {
-          position: relative; z-index: 10;
-          width: 100%; max-width: 480px; padding: 0 20px;
+          position: relative; z-index: 10; width: 100%; max-width: 480px; padding: 0 20px;
           opacity: 0; transform: translateY(12px);
           transition: opacity 0.7s ease, transform 0.7s ease;
         }
         .cb-mounted .cb-content { opacity: 1; transform: translateY(0); transition-delay: 0.5s; }
 
-        /* Card de base */
         .cb-card {
-          background: rgba(255,255,255,0.025);
-          border: 1px solid rgba(221,185,90,0.2);
-          border-radius: 12px;
-          padding: 24px 20px;
-          margin-bottom: 10px;
+          background: rgba(255,255,255,0.025); border: 1px solid rgba(221,185,90,0.2);
+          border-radius: 12px; padding: 24px 20px; margin-bottom: 10px;
           position: relative; overflow: hidden;
         }
         .cb-card::before {
@@ -306,48 +370,36 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           pointer-events: none;
         }
 
-        /* Coins décoratifs */
-        .cb-corner {
-          position: absolute; width: 8px; height: 8px;
-          border-color: rgba(221,185,90,0.3); border-style: solid;
-        }
+        .cb-corner { position: absolute; width: 8px; height: 8px; border-color: rgba(221,185,90,0.3); border-style: solid; }
         .cb-corner.tl { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
         .cb-corner.tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
         .cb-corner.bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; }
         .cb-corner.br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
 
-        /* Titre card */
         .cb-card-title {
           font-family: 'Playfair Display', Georgia, serif;
           font-size: 16px; font-weight: 300; font-style: italic;
-          color: var(--gold-light); text-align: center;
-          margin-bottom: 16px;
+          color: var(--gold-light); text-align: center; margin-bottom: 16px;
         }
 
-        /* Input zone */
         .cb-input {
           background: transparent; border: none;
-          border-bottom: 1px solid rgba(221,185,90,0.35);
-          color: var(--white);
+          border-bottom: 1px solid rgba(221,185,90,0.35); color: var(--white);
           font-family: 'Playfair Display', Georgia, serif;
           font-size: 18px; font-weight: 300; letter-spacing: 0.5px;
           text-align: center; padding: 12px 4px;
           transition: border-color 0.4s; caret-color: var(--gold);
-          width: 100%; outline: none;
-          margin-bottom: 20px; resize: none;
+          width: 100%; outline: none; margin-bottom: 20px; resize: none;
         }
         .cb-input::placeholder { color: rgba(247,242,234,0.30); font-style: italic; }
         .cb-input:focus { border-bottom-color: rgba(221,185,90,0.8); }
 
-        /* Hint */
         .cb-hint {
           font-size: 12px; font-weight: 300; letter-spacing: 0.3px;
-          color: rgba(247,242,234,0.60);
-          text-align: center; line-height: 1.6; margin-bottom: 20px;
-          font-style: italic; font-family: 'Playfair Display', serif;
+          color: rgba(247,242,234,0.60); text-align: center; line-height: 1.6;
+          margin-bottom: 20px; font-style: italic; font-family: 'Playfair Display', serif;
         }
 
-        /* Bouton primaire */
         .cb-btn-primary {
           width: 100%; padding: 16px 24px;
           background: linear-gradient(135deg, rgba(221,185,90,0.14) 0%, rgba(221,185,90,0.08) 100%);
@@ -360,11 +412,8 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           border-color: rgba(221,185,90,0.85); color: #fff8d0;
           box-shadow: 0 0 24px rgba(221,185,90,0.15);
         }
-        .cb-btn-primary:disabled {
-          opacity: 0.35; cursor: not-allowed;
-        }
+        .cb-btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
 
-        /* Bouton secondaire */
         .cb-btn-secondary {
           width: 100%; padding: 14px 24px;
           background: none; border: 1px solid rgba(255,255,255,0.18); border-radius: 3px;
@@ -373,22 +422,11 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           color: rgba(247,242,234,0.78); cursor: pointer; transition: all 0.3s;
           margin-top: 10px;
         }
-        .cb-btn-secondary:hover {
-          border-color: rgba(255,255,255,0.38); color: rgba(247,242,234,1);
-        }
+        .cb-btn-secondary:hover { border-color: rgba(255,255,255,0.38); color: rgba(247,242,234,1); }
 
-        /* Séparateur */
-        .cb-sep {
-          width: 1px; height: 24px; margin: 4px auto;
-          background: linear-gradient(to bottom, transparent, rgba(221,185,90,0.2), transparent);
-        }
-
-        /* Phase loading */
         .cb-loading-text {
-          font-family: 'Playfair Display', serif;
-          font-size: 16px; font-style: italic; font-weight: 300;
-          color: rgba(247,242,234,0.85); text-align: center;
-          margin-bottom: 16px;
+          font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; font-weight: 300;
+          color: rgba(247,242,234,0.85); text-align: center; margin-bottom: 16px;
         }
         .cb-loading-dots { display: flex; gap: 8px; justify-content: center; }
         .cb-loading-dot {
@@ -399,13 +437,11 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
         .cb-loading-dot:nth-child(3) { animation-delay: 0.4s; }
         @keyframes cb-dot {
           0%,100% { transform: translateY(0); opacity: 0.5; }
-          50% { transform: translateY(-6px); opacity: 1; }
+          50%      { transform: translateY(-6px); opacity: 1; }
         }
 
-        /* Question rappel */
         .cb-question-recall {
-          font-family: 'Playfair Display', serif;
-          font-size: 13px; font-style: italic; font-weight: 300;
+          font-family: 'Playfair Display', serif; font-size: 13px; font-style: italic; font-weight: 300;
           color: rgba(247,242,234,0.75); text-align: center; line-height: 1.65;
         }
         .cb-question-recall strong {
@@ -414,53 +450,39 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           color: var(--gold); margin-bottom: 6px; font-style: normal;
         }
 
-        /* Réponse */
         .cb-answer-text {
           font-family: 'Playfair Display', Georgia, serif;
           font-size: clamp(24px, 7vw, 34px); font-weight: 300; font-style: italic;
-          text-align: center; line-height: 1.2;
-          padding: 8px 0;
+          text-align: center; line-height: 1.2; padding: 8px 0;
           animation: cb-reveal 0.8s cubic-bezier(0.16,1,0.3,1);
         }
-
         .cb-answer-sep {
           width: 48px; height: 1px; margin: 12px auto;
           background: linear-gradient(90deg, transparent, rgba(221,185,90,0.4), transparent);
         }
-
         .cb-answer-guidance {
-          font-family: 'Playfair Display', serif;
-          font-size: 13px; font-style: italic; font-weight: 300;
+          font-family: 'Playfair Display', serif; font-size: 13px; font-style: italic; font-weight: 300;
           color: rgba(247,242,234,0.80); text-align: center; line-height: 1.7;
         }
-
-        /* Disclaimer */
         .cb-disclaimer {
           font-size: 11px; font-weight: 300; letter-spacing: 0.3px;
-          color: rgba(247,242,234,0.45); text-align: center;
-          line-height: 1.6; padding: 16px 4px 0;
-          font-style: italic; font-family: 'Playfair Display', serif;
+          color: rgba(247,242,234,0.45); text-align: center; line-height: 1.6;
+          padding: 16px 4px 0; font-style: italic; font-family: 'Playfair Display', serif;
         }
-
-        /* Ligne fine */
         .cb-line {
           width: 1px; height: 28px; margin: 0 auto 24px;
           background: linear-gradient(to bottom, transparent, rgba(221,185,90,0.2), transparent);
         }
       `}</style>
 
-      {/* Arrière-plans */}
       <div className="cb-bg" />
       <div className="cb-noise" />
       <div className="cb-particles">
         {Array.from({ length: 40 }).map((_, i) => (
           <div key={i} className="cb-particle" style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            width: `${Math.random() < 0.2 ? 2 : 1}px`,
-            height: `${Math.random() < 0.2 ? 2 : 1}px`,
-            '--d': `${4 + Math.random() * 6}s`,
-            '--dl': `${Math.random() * 6}s`,
+            left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`,
+            width: `${Math.random() < 0.2 ? 2 : 1}px`, height: `${Math.random() < 0.2 ? 2 : 1}px`,
+            '--d': `${4 + Math.random() * 6}s`, '--dl': `${Math.random() * 6}s`,
             '--op': 0.08 + Math.random() * 0.25,
           } as React.CSSProperties} />
         ))}
@@ -477,43 +499,45 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
       {/* Titre */}
       <div className="cb-title-block">
         <div className="cb-badge">Divination</div>
-        <h1 className="cb-title">
-          <em>{t('crystalBall.title') || 'Boule de Cristal'}</em>
-        </h1>
-        <p className="cb-subtitle">
-          {t('crystalBall.subtitle') || 'Posez votre question et laissez la magie vous guider'}
-        </p>
+        <h1 className="cb-title"><em>{t('crystalBall.title') || 'Boule de Cristal'}</em></h1>
+        <p className="cb-subtitle">{t('crystalBall.subtitle') || 'Posez votre question et laissez la magie vous guider'}</p>
       </div>
 
-      {/* Orbe */}
-      <div className="cb-orb-wrap" style={{ animation: phase === 'loading' ? 'cb-float 1.5s ease-in-out infinite' : 'cb-float 4s ease-in-out infinite' }}>
-        <div className="cb-orb-halo" />
-        <div className="cb-ring cb-ring-1" />
-        <div className="cb-ring cb-ring-2" />
-        <div className="cb-ring cb-ring-3" />
+      {/* ── BOULE DE CRISTAL ── */}
+      <div
+        className="cb-orb-wrap"
+        style={{ animation: phase === 'loading' ? 'cb-float 1.4s ease-in-out infinite' : 'cb-float 4.5s ease-in-out infinite' }}
+      >
+        {/* Halo ambiant */}
+        <div className="cb-orb-glow" />
 
+        {/* Ombre sol */}
+        <div className="cb-orb-shadow" />
+
+        {/* Sphère cristal */}
         <div className="cb-sphere">
-          <div className="cb-sphere-reflex" />
-          <div className="cb-sphere-reflex2" />
+          {/* Nébuleuse interne */}
+          <div className="cb-nebula" />
+          {/* Poussière d'étoiles */}
+          <div className="cb-stardust" />
+          {/* Reflets de verre */}
+          <div className="cb-reflex-main" />
+          <div className="cb-reflex-sparkle" />
+          <div className="cb-reflex-low" />
+          <div className="cb-reflex-rim" />
+          {/* Loader phase loading */}
           {phase === 'loading' && <div className="cb-orb-loader" />}
+          {/* Contenu central : uniquement la réponse, aucun symbole en idle */}
           <div className="cb-sphere-center">
-            {phase === 'question' && (
-              <span className="cb-sphere-icon">◈</span>
-            )}
-            {phase === 'loading' && (
-              <span className="cb-sphere-icon" style={{ opacity: 0.5 }}>◌</span>
-            )}
             {phase === 'answer' && currentAnswer && (
-              <span
-                className="cb-sphere-answer"
-                style={{ color: currentAnswer.color }}
-              >
+              <span className="cb-sphere-answer" style={{ color: currentAnswer.color }}>
                 {currentAnswer.icon}
               </span>
             )}
           </div>
         </div>
 
+        {/* Socle */}
         <div className="cb-orb-base" />
       </div>
 
@@ -522,60 +546,41 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
       {/* Contenu */}
       <div className="cb-content">
 
-        {/* ── PHASE QUESTION ── */}
         {phase === 'question' && (
           <>
             <div className="cb-card">
               <div className="cb-corner tl" /><div className="cb-corner tr" />
               <div className="cb-corner bl" /><div className="cb-corner br" />
-              <div className="cb-card-title">
-                {t('crystalBall.askPrompt') || 'Quelle est votre question ?'}
-              </div>
+              <div className="cb-card-title">{t('crystalBall.askPrompt') || 'Quelle est votre question ?'}</div>
               <textarea
                 className="cb-input"
-                placeholder={t('crystalBall.questionPlaceholder') || 'Écrivez votre question ici'}
+                placeholder={t('crystalBall.questionPlaceholder') || 'Écrivez votre question ici...'}
                 value={question}
                 onChange={e => setQuestion(e.target.value)}
-                maxLength={200}
-                rows={2}
+                maxLength={200} rows={2}
               />
-              <p className="cb-hint">
-                {t('crystalBall.closedQuestionHint') || 'La boule répond par oui, non, ou peut-être — posez une question précise'}
-              </p>
-              <button
-                className="cb-btn-primary"
-                onClick={handleAskQuestion}
-                disabled={!question.trim()}
-              >
+              <p className="cb-hint">{t('crystalBall.closedQuestionHint') || 'La boule répond par oui, non, ou peut-être — posez une question précise'}</p>
+              <button className="cb-btn-primary" onClick={handleAskQuestion} disabled={!question.trim()}>
                 {t('crystalBall.submitQuestion') || 'Consulter la boule'}
               </button>
             </div>
-            <button className="cb-btn-secondary" onClick={onBack}>
-              {t('common.back') || 'Retour'}
-            </button>
+            <button className="cb-btn-secondary" onClick={onBack}>{t('common.back') || 'Retour'}</button>
           </>
         )}
 
-        {/* ── PHASE LOADING ── */}
         {phase === 'loading' && (
           <div className="cb-card" style={{ textAlign: 'center', padding: '32px 20px' }}>
             <div className="cb-corner tl" /><div className="cb-corner tr" />
             <div className="cb-corner bl" /><div className="cb-corner br" />
-            <p className="cb-loading-text">
-              {t('crystalBall.thinking') || 'La boule réfléchit…'}
-            </p>
+            <p className="cb-loading-text">{t('crystalBall.thinking') || 'La boule réfléchit…'}</p>
             <div className="cb-loading-dots">
-              <div className="cb-loading-dot" />
-              <div className="cb-loading-dot" />
-              <div className="cb-loading-dot" />
+              <div className="cb-loading-dot" /><div className="cb-loading-dot" /><div className="cb-loading-dot" />
             </div>
           </div>
         )}
 
-        {/* ── PHASE RÉPONSE ── */}
         {phase === 'answer' && currentAnswer && (
           <>
-            {/* Rappel question */}
             <div className="cb-card" style={{ marginBottom: 10 }}>
               <div className="cb-corner tl" /><div className="cb-corner tr" />
               <div className="cb-corner bl" /><div className="cb-corner br" />
@@ -584,37 +589,24 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
                 « {question} »
               </p>
             </div>
-
-            {/* Réponse */}
             <div className="cb-card" style={{ marginBottom: 10 }}>
               <div className="cb-corner tl" /><div className="cb-corner tr" />
               <div className="cb-corner bl" /><div className="cb-corner br" />
-              <p
-                className="cb-answer-text"
-                style={{ color: currentAnswer.color, textShadow: `0 0 30px ${currentAnswer.color}60` }}
-              >
+              <p className="cb-answer-text" style={{ color: currentAnswer.color, textShadow: `0 0 30px ${currentAnswer.color}60` }}>
                 {t(`crystalBall.answers.${currentAnswer.key}`) || currentAnswer.key}
               </p>
               <div className="cb-answer-sep" />
-              <p className="cb-answer-guidance">
-                {t('crystalBall.guidance') || 'Écoutez votre intuition pour interpréter ce message'}
-              </p>
+              <p className="cb-answer-guidance">{t('crystalBall.guidance') || 'Écoutez votre intuition pour interpréter ce message'}</p>
             </div>
-
-            {/* Actions */}
             <button className="cb-btn-primary" onClick={handleNewQuestion}>
               {t('crystalBall.newQuestion') || 'Poser une autre question'}
             </button>
             <button className="cb-btn-secondary" onClick={onBack}>
               {t('crystalBall.backHome') || "Retour à l'accueil"}
             </button>
-
-            <p className="cb-disclaimer">
-              {t('crystalBall.disclaimer') || 'Les réponses sont symboliques et destinées au divertissement.'}
-            </p>
+            <p className="cb-disclaimer">{t('crystalBall.disclaimer') || 'Les réponses sont symboliques et destinées au divertissement.'}</p>
           </>
         )}
-
       </div>
     </div>
   );

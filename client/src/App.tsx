@@ -138,11 +138,9 @@ function App() {
       return;
     }
 
-    // Pages où la bannière NE doit PAS s'afficher (onboarding uniquement)
     const noBannerPages = ['landing', 'name', 'date', 'gender'];
     const shouldShowBanner = !noBannerPages.includes(currentStep);
 
-    // Afficher la bannière sur toutes les pages après l'onboarding
     if (shouldShowBanner && !bannerShown) {
       console.log(`🎯 Page "${currentStep}" atteinte → Affichage de la bannière permanente`);
       const timer = setTimeout(() => {
@@ -154,7 +152,6 @@ function App() {
       return () => clearTimeout(timer);
     }
 
-    // Cacher la bannière uniquement si on retourne sur les pages d'onboarding
     if (!shouldShowBanner && bannerShown) {
       console.log('👋 Retour à l\'onboarding → Masquer la bannière');
       hideBanner();
@@ -335,7 +332,7 @@ function App() {
     }
   };
 
-  // ✅ SYSTÈME DE PUB AVANT TIRAGE (pour les tirages globaux uniquement)
+  // ✅ SYSTÈME DE PUB AVANT TIRAGE
   const shouldShowAdBeforeReading = async (oracleType: string): Promise<boolean> => {
     console.log(`🎯 [PUB CHECK] Oracle sélectionné: "${oracleType}"`);
 
@@ -344,7 +341,6 @@ function App() {
       return false;
     }
 
-    // ✅ Horoscope et BonusRoll ont leur propre système de pub
     if (oracleType === 'horoscope' || oracleType === 'bonusRoll') {
       console.log(`⏭️ "${oracleType}" exclu : pas de pub interstitielle (système propre)`);
       return false;
@@ -365,7 +361,6 @@ function App() {
       }
     }
 
-    // Pré-charger la prochaine pub
     if ((nextCount + 1) % 3 === 0) {
       console.log(`🔄 Pré-chargement pub pour le tirage #${nextCount + 1}`);
       setTimeout(() => preloadInterstitial(), 1000);
@@ -374,45 +369,32 @@ function App() {
     return shouldShow;
   };
 
-  // ✅ SYSTÈME D'ÉVALUATION GOOGLE PLAY
-  const checkAndShowRating = () => {
-    // Récupérer les données de rating
-    const hasRated = localStorage.getItem('hasRatedApp');
-    const readingCountStr = localStorage.getItem('ratingReadingCount');
-    const currentCount = parseInt(readingCountStr || '0', 10);
-
+  // ✅ SYSTÈME D'ÉVALUATION GOOGLE PLAY — logique corrigée
+  const checkAndShowRating = (newCount: number) => {
     // Si déjà noté, ne rien faire
+    const hasRated = localStorage.getItem('hasRatedApp');
     if (hasRated === 'true') {
       console.log('⭐ Utilisateur a déjà noté l\'app');
       return;
     }
 
-    // Incrémenter le compteur
-    const newCount = currentCount + 1;
-    localStorage.setItem('ratingReadingCount', newCount.toString());
+    console.log(`⭐ Compteur rating: ${newCount}`);
 
-    console.log(`⭐ Compteur rating: ${currentCount} → ${newCount}`);
-
-    // Afficher le modal après 5 tirages
-    if (newCount === 5) {
-      console.log('🎯 5 tirages atteints → Affichage du modal de rating');
+    // Déclencher tous les 5 tirages (5, 10, 15...)
+    if (newCount % 5 === 0) {
+      console.log(`🎯 ${newCount} tirages atteints → Affichage du modal de rating`);
       setTimeout(() => {
         setShowRatingModal(true);
-      }, 2000); // 2 secondes après le tirage pour ne pas être intrusif
+      }, 2000);
     }
   };
 
   const handleRateApp = () => {
     console.log('⭐ Utilisateur a accepté de noter l\'app');
-
-    // Marquer comme noté pour ne plus redemander
     localStorage.setItem('hasRatedApp', 'true');
     setShowRatingModal(false);
 
-    // ✅ Redirection vers Google Play Store avec votre URL
     const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.cartomystik.app&pli=1';
-
-    // Ouvrir dans un nouvel onglet (pour le web) ou dans l'app Play Store (pour mobile)
     window.open(playStoreUrl, '_blank');
 
     console.log('📱 Redirection vers Google Play Store');
@@ -421,22 +403,15 @@ function App() {
   const handleCloseRating = () => {
     console.log('⭐ Utilisateur a choisi "Plus tard"');
     setShowRatingModal(false);
-
-    // Redemander dans 5 tirages (réinitialiser le compteur à 0)
-    const currentCount = parseInt(localStorage.getItem('ratingReadingCount') || '0', 10);
-    localStorage.setItem('ratingReadingCount', (currentCount - 5).toString());
-
     console.log('⏭️ Modal de rating redemandera dans 5 tirages');
   };
 
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
     if (!deviceId) return;
 
-    // ✅ Types NON sauvegardés dans le Grimoire
     const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
     const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
 
-    // ✅ Types comptabilisés pour le système de pub global
     const typesCountedForAds = ['tarot', 'oracle', 'angels', 'runes', 'crystalBall', 'crystal'];
     const shouldIncrementCounter = typesCountedForAds.includes(reading.type);
 
@@ -471,14 +446,16 @@ function App() {
       }
 
       if (shouldIncrementCounter) {
-        setReadingCount(prev => {
-          const newCount = prev + 1;
-          console.log(`📊 ✅ Compteur mis à jour: ${prev} → ${newCount} (type: ${reading.type})`);
-          return newCount;
-        });
+        // ✅ FIX : lire depuis localStorage pour avoir la valeur synchrone
+        const currentCount = parseInt(localStorage.getItem('ratingReadingCount') || '0', 10);
+        const newCount = currentCount + 1;
+        localStorage.setItem('ratingReadingCount', newCount.toString());
 
-        // ✅ Vérifier si on doit montrer le modal de rating
-        checkAndShowRating();
+        setReadingCount(newCount);
+        console.log(`📊 ✅ Compteur mis à jour: ${currentCount} → ${newCount} (type: ${reading.type})`);
+
+        // ✅ Passer directement newCount pour éviter les problèmes d'async React state
+        checkAndShowRating(newCount);
       } else {
         console.log(`📊 ⏭️ Type "${reading.type}" NON comptabilisé (système pub indépendant)`);
       }
@@ -503,33 +480,23 @@ function App() {
         <UserProvider>
           <TooltipProvider>
             <div className="dark relative w-screen h-screen overflow-hidden">
-              {/* ✅ CSS pour éviter que la bannière cache les boutons */}
               {!isPremium && bannerShown && (
                 <style>{`
-                  /* ✅ Espace réservé pour la bannière AdMob (60px) + marge de sécurité (50px) */
                   .main-content {
                     padding-bottom: 110px !important;
                   }
-
-                  /* ✅ Classe pour les éléments qui doivent rester visibles */
                   .pb-safe {
                     padding-bottom: 110px !important;
                   }
-
-                  /* ✅ Responsive desktop */
                   @media (min-width: 640px) {
                     .main-content, .pb-safe {
                       padding-bottom: 120px !important;
                     }
                   }
-
-                  /* ⚠️ CRITIQUE : Empêcher l'overlap des boutons avec la bannière */
                   button, a, input, textarea {
                     position: relative;
                     z-index: 10;
                   }
-
-                  /* ⚠️ Bannière au-dessus du fond mais sous les overlays */
                   #admob-banner {
                     z-index: 5 !important;
                   }
