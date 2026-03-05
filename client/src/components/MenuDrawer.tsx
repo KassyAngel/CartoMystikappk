@@ -119,11 +119,11 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
         .md-item-texts { flex: 1; min-width: 0; overflow: hidden; }
         .md-item-title {
           font-size: 14px; font-weight: 300; letter-spacing: 0.3px;
-          color: rgba(247,242,234,0.85); margin-bottom: 1px;
+          color: rgba(247,242,234,0.92); margin-bottom: 1px;
         }
         .md-item-sub {
           font-size: 11px; font-weight: 200; letter-spacing: 0.2px;
-          color: rgba(247,242,234,0.78);
+          color: rgba(247,242,234,0.72);
           overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
 
@@ -131,7 +131,7 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
         .md-item-gold .md-item-icon { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.15); }
         .md-item-gold:hover { background: rgba(201,168,76,0.05); border-color: rgba(201,168,76,0.15); }
         .md-item-gold:hover .md-item-icon { background: rgba(201,168,76,0.12); border-color: rgba(201,168,76,0.25); }
-        .md-item-gold .md-item-title { color: rgba(232,208,128,0.9); }
+        .md-item-gold .md-item-title { color: rgba(232,208,128,0.95); }
 
         /* Item premium */
         .md-item-premium {
@@ -262,13 +262,15 @@ export default function MenuDrawer({ isOpen, onClose, onOpenGrimoire, onOpenPrem
 
           {/* Langue */}
           <div className="md-sep"/>
-          <div className="md-sep-label">Langue</div>
+          {/* ✅ FIX : libellé section langue traduit */}
+          <div className="md-sep-label">{t('menu.language') || 'Langue'}</div>
 
           <button className="md-item" onClick={() => setLangOpen(v => !v)}>
             <div className="md-item-icon" style={{fontSize:'18px'}}>{currentLang?.flag}</div>
             <div className="md-item-texts">
               <div className="md-item-title">{currentLang?.name}</div>
-              <div className="md-item-sub">Changer la langue</div>
+              {/* ✅ FIX : "Changer la langue" hardcodé → traduit */}
+              <div className="md-item-sub">{t('menu.changeLanguage') || 'Change language'}</div>
             </div>
             <svg className={`md-arrow ${langOpen ? 'open' : ''}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M6 9l6 6 6-6"/>

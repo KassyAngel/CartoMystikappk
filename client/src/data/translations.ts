@@ -85,7 +85,9 @@ const translations: Record<Language, Record<string, string>> = {
     "name.label": "Nom",
     "oracle.choose": "Choisissez votre oracle", 
     "oracle.bonus": "Bonus",
-
+    "menu.language": "Langue",        // Français
+    "menu.changeLanguage": "Changer de langue", // Français
+   
     // FR Notifications  
     "notification.channel.name": "Tirage Quotidien",
     "notification.channel.description": "Notifications pour votre tirage mystique du jour",
@@ -1806,7 +1808,9 @@ const translations: Record<Language, Record<string, string>> = {
       "name.label": "Name",
      "oracle.choose": "Choose your oracle",
       "oracle.bonus": "Bonus",
-
+      "menu.language": "Language",      // English
+      "menu.changeLanguage": "Change language",   // English
+     
     // EN Notifications  
     "notification.channel.name": "Daily Reading",
     "notification.channel.description": "Notifications for your daily mystical reading",
@@ -3476,7 +3480,9 @@ const translations: Record<Language, Record<string, string>> = {
       "name.label": "Nombre",
       "oracle.choose": "Elige tu oráculo",
       "oracle.bonus": "Bono",
-
+      "menu.language": "Idioma",        // Español
+      "menu.changeLanguage": "Cambiar idioma",    // Español
+     
     // ES Notificaciones  
     "notification.channel.name": "Lectura Diaria",
     "notification.channel.description": "Notificaciones para tu lectura mística diaria",
@@ -5213,7 +5219,9 @@ const translations: Record<Language, Record<string, string>> = {
       "name.label": "Name",
       "oracle.choose": "Wähle dein Orakel",
       "oracle.bonus": "Bonus",
-
+      "menu.language": "Sprache",       // Deutsch
+      "menu.changeLanguage": "Sprache ändern",    // Deutsch
+      
     // DE Benachrichtigungen  
     "notification.channel.name": "Tägliche Ziehung",
     "notification.channel.description": "Benachrichtigungen für deine tägliche mystische Kartenlesung",
@@ -6953,6 +6961,8 @@ const translations: Record<Language, Record<string, string>> = {
       "name.label": "Nome",
       "oracle.choose": "Scegli il tuo oracolo",
       "oracle.bonus": "Bonus",
+      "menu.language": "Lingua",        // Italiano
+      "menu.changeLanguage": "Cambia lingua",      // Italiano
 
     // IT Notifiche  
     "notification.channel.name": "Estratto quotidiano",
