@@ -82,7 +82,7 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
 
         :root {
-          --gold: #C9A84C; --gold-light: #E8D080;
+          --gold: #C9A84C; --gold-light: #F0D98A;
           --white: #F7F2EA; --bg: #05030E;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -97,11 +97,11 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         .os-bg {
           position: absolute; inset: 0; pointer-events: none;
           background:
-            radial-gradient(ellipse 80% 45% at 50% -5%, rgba(80,40,160,0.2) 0%, transparent 60%),
-            radial-gradient(ellipse 40% 30% at 90% 70%, rgba(40,20,90,0.1) 0%, transparent 50%);
+            radial-gradient(ellipse 80% 45% at 50% -5%, rgba(80,40,160,0.25) 0%, transparent 60%),
+            radial-gradient(ellipse 40% 30% at 90% 70%, rgba(40,20,90,0.15) 0%, transparent 50%);
         }
         .os-noise {
-          position: absolute; inset: 0; pointer-events: none; opacity: 0.025;
+          position: absolute; inset: 0; pointer-events: none; opacity: 0.03;
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
           background-size: 200px;
         }
@@ -122,19 +122,19 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         .os-mounted .os-header { opacity: 1; transform: translateY(0); transition-delay: 0.15s; }
 
         .os-eyebrow {
-          font-size: 9px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase;
-          color: rgba(201,168,76,0.75); margin-bottom: 8px;
+          font-size: 9px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase;
+          color: rgba(201,168,76,0.95); margin-bottom: 8px;
         }
         .os-subtitle {
           font-family: 'Playfair Display', serif;
-          font-size: 14px; font-style: italic; font-weight: 300;
-          color: rgba(247,242,234,0.72); line-height: 1.7; font-size: 15px;
+          font-size: 15px; font-style: italic; font-weight: 300;
+          color: rgba(247,242,234,0.92); line-height: 1.7;
         }
 
         /* Ligne */
         .os-line {
           width: 1px; height: 24px; margin: 0 auto 20px;
-          background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.2), transparent);
+          background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.35), transparent);
         }
 
         /* Grille oracles */
@@ -150,36 +150,38 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         .os-card {
           position: relative;
           display: flex; align-items: center; gap: 0;
-          background: rgba(255,255,255,0.025);
-          border: 1px solid rgba(255,255,255,0.07);
+          background: rgba(255,255,255,0.055);
+          border: 1px solid rgba(255,255,255,0.12);
           border-radius: 12px;
           overflow: hidden; cursor: pointer;
           transition: all 0.32s cubic-bezier(0.16,1,0.3,1);
           -webkit-tap-highlight-color: transparent;
           min-height: 80px;
+          backdrop-filter: blur(4px);
+          box-shadow: 0 2px 12px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
         }
         .os-card:hover {
-          border-color: rgba(var(--c-rgb), 0.3);
+          border-color: rgba(var(--c-rgb), 0.45);
           transform: translateX(3px);
-          box-shadow: 0 6px 28px rgba(0,0,0,0.3), 0 0 20px rgba(var(--c-rgb),0.07);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 0 24px rgba(var(--c-rgb),0.1), inset 0 1px 0 rgba(255,255,255,0.08);
         }
         .os-card:active { transform: translateX(1px) scale(0.99); }
         .os-card.os-active {
-          border-color: rgba(var(--c-rgb), 0.5);
-          background: rgba(var(--c-rgb), 0.06);
-          box-shadow: 0 0 28px rgba(var(--c-rgb),0.1);
+          border-color: rgba(var(--c-rgb), 0.6);
+          background: rgba(var(--c-rgb), 0.09);
+          box-shadow: 0 0 32px rgba(var(--c-rgb),0.14), inset 0 1px 0 rgba(255,255,255,0.08);
         }
 
         /* Indicateur latéral */
         .os-card-bar {
           width: 3px; height: 100%; position: absolute; left: 0; top: 0;
-          background: rgb(var(--c-rgb));
+          background: linear-gradient(to bottom, rgba(var(--c-rgb),0.4), rgb(var(--c-rgb)), rgba(var(--c-rgb),0.4));
           transform: scaleY(0); transform-origin: center;
           transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
           border-radius: 0 2px 2px 0;
         }
-        .os-card:hover .os-card-bar { transform: scaleY(0.5); }
-        .os-card.os-active .os-card-bar { transform: scaleY(0.7); }
+        .os-card:hover .os-card-bar { transform: scaleY(0.55); }
+        .os-card.os-active .os-card-bar { transform: scaleY(0.75); }
 
         /* Image */
         .os-card-img {
@@ -189,12 +191,12 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         .os-card-img img {
           width: 100%; height: 100%; object-fit: cover;
           transition: transform 0.4s ease;
-          filter: brightness(0.9) contrast(1.05);
+          filter: brightness(0.95) contrast(1.08) saturate(1.1);
         }
         .os-card:hover .os-card-img img { transform: scale(1.06); }
         .os-card-img-overlay {
           position: absolute; inset: 0;
-          background: linear-gradient(90deg, transparent 60%, rgba(5,3,14,0.6) 100%);
+          background: linear-gradient(90deg, transparent 55%, rgba(5,3,14,0.55) 100%);
         }
 
         /* Texte */
@@ -205,35 +207,38 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         .os-card-texts { flex: 1; }
         .os-card-title {
           font-family: 'Playfair Display', Georgia, serif;
-          font-size: 16px; font-weight: 400; letter-spacing: 0.2px;
-          color: #F7F2EA; margin-bottom: 4px; line-height: 1.25;
+          font-size: 17px; font-weight: 400; letter-spacing: 0.3px;
+          color: #FDFAF4;
+          margin-bottom: 5px; line-height: 1.25;
           transition: color 0.3s;
+          text-shadow: 0 1px 8px rgba(0,0,0,0.6);
         }
         .os-card.os-active .os-card-title { color: rgb(var(--c-rgb)); }
         .os-card-desc {
-          font-size: 12px; font-weight: 200; letter-spacing: 0.2px;
-          color: rgba(247,242,234,0.62); line-height: 1.5;
+          font-size: 12.5px; font-weight: 300; letter-spacing: 0.2px;
+          color: rgba(247,242,234,0.82); line-height: 1.5;
           transition: color 0.3s;
+          text-shadow: 0 1px 4px rgba(0,0,0,0.5);
         }
-        .os-card:hover .os-card-desc { color: rgba(247,242,234,0.82); }
+        .os-card:hover .os-card-desc { color: rgba(247,242,234,0.96); }
 
         /* Arrow */
         .os-card-arrow {
           width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-          border: 1px solid rgba(var(--c-rgb), 0.2);
+          border: 1px solid rgba(var(--c-rgb), 0.3);
           display: flex; align-items: center; justify-content: center;
-          color: rgba(var(--c-rgb), 0.4);
+          color: rgba(var(--c-rgb), 0.6);
           transition: all 0.3s;
         }
         .os-card:hover .os-card-arrow {
-          border-color: rgba(var(--c-rgb), 0.5);
-          color: rgba(var(--c-rgb), 0.8);
-          background: rgba(var(--c-rgb), 0.08);
+          border-color: rgba(var(--c-rgb), 0.65);
+          color: rgba(var(--c-rgb), 0.95);
+          background: rgba(var(--c-rgb), 0.1);
         }
         .os-card.os-active .os-card-arrow {
-          border-color: rgba(var(--c-rgb), 0.6);
+          border-color: rgba(var(--c-rgb), 0.75);
           color: rgb(var(--c-rgb));
-          background: rgba(var(--c-rgb), 0.12);
+          background: rgba(var(--c-rgb), 0.15);
         }
         .os-card-arrow svg { width: 12px; height: 12px; }
 
@@ -248,32 +253,34 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         .os-bonus-label {
           display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
         }
-        .os-bonus-line { flex: 1; height: 1px; background: rgba(201,168,76,0.15); }
+        .os-bonus-line { flex: 1; height: 1px; background: rgba(201,168,76,0.25); }
         .os-bonus-tag {
           font-size: 8px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase;
-          color: rgba(201,168,76,0.5);
-          border: 1px solid rgba(201,168,76,0.2); border-radius: 20px;
+          color: rgba(201,168,76,0.8);
+          border: 1px solid rgba(201,168,76,0.3); border-radius: 20px;
           padding: 4px 12px;
         }
 
         .os-bonus-card {
           position: relative; display: flex; align-items: center; gap: 0;
-          background: rgba(201,168,76,0.04);
-          border: 1px solid rgba(201,168,76,0.2);
+          background: rgba(201,168,76,0.06);
+          border: 1px solid rgba(201,168,76,0.28);
           border-radius: 12px; overflow: hidden; cursor: pointer;
           transition: all 0.32s cubic-bezier(0.16,1,0.3,1);
           -webkit-tap-highlight-color: transparent;
           min-height: 80px;
+          backdrop-filter: blur(4px);
+          box-shadow: 0 2px 12px rgba(0,0,0,0.35), 0 0 20px rgba(201,168,76,0.04), inset 0 1px 0 rgba(255,255,255,0.06);
         }
         .os-bonus-card:hover {
-          border-color: rgba(201,168,76,0.4);
+          border-color: rgba(201,168,76,0.5);
           transform: translateX(3px);
-          box-shadow: 0 6px 28px rgba(0,0,0,0.3), 0 0 20px rgba(201,168,76,0.08);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 0 24px rgba(201,168,76,0.1), inset 0 1px 0 rgba(255,255,255,0.08);
         }
         .os-bonus-card:active { transform: translateX(1px) scale(0.99); }
         .os-bonus-card.os-active {
-          border-color: rgba(201,168,76,0.55);
-          background: rgba(201,168,76,0.08);
+          border-color: rgba(201,168,76,0.65);
+          background: rgba(201,168,76,0.1);
         }
         .os-bonus-card-img {
           width: 72px; height: 80px; flex-shrink: 0; overflow: hidden; position: relative;
@@ -281,7 +288,7 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         .os-bonus-card-img img {
           width: 100%; height: 100%; object-fit: cover;
           transition: transform 0.4s ease;
-          filter: brightness(0.9) contrast(1.05);
+          filter: brightness(0.95) contrast(1.08) saturate(1.1);
         }
         .os-bonus-card:hover .os-bonus-card-img img { transform: scale(1.06); }
         .os-bonus-card-body {
@@ -290,23 +297,26 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         }
         .os-bonus-title {
           font-family: 'Playfair Display', serif;
-          font-size: 16px; font-weight: 400;
-          color: var(--gold-light); margin-bottom: 3px;
+          font-size: 17px; font-weight: 400;
+          color: #F5E199;
+          margin-bottom: 4px;
+          text-shadow: 0 1px 8px rgba(0,0,0,0.6);
         }
         .os-bonus-desc {
-          font-size: 12px; font-weight: 200;
-          color: rgba(247,242,234,0.65); line-height: 1.5;
+          font-size: 12.5px; font-weight: 300;
+          color: rgba(247,242,234,0.82); line-height: 1.5;
+          text-shadow: 0 1px 4px rgba(0,0,0,0.5);
         }
         .os-bonus-arrow {
           width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-          border: 1px solid rgba(201,168,76,0.3);
+          border: 1px solid rgba(201,168,76,0.4);
           display: flex; align-items: center; justify-content: center;
-          color: rgba(201,168,76,0.5);
+          color: rgba(201,168,76,0.7);
           transition: all 0.3s;
         }
         .os-bonus-card:hover .os-bonus-arrow {
-          border-color: rgba(201,168,76,0.6); color: var(--gold);
-          background: rgba(201,168,76,0.08);
+          border-color: rgba(201,168,76,0.75); color: var(--gold-light);
+          background: rgba(201,168,76,0.1);
         }
         .os-bonus-arrow svg { width: 12px; height: 12px; }
 
@@ -321,12 +331,12 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
 
         .os-back-btn {
           padding: 12px 32px;
-          background: none; border: 1px solid rgba(255,255,255,0.07); border-radius: 3px;
+          background: none; border: 1px solid rgba(255,255,255,0.12); border-radius: 3px;
           font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 300;
           letter-spacing: 3px; text-transform: uppercase;
-          color: rgba(247,242,234,0.4); cursor: pointer; transition: all 0.3s;
+          color: rgba(247,242,234,0.6); cursor: pointer; transition: all 0.3s;
         }
-        .os-back-btn:hover { border-color: rgba(255,255,255,0.14); color: rgba(247,242,234,0.65); }
+        .os-back-btn:hover { border-color: rgba(255,255,255,0.22); color: rgba(247,242,234,0.85); }
       `}</style>
 
       <div className="os-bg"/>

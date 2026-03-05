@@ -82,7 +82,6 @@ export default function SummaryCard({
           margin-bottom: 20px;
         }
 
-        /* ✅ FIX lisibilité : 0.7 → 0.95 */
         .sc-eyebrow {
           font-size: 9px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase;
           color: rgba(220,185,90,1.0); margin-bottom: 8px;
@@ -141,25 +140,34 @@ export default function SummaryCard({
           border-color: rgba(201,168,76,0.38);
         }
 
-        /* ✅ FIX lisibilité titre carte : blanc pur */
         .sc-section-label {
           flex: 1;
           font-family: 'Playfair Display', Georgia, serif;
           font-size: 16px; font-weight: 400; letter-spacing: 0.3px;
           color: #F7F2EA;
         }
-        /* ✅ FIX lisibilité titre ouvert : or vif */
         .sc-section.open .sc-section-label { color: #F0DC88; }
 
-        /* ✅ FIX lisibilité chevron : 0.4 → 0.70 */
+        /* Chevron — cercle blanc bien visible */
         .sc-chevron {
-          width: 16px; height: 16px; flex-shrink: 0;
+          width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          color: rgba(220,185,90,1.0);
-          transition: transform 0.3s ease, color 0.3s;
+          background: rgba(255,255,255,0.12);
+          border: 1px solid rgba(255,255,255,0.28);
+          color: rgba(255,255,255,0.95);
+          transition: transform 0.3s ease, background 0.3s, border-color 0.3s, color 0.3s;
         }
-        .sc-section.open .sc-chevron { transform: rotate(180deg); color: rgba(220,185,90,1.0); }
-        .sc-chevron svg { width: 14px; height: 14px; }
+        .sc-section:hover .sc-chevron {
+          background: rgba(255,255,255,0.18);
+          border-color: rgba(255,255,255,0.45);
+        }
+        .sc-section.open .sc-chevron {
+          transform: rotate(180deg);
+          background: rgba(201,168,76,0.18);
+          border-color: rgba(201,168,76,0.55);
+          color: #F0DC88;
+        }
+        .sc-chevron svg { width: 15px; height: 15px; stroke-width: 2.5; }
 
         .sc-section-body {
           overflow: hidden;
@@ -168,7 +176,6 @@ export default function SummaryCard({
         }
         .sc-section-body.open { max-height: 800px; opacity: 1; }
 
-        /* ✅ FIX lisibilité contenu : 0.85 → 0.92 */
         .sc-section-content {
           padding: 0 18px 18px 68px;
           font-family: 'Playfair Display', serif;
@@ -191,12 +198,10 @@ export default function SummaryCard({
           flex: 1; height: 1px;
           background: linear-gradient(90deg, rgba(201,168,76,0.25), transparent);
         }
-        /* ✅ FIX lisibilité label conseil : 0.7 → 0.95 */
         .sc-final-label {
           font-size: 9px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase;
           color: rgba(220,185,90,1.0);
         }
-        /* ✅ FIX lisibilité texte conseil : 0.82 → 0.92 */
         .sc-final-text {
           font-family: 'Playfair Display', serif;
           font-size: 15px; font-style: italic; font-weight: 300;
@@ -207,7 +212,6 @@ export default function SummaryCard({
 
       <div className="sc-container">
 
-        {/* ✅ FIX : "Votre lecture" hardcodé → clé de traduction */}
         <div className="sc-header">
           <div className="sc-eyebrow">
             {t('revelation.summary.eyebrow') || t('interpretation.label.reading') || 'Your reading'}
@@ -230,7 +234,7 @@ export default function SummaryCard({
                   <div className="sc-section-icon">{section.icon}</div>
                   <span className="sc-section-label">{section.title}</span>
                   <div className="sc-chevron">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                       <path d="M6 9l6 6 6-6"/>
                     </svg>
                   </div>
