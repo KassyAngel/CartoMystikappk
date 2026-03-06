@@ -143,6 +143,7 @@ const translations: Record<Language, Record<string, string>> = {
     "cardgame.previous": "Précédent",
     "cardgame.next": "Suivant",
     "cardgame.daily.choose": "Choisissez la carte qui vous appelle",
+    "interpretation.label.daily": "Oracle du jour",
 
     // CardGame - Modal de révélation
     "cardgame.cardRevealed": "Carte révélée",
@@ -1864,7 +1865,8 @@ const translations: Record<Language, Record<string, string>> = {
     "cardgame.next": "Next",
     "cardgame.reveal": "REVEAL CARDS",
     "cardgame.daily.choose": "Choose the card that calls to you",
-
+    "interpretation.label.daily.en": "Daily oracle",
+    
     // CardGame - Modal de révélation
     "cardgame.cardRevealed": "Card revealed",
     "cardgame.continue": "Continue",
@@ -3535,7 +3537,8 @@ const translations: Record<Language, Record<string, string>> = {
     "cardgame.previous": "Anterior",
     "cardgame.next": "Siguiente",
     "cardgame.daily.choose": "Elige la carta que te llama",
-
+    "interpretation.label.daily.es": "Oráculo del día",
+    
     // CardGame - Modal de révélation
     "cardgame.cardRevealed": "Carta revelada",
     "cardgame.continue": "Continuar",
@@ -5276,7 +5279,8 @@ const translations: Record<Language, Record<string, string>> = {
     "cardgame.previous": "Zurück",
     "cardgame.next": "Weiter",
     "cardgame.daily.choose": "Wähle die Karte, die dich ruft",
-
+    "interpretation.label.daily.de": "Orakel des Tages",
+      
     // CardGame - Modal de révélation
     "cardgame.cardRevealed": "Karte aufgedeckt",
     "cardgame.continue": "Weiter",
@@ -7018,6 +7022,7 @@ const translations: Record<Language, Record<string, string>> = {
     "cardgame.previous": "Precedente",
     "cardgame.next": "Successivo",
     "cardgame.daily.choose": "Scegli la carta che ti chiama",
+    "interpretation.label.daily.it": "Oracolo del giorno",
 
     // CardGame - Modal de révélation
     "cardgame.cardRevealed": "Carta rivelata",
