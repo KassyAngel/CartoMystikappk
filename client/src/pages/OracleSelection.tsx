@@ -3,14 +3,14 @@ import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSound } from '@/hooks/useSound';
 import { hasUsedDailyReading } from '@/lib/dailyLimit';
-import { getSavedLanguage } from '@/lib/userStorage';
-import { config } from '@/config';
 
 interface OracleSelectionProps {
   user: UserSession;
   onOracleSelect: (oracleType: string) => void;
   onBack: () => void;
   onHome: () => void;
+  shouldShowAdBeforeReading?: (oracleType: string) => Promise<boolean>;
+  isPremium?: boolean; // ✅ AJOUT
 }
 
 interface OracleItem {
@@ -21,9 +21,10 @@ interface OracleItem {
   accentRgb: string;
 }
 
-export default function OracleSelection({ user, onOracleSelect, onBack }: OracleSelectionProps) {
+export default function OracleSelection({ user, onOracleSelect, onBack, shouldShowAdBeforeReading, isPremium = false }: OracleSelectionProps) {
   const [selected, setSelected] = useState('');
   const [mounted, setMounted] = useState(false);
+  const [isLoadingAd, setIsLoadingAd] = useState(false);
   const { t } = useLanguage();
   const playFlip = useSound('Flip-card.wav');
   const hasDoneDaily = hasUsedDailyReading();
@@ -70,8 +71,26 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
     },
   ];
 
-  const handleSelect = (id: string) => {
+  const handleSelect = async (id: string) => {
+    if (isLoadingAd) return;
+
     playFlip();
+
+    // ✅ bonusRoll : pub UNIQUEMENT si pas premium ET shouldShowAdBeforeReading dispo
+    if (id === 'bonusRoll' && shouldShowAdBeforeReading) {
+      setSelected(id);
+      setIsLoadingAd(true);
+      try {
+        await shouldShowAdBeforeReading('bonusRoll');
+      } catch (e) {
+        console.error('Erreur pub bonusRoll:', e);
+      }
+      setIsLoadingAd(false);
+      onOracleSelect(id);
+      return;
+    }
+
+    // Premium ou autres oracles : navigation directe
     setSelected(id);
     setTimeout(() => onOracleSelect(id), 420);
   };
@@ -112,7 +131,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         }
         @keyframes ospf { 0%,100%{opacity:0} 40%,60%{opacity:var(--op,.2)} }
 
-        /* Header */
         .os-header {
           position: relative; z-index: 10;
           text-align: center; padding: 20px 24px 14px;
@@ -131,13 +149,11 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
           color: rgba(247,242,234,0.92); line-height: 1.7;
         }
 
-        /* Ligne */
         .os-line {
           width: 1px; height: 24px; margin: 0 auto 20px;
           background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.35), transparent);
         }
 
-        /* Grille oracles */
         .os-grid {
           position: relative; z-index: 10;
           display: flex; flex-direction: column; gap: 8px;
@@ -146,7 +162,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         }
         .os-mounted .os-grid { opacity: 1; transition-delay: 0.3s; }
 
-        /* Carte oracle — layout horizontal */
         .os-card {
           position: relative;
           display: flex; align-items: center; gap: 0;
@@ -172,7 +187,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
           box-shadow: 0 0 32px rgba(var(--c-rgb),0.14), inset 0 1px 0 rgba(255,255,255,0.08);
         }
 
-        /* Indicateur latéral */
         .os-card-bar {
           width: 3px; height: 100%; position: absolute; left: 0; top: 0;
           background: linear-gradient(to bottom, rgba(var(--c-rgb),0.4), rgb(var(--c-rgb)), rgba(var(--c-rgb),0.4));
@@ -183,7 +197,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         .os-card:hover .os-card-bar { transform: scaleY(0.55); }
         .os-card.os-active .os-card-bar { transform: scaleY(0.75); }
 
-        /* Image */
         .os-card-img {
           width: 72px; height: 80px; flex-shrink: 0;
           overflow: hidden; position: relative;
@@ -199,7 +212,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
           background: linear-gradient(90deg, transparent 55%, rgba(5,3,14,0.55) 100%);
         }
 
-        /* Texte */
         .os-card-body {
           flex: 1; padding: 14px 14px 14px 16px;
           display: flex; align-items: center; justify-content: space-between; gap: 8px;
@@ -222,7 +234,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         }
         .os-card:hover .os-card-desc { color: rgba(247,242,234,0.96); }
 
-        /* Arrow */
         .os-card-arrow {
           width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
           border: 1px solid rgba(var(--c-rgb), 0.3);
@@ -242,7 +253,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         }
         .os-card-arrow svg { width: 12px; height: 12px; }
 
-        /* Bonus */
         .os-bonus-wrap {
           position: relative; z-index: 10;
           margin: 16px 16px 0;
@@ -282,6 +292,11 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
           border-color: rgba(201,168,76,0.65);
           background: rgba(201,168,76,0.1);
         }
+        .os-bonus-card.os-loading {
+          opacity: 0.7;
+          pointer-events: none;
+          cursor: wait;
+        }
         .os-bonus-card-img {
           width: 72px; height: 80px; flex-shrink: 0; overflow: hidden; position: relative;
         }
@@ -320,7 +335,15 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         }
         .os-bonus-arrow svg { width: 12px; height: 12px; }
 
-        /* Footer */
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .os-spinner {
+          width: 12px; height: 12px;
+          border: 2px solid rgba(201,168,76,0.3);
+          border-top-color: #C9A84C;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+
         .os-footer {
           position: relative; z-index: 10;
           padding: 20px 16px 32px;
@@ -352,7 +375,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         ))}
       </div>
 
-      {/* Header */}
       <div className="os-header">
         <div className="os-eyebrow">{t('oracle.choose') || 'Choisissez votre oracle'}</div>
         <p className="os-subtitle">
@@ -362,7 +384,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
 
       <div className="os-line"/>
 
-      {/* Grille */}
       <div className="os-grid">
         {mainOracles.map((oracle) => (
           <div
@@ -393,7 +414,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
         ))}
       </div>
 
-      {/* Bonus */}
       <div className="os-bonus-wrap">
         <div className="os-bonus-label">
           <div className="os-bonus-line"/>
@@ -401,7 +421,7 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
           <div className="os-bonus-line"/>
         </div>
         <div
-          className={`os-bonus-card ${selected === 'bonusRoll' ? 'os-active' : ''}`}
+          className={`os-bonus-card ${selected === 'bonusRoll' ? 'os-active' : ''} ${isLoadingAd ? 'os-loading' : ''}`}
           onClick={() => handleSelect('bonusRoll')}
         >
           <div className="os-bonus-card-img">
@@ -410,18 +430,25 @@ export default function OracleSelection({ user, onOracleSelect, onBack }: Oracle
           <div className="os-bonus-card-body">
             <div className="os-card-texts">
               <div className="os-bonus-title">{t('oracle.bonusRoll.title') || 'Tirage Bonus'}</div>
-              <div className="os-bonus-desc">{t('oracle.bonusRoll.description') || 'Déverrouillez votre révélation numérologique'}</div>
+              <div className="os-bonus-desc">
+                {isLoadingAd
+                  ? 'Préparation...'
+                  : (t('oracle.bonusRoll.description') || 'Déverrouillez votre révélation numérologique')}
+              </div>
             </div>
             <div className="os-bonus-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M9 6l6 6-6 6"/>
-              </svg>
+              {isLoadingAd
+                ? <div className="os-spinner" />
+                : (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M9 6l6 6-6 6"/>
+                  </svg>
+                )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
       <div className="os-footer">
         <button className="os-back-btn" onClick={onBack}>
           {t('oracle.back') || 'Retour'}

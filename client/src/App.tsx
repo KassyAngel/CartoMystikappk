@@ -39,10 +39,11 @@ type AppStep =
   | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'bonusRoll'
   | 'responsiveTest';
 
-function Router({ onSaveReading, onStepChange, shouldShowAdBeforeReading, isPremium }: {
+function Router({ onSaveReading, onStepChange, shouldShowAdBeforeReading, shouldShowAdForBonusRoll, isPremium }: {
   onSaveReading: (reading: any) => Promise<void>;
   onStepChange: (step: AppStep) => void;
   shouldShowAdBeforeReading: (oracleType: string) => Promise<boolean>;
+  shouldShowAdForBonusRoll: (oracleType: string) => Promise<boolean>; // ✅ AJOUT
   isPremium: boolean;
 }) {
   return (
@@ -54,6 +55,7 @@ function Router({ onSaveReading, onStepChange, shouldShowAdBeforeReading, isPrem
           onSaveReading={onSaveReading}
           onStepChange={onStepChange as any}
           shouldShowAdBeforeReading={shouldShowAdBeforeReading}
+          shouldShowAdForBonusRoll={shouldShowAdForBonusRoll} // ✅ AJOUT
           isPremium={isPremium}
         />
       </Route>
@@ -87,20 +89,14 @@ function App() {
   useEffect(() => {
     const migrateData = async () => {
       if (!deviceId) return;
-
       const migrationDone = localStorage.getItem('migration_done');
       if (migrationDone) return;
-
       try {
         const response = await fetch(`${config.apiBaseUrl}/api/readings/migrate`, {
           method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'X-Device-ID': deviceId 
-          },
+          headers: { 'Content-Type': 'application/json', 'X-Device-ID': deviceId },
           credentials: 'include'
         });
-
         if (response.ok) {
           localStorage.setItem('migration_done', 'true');
           console.log('✅ Migration des données terminée');
@@ -109,11 +105,9 @@ function App() {
         console.error('❌ Erreur migration:', error);
       }
     };
-
     migrateData();
   }, [deviceId]);
 
-  // ✅ Initialisation AdMob + RevenueCat
   useEffect(() => {
     const initServices = async () => {
       try {
@@ -127,7 +121,6 @@ function App() {
     initServices();
   }, []);
 
-  // ✅ GESTION BANNIÈRE : Permanente à partir de la page Oracle (sauf Premium)
   useEffect(() => {
     if (isPremium) {
       console.log('👑 Premium actif : bannière cachée');
@@ -148,7 +141,6 @@ function App() {
         setBannerShown(true);
         console.log('📺 Bannière affichée en permanence (utilisateur gratuit)');
       }, 500);
-
       return () => clearTimeout(timer);
     }
 
@@ -175,11 +167,7 @@ function App() {
     if (!deviceId) return;
     loadUserData();
     checkPremiumExpiration();
-
-    const interval = setInterval(() => {
-      loadUserData();
-    }, 60 * 60 * 1000);
-
+    const interval = setInterval(() => { loadUserData(); }, 60 * 60 * 1000);
     return () => clearInterval(interval);
   }, [deviceId]);
 
@@ -188,41 +176,28 @@ function App() {
       console.log('⏳ Device ID pas encore initialisé, on attend...');
       return;
     }
-
     try {
       const savedEmail = await getUserEmail();
-
       const premiumResponse = await fetch(`${config.apiBaseUrl}/api/user/premium-status`, {
         credentials: 'include',
         headers: savedEmail ? { 'x-user-email': savedEmail } : {},
       });
       const premiumData = await premiumResponse.json();
       setIsPremium(premiumData.isPremium);
-
       console.log('✅ Statut Premium:', premiumData.isPremium, savedEmail ? `(email: ${savedEmail})` : '(sans email)');
 
       const readingsResponse = await fetch(`${config.apiBaseUrl}/api/readings`, {
         credentials: 'include',
-        headers: {
-          'X-Device-ID': deviceId
-        }
+        headers: { 'X-Device-ID': deviceId }
       });
-
       if (!readingsResponse.ok) {
         const errorData = await readingsResponse.json();
         console.error('❌ Erreur chargement tirages:', errorData);
         setIsLoading(false);
         return;
       }
-
       const readingsData = await readingsResponse.json();
-      setReadings(
-        readingsData.readings.map((r: any) => ({
-          ...r,
-          date: new Date(r.date)
-        }))
-      );
-
+      setReadings(readingsData.readings.map((r: any) => ({ ...r, date: new Date(r.date) })));
       console.log('✅ Données chargées:', readingsData.readings.length, 'tirages pour device:', deviceId);
     } catch (error) {
       console.error('❌ Erreur chargement données:', error);
@@ -233,14 +208,10 @@ function App() {
 
   const checkPremiumExpiration = async () => {
     try {
-      const response = await fetch(`${config.apiBaseUrl}/api/user/premium-expiration-alert`, {
-        credentials: 'include'
-      });
+      const response = await fetch(`${config.apiBaseUrl}/api/user/premium-expiration-alert`, { credentials: 'include' });
       const data = await response.json();
-
       if (data.shouldAlert) {
         let alertMessage = '';
-
         if (data.alertType === 'expired') {
           alertMessage = `⚠️ Votre accès Premium a expiré.\n\nVous pouvez souscrire à nouveau pour profiter des avantages Premium.`;
         } else if (data.alertType === 'warning') {
@@ -248,7 +219,6 @@ function App() {
           const expirationDate = new Date(data.expirationDate).toLocaleDateString('fr-FR');
           alertMessage = `🔔 Votre accès Premium expire dans ${days} jour${days > 1 ? 's' : ''}.\n\nDate d'expiration : ${expirationDate}\n\nPour renouveler, rendez-vous dans le menu Premium.`;
         }
-
         if (alertMessage) {
           setTimeout(() => {
             alert(alertMessage);
@@ -265,21 +235,14 @@ function App() {
 
   const handleSaveNote = async (readingId: string, note: string) => {
     if (!deviceId) return;
-
     try {
       await fetch(`${config.apiBaseUrl}/api/readings/${readingId}/note`, {
         method: 'PUT',
-        headers: { 
-          'Content-Type': 'application/json',
-          'X-Device-ID': deviceId
-        },
+        headers: { 'Content-Type': 'application/json', 'X-Device-ID': deviceId },
         credentials: 'include',
         body: JSON.stringify({ note })
       });
-
-      setReadings(prev =>
-        prev.map(r => r.id === readingId ? { ...r, notes: note } : r)
-      );
+      setReadings(prev => prev.map(r => r.id === readingId ? { ...r, notes: note } : r));
     } catch (error) {
       console.error('❌ Erreur sauvegarde note:', error);
     }
@@ -287,24 +250,16 @@ function App() {
 
   const handleToggleFavorite = async (readingId: string) => {
     if (!deviceId) return;
-
     const reading = readings.find(r => r.id === readingId);
     if (!reading) return;
-
     try {
       await fetch(`${config.apiBaseUrl}/api/readings/${readingId}/favorite`, {
         method: 'PUT',
-        headers: { 
-          'Content-Type': 'application/json',
-          'X-Device-ID': deviceId
-        },
+        headers: { 'Content-Type': 'application/json', 'X-Device-ID': deviceId },
         credentials: 'include',
         body: JSON.stringify({ isFavorite: !reading.isFavorite })
       });
-
-      setReadings(prev =>
-        prev.map(r => r.id === readingId ? { ...r, isFavorite: !r.isFavorite } : r)
-      );
+      setReadings(prev => prev.map(r => r.id === readingId ? { ...r, isFavorite: !r.isFavorite } : r));
     } catch (error) {
       console.error('❌ Erreur toggle favori:', error);
     }
@@ -312,17 +267,13 @@ function App() {
 
   const clearAllReadings = async () => {
     if (!deviceId) return;
-
     try {
       console.log('🗑️ Suppression de tous les tirages du Grimoire...');
       const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
         method: 'DELETE',
         credentials: 'include',
-        headers: {
-          'X-Device-ID': deviceId
-        }
+        headers: { 'X-Device-ID': deviceId }
       });
-
       if (!response.ok) throw new Error('Erreur lors de la suppression');
       setReadings([]);
       console.log('🔥 Grimoire vidé !');
@@ -332,7 +283,7 @@ function App() {
     }
   };
 
-  // ✅ SYSTÈME DE PUB AVANT TIRAGE
+  // ✅ Pub pour les tirages classiques (tarot, oracle, angels, runes...)
   const shouldShowAdBeforeReading = async (oracleType: string): Promise<boolean> => {
     console.log(`🎯 [PUB CHECK] Oracle sélectionné: "${oracleType}"`);
 
@@ -341,6 +292,7 @@ function App() {
       return false;
     }
 
+    // horoscope et bonusRoll ont leur propre système
     if (oracleType === 'horoscope' || oracleType === 'bonusRoll') {
       console.log(`⏭️ "${oracleType}" exclu : pas de pub interstitielle (système propre)`);
       return false;
@@ -348,7 +300,6 @@ function App() {
 
     const nextCount = readingCount + 1;
     const shouldShow = nextCount % 3 === 0;
-
     console.log(`📊 Compteur: ${readingCount} → ${nextCount} | Pub: ${shouldShow ? 'OUI ✅' : 'NON ❌'}`);
 
     if (shouldShow) {
@@ -369,23 +320,35 @@ function App() {
     return shouldShow;
   };
 
-  // ✅ SYSTÈME D'ÉVALUATION GOOGLE PLAY — logique corrigée
+  // ✅ NOUVEAU : Pub dédiée bonusRoll — appelée depuis OracleSelection au clic
+  const shouldShowAdForBonusRoll = async (oracleType: string): Promise<boolean> => {
+    console.log(`🎲 [BONUS ROLL PUB] Déclenchement avant navigation`);
+
+    if (isPremium) {
+      console.log('👑 Premium actif : pas de pub bonusRoll');
+      return false;
+    }
+
+    try {
+      await showInterstitialAd('before_bonusRoll');
+      console.log('✅ [BONUS ROLL PUB] Pub interstitielle affichée');
+      return true;
+    } catch (error) {
+      console.error('❌ [BONUS ROLL PUB] Erreur pub:', error);
+      return false;
+    }
+  };
+
   const checkAndShowRating = (newCount: number) => {
-    // Si déjà noté, ne rien faire
     const hasRated = localStorage.getItem('hasRatedApp');
     if (hasRated === 'true') {
       console.log('⭐ Utilisateur a déjà noté l\'app');
       return;
     }
-
     console.log(`⭐ Compteur rating: ${newCount}`);
-
-    // Déclencher tous les 5 tirages (5, 10, 15...)
     if (newCount % 5 === 0) {
       console.log(`🎯 ${newCount} tirages atteints → Affichage du modal de rating`);
-      setTimeout(() => {
-        setShowRatingModal(true);
-      }, 2000);
+      setTimeout(() => { setShowRatingModal(true); }, 2000);
     }
   };
 
@@ -393,10 +356,8 @@ function App() {
     console.log('⭐ Utilisateur a accepté de noter l\'app');
     localStorage.setItem('hasRatedApp', 'true');
     setShowRatingModal(false);
-
     const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.cartomystik.app&pli=1';
     window.open(playStoreUrl, '_blank');
-
     console.log('📱 Redirection vers Google Play Store');
   };
 
@@ -421,14 +382,10 @@ function App() {
       if (shouldSaveInGrimoire) {
         const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
           method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'X-Device-ID': deviceId
-          },
+          headers: { 'Content-Type': 'application/json', 'X-Device-ID': deviceId },
           credentials: 'include',
           body: JSON.stringify(reading)
         });
-
         if (response.status === 403) {
           console.log('⚠️ Erreur 403 ignorée');
         } else if (!response.ok) {
@@ -437,24 +394,17 @@ function App() {
           throw new Error(`Erreur HTTP: ${response.status}`);
         } else {
           const newReading = await response.json();
-          setReadings(prev => [
-            { ...newReading, date: new Date(newReading.date) },
-            ...prev
-          ]);
+          setReadings(prev => [{ ...newReading, date: new Date(newReading.date) }, ...prev]);
           console.log('✅ Tirage enregistré dans le Grimoire:', newReading.id);
         }
       }
 
       if (shouldIncrementCounter) {
-        // ✅ FIX : lire depuis localStorage pour avoir la valeur synchrone
         const currentCount = parseInt(localStorage.getItem('ratingReadingCount') || '0', 10);
         const newCount = currentCount + 1;
         localStorage.setItem('ratingReadingCount', newCount.toString());
-
         setReadingCount(newCount);
         console.log(`📊 ✅ Compteur mis à jour: ${currentCount} → ${newCount} (type: ${reading.type})`);
-
-        // ✅ Passer directement newCount pour éviter les problèmes d'async React state
         checkAndShowRating(newCount);
       } else {
         console.log(`📊 ⏭️ Type "${reading.type}" NON comptabilisé (système pub indépendant)`);
@@ -482,24 +432,13 @@ function App() {
             <div className="dark relative w-screen h-screen overflow-hidden">
               {!isPremium && bannerShown && (
                 <style>{`
-                  .main-content {
-                    padding-bottom: 110px !important;
-                  }
-                  .pb-safe {
-                    padding-bottom: 110px !important;
-                  }
+                  .main-content { padding-bottom: 110px !important; }
+                  .pb-safe { padding-bottom: 110px !important; }
                   @media (min-width: 640px) {
-                    .main-content, .pb-safe {
-                      padding-bottom: 120px !important;
-                    }
+                    .main-content, .pb-safe { padding-bottom: 120px !important; }
                   }
-                  button, a, input, textarea {
-                    position: relative;
-                    z-index: 10;
-                  }
-                  #admob-banner {
-                    z-index: 5 !important;
-                  }
+                  button, a, input, textarea { position: relative; z-index: 10; }
+                  #admob-banner { z-index: 5 !important; }
                 `}</style>
               )}
 
@@ -512,9 +451,7 @@ function App() {
               )}
 
               {showNotificationModal && (
-                <NotificationPermissionModal
-                  onClose={() => setShowNotificationModal(false)}
-                />
+                <NotificationPermissionModal onClose={() => setShowNotificationModal(false)} />
               )}
 
               {isGrimoireOpen && (
@@ -532,19 +469,12 @@ function App() {
                 <PremiumModal
                   isOpen={isPremiumModalOpen}
                   onClose={() => setIsPremiumModalOpen(false)}
-                  onPurchase={() => {
-                    setIsPremiumModalOpen(false);
-                    window.location.reload();
-                  }}
+                  onPurchase={() => { setIsPremiumModalOpen(false); window.location.reload(); }}
                 />
               )}
 
-              {/* ✅ MODAL DE RATING GOOGLE PLAY */}
               {showRatingModal && (
-                <RatingModal
-                  onClose={handleCloseRating}
-                  onRate={handleRateApp}
-                />
+                <RatingModal onClose={handleCloseRating} onRate={handleRateApp} />
               )}
 
               <Toaster />
@@ -554,6 +484,7 @@ function App() {
                   onSaveReading={addReading}
                   onStepChange={setCurrentStep}
                   shouldShowAdBeforeReading={shouldShowAdBeforeReading}
+                  shouldShowAdForBonusRoll={shouldShowAdForBonusRoll} // ✅ AJOUT
                   isPremium={isPremium}
                 />
               </div>

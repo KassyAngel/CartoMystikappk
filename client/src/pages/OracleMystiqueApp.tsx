@@ -17,23 +17,15 @@ import { oracleData } from '@/data/oracleData';
 import { useUser } from '@/contexts/UserContext';
 
 type AppStep =
-  | 'landing'
-  | 'name'
-  | 'date'
-  | 'gender'
-  | 'oracle'
-  | 'game'
-  | 'revelation'
-  | 'interpretation'
-  | 'horoscope'
-  | 'crystalBall'
-  | 'bonusRoll'
-  | 'responsiveTest';
+  | 'landing' | 'name' | 'date' | 'gender'
+  | 'oracle' | 'game' | 'revelation' | 'interpretation'
+  | 'horoscope' | 'crystalBall' | 'bonusRoll' | 'responsiveTest';
 
 interface OracleMystiqueAppProps {
   onSaveReading?: (reading: any) => Promise<void>;
   onStepChange?: ((step: AppStep) => void) | ((step: AppStep) => Promise<void>);
   shouldShowAdBeforeReading?: (oracleType: string) => Promise<boolean>;
+  shouldShowAdForBonusRoll?: (oracleType: string) => Promise<boolean>; // ✅ AJOUT
   isPremium?: boolean;
 }
 
@@ -41,6 +33,7 @@ export default function OracleMystiqueApp({
   onSaveReading, 
   onStepChange,
   shouldShowAdBeforeReading,
+  shouldShowAdForBonusRoll, // ✅ AJOUT
   isPremium = false
 }: OracleMystiqueAppProps) {
   const [currentStep, setCurrentStep] = useState<AppStep>('landing');
@@ -65,39 +58,22 @@ export default function OracleMystiqueApp({
   }, []);
 
   const handleEnter = () => setCurrentStep('name');
+  const handleNameSubmit = (name: string) => { setUser({ ...user, name }); setCurrentStep('date'); };
+  const handleDateSubmit = (birthDate: string, zodiacSign?: ZodiacSign) => { setUser({ ...user, birthDate, zodiacSign }); setCurrentStep('gender'); };
+  const handleGenderSubmit = (gender: string) => { setUser({ ...user, gender }); console.log('Session utilisateur sauvegardée dans le context'); setCurrentStep('oracle'); };
 
-  const handleNameSubmit = (name: string) => {
-    setUser({ ...user, name });
-    setCurrentStep('date');
-  };
-
-  const handleDateSubmit = (birthDate: string, zodiacSign?: ZodiacSign) => {
-    setUser({ ...user, birthDate, zodiacSign });
-    setCurrentStep('gender');
-  };
-
-  const handleGenderSubmit = (gender: string) => {
-    setUser({ ...user, gender });
-    console.log('Session utilisateur sauvegardée dans le context');
-    setCurrentStep('oracle');
-  };
-
-  // ✅ CORRIGÉ : N'appeler la pub QUE pour les tirages comptabilisés
   const handleOracleSelect = async (oracleType: string) => {
     console.log(`🎯 Oracle sélectionné: "${oracleType}"`);
 
-    // ⚡ Vérifier pub interstitielle UNIQUEMENT pour les tirages comptabilisés
-    // ❌ PAS pour horoscope et bonusRoll (ont leur propre système)
+    // Pub classique pour tirages standards (bonusRoll géré dans OracleSelection)
     const typesWithInterstitialAd = ['tarot', 'oracle', 'angels', 'runes', 'crystalBall', 'crystal'];
-
     if (typesWithInterstitialAd.includes(oracleType) && shouldShowAdBeforeReading) {
       console.log('🎬 Vérification pub avant tirage...');
       await shouldShowAdBeforeReading(oracleType);
     } else {
-      console.log(`⏭️ "${oracleType}" exclu de la pub interstitielle (système propre)`);
+      console.log(`⏭️ "${oracleType}" — pub gérée en amont ou absente`);
     }
 
-    // ✅ PUIS lancer le tirage
     setSelectedOracle(oracleType);
     if (oracleType === 'horoscope') setCurrentStep('horoscope');
     else if (oracleType === 'crystalBall') setCurrentStep('crystalBall');
@@ -105,11 +81,7 @@ export default function OracleMystiqueApp({
     else setCurrentStep('game');
   };
 
-  const handleCardsSelected = (cardIndices: number[]) => {
-    setSelectedCardIndices(cardIndices);
-    setCurrentStep('revelation');
-  };
-
+  const handleCardsSelected = (cardIndices: number[]) => { setSelectedCardIndices(cardIndices); setCurrentStep('revelation'); };
   const handleRevealInterpretation = () => setCurrentStep('interpretation');
   const handleBackToCards = () => setCurrentStep('revelation');
   const handleBackToName = () => setCurrentStep('name');
@@ -128,22 +100,16 @@ export default function OracleMystiqueApp({
 
   const oracle = selectedOracle ? oracleData[selectedOracle] : null;
 
-        return (
-          <div className="min-h-screen flex flex-col">
-            <StarsBackground />
-            <main className="flex-grow flex flex-col justify-center items-center max-w-6xl mx-auto p-5 pb-safe">
+  return (
+    <div className="min-h-screen flex flex-col">
+      <StarsBackground />
+      <main className="flex-grow flex flex-col justify-center items-center max-w-6xl mx-auto p-5 pb-safe">
 
         {currentStep === 'responsiveTest' && <ResponsiveTest />}
-
         {currentStep === 'landing' && <LandingPage onEnter={handleEnter} />}
-
         {currentStep === 'name' && <NamePage onNext={handleNameSubmit} />}
-
         {currentStep === 'date' && <DatePage onNext={handleDateSubmit} onBack={handleBackToName} />}
-
-        {currentStep === 'gender' && (
-          <GenderPage onNext={handleGenderSubmit} onBack={handleBackToDate} />
-        )}
+        {currentStep === 'gender' && <GenderPage onNext={handleGenderSubmit} onBack={handleBackToDate} />}
 
         {currentStep === 'oracle' && (
           <OracleSelection
@@ -151,6 +117,9 @@ export default function OracleMystiqueApp({
             onOracleSelect={handleOracleSelect}
             onBack={handleBackToGender}
             onHome={handleBackToHome}
+            // ✅ shouldShowAdForBonusRoll : pub dédiée bonusRoll, pas exclue
+            shouldShowAdBeforeReading={shouldShowAdForBonusRoll}
+            isPremium={isPremium}
           />
         )}
 
@@ -213,6 +182,7 @@ export default function OracleMystiqueApp({
             user={user}
             onBack={handleBackToOracle}
             isPremium={isPremium}
+            // ✅ onBeforeRoll retiré — pub déjà montrée dans OracleSelection
           />
         )}
       </main>

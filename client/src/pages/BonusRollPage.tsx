@@ -1,9 +1,7 @@
-import { useState } from 'react';
-import MysticalButton from '@/components/MysticalButton';
 import BonusRoll from '@/components/BonusRoll';
 import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { showInterstitialAd } from '@/admobService';
+import { useState } from 'react';
 
 interface BonusRollPageProps {
   user: UserSession;
@@ -37,26 +35,32 @@ export default function BonusRollPage({
     console.log('✅ Tirage bonus complété:', result);
   };
 
+  // ✅ handleBeforeRoll : PAS de pub au 1er lancer (déjà montrée dans OracleSelection)
+  // Pub uniquement à partir du 2ème lancer, tous les 3 lancers (2, 5, 8...)
   const handleBeforeRoll = async (): Promise<boolean> => {
     if (isPremium) {
       console.log('👑 [BONUS ROLL] Premium actif : pas de pub');
+      setRollCount(prev => prev + 1);
       return true;
     }
 
     const nextCount = rollCount + 1;
     console.log(`🎲 [BONUS ROLL] Lancer #${nextCount}`);
 
-    // ✅ CORRECTION: Pub au 1er lancer, puis tous les 3 lancers (1, 4, 7, 10...)
-    if (nextCount === 1 || (nextCount - 1) % 3 === 0) {
+    // ✅ 1er lancer : pas de pub (déjà montrée avant d'arriver ici)
+    // Pub à partir du 4ème lancer, puis tous les 3 (4, 7, 10...)
+    if (nextCount > 1 && (nextCount - 1) % 3 === 0) {
       console.log(`🎬 [BONUS ROLL] Lancer #${nextCount} → Pub interstitielle`);
       try {
+        const { showInterstitialAd } = await import('@/admobService');
         await showInterstitialAd(`bonus_roll_${nextCount}`);
         console.log('✅ [BONUS ROLL] Pub interstitielle affichée');
       } catch (error) {
         console.error('❌ [BONUS ROLL] Erreur pub interstitielle:', error);
       }
     } else {
-      console.log(`⏭️ [BONUS ROLL] Lancer #${nextCount} → Pas de pub (prochain: ${nextCount + (3 - ((nextCount - 1) % 3))})`);
+      const nextAd = nextCount === 1 ? 4 : nextCount + (3 - ((nextCount - 1) % 3));
+      console.log(`⏭️ [BONUS ROLL] Lancer #${nextCount} → Pas de pub (prochain: ${nextAd})`);
     }
 
     setRollCount(nextCount);
@@ -115,39 +119,9 @@ export default function BonusRollPage({
         ))}
       </div>
 
-      {/* Top Navigation - Minimal */}
-      <div className="cosmic-nav">
-        {isPremium && (
-          <div className="premium-badge-mini">
-            <span>👑</span>
-          </div>
-        )}
+      {/* ✅ PAS de cosmic-nav — les boutons Retour sont déjà dans BonusRoll */}
 
-        <MysticalButton 
-          variant="secondary" 
-          onClick={() => {
-            handleBackToOracle();
-          }}
-          className="nav-btn-cosmic"
-        >
-          <span className="nav-icon">←</span>
-          <span className="nav-label">{t('common.back')}</span>
-        </MysticalButton>
-
-        {isComplete && (
-          <MysticalButton 
-            onClick={() => {
-              handleBackToOracle();
-            }}
-            className="nav-btn-cosmic primary"
-          >
-            <span className="nav-label">{t('oracle.backToOracles') || 'Retour'}</span>
-            <span className="nav-icon">→</span>
-          </MysticalButton>
-        )}
-      </div>
-
-      {/* ✅ Main Cosmic Area - SCROLLABLE */}
+      {/* Main Cosmic Area */}
       <div className="cosmic-main">
         <BonusRoll 
           onComplete={handleComplete}
@@ -171,7 +145,6 @@ export default function BonusRollPage({
           background: #000000;
         }
 
-        /* Deep Space Background */
         .space-background {
           position: absolute;
           inset: 0;
@@ -195,7 +168,6 @@ export default function BonusRollPage({
           50% { opacity: 1; }
         }
 
-        /* Nebula Layer */
         .nebula-layer {
           position: absolute;
           inset: 0;
@@ -214,7 +186,6 @@ export default function BonusRollPage({
           }
         }
 
-        /* Stars Field */
         .stars-field {
           position: absolute;
           inset: 0;
@@ -237,98 +208,20 @@ export default function BonusRollPage({
           50% { opacity: 1; transform: scale(1.5); }
         }
 
-        /* Navigation */
-        .cosmic-nav {
-          position: relative;
-          z-index: 100;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 1rem 1.5rem;
-          gap: 1rem;
-          background: linear-gradient(
-            to bottom,
-            rgba(10, 0, 25, 0.9) 0%,
-            rgba(10, 0, 25, 0.7) 70%,
-            transparent 100%
-          );
-          backdrop-filter: blur(10px);
-          flex-shrink: 0; /* ✅ Empêche la nav de rétrécir */
-        }
-
-        .premium-badge-mini {
-          position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
-          font-size: 1.5rem;
-          animation: premiumFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes premiumFloat {
-          0%, 100% { transform: translateX(-50%) translateY(0); }
-          50% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        .nav-btn-cosmic {
-          font-family: 'Rajdhani', sans-serif;
-          font-size: 1rem;
-          font-weight: 700;
-          padding: 0.75rem 1.5rem;
-          border-radius: 10px;
-          background: rgba(20, 0, 40, 0.8);
-          border: 1px solid rgba(100, 50, 200, 0.5);
-          color: #a78bfa;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          backdrop-filter: blur(5px);
-        }
-
-        .nav-btn-cosmic:hover {
-          background: rgba(30, 0, 60, 1);
-          border-color: rgba(150, 100, 255, 0.8);
-          transform: translateY(-2px);
-          box-shadow: 0 5px 20px rgba(100, 50, 200, 0.4);
-        }
-
-        .nav-btn-cosmic.primary {
-          background: linear-gradient(135deg, #6366f1, #8b5cf6);
-          border-color: rgba(255, 255, 255, 0.3);
-          color: white;
-        }
-
-        .nav-btn-cosmic.primary:hover {
-          background: linear-gradient(135deg, #7c3aed, #a855f7);
-          box-shadow: 0 5px 25px rgba(139, 92, 246, 0.6);
-        }
-
-        .nav-icon {
-          font-size: 1.25rem;
-          font-weight: 900;
-        }
-
-        .nav-label {
-          font-weight: 700;
-          letter-spacing: 0.05em;
-        }
-
-        /* ✅ Main Cosmic Area - SCROLLABLE */
+        /* ✅ Main occupe tout l'espace disponible */
         .cosmic-main {
           position: relative;
           z-index: 10;
           flex: 1;
-          overflow-y: auto; /* ✅ CRITIQUE: Permet le scroll vertical */
+          overflow-y: auto;
           overflow-x: hidden;
           display: flex;
-          align-items: flex-start; /* ✅ Alignement en haut pour le scroll */
+          align-items: flex-start;
           justify-content: center;
-          padding: 0;
-          -webkit-overflow-scrolling: touch; /* ✅ Smooth scroll sur iOS */
+          padding: 100px 0 40px;
+          -webkit-overflow-scrolling: touch;
         }
 
-        /* ✅ Style de la scrollbar (optionnel, pour webkit) */
         .cosmic-main::-webkit-scrollbar {
           width: 8px;
         }
@@ -346,41 +239,13 @@ export default function BonusRollPage({
           background: rgba(139, 92, 246, 0.7);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-          .cosmic-nav {
-            padding: 0.75rem 1rem;
-          }
-
-          .nav-btn-cosmic {
-            font-size: 0.9rem;
-            padding: 0.6rem 1rem;
-          }
-
-          .nav-label {
-            display: none;
-          }
-
-          .nav-icon {
-            font-size: 1.5rem;
-          }
-
-          .nav-btn-cosmic.primary .nav-label {
-            display: inline;
-          }
-
-          .premium-badge-mini {
-            font-size: 1.25rem;
-          }
-
-          /* ✅ Assure que le scroll fonctionne bien sur mobile */
           .cosmic-main {
-            align-items: center; /* ✅ Centré sur mobile si pas de scroll nécessaire */
+            align-items: center;
           }
         }
       `}</style>
 
-      {/* Google Fonts */}
       <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
     </div>
   );
