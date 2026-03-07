@@ -212,6 +212,8 @@ export default function CardGame({
             background: var(--bg); font-family: 'Jost', sans-serif; color: var(--white);
             position: relative; overflow: hidden;
             padding-top: env(safe-area-inset-top, 0px);
+            /* ✅ FIX SCROLL : autoriser uniquement le scroll vertical sur toute la page */
+            touch-action: pan-y;
           }
 
           .cg-bg {
@@ -246,7 +248,6 @@ export default function CardGame({
             background: none; border: none; cursor: pointer; padding: 0;
             font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 300;
             letter-spacing: 2px; text-transform: uppercase;
-            /* ✅ +lisibilité : 0.45 → 0.80 */
             color: rgba(247,242,234,0.80); transition: color 0.3s;
           }
           .cg-back:hover { color: rgba(247,242,234,1); }
@@ -261,7 +262,6 @@ export default function CardGame({
           .cg-progress-dots { display: flex; align-items: center; gap: 6px; }
           .cg-dot {
             width: 6px; height: 6px; border-radius: 50%;
-            /* ✅ +lisibilité : 0.1 → 0.30 */
             background: rgba(255,255,255,0.30); transition: all 0.4s ease;
           }
           .cg-dot.filled {
@@ -281,7 +281,6 @@ export default function CardGame({
           .cg-oracle-badge {
             display: inline-block;
             font-size: 9px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase;
-            /* ✅ +lisibilité : 0.6 → 0.90, border 0.2 → 0.45 */
             color: rgba(220,185,90,1.0);
             border: 1px solid rgba(201,168,76,0.45);
             border-radius: 20px; padding: 5px 14px; margin-bottom: 14px;
@@ -297,21 +296,28 @@ export default function CardGame({
           .cg-desc {
             font-family: 'Playfair Display', serif;
             font-size: 14px; font-style: italic; font-weight: 300;
-            /* ✅ +lisibilité : 0.55 → 0.85 */
             color: rgba(247,242,234,0.85); line-height: 1.65;
           }
 
+          /* ✅ FIX PRINCIPAL : touch-action pan-y sur toute la zone cartes */
           .cg-cards-area {
             position: relative; z-index: 10;
             flex: 1; display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             padding: 8px 16px; gap: 16px;
             opacity: 0; transition: opacity 0.8s ease;
+            /* Interdit scroll horizontal et rotation, autorise uniquement vertical */
+            touch-action: pan-y;
+            /* Empêche la sélection de texte accidentelle */
+            user-select: none;
+            -webkit-user-select: none;
           }
           .cg-mounted .cg-cards-area { opacity: 1; transition-delay: 0.4s; }
 
+          /* ✅ Chaque rangée de cartes aussi */
           .cg-cards-row {
             display: flex; justify-content: center; align-items: center; gap: 14px;
+            touch-action: pan-y;
           }
 
           /* Instruction */
@@ -324,13 +330,11 @@ export default function CardGame({
 
           .cg-instruction-text {
             font-size: 13px; font-weight: 400; letter-spacing: 0.3px;
-            /* ✅ +lisibilité : 0.5 → 0.88 */
             color: rgba(247,242,234,0.88); margin-bottom: 4px;
           }
           .cg-counter {
             font-family: 'Playfair Display', serif;
             font-size: 12px; font-style: italic;
-            /* ✅ +lisibilité : 0.55 → 0.85 */
             color: rgba(220,185,90,1.0);
           }
 
@@ -345,11 +349,9 @@ export default function CardGame({
           .cg-back-btn {
             padding: 13px 36px;
             background: none;
-            /* ✅ +lisibilité : border 0.07 → 0.22 */
             border: 1px solid rgba(255,255,255,0.22); border-radius: 3px;
             font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 300;
             letter-spacing: 3px; text-transform: uppercase;
-            /* ✅ +lisibilité : 0.4 → 0.78 */
             color: rgba(247,242,234,0.78); cursor: pointer; transition: all 0.3s;
           }
           .cg-back-btn:hover { border-color: rgba(255,255,255,0.45); color: rgba(247,242,234,1); }
@@ -398,6 +400,7 @@ export default function CardGame({
 
         <div className="cg-line"/>
 
+        {/* ✅ touch-action pan-y posé ici ET sur chaque row */}
         <div className="cg-cards-area">
           {isDailyReading ? (
             <div className="cg-cards-row">

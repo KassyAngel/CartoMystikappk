@@ -14,26 +14,37 @@ type Phase = 'question' | 'loading' | 'answer';
 export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPageProps) {
   const [question, setQuestion] = useState('');
   const [phase, setPhase] = useState<Phase>('question');
-  const [currentAnswer, setCurrentAnswer] = useState<{ key: string; icon: string; color: string } | null>(null);
+  const [currentAnswer, setCurrentAnswer] = useState<{ key: string; color: string } | null>(null);
   const [mounted] = useState(true);
   const { t } = useLanguage();
 
   const mysticalAnswers = [
-    { key: 'yes',            icon: '✦', color: '#7dffb3' },
-    { key: 'no',             icon: '✕', color: '#ff7d7d' },
-    { key: 'maybe',          icon: '◈', color: '#c4a8ff' },
-    { key: 'veryLikely',     icon: '✧', color: '#ffe57d' },
-    { key: 'unlikely',       icon: '◇', color: '#7dc8ff' },
-    { key: 'certain',        icon: '✦', color: '#7dffcf' },
-    { key: 'noChance',       icon: '✕', color: '#ff9d7d' },
-    { key: 'askLater',       icon: '◎', color: '#b0b8d0' },
-    { key: 'dontCount',      icon: '✕', color: '#ffb87d' },
-    { key: 'yesDefinitely',  icon: '✦', color: '#7dff9d' },
-    { key: 'signsYes',       icon: '✧', color: '#fffb7d' },
-    { key: 'signsNo',        icon: '◇', color: '#9d7dff' },
-    { key: 'unclear',        icon: '◌', color: '#c0c8d8' },
-    { key: 'trustIntuition', icon: '◈', color: '#ffb8e8' },
+    { key: 'yes',            color: '#7dffb3' },
+    { key: 'no',             color: '#ff7d7d' },
+    { key: 'maybe',          color: '#c4a8ff' },
+    { key: 'veryLikely',     color: '#ffe57d' },
+    { key: 'unlikely',       color: '#7dc8ff' },
+    { key: 'certain',        color: '#7dffcf' },
+    { key: 'noChance',       color: '#ff9d7d' },
+    { key: 'askLater',       color: '#b0b8d0' },
+    { key: 'dontCount',      color: '#ffb87d' },
+    { key: 'yesDefinitely',  color: '#7dff9d' },
+    { key: 'signsYes',       color: '#fffb7d' },
+    { key: 'signsNo',        color: '#9d7dff' },
+    { key: 'unclear',        color: '#c0c8d8' },
+    { key: 'trustIntuition', color: '#ffb8e8' },
   ];
+
+  // ✅ Taille de police adaptive selon longueur du texte
+  const getOrbFontSize = (text: string) => {
+    const len = text.length;
+    if (len <= 3)  return '32px';
+    if (len <= 6)  return '26px';
+    if (len <= 10) return '20px';
+    if (len <= 16) return '15px';
+    if (len <= 24) return '12px';
+    return '10px';
+  };
 
   const saveReading = async (answerKey: string) => {
     if (onSaveReading) {
@@ -71,7 +82,6 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           position: relative; overflow-x: hidden; padding: 0 0 48px;
         }
 
-        /* ── Arrière-plans ── */
         .cb-bg {
           position: fixed; inset: 0; pointer-events: none; z-index: 0;
           background:
@@ -87,7 +97,6 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
         .cb-particle { position: absolute; border-radius: 50%; background: white; animation: cbpf var(--d,5s) ease-in-out infinite var(--dl,0s); }
         @keyframes cbpf { 0%,100%{opacity:0} 40%,60%{opacity:var(--op,.15)} }
 
-        /* ── Header ── */
         .cb-header {
           position: relative; z-index: 10; width: 100%;
           display: flex; align-items: center; justify-content: space-between;
@@ -111,7 +120,6 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           transform: rotate(45deg);
         }
 
-        /* ── Titre ── */
         .cb-title-block {
           position: relative; z-index: 10; text-align: center; padding: 32px 24px 8px;
           opacity: 0; transform: translateY(10px);
@@ -135,10 +143,7 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           color: rgba(247,242,234,0.82); line-height: 1.65; max-width: 280px; margin: 0 auto;
         }
 
-        /* ══════════════════════════════════
-           ── BOULE DE CRISTAL ──
-           ══════════════════════════════════ */
-
+        /* ── BOULE DE CRISTAL ── */
         .cb-orb-wrap {
           position: relative; z-index: 10;
           width: 220px; height: 220px; margin: 36px auto 44px;
@@ -148,13 +153,9 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
         .cb-mounted .cb-orb-wrap { opacity: 1; transform: scale(1); transition-delay: 0.35s; }
 
         .cb-orb-glow {
-          position: absolute;
-          inset: -40px;
-          border-radius: 50%;
+          position: absolute; inset: -40px; border-radius: 50%;
           background: radial-gradient(ellipse at 50% 50%,
-            rgba(140,80,255,0.18) 0%,
-            rgba(100,50,200,0.08) 45%,
-            transparent 70%);
+            rgba(140,80,255,0.18) 0%, rgba(100,50,200,0.08) 45%, transparent 70%);
           filter: blur(12px);
           animation: cb-glow-pulse 5s ease-in-out infinite;
           pointer-events: none;
@@ -181,51 +182,34 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           position: absolute; bottom: -18px; left: 50%;
           transform: translateX(-50%);
           width: 88px; height: 14px;
-          background: linear-gradient(180deg,
-            rgba(201,168,76,0.25) 0%,
-            rgba(201,168,76,0.06) 100%);
-          border: 1px solid rgba(201,168,76,0.30);
-          border-radius: 50%;
+          background: linear-gradient(180deg, rgba(201,168,76,0.25) 0%, rgba(201,168,76,0.06) 100%);
+          border: 1px solid rgba(201,168,76,0.30); border-radius: 50%;
           box-shadow: 0 2px 10px rgba(201,168,76,0.08);
         }
 
         .cb-sphere {
-          position: absolute;
-          inset: 10px;
-          border-radius: 50%;
-          overflow: hidden;
-          cursor: default;
+          position: absolute; inset: 10px; border-radius: 50%; overflow: hidden; cursor: default;
           background:
             radial-gradient(ellipse 65% 55% at 35% 40%, rgba(130,80,255,0.50) 0%, transparent 60%),
             radial-gradient(ellipse 50% 45% at 68% 65%, rgba(80,35,200,0.38) 0%, transparent 55%),
             radial-gradient(circle at 50% 50%,
-              rgba(25,10,75,0.97) 0%,
-              rgba(12,4,45,0.99) 55%,
-              rgba(5,2,20,1) 100%);
+              rgba(25,10,75,0.97) 0%, rgba(12,4,45,0.99) 55%, rgba(5,2,20,1) 100%);
           box-shadow:
-            0 0 30px rgba(120,65,255,0.50),
-            0 0 65px rgba(100,45,220,0.22),
-            0 0 120px rgba(80,30,180,0.10),
-            inset 0 0 28px rgba(150,90,255,0.22),
-            inset 0 -18px 36px rgba(15,4,60,0.65),
-            inset 0 0 0 1px rgba(190,155,255,0.20);
+            0 0 30px rgba(120,65,255,0.50), 0 0 65px rgba(100,45,220,0.22),
+            0 0 120px rgba(80,30,180,0.10), inset 0 0 28px rgba(150,90,255,0.22),
+            inset 0 -18px 36px rgba(15,4,60,0.65), inset 0 0 0 1px rgba(190,155,255,0.20);
           border: 1px solid rgba(175,140,255,0.25);
           animation: cb-breathe 5s ease-in-out infinite;
         }
 
         .cb-nebula {
-          position: absolute; inset: -25%;
-          border-radius: 50%;
+          position: absolute; inset: -25%; border-radius: 50%;
           background: conic-gradient(from 0deg at 42% 38%,
-            rgba(110,55,255,0.00)  0deg,
-            rgba(110,55,255,0.28) 55deg,
-            rgba(190,90,255,0.18) 110deg,
-            rgba(75,35,200,0.22)  175deg,
-            rgba(130,70,255,0.12) 240deg,
-            rgba(110,55,255,0.00) 360deg);
+            rgba(110,55,255,0.00) 0deg, rgba(110,55,255,0.28) 55deg,
+            rgba(190,90,255,0.18) 110deg, rgba(75,35,200,0.22) 175deg,
+            rgba(130,70,255,0.12) 240deg, rgba(110,55,255,0.00) 360deg);
           animation: cb-nebula-spin 22s linear infinite;
-          mix-blend-mode: screen;
-          opacity: 0.75;
+          mix-blend-mode: screen; opacity: 0.75;
         }
         @keyframes cb-nebula-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
@@ -247,99 +231,73 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
         }
 
         .cb-reflex-main {
-          position: absolute;
-          top: 5%; left: 6%;
-          width: 52%; height: 38%;
+          position: absolute; top: 5%; left: 6%; width: 52%; height: 38%;
           background: radial-gradient(ellipse,
-            rgba(255,255,255,0.68) 0%,
-            rgba(255,255,255,0.28) 28%,
-            rgba(255,255,255,0.06) 58%,
-            transparent 100%);
-          border-radius: 50%;
-          transform: rotate(-32deg);
-          pointer-events: none;
-          filter: blur(1.5px);
+            rgba(255,255,255,0.68) 0%, rgba(255,255,255,0.28) 28%,
+            rgba(255,255,255,0.06) 58%, transparent 100%);
+          border-radius: 50%; transform: rotate(-32deg);
+          pointer-events: none; filter: blur(1.5px);
         }
-
         .cb-reflex-sparkle {
-          position: absolute;
-          top: 9%; left: 14%;
-          width: 13%; height: 9%;
+          position: absolute; top: 9%; left: 14%; width: 13%; height: 9%;
           background: radial-gradient(ellipse,
-            rgba(255,255,255,0.98) 0%,
-            rgba(255,255,255,0.45) 40%,
-            transparent 100%);
-          border-radius: 50%;
-          pointer-events: none;
+            rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.45) 40%, transparent 100%);
+          border-radius: 50%; pointer-events: none;
         }
-
         .cb-reflex-low {
-          position: absolute;
-          bottom: 8%; right: 8%;
-          width: 30%; height: 22%;
+          position: absolute; bottom: 8%; right: 8%; width: 30%; height: 22%;
           background: radial-gradient(ellipse,
-            rgba(175,140,255,0.42) 0%,
-            rgba(150,110,255,0.18) 45%,
-            transparent 100%);
-          border-radius: 50%;
-          transform: rotate(18deg);
-          pointer-events: none;
-          filter: blur(2.5px);
+            rgba(175,140,255,0.42) 0%, rgba(150,110,255,0.18) 45%, transparent 100%);
+          border-radius: 50%; transform: rotate(18deg);
+          pointer-events: none; filter: blur(2.5px);
         }
-
         .cb-reflex-rim {
           position: absolute; inset: 0; border-radius: 50%;
           background: radial-gradient(ellipse 100% 100% at 50% 50%,
-            transparent 60%,
-            rgba(165,135,255,0.10) 72%,
-            rgba(210,190,255,0.20) 82%,
-            rgba(255,255,255,0.07) 90%,
-            transparent 100%);
+            transparent 60%, rgba(165,135,255,0.10) 72%,
+            rgba(210,190,255,0.20) 82%, rgba(255,255,255,0.07) 90%, transparent 100%);
           pointer-events: none;
         }
 
-        /* ── Contenu central : answer only, no idle symbol ── */
+        /* ✅ Centre de la boule — texte adaptatif */
         .cb-sphere-center {
           position: absolute; inset: 0; z-index: 2;
           display: flex; align-items: center; justify-content: center;
+          padding: 16px;
         }
 
         .cb-sphere-answer {
           font-family: 'Playfair Display', serif;
-          font-size: 24px; font-weight: 400; font-style: italic;
-          text-align: center; padding: 0 8px; line-height: 1.25;
+          font-weight: 400; font-style: italic;
+          text-align: center;
+          line-height: 1.25;
+          word-break: break-word;
+          max-width: 100%;
+          display: block;
           animation: cb-reveal 0.7s cubic-bezier(0.16,1,0.3,1);
           text-shadow: 0 0 14px currentColor, 0 0 36px currentColor, 0 0 70px currentColor;
           z-index: 2;
+          /* font-size géré inline dynamiquement */
         }
 
-        /* Loader doré animé */
         .cb-orb-loader {
           position: absolute; inset: -1px; border-radius: 50%; z-index: 3; pointer-events: none;
           background: conic-gradient(from 0deg,
-            transparent 0%,
-            rgba(201,168,76,0.55) 18%,
-            rgba(240,220,136,0.85) 32%,
-            rgba(201,168,76,0.55) 48%,
-            transparent 65%);
+            transparent 0%, rgba(201,168,76,0.55) 18%,
+            rgba(240,220,136,0.85) 32%, rgba(201,168,76,0.55) 48%, transparent 65%);
           animation: cb-spin-loader 1.8s linear infinite;
           mix-blend-mode: screen;
         }
         @keyframes cb-spin-loader { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
-        /* ── Animations globales ── */
         @keyframes cb-breathe {
           0%,100% { box-shadow:
-            0 0 28px rgba(120,65,255,0.45),
-            0 0 60px rgba(100,45,220,0.18),
-            inset 0 0 25px rgba(150,90,255,0.18),
-            inset 0 -18px 36px rgba(15,4,60,0.65),
+            0 0 28px rgba(120,65,255,0.45), 0 0 60px rgba(100,45,220,0.18),
+            inset 0 0 25px rgba(150,90,255,0.18), inset 0 -18px 36px rgba(15,4,60,0.65),
             inset 0 0 0 1px rgba(190,155,255,0.18); }
           50% { box-shadow:
-            0 0 42px rgba(130,75,255,0.60),
-            0 0 85px rgba(110,55,230,0.25),
-            inset 0 0 35px rgba(165,105,255,0.28),
-            inset 0 -18px 36px rgba(15,4,60,0.65),
+            0 0 42px rgba(130,75,255,0.60), 0 0 85px rgba(110,55,230,0.25),
+            inset 0 0 35px rgba(165,105,255,0.28), inset 0 -18px 36px rgba(15,4,60,0.65),
             inset 0 0 0 1px rgba(200,165,255,0.28); }
         }
         @keyframes cb-reveal { from{opacity:0;transform:scale(0.6)} to{opacity:1;transform:scale(1)} }
@@ -348,10 +306,7 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
           50%      { transform: translateY(-9px); }
         }
 
-        /* ══════════════════════════════════
-           ── UI CONTENU ──
-           ══════════════════════════════════ */
-
+        /* ── UI CONTENU ── */
         .cb-content {
           position: relative; z-index: 10; width: 100%; max-width: 480px; padding: 0 20px;
           opacity: 0; transform: translateY(12px);
@@ -508,36 +463,37 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
         className="cb-orb-wrap"
         style={{ animation: phase === 'loading' ? 'cb-float 1.4s ease-in-out infinite' : 'cb-float 4.5s ease-in-out infinite' }}
       >
-        {/* Halo ambiant */}
         <div className="cb-orb-glow" />
-
-        {/* Ombre sol */}
         <div className="cb-orb-shadow" />
 
-        {/* Sphère cristal */}
         <div className="cb-sphere">
-          {/* Nébuleuse interne */}
           <div className="cb-nebula" />
-          {/* Poussière d'étoiles */}
           <div className="cb-stardust" />
-          {/* Reflets de verre */}
           <div className="cb-reflex-main" />
           <div className="cb-reflex-sparkle" />
           <div className="cb-reflex-low" />
           <div className="cb-reflex-rim" />
-          {/* Loader phase loading */}
           {phase === 'loading' && <div className="cb-orb-loader" />}
-          {/* Contenu central : uniquement la réponse, aucun symbole en idle */}
+
+          {/* ✅ Texte adaptatif — plus de symbole */}
           <div className="cb-sphere-center">
-            {phase === 'answer' && currentAnswer && (
-              <span className="cb-sphere-answer" style={{ color: currentAnswer.color }}>
-                {currentAnswer.icon}
-              </span>
-            )}
+            {phase === 'answer' && currentAnswer && (() => {
+              const answerText = t(`crystalBall.answers.${currentAnswer.key}`) || currentAnswer.key;
+              return (
+                <span
+                  className="cb-sphere-answer"
+                  style={{
+                    color: currentAnswer.color,
+                    fontSize: getOrbFontSize(answerText),
+                  }}
+                >
+                  {answerText}
+                </span>
+              );
+            })()}
           </div>
         </div>
 
-        {/* Socle */}
         <div className="cb-orb-base" />
       </div>
 
@@ -592,7 +548,13 @@ export default function CrystalBallPage({ onBack, onSaveReading }: CrystalBallPa
             <div className="cb-card" style={{ marginBottom: 10 }}>
               <div className="cb-corner tl" /><div className="cb-corner tr" />
               <div className="cb-corner bl" /><div className="cb-corner br" />
-              <p className="cb-answer-text" style={{ color: currentAnswer.color, textShadow: `0 0 30px ${currentAnswer.color}60` }}>
+              <p
+                className="cb-answer-text"
+                style={{
+                  color: currentAnswer.color,
+                  textShadow: `0 0 30px ${currentAnswer.color}60`
+                }}
+              >
                 {t(`crystalBall.answers.${currentAnswer.key}`) || currentAnswer.key}
               </p>
               <div className="cb-answer-sep" />
