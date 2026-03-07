@@ -39,11 +39,13 @@ type AppStep =
   | 'horoscope' | 'crystalBall' | 'mysteryDice' | 'bonusRoll'
   | 'responsiveTest';
 
+const NO_BANNER_PAGES = ['landing', 'name', 'date', 'gender'];
+
 function Router({ onSaveReading, onStepChange, shouldShowAdBeforeReading, shouldShowAdForBonusRoll, isPremium }: {
   onSaveReading: (reading: any) => Promise<void>;
   onStepChange: (step: AppStep) => void;
   shouldShowAdBeforeReading: (oracleType: string) => Promise<boolean>;
-  shouldShowAdForBonusRoll: (oracleType: string) => Promise<boolean>; // ✅ AJOUT
+  shouldShowAdForBonusRoll: (oracleType: string) => Promise<boolean>;
   isPremium: boolean;
 }) {
   return (
@@ -55,7 +57,7 @@ function Router({ onSaveReading, onStepChange, shouldShowAdBeforeReading, should
           onSaveReading={onSaveReading}
           onStepChange={onStepChange as any}
           shouldShowAdBeforeReading={shouldShowAdBeforeReading}
-          shouldShowAdForBonusRoll={shouldShowAdForBonusRoll} // ✅ AJOUT
+          shouldShowAdForBonusRoll={shouldShowAdForBonusRoll}
           isPremium={isPremium}
         />
       </Route>
@@ -76,6 +78,7 @@ function App() {
   const [readingCount, setReadingCount] = useState(0);
   const [bannerShown, setBannerShown] = useState(false);
   const [deviceId, setDeviceId] = useState<string>('');
+  const [adMobReady, setAdMobReady] = useState(false); // ✅ NOUVEAU : track init AdMob
 
   useEffect(() => {
     const initDeviceId = async () => {
@@ -108,20 +111,28 @@ function App() {
     migrateData();
   }, [deviceId]);
 
+  // ✅ Init AdMob + RevenueCat — on marque adMobReady après init
   useEffect(() => {
     const initServices = async () => {
       try {
         await initializeAdMob();
         await initializeRevenueCat();
         console.log('✅ Services AdMob + RevenueCat initialisés');
+        setAdMobReady(true); // ✅ déclenche la bannière si nécessaire
       } catch (error) {
         console.error('❌ Erreur initialisation services:', error);
+        setAdMobReady(true); // on continue quand même
       }
     };
     initServices();
   }, []);
 
+  // ✅ GESTION BANNIÈRE — réagit à currentStep, isPremium ET adMobReady
+  // Ainsi au 1er lancement quand AdMob finit de s'init, la bannière s'affiche
+  // immédiatement si on est déjà sur une page qui la requiert.
   useEffect(() => {
+    if (!adMobReady) return; // attendre que AdMob soit prêt
+
     if (isPremium) {
       console.log('👑 Premium actif : bannière cachée');
       if (bannerShown) {
@@ -131,27 +142,26 @@ function App() {
       return;
     }
 
-    const noBannerPages = ['landing', 'name', 'date', 'gender'];
-    const shouldShowBanner = !noBannerPages.includes(currentStep);
+    const shouldShowBanner = !NO_BANNER_PAGES.includes(currentStep);
 
     if (shouldShowBanner && !bannerShown) {
-      console.log(`🎯 Page "${currentStep}" atteinte → Affichage de la bannière permanente`);
+      console.log(`🎯 Bannière requise (step="${currentStep}") → affichage`);
       const timer = setTimeout(() => {
         showBanner();
         setBannerShown(true);
-        console.log('📺 Bannière affichée en permanence (utilisateur gratuit)');
+        console.log('📺 Bannière affichée');
       }, 500);
       return () => clearTimeout(timer);
     }
 
     if (!shouldShowBanner && bannerShown) {
-      console.log('👋 Retour à l\'onboarding → Masquer la bannière');
+      console.log('👋 Page sans bannière → masquage');
       hideBanner();
       setBannerShown(false);
     }
-  }, [currentStep, isPremium, bannerShown]);
+  }, [currentStep, isPremium, bannerShown, adMobReady]); // ✅ adMobReady dans les deps
 
-  const showTopBar = !['landing', 'name', 'date', 'gender'].includes(currentStep);
+  const showTopBar = !NO_BANNER_PAGES.includes(currentStep);
 
   useEffect(() => {
     const checkNotificationPermission = () => {
@@ -172,10 +182,7 @@ function App() {
   }, [deviceId]);
 
   const loadUserData = async () => {
-    if (!deviceId) {
-      console.log('⏳ Device ID pas encore initialisé, on attend...');
-      return;
-    }
+    if (!deviceId) return;
     try {
       const savedEmail = await getUserEmail();
       const premiumResponse = await fetch(`${config.apiBaseUrl}/api/user/premium-status`, {
@@ -184,21 +191,19 @@ function App() {
       });
       const premiumData = await premiumResponse.json();
       setIsPremium(premiumData.isPremium);
-      console.log('✅ Statut Premium:', premiumData.isPremium, savedEmail ? `(email: ${savedEmail})` : '(sans email)');
+      console.log('✅ Statut Premium:', premiumData.isPremium);
 
       const readingsResponse = await fetch(`${config.apiBaseUrl}/api/readings`, {
         credentials: 'include',
         headers: { 'X-Device-ID': deviceId }
       });
       if (!readingsResponse.ok) {
-        const errorData = await readingsResponse.json();
-        console.error('❌ Erreur chargement tirages:', errorData);
         setIsLoading(false);
         return;
       }
       const readingsData = await readingsResponse.json();
       setReadings(readingsData.readings.map((r: any) => ({ ...r, date: new Date(r.date) })));
-      console.log('✅ Données chargées:', readingsData.readings.length, 'tirages pour device:', deviceId);
+      console.log('✅ Données chargées:', readingsData.readings.length, 'tirages');
     } catch (error) {
       console.error('❌ Erreur chargement données:', error);
     } finally {
@@ -268,7 +273,6 @@ function App() {
   const clearAllReadings = async () => {
     if (!deviceId) return;
     try {
-      console.log('🗑️ Suppression de tous les tirages du Grimoire...');
       const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
         method: 'DELETE',
         credentials: 'include',
@@ -283,55 +287,31 @@ function App() {
     }
   };
 
-  // ✅ Pub pour les tirages classiques (tarot, oracle, angels, runes...)
+  // ✅ Pub pour les tirages classiques
   const shouldShowAdBeforeReading = async (oracleType: string): Promise<boolean> => {
-    console.log(`🎯 [PUB CHECK] Oracle sélectionné: "${oracleType}"`);
-
-    if (isPremium) {
-      console.log('👑 Premium actif : pas de pub');
-      return false;
-    }
-
-    // horoscope et bonusRoll ont leur propre système
-    if (oracleType === 'horoscope' || oracleType === 'bonusRoll') {
-      console.log(`⏭️ "${oracleType}" exclu : pas de pub interstitielle (système propre)`);
-      return false;
-    }
-
+    if (isPremium) return false;
+    if (oracleType === 'horoscope' || oracleType === 'bonusRoll') return false;
     const nextCount = readingCount + 1;
     const shouldShow = nextCount % 3 === 0;
-    console.log(`📊 Compteur: ${readingCount} → ${nextCount} | Pub: ${shouldShow ? 'OUI ✅' : 'NON ❌'}`);
-
+    console.log(`📊 Compteur: ${readingCount} → ${nextCount} | Pub: ${shouldShow ? 'OUI' : 'NON'}`);
     if (shouldShow) {
-      console.log('🎬 Affichage pub interstitielle AVANT le tirage');
       try {
         await showInterstitialAd(`before_${oracleType}`);
-        console.log('✅ Pub interstitielle affichée avec succès');
       } catch (error) {
         console.error('❌ Erreur pub interstitielle:', error);
       }
     }
-
     if ((nextCount + 1) % 3 === 0) {
-      console.log(`🔄 Pré-chargement pub pour le tirage #${nextCount + 1}`);
       setTimeout(() => preloadInterstitial(), 1000);
     }
-
     return shouldShow;
   };
 
-  // ✅ NOUVEAU : Pub dédiée bonusRoll — appelée depuis OracleSelection au clic
+  // ✅ Pub dédiée bonusRoll
   const shouldShowAdForBonusRoll = async (oracleType: string): Promise<boolean> => {
-    console.log(`🎲 [BONUS ROLL PUB] Déclenchement avant navigation`);
-
-    if (isPremium) {
-      console.log('👑 Premium actif : pas de pub bonusRoll');
-      return false;
-    }
-
+    if (isPremium) return false;
     try {
       await showInterstitialAd('before_bonusRoll');
-      console.log('✅ [BONUS ROLL PUB] Pub interstitielle affichée');
       return true;
     } catch (error) {
       console.error('❌ [BONUS ROLL PUB] Erreur pub:', error);
@@ -341,44 +321,27 @@ function App() {
 
   const checkAndShowRating = (newCount: number) => {
     const hasRated = localStorage.getItem('hasRatedApp');
-    if (hasRated === 'true') {
-      console.log('⭐ Utilisateur a déjà noté l\'app');
-      return;
-    }
-    console.log(`⭐ Compteur rating: ${newCount}`);
+    if (hasRated === 'true') return;
     if (newCount % 5 === 0) {
-      console.log(`🎯 ${newCount} tirages atteints → Affichage du modal de rating`);
       setTimeout(() => { setShowRatingModal(true); }, 2000);
     }
   };
 
   const handleRateApp = () => {
-    console.log('⭐ Utilisateur a accepté de noter l\'app');
     localStorage.setItem('hasRatedApp', 'true');
     setShowRatingModal(false);
-    const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.cartomystik.app&pli=1';
-    window.open(playStoreUrl, '_blank');
-    console.log('📱 Redirection vers Google Play Store');
+    window.open('https://play.google.com/store/apps/details?id=com.cartomystik.app&pli=1', '_blank');
   };
 
-  const handleCloseRating = () => {
-    console.log('⭐ Utilisateur a choisi "Plus tard"');
-    setShowRatingModal(false);
-    console.log('⏭️ Modal de rating redemandera dans 5 tirages');
-  };
+  const handleCloseRating = () => { setShowRatingModal(false); };
 
   const addReading = async (reading: Omit<Reading, 'id' | 'notes' | 'isFavorite'>) => {
     if (!deviceId) return;
-
     const typesExcludedFromGrimoire = ['crystalBall', 'horoscope', 'mysteryDice', 'bonusRoll'];
     const shouldSaveInGrimoire = !typesExcludedFromGrimoire.includes(reading.type);
-
     const typesCountedForAds = ['tarot', 'oracle', 'angels', 'runes', 'crystalBall', 'crystal'];
     const shouldIncrementCounter = typesCountedForAds.includes(reading.type);
-
     try {
-      console.log(`📤 Sauvegarde tirage: "${reading.type}" | Grimoire: ${shouldSaveInGrimoire} | Compteur: ${shouldIncrementCounter}`);
-
       if (shouldSaveInGrimoire) {
         const response = await fetch(`${config.apiBaseUrl}/api/readings`, {
           method: 'POST',
@@ -389,27 +352,19 @@ function App() {
         if (response.status === 403) {
           console.log('⚠️ Erreur 403 ignorée');
         } else if (!response.ok) {
-          const errorText = await response.text();
-          console.error(`❌ Erreur HTTP ${response.status}:`, errorText);
           throw new Error(`Erreur HTTP: ${response.status}`);
         } else {
           const newReading = await response.json();
           setReadings(prev => [{ ...newReading, date: new Date(newReading.date) }, ...prev]);
-          console.log('✅ Tirage enregistré dans le Grimoire:', newReading.id);
         }
       }
-
       if (shouldIncrementCounter) {
         const currentCount = parseInt(localStorage.getItem('ratingReadingCount') || '0', 10);
         const newCount = currentCount + 1;
         localStorage.setItem('ratingReadingCount', newCount.toString());
         setReadingCount(newCount);
-        console.log(`📊 ✅ Compteur mis à jour: ${currentCount} → ${newCount} (type: ${reading.type})`);
         checkAndShowRating(newCount);
-      } else {
-        console.log(`📊 ⏭️ Type "${reading.type}" NON comptabilisé (système pub indépendant)`);
       }
-
     } catch (error) {
       console.error('❌ Erreur ajout tirage:', error);
       alert('⚠️ Erreur lors de la sauvegarde du tirage.');
@@ -484,7 +439,7 @@ function App() {
                   onSaveReading={addReading}
                   onStepChange={setCurrentStep}
                   shouldShowAdBeforeReading={shouldShowAdBeforeReading}
-                  shouldShowAdForBonusRoll={shouldShowAdForBonusRoll} // ✅ AJOUT
+                  shouldShowAdForBonusRoll={shouldShowAdForBonusRoll}
                   isPremium={isPremium}
                 />
               </div>
