@@ -112,12 +112,21 @@ export default function TarotCard({
   return (
     <div
       className={cn(
-        'w-24 h-36 sm:w-28 sm:h-40 md:w-32 md:h-44 rounded-xl cursor-pointer min-h-[44px]',
-        'touch-manipulation flex items-center justify-center transition-all duration-300',
+        /*
+         * ── TAILLE : on remplit complètement le conteneur parent ──────────────
+         * CardGame positionne chaque carte via .cg-fan-card (width/height en CSS var).
+         * TarotCard ne doit PAS imposer sa propre taille — il remplit simplement
+         * le parent avec w-full h-full.
+         * Les anciennes classes fixes (w-24 h-36 sm:w-28 sm:h-40 md:w-32 md:h-44)
+         * sont supprimées car elles créaient un espace mort autour des cartes.
+         */
+        'w-full h-full',
+        'rounded-xl cursor-pointer',
+        'touch-manipulation flex items-center justify-center',
         'relative overflow-hidden',
-        isSelectable && 'hover:scale-105',
+        isSelectable && 'hover:scale-105 transition-transform duration-300',
         isSelected && 'selected scale-105 ring-4 ring-[#ffd700] ring-offset-2 ring-offset-purple-900',
-        !isSelectable && 'cursor-default opacity-50',
+        !isSelectable && 'cursor-default',
         !isBack && 'mystical-card',
         className
       )}
@@ -127,7 +136,7 @@ export default function TarotCard({
       data-testid={`card-${number}`}
     >
       {isBack ? (
-        /* DOS DE LA CARTE - Optimisé sans transition */
+        /* DOS DE LA CARTE */
         <div className="absolute inset-0 rounded-xl overflow-hidden">
           {!imageError ? (
             <>
@@ -135,36 +144,34 @@ export default function TarotCard({
                 src="/Image/Dos-carte.jpg" 
                 alt="Dos de carte"
                 className="absolute inset-0 w-full h-full object-cover"
-                style={{ 
-                  filter: 'contrast(1.05) saturate(1.1)'
-                } as React.CSSProperties}
+                style={{ filter: 'contrast(1.05) saturate(1.1)' } as React.CSSProperties}
                 loading="eager"
                 onError={() => {
                   console.error('❌ Erreur chargement image: /Image/Dos-carte.jpg');
                   setImageError(true);
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-indigo-900/20"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-indigo-900/20" />
             </>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-800">
               <div className="absolute inset-0 opacity-20">
                 <div className="absolute inset-0" style={{
-                  backgroundImage: `radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                                   radial-gradient(circle at 80% 70%, rgba(138, 43, 226, 0.15) 0%, transparent 50%)`
-                }}></div>
+                  backgroundImage: `radial-gradient(circle at 20% 30%, rgba(255,215,0,0.1) 0%, transparent 50%),
+                                    radial-gradient(circle at 80% 70%, rgba(138,43,226,0.15) 0%, transparent 50%)`
+                }} />
               </div>
             </div>
           )}
 
-          <div className="absolute inset-2 rounded-lg border-2 border-[#ffd700]/40 pointer-events-none"></div>
+          <div className="absolute inset-2 rounded-lg border-2 border-[#ffd700]/40 pointer-events-none" />
           <div className="absolute top-3 left-3 text-[#ffd700]/60 text-xs">✦</div>
           <div className="absolute top-3 right-3 text-[#ffd700]/60 text-xs">✦</div>
           <div className="absolute bottom-3 left-3 text-[#ffd700]/60 text-xs">✦</div>
           <div className="absolute bottom-3 right-3 text-[#ffd700]/60 text-xs">✦</div>
 
           {isHovered && (
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent animate-shimmer"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent animate-shimmer" />
           )}
         </div>
       ) : (
@@ -185,7 +192,7 @@ export default function TarotCard({
                       e.currentTarget.style.display = 'none';
                     }}
                   />
-                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/80 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/80 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 text-center px-2 pb-2">
                     <span className="text-white font-bold text-xs sm:text-sm leading-tight block drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                       {getTranslatedCardName()}
@@ -203,7 +210,7 @@ export default function TarotCard({
 
             {oracleType !== 'daily' && oracleType !== 'tarot' && oracleType !== 'angels' && (
               <div className="absolute inset-0 bg-gradient-to-br from-[#4a3470] via-[#2d1b4e] to-[#1a0f3a] rounded-xl overflow-hidden">
-                <div className="absolute inset-2 rounded-lg border-2 border-[#ffd700]/40 pointer-events-none"></div>
+                <div className="absolute inset-2 rounded-lg border-2 border-[#ffd700]/40 pointer-events-none" />
                 <div className="absolute top-3 left-3 text-[#ffd700]/60 text-xs">✦</div>
                 <div className="absolute top-3 right-3 text-[#ffd700]/60 text-xs">✦</div>
                 <div className="absolute bottom-3 left-3 text-[#ffd700]/60 text-xs">✦</div>

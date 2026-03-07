@@ -22,12 +22,23 @@ interface CardGameProps {
   onBack: () => void;
 }
 
+// ─── Angles & lifts pour l'éventail ─────────────────────────────────────────
+// 6 cartes : spread de -50° à +50°, les cartes du centre remontent légèrement
+const FAN6_ROTS  = [-50, -30, -10, 10, 30, 50];
+const FAN6_LIFTS = [  0, -12, -18, -18, -12,  0];
+
+// 3 cartes (tirage du jour) : spread resserré
+const FAN3_ROTS  = [-22,  0, 22];
+const FAN3_LIFTS = [  -4, -8, -4];
+
 export default function CardGame({ 
   user, oracle, oracleType, onCardsSelected, onSaveReading, onBack 
 }: CardGameProps) {
   const [randomCards, setRandomCards] = useState<number[]>([]);
   const [flippedCards, setFlippedCards] = useState<boolean[]>([]);
   const [selectedCardsIndices, setSelectedCardsIndices] = useState<number[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isShuffling, setIsShuffling] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [revealedCard, setRevealedCard] = useState<{ card: any; index: number } | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -42,11 +53,15 @@ export default function CardGame({
   const displayCards = isDailyReading ? 3 : 6;
   const maxSelection = isDailyReading ? 1 : 3;
 
+  const fanRots  = isDailyReading ? FAN3_ROTS  : FAN6_ROTS;
+  const fanLifts = isDailyReading ? FAN3_LIFTS : FAN6_LIFTS;
+
   useEffect(() => {
     const timer = setTimeout(() => setMounted(true), 60);
     return () => clearTimeout(timer);
   }, []);
 
+  // ─── Helpers — IDENTIQUES à l'original ──────────────────────────────────────
   const normalizeCardName = (name: string): string =>
     name.trim().replace(/[''\s-]/g, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
@@ -82,6 +97,7 @@ export default function CardGame({
     return translated !== `cards.${oracleTypeKey}.${norm}.name` ? translated : cardName;
   };
 
+  // ─── Génération des cartes — IDENTIQUE à l'original ─────────────────────────
   useEffect(() => {
     const generateCards = async () => {
       setIsLoading(true);
@@ -102,6 +118,7 @@ export default function CardGame({
     generateCards();
   }, [oracle.cards.length, displayCards, oracleType, imagesLoaded, progress]);
 
+  // ─── Clic carte — IDENTIQUE à l'original ────────────────────────────────────
   const handleCardClick = (cardIndex: number) => {
     if (flippedCards[cardIndex]) return;
     if (selectedCardsIndices.length >= maxSelection) return;
@@ -114,6 +131,7 @@ export default function CardGame({
     setSelectedCardsIndices([...selectedCardsIndices, cardIndex]);
   };
 
+  // ─── Interprétation — IDENTIQUE à l'original ────────────────────────────────
   const generateFullInterpretation = (selectedCards: OracleCard[]): string => {
     const genderSuffix = user.gender === 'femme' ? 'e' : '';
     const genderText = t(`interpretation.gender.${user.gender || 'autre'}`);
@@ -141,6 +159,7 @@ export default function CardGame({
     return sections.join('\n\n');
   };
 
+  // ─── Fermeture modale — IDENTIQUE à l'original ──────────────────────────────
   const handleCloseModal = async () => {
     setRevealedCard(null);
     if (selectedCardsIndices.length === maxSelection) {
@@ -159,6 +178,28 @@ export default function CardGame({
     }
   };
 
+  // ─── Rebattre les cartes (avec animation de battage) ────────────────────────
+  const handleReshuffle = () => {
+    if (isShuffling) return;
+    setIsShuffling(true);
+    // Les cartes convergent et disparaissent en ~600ms, puis les nouvelles apparaissent
+    setTimeout(() => {
+      try {
+        const newCards = selectRandomCardsWithoutRepeat(oracle.cards.length, displayCards, oracleType);
+        setRandomCards(newCards);
+      } catch {
+        const fallback = Array.from({length: oracle.cards.length}, (_, i) => i)
+          .sort(() => Math.random() - 0.5).slice(0, displayCards);
+        setRandomCards(fallback);
+      }
+      setFlippedCards(new Array(displayCards).fill(false));
+      setSelectedCardsIndices([]);
+      setHoveredIndex(null);
+      setIsShuffling(false);
+    }, 580);
+  };
+
+  // ─── Loading — IDENTIQUE à l'original ───────────────────────────────────────
   if (isLoading || !imagesLoaded) {
     return (
       <div style={{
@@ -188,9 +229,24 @@ export default function CardGame({
     );
   }
 
+  // ─── Variables d'affichage ───────────────────────────────────────────────────
   const selectionCount = selectedCardsIndices.length;
-  const oracleLabels: Record<string,string> = { daily: 'Tirage du Jour', tarot: 'Tarot de Marseille', angels: "Oracle des Anges", runes: 'Runes Ancestrales' };
+  const allSelected = selectionCount === maxSelection;
+  const oracleLabels: Record<string,string> = {
+    daily: 'Tirage du Jour',
+    tarot: 'Tarot de Marseille',
+    angels: "Oracle des Anges",
+    runes: 'Runes Ancestrales'
+  };
   const oracleLabel = oracleLabels[oracleType] || oracle.title;
+
+  // Transform de chaque carte selon son état
+  const getCardTransform = (cardIndex: number): string => {
+    const rot  = fanRots[cardIndex];
+    const lift = fanLifts[cardIndex];
+    if (hoveredIndex === cardIndex) return `rotate(${rot}deg) translateY(${lift - 16}px)`;
+    return `rotate(${rot}deg) translateY(${lift}px)`;
+  };
 
   return (
     <>
@@ -212,10 +268,8 @@ export default function CardGame({
             background: var(--bg); font-family: 'Jost', sans-serif; color: var(--white);
             position: relative; overflow: hidden;
             padding-top: env(safe-area-inset-top, 0px);
-            /* ✅ FIX SCROLL : autoriser uniquement le scroll vertical sur toute la page */
             touch-action: pan-y;
           }
-
           .cg-bg {
             position: absolute; inset: 0; pointer-events: none;
             background:
@@ -234,15 +288,14 @@ export default function CardGame({
           }
           @keyframes cgpf { 0%,100%{opacity:0} 40%,60%{opacity:var(--op,.2)} }
 
-          /* Header */
+          /* HEADER */
           .cg-header {
             position: relative; z-index: 20;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 20px 24px 0;
+            padding: 12px 20px 0;
             opacity: 0; transition: opacity 0.6s ease;
           }
           .cg-mounted .cg-header { opacity: 1; transition-delay: 0.1s; }
-
           .cg-back {
             display: flex; align-items: center; gap: 8px;
             background: none; border: none; cursor: pointer; padding: 0;
@@ -258,94 +311,229 @@ export default function CardGame({
             border-left: 1px solid currentColor; border-bottom: 1px solid currentColor;
             transform: rotate(45deg);
           }
-
           .cg-progress-dots { display: flex; align-items: center; gap: 6px; }
           .cg-dot {
             width: 6px; height: 6px; border-radius: 50%;
             background: rgba(255,255,255,0.30); transition: all 0.4s ease;
           }
-          .cg-dot.filled {
-            background: var(--gold);
-            box-shadow: 0 0 6px rgba(201,168,76,0.6);
-          }
+          .cg-dot.filled { background: var(--gold); box-shadow: 0 0 6px rgba(201,168,76,0.6); }
 
-          /* Titre */
+          /* TITLE */
           .cg-title-block {
             position: relative; z-index: 10; text-align: center;
-            padding: 32px 24px 24px;
+            padding: 8px 20px 6px;
             opacity: 0; transform: translateY(10px);
             transition: opacity 0.7s ease, transform 0.7s ease;
           }
           .cg-mounted .cg-title-block { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
-
           .cg-oracle-badge {
             display: inline-block;
             font-size: 9px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase;
             color: rgba(220,185,90,1.0);
             border: 1px solid rgba(201,168,76,0.45);
-            border-radius: 20px; padding: 5px 14px; margin-bottom: 14px;
+            border-radius: 20px; padding: 4px 12px; margin-bottom: 8px;
           }
-
           .cg-title {
             font-family: 'Playfair Display', Georgia, serif;
-            font-size: clamp(26px, 7vw, 38px); font-weight: 300;
-            color: var(--white); margin: 0 0 8px; line-height: 1.1;
+            font-size: clamp(22px, 6vw, 32px); font-weight: 300;
+            color: var(--white); margin: 0 0 4px; line-height: 1.1;
           }
           .cg-title em { font-style: italic; color: #F0DC88; }
-
           .cg-desc {
             font-family: 'Playfair Display', serif;
             font-size: 14px; font-style: italic; font-weight: 300;
             color: rgba(247,242,234,0.85); line-height: 1.65;
           }
 
-          /* ✅ FIX PRINCIPAL : touch-action pan-y sur toute la zone cartes */
-          .cg-cards-area {
+          /* ══════════════════════════════════════════
+             NOUVEAU : ZONE ÉVENTAIL
+             Remplace .cg-cards-area + .cg-cards-row
+          ══════════════════════════════════════════ */
+          .cg-fan-area {
             position: relative; z-index: 10;
-            flex: 1; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            padding: 8px 16px; gap: 16px;
-            opacity: 0; transition: opacity 0.8s ease;
-            /* Interdit scroll horizontal et rotation, autorise uniquement vertical */
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 30px;
             touch-action: pan-y;
-            /* Empêche la sélection de texte accidentelle */
             user-select: none;
             -webkit-user-select: none;
+            opacity: 0; transition: opacity 0.8s ease;
+            overflow: visible;
           }
-          .cg-mounted .cg-cards-area { opacity: 1; transition-delay: 0.4s; }
+          .cg-mounted .cg-fan-area { opacity: 1; transition-delay: 0.4s; }
 
-          /* ✅ Chaque rangée de cartes aussi */
-          .cg-cards-row {
-            display: flex; justify-content: center; align-items: center; gap: 14px;
-            touch-action: pan-y;
+          /* Pivot : point d'ancrage bas-centre de toutes les cartes */
+          .cg-fan-pivot {
+            position: relative;
+            width: 0; height: 0;
           }
 
-          /* Instruction */
+          /* Lueur dorée subtile sous le pivot */
+          .cg-pivot-glow {
+            position: absolute;
+            bottom: -8px; left: 50%;
+            transform: translateX(-50%);
+            width: 180px; height: 28px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse, rgba(201,168,76,0.1) 0%, transparent 70%);
+            pointer-events: none;
+            animation: glowPulse 3.5s ease-in-out infinite;
+          }
+          @keyframes glowPulse {
+            0%,100% { opacity:0.5; transform:translateX(-50%) scaleX(1); }
+            50%      { opacity:1;   transform:translateX(-50%) scaleX(1.3); }
+          }
+
+          /* Wrapper de chaque carte dans l'éventail */
+          .cg-fan-card {
+            position: absolute;
+            bottom: 0;
+            left: calc(var(--cw, 100px) / -2);
+            width: var(--cw, 100px);
+            height: var(--ch, 160px);
+            transform-origin: 50% 100%;   /* pivot en bas-centre */
+            transform: rotate(var(--rot, 0deg)) translateY(var(--lift, 0px));
+            transition:
+              transform 0.4s cubic-bezier(0.34, 1.45, 0.64, 1),
+              filter 0.3s ease,
+              opacity 0.35s ease;
+            cursor: pointer;
+            will-change: transform;
+            /* Animation d'entrée : les cartes se déploient depuis le centre */
+            animation: fanSpread 0.7s cubic-bezier(0.34, 1.2, 0.64, 1) calc(0.3s + var(--i, 0) * 0.06s) both;
+          }
+          @keyframes fanSpread {
+            from { transform: rotate(0deg) translateY(60px); opacity: 0; }
+            to   { transform: rotate(var(--rot, 0deg)) translateY(var(--lift, 0px)); opacity: 1; }
+          }
+
+          /* Carte non-sélectionnable une fois le max atteint */
+          .cg-fan-card.cg-disabled {
+            cursor: default;
+            opacity: 0.4;
+            pointer-events: none;
+          }
+          /* Carte retournée */
+          .cg-fan-card.cg-flipped {
+            cursor: default;
+            filter: drop-shadow(0 0 14px rgba(221,185,90,0.35));
+          }
+          /* ══════════════════════════════════════════ */
+
+          /* ══════════════════════════════════════════
+             RANGÉE DES CARTES SÉLECTIONNÉES (au-dessus de l'éventail)
+          ══════════════════════════════════════════ */
+          .cg-selected-row {
+            position: relative; z-index: 10;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 14px;
+            padding: 0 20px;
+            min-height: 120px;
+            flex-shrink: 0;
+            opacity: 0; transition: opacity 0.6s ease;
+          }
+          .cg-mounted .cg-selected-row { opacity: 1; transition-delay: 0.35s; }
+
+          /* Slot vide (placeholder avant sélection) */
+          .cg-selected-slot {
+            width: 80px; height: 128px;
+            border: 1px dashed rgba(201,168,76,0.2);
+            border-radius: 7px;
+            display: flex; align-items: center; justify-content: center;
+            transition: border-color 0.4s ease;
+            flex-shrink: 0;
+          }
+          .cg-selected-slot .slot-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px; font-style: italic;
+            color: rgba(201,168,76,0.2);
+            transition: color 0.4s ease;
+          }
+
+          /* Carte sélectionnée qui apparaît dans la rangée */
+          .cg-selected-card {
+            width: 80px; height: 128px;
+            flex-shrink: 0;
+            animation: cardRise 0.55s cubic-bezier(0.34, 1.45, 0.64, 1) both;
+            filter: drop-shadow(0 4px 20px rgba(201,168,76,0.3));
+          }
+          @keyframes cardRise {
+            from { opacity: 0; transform: translateY(30px) scale(0.88); }
+            to   { opacity: 1; transform: translateY(0px) scale(1); }
+          }
+
+          /* Numéro d'ordre sous la carte sélectionnée */
+          .cg-selected-card-wrap {
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+            flex-shrink: 0;
+            animation: cardRise 0.55s cubic-bezier(0.34, 1.45, 0.64, 1) both;
+          }
+          .cg-selected-order {
+            font-size: 9px; font-weight: 300; letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(221,185,90,0.7);
+          }
+
+          /* Séparateur entre rangée sélectionnée et éventail */
+          .cg-divider-row {
+            display: flex; align-items: center; gap: 8px;
+            padding: 0 40px;
+            margin: 2px 0;
+            flex-shrink: 0;
+            opacity: 0; transition: opacity 0.5s ease;
+          }
+          .cg-mounted .cg-divider-row { opacity: 1; transition-delay: 0.38s; }
+          .cg-div-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent); }
+          .cg-div-glyph { font-size: 9px; color: rgba(201,168,76,0.35); letter-spacing: 2px; }
+
+          /* Bouton rebattre */
+          .cg-reshuffle-btn {
+            padding: 10px 24px;
+            background: none;
+            border: 1px solid rgba(201,168,76,0.28); border-radius: 3px;
+            font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 300;
+            letter-spacing: 2.5px; text-transform: uppercase;
+            color: rgba(221,185,90,0.7); cursor: pointer;
+            transition: all 0.3s ease;
+            /* disparaît dès qu'une carte est sélectionnée */
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s, color 0.3s;
+          }
+          .cg-reshuffle-btn:hover { border-color: rgba(201,168,76,0.55); color: rgba(221,185,90,1); }
+          .cg-reshuffle-btn.hidden {
+            opacity: 0; pointer-events: none; transform: translateY(4px);
+          }
+
+          /* INSTRUCTION */
           .cg-instruction {
             position: relative; z-index: 10;
-            text-align: center; padding: 0 24px 12px;
+            text-align: center; padding: 0 20px 2px;
             opacity: 0; transition: opacity 0.7s ease;
           }
           .cg-mounted .cg-instruction { opacity: 1; transition-delay: 0.6s; }
-
           .cg-instruction-text {
-            font-size: 13px; font-weight: 400; letter-spacing: 0.3px;
-            color: rgba(247,242,234,0.88); margin-bottom: 4px;
+            font-size: 12px; font-weight: 400; letter-spacing: 0.3px;
+            color: rgba(247,242,234,0.88); margin-bottom: 2px;
           }
           .cg-counter {
             font-family: 'Playfair Display', serif;
-            font-size: 12px; font-style: italic;
+            font-size: 11px; font-style: italic;
             color: rgba(220,185,90,1.0);
           }
 
-          /* Footer */
+          /* FOOTER */
           .cg-footer {
             position: relative; z-index: 10;
-            padding: 16px 24px 32px; display: flex; justify-content: center;
+            padding: 4px 20px 14px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
             opacity: 0; transition: opacity 0.7s ease;
           }
           .cg-mounted .cg-footer { opacity: 1; transition-delay: 0.7s; }
-
           .cg-back-btn {
             padding: 13px 36px;
             background: none;
@@ -357,9 +545,54 @@ export default function CardGame({
           .cg-back-btn:hover { border-color: rgba(255,255,255,0.45); color: rgba(247,242,234,1); }
 
           .cg-line {
-            width: 1px; height: 32px;
+            width: 1px; height: 10px;
             background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.3), transparent);
             margin: 0 auto;
+          }
+
+          /* ── ANIMATION BATTAGE — fluide et naturelle ── */
+          /*
+           * Principe : toutes les cartes convergent vers le centre (comme si
+           * une main les ramassait), puis se redéploient en éventail.
+           * Phase 1 (0→40%) : convergence vers 0° et remontée légère
+           * Phase 2 (40→60%) : légère compression / superposition
+           * Phase 3 (60→100%) : redéploiement — géré par fanSpread au reset
+           */
+          @keyframes shuffleFan {
+            0%   {
+              transform: rotate(var(--rot)) translateY(var(--lift));
+              opacity: 1;
+            }
+            35%  {
+              transform: rotate(calc(var(--rot) * 0.15)) translateY(-12px);
+              opacity: 0.9;
+            }
+            55%  {
+              transform: rotate(calc(var(--rot) * 0.05)) translateY(-8px) scale(0.97);
+              opacity: 0.85;
+            }
+            75%  {
+              transform: rotate(calc(var(--rot) * 0.05)) translateY(50px) scale(0.95);
+              opacity: 0;
+            }
+            100% {
+              transform: rotate(0deg) translateY(60px);
+              opacity: 0;
+            }
+          }
+          .cg-fan-card.shuffling {
+            animation: shuffleFan 0.55s cubic-bezier(0.4, 0, 0.6, 1)
+              calc(var(--i, 0) * 0.03s) forwards !important;
+          }
+
+          /* Icône ↺ tourne pendant le battage */
+          .cg-reshuffle-btn.shuffling .shuffle-icon {
+            display: inline-block;
+            animation: spinIcon 0.55s ease forwards;
+          }
+          @keyframes spinIcon {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(-360deg); }
           }
         `}</style>
 
@@ -376,6 +609,7 @@ export default function CardGame({
           ))}
         </div>
 
+        {/* HEADER — identique original */}
         <div className="cg-header">
           <button className="cg-back" onClick={onBack}>
             <span className="cg-back-arr"/>
@@ -390,6 +624,7 @@ export default function CardGame({
           )}
         </div>
 
+        {/* TITRE — identique original */}
         <div className="cg-title-block">
           <div className="cg-oracle-badge">{oracleLabel}</div>
           <h1 className="cg-title">
@@ -400,68 +635,111 @@ export default function CardGame({
 
         <div className="cg-line"/>
 
-        {/* ✅ touch-action pan-y posé ici ET sur chaque row */}
-        <div className="cg-cards-area">
-          {isDailyReading ? (
-            <div className="cg-cards-row">
-              {Array.from({length: displayCards}, (_, cardIndex) => {
-                const actualIndex = randomCards[cardIndex];
-                const isFlipped = flippedCards[cardIndex];
-                const canClick = !isFlipped && selectionCount < maxSelection;
-                return (
+        {/* ══════════════════════════════════════════════════════════
+            RANGÉE DES CARTES SÉLECTIONNÉES
+            Apparaît au-dessus de l'éventail, une carte à la fois
+        ══════════════════════════════════════════════════════════ */}
+        <div className="cg-selected-row">
+          {Array.from({length: maxSelection}, (_, slotIndex) => {
+            const selectedFanIndex = selectedCardsIndices[slotIndex];
+            const hasCard = selectedFanIndex !== undefined;
+            const actualIndex = hasCard ? randomCards[selectedFanIndex] : null;
+
+            if (hasCard && actualIndex !== null) {
+              // Carte sélectionnée : affiche la face retournée
+              return (
+                <div key={`sel-${slotIndex}`} className="cg-selected-card-wrap">
+                  <div className="cg-selected-card">
+                    <TarotCard
+                      number={actualIndex + 1}
+                      isSelected={false}
+                      isSelectable={false}
+                      onClick={() => {}}
+                      cardName={oracle.cards[actualIndex]?.name}
+                      oracleType={getCardOracleType()}
+                    />
+                  </div>
+                </div>
+              );
+            }
+
+            // Slot vide : placeholder avec le numéro
+            return (
+              <div key={`slot-${slotIndex}`} className="cg-selected-slot">
+                <span className="slot-num">{slotIndex + 1}</span>
+              </div>
+            );
+          })}
+        </div>
+        {/* ══════════════════════════════════════════════════════════ */}
+
+        {/* Séparateur visuel entre rangée sélectionnée et éventail */}
+        <div className="cg-divider-row">
+          <div className="cg-div-line" />
+          <span className="cg-div-glyph">✦</span>
+          <div className="cg-div-line" />
+        </div>
+
+        {/* ══════════════════════════════════════════════════════════
+            ÉVENTAIL — cartes non encore sélectionnées restent visibles
+            Les cartes choisies restent dans l'éventail mais s'estompent
+        ══════════════════════════════════════════════════════════ */}
+        <div className="cg-fan-area">
+          <div className="cg-fan-pivot">
+            <div className="cg-pivot-glow" />
+
+            {Array.from({length: displayCards}, (_, cardIndex) => {
+              const actualIndex = randomCards[cardIndex];
+              const isFlipped   = flippedCards[cardIndex];
+              const isDisabled  = allSelected && !isFlipped;
+              const canClick    = !isFlipped && !isDisabled;
+
+              // ── Carte choisie : on ne la rend plus du tout dans l'éventail ──
+              if (isFlipped) return null;
+
+              const baseZ = isDailyReading
+                ? (cardIndex === 1 ? 3 : cardIndex + 1)
+                : (cardIndex < 3 ? cardIndex + 1 : 6 - cardIndex);
+
+              const shuffleClass = isShuffling ? 'shuffling' : '';
+
+              return (
+                <div
+                  key={`${oracleType}-${cardIndex}-${actualIndex}`}
+                  className={[
+                    'cg-fan-card',
+                    isDisabled ? 'cg-disabled' : '',
+                    shuffleClass,
+                  ].join(' ').trim()}
+                  style={{
+                    '--rot':  `${fanRots[cardIndex]}deg`,
+                    '--lift': `${fanLifts[cardIndex]}px`,
+                    '--i':    cardIndex,
+                    '--cw':   '100px',
+                    '--ch':   '160px',
+                    zIndex: baseZ,
+                    transform: getCardTransform(cardIndex),
+                  } as any}
+                  onClick={() => handleCardClick(cardIndex)}
+                  onMouseEnter={() => canClick && setHoveredIndex(cardIndex)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
                   <TarotCard
-                    key={`${oracleType}-${cardIndex}-${actualIndex}`}
-                    number={isFlipped ? actualIndex + 1 : 0}
+                    number={0}
                     isSelected={false}
                     isSelectable={canClick}
                     onClick={() => handleCardClick(cardIndex)}
-                    cardName={isFlipped ? oracle.cards[actualIndex]?.name : undefined}
+                    cardName={undefined}
                     oracleType={getCardOracleType()}
                   />
-                );
-              })}
-            </div>
-          ) : (
-            <>
-              <div className="cg-cards-row">
-                {Array.from({length: 3}, (_, i) => {
-                  const isFlipped = flippedCards[i];
-                  const canClick = !isFlipped && selectionCount < maxSelection;
-                  return (
-                    <TarotCard
-                      key={`${oracleType}-${i}-${randomCards[i]}`}
-                      number={isFlipped ? randomCards[i]+1 : 0}
-                      isSelected={selectedCardsIndices.includes(i)}
-                      isSelectable={canClick}
-                      onClick={() => handleCardClick(i)}
-                      cardName={isFlipped ? oracle.cards[randomCards[i]]?.name : undefined}
-                      oracleType={getCardOracleType()}
-                    />
-                  );
-                })}
-              </div>
-              <div className="cg-cards-row">
-                {Array.from({length: 3}, (_, i) => {
-                  const ci = i + 3;
-                  const isFlipped = flippedCards[ci];
-                  const canClick = !isFlipped && selectionCount < maxSelection;
-                  return (
-                    <TarotCard
-                      key={`${oracleType}-${ci}-${randomCards[ci]}`}
-                      number={isFlipped ? randomCards[ci]+1 : 0}
-                      isSelected={selectedCardsIndices.includes(ci)}
-                      isSelectable={canClick}
-                      onClick={() => handleCardClick(ci)}
-                      cardName={isFlipped ? oracle.cards[randomCards[ci]]?.name : undefined}
-                      oracleType={getCardOracleType()}
-                    />
-                  );
-                })}
-              </div>
-            </>
-          )}
+                </div>
+              );
+            })}
+          </div>
         </div>
+        {/* ══════════════════════════════════════════════════════════ */}
 
+        {/* INSTRUCTION — identique original */}
         <div className="cg-instruction">
           <p className="cg-instruction-text">
             {isDailyReading
@@ -476,7 +754,18 @@ export default function CardGame({
           )}
         </div>
 
+        {/* FOOTER — bouton rebattre + retour */}
         <div className="cg-footer">
+          {/* Rebattre : visible seulement si aucune carte n'a encore été choisie */}
+          <button
+            className={`cg-reshuffle-btn ${selectionCount > 0 ? 'hidden' : ''} ${isShuffling ? 'shuffling' : ''}`}
+            onClick={handleReshuffle}
+            disabled={isShuffling}
+          >
+            {/* i18n: cardgame.reshuffle = "Rebattre les cartes" */}
+            <span className="shuffle-icon" style={{display:'inline-block', marginRight: 6}}>↺</span>
+            {t('cardgame.reshuffle') || 'Rebattre les cartes'}
+          </button>
           <button className="cg-back-btn" onClick={onBack}>
             {t('cardgame.back') || 'Retour'}
           </button>
@@ -495,3 +784,26 @@ export default function CardGame({
     </>
   );
 }
+
+/*
+ * ═══════════════════════════════════════════════════════
+ *  CLÉS I18N
+ *
+ *  Existantes (inchangées) :
+ *    cardgame.back
+ *    cardgame.daily.choose
+ *    cardgame.selected              ({current} et {max})
+ *    cardgame.reading.instruction
+ *    oracle.{oracleType}.title
+ *    oracle.{oracleType}.description
+ *
+ *  Nouvelle clé à ajouter (renommée, chemin simplifié) :
+ *    cardgame.reshuffle  = "Rebattre les cartes"
+ *                        = "Reshuffle cards"          (EN)
+ *                        = "Mischen Sie die Karten"   (DE)
+ *                        = etc.
+ *
+ *  ⚠️  Si vous aviez déjà ajouté cardgame.fan.reshuffle dans votre JSON,
+ *      renommez-la en cardgame.reshuffle (supprimez le niveau "fan").
+ * ═══════════════════════════════════════════════════════
+ */

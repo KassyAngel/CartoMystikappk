@@ -144,6 +144,7 @@ const translations: Record<Language, Record<string, string>> = {
     "cardgame.next": "Suivant",
     "cardgame.daily.choose": "Choisissez la carte qui vous appelle",
     "interpretation.label.daily": "Oracle du jour",
+    "cardgame.reshuffle": "Rebattre les cartes",
 
     // CardGame - Modal de révélation
     "cardgame.cardRevealed": "Carte révélée",
@@ -1865,8 +1866,9 @@ const translations: Record<Language, Record<string, string>> = {
     "cardgame.next": "Next",
     "cardgame.reveal": "REVEAL CARDS",
     "cardgame.daily.choose": "Choose the card that calls to you",
-    "interpretation.label.daily.en": "Daily oracle",
-    
+    "interpretation.label.daily": "Daily oracle",
+    "cardgame.reshuffle": "Reshuffle the cards",
+        
     // CardGame - Modal de révélation
     "cardgame.cardRevealed": "Card revealed",
     "cardgame.continue": "Continue",
@@ -3537,8 +3539,9 @@ const translations: Record<Language, Record<string, string>> = {
     "cardgame.previous": "Anterior",
     "cardgame.next": "Siguiente",
     "cardgame.daily.choose": "Elige la carta que te llama",
-    "interpretation.label.daily.es": "Oráculo del día",
-    
+    "interpretation.label.daily": "Oráculo del día",
+    "cardgame.reshuffle": "Barajar las cartas de nuevo",
+        
     // CardGame - Modal de révélation
     "cardgame.cardRevealed": "Carta revelada",
     "cardgame.continue": "Continuar",
@@ -5279,8 +5282,9 @@ const translations: Record<Language, Record<string, string>> = {
     "cardgame.previous": "Zurück",
     "cardgame.next": "Weiter",
     "cardgame.daily.choose": "Wähle die Karte, die dich ruft",
-    "interpretation.label.daily.de": "Orakel des Tages",
-      
+    "interpretation.label.daily": "Orakel des Tages",
+    "cardgame.reshuffle": "Karten neu mischen",
+          
     // CardGame - Modal de révélation
     "cardgame.cardRevealed": "Karte aufgedeckt",
     "cardgame.continue": "Weiter",
@@ -7022,7 +7026,8 @@ const translations: Record<Language, Record<string, string>> = {
     "cardgame.previous": "Precedente",
     "cardgame.next": "Successivo",
     "cardgame.daily.choose": "Scegli la carta che ti chiama",
-    "interpretation.label.daily.it": "Oracolo del giorno",
+    "interpretation.label.daily": "Oracolo del giorno",
+    "cardgame.reshuffle": "Rimescolare le carte",
 
     // CardGame - Modal de révélation
     "cardgame.cardRevealed": "Carta rivelata",
