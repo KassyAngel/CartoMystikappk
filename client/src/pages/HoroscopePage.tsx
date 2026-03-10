@@ -79,7 +79,7 @@ const genLucky = (name: string, date: string, sign: string): string => {
 };
 
 const stableVar = (sign: string, cat: 'descriptions'|'love'|'work'|'finances'|'health'|'advice', date: string, t: (k: string) => string): string => {
-  const counts: Record<string,number> = { descriptions:15, love:8, work:8, finances:8, health:8, advice:5 };
+  const counts: Record<string,number> = { descriptions:30, love:30, work:30, finances:8, health:8, advice:5 };
   const seed = `${sign}-${cat}-${date}`; let h = 0;
   for (let i = 0; i < seed.length; i++) { h = ((h << 5) - h) + seed.charCodeAt(i); h = h & h; }
   const k = `horoscope.data.${cat}.${sign}.${Math.abs(h) % counts[cat]}`;
