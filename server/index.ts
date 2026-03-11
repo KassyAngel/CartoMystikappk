@@ -27,7 +27,7 @@ console.log(`📁 Dossier public servi depuis: ${publicPath}`);
 
 // ⚠️ IMPORTANT : Définir la route webhook AVANT express.json()
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2025-09-30.clover",
+  apiVersion: "2025-10-29.clover",
 });
 
 app.post(
@@ -127,7 +127,7 @@ registerPremiumRevenueCatRoutes(app);
   const httpServer = createServer(app);
 
   // Gestion du port Render
-  const PORT = Number(process.env.PORT) || 5000;
+  const PORT = Number(process.env.PORT) || 5001;
   console.log(`🔧 Démarrage sur le port ${PORT}`);
 
   httpServer.listen(PORT, "0.0.0.0", () => {
