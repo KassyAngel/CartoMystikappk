@@ -121,7 +121,7 @@ const translations: Record<Language, Record<string, string>> = {
       "Découvrez ce que les astres vous réservent aujourd'hui selon votre signe",
     "oracle.tarot.title": "Tarot",
     "oracle.tarot.description":
-      '"Les 22 arcanes majeurs dévoilent les mystères de votre destinée"',
+      'Les 22 arcanes majeurs dévoilent les mystères de votre destinée',
     "oracle.angels.title": "Oracle des Anges",
     "oracle.angels.description":
       "Connectez-vous avec vos guides angéliques pour recevoir leurs messages d'amour",

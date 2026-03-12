@@ -176,7 +176,7 @@ export default function FlipCard({
             isFlipped && "pointer-events-none"
           )}>
             <img
-              src="/image/Tarot/verso-cartes.jpg"
+              src="/image/Tarot/verso-cartes.webp"
               alt="Dos de carte"
               className="w-full h-full object-cover rounded-xl sm:rounded-2xl"
               onError={(e) => {

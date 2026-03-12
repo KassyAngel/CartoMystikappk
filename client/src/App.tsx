@@ -78,7 +78,7 @@ function App() {
   const [readingCount, setReadingCount] = useState(0);
   const [bannerShown, setBannerShown] = useState(false);
   const [deviceId, setDeviceId] = useState<string>('');
-  const [adMobReady, setAdMobReady] = useState(false); // ✅ NOUVEAU : track init AdMob
+  const [adMobReady, setAdMobReady] = useState(false);
 
   useEffect(() => {
     const initDeviceId = async () => {
@@ -111,27 +111,23 @@ function App() {
     migrateData();
   }, [deviceId]);
 
-  // ✅ Init AdMob + RevenueCat — on marque adMobReady après init
   useEffect(() => {
     const initServices = async () => {
       try {
         await initializeAdMob();
         await initializeRevenueCat();
         console.log('✅ Services AdMob + RevenueCat initialisés');
-        setAdMobReady(true); // ✅ déclenche la bannière si nécessaire
+        setAdMobReady(true);
       } catch (error) {
         console.error('❌ Erreur initialisation services:', error);
-        setAdMobReady(true); // on continue quand même
+        setAdMobReady(true);
       }
     };
     initServices();
   }, []);
 
-  // ✅ GESTION BANNIÈRE — réagit à currentStep, isPremium ET adMobReady
-  // Ainsi au 1er lancement quand AdMob finit de s'init, la bannière s'affiche
-  // immédiatement si on est déjà sur une page qui la requiert.
   useEffect(() => {
-    if (!adMobReady) return; // attendre que AdMob soit prêt
+    if (!adMobReady) return;
 
     if (isPremium) {
       console.log('👑 Premium actif : bannière cachée');
@@ -159,9 +155,17 @@ function App() {
       hideBanner();
       setBannerShown(false);
     }
-  }, [currentStep, isPremium, bannerShown, adMobReady]); // ✅ adMobReady dans les deps
+  }, [currentStep, isPremium, bannerShown, adMobReady]);
 
   const showTopBar = !NO_BANNER_PAGES.includes(currentStep);
+
+  // ✅ Scroll en haut à chaque changement de page
+  useEffect(() => {
+    const scrollContainer = document.querySelector('.overflow-y-auto');
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 0;
+    }
+  }, [currentStep]);
 
   useEffect(() => {
     const checkNotificationPermission = () => {
@@ -287,7 +291,6 @@ function App() {
     }
   };
 
-  // ✅ Pub pour les tirages classiques
   const shouldShowAdBeforeReading = async (oracleType: string): Promise<boolean> => {
     if (isPremium) return false;
     if (oracleType === 'horoscope' || oracleType === 'bonusRoll') return false;
@@ -307,7 +310,6 @@ function App() {
     return shouldShow;
   };
 
-  // ✅ Pub dédiée bonusRoll
   const shouldShowAdForBonusRoll = async (oracleType: string): Promise<boolean> => {
     if (isPremium) return false;
     try {

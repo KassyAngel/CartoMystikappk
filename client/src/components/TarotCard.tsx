@@ -141,13 +141,13 @@ export default function TarotCard({
           {!imageError ? (
             <>
               <img 
-                src="/Image/Dos-carte.jpg" 
+                src="/Image/Dos-carte.webp" 
                 alt="Dos de carte"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ filter: 'contrast(1.05) saturate(1.1)' } as React.CSSProperties}
                 loading="eager"
                 onError={() => {
-                  console.error('❌ Erreur chargement image: /Image/Dos-carte.jpg');
+                  console.error('❌ Erreur chargement image: /Image/Dos-carte.webp');
                   setImageError(true);
                 }}
               />

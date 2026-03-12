@@ -11,12 +11,12 @@ export function useCardImagePreloader(oracleType: OracleTypeForPreload) {
 
   useEffect(() => {
     const imagesToPreload: string[] = [
-      '/Image/Dos-carte.jpg', // Image principale du dos
+      '/Image/Dos-carte.webp', // Image principale du dos
     ];
 
     // Pour les autres tirages, ajouter l'image alternative
     if (oracleType !== 'daily') {
-      imagesToPreload.push('/image/Tarot/verso-cartes.jpg');
+      imagesToPreload.push('/image/Tarot/verso-cartes.webp');
     }
 
     console.log(`🖼️ Préchargement de ${imagesToPreload.length} images pour ${oracleType}...`);

@@ -17,7 +17,7 @@ interface OracleItem {
   id: string;
   title: string;
   description: string;
-  hint?: string;       // ← explication courte du tirage
+  hint?: string;
   imageSrc?: string;
   accentRgb: string;
 }
@@ -41,13 +41,13 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
       id: 'daily',
       title: t('oracle.daily.title') || 'Tirage du Jour',
       description: t('oracle.daily.description') || 'Une carte pour vous guider aujourd\'hui',
-      imageSrc: '/Image/Tirage-jour.jpg',
+      imageSrc: '/Image/Tirage-jour.webp',
       accentRgb: '201,168,76',
     }] : [{
       id: 'crystalBall',
       title: t('oracle.crystalBall.title') || 'Boule de Cristal',
       description: t('oracle.crystalBall.description') || 'Posez vos questions à la boule mystique',
-      imageSrc: '/Image/Bouledecristal.jpg',
+      imageSrc: '/Image/Bouledecristal.webp',
       accentRgb: '127,201,168',
     }]),
     {
@@ -55,7 +55,7 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
       title: t('oracle.tarot.title') || 'Tarot de Marseille',
       description: t('oracle.tarot.description') || 'Les 22 arcanes révèlent votre destinée',
       hint: t('oracle.tarot.hint') || '3 cartes · Énergie du moment, ce qui se transforme, ce qui arrive',
-      imageSrc: '/Image/Tirage-tarot.jpg',
+      imageSrc: '/Image/Tirage-tarot.webp',
       accentRgb: '168,127,201',
     },
     {
@@ -63,14 +63,14 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
       title: t('oracle.angels.title') || 'Oracle des Anges',
       description: t('oracle.angels.description') || 'Recevez les messages de vos guides',
       hint: t('oracle.angels.hint') || '3 cartes · Ce que tu libères, ce que tu accueilles, ce que tu incarnes',
-      imageSrc: '/Image/Tirage-anges.jpg',
+      imageSrc: '/Image/Tirage-anges.webp',
       accentRgb: '127,168,201',
     },
     {
       id: 'horoscope',
       title: t('oracle.horoscope.title') || 'Horoscope',
       description: t('oracle.horoscope.description') || 'Ce que les astres vous réservent',
-      imageSrc: '/Image/Horoscope.jpg',
+      imageSrc: '/Image/Horoscope.webp',
       accentRgb: '201,127,168',
     },
   ];
@@ -157,7 +157,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
         }
         .os-mounted .os-grid { opacity: 1; transition-delay: 0.3s; }
 
-        /* Carte oracle */
         .os-card {
           position: relative;
           background: rgba(255,255,255,0.055);
@@ -190,7 +189,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
         .os-card:hover .os-card-bar { transform: scaleY(0.55); }
         .os-card.os-active .os-card-bar { transform: scaleY(0.75); }
 
-        /* Ligne principale (image + corps) */
         .os-card-main {
           display: flex; align-items: center; gap: 0;
           min-height: 80px;
@@ -216,25 +214,51 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
           display: flex; align-items: center; justify-content: space-between; gap: 8px;
         }
         .os-card-texts { flex: 1; }
+
+        /* Titre + bouton i sur la même ligne */
+        .os-card-title-row {
+          display: flex; align-items: center; gap: 7px; margin-bottom: 4px;
+        }
         .os-card-title {
           font-family: 'Playfair Display', Georgia, serif;
           font-size: 17px; font-weight: 400; letter-spacing: 0.3px;
-          color: #FDFAF4; margin-bottom: 4px; line-height: 1.25;
+          color: #FDFAF4; line-height: 1.25;
           transition: color 0.3s;
           text-shadow: 0 1px 8px rgba(0,0,0,0.6);
         }
         .os-card.os-active .os-card-title { color: rgb(var(--c-rgb)); }
+
+        /* Bouton hint (i) à côté du titre */
+        .os-hint-btn {
+          width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+          border: 1px solid rgba(var(--c-rgb), 0.5);
+          background: rgba(var(--c-rgb), 0.1);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 9px; font-weight: 500; font-style: italic;
+          color: rgba(var(--c-rgb), 0.85);
+          cursor: pointer;
+          transition: all 0.25s;
+          -webkit-tap-highlight-color: transparent;
+          font-family: 'Playfair Display', serif;
+          line-height: 1;
+        }
+        .os-hint-btn:hover, .os-hint-btn.active {
+          background: rgba(var(--c-rgb), 0.22);
+          border-color: rgb(var(--c-rgb));
+          color: rgb(var(--c-rgb));
+        }
+
         .os-card-desc {
           font-size: 12.5px; font-weight: 300; letter-spacing: 0.2px;
           color: rgba(247,242,234,0.82); line-height: 1.5;
           text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+          font-style: italic;
         }
+        .os-card-desc::before { content: '« '; }
+        .os-card-desc::after { content: ' »'; }
         .os-card:hover .os-card-desc { color: rgba(247,242,234,0.96); }
 
-        .os-card-right {
-          display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
-          flex-shrink: 0;
-        }
+        .os-card-right { flex-shrink: 0; }
         .os-card-arrow {
           width: 28px; height: 28px; border-radius: 50%;
           border: 1px solid rgba(var(--c-rgb), 0.3);
@@ -252,26 +276,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
         }
         .os-card-arrow svg { width: 12px; height: 12px; }
 
-        /* Bouton hint (i) */
-        .os-hint-btn {
-          width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
-          border: 1px solid rgba(var(--c-rgb), 0.35);
-          background: rgba(var(--c-rgb), 0.06);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 10px; font-weight: 500; font-style: italic;
-          color: rgba(var(--c-rgb), 0.7);
-          cursor: pointer;
-          transition: all 0.25s;
-          -webkit-tap-highlight-color: transparent;
-          font-family: 'Playfair Display', serif;
-          line-height: 1;
-        }
-        .os-hint-btn:hover, .os-hint-btn.active {
-          background: rgba(var(--c-rgb), 0.14);
-          border-color: rgba(var(--c-rgb), 0.65);
-          color: rgb(var(--c-rgb));
-        }
-
         /* Panneau hint dépliable */
         .os-hint-panel {
           overflow: hidden;
@@ -280,25 +284,27 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
           opacity: 0;
         }
         .os-hint-panel.open {
-          max-height: 120px;
+          max-height: 140px;
           opacity: 1;
         }
         .os-hint-content {
-          padding: 10px 16px 14px 88px; /* aligne avec le texte */
-          border-top: 1px solid rgba(var(--c-rgb), 0.12);
+          padding: 10px 16px 14px 88px;
+          border-top: 1px solid rgba(var(--c-rgb), 0.2);
+          background: rgba(var(--c-rgb), 0.07);
         }
         .os-hint-tag {
           display: inline-block;
-          font-size: 8px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase;
-          color: rgba(var(--c-rgb), 0.65);
-          margin-bottom: 5px;
+          font-size: 8px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase;
+          color: rgba(var(--c-rgb), 0.9);
+          margin-bottom: 6px;
         }
         .os-hint-text {
           font-family: 'Playfair Display', serif;
-          font-size: 12px; font-style: italic; font-weight: 300;
-          color: rgba(247,242,234,0.80); line-height: 1.6;
+          font-size: 12.5px; font-style: italic; font-weight: 300;
+          color: rgba(247,242,234,0.95); line-height: 1.65;
+          text-shadow: 0 1px 4px rgba(0,0,0,0.5);
         }
-
+        
         /* Bonus */
         .os-bonus-wrap {
           position: relative; z-index: 10;
@@ -354,7 +360,10 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
           font-size: 12.5px; font-weight: 300;
           color: rgba(247,242,234,0.82); line-height: 1.5;
           text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+          font-style: italic;
         }
+        .os-bonus-desc::before { content: '« '; }
+        .os-bonus-desc::after { content: ' »'; }
         .os-bonus-arrow {
           width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
           border: 1px solid rgba(201,168,76,0.4);
@@ -418,7 +427,6 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
             >
               <div className="os-card-bar"/>
 
-              {/* Ligne principale — clic pour naviguer */}
               <div className="os-card-main" onClick={() => handleSelect(oracle.id)}>
                 {oracle.imageSrc && (
                   <div className="os-card-img">
@@ -428,7 +436,21 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
                 )}
                 <div className="os-card-body">
                   <div className="os-card-texts">
-                    <div className="os-card-title">{oracle.title}</div>
+                    {/* Titre + bouton i sur la même ligne */}
+                    <div className="os-card-title-row">
+                      <div className="os-card-title">{oracle.title}</div>
+                      {hasHint && (
+                        <button
+                          className={`os-hint-btn ${isHintOpen ? 'active' : ''}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setExpandedHint(isHintOpen ? null : oracle.id);
+                          }}
+                        >
+                          i
+                        </button>
+                      )}
+                    </div>
                     <div className="os-card-desc">{oracle.description}</div>
                   </div>
                   <div className="os-card-right">
@@ -437,23 +459,11 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
                         <path d="M9 6l6 6-6 6"/>
                       </svg>
                     </div>
-                    {/* Bouton (i) — seulement si hint existe */}
-                    {hasHint && (
-                      <button
-                        className={`os-hint-btn ${isHintOpen ? 'active' : ''}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setExpandedHint(isHintOpen ? null : oracle.id);
-                        }}
-                      >
-                        i
-                      </button>
-                    )}
                   </div>
                 </div>
               </div>
 
-              {/* Panneau dépliable avec explication du tirage */}
+              {/* Panneau dépliable */}
               {hasHint && (
                 <div className={`os-hint-panel ${isHintOpen ? 'open' : ''}`}>
                   <div className="os-hint-content">
@@ -480,7 +490,7 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
           onClick={() => handleSelect('bonusRoll')}
         >
           <div className="os-bonus-card-img">
-            <img src="/Image/Tirage-de.jpg" alt="Tirage Bonus"/>
+            <img src="/Image/Tirage-de.webp" alt="Tirage Bonus"/>
           </div>
           <div className="os-bonus-card-body">
             <div className="os-card-texts">
