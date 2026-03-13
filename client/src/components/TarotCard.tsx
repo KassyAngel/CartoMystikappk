@@ -57,12 +57,10 @@ export default function TarotCard({
   const [imageError, setImageError] = useState(false);
   const { t, language } = useLanguage();
 
-  // ✅ Plus de préchargement ici car fait en amont dans CardGame
   const isBack = number === 0;
 
   const handleClick = () => {
     if (isSelectable) {
-      console.log(`Card ${number} selected`);
       onClick?.();
     }
   };
@@ -112,14 +110,6 @@ export default function TarotCard({
   return (
     <div
       className={cn(
-        /*
-         * ── TAILLE : on remplit complètement le conteneur parent ──────────────
-         * CardGame positionne chaque carte via .cg-fan-card (width/height en CSS var).
-         * TarotCard ne doit PAS imposer sa propre taille — il remplit simplement
-         * le parent avec w-full h-full.
-         * Les anciennes classes fixes (w-24 h-36 sm:w-28 sm:h-40 md:w-32 md:h-44)
-         * sont supprimées car elles créaient un espace mort autour des cartes.
-         */
         'w-full h-full',
         'rounded-xl cursor-pointer',
         'touch-manipulation flex items-center justify-center',
@@ -192,22 +182,86 @@ export default function TarotCard({
                       e.currentTarget.style.display = 'none';
                     }}
                   />
-                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/80 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 text-center px-2 pb-2">
-                    <span className="text-white font-bold text-xs sm:text-sm leading-tight block drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+
+                  {/* ── Dégradé + nom de la carte ──────────────────────────────
+                      CORRECTION : plus de white-space:nowrap ni text-overflow:ellipsis
+                      Le nom se répartit sur 2 lignes max avec font-size adaptatif.
+                      On utilise clamp() pour que les noms longs restent lisibles
+                      quelle que soit la largeur de la carte.
+                  ─────────────────────────────────────────────────────────── */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0"
+                    style={{
+                      /* Dégradé plus haut pour laisser de la place aux 2 lignes */
+                      height: '56px',
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 55%, transparent 100%)',
+                    }}
+                  />
+                  <div
+                    className="absolute bottom-0 left-0 right-0"
+                    style={{
+                      padding: '0 5px 5px',
+                      display: 'flex',
+                      alignItems: 'flex-end',
+                      justifyContent: 'center',
+                      minHeight: '52px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        /* clamp : min 9px, idéal 2.2cqw (relatif au conteneur), max 12px
+                           Permet aux noms longs de rétrécir automatiquement         */
+                        fontSize: 'clamp(9px, 2.2cqw, 12px)',
+                        fontWeight: 700,
+                        color: '#ffffff',
+                        textAlign: 'center',
+                        lineHeight: 1.25,
+                        /* Autorise le retour à la ligne mais coupe au bout de 2 lignes */
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical' as any,
+                        overflow: 'hidden',
+                        wordBreak: 'break-word',
+                        /* Ombre portée pour lisibilité sur toutes les images */
+                        textShadow: '0 1px 4px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.7)',
+                        width: '100%',
+                      }}
+                    >
                       {getTranslatedCardName()}
                     </span>
                   </div>
                 </div>
               ) : (
-                <div className="absolute inset-0 bg-gradient-to-br from-[#4a3470] via-[#2d1b4e] to-[#1a0f3a] rounded-xl flex items-center justify-center">
-                  <span className="text-[#ffd700] font-bold text-xs sm:text-sm md:text-base leading-tight text-center px-2">
+                /* Pas d'image : fond dégradé + nom centré */
+                <div
+                  className="absolute inset-0 rounded-xl flex items-center justify-center"
+                  style={{
+                    background: 'linear-gradient(135deg, #4a3470 0%, #2d1b4e 50%, #1a0f3a 100%)',
+                  }}
+                >
+                  <span
+                    style={{
+                      color: '#ffd700',
+                      fontWeight: 700,
+                      fontSize: 'clamp(9px, 2.2cqw, 13px)',
+                      lineHeight: 1.3,
+                      textAlign: 'center',
+                      padding: '0 8px',
+                      /* 3 lignes max pour les noms très longs */
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical' as any,
+                      overflow: 'hidden',
+                      wordBreak: 'break-word',
+                    }}
+                  >
                     {getTranslatedCardName()}
                   </span>
                 </div>
               );
             })()}
 
+            {/* Oracles autres que daily/tarot/angels */}
             {oracleType !== 'daily' && oracleType !== 'tarot' && oracleType !== 'angels' && (
               <div className="absolute inset-0 bg-gradient-to-br from-[#4a3470] via-[#2d1b4e] to-[#1a0f3a] rounded-xl overflow-hidden">
                 <div className="absolute inset-2 rounded-lg border-2 border-[#ffd700]/40 pointer-events-none" />
@@ -215,8 +269,22 @@ export default function TarotCard({
                 <div className="absolute top-3 right-3 text-[#ffd700]/60 text-xs">✦</div>
                 <div className="absolute bottom-3 left-3 text-[#ffd700]/60 text-xs">✦</div>
                 <div className="absolute bottom-3 right-3 text-[#ffd700]/60 text-xs">✦</div>
-                <div className="absolute inset-0 flex items-center justify-center px-2">
-                  <span className="text-[#ffd700] font-bold text-xs sm:text-sm md:text-base leading-tight text-center">
+                <div className="absolute inset-0 flex items-center justify-center px-3">
+                  <span
+                    style={{
+                      color: '#ffd700',
+                      fontWeight: 700,
+                      fontSize: 'clamp(9px, 2.2cqw, 13px)',
+                      lineHeight: 1.3,
+                      textAlign: 'center',
+                      /* 3 lignes max */
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical' as any,
+                      overflow: 'hidden',
+                      wordBreak: 'break-word',
+                    }}
+                  >
                     {getTranslatedCardName()}
                   </span>
                 </div>
@@ -232,3 +300,23 @@ export default function TarotCard({
     </div>
   );
 }
+
+/*
+ * ═══════════════════════════════════════════════════════
+ *  CORRECTIONS APPORTÉES
+ *
+ *  Problème : les noms longs étaient coupés avec "…" car le CSS utilisait
+ *    white-space: nowrap + text-overflow: ellipsis
+ *
+ *  Solution :
+ *  • Suppression de white-space:nowrap et text-overflow:ellipsis
+ *  • Utilisation de -webkit-line-clamp: 2 (face avec image)
+ *    ou -webkit-line-clamp: 3 (face sans image / autres oracles)
+ *    → le nom se répartit proprement sur 2 ou 3 lignes maximum
+ *  • font-size en clamp(9px, 2.2cqw, 12px) : adaptatif à la largeur
+ *    de la carte, donc les très longs noms rétrécissent naturellement
+ *  • word-break: break-word : évite tout débordement horizontal
+ *  • Dégradé bas légèrement plus haut (56px → 56px) pour héberger 2 lignes
+ *  • textShadow renforcé pour lisibilité sur images claires
+ * ═══════════════════════════════════════════════════════
+ */

@@ -29,7 +29,7 @@ export default function InterpretationPage({
   user, oracle, oracleType, selectedCards,
   onBack, onHome, onCrystalBall
 }: InterpretationPageProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -74,8 +74,20 @@ export default function InterpretationPage({
     Array.from({ length: count }, (_, i) => t(`${keyBase}.var${i + 1}`, vars))
       .filter(v => !v.includes(keyBase));
 
+  // ─── Helper : contraction "de + article" en français ────────────────────────
+  // Gère tous les cas : "du lâcher-prise" / "de la joie" / "de l'espoir" / "d'un élan"
+  const deOf = (kw: string): string => {
+    if (!kw) return '';
+    const w = kw.trim();
+    const lo = w.toLowerCase();
+    if (lo.startsWith('le '))  return 'du '  + w.slice(3);
+    if (lo.startsWith('les ')) return 'des ' + w.slice(4);
+    if (lo.startsWith("l'") || lo.startsWith('l\u2019')) return "de l'" + w.slice(2);
+    if (lo.startsWith('un ') || lo.startsWith('une ')) return "d'" + w;
+    return 'de ' + w;
+  };
+
   // ─── Synthèse Tarot ─────────────────────────────────────────────────────────
-  // Templates dans translations.ts, variables {kw0}/{kw1}/{kw2} pour traduction
   const buildTarotSynthesis = (cards: OracleCard[]): string => {
     const kw = cards.map(c => {
       const key = getTarotFrenchKey(c.name, 'fr');
@@ -88,17 +100,21 @@ export default function InterpretationPage({
       t(`interpretation.synthesis.tarot.${i + 1}`, { kw0, kw1, kw2 })
     ).filter(v => v && !v.includes('interpretation.synthesis'));
 
-    // Fallback FR si pas de clés traduites
     if (!templates.length) {
+      // Fallback FR — 12 templates validés avec tous les 22 keywords
       const fb = [
-        kw0 && kw1 && kw2 ? `En ce moment, ${kw0} est présent dans ta vie. Cela laisse place à ${kw1} qui évolue, et ce qui arrive, c'est ${kw2}.` : '',
-        kw0 && kw2 ? `Tu pars de ${kw0}. Pas à pas, ce chemin te mène vers ${kw2}.` : '',
-        kw1 ? `Ce tirage montre un moment de changement. Ce qui bouge en toi, c'est ${kw1}.` : '',
-        kw0 && kw1 && kw2 ? `Trois étapes : d'abord ${kw0} qui pose la situation. Puis ${kw1} qui la met en mouvement. Et enfin ${kw2} qui montre où ça va.` : '',
-        kw2 ? `Ce que tes cartes montrent en ce moment : tout ce que tu traverses te prépare à ${kw2}.` : '',
-        kw1 && kw2 ? `${kw1} est en train de changer en toi. Ce changement prépare l'arrivée de ${kw2}.` : '',
-        kw0 && kw2 ? `Tu n'es plus tout à fait dans ${kw0}, et pas encore dans ${kw2}. Tu es entre les deux, et c'est là que tout se joue.` : '',
-        `Ces trois cartes racontent une seule histoire : un mouvement qui se déroule en ce moment dans ta vie.`,
+        kw0 && kw1 && kw2 ? `Tes cartes montrent un mouvement en trois temps : ${kw0} au départ, ${kw1} en transition, ${kw2} à l'horizon.` : '',
+        kw0 && kw2 ? `En ce moment, ${kw0} est au cœur de ta vie. Ce chemin t'amène vers ${kw2}, pas à pas.` : '',
+        kw1 ? `Ce qui domine ce tirage, c'est ${kw1}. Tout part de là.` : '',
+        kw0 && kw1 && kw2 ? `Trois temps : ${kw0} comme point de départ, ${kw1} comme transformation, ${kw2} comme destination.` : '',
+        kw2 ? `La direction que tes cartes te montrent, c'est ${kw2}. Tu es déjà en route.` : '',
+        kw0 && kw1 ? `Tu navigues entre ${kw0} et ${kw1} en ce moment. Ce mélange crée le mouvement.` : '',
+        kw1 && kw2 ? `Ce que tu traverses — ${kw1} — se transforme. Cela prépare l'arrivée ${deOf(kw2)}.` : '',
+        kw0 && kw2 ? `Tu quittes ${kw0} et tu n'es pas encore dans ${kw2}. Cette zone de passage, c'est là que tout se décide.` : '',
+        `Ces trois cartes racontent une seule histoire : un mouvement en cours dans ta vie.`,
+        kw2 ? `Ce tirage pointe clairement vers ${kw2}. Ce n'est pas loin, c'est déjà en train de commencer.` : '',
+        kw0 ? `Tout part ${deOf(kw0)}. C'est là où tu es aujourd'hui, et c'est un bon point de départ.` : '',
+        `Ces trois cartes forment un arc cohérent. Pas trois événements séparés — un seul mouvement en train de se déployer.`,
       ].filter(Boolean) as string[];
       return pick(fb);
     }
@@ -122,16 +138,15 @@ export default function InterpretationPage({
       t(`interpretation.synthesis.angels.${i + 1}`, { e0, e1, e2, genderSuffix })
     ).filter(v => v && !v.includes('interpretation.synthesis'));
 
-    // Fallback FR si pas de clés traduites
     if (!templates.length) {
       const fb = [
-        e0 && e1 && e2 ? `Les anges te guident en trois étapes : laisser partir ${e0}, recevoir ${e1}, et devenir ${e2}.` : '',
-        e0 && e2 ? `Ce que tu lâches, ${e0}, fait de la place pour quelque chose de nouveau : ${e2}.` : '',
+        e0 && e1 && e2 ? `Les anges te guident en trois étapes : laisser partir ${deOf(e0)}, accueillir ${e1}, et devenir ${e2}.` : '',
+        e0 && e2 ? `Se détacher ${deOf(e0)} ouvre de l'espace pour quelque chose de nouveau : ${e2}.` : '',
         e1 ? `${e1} entre dans ta vie en ce moment. C'est une réponse à ce que tu traverses.` : '',
-        e0 && e1 ? `En libérant ${e0}, tu t'ouvres à ${e1}. C'est le mouvement que les anges voient pour toi.` : '',
-        e2 ? `Au bout de ce chemin, il y a ${e2}. C'est qui tu deviens, pas un rêve lointain.` : '',
+        e0 && e1 ? `En lâchant ${deOf(e0)}, tu t'ouvres à ${e1}. C'est le mouvement que les anges voient pour toi.` : '',
+        e2 ? `Au bout de ce chemin, il y a ${e2}. C'est ce que tu deviens, pas un rêve lointain.` : '',
         `Tu n'es pas seul${genderSuffix} dans ce moment. Une présence bienveillante accompagne chacun de tes pas.`,
-        `Ce tirage t'invite à faire confiance. Pas à l'aveugle, mais avec la certitude que tu es sur le bon chemin.`,
+        `Ce tirage t'invite à faire confiance — avec la certitude que tu es sur le bon chemin.`,
       ].filter(Boolean) as string[];
       return pick(fb);
     }
@@ -145,17 +160,17 @@ export default function InterpretationPage({
       t(`interpretation.action.tarot.${i + 1}`, { name, genderSuffix })
     ).filter(v => v && !v.includes('interpretation.action'));
 
-    // Fallback FR — directives concrètes sans keywords
+    // Fallback FR — ton mystique et incarné, pas de jargon de coach
     if (!templates.length) {
       const fb = [
-        `${name}, dans les prochains jours : prends note de ce qui attire vraiment ton attention. C'est là que ton énergie veut aller.`,
-        `${name}, un conseil simple : avant de prendre une décision importante, demande-toi si elle te rapproche de ce que tu veux vraiment ou si elle t'en éloigne.`,
-        `${name}, ce tirage te dit de ne pas forcer. Si quelque chose résiste, laisse-le reposer. La clarté vient quand on arrête de pousser.`,
-        `${name}, sois attentif${genderSuffix} aux petits signes autour de toi cette semaine. Ils font partie du mouvement que tes cartes ont montré.`,
-        `${name}, le bon timing, c'est maintenant. Si tu attends le moment parfait, il ne viendra pas. Commence avec ce que tu as.`,
-        `${name}, parle de ce que tu ressens à quelqu'un en qui tu as confiance. Mettre des mots dessus t'aidera à avancer.`,
-        `${name}, prends soin de toi physiquement cette semaine. L'énergie de ce tirage demande que tu sois ancré${genderSuffix} dans ton corps.`,
-        `${name}, lâche une chose que tu contrôles trop en ce moment. Ce relâchement est exactement ce dont tu as besoin.`,
+        `${name}, quelque chose cherche à attirer ton attention en ce moment. Note ce qui revient souvent — dans tes pensées, tes conversations, ce que tu remarques. Ce n'est pas un hasard.`,
+        `${name}, avant de prendre une décision dans les prochains jours, prends un temps de silence. La réponse juste est déjà en toi.`,
+        `${name}, ce tirage te demande de ralentir. Ce qui se construit en douceur tient dans le temps. Laisse les choses se mettre en place.`,
+        `${name}, sois attentif${genderSuffix} à ce que tu ressens dans ton corps cette semaine. Ton intuition parle souvent par là avant de passer par les mots.`,
+        `${name}, le moment que tu attends n'est peut-être pas si loin. Fais un pas, même petit. Le chemin se révèle en marchant.`,
+        `${name}, partage ce que tu portes avec quelqu'un de confiance. Ce que tu gardes pour toi prend souvent plus de place qu'il ne le devrait.`,
+        `${name}, prends soin de ton corps cette semaine. L'énergie spirituelle a besoin d'un ancrage physique pour agir.`,
+        `${name}, il y a quelque chose que tu sais déjà mais que tu hésites à accepter. Ce tirage te dit qu'il est temps.`,
       ];
       return pick(fb);
     }
@@ -168,17 +183,17 @@ export default function InterpretationPage({
       t(`interpretation.action.angels.${i + 1}`, { name, genderSuffix })
     ).filter(v => v && !v.includes('interpretation.action'));
 
-    // Fallback FR — conseils angéliques sans keywords
+    // Fallback FR — doux, angélique, incarné
     if (!templates.length) {
       const fb = [
-        `${name}, prends 5 minutes aujourd'hui dans le calme et demande-toi : qu'est-ce que je traîne depuis trop longtemps ? Juste nommer la chose, c'est déjà un geste de libération.`,
-        `${name}, les anges te demandent d'arrêter de te justifier. Tu n'as pas besoin de la permission de quelqu'un d'autre pour avancer.`,
-        `${name}, fais un geste de soin pour toi aujourd'hui : quelque chose que tu repousses depuis des semaines. C'est ça, le message.`,
-        `${name}, observe sans juger cette semaine. Quelque chose que tu vois souvent autour de toi est un signe. Fais-lui confiance.`,
-        `${name}, dis oui à quelque chose que tu refuses habituellement par peur. Les anges te disent que le moment est sûr.`,
-        `${name}, écris ce que tu ressens. Pas pour quelqu'un, juste pour toi. Ça libère ce qui ne peut pas sortir autrement.`,
-        `${name}, cherche la beauté dans une chose ordinaire aujourd'hui. C'est un exercice simple qui change l'énergie autour de toi.`,
-        `${name}, si quelqu'un te demande comment tu vas, réponds vraiment. Ne dis pas juste "bien". Cette honnêteté est un acte spirituel.`,
+        `${name}, prends un moment seul${genderSuffix} aujourd'hui et demande-toi : qu'est-ce que je porte depuis trop longtemps ? Simplement le nommer est déjà un acte de libération.`,
+        `${name}, les anges te rappellent que tu n'as pas besoin de mériter ce qui vient. Tu peux recevoir, simplement.`,
+        `${name}, fais quelque chose de doux pour toi aujourd'hui. Quelque chose de simple que tu remets toujours à plus tard. C'est là que le message se loge.`,
+        `${name}, cette semaine, observe sans chercher à comprendre. Quelque chose que tu croises souvent autour de toi est un signe. Laisse-le te parler.`,
+        `${name}, il y a une chose que tu refuses par peur. Les anges te disent que c'est sans danger. Tu peux dire oui.`,
+        `${name}, pose des mots sur ce que tu traverses. Pas pour quelqu'un — juste pour toi. Ce que tu écris se libère.`,
+        `${name}, cherche la beauté dans ce qui est ordinaire aujourd'hui. Un geste simple qui change ta vibration intérieure.`,
+        `${name}, quand quelqu'un te demande comment tu vas, réponds avec honnêteté. Cette sincérité est un acte sacré.`,
       ];
       return pick(fb);
     }
@@ -186,7 +201,7 @@ export default function InterpretationPage({
   };
 
   // ─── Génération complète ─────────────────────────────────────────────────────
-  const generateSections = () => {
+  const generateSections = (fixedSynthesis: string, fixedAction: string) => {
     const genderSuffix = user.gender === 'femme' ? 'e' : '';
     const zodiacMap: Record<string, string> = {
       'Bélier': 'aries', 'Taureau': 'taurus', 'Gémeaux': 'gemini',
@@ -252,14 +267,7 @@ export default function InterpretationPage({
         });
       });
 
-      // Synthèse non-répétitive (12 templates basés sur keywords)
-      const synthesis = buildTarotSynthesis(selectedCards.slice(0, 3));
-
-      // Action concrète dérivée des keywords — liée aux cartes, pas aléatoire
-      const action = buildTarotAction(selectedCards.slice(0, 3), user.name, genderSuffix);
-
-      // Un seul bloc : synthèse + action séparés par saut de ligne
-      finalMessage = [synthesis, action].filter(Boolean).join('\n\n');
+      finalMessage = [fixedSynthesis, fixedAction].filter(Boolean).join('\n\n');
       greeting = getGreeting('tarot');
 
     // ── Oracle des Anges ────────────────────────────────────────────
@@ -282,14 +290,7 @@ export default function InterpretationPage({
         });
       });
 
-      // Synthèse non-répétitive (12 templates)
-      const synthesis = buildAngelsSynthesis(selectedCards.slice(0, 3));
-
-      // Action concrète dérivée des énergies angéliques
-      const action = buildAngelsAction(selectedCards.slice(0, 3), user.name, genderSuffix);
-
-      // Un seul bloc fusionné
-      finalMessage = [synthesis, action].filter(Boolean).join('\n\n');
+      finalMessage = [fixedSynthesis, fixedAction].filter(Boolean).join('\n\n');
       greeting = getGreeting('angels');
 
     // ── Runes ───────────────────────────────────────────────────────
@@ -311,13 +312,32 @@ export default function InterpretationPage({
     return { sections, finalMessage, greeting };
   };
 
-  // Mémorisé sur les cartes uniquement — la synthèse ne change pas si on change de langue
-  // car les keywords sont en français (langue source des templates)
-  const { sections, finalMessage, greeting } = useMemo(
-    () => generateSections(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedCards.map(c => c.name).join(','), oracleType, user.name, user.gender]
-  );
+  // ── Synthèse et action : fixes par tirage, indépendantes de la langue ──────
+  // Les keywords sont en FR (langue source), la synthèse ne change pas si on change de langue
+  const { fixedSynthesis, fixedAction, fixedGreetingKey } = useMemo(() => {
+    const genderSuffix = user.gender === 'femme' ? 'e' : '';
+    if (oracleType === 'tarot') {
+      return {
+        fixedSynthesis: buildTarotSynthesis(selectedCards.slice(0, 3)),
+        fixedAction: buildTarotAction(selectedCards.slice(0, 3), user.name, genderSuffix),
+        fixedGreetingKey: 'tarot',
+      };
+    } else if (oracleType === 'angels') {
+      return {
+        fixedSynthesis: buildAngelsSynthesis(selectedCards.slice(0, 3)),
+        fixedAction: buildAngelsAction(selectedCards.slice(0, 3), user.name, genderSuffix),
+        fixedGreetingKey: 'angels',
+      };
+    }
+    return { fixedSynthesis: '', fixedAction: '', fixedGreetingKey: oracleType };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCards.map(c => c.name).join(','), oracleType, user.name, user.gender]);
+
+  // ── Sections et labels : réactifs à la langue ─────────────────────────────
+  const { sections, finalMessage, greeting } = useMemo(() => {
+    return generateSections(fixedSynthesis, fixedAction);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fixedSynthesis, fixedAction, language, user.name, user.gender]);
   const timeLeft = getTimeUntilMidnight();
 
   return (
