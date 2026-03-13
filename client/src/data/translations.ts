@@ -1632,7 +1632,7 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.synthesis.tarot.9":  "Ces trois cartes racontent une seule histoire : un mouvement en cours dans ta vie.",
     "interpretation.synthesis.tarot.10": "Ce tirage pointe clairement vers {kw2}. Ce n'est pas loin, c'est déjà en train de commencer.",
     "interpretation.synthesis.tarot.11": "Tout part de {kw0}. C'est là où tu es aujourd'hui, et c'est un bon point de départ.",
-    "interpretation.synthesis.tarot.12": "Ces trois cartes forment un arc cohérent. Pas trois événements séparés — un seul mouvement en train de se déployer.",
+    "interpretation.synthesis.tarot.12": "Ces trois cartes forment un arc cohérent. Pas trois événements séparés! un seul mouvement en train de se déployer.",
 
     // ── Synthèses Anges ──────────────────────────────────────────────────────────
     "interpretation.synthesis.angels.1":  "Les anges te guident en trois étapes : laisser partir {e0}, accueillir {e1}, et devenir {e2}.",
@@ -1646,10 +1646,10 @@ const translations: Record<Language, Record<string, string>> = {
     "interpretation.synthesis.angels.9":  "Trois temps : {e0} se dépose, {e1} arrive, {e2} s'installe. Chaque étape a sa place.",
     "interpretation.synthesis.angels.10": "Les anges voient déjà {e2} en toi. C'est là, ça grandit.",
     "interpretation.synthesis.angels.11": "Ce que tu reçois, {e1} , tu l'as rendu possible. Continue.",
-    "interpretation.synthesis.angels.12": "Ce tirage t'invite à faire confiance — avec la certitude que tu es exactement là où tu dois être.",
+    "interpretation.synthesis.angels.12": "Ce tirage t'invite à faire confiance! avec la certitude que tu es exactement là où tu dois être.",
 
     // ── Actions Tarot ─────────────────────────────────────────────────────────────
-    "interpretation.action.tarot.1": "Quelque chose cherche à attirer ton attention en ce moment. Note ce qui revient souvent — dans tes pensées, tes rêves, ce que tu remarques. Ce n'est pas un hasard.",
+    "interpretation.action.tarot.1": "Quelque chose cherche à attirer ton attention en ce moment. Note ce qui revient souvent dans tes pensées, tes rêves, ce que tu remarques. Ce n'est pas un hasard.",
     "interpretation.action.tarot.2": "Avant de décider quoi que ce soit d'important, prends un moment de silence. La réponse juste est déjà en toi.",
     "interpretation.action.tarot.3": "{name}, ce tirage te demande de ralentir. Ce qui se construit en douceur tient dans le temps. Laisse les choses se mettre en place.",
     "interpretation.action.tarot.4": "Sois attentif(ve) à ce que tu ressens dans ton corps cette semaine. Ton intuition parle souvent par là, avant les mots.",

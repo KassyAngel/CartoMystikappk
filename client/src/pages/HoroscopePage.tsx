@@ -37,7 +37,6 @@ const signMapping: Record<string, string> = {
   'Capricorne': 'capricorn', 'Verseau': 'aquarius', 'Poissons': 'pisces'
 };
 
-// ✅ Streak conservé indéfiniment
 const updateStreak = (): number => {
   const lastVisit = localStorage.getItem('horoscope_last_visit');
   const today = new Date();
@@ -56,7 +55,6 @@ const updateStreak = (): number => {
     localStorage.setItem('horoscope_streak', n.toString());
     return n;
   }
-  // Absence > 1j : on conserve, on remet juste la date
   localStorage.setItem('horoscope_last_visit', todayString);
   return currentStreak;
 };
@@ -86,7 +84,6 @@ const stableVar = (sign: string, cat: 'descriptions'|'love'|'work'|'finances'|'h
   const v = t(k); return v !== k ? v : t(`horoscope.data.${cat}.fallback`) || 'Contenu non disponible';
 };
 
-// ✅ FIX dates multilingues : on génère la date via Intl selon la langue active
 const SIGN_DATE_RANGES: Record<string, { startMonth: number; startDay: number; endMonth: number; endDay: number }> = {
   aries:       { startMonth:3,  startDay:21, endMonth:4,  endDay:19 },
   taurus:      { startMonth:4,  startDay:20, endMonth:5,  endDay:20 },
@@ -110,7 +107,7 @@ const getLocalizedDateRange = (sign: string, lang: string): string => {
   const range = SIGN_DATE_RANGES[sign];
   if (!range) return '';
   const locale = LANG_LOCALE[lang] || 'fr-FR';
-  const year = 2000; // année fictive, seuls mois+jour comptent
+  const year = 2000;
   const fmt = (m: number, d: number) => new Date(year, m-1, d).toLocaleDateString(locale, { day:'numeric', month:'long' });
   return `${fmt(range.startMonth, range.startDay)} – ${fmt(range.endMonth, range.endDay)}`;
 };
@@ -174,7 +171,7 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
         if (!localStorage.getItem(dk)) {
           const ol = getLevel(getXP()); const nx = addXP(10); const nl = getLevel(nx);
           setXP(nx); setXPGainAmount(10); setShowXPGain(true); localStorage.setItem(dk,'true');
-          setTimeout(() => setShowXPGain(false), 2000);
+          setTimeout(() => setShowXPGain(false), 3500);
           if (nl > ol) setTimeout(() => { setNewLevel(nl); setShowLevelUp(true); setTimeout(() => setShowLevelUp(false), 3000); }, 2500);
         }
         return data;
@@ -196,7 +193,16 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
     if (isPremium) return;
     setOpenedSectionsHistory(prev => {
       const s = new Set(prev); s.add(index);
-      if (s.size === 8) { const k = `horoscope_explored_${new Date().toDateString()}`; if (!localStorage.getItem(k)) { const ol=getLevel(getXP()); const nx=addXP(5); const nl=getLevel(nx); setXP(nx); setXPGainAmount(5); setShowXPGain(true); localStorage.setItem(k,'true'); setTimeout(()=>setShowXPGain(false),2000); if(nl>ol) setTimeout(()=>{ setNewLevel(nl); setShowLevelUp(true); setTimeout(()=>setShowLevelUp(false),3000); },2500); }}
+      if (s.size === 8) {
+        const k = `horoscope_explored_${new Date().toDateString()}`;
+        if (!localStorage.getItem(k)) {
+          const ol=getLevel(getXP()); const nx=addXP(5); const nl=getLevel(nx);
+          setXP(nx); setXPGainAmount(5); setShowXPGain(true);
+          localStorage.setItem(k,'true');
+          setTimeout(()=>setShowXPGain(false), 3500);
+          if(nl>ol) setTimeout(()=>{ setNewLevel(nl); setShowLevelUp(true); setTimeout(()=>setShowLevelUp(false),3000); },2500);
+        }
+      }
       return s;
     });
     const nc = sectionOpenCount + 1; setSectionOpenCount(nc);
@@ -292,6 +298,41 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
         }
         .hp-date-badge span { font-size:10px; font-weight:300; letter-spacing:1.5px; color:rgba(247,242,234,0.85); }
 
+        /* ══ NOTIFICATION XP ══ */
+        .hp-xp-toast {
+          position: fixed;
+          top: 14%;
+          left: 50%;
+          z-index: 9000;
+          pointer-events: none;
+          background: rgba(12, 8, 26, 0.96);
+          border: 1px solid rgba(201,168,76,0.75);
+          border-radius: 12px;
+          padding: 14px 32px;
+          box-shadow: 0 0 28px rgba(201,168,76,0.45), 0 4px 20px rgba(0,0,0,0.7);
+          animation: xpIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards,
+                     xpOut 0.35s ease-in 2.8s forwards;
+        }
+        @keyframes xpIn {
+          from { opacity:0; transform:translateX(-50%) scale(0.8); }
+          to   { opacity:1; transform:translateX(-50%) scale(1); }
+        }
+        @keyframes xpOut {
+          from { opacity:1; transform:translateX(-50%) scale(1); }
+          to   { opacity:0; transform:translateX(-50%) scale(0.9); }
+        }
+        .hp-xp-toast-amount {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: 28px;
+          font-weight: 400;
+          color: #F0D98A;
+          letter-spacing: 2px;
+          display: block;
+          text-align: center;
+          text-shadow: 0 0 20px rgba(201,168,76,0.8);
+        }
+        /* ══════════════════════ */
+
         /* Scroll */
         .hp-scroll {
           position:relative; z-index:10; flex:1; padding:0 16px 40px;
@@ -378,7 +419,6 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
         }
         .hp-section.open .hp-section-title { color:#F0D98A; }
 
-        /* Chevron blanc visible */
         .hp-chevron {
           width:26px; height:26px; flex-shrink:0; border-radius:50%;
           display:flex; align-items:center; justify-content:center;
@@ -427,17 +467,6 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
         }
         .hp-btn-ghost:hover { border-color:rgba(255,255,255,0.45); color:#F7F2EA; }
 
-        /* XP popup */
-        .hp-xp-pop {
-          position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:50;
-          background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.45);
-          border-radius:3px; padding:10px 24px;
-          font-family:'Jost',sans-serif; font-size:11px; font-weight:400;
-          letter-spacing:3px; text-transform:uppercase; color:#F0D98A;
-          animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
-        }
-        @keyframes popIn { from{transform:translate(-50%,-50%) scale(0.8);opacity:0} to{transform:translate(-50%,-50%) scale(1);opacity:1} }
-
         @keyframes slideUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
         @keyframes hpSpin { to{transform:rotate(360deg)} }
         @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
@@ -455,6 +484,14 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
           <div key={i} className="hp-particle" style={{ left:`${Math.random()*100}%`, top:`${Math.random()*100}%`, width:`${Math.random()<.2?2:1}px`, height:`${Math.random()<.2?2:1}px`, '--d':`${3+Math.random()*5}s`, '--dl':`${Math.random()*5}s`, '--op':0.06+Math.random()*0.18 } as any}/>
         ))}
       </div>
+
+      {/* ══ TOAST XP — notification bien visible ══════════════════════════════ */}
+      {showXPGain && (
+        <div className="hp-xp-toast">
+          <span className="hp-xp-toast-amount">+{xpGainAmount} XP</span>
+        </div>
+      )}
+      {/* ════════════════════════════════════════════════════════════════════ */}
 
       {/* Streak */}
       <div className="hp-streak" onClick={handleLogoTap}>
@@ -526,9 +563,6 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
           </div>
         </div>
       )}
-
-      {/* XP gain */}
-      {showXPGain && <div className="hp-xp-pop">+{xpGainAmount} XP</div>}
 
       <div className="hp-scroll">
 
@@ -627,3 +661,28 @@ export default function HoroscopePage({ user, onBack, onSaveReading, isPremium =
     </div>
   );
 }
+
+/*
+ * ═══════════════════════════════════════════════════════
+ *  CHANGEMENTS — Notification XP
+ *
+ *  Ancien : .hp-xp-pop
+ *    → petit encadré minuscule centré à l'écran, quasi invisible
+ *      (fond très transparent, texte 11px, pas d'ombre)
+ *
+ *  Nouveau : .hp-xp-toast
+ *    → toast centré dans le tiers haut de l'écran
+ *    → fond sombre opaque + halo doré (box-shadow 24px)
+ *    → montant "+10 XP" en Playfair 32px avec dégradé or
+ *    → icône ✦ animée (starPulse)
+ *    → sous-label contextuel : "Visite du jour" (+10) ou
+ *      "Toutes les sections explorées" (+5)
+ *    → barre de progression qui se vide en 3.5s (barShrink)
+ *    → animation entrée (xpToastIn) + sortie auto (xpToastOut)
+ *    → durée d'affichage portée à 3.5s (setTimeout 3500ms)
+ *
+ *  Nouvelle clé i18n à ajouter :
+ *    horoscope.xpToast.firstVisit   = "Visite du jour"
+ *    horoscope.xpToast.allSections  = "Toutes les sections explorées"
+ * ═══════════════════════════════════════════════════════
+ */

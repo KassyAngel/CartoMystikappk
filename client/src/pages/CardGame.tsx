@@ -439,16 +439,17 @@ export default function CardGame({
 
           .cg-selected-slot {
             width: 80px; height: 128px;
-            border: 1px dashed rgba(201,168,76,0.2);
+            border: 1px dashed rgba(201,168,76,0.55);
             border-radius: 7px;
             display: flex; align-items: center; justify-content: center;
             transition: border-color 0.4s ease;
             flex-shrink: 0;
+            background: rgba(201,168,76,0.04);
           }
           .cg-selected-slot .slot-num {
             font-family: 'Playfair Display', serif;
             font-size: 18px; font-style: italic;
-            color: rgba(201,168,76,0.2);
+            color: rgba(201,168,76,0.7);
             transition: color 0.4s ease;
           }
 
