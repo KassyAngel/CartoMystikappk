@@ -26,10 +26,7 @@ export async function initializeRevenueCat(): Promise<void> {
         ? 'goog_FysChuiotCqiQGrxnPIxWGJtyKH'
         : 'appl_VOTRE_CLE_IOS';
 
-    // ✅ Configure RevenueCat
     await Purchases.configure({ apiKey });
-
-    // Activer les logs pour debug
     await Purchases.setLogLevel({ level: LOG_LEVEL.DEBUG });
 
     console.log('✅ RevenueCat initialisé avec succès');
@@ -56,13 +53,14 @@ export async function getOfferings(): Promise<PurchasesOfferings | null> {
 
 /**
  * 🛒 Achat d'un package
- * 🔴 CORRECTION : Récupère le productIdentifier exact depuis l'entitlement
+ * 🔴 CORRECTION : vérifie que le serveur a bien activé le premium avant
+ *                 de renvoyer un succès à l'utilisateur, avec retry.
  */
 export async function purchasePackage(
   aPackage: PurchasesPackage,
   email: string
-): Promise<{ success: boolean; customerInfo?: CustomerInfo }> {
-  if (!Capacitor.isNativePlatform()) return { success: false };
+): Promise<{ success: boolean; customerInfo?: CustomerInfo; error?: string }> {
+  if (!Capacitor.isNativePlatform()) return { success: false, error: 'Non disponible sur web' };
 
   try {
     // 1. Connecter l'utilisateur avec son email
@@ -76,91 +74,107 @@ export async function purchasePackage(
     const entitlements = purchaseResult.customerInfo.entitlements.active;
     const isPremiumActive = !!entitlements['premium'];
 
-    if (isPremiumActive) {
-      const premiumEntitlement = entitlements['premium'];
-
-      // 🔴 CORRECTION : Utiliser productIdentifier de l'entitlement (plus précis que aPackage.identifier)
-      const productId = premiumEntitlement.productIdentifier;
-      const expirationDate = premiumEntitlement.expirationDate || null;
-
-      console.log('✅ Premium activé !');
-      console.log('📦 Produit acheté:', productId);
-      console.log('📅 Expiration:', expirationDate || 'Non fournie par RevenueCat');
-
-      // 4. Envoyer au backend pour activation
-      await activatePremiumOnServer({
-        email,
-        productId,
-        expirationDate,
-      });
-
-      return { success: true, customerInfo: purchaseResult.customerInfo };
+    if (!isPremiumActive) {
+      console.warn('⚠️ Premium non actif après achat (côté RevenueCat)');
+      return { success: false, error: 'Achat non confirmé par RevenueCat' };
     }
 
-    console.warn('⚠️ Premium non actif après achat');
-    return { success: false };
+    const premiumEntitlement = entitlements['premium'];
+    const productId = premiumEntitlement.productIdentifier;
+    const expirationDate = premiumEntitlement.expirationDate || null;
+
+    console.log('✅ Premium activé côté RevenueCat !');
+    console.log('📦 Produit acheté:', productId);
+    console.log('📅 Expiration:', expirationDate || 'Non fournie par RevenueCat');
+
+    // 4. Envoyer au backend pour activation — avec retry, et on VÉRIFIE le résultat
+    const activationResult = await activatePremiumOnServerWithRetry({
+      email,
+      productId,
+      expirationDate,
+    });
+
+    if (!activationResult.success) {
+      // 🔴 Achat validé côté store, mais le backend n'a pas pu l'enregistrer.
+      // On le signale clairement au lieu de faire croire que tout a marché.
+      console.error('❌ Achat validé côté store mais activation serveur échouée après retries');
+      return {
+        success: false,
+        customerInfo: purchaseResult.customerInfo,
+        error:
+          "Votre achat a été validé par Google Play, mais nous n'avons pas pu l'enregistrer sur nos serveurs. " +
+          "Réessayez dans quelques instants via 'Restaurer un abonnement existant', ou contactez le support si le problème persiste.",
+      };
+    }
+
+    return { success: true, customerInfo: purchaseResult.customerInfo };
   } catch (error: any) {
     if (error.userCancelled) {
       console.log('❌ Achat annulé par l\'utilisateur');
-    } else {
-      console.error('❌ Erreur achat:', error);
+      return { success: false, error: 'Achat annulé' };
     }
-    return { success: false };
+    console.error('❌ Erreur achat:', error);
+    return { success: false, error: error.message || 'Erreur inconnue' };
   }
 }
 
 /**
  * ♻️ Restauration des achats
- * 🔴 CORRECTION : Récupère le productIdentifier exact depuis l'entitlement
+ * 🔴 CORRECTION : même vérification + retry qu'à l'achat.
  */
 export async function restorePurchases(
   email: string
-): Promise<{ success: boolean; customerInfo?: CustomerInfo }> {
-  if (!Capacitor.isNativePlatform()) return { success: false };
+): Promise<{ success: boolean; customerInfo?: CustomerInfo; error?: string }> {
+  if (!Capacitor.isNativePlatform()) return { success: false, error: 'Non disponible sur web' };
 
   try {
-    // 1. Connecter l'utilisateur
     await Purchases.logIn({ appUserID: email });
     console.log(`✅ Utilisateur connecté pour restauration : ${email}`);
 
-    // 2. Restaurer les achats Google Play
     const result = await Purchases.restorePurchases();
 
-    // 3. Vérifier si l'entitlement Premium est actif
     const entitlements = result.customerInfo.entitlements.active;
     const isPremiumActive = !!entitlements['premium'];
 
-    if (isPremiumActive) {
-      const premiumEntitlement = entitlements['premium'];
-
-      // 🔴 CORRECTION : Utiliser productIdentifier de l'entitlement
-      const productId = premiumEntitlement.productIdentifier;
-      const expirationDate = premiumEntitlement.expirationDate || null;
-
-      console.log('✅ Premium restauré !');
-      console.log('📦 Produit restauré:', productId);
-      console.log('📅 Expiration:', expirationDate || 'Non fournie par RevenueCat');
-
-      // 4. Envoyer au backend pour réactivation
-      await activatePremiumOnServer({
-        email,
-        productId,
-        expirationDate,
-      });
-
-      return { success: true, customerInfo: result.customerInfo };
+    if (!isPremiumActive) {
+      console.warn('⚠️ Aucun abonnement actif trouvé lors de la restauration');
+      return { success: false, error: 'Aucun abonnement actif trouvé' };
     }
 
-    console.warn('⚠️ Aucun abonnement actif trouvé lors de la restauration');
-    return { success: false };
-  } catch (error) {
+    const premiumEntitlement = entitlements['premium'];
+    const productId = premiumEntitlement.productIdentifier;
+    const expirationDate = premiumEntitlement.expirationDate || null;
+
+    console.log('✅ Premium restauré côté RevenueCat !');
+    console.log('📦 Produit restauré:', productId);
+    console.log('📅 Expiration:', expirationDate || 'Non fournie par RevenueCat');
+
+    const activationResult = await activatePremiumOnServerWithRetry({
+      email,
+      productId,
+      expirationDate,
+    });
+
+    if (!activationResult.success) {
+      console.error('❌ Restauration validée côté store mais activation serveur échouée après retries');
+      return {
+        success: false,
+        customerInfo: result.customerInfo,
+        error:
+          "Votre abonnement a été retrouvé, mais nous n'avons pas pu le réactiver sur nos serveurs. " +
+          "Réessayez dans quelques instants, ou contactez le support si le problème persiste.",
+      };
+    }
+
+    return { success: true, customerInfo: result.customerInfo };
+  } catch (error: any) {
     console.error('❌ Erreur restauration:', error);
-    return { success: false };
+    return { success: false, error: error.message || 'Erreur inconnue' };
   }
 }
 
 /**
- * 👑 Vérification du statut premium
+ * 👑 Vérification du statut premium (côté RevenueCat directement)
  */
 export async function checkPremiumStatus(email: string): Promise<boolean> {
   if (!Capacitor.isNativePlatform()) return false;
@@ -181,38 +195,66 @@ export async function checkPremiumStatus(email: string): Promise<boolean> {
 }
 
 /**
- * 🚀 Envoi au serveur (activation premium)
- * 🔴 Cette fonction envoie les données au backend qui calculera la durée
+ * 🚀 Envoi au serveur (activation premium) — tentative unique
  */
 async function activatePremiumOnServer(data: {
   email: string;
   productId: string;
   expirationDate: string | null;
 }): Promise<{ success: boolean }> {
-  try {
-    console.log('📤 Envoi au backend pour activation Premium:', data);
+  console.log('📤 Envoi au backend pour activation Premium:', data);
 
-    const response = await fetch(`${config.apiBaseUrl}/api/premium/activate-revenuecat`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify(data),
-    });
+  const response = await fetch(`${config.apiBaseUrl}/api/premium/activate-revenuecat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Erreur serveur');
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error || `Erreur serveur (${response.status})`);
+  }
+
+  const result = await response.json();
+
+  console.log('✅ Réponse du backend:', result);
+  console.log('⏱️ Durée:', result.durationMonths || 'Non calculée', 'mois');
+  console.log(
+    '📅 Expire le:',
+    result.premiumUntil ? new Date(result.premiumUntil).toLocaleDateString('fr-FR') : 'Non définie'
+  );
+
+  return { success: !!result.success };
+}
+
+/**
+ * 🔁 Wrapper avec retry (3 tentatives, backoff progressif)
+ * 🔴 NOUVEAU : absorbe les pannes temporaires (cold start Render, coupure
+ *              réseau ponctuelle) sans faire échouer tout de suite l'achat.
+ */
+async function activatePremiumOnServerWithRetry(
+  data: { email: string; productId: string; expirationDate: string | null },
+  maxAttempts: number = 3
+): Promise<{ success: boolean }> {
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      const result = await activatePremiumOnServer(data);
+      if (result.success) {
+        if (attempt > 1) console.log(`✅ Activation réussie à la tentative ${attempt}`);
+        return result;
+      }
+      console.warn(`⚠️ Tentative ${attempt}/${maxAttempts} : le serveur a renvoyé success=false`);
+    } catch (error) {
+      console.error(`❌ Tentative ${attempt}/${maxAttempts} échouée:`, error);
     }
 
-    const result = await response.json();
-
-    console.log('✅ Réponse du backend:', result);
-    console.log('⏱️ Durée:', result.durationMonths || 'Non calculée', 'mois');
-    console.log('📅 Expire le:', result.premiumUntil ? new Date(result.premiumUntil).toLocaleDateString('fr-FR') : 'Non définie');
-
-    return { success: result.success };
-  } catch (error) {
-    console.error('❌ Erreur d\'envoi au serveur:', error);
-    return { success: false };
+    if (attempt < maxAttempts) {
+      const delayMs = attempt * 1500; // 1.5s, puis 3s
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
   }
+
+  console.error(`❌ Échec définitif de l'activation serveur après ${maxAttempts} tentatives`);
+  return { success: false };
 }

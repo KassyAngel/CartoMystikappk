@@ -54,7 +54,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
     try {
       const result = await purchasePackage(pkg, email);
       if (result.success) { await saveUserEmail(email); onPurchase(pkg.identifier); }
-      else setError(t('premium.error.purchaseFailed') || 'Erreur achat');
+      else setError(result.error || t('premium.error.purchaseFailed') || 'Erreur achat');
     } catch (e: any) { setError(e.message || 'Erreur'); }
     finally { setLoading(false); }
   };
@@ -65,7 +65,7 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
     try {
       const result = await restorePurchases(email);
       if (result.success) { await saveUserEmail(email); onPurchase(); }
-      else setError(t('premium.error.noActivePremium') || 'Aucun abonnement trouvé');
+      else setError(result.error || t('premium.error.noActivePremium') || 'Aucun abonnement trouvé');
     } catch (e: any) { setError(e.message || 'Erreur'); }
     finally { setLoading(false); }
   };

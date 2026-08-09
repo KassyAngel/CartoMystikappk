@@ -3,6 +3,8 @@ import { UserSession } from '@shared/schema';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSound } from '@/hooks/useSound';
 import { hasUsedDailyReading } from '@/lib/dailyLimit';
+import OtherAppsButton from "@/components/OtherAppsButton";
+
 
 interface OracleSelectionProps {
   user: UserSession;
@@ -394,6 +396,9 @@ export default function OracleSelection({ user, onOracleSelect, onBack, shouldSh
 
       <div className="os-bg"/>
       <div className="os-noise"/>
+      <div style={{ position: "fixed", top: 66, right: 12, zIndex: 999 }}>
+        <OtherAppsButton />
+      </div>
       <div className="os-particles">
         {Array.from({length: 28}).map((_,i) => (
           <div key={i} className="os-particle" style={{

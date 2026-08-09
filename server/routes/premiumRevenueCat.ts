@@ -5,7 +5,6 @@ export function registerPremiumRevenueCatRoutes(app: Express) {
 
   // ========================================
   // 🛒 ACTIVER PREMIUM VIA REVENUECAT
-  // 🔴 CORRECTION : Gestion précise de la durée selon le productId
   // ========================================
   app.post("/api/premium/activate-revenuecat", async (req: Request, res: Response) => {
     try {
@@ -22,25 +21,14 @@ export function registerPremiumRevenueCatRoutes(app: Express) {
 
       const userId = email.toLowerCase().trim();
 
-      // 🔴 CALCULER LA DATE D'EXPIRATION
       let premiumUntil: Date;
-      let durationMonths = 1; // Par défaut 1 mois
+      let durationMonths = 1;
 
       if (expirationDate) {
-        // ✅ PRIORITÉ : Si RevenueCat fournit une date d'expiration, on l'utilise
         premiumUntil = new Date(expirationDate);
         console.log('📅 Utilisation de la date d\'expiration RevenueCat:', premiumUntil.toLocaleDateString('fr-FR'));
       } else {
-        // ❌ FALLBACK : Calculer selon le productId
         const now = new Date();
-
-        // 🔴 DÉTECTION PRÉCISE DES IDENTIFIANTS DE PRODUITS
-        // Formats possibles :
-        // - premium_1month
-        // - com.cartomystik.app.premium_1month
-        // - premium_3months
-        // - com.cartomystik.app.premium_3months
-
         const productIdLower = productId.toLowerCase();
 
         if (productIdLower.includes('3month') || 
@@ -63,17 +51,13 @@ export function registerPremiumRevenueCatRoutes(app: Express) {
           durationMonths = 1;
         }
 
-        // Calculer la date d'expiration
         premiumUntil = new Date(now);
         premiumUntil.setMonth(premiumUntil.getMonth() + durationMonths);
 
         console.log(`📅 Date d'expiration calculée: ${premiumUntil.toLocaleDateString('fr-FR')}`);
       }
 
-      // ✅ SAUVEGARDER DANS LE STORAGE
       await storage.setItem(`premiumUntil_${userId}`, premiumUntil.toISOString());
-
-      // 🔴 NOUVEAU : Sauvegarder aussi le productId pour référence
       await storage.setItem(`premiumProduct_${userId}`, productId);
 
       console.log(`✅ Premium activé pour ${userId}`);
@@ -122,7 +106,6 @@ export function registerPremiumRevenueCatRoutes(app: Express) {
       const now = new Date();
       const isPremium = premiumUntil > now;
 
-      // Récupérer le produit acheté (optionnel)
       const productId = await storage.getItem(`premiumProduct_${userId}`);
 
       console.log(`🔍 Vérification Premium RevenueCat pour ${userId}:`);
@@ -144,20 +127,16 @@ export function registerPremiumRevenueCatRoutes(app: Express) {
   });
 
   // ========================================
-  // 🔄 WEBHOOK REVENUECAT (optionnel mais recommandé)
+  // 🔄 WEBHOOK REVENUECAT
+  // 🔴 CORRECTION : app_user_id normalisé en lowercase/trim, exactement
+  //                 comme partout ailleurs, pour matcher la même clé
+  //                 que l'app lit via /api/user/premium-status.
   // ========================================
   app.post("/api/revenuecat-webhook", async (req: Request, res: Response) => {
     try {
       const event = req.body;
 
       console.log('🎣 Webhook RevenueCat reçu:', event.type);
-
-      // Types d'événements RevenueCat possibles :
-      // - INITIAL_PURCHASE : Premier achat
-      // - RENEWAL : Renouvellement (si abonnement récurrent)
-      // - CANCELLATION : Annulation
-      // - EXPIRATION : Expiration
-      // - PRODUCT_CHANGE : Changement de produit
 
       if (event.type === 'INITIAL_PURCHASE' || event.type === 'RENEWAL') {
         const { app_user_id, product_id, expiration_at_ms } = event.event;
@@ -167,17 +146,17 @@ export function registerPremiumRevenueCatRoutes(app: Express) {
           return res.status(400).json({ error: 'app_user_id manquant' });
         }
 
-        // Calculer la date d'expiration
+        // 🔴 Normalisation identique à toutes les autres routes premium
+        const userId = app_user_id.toLowerCase().trim();
+
         let premiumUntil: Date;
         let durationMonths = 1;
 
         if (expiration_at_ms) {
-          // Si RevenueCat fournit une date d'expiration
           premiumUntil = new Date(expiration_at_ms);
         } else {
-          // Sinon calculer selon le product_id
           const now = new Date();
-          const productIdLower = product_id.toLowerCase();
+          const productIdLower = (product_id || '').toLowerCase();
 
           if (productIdLower.includes('3month')) {
             durationMonths = 3;
@@ -189,18 +168,17 @@ export function registerPremiumRevenueCatRoutes(app: Express) {
           premiumUntil.setMonth(premiumUntil.getMonth() + durationMonths);
         }
 
-        // Activer Premium automatiquement via webhook
         await storage.setItem(
-          `premiumUntil_${app_user_id}`,
+          `premiumUntil_${userId}`,
           premiumUntil.toISOString()
         );
 
         await storage.setItem(
-          `premiumProduct_${app_user_id}`,
+          `premiumProduct_${userId}`,
           product_id
         );
 
-        console.log(`✅ Premium activé via webhook pour ${app_user_id}`);
+        console.log(`✅ Premium activé via webhook pour ${userId}`);
         console.log(`   📦 Produit: ${product_id}`);
         console.log(`   📅 Expire le: ${premiumUntil.toLocaleDateString('fr-FR')}`);
       } 
@@ -208,8 +186,8 @@ export function registerPremiumRevenueCatRoutes(app: Express) {
         const { app_user_id } = event.event;
 
         if (app_user_id) {
-          // On ne supprime pas immédiatement, on laisse expirer naturellement
-          console.log(`⚠️ ${event.type} détectée pour ${app_user_id}`);
+          const userId = app_user_id.toLowerCase().trim();
+          console.log(`⚠️ ${event.type} détectée pour ${userId}`);
           console.log('   La date d\'expiration existante sera respectée');
         }
       }
