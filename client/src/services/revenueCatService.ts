@@ -8,6 +8,13 @@ import {
 } from '@revenuecat/purchases-capacitor';
 import { config } from '@/config';
 
+// 🔴 CORRECTION CRITIQUE : l'identifiant réel de l'entitlement dans
+// RevenueCat est "CartoMystik Pro" (voir Product catalog > Entitlements),
+// PAS "premium". C'est la cause racine du bug : le code cherchait une clé
+// qui n'existe jamais dans entitlements.active, donc isPremiumActive était
+// toujours false, quel que soit l'achat.
+const PREMIUM_ENTITLEMENT_ID = 'CartoMystik Pro';
+
 /**
  * 🔧 Initialisation de RevenueCat
  */
@@ -53,8 +60,8 @@ export async function getOfferings(): Promise<PurchasesOfferings | null> {
 
 /**
  * 🛒 Achat d'un package
- * 🔴 CORRECTION : vérifie que le serveur a bien activé le premium avant
- *                 de renvoyer un succès à l'utilisateur, avec retry.
+ * 🔴 CORRECTION : bon identifiant d'entitlement + vérification que le
+ *                 serveur a bien activé le premium, avec retry.
  */
 export async function purchasePackage(
   aPackage: PurchasesPackage,
@@ -63,23 +70,34 @@ export async function purchasePackage(
   if (!Capacitor.isNativePlatform()) return { success: false, error: 'Non disponible sur web' };
 
   try {
-    // 1. Connecter l'utilisateur avec son email
     await Purchases.logIn({ appUserID: email });
     console.log(`✅ Utilisateur connecté : ${email}`);
 
-    // 2. Effectuer l'achat via Google Play
     const purchaseResult = await Purchases.purchasePackage({ aPackage });
 
-    // 3. Vérifier si l'entitlement Premium est actif
     const entitlements = purchaseResult.customerInfo.entitlements.active;
-    const isPremiumActive = !!entitlements['premium'];
+    let isPremiumActive = !!entitlements[PREMIUM_ENTITLEMENT_ID];
+
+    // 🔁 Filet de sécurité : si l'entitlement n'apparaît pas encore dans la
+    // réponse immédiate (léger délai de propagation possible), on refait
+    // un appel frais avant de conclure à un échec.
+    if (!isPremiumActive) {
+      console.warn('⚠️ Entitlement pas encore visible, nouvelle vérification...');
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const freshInfo = await Purchases.getCustomerInfo();
+      isPremiumActive = !!freshInfo.customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID];
+      if (isPremiumActive) {
+        purchaseResult.customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID] =
+          freshInfo.customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID];
+      }
+    }
 
     if (!isPremiumActive) {
       console.warn('⚠️ Premium non actif après achat (côté RevenueCat)');
       return { success: false, error: 'Achat non confirmé par RevenueCat' };
     }
 
-    const premiumEntitlement = entitlements['premium'];
+    const premiumEntitlement = purchaseResult.customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID];
     const productId = premiumEntitlement.productIdentifier;
     const expirationDate = premiumEntitlement.expirationDate || null;
 
@@ -87,7 +105,6 @@ export async function purchasePackage(
     console.log('📦 Produit acheté:', productId);
     console.log('📅 Expiration:', expirationDate || 'Non fournie par RevenueCat');
 
-    // 4. Envoyer au backend pour activation — avec retry, et on VÉRIFIE le résultat
     const activationResult = await activatePremiumOnServerWithRetry({
       email,
       productId,
@@ -95,8 +112,6 @@ export async function purchasePackage(
     });
 
     if (!activationResult.success) {
-      // 🔴 Achat validé côté store, mais le backend n'a pas pu l'enregistrer.
-      // On le signale clairement au lieu de faire croire que tout a marché.
       console.error('❌ Achat validé côté store mais activation serveur échouée après retries');
       return {
         success: false,
@@ -120,7 +135,7 @@ export async function purchasePackage(
 
 /**
  * ♻️ Restauration des achats
- * 🔴 CORRECTION : même vérification + retry qu'à l'achat.
+ * 🔴 CORRECTION : bon identifiant d'entitlement + vérification serveur.
  */
 export async function restorePurchases(
   email: string
@@ -134,14 +149,14 @@ export async function restorePurchases(
     const result = await Purchases.restorePurchases();
 
     const entitlements = result.customerInfo.entitlements.active;
-    const isPremiumActive = !!entitlements['premium'];
+    const isPremiumActive = !!entitlements[PREMIUM_ENTITLEMENT_ID];
 
     if (!isPremiumActive) {
       console.warn('⚠️ Aucun abonnement actif trouvé lors de la restauration');
       return { success: false, error: 'Aucun abonnement actif trouvé' };
     }
 
-    const premiumEntitlement = entitlements['premium'];
+    const premiumEntitlement = entitlements[PREMIUM_ENTITLEMENT_ID];
     const productId = premiumEntitlement.productIdentifier;
     const expirationDate = premiumEntitlement.expirationDate || null;
 
@@ -184,7 +199,7 @@ export async function checkPremiumStatus(email: string): Promise<boolean> {
     const result = await Purchases.getCustomerInfo();
 
     const entitlements = result.customerInfo.entitlements.active;
-    const isPremium = !!entitlements['premium'];
+    const isPremium = !!entitlements[PREMIUM_ENTITLEMENT_ID];
 
     console.log('👑 Statut Premium:', isPremium);
     return isPremium;
@@ -230,8 +245,6 @@ async function activatePremiumOnServer(data: {
 
 /**
  * 🔁 Wrapper avec retry (3 tentatives, backoff progressif)
- * 🔴 NOUVEAU : absorbe les pannes temporaires (cold start Render, coupure
- *              réseau ponctuelle) sans faire échouer tout de suite l'achat.
  */
 async function activatePremiumOnServerWithRetry(
   data: { email: string; productId: string; expirationDate: string | null },
@@ -250,7 +263,7 @@ async function activatePremiumOnServerWithRetry(
     }
 
     if (attempt < maxAttempts) {
-      const delayMs = attempt * 1500; // 1.5s, puis 3s
+      const delayMs = attempt * 1500;
       await new Promise((resolve) => setTimeout(resolve, delayMs));
     }
   }
