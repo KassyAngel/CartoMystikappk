@@ -232,6 +232,21 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
         }
         .pm-cta:disabled { opacity: 0.4; cursor: not-allowed; }
 
+        /* Confirmation en cours */
+        .pm-confirming {
+          display: flex; align-items: center; justify-content: center; gap: 8px;
+          padding: 12px 14px; margin-bottom: 12px; border-radius: 6px;
+          background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2);
+          font-size: 12px; font-weight: 300; color: rgba(232,208,128,0.9);
+          text-align: center; line-height: 1.5;
+        }
+        .pm-confirming-spinner {
+          width: 12px; height: 12px; border-radius: 50%;
+          border: 2px solid rgba(201,168,76,0.25); border-top-color: rgba(201,168,76,0.9);
+          animation: pm-spin 0.8s linear infinite; flex-shrink: 0;
+        }
+        @keyframes pm-spin { to { transform: rotate(360deg); } }
+
         /* Benefits */
         .pm-benefits {
           margin-top: 16px; padding-top: 16px;
@@ -317,6 +332,17 @@ export default function PremiumModal({ isOpen, onClose, onPurchase }: PremiumMod
                 {emailError && <span className="pm-err">{emailError}</span>}
                 <span className="pm-email-hint">{t('premium.emailHelp') || 'Pour récupérer votre abonnement'}</span>
               </>
+            )}
+
+            {/* 🔴 NOUVEAU : message "Confirmation en cours" pendant l'achat ou la restauration */}
+            {loading && (
+              <div className="pm-confirming">
+                <span className="pm-confirming-spinner" />
+                <span>
+                  {t('premium.status.confirming') ||
+                    "Confirmation en cours… Cela peut prendre jusqu'à 10 secondes, merci de patienter."}
+                </span>
+              </div>
             )}
 
             {/* RevenueCat (natif) */}

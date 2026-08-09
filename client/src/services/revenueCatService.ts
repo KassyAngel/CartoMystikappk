@@ -75,29 +75,34 @@ export async function purchasePackage(
 
     const purchaseResult = await Purchases.purchasePackage({ aPackage });
 
-    const entitlements = purchaseResult.customerInfo.entitlements.active;
-    let isPremiumActive = !!entitlements[PREMIUM_ENTITLEMENT_ID];
+    let activeEntitlement = purchaseResult.customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID];
 
-    // 🔁 Filet de sécurité : si l'entitlement n'apparaît pas encore dans la
-    // réponse immédiate (léger délai de propagation possible), on refait
-    // un appel frais avant de conclure à un échec.
-    if (!isPremiumActive) {
-      console.warn('⚠️ Entitlement pas encore visible, nouvelle vérification...');
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      const freshInfo = await Purchases.getCustomerInfo();
-      isPremiumActive = !!freshInfo.customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID];
-      if (isPremiumActive) {
-        purchaseResult.customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID] =
-          freshInfo.customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID];
+    // 🔁 Filet de sécurité n°1 : polling sur getCustomerInfo() jusqu'à 10s,
+    // au cas où RevenueCat mette un peu de temps à traiter le reçu.
+    if (!activeEntitlement) {
+      console.warn('⚠️ Entitlement pas encore visible, vérifications répétées (jusqu\'à 10s)...');
+      activeEntitlement = await pollForEntitlement(5, 2000);
+    }
+
+    // 🔁 Filet de sécurité n°2 : si le polling n'a rien donné, on force une
+    // resynchronisation complète avec le Play Store — exactement ce que fait
+    // "Restaurer un abonnement", mais automatiquement, sans action utilisateur.
+    if (!activeEntitlement) {
+      console.warn('⚠️ Toujours rien après polling, resynchronisation forcée via restorePurchases()...');
+      try {
+        const restoreResult = await Purchases.restorePurchases();
+        activeEntitlement = restoreResult.customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID];
+      } catch (restoreError) {
+        console.error('❌ Erreur lors de la resynchronisation forcée:', restoreError);
       }
     }
 
-    if (!isPremiumActive) {
-      console.warn('⚠️ Premium non actif après achat (côté RevenueCat)');
+    if (!activeEntitlement) {
+      console.warn('⚠️ Premium non actif après achat, malgré polling et resynchronisation');
       return { success: false, error: 'Achat non confirmé par RevenueCat' };
     }
 
-    const premiumEntitlement = purchaseResult.customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID];
+    const premiumEntitlement = activeEntitlement;
     const productId = premiumEntitlement.productIdentifier;
     const expirationDate = premiumEntitlement.expirationDate || null;
 
@@ -131,6 +136,29 @@ export async function purchasePackage(
     console.error('❌ Erreur achat:', error);
     return { success: false, error: error.message || 'Erreur inconnue' };
   }
+}
+
+/**
+ * 🔁 Vérifie plusieurs fois de suite (avec délai) si l'entitlement premium
+ * est devenu actif. Utilisé juste après un achat pour absorber le léger
+ * délai que RevenueCat peut prendre à traiter le reçu Google Play.
+ */
+async function pollForEntitlement(maxAttempts: number, delayMs: number) {
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+    try {
+      const info = await Purchases.getCustomerInfo();
+      const entitlement = info.customerInfo.entitlements.active[PREMIUM_ENTITLEMENT_ID];
+      if (entitlement) {
+        console.log(`✅ Entitlement détecté après ${attempt} vérification(s)`);
+        return entitlement;
+      }
+      console.log(`⏳ Vérification ${attempt}/${maxAttempts} : toujours pas actif`);
+    } catch (error) {
+      console.error(`❌ Erreur lors de la vérification ${attempt}/${maxAttempts}:`, error);
+    }
+  }
+  return undefined;
 }
 
 /**
