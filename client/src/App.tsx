@@ -426,7 +426,18 @@ function App() {
                 <PremiumModal
                   isOpen={isPremiumModalOpen}
                   onClose={() => setIsPremiumModalOpen(false)}
-                  onPurchase={() => { setIsPremiumModalOpen(false); window.location.reload(); }}
+                  onPurchase={() => {
+                    // 🔴 CORRECTION : purchasePackage()/restorePurchases() ont déjà
+                    // confirmé le succès (RevenueCat + activation serveur) avant
+                    // d'appeler onPurchase. On met donc à jour l'état localement,
+                    // sans recharger la page — window.location.reload() n'est pas
+                    // fiable dans une WebView Capacitor et pouvait laisser les
+                    // publicités affichées jusqu'à la fermeture complète de l'app.
+                    setIsPremiumModalOpen(false);
+                    setIsPremium(true);
+                    if (bannerShown) { hideBanner(); setBannerShown(false); }
+                    loadUserData();
+                  }}
                 />
               )}
 
