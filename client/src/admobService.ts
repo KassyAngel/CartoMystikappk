@@ -68,6 +68,29 @@ let isInterstitialReady = false;
 let isInterstitialLoading = false;
 let isInterstitialShowing = false;
 
+// 🔴 NOUVEAU : source de vérité interne du statut Premium.
+// Le service ne dépend plus uniquement du timing des appels React —
+// il vérifie lui-même ce flag avant CHAQUE commande native, y compris
+// juste avant qu'une bannière déjà "en vol" (showBanner() appelé mais
+// pas encore chargé côté natif) ne se rende visible. Ça règle le bug
+// où une bannière commandée juste avant l'achat finissait par
+// s'afficher APRÈS le hideBanner(), car sa requête réseau AdMob
+// aboutissait plus tard.
+let isPremiumActive = false;
+
+export function setPremiumStatus(premium: boolean) {
+  const changed = isPremiumActive !== premium;
+  isPremiumActive = premium;
+  if (changed) {
+    console.log(`👑 [AdMob] Statut Premium mis à jour: ${premium}`);
+  }
+  // Dès qu'on devient Premium, on nettoie tout de suite, au cas où une
+  // bannière serait déjà visible ou en cours de chargement.
+  if (premium && isNative) {
+    removeBanner();
+  }
+}
+
 export async function initialize() {
   console.log(`📱 Initialisation AdMob - Mode: ${IS_PRODUCTION ? 'PRODUCTION' : 'TEST'}`);
   console.log(`📱 Platform: ${platform}, isNative: ${isNative}`);
@@ -105,8 +128,10 @@ export async function initialize() {
       console.log('✅ Pub interstitielle fermée par l\'utilisateur');
       isInterstitialReady = false;
       isInterstitialShowing = false;
-      // 🔄 Recharger une nouvelle pub pour la prochaine fois
-      setTimeout(() => preloadInterstitial(), 1000);
+      // 🔄 Recharger une nouvelle pub pour la prochaine fois (sauf si Premium)
+      if (!isPremiumActive) {
+        setTimeout(() => preloadInterstitial(), 1000);
+      }
     });
 
     _addListener('interstitialAdFailedToShow', (error: any) => {
@@ -123,7 +148,7 @@ export async function initialize() {
 
 // 🎯 NOUVELLE FONCTION : Pré-charger la pub sans l'afficher
 export async function preloadInterstitial() {
-  if (!isNative) return;
+  if (!isNative || isPremiumActive) return;
 
   // Éviter de charger plusieurs fois
   if (isInterstitialReady || isInterstitialLoading) {
@@ -151,6 +176,12 @@ export async function showInterstitialAd(context: string = 'unknown'): Promise<b
   if (!isNative) {
     console.log('📱 Pas de pub (web) - Context:', context);
     return true;
+  }
+
+  // 🔴 Garde-fou Premium : revérifié ici, pas seulement côté appelant
+  if (isPremiumActive) {
+    console.log('👑 Premium actif — pub interstitielle annulée. Context:', context);
+    return false;
   }
 
   if (isInterstitialShowing) {
@@ -186,6 +217,13 @@ export async function showInterstitialAd(context: string = 'unknown'): Promise<b
       await new Promise(resolve => setTimeout(resolve, 100));
     }
 
+    // 🔴 Re-vérification : si l'utilisateur est devenu Premium PENDANT
+    // l'attente (ex: achat en cours dans un autre écran), on annule.
+    if (isPremiumActive) {
+      console.log('👑 Premium devenu actif pendant le chargement — pub annulée');
+      return false;
+    }
+
     if (isInterstitialReady) {
       await AdMob.showInterstitial();
       console.log('✅ Pub affichée après chargement');
@@ -205,6 +243,16 @@ export async function showInterstitialAd(context: string = 'unknown'): Promise<b
 export async function showBanner() {
   if (!isNative) return;
 
+  // 🔴 Garde-fou Premium : c'est LA correction du bug. Cette fonction
+  // peut être commandée par un setTimeout(500ms) programmé avant que
+  // l'achat n'aboutisse. Sans cette vérification, la bannière pouvait
+  // finir par se charger et s'afficher APRÈS le hideBanner() déclenché
+  // par l'activation Premium.
+  if (isPremiumActive) {
+    console.log('👑 Premium actif — affichage bannière annulé');
+    return;
+  }
+
   try {
     const options: BannerAdOptions = {
       adId: BANNER_AD_ID,
@@ -214,6 +262,16 @@ export async function showBanner() {
     };
 
     await AdMob.showBanner(options);
+
+    // 🔴 Double vérification après le await : si le Premium est devenu
+    // actif pendant que la requête AdMob était en vol, on détruit la
+    // bannière qui vient tout juste d'apparaître.
+    if (isPremiumActive) {
+      console.log('👑 Premium devenu actif pendant le chargement de la bannière — suppression immédiate');
+      await AdMob.removeBanner();
+      return;
+    }
+
     console.log('✅ Bannière affichée');
   } catch (error) {
     console.error('❌ Erreur bannière:', error);

@@ -15,7 +15,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { UserProvider } from "@/contexts/UserContext";
 import OracleMystiqueApp from "@/pages/OracleMystiqueApp";
 import NotFound from "@/pages/not-found";
-import { initialize as initializeAdMob, showBanner, hideBanner, showInterstitialAd, preloadInterstitial } from './admobService';
+import { initialize as initializeAdMob, showBanner, hideBanner, removeBanner, showInterstitialAd, preloadInterstitial, setPremiumStatus } from './admobService';
 import { initializeRevenueCat } from './services/revenueCatService';
 import { config } from '@/config';
 import { getUserEmail } from '@/lib/userStorage';
@@ -126,13 +126,22 @@ function App() {
     initServices();
   }, []);
 
+  // 🔴 NOUVEAU : on garde admobService synchronisé avec isPremium à CHAQUE
+  // changement, quelle qu'en soit la source (achat, chargement serveur,
+  // expiration). C'est ce flag interne au service qui bloque définitivement
+  // toute bannière/interstitiel, même ceux déjà "en vol" au moment du switch —
+  // c'est ça qui corrige le bug où la pub restait visible après achat.
+  useEffect(() => {
+    setPremiumStatus(isPremium);
+  }, [isPremium]);
+
   useEffect(() => {
     if (!adMobReady) return;
 
     if (isPremium) {
       console.log('👑 Premium actif : bannière cachée');
       if (bannerShown) {
-        hideBanner();
+        removeBanner();
         setBannerShown(false);
       }
       return;
@@ -435,7 +444,12 @@ function App() {
                     // publicités affichées jusqu'à la fermeture complète de l'app.
                     setIsPremiumModalOpen(false);
                     setIsPremium(true);
-                    if (bannerShown) { hideBanner(); setBannerShown(false); }
+                    // 🔴 NOUVEAU : on prévient admobService en tout premier, de
+                    // façon synchrone, avant même le hideBanner/removeBanner ci-
+                    // dessous. Ça bloque immédiatement toute bannière en cours de
+                    // chargement (voir setPremiumStatus dans admobService.ts).
+                    setPremiumStatus(true);
+                    if (bannerShown) { removeBanner(); setBannerShown(false); }
                     loadUserData();
                   }}
                 />
