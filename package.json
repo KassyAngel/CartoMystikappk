@@ -10,6 +10,10 @@
     "check": "tsc",
     "db:push": "drizzle-kit push"
   },
+  "overrides": {
+    "tar": "^7.4.0",
+    "shell-quote": "^1.8.4"
+  },
   "dependencies": {
     "@capacitor-community/admob": "^7.2.0",
     "@capacitor/android": "^7.4.3",
