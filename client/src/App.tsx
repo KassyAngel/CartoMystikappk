@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { App as CapacitorApp } from '@capacitor/app';
+import { Capacitor } from '@capacitor/core';
 import GrimoireModal from './pages/GrimoireModal';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import PaymentCancelPage from './pages/PaymentCancelPage';
@@ -134,6 +136,30 @@ function App() {
   useEffect(() => {
     setPremiumStatus(isPremium);
   }, [isPremium]);
+
+  // 🔴 NOUVEAU : écoute du retour au premier plan de l'appli.
+  // L'écran de paiement Google Play fait passer l'appli en arrière-plan.
+  // Sur certains téléphones (mémoire faible), Android peut carrément TUER
+  // le process pendant ce temps — ce qui interrompt net la promesse
+  // purchasePackage() (polling + activation serveur) avant qu'elle ait pu
+  // mettre isPremium à jour. Résultat : les pubs restaient visibles jusqu'à
+  // ce que l'utilisateur ferme/rouvre l'appli manuellement.
+  // En revérifiant systématiquement le statut Premium à CHAQUE retour au
+  // premier plan (l'événement 'resume' est déclenché à chaque fois, que le
+  // process ait survécu ou non), on n'a plus besoin d'attendre que cette
+  // promesse aboutisse dans le même contexte JS.
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return;
+
+    const listenerPromise = CapacitorApp.addListener('resume', () => {
+      console.log('🔄 Appli revenue au premier plan → re-vérification Premium');
+      loadUserData();
+    });
+
+    return () => {
+      listenerPromise.then(listener => listener.remove());
+    };
+  }, [deviceId]);
 
   useEffect(() => {
     if (!adMobReady) return;
