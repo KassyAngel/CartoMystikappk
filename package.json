@@ -8,19 +8,19 @@
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist/server && node copy-public.js",
     "start": "NODE_ENV=production node dist/server/index.js",
     "check": "tsc",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "fix:lockfile": "sed -i 's#http://package-firewall.replit.local/npm/#https://registry.npmjs.org/#g' package-lock.json"
   },
   "overrides": {
-    "tar": "^7.4.0",
     "shell-quote": "^1.8.4"
   },
   "dependencies": {
     "@capacitor-community/admob": "^7.2.0",
-    "@capacitor/android": "^7.4.3",
+    "@capacitor/android": "^7.6.8",
     "@capacitor/app": "^7.1.2",
     "@capacitor/browser": "^7.0.2",
-    "@capacitor/cli": "^7.4.3",
-    "@capacitor/core": "^7.4.3",
+    "@capacitor/cli": "^7.6.8",
+    "@capacitor/core": "^7.6.8",
     "@capacitor/device": "^7.0.2",
     "@capacitor/local-notifications": "^7.0.3",
     "@capacitor/preferences": "^7.0.3",
